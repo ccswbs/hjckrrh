@@ -1,0 +1,10 @@
+name = UG Image
+description = Image field base
+core = 7.x
+package = UG
+version = 7.x-1.0
+project = ug_image
+dependencies[] = features
+dependencies[] = image
+features[features_api][] = api:2
+features[field_base][] = field_image

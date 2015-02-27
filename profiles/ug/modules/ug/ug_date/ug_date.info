@@ -1,0 +1,8 @@
+name = UG Date
+description = Date field base.
+core = 7.x
+package = UG
+dependencies[] = date
+dependencies[] = features
+features[features_api][] = api:2
+features[field_base][] = field_date

@@ -1,0 +1,56 @@
+@import url("//www.uoguelph.ca/css/uofg.css");
+@import url("//fonts.googleapis.com/css?family=Lato:300,400");
+
+
+/*
+ * Navbar
+ */
+
+.navbar-nav {
+  clear: right;
+  margin-top: 100px;
+}
+
+.navbar > .container .navbar-brand {
+  background-image: url(//www.uoguelph.ca/img/universityofguelph.gif);
+  margin-left: 0;
+  width: 100px;
+}
+
+
+
+/*
+ * Feature
+ */
+
+.view-feature .thumbnail {
+  min-height: 250px;
+}
+
+
+/*
+ * Events
+ */
+
+.view-events .view-content {
+  display: table;
+}
+
+.view-events .views-row {
+  display: table-row;
+}
+
+.view-events .views-field {
+  display: table-cell;
+  padding-bottom: 10px;
+}
+
+.view-events .views-field-title {
+  padding-right: 10px;
+}
+
+.view-events .views-field-field-date {
+  min-width: 8ex;
+}
+
+

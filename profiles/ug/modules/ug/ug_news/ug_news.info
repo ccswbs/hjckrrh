@@ -1,0 +1,15 @@
+name = UG News
+description = News content type.
+core = 7.x
+package = UG
+version = 7.x-1.0
+project = ug_news
+dependencies[] = features
+dependencies[] = image
+dependencies[] = text
+dependencies[] = ug_body
+dependencies[] = ug_image
+features[features_api][] = api:2
+features[field_instance][] = node-news-body
+features[field_instance][] = node-news-field_image
+features[node][] = news

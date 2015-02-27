@@ -1,0 +1,16 @@
+name = UG Event
+description = Calendar appointment content type.
+core = 7.x
+package = UG
+version = 7.x-1.1
+project = ug_event
+dependencies[] = date
+dependencies[] = features
+dependencies[] = text
+dependencies[] = ug_body
+dependencies[] = ug_date
+features[features_api][] = api:2
+features[field_instance][] = node-event-body
+features[field_instance][] = node-event-field_date
+features[node][] = event
+features_exclude[field_base][body] = body
