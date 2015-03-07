@@ -9,6 +9,21 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 
+
+/*
+ * Toolbar
+ */
+
+body.toolbar {
+  background-position: 0 30px;
+}
+
+body.toolbar-drawer {
+  padding-top: 30px !important;
+}
+
+
+
 /*
  * Navbar
  */
@@ -24,6 +39,9 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   width: 100px;
 }
 
+.navbar.container {
+  margin-top: 0;
+}
 
 
 /*
