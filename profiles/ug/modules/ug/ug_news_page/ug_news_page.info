@@ -1,0 +1,13 @@
+name = UG News page
+description = Summary page of news articles.
+core = 7.x
+package = UG
+version = 7.x-1.0
+project = ug_news_page
+dependencies[] = ctools
+dependencies[] = page_manager
+dependencies[] = ug_news
+dependencies[] = ug_news_views
+features[ctools][] = page_manager:pages_default:1
+features[features_api][] = api:2
+features[page_manager_pages][] = news_summary
