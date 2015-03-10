@@ -35,8 +35,12 @@ body.toolbar-drawer {
 
 .navbar > .container .navbar-brand {
   background-image: url(//www.uoguelph.ca/img/universityofguelph.gif);
+  background-repeat: no-repeat;
+  padding: 36px 0 0 120px;
   margin-left: 0;
   width: 100px;
+  color: white;
+  font-size: 1.5em;
 }
 
 .navbar.container {
