@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the UG Theme settings feature.
+ */
+
+include_once 'ug_theme_settings.features.inc';
