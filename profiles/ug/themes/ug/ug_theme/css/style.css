@@ -9,6 +9,10 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   font-weight: 300;
 }
 
+div.row {
+  margin-top: 0;
+}
+
 
 
 /*
@@ -83,4 +87,13 @@ body.toolbar-drawer {
   min-width: 8ex;
 }
 
+
+
+/*
+ * Page
+ */
+
+.page-header {
+  margin-top: 40px;
+}
 
