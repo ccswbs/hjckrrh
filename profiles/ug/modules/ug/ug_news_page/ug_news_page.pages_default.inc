@@ -15,17 +15,10 @@ function ug_news_page_default_page_manager_pages() {
   $page->task = 'page';
   $page->admin_title = '';
   $page->admin_description = '';
-  $page->path = 'news/!date';
+  $page->path = 'news';
   $page->access = array();
   $page->menu = array();
-  $page->arguments = array(
-    'date' => array(
-      'id' => '',
-      'identifier' => '',
-      'argument' => '',
-      'settings' => array(),
-    ),
-  );
+  $page->arguments = array();
   $page->conf = array(
     'admin_paths' => FALSE,
   );
@@ -152,6 +145,41 @@ function ug_news_page_default_page_manager_pages() {
     $pane->uuid = '8553f423-e622-4afa-bff9-ed4bcc8e7e7e';
     $display->content['new-8553f423-e622-4afa-bff9-ed4bcc8e7e7e'] = $pane;
     $display->panels['right'][0] = 'new-8553f423-e622-4afa-bff9-ed4bcc8e7e7e';
+    $pane = new stdClass();
+    $pane->pid = 'new-11395a7e-fd54-45df-b10a-dcbd6aebf13e';
+    $pane->panel = 'right';
+    $pane->type = 'views';
+    $pane->subtype = 'news_tags_filter';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_pager_settings' => 0,
+      'use_pager' => 1,
+      'nodes_per_page' => '0',
+      'pager_id' => '0',
+      'offset' => '0',
+      'more_link' => 0,
+      'feed_icons' => 0,
+      'panel_args' => 0,
+      'link_to_view' => 0,
+      'args' => '',
+      'url' => '',
+      'display' => 'default',
+      'override_title' => 0,
+      'override_title_text' => '',
+      'override_title_heading' => 'h2',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 1;
+    $pane->locks = array();
+    $pane->uuid = '11395a7e-fd54-45df-b10a-dcbd6aebf13e';
+    $display->content['new-11395a7e-fd54-45df-b10a-dcbd6aebf13e'] = $pane;
+    $display->panels['right'][1] = 'new-11395a7e-fd54-45df-b10a-dcbd6aebf13e';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = 'new-64adacfa-728a-41fe-b1af-e9b9484ce9ef';
   $handler->conf['display'] = $display;
