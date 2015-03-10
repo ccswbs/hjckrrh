@@ -27,11 +27,11 @@
  * @ingroup views_templates
  */
 ?>
-<div class='col-md-4'>
+<div class='col-sm-4'>
   <img src="<?php print $fields['field_image']->content; ?>" class="img-responsive"></img>
 </div>
-<div class='col-md-8'>
-  <h3><?php print $fields['title']->content; ?></h3>
+<div class='col-sm-8'>
+  <h3 class='news-summary--title'><?php print $fields['title']->content; ?></h3>
   <p><?php print $fields['created']->content; ?></p>
   <?php print $fields['body']->content; ?>
 </div>

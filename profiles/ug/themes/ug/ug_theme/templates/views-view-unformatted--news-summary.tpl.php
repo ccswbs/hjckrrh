@@ -14,4 +14,5 @@
   <div class="row">
     <?php print $row; ?>
   </div>
+  <hr>
 <?php endforeach; ?>
