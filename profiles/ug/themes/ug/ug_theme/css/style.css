@@ -59,6 +59,10 @@ body.toolbar-drawer {
  * Navbar
  */
 
+#navbar {
+  margin-bottom: 40px; /* leave some space between navbar and content */
+}
+
 .navbar-nav {
   clear: right;
   margin-top: 100px;
@@ -111,16 +115,6 @@ body.toolbar-drawer {
 
 .view-events .views-field-field-date {
   min-width: 8ex;
-}
-
-
-
-/*
- * Page
- */
-
-.page-header {
-  margin-top: 40px;
 }
 
 
