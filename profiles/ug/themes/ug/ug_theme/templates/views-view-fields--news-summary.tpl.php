@@ -28,10 +28,10 @@
  */
 ?>
 <div class='col-sm-4'>
-  <img src="<?php print $fields['field_image']->content; ?>" class="img-responsive"></img>
+  <?php print $fields['field_image']->content; ?>
 </div>
 <div class='col-sm-8'>
-  <h3 class='news-summary--title'><?php print $fields['title']->content; ?></h3>
+  <h3 class='headline'><?php print $fields['title']->content; ?></h3>
   <p><?php print $fields['created']->content; ?></p>
   <?php print $fields['body']->content; ?>
 </div>

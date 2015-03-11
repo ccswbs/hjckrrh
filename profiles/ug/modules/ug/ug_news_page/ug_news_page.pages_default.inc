@@ -13,7 +13,7 @@ function ug_news_page_default_page_manager_pages() {
   $page->api_version = 1;
   $page->name = 'news_summary';
   $page->task = 'page';
-  $page->admin_title = '';
+  $page->admin_title = 'News';
   $page->admin_description = '';
   $page->path = 'news';
   $page->access = array();

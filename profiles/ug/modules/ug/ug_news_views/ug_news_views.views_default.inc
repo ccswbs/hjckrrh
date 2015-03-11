@@ -189,10 +189,8 @@ function ug_news_views_views_default_views() {
   $handler->display->display_options['fields']['field_image']['label'] = '';
   $handler->display->display_options['fields']['field_image']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_image']['click_sort_column'] = 'fid';
-  $handler->display->display_options['fields']['field_image']['type'] = 'image_url';
   $handler->display->display_options['fields']['field_image']['settings'] = array(
-    'url_type' => '0',
-    'image_style' => '',
+    'image_style' => 'medium',
     'image_link' => '',
   );
   /* Field: Content: Body */

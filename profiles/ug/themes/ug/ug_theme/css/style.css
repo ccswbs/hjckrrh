@@ -14,6 +14,32 @@ div.row {
 }
 
 
+/*
+ * Utilities
+ */
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  .float-sm-left { float: left; margin-right: 10px; }
+  .float-sm-right { float: right; margin-left: 10px; }
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  .float-md-left { float: left; margin-right: 10px; }
+  .float-md-right { float: right; margin-left: 10px; }
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+  .float-lg-left { float: left; margin-right: 10px; }
+  .float-lg-right { float: right; margin-left: 10px; }
+}
+
+
+/* Remove margin from top of first heading. */
+.headline { margin-top: 0; }
+
 
 /*
  * Toolbar
@@ -97,13 +123,4 @@ body.toolbar-drawer {
   margin-top: 40px;
 }
 
-
-
-/*
- * News
- */
-
-.news-summary--title {
-  margin-top: 0;
-}
 
