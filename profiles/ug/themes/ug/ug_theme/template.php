@@ -45,15 +45,8 @@ function ug_theme_field($variables) {
 
 function ug_theme_field__field_image__news($variables) {
   $output = ug_theme_field($variables);
-  $output = '<figure class="float-md-left">' . $output . '</figure>';
+  $output = '<figure>' . $output . '</figure>';
   return $output;
 }
 
-
-/*
- * Theme more link as a bootstrap button.
- */
-function ug_theme_more_link($variables) {
-  return '<p class="more-link">' . l(t('More'), $variables['url'], array('attributes' => array('title' => $variables['title'], 'class' => $variables['class']))) . '</p>';
-}
 
