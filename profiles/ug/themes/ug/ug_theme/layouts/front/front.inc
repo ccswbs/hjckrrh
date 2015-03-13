@@ -2,11 +2,11 @@
 
 // Plugin definition
 $plugin = array(
-  'title' => t('1:1:1'),
+  'title' => t('Three column (4:4:4)'),
   'category' => t('Responsive'),
-  'icon' => 'ug_1_1_1.png',
-  'theme' => 'ug_1_1_1',
-  'css' => 'ug_1_1_1.css',
+  'icon' => 'front.png',
+  'theme' => 'front',
+  'css' => 'front.css',
   'regions' => array(
     'top' => t('Top'),
     'left' => t('Left column'),

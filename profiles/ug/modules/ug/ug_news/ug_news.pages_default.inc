@@ -46,7 +46,7 @@ function ug_news_default_page_manager_handlers() {
     ),
   );
   $display = new panels_display();
-  $display->layout = 'ug_1_2';
+  $display->layout = 'news';
   $display->layout_settings = array();
   $display->panel_settings = array(
     'style_settings' => array(

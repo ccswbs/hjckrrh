@@ -32,7 +32,7 @@ function ug_news_views_default_views() {
   $handler->display->display_options['style_options']['default_row_class'] = FALSE;
   $handler->display->display_options['style_options']['row_class_special'] = FALSE;
   $handler->display->display_options['row_plugin'] = 'panels_fields';
-  $handler->display->display_options['row_options']['layout'] = 'ug_1_2';
+  $handler->display->display_options['row_options']['layout'] = 'news';
   $handler->display->display_options['row_options']['regions'] = array(
     'title' => 'right',
     'created' => 'right',
