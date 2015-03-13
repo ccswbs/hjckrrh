@@ -37,14 +37,14 @@ function ug_front_default_page_manager_pages() {
   $handler = new stdClass();
   $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
   $handler->api_version = 1;
-  $handler->name = 'page_front__panel_context_cbfb6c3f-b344-47b3-8b25-27bc1c08337b';
+  $handler->name = 'page_front__front';
   $handler->task = 'page';
   $handler->subtask = 'front';
   $handler->handler = 'panel_context';
   $handler->weight = 0;
   $handler->conf = array(
-    'title' => 'Landing page',
-    'no_blocks' => FALSE,
+    'title' => 'Front',
+    'no_blocks' => 0,
     'pipeline' => 'ipe',
     'body_classes_to_remove' => '',
     'body_classes_to_add' => '',
@@ -52,60 +52,37 @@ function ug_front_default_page_manager_pages() {
     'css' => '',
     'contexts' => array(),
     'relationships' => array(),
+    'name' => 'front',
   );
   $display = new panels_display();
-  $display->layout = 'bootstrap_threecol_stacked';
+  $display->layout = 'ug_1_1_1';
   $display->layout_settings = array();
   $display->panel_settings = array(
     'style_settings' => array(
-      'left' => array(
-        'column_type' => 'col-sm',
-        'column_size' => '4',
-        'offset_type' => 'col-lg-offset',
-        'offset_size' => '0',
-      ),
-      'middle' => array(
-        'column_type' => 'col-sm',
-        'column_size' => '4',
-        'offset_type' => 'col-lg-offset',
-        'offset_size' => '0',
-      ),
-      'right' => array(
-        'column_type' => 'col-sm',
-        'column_size' => '4',
-        'offset_type' => 'col-lg-offset',
-        'offset_size' => '0',
-      ),
       'default' => NULL,
       'top' => NULL,
+      'left' => NULL,
+      'middle' => NULL,
+      'right' => NULL,
       'bottom' => NULL,
-    ),
-    'left' => array(
-      'style' => 'bootstrap_region',
-    ),
-    'middle' => array(
-      'style' => 'bootstrap_region',
-    ),
-    'right' => array(
-      'style' => 'bootstrap_region',
     ),
   );
   $display->cache = array();
-  $display->title = 'Front';
-  $display->uuid = '47e88446-e21a-4c5e-bbad-0eb8f6654972';
+  $display->title = '';
+  $display->uuid = '0f9fa8ae-f049-4c30-9250-10f3a41fc487';
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-97d99cca-6fee-40c4-9d60-0d0817de73bf';
+    $pane->pid = 'new-1027894c-128f-4486-91a4-842f5ca7d3be';
     $pane->panel = 'left';
     $pane->type = 'views';
-    $pane->subtype = 'news';
+    $pane->subtype = 'n3';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
       'override_pager_settings' => 0,
-      'use_pager' => 1,
-      'nodes_per_page' => '0',
+      'use_pager' => 0,
+      'nodes_per_page' => '5',
       'pager_id' => '0',
       'offset' => '0',
       'more_link' => 0,
@@ -120,18 +97,16 @@ function ug_front_default_page_manager_pages() {
       'override_title_heading' => 'h2',
     );
     $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
+    $pane->style = array();
     $pane->css = array();
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $pane->uuid = '97d99cca-6fee-40c4-9d60-0d0817de73bf';
-    $display->content['new-97d99cca-6fee-40c4-9d60-0d0817de73bf'] = $pane;
-    $display->panels['left'][0] = 'new-97d99cca-6fee-40c4-9d60-0d0817de73bf';
+    $pane->uuid = '1027894c-128f-4486-91a4-842f5ca7d3be';
+    $display->content['new-1027894c-128f-4486-91a4-842f5ca7d3be'] = $pane;
+    $display->panels['left'][0] = 'new-1027894c-128f-4486-91a4-842f5ca7d3be';
     $pane = new stdClass();
-    $pane->pid = 'new-f3b4c75e-65e2-43a1-ba32-67d04989887a';
+    $pane->pid = 'new-f0112557-96cd-4dc5-9f33-fc9e400f6a03';
     $pane->panel = 'middle';
     $pane->type = 'views';
     $pane->subtype = 'events';
@@ -139,8 +114,8 @@ function ug_front_default_page_manager_pages() {
     $pane->access = array();
     $pane->configuration = array(
       'override_pager_settings' => 0,
-      'use_pager' => 1,
-      'nodes_per_page' => '0',
+      'use_pager' => 0,
+      'nodes_per_page' => '10',
       'pager_id' => '0',
       'offset' => '0',
       'more_link' => 0,
@@ -162,11 +137,11 @@ function ug_front_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $pane->uuid = 'f3b4c75e-65e2-43a1-ba32-67d04989887a';
-    $display->content['new-f3b4c75e-65e2-43a1-ba32-67d04989887a'] = $pane;
-    $display->panels['middle'][0] = 'new-f3b4c75e-65e2-43a1-ba32-67d04989887a';
+    $pane->uuid = 'f0112557-96cd-4dc5-9f33-fc9e400f6a03';
+    $display->content['new-f0112557-96cd-4dc5-9f33-fc9e400f6a03'] = $pane;
+    $display->panels['middle'][0] = 'new-f0112557-96cd-4dc5-9f33-fc9e400f6a03';
     $pane = new stdClass();
-    $pane->pid = 'new-14f93bd7-eec2-4c1e-a6f9-9a9206fab93b';
+    $pane->pid = 'new-14548eac-b77f-4749-84cd-eac4e05d7602';
     $pane->panel = 'right';
     $pane->type = 'custom';
     $pane->subtype = 'podcast';
@@ -187,11 +162,11 @@ function ug_front_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $pane->uuid = '14f93bd7-eec2-4c1e-a6f9-9a9206fab93b';
-    $display->content['new-14f93bd7-eec2-4c1e-a6f9-9a9206fab93b'] = $pane;
-    $display->panels['right'][0] = 'new-14f93bd7-eec2-4c1e-a6f9-9a9206fab93b';
+    $pane->uuid = '14548eac-b77f-4749-84cd-eac4e05d7602';
+    $display->content['new-14548eac-b77f-4749-84cd-eac4e05d7602'] = $pane;
+    $display->panels['right'][0] = 'new-14548eac-b77f-4749-84cd-eac4e05d7602';
     $pane = new stdClass();
-    $pane->pid = 'new-0c5a1155-b6f4-40e5-aa57-537a202fbdf9';
+    $pane->pid = 'new-7acb0db1-bbbd-4db3-9a6a-980ca994685e';
     $pane->panel = 'top';
     $pane->type = 'views';
     $pane->subtype = 'feature';
@@ -199,8 +174,8 @@ function ug_front_default_page_manager_pages() {
     $pane->access = array();
     $pane->configuration = array(
       'override_pager_settings' => 0,
-      'use_pager' => 1,
-      'nodes_per_page' => '0',
+      'use_pager' => 0,
+      'nodes_per_page' => '4',
       'pager_id' => '0',
       'offset' => '0',
       'more_link' => 0,
@@ -222,11 +197,11 @@ function ug_front_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $pane->uuid = '0c5a1155-b6f4-40e5-aa57-537a202fbdf9';
-    $display->content['new-0c5a1155-b6f4-40e5-aa57-537a202fbdf9'] = $pane;
-    $display->panels['top'][0] = 'new-0c5a1155-b6f4-40e5-aa57-537a202fbdf9';
+    $pane->uuid = '7acb0db1-bbbd-4db3-9a6a-980ca994685e';
+    $display->content['new-7acb0db1-bbbd-4db3-9a6a-980ca994685e'] = $pane;
+    $display->panels['top'][0] = 'new-7acb0db1-bbbd-4db3-9a6a-980ca994685e';
   $display->hide_title = PANELS_TITLE_NONE;
-  $display->title_pane = 'new-97d99cca-6fee-40c4-9d60-0d0817de73bf';
+  $display->title_pane = 'new-7acb0db1-bbbd-4db3-9a6a-980ca994685e';
   $handler->conf['display'] = $display;
   $page->default_handlers[$handler->name] = $handler;
   $pages['front'] = $page;
