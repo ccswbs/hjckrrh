@@ -14,31 +14,25 @@ div.row {
 }
 
 
-/*
- * Utilities
- */
-
-/* Small devices (tablets, 768px and up) */
-@media (min-width: 768px) {
-  .float-sm-left { float: left; margin-right: 10px; }
-  .float-sm-right { float: right; margin-left: 10px; }
-}
-
-/* Medium devices (desktops, 992px and up) */
-@media (min-width: 992px) {
-  .float-md-left { float: left; margin-right: 10px; }
-  .float-md-right { float: right; margin-left: 10px; }
-}
-
-/* Large devices (large desktops, 1200px and up) */
-@media (min-width: 1200px) {
-  .float-lg-left { float: left; margin-right: 10px; }
-  .float-lg-right { float: right; margin-left: 10px; }
-}
-
-
 /* Remove margin from top of first heading. */
 .headline { margin-top: 0; }
+
+
+
+/*
+ * Fixes for Bootstrap styles.
+ *
+ * The Bootstrap theme includes some "overrides" that don't necessarily work
+ * well with our theme.
+ */
+
+/* Restore paragraph margins. The Drupal Bootstrap theme removes bottom
+ * margin from the last paragraph. This causes all sorts of problems 
+ * because adjacent paragraphs are often divided by divs inserted by views,
+ * panels, fields, etc. Without the bottom margin, paragraphs run together.
+ * So we override the override to put the margin back. */
+p:last-child { margin-bottom: 10px; }
+
 
 
 /*
