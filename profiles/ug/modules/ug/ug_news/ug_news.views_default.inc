@@ -81,20 +81,15 @@ function ug_news_views_default_views() {
   $handler->display->display_options['sorts']['created']['table'] = 'node';
   $handler->display->display_options['sorts']['created']['field'] = 'created';
   $handler->display->display_options['sorts']['created']['order'] = 'DESC';
-  /* Contextual filter: Broken/missing handler */
-  $handler->display->display_options['arguments']['field_tags_tid']['id'] = 'field_tags_tid';
-  $handler->display->display_options['arguments']['field_tags_tid']['table'] = 'field_data_field_tags';
-  $handler->display->display_options['arguments']['field_tags_tid']['field'] = 'field_tags_tid';
-  $handler->display->display_options['arguments']['field_tags_tid']['default_argument_type'] = 'fixed';
-  $handler->display->display_options['arguments']['field_tags_tid']['summary']['number_of_records'] = '0';
-  $handler->display->display_options['arguments']['field_tags_tid']['summary']['format'] = 'default_summary';
-  $handler->display->display_options['arguments']['field_tags_tid']['summary_options']['items_per_page'] = '25';
-  $handler->display->display_options['arguments']['field_tags_tid']['specify_validation'] = TRUE;
-  $handler->display->display_options['arguments']['field_tags_tid']['validate']['type'] = 'taxonomy_term';
-  $handler->display->display_options['arguments']['field_tags_tid']['validate_options']['vocabularies'] = array(
-    'tags' => 'tags',
-  );
-  $handler->display->display_options['arguments']['field_tags_tid']['validate']['fail'] = 'ignore';
+  /* Contextual filter: Content: Tags (field_news_tags) */
+  $handler->display->display_options['arguments']['field_news_tags_tid']['id'] = 'field_news_tags_tid';
+  $handler->display->display_options['arguments']['field_news_tags_tid']['table'] = 'field_data_field_news_tags';
+  $handler->display->display_options['arguments']['field_news_tags_tid']['field'] = 'field_news_tags_tid';
+  $handler->display->display_options['arguments']['field_news_tags_tid']['default_argument_type'] = 'raw';
+  $handler->display->display_options['arguments']['field_news_tags_tid']['default_argument_options']['index'] = '0';
+  $handler->display->display_options['arguments']['field_news_tags_tid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_news_tags_tid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_news_tags_tid']['summary_options']['items_per_page'] = '25';
   /* Contextual filter: Content: Created year + month */
   $handler->display->display_options['arguments']['created_year_month']['id'] = 'created_year_month';
   $handler->display->display_options['arguments']['created_year_month']['table'] = 'node';

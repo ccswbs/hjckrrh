@@ -245,7 +245,10 @@ function ug_news_default_page_manager_pages() {
   $page->admin_title = 'News';
   $page->admin_description = '';
   $page->path = 'news/!tags/!date';
-  $page->access = array();
+  $page->access = array(
+    'type' => 'none',
+    'settings' => NULL,
+  );
   $page->menu = array();
   $page->arguments = array(
     'tags' => array(
