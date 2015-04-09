@@ -10,54 +10,8 @@
 function ug_news_field_default_field_instances() {
   $field_instances = array();
 
-  // Exported field_instance: 'node-news-body'
-  $field_instances['node-news-body'] = array(
-    'bundle' => 'news',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'hidden',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 1,
-      ),
-      'teaser' => array(
-        'label' => 'hidden',
-        'module' => 'text',
-        'settings' => array(
-          'trim_length' => 600,
-        ),
-        'type' => 'text_summary_or_trimmed',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'fences_wrapper' => 'no_wrapper',
-    'field_name' => 'body',
-    'label' => 'Body',
-    'required' => 0,
-    'settings' => array(
-      'display_summary' => 1,
-      'text_processing' => 1,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'rows' => 20,
-        'summary_rows' => 5,
-      ),
-      'type' => 'text_textarea_with_summary',
-      'weight' => 2,
-    ),
-  );
-
-  // Exported field_instance: 'node-news-field_attachment'
-  $field_instances['node-news-field_attachment'] = array(
+  // Exported field_instance: 'node-news-field_news_attachment'
+  $field_instances['node-news-field_news_attachment'] = array(
     'bundle' => 'news',
     'deleted' => 0,
     'description' => '',
@@ -77,7 +31,7 @@ function ug_news_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'field_attachment',
+    'field_name' => 'field_news_attachment',
     'label' => 'Attachment',
     'required' => 0,
     'settings' => array(
@@ -94,12 +48,54 @@ function ug_news_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'file_generic',
-      'weight' => 3,
+      'weight' => 4,
     ),
   );
 
-  // Exported field_instance: 'node-news-field_image'
-  $field_instances['node-news-field_image'] = array(
+  // Exported field_instance: 'node-news-field_news_body'
+  $field_instances['node-news-field_news_body'] = array(
+    'bundle' => 'news',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 1,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_news_body',
+    'label' => 'Body',
+    'required' => 0,
+    'settings' => array(
+      'display_summary' => 1,
+      'text_processing' => 1,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 20,
+        'summary_rows' => 5,
+      ),
+      'type' => 'text_textarea_with_summary',
+      'weight' => 2,
+    ),
+  );
+
+  // Exported field_instance: 'node-news-field_news_image'
+  $field_instances['node-news-field_news_image'] = array(
     'bundle' => 'news',
     'deleted' => 0,
     'description' => '',
@@ -122,7 +118,7 @@ function ug_news_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'field_image',
+    'field_name' => 'field_news_image',
     'label' => 'Image',
     'required' => 0,
     'settings' => array(
@@ -148,8 +144,8 @@ function ug_news_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-news-field_tags'
-  $field_instances['node-news-field_tags'] = array(
+  // Exported field_instance: 'node-news-field_news_tags'
+  $field_instances['node-news-field_news_tags'] = array(
     'bundle' => 'news',
     'default_value' => NULL,
     'deleted' => 0,
@@ -170,7 +166,7 @@ function ug_news_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'field_tags',
+    'field_name' => 'field_news_tags',
     'label' => 'Tags',
     'required' => 0,
     'settings' => array(
@@ -184,7 +180,7 @@ function ug_news_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'taxonomy_autocomplete',
-      'weight' => 4,
+      'weight' => 6,
     ),
   );
 

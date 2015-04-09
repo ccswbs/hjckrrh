@@ -37,7 +37,8 @@ function ug_news_views_default_views() {
     'title' => 'right',
     'created' => 'right',
     'field_image' => 'left',
-    'body' => 'right',
+    'field_news_body' => 'right',
+    'field_news_image' => 'left',
   );
   /* Field: Content: Title */
   $handler->display->display_options['fields']['title']['id'] = 'title';
@@ -54,33 +55,33 @@ function ug_news_views_default_views() {
   $handler->display->display_options['fields']['created']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['created']['date_format'] = 'medium';
   $handler->display->display_options['fields']['created']['second_date_format'] = 'long';
+  /* Field: Content: Body */
+  $handler->display->display_options['fields']['field_news_body']['id'] = 'field_news_body';
+  $handler->display->display_options['fields']['field_news_body']['table'] = 'field_data_field_news_body';
+  $handler->display->display_options['fields']['field_news_body']['field'] = 'field_news_body';
+  $handler->display->display_options['fields']['field_news_body']['label'] = '';
+  $handler->display->display_options['fields']['field_news_body']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_news_body']['type'] = 'text_summary_or_trimmed';
+  $handler->display->display_options['fields']['field_news_body']['settings'] = array(
+    'trim_length' => '600',
+  );
   /* Field: Content: Image */
-  $handler->display->display_options['fields']['field_image']['id'] = 'field_image';
-  $handler->display->display_options['fields']['field_image']['table'] = 'field_data_field_image';
-  $handler->display->display_options['fields']['field_image']['field'] = 'field_image';
-  $handler->display->display_options['fields']['field_image']['label'] = '';
-  $handler->display->display_options['fields']['field_image']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['field_image']['click_sort_column'] = 'fid';
-  $handler->display->display_options['fields']['field_image']['settings'] = array(
+  $handler->display->display_options['fields']['field_news_image']['id'] = 'field_news_image';
+  $handler->display->display_options['fields']['field_news_image']['table'] = 'field_data_field_news_image';
+  $handler->display->display_options['fields']['field_news_image']['field'] = 'field_news_image';
+  $handler->display->display_options['fields']['field_news_image']['label'] = '';
+  $handler->display->display_options['fields']['field_news_image']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_news_image']['click_sort_column'] = 'fid';
+  $handler->display->display_options['fields']['field_news_image']['settings'] = array(
     'image_style' => 'medium',
     'image_link' => '',
-  );
-  /* Field: Content: Body */
-  $handler->display->display_options['fields']['body']['id'] = 'body';
-  $handler->display->display_options['fields']['body']['table'] = 'field_data_body';
-  $handler->display->display_options['fields']['body']['field'] = 'body';
-  $handler->display->display_options['fields']['body']['label'] = '';
-  $handler->display->display_options['fields']['body']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['body']['type'] = 'text_summary_or_trimmed';
-  $handler->display->display_options['fields']['body']['settings'] = array(
-    'trim_length' => '600',
   );
   /* Sort criterion: Content: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
   $handler->display->display_options['sorts']['created']['field'] = 'created';
   $handler->display->display_options['sorts']['created']['order'] = 'DESC';
-  /* Contextual filter: Content: Tags (field_tags) */
+  /* Contextual filter: Broken/missing handler */
   $handler->display->display_options['arguments']['field_tags_tid']['id'] = 'field_tags_tid';
   $handler->display->display_options['arguments']['field_tags_tid']['table'] = 'field_data_field_tags';
   $handler->display->display_options['arguments']['field_tags_tid']['field'] = 'field_tags_tid';
