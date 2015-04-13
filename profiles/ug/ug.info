@@ -8,6 +8,7 @@ dependencies[] = features
 dependencies[] = jquery_update
 dependencies[] = toolbar
 dependencies[] = ug_date_format
+dependencies[] = ug_event
 dependencies[] = ug_front
 dependencies[] = ug_page
 dependencies[] = ug_theme_settings

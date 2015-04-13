@@ -1,7 +1,0 @@
-<?php
-/**
- * @file
- * Code for the UG Event views feature.
- */
-
-include_once 'ug_event_views.features.inc';

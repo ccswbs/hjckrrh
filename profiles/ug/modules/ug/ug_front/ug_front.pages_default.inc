@@ -97,7 +97,9 @@ function ug_front_default_page_manager_pages() {
       'override_title_heading' => 'h2',
     );
     $pane->cache = array();
-    $pane->style = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
     $pane->css = array();
     $pane->extras = array();
     $pane->position = 0;
@@ -106,16 +108,16 @@ function ug_front_default_page_manager_pages() {
     $display->content['new-1027894c-128f-4486-91a4-842f5ca7d3be'] = $pane;
     $display->panels['left'][0] = 'new-1027894c-128f-4486-91a4-842f5ca7d3be';
     $pane = new stdClass();
-    $pane->pid = 'new-f0112557-96cd-4dc5-9f33-fc9e400f6a03';
+    $pane->pid = 'new-5568fdab-d4d7-4e64-98b2-cf2ba466c7d6';
     $pane->panel = 'middle';
     $pane->type = 'views';
-    $pane->subtype = 'events';
+    $pane->subtype = 'e3';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
       'override_pager_settings' => 0,
       'use_pager' => 0,
-      'nodes_per_page' => '10',
+      'nodes_per_page' => '5',
       'pager_id' => '0',
       'offset' => '0',
       'more_link' => 0,
@@ -125,8 +127,8 @@ function ug_front_default_page_manager_pages() {
       'args' => '',
       'url' => '',
       'display' => 'default',
-      'override_title' => 0,
-      'override_title_text' => '',
+      'override_title' => 1,
+      'override_title_text' => 'Upcoming Events',
       'override_title_heading' => 'h2',
     );
     $pane->cache = array();
@@ -137,9 +139,9 @@ function ug_front_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $pane->uuid = 'f0112557-96cd-4dc5-9f33-fc9e400f6a03';
-    $display->content['new-f0112557-96cd-4dc5-9f33-fc9e400f6a03'] = $pane;
-    $display->panels['middle'][0] = 'new-f0112557-96cd-4dc5-9f33-fc9e400f6a03';
+    $pane->uuid = '5568fdab-d4d7-4e64-98b2-cf2ba466c7d6';
+    $display->content['new-5568fdab-d4d7-4e64-98b2-cf2ba466c7d6'] = $pane;
+    $display->panels['middle'][0] = 'new-5568fdab-d4d7-4e64-98b2-cf2ba466c7d6';
     $pane = new stdClass();
     $pane->pid = 'new-14548eac-b77f-4749-84cd-eac4e05d7602';
     $pane->panel = 'right';

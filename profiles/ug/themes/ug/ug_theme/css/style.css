@@ -112,3 +112,9 @@ body.toolbar-drawer {
 }
 
 
+/*
+ * Fields
+ */
+.field { margin-bottom: 10px; }
+.field:last-child { margin-bottom: 0; }
+
