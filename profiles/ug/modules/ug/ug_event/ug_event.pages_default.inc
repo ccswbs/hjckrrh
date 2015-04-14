@@ -13,11 +13,22 @@ function ug_event_default_page_manager_pages() {
   $page->api_version = 1;
   $page->name = 'events';
   $page->task = 'page';
-  $page->admin_title = 'Events';
+  $page->admin_title = 'Upcoming Events';
   $page->admin_description = '';
-  $page->path = 'events';
+  $page->path = 'events/upcoming';
   $page->access = array();
-  $page->menu = array();
+  $page->menu = array(
+    'type' => 'default tab',
+    'title' => 'Upcoming Events',
+    'name' => 'navigation',
+    'weight' => '-1',
+    'parent' => array(
+      'type' => 'normal',
+      'title' => 'Events Calendar',
+      'name' => 'navigation',
+      'weight' => '0',
+    ),
+  );
   $page->arguments = array();
   $page->conf = array(
     'admin_paths' => FALSE,
@@ -55,7 +66,7 @@ function ug_event_default_page_manager_pages() {
     ),
   );
   $display->cache = array();
-  $display->title = 'Upcoming Events';
+  $display->title = 'Events Calendar';
   $display->uuid = 'b3915726-f6fc-4665-96df-a222ba62410e';
   $display->content = array();
   $display->panels = array();
@@ -74,7 +85,7 @@ function ug_event_default_page_manager_pages() {
       'offset' => '0',
       'more_link' => 0,
       'feed_icons' => 0,
-      'panel_args' => 0,
+      'panel_args' => 1,
       'link_to_view' => 0,
       'args' => '',
       'url' => '',
