@@ -21,7 +21,7 @@ function ug_page_node_info() {
     'page' => array(
       'name' => t('Page'),
       'base' => 'node_content',
-      'description' => '',
+      'description' => t('Add basic pages to your site.'),
       'has_title' => '1',
       'title_label' => t('Title'),
       'help' => '',
