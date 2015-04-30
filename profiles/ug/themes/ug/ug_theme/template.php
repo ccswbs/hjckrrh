@@ -89,3 +89,11 @@ function ug_theme_preprocess_views_view_fields__p1(&$vars) {
   $vars['user_url']  = url('user/'.$vars['uid']);
 }
 
+
+function ug_theme_preprocess_views_view_fields__n1(&$vars) {
+  $vars['title']     = $vars['fields']['title']->content;
+  $vars['created']   = $vars['fields']['created']->content;
+  $vars['body']      = $vars['fields']['field_news_body']->content;
+  $vars['image']     = $vars['fields']['field_news_image']->content;
+}
+
