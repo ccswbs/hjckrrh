@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * ug_person.pages_default.inc
+ * ug_profile.pages_default.inc
  */
 
 /**
  * Implements hook_default_page_manager_pages().
  */
-function ug_person_default_page_manager_pages() {
+function ug_profile_default_page_manager_pages() {
   $page = new stdClass();
   $page->disabled = FALSE; /* Edit this to true to make a default page disabled initially */
   $page->api_version = 1;
@@ -15,10 +15,31 @@ function ug_person_default_page_manager_pages() {
   $page->task = 'page';
   $page->admin_title = 'People';
   $page->admin_description = '';
-  $page->path = 'people';
-  $page->access = array();
+  $page->path = 'people/!unit';
+  $page->access = array(
+    'type' => 'none',
+    'settings' => NULL,
+  );
   $page->menu = array();
-  $page->arguments = array();
+  $page->arguments = array(
+    'unit' => array(
+      'id' => 1,
+      'identifier' => 'Unit',
+      'name' => 'term',
+      'settings' => array(
+        'input_form' => 'tid',
+        'vids' => array(
+          3 => '3',
+          5 => 0,
+          2 => 0,
+          4 => 0,
+          1 => 0,
+        ),
+        'breadcrumb' => 0,
+        'transform' => 0,
+      ),
+    ),
+  );
   $page->conf = array(
     'admin_paths' => FALSE,
   );
@@ -26,7 +47,7 @@ function ug_person_default_page_manager_pages() {
   $handler = new stdClass();
   $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
   $handler->api_version = 1;
-  $handler->name = 'page_people__panel_context_f7517d83-4212-432d-a204-9cdd2d83171f';
+  $handler->name = 'page_people__panel_context_9a810f37-51b2-41b5-a037-fe5df6dcc666';
   $handler->task = 'page';
   $handler->subtask = 'people';
   $handler->handler = 'panel_context';
@@ -56,11 +77,11 @@ function ug_person_default_page_manager_pages() {
   );
   $display->cache = array();
   $display->title = 'Our People';
-  $display->uuid = 'e7d36af6-fb6f-420a-947c-b9bf3e20d23b';
+  $display->uuid = '8db0f571-e639-4b01-aa37-30739bdf06dc';
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-83252d1e-0fc5-45cc-9755-6444d677abfe';
+    $pane->pid = 'new-08bfe71d-5ab9-4091-ad20-3fd998f5f1a7';
     $pane->panel = 'left';
     $pane->type = 'views_panes';
     $pane->subtype = 'p1-panel_pane_1';
@@ -75,35 +96,11 @@ function ug_person_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $pane->uuid = '83252d1e-0fc5-45cc-9755-6444d677abfe';
-    $display->content['new-83252d1e-0fc5-45cc-9755-6444d677abfe'] = $pane;
-    $display->panels['left'][0] = 'new-83252d1e-0fc5-45cc-9755-6444d677abfe';
-    $pane = new stdClass();
-    $pane->pid = 'new-106e1d02-cf8d-4930-a4da-02c479bbeab7';
-    $pane->panel = 'top';
-    $pane->type = 'block';
-    $pane->subtype = 'views--exp-p1-panel_pane_1';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'inherit_path' => 0,
-      'override_title' => 0,
-      'override_title_text' => '',
-      'override_title_heading' => 'h2',
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 0;
-    $pane->locks = array();
-    $pane->uuid = '106e1d02-cf8d-4930-a4da-02c479bbeab7';
-    $display->content['new-106e1d02-cf8d-4930-a4da-02c479bbeab7'] = $pane;
-    $display->panels['top'][0] = 'new-106e1d02-cf8d-4930-a4da-02c479bbeab7';
+    $pane->uuid = '08bfe71d-5ab9-4091-ad20-3fd998f5f1a7';
+    $display->content['new-08bfe71d-5ab9-4091-ad20-3fd998f5f1a7'] = $pane;
+    $display->panels['left'][0] = 'new-08bfe71d-5ab9-4091-ad20-3fd998f5f1a7';
   $display->hide_title = PANELS_TITLE_FIXED;
-  $display->title_pane = 'new-83252d1e-0fc5-45cc-9755-6444d677abfe';
+  $display->title_pane = '0';
   $handler->conf['display'] = $display;
   $page->default_handlers[$handler->name] = $handler;
   $pages['people'] = $page;

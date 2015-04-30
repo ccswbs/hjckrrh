@@ -4,4 +4,4 @@
  * Code for the UG Personal profile feature.
  */
 
-include_once 'ug_person.features.inc';
+include_once 'ug_profile.features.inc';

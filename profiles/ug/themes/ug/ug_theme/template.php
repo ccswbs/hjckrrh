@@ -50,3 +50,42 @@ function ug_theme_field__field_image__news($variables) {
 }
 
 
+/**
+ * Allow each views template to specify its own preprocess function.
+ */
+function ug_theme_preprocess_views_view(&$vars) {
+  if (isset($vars['view']->name)) {
+    $function = 'ug_theme_preprocess_views_view__'.$vars['view']->name; 
+    if (function_exists($function)) {
+     $function($vars);
+    }
+  }
+} 
+
+
+/**
+ * Allow each views template to specify its own fields preprocess function.
+ */
+function ug_theme_preprocess_views_view_fields(&$vars) {
+  if (isset($vars['view']->name)) {
+    $function = 'ug_theme_preprocess_views_view_fields__'.$vars['view']->name; 
+    if (function_exists($function)) {
+     $function($vars);
+    }
+  }
+} 
+
+
+
+function ug_theme_preprocess_views_view_fields__p1(&$vars) {
+  $vars['image']     = $vars['fields']['field_profile_image']->content;
+  $vars['name']      = $vars['fields']['field_profile_name']->content;
+  $vars['lastname']  = $vars['fields']['field_profile_lastname']->content;
+  $vars['uid']       = $vars['fields']['uid']->content;
+  $vars['title']     = $vars['fields']['field_profile_title']->content;
+  $vars['unit']      = $vars['fields']['field_profile_unit']->content;
+  $vars['phone']     = $vars['fields']['field_profile_telephonenumber']->content;
+  $vars['email']     = $vars['fields']['field_profile_email']->content;
+  $vars['user_url']  = url('user/'.$vars['uid']);
+}
+
