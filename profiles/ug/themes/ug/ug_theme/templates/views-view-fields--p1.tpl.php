@@ -54,3 +54,5 @@
     <?php endif; ?>
   </div>
 </div> 
+<hr/>
+
