@@ -97,3 +97,31 @@ function ug_theme_preprocess_views_view_fields__n1(&$vars) {
   $vars['image']     = $vars['fields']['field_news_image']->content;
 }
 
+
+
+/**
+ * Preprocess function for person profile detail view.
+ */
+function ug_theme_preprocess_views_view_fields__p2(&$vars) {
+  $vars['firstname']    = $vars['fields']['field_profile_name']->content;
+  $vars['lastname']     = $vars['fields']['field_profile_lastname']->content;
+  $vars['fullname']     = $vars['firstname'] . ' ' . $vars['lastname'];
+  $vars['image']        = $vars['fields']['field_profile_image']->content;
+  $vars['title']        = $vars['fields']['field_profile_title']->content;
+  $vars['unit']         = $vars['fields']['field_profile_unit']->content;
+  $vars['subunit']      = $vars['fields']['field_profile_subunit']->content;
+  $vars['building']     = $vars['fields']['field_profile_building']->content;
+  $vars['email']        = $vars['fields']['field_profile_email']->content;
+  $vars['fax']          = $vars['fields']['field_profile_faxnumber']->content;
+  $vars['lab']          = $vars['fields']['field_profile_lab']->content;
+  $vars['phone']        = $vars['fields']['field_profile_telephonenumber']->content;
+  $vars['room']         = $vars['fields']['field_profile_room']->content;
+  $vars['website']      = $vars['fields']['field_profile_website']->content;
+  $vars['about']        = $vars['fields']['field_profile_about']->content;
+  $vars['education']    = $vars['fields']['field_profile_education']->content;
+  $vars['research']     = $vars['fields']['field_profile_research']->content;
+  $vars['publications'] = $vars['fields']['field_profile_publications']->content;
+  $vars['attachments']  = $vars['fields']['field_profile_attachments']->content;
+  drupal_set_title($vars['fullname']);
+}
+
