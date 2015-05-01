@@ -55,16 +55,40 @@ function ug_front_default_page_manager_pages() {
     'name' => 'front',
   );
   $display = new panels_display();
-  $display->layout = 'front';
+  $display->layout = 'bootstrap_threecol_stacked';
   $display->layout_settings = array();
   $display->panel_settings = array(
     'style_settings' => array(
       'default' => NULL,
       'top' => NULL,
-      'left' => NULL,
-      'middle' => NULL,
-      'right' => NULL,
+      'left' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '4',
+        'offset_type' => 'col-lg-offset',
+        'offset_size' => '0',
+      ),
+      'middle' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '4',
+        'offset_type' => 'col-lg-offset',
+        'offset_size' => '0',
+      ),
+      'right' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '4',
+        'offset_type' => 'col-lg-offset',
+        'offset_size' => '0',
+      ),
       'bottom' => NULL,
+    ),
+    'left' => array(
+      'style' => 'bootstrap_region',
+    ),
+    'middle' => array(
+      'style' => 'bootstrap_region',
+    ),
+    'right' => array(
+      'style' => 'bootstrap_region',
     ),
   );
   $display->cache = array();

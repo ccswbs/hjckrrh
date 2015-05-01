@@ -290,15 +290,31 @@ function ug_news_default_page_manager_pages() {
     ),
   );
   $display = new panels_display();
-  $display->layout = 'aside';
+  $display->layout = 'bootstrap_twocol_stacked';
   $display->layout_settings = array();
   $display->panel_settings = array(
     'style_settings' => array(
       'default' => NULL,
       'top' => NULL,
-      'left' => NULL,
-      'right' => NULL,
+      'left' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '8',
+        'offset_type' => 'col-lg-offset',
+        'offset_size' => '0',
+      ),
+      'right' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '4',
+        'offset_type' => 'col-lg-offset',
+        'offset_size' => '0',
+      ),
       'bottom' => NULL,
+    ),
+    'left' => array(
+      'style' => 'bootstrap_region',
+    ),
+    'right' => array(
+      'style' => 'bootstrap_region',
     ),
   );
   $display->cache = array();
@@ -331,7 +347,9 @@ function ug_news_default_page_manager_pages() {
       'override_title_heading' => 'h2',
     );
     $pane->cache = array();
-    $pane->style = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
     $pane->css = array();
     $pane->extras = array();
     $pane->position = 0;
@@ -364,7 +382,22 @@ function ug_news_default_page_manager_pages() {
       'override_title_heading' => 'h2',
     );
     $pane->cache = array();
-    $pane->style = array();
+    $pane->style = array(
+      'settings' => array(
+        'hide_classes' => array(
+          'hidden-xs' => 0,
+          'hidden-sm' => 0,
+          'hidden-md' => 0,
+          'hidden-lg' => 0,
+        ),
+        'additional_classes' => array(
+          'pull-left' => 0,
+          'pull-right' => 0,
+          'clearfix' => 0,
+        ),
+      ),
+      'style' => 'bootstrap_styles:well',
+    );
     $pane->css = array();
     $pane->extras = array();
     $pane->position = 0;
@@ -397,7 +430,9 @@ function ug_news_default_page_manager_pages() {
       'override_title_heading' => 'h2',
     );
     $pane->cache = array();
-    $pane->style = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
     $pane->css = array();
     $pane->extras = array();
     $pane->position = 1;
