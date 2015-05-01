@@ -15,7 +15,7 @@ function ug_profile_views_default_views() {
   $view->description = 'Provides a listing of all profiles.';
   $view->tag = 'default';
   $view->base_table = 'users';
-  $view->human_name = 'Listing page for multiple people profiles';
+  $view->human_name = 'P1 - Listing page for multiple people profiles';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */

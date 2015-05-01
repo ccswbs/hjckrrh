@@ -15,7 +15,7 @@ function ug_event_views_default_views() {
   $view->description = 'Provides a full listing of events, shown 10 at a time using pagination.';
   $view->tag = 'default';
   $view->base_table = 'node';
-  $view->human_name = 'Listing of events';
+  $view->human_name = 'E1 - Listing page for multiple events';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
@@ -183,7 +183,7 @@ function ug_event_views_default_views() {
   $view->description = 'Provides a teaser listing of 5 upcoming event itmes.';
   $view->tag = 'default';
   $view->base_table = 'node';
-  $view->human_name = 'Upcoming events teaser list';
+  $view->human_name = 'E3 - Upcoming events teaser list';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
@@ -252,10 +252,10 @@ function ug_event_views_default_views() {
 
   $view = new view();
   $view->name = 'e5';
-  $view->description = '';
+  $view->description = 'Allows users to find a list of events associated with a specific year and month.';
   $view->tag = 'default';
   $view->base_table = 'node';
-  $view->human_name = 'Browse events by date';
+  $view->human_name = 'E5 - Browse events by date';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
@@ -317,10 +317,10 @@ function ug_event_views_default_views() {
 
   $view = new view();
   $view->name = 'e9';
-  $view->description = '';
-  $view->tag = 'Events';
+  $view->description = 'Provides a monthly calendar view of events in grid format.';
+  $view->tag = 'default';
   $view->base_table = 'node';
-  $view->human_name = 'Calendar Grid';
+  $view->human_name = 'E8 - Monthly calendar';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */

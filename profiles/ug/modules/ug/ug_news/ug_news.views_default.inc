@@ -15,7 +15,7 @@ function ug_news_views_default_views() {
   $view->description = 'Provides a full listing of news articles. News items are paged and sorted from newest to oldest.';
   $view->tag = 'default';
   $view->base_table = 'node';
-  $view->human_name = 'List of news articles';
+  $view->human_name = 'N1 - Listing page for multiple news articles';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
@@ -108,6 +108,9 @@ function ug_news_views_default_views() {
   $handler->display->display_options['filters']['type']['value'] = array(
     'news' => 'news',
   );
+
+  /* Display: Content pane */
+  $handler = $view->new_display('panel_pane', 'Content pane', 'panel_pane_1');
   $export['n1'] = $view;
 
   $view = new view();
@@ -115,7 +118,7 @@ function ug_news_views_default_views() {
   $view->description = 'Provides a teaser listing of the most recent news items. News items are sorted from newest to oldest.';
   $view->tag = 'default';
   $view->base_table = 'node';
-  $view->human_name = 'Teaser list of recent news articles';
+  $view->human_name = 'N3 - Recent news teaser list';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
@@ -176,6 +179,9 @@ function ug_news_views_default_views() {
   $handler->display->display_options['filters']['type']['value'] = array(
     'news' => 'news',
   );
+
+  /* Display: Content pane */
+  $handler = $view->new_display('panel_pane', 'Content pane', 'panel_pane_1');
   $export['n3'] = $view;
 
   $view = new view();
@@ -183,7 +189,7 @@ function ug_news_views_default_views() {
   $view->description = 'Provides a list of all tags associated with news articles. Tags are organized by popularity.';
   $view->tag = 'default';
   $view->base_table = 'node';
-  $view->human_name = 'Filter by tags';
+  $view->human_name = 'N5 - Browse news by category';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
@@ -235,6 +241,9 @@ function ug_news_views_default_views() {
   $handler->display->display_options['filters']['type']['value'] = array(
     'news' => 'news',
   );
+
+  /* Display: Content pane */
+  $handler = $view->new_display('panel_pane', 'Content pane', 'panel_pane_1');
   $export['n5'] = $view;
 
   $view = new view();
@@ -242,7 +251,7 @@ function ug_news_views_default_views() {
   $view->description = 'Provides a list of dates (organized by year and month) associated with news articles.';
   $view->tag = 'default';
   $view->base_table = 'node';
-  $view->human_name = 'Filter by date';
+  $view->human_name = 'N6 - Browse news by date';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
@@ -290,6 +299,9 @@ function ug_news_views_default_views() {
   $handler->display->display_options['filters']['type']['value'] = array(
     'news' => 'news',
   );
+
+  /* Display: Content pane */
+  $handler = $view->new_display('panel_pane', 'Content pane', 'panel_pane_1');
   $export['n6'] = $view;
 
   return $export;

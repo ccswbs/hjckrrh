@@ -16,7 +16,10 @@ function ug_event_default_page_manager_pages() {
   $page->admin_title = 'Upcoming Events';
   $page->admin_description = '';
   $page->path = 'events/upcoming';
-  $page->access = array();
+  $page->access = array(
+    'type' => 'none',
+    'settings' => NULL,
+  );
   $page->menu = array(
     'type' => 'default tab',
     'title' => 'Upcoming Events',
@@ -119,7 +122,10 @@ function ug_event_default_page_manager_pages() {
   $page->admin_title = 'Events Archive';
   $page->admin_description = '';
   $page->path = 'events/archive/!date';
-  $page->access = array();
+  $page->access = array(
+    'type' => 'none',
+    'settings' => NULL,
+  );
   $page->menu = array(
     'type' => 'tab',
     'title' => 'Past Events',
@@ -250,7 +256,10 @@ function ug_event_default_page_manager_pages() {
   $page->admin_title = 'Events Month';
   $page->admin_description = '';
   $page->path = 'events/month';
-  $page->access = array();
+  $page->access = array(
+    'type' => 'none',
+    'settings' => NULL,
+  );
   $page->menu = array(
     'type' => 'tab',
     'title' => 'Monthly Calendar',
@@ -350,7 +359,10 @@ function ug_event_default_page_manager_pages() {
   $page->admin_title = 'Past events';
   $page->admin_description = '';
   $page->path = 'events/archive/!date';
-  $page->access = array();
+  $page->access = array(
+    'type' => 'none',
+    'settings' => NULL,
+  );
   $page->menu = array(
     'type' => 'tab',
     'title' => 'Past Events',
@@ -479,7 +491,10 @@ function ug_event_default_page_manager_pages() {
   $page->admin_title = 'Events Week';
   $page->admin_description = '';
   $page->path = 'events/week';
-  $page->access = array();
+  $page->access = array(
+    'type' => 'none',
+    'settings' => NULL,
+  );
   $page->menu = array(
     'type' => 'tab',
     'title' => 'This Week',
