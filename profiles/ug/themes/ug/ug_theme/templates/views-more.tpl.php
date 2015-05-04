@@ -12,8 +12,8 @@
  */
 ?>
 
-<p class="more-link">
+<div class="more-link">
   <a href="<?php print $more_url ?>" class="btn btn-default">
     <?php print $link_text; ?>
   </a>
-</p>
+</div>

@@ -14,27 +14,6 @@ div.row {
 }
 
 
-/* Remove margin from top of first heading. */
-.headline { margin-top: 0; }
-
-
-
-/*
- * Fixes for Bootstrap styles.
- *
- * The Bootstrap theme includes some "overrides" that don't necessarily work
- * well with our theme.
- */
-
-/* Restore paragraph margins. The Drupal Bootstrap theme removes bottom
- * margin from the last paragraph. This causes all sorts of problems 
- * because adjacent paragraphs are often divided by divs inserted by views,
- * panels, fields, etc. Without the bottom margin, paragraphs run together.
- * So we override the override to put the margin back. */
-p:last-child { margin-bottom: 10px; }
-
-
-
 /*
  * Toolbar
  */
@@ -78,43 +57,7 @@ body.toolbar-drawer {
 
 
 /*
- * Feature
+ * Links
  */
-
-.view-feature .thumbnail {
-  min-height: 250px;
-}
-
-
-/*
- * Events
- */
-
-.view-events .view-content {
-  display: table;
-}
-
-.view-events .views-row {
-  display: table-row;
-}
-
-.view-events .views-field {
-  display: table-cell;
-  padding-bottom: 10px;
-}
-
-.view-events .views-field-title {
-  padding-right: 10px;
-}
-
-.view-events .views-field-field-date {
-  min-width: 8ex;
-}
-
-
-/*
- * Fields
- */
-.field { margin-bottom: 10px; }
-.field:last-child { margin-bottom: 0; }
+p a[href] { text-decoration: underline; }
 
