@@ -58,6 +58,15 @@ function ug_theme_preprocess_views_view_fields__n1(&$vars) {
 
 
 /**
+ * N3 - Recent news teaser list.
+ */
+function ug_theme_preprocess_views_view_fields__n3(&$vars) {
+  $vars['title']     = $vars['fields']['title']->content;
+  $vars['created']   = $vars['fields']['created']->content;
+}
+
+
+/**
  * E1 - Listing page for multiple events.
  */
 function ug_theme_preprocess_views_view_fields__e1(&$vars) {

@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Template to display one row of the news listing.
+ * N1 - Listing page for multiple news articles.
  *
  * Available variables:
  * - $title: title of news article
