@@ -74,6 +74,7 @@ features[taxonomy][] = profile_role
 features[taxonomy][] = profile_subunit
 features[taxonomy][] = profile_unit
 features[views_view][] = p1
+features[views_view][] = p2
 features_exclude[dependencies][ctools] = ctools
 features_exclude[dependencies][file] = file
 features_exclude[dependencies][image] = image

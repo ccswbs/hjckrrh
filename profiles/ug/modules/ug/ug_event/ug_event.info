@@ -49,6 +49,7 @@ features[variable][] = field_bundle_settings_node__event
 features[views_view][] = e1
 features[views_view][] = e3
 features[views_view][] = e5
+features[views_view][] = e8
 features[views_view][] = e9
 features_exclude[dependencies][ctools] = ctools
 features_exclude[dependencies][views] = views
