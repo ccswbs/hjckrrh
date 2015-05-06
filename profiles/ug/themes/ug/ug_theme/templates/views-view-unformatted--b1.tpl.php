@@ -11,7 +11,7 @@
   <?php endforeach; ?>
   <div class="row slidesjs-navigation">
     <div class="col-xs-6 col-sm-8">
-      <p><a href="#" class="h4 slidesjs-slide-link slidesjs-slide-title"></a></p>
+      <a href="#" class="btn btn-link slidesjs-slide-link slidesjs-slide-title"></a>
     </div>
     <div class="col-xs-2 col-sm-1">
       <a href="#" class="btn btn-default btn-block slidesjs-previous" role="button">
