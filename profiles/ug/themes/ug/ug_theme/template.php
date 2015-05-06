@@ -23,9 +23,9 @@ function ug_theme_image($variables) {
 /**
  * Allow each views template to specify its own preprocess function.
  */
-function ug_theme_preprocess_views_view(&$vars) {
+function ug_theme_preprocess_views_view_unformatted(&$vars) {
   if (isset($vars['view']->name)) {
-    $function = 'ug_theme_preprocess_views_view__'.$vars['view']->name; 
+    $function = 'ug_theme_preprocess_views_view_unformatted__'.$vars['view']->name; 
     if (function_exists($function)) {
      $function($vars);
     }
@@ -126,5 +126,19 @@ function ug_theme_preprocess_views_view_fields__p2(&$vars) {
   $vars['publications'] = $vars['fields']['field_profile_publications']->content;
   $vars['attachments']  = $vars['fields']['field_profile_attachments']->content;
   drupal_set_title($vars['fullname']);
+}
+
+
+/**
+ * B1 - Image slider
+ */
+function ug_theme_preprocess_views_view_unformatted__b1(&$vars) {
+  $vars['slide_number'] = "1";
+  $vars['slide_count'] = count($vars['view']->result);
+} 
+function ug_theme_preprocess_views_view_fields__b1(&$vars) {
+  $vars['title'] = $vars['fields']['title']->content;
+  $vars['image'] = $vars['fields']['field_banner_image']->content;
+  $vars['link']  = $vars['fields']['field_banner_link']->content;
 }
 

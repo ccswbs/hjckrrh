@@ -41,8 +41,8 @@ function ug_banner_image_default_styles() {
         'module' => 'image',
         'name' => 'image_resize',
         'data' => array(
-          'width' => 1138,
-          'height' => 303,
+          'width' => 860,
+          'height' => 220,
         ),
         'weight' => 1,
       ),

@@ -1,7 +1,12 @@
 <?php
 /**
  * @file
- * Template to display one banner image.
+ * B1 - Image slider (banner)
+ *
+ * Available variables:
+ * - $title: Banner title.
+ * - $image: Absolute URL of banner image.
+ * - $link: URL for title link.
  *
  * Other variables:
  * - $view: The view in use.
@@ -23,28 +28,8 @@
  *
  */
 ?>
-<div class="panel-body">
-  <img class="img-responsive"
-    src="<?php print $fields['field_banner_image']->content; ?>"/>
-</div>
-<div class="panel-footer">
-  <div class="row">
-    <div class="col-md-10">
-      <a class="h3" href="<?php print $fields['field_banner_link']->content; ?>"
-        ><?php print $fields['title']->content; ?></a>
-    </div>
-    <div class="col-md-2 text-right">
-      <a href="#carousel" class="btn btn-default btn-sm" role="button" data-slide="prev">
-        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-      </a>
-      <?php print t('Item @num of @total', array('@num' => $view->row_index+1,
-        '@total' => count($view->result))); ?>
-      <a href="#carousel" class="btn btn-default btn-sm" role="button" data-slide="next">
-        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-      </a>
-    </div>
-  </div>
-</div>
-
+<img class="img-responsive"
+     alt="<?php print $title; ?>"
+     data-link="<?php print $link; ?>"
+     src="<?php print $image; ?>"
+>

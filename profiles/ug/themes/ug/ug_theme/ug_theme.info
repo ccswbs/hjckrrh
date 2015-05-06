@@ -27,12 +27,6 @@ regions[page_bottom]    = 'Page bottom'
 stylesheets[all][] = css/style.css
 
 
-;;;;;;;;;;;;;;;;;;;;;
-;; Panels layouts
-;;;;;;;;;;;;;;;;;;;;;
-
-plugins[panels][layouts] = layouts
-
 ; For information on choosing the desired method, please read the Drupal
 ; Bootstrap sub-theme "how-to" documentation:
 ; https://drupal.org/node/1978010
