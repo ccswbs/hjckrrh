@@ -1,0 +1,11 @@
+name = UG Developer
+description = Useful tools for site developers.
+core = 7.x
+package = UG
+version = 7.x-1.0
+project = ug_devel
+dependencies[] = devel
+dependencies[] = devel_generate
+dependencies[] = field_ui
+dependencies[] = views_ui
+features[features_api][] = api:2
