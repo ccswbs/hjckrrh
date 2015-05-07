@@ -6,5 +6,7 @@ version = 7.x-1.2
 project = ug_wysiwyg
 dependencies[] = ckeditor
 dependencies[] = features
+features[ckeditor_profile][] = Basic
 features[ckeditor_profile][] = CKEditor Global Profile
 features[features_api][] = api:2
+features[filter][] = basic_html
