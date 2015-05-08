@@ -15,6 +15,5 @@ dependencies[] = ug_event
 dependencies[] = ug_front
 dependencies[] = ug_page
 dependencies[] = ug_theme_settings
-dependencies[] = ug_user
 dependencies[] = ug_wysiwyg
 
