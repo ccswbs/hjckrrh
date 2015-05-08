@@ -58,7 +58,7 @@ function ug_news_views_default_views() {
   $handler->display->display_options['fields']['field_news_body']['settings'] = array(
     'trim_length' => '600',
   );
-  /* Field: Content: Image */
+  /* Field: Content: Feature image */
   $handler->display->display_options['fields']['field_news_image']['id'] = 'field_news_image';
   $handler->display->display_options['fields']['field_news_image']['table'] = 'field_data_field_news_image';
   $handler->display->display_options['fields']['field_news_image']['field'] = 'field_news_image';
