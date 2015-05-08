@@ -10,6 +10,7 @@ dependencies[] = strongarm
 dependencies[] = ug_banner
 dependencies[] = ug_event
 dependencies[] = ug_news
+dependencies[] = ug_podcast
 features[ctools][] = page_manager:pages_default:1
 features[ctools][] = strongarm:strongarm:1
 features[features_api][] = api:2
