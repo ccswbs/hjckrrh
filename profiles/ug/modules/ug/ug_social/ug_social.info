@@ -1,0 +1,12 @@
+name = UG Social Media
+description = The Social Media feature allows Anonymous Users to share pages on their favourite networks and visit a variety of (external) soc
+core = 7.x
+package = UG
+version = 7.x-1.0
+project = ug_social
+dependencies[] = views
+dependencies[] = views_content
+features[ctools][] = views:views_default:3.0
+features[features_api][] = api:2
+features[views_view][] = s1
+features_exclude[dependencies][ctools] = ctools
