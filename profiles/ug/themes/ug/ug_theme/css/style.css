@@ -64,10 +64,11 @@ p a[href] { text-decoration: underline; }
 
 
 /*
- * Flickr square. For some reason Font Awesome has "square" versions of 
- * all the social media icons, except flickr.
+ * Icons. The social media feature expects an icon class of the
+ * form fa-{network}-square for the icon. All but flickr and 
+ * myspace have an icon of this form, so we fill in the 2 missing
+ * icon classes here.
  */
-.fa.fa-flickr-square::before {
-  content: "\f16e";
-}
+.fa.fa-flickr-square::before { content: "\f16e"; }
+.fa.fa-myspace-square::before { content: "\f007"; }
 
