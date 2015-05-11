@@ -142,3 +142,14 @@ function ug_theme_preprocess_views_view_fields__b1(&$vars) {
   $vars['link']  = $vars['fields']['field_banner_link']->content;
 }
 
+
+/**
+ * S1 - Share this page
+ */
+function ug_theme_preprocess_views_view_fields__s1(&$vars) {
+  global $base_url;
+  $vars['title']  = $vars['fields']['title']->content;
+  $vars['path']   = $vars['fields']['path']->content;
+  $vars['link']   = $base_url . $vars['path'];
+}
+
