@@ -62,3 +62,12 @@ body.toolbar-drawer {
 p a[href] { text-decoration: underline; }
 
 
+
+/*
+ * Flickr square. For some reason Font Awesome has "square" versions of 
+ * all the social media icons, except flickr.
+ */
+.fa.fa-flickr-square::before {
+  content: "\f16e";
+}
+
