@@ -153,3 +153,14 @@ function ug_theme_preprocess_views_view_fields__s1(&$vars) {
   $vars['link']   = $base_url . $vars['path'];
 }
 
+
+/**
+ * S4 - Find us on Social Media (icons and names)
+ */
+function ug_theme_preprocess_views_view_fields__s4(&$vars) {
+  $vars['title']    = $vars['fields']['title']->content;
+  $vars['network']  = $vars['fields']['field_social_network']->content;
+  $vars['link']     = $vars['fields']['field_social_link']->content;
+  $vars['category'] = $vars['fields']['field_social_category']->content;
+}
+
