@@ -1,13 +1,12 @@
 <?php
 /**
  * @file
- * S4 - Find us on Social Media (icons and text)
+ * S3 - Find us on Social Media (icons only)
  *
  * Available variables:
  * - $title: title of news article
  * - $network: social network this account belongs to
  * - $link: link to social media page
- * - $category: social media account catagory (for grouping)
  *
  * Other variables:
  * - $view: The view in use.
@@ -29,10 +28,8 @@
  *
  */
 ?>
-<li class="h3">
-  <a href="<?php print $link; ?>">
-    <span class="social-icon fa fa-<?php print $network; ?>-square"></span>
-    <?php print $title; ?>
-  </a>
-</li>
+<a class="h1" data-toggle="tooltip" data-placement="bottom"
+  href="<?php print $link; ?>"
+  title="<?php print $title; ?>"
+  ><span class="fa fa-<?php print $network; ?>-square"></span></a>
 
