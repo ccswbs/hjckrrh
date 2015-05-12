@@ -31,7 +31,7 @@
 ?>
 <li>
   <a class="h3" href="<?php print $link; ?>">
-    <span class="social-icon fa fa-<?php print $network; ?>-square"></span>
+    <?php print $icon; ?>
     <?php print $title; ?>
   </a>
 </li>

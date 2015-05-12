@@ -31,5 +31,5 @@
 <a class="h1" data-toggle="tooltip" data-placement="bottom"
   href="<?php print $link; ?>"
   title="<?php print $title; ?>"
-  ><span class="fa fa-<?php print $network; ?>-square"></span></a>
+  ><?php print $icon; ?></span></a>
 

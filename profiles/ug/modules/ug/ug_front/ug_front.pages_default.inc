@@ -206,6 +206,25 @@ function ug_front_default_page_manager_pages() {
     $display->content['new-14548eac-b77f-4749-84cd-eac4e05d7602'] = $pane;
     $display->panels['right'][0] = 'new-14548eac-b77f-4749-84cd-eac4e05d7602';
     $pane = new stdClass();
+    $pane->pid = 'new-667f1640-6444-489e-ba34-612af61281f2';
+    $pane->panel = 'right';
+    $pane->type = 'views_panes';
+    $pane->subtype = 's4-panel_pane_1';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array();
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 1;
+    $pane->locks = array();
+    $pane->uuid = '667f1640-6444-489e-ba34-612af61281f2';
+    $display->content['new-667f1640-6444-489e-ba34-612af61281f2'] = $pane;
+    $display->panels['right'][1] = 'new-667f1640-6444-489e-ba34-612af61281f2';
+    $pane = new stdClass();
     $pane->pid = 'new-3fea91fc-40a5-4a2d-b13b-661ea4c43b2b';
     $pane->panel = 'top';
     $pane->type = 'views_panes';

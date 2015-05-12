@@ -5,6 +5,22 @@
  * template.php
  */
 
+
+/**
+ * Implements hook_theme().
+ */
+function ug_theme_theme() {
+  return array(
+    'icon' => array(
+      'variables' => array('icon' => NULL, 'bundle' => NULL),
+    ),
+  );
+}
+
+
+/**
+ * Outputs a responsive image.
+ */
 function ug_theme_image($variables) {
   $attributes = $variables['attributes'];
   $attributes['src'] = file_create_url($variables['path']);
@@ -16,7 +32,16 @@ function ug_theme_image($variables) {
     }
   }
 
-  return '<img' . drupal_attributes($attributes) . ' />';
+  return '<img' . drupal_attributes($attributes) . '/>';
+}
+
+
+/**
+ * Outputs an icon.
+ */
+function ug_theme_icon($variables) {
+  $attributes = array('class' => array('fa', 'fa-' . $variables['icon']));
+  return '<span' . drupal_attributes($attributes) . '></span>';
 }
 
 
@@ -161,6 +186,7 @@ function ug_theme_preprocess_views_view_fields__s3(&$vars) {
   $vars['title']    = $vars['fields']['title']->content;
   $vars['network']  = $vars['fields']['field_social_network']->content;
   $vars['link']     = $vars['fields']['field_social_link']->content;
+  $vars['icon']     = theme('icon', array('bundle' => 'icomoon', 'icon' => $vars['network']));
 }
 
 
@@ -171,6 +197,7 @@ function ug_theme_preprocess_views_view_fields__s4(&$vars) {
   $vars['title']    = $vars['fields']['title']->content;
   $vars['network']  = $vars['fields']['field_social_network']->content;
   $vars['link']     = $vars['fields']['field_social_link']->content;
+  $vars['icon']     = theme('icon', array('bundle' => 'icomoon', 'icon' => $vars['network']));
 }
 
 
@@ -181,4 +208,7 @@ function ug_theme_preprocess_views_view_fields__s6(&$vars) {
   $vars['title']    = $vars['fields']['title']->content;
   $vars['network']  = $vars['fields']['field_social_network']->content;
   $vars['link']     = $vars['fields']['field_social_link']->content;
+  $vars['icon']     = theme('icon', array('bundle' => 'icomoon', 'icon' => $vars['network']));
 }
+
+

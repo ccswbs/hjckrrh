@@ -13,4 +13,3 @@ features[ctools][] = strongarm:strongarm:1
 features[features_api][] = api:2
 features[ldap_servers][] = ug
 features[variable][] = ldap_authentication_conf
-features[variable][] = user_register

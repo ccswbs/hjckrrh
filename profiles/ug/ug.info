@@ -6,6 +6,7 @@ dependencies[] = ckeditor
 dependencies[] = block
 dependencies[] = dblog
 dependencies[] = features
+dependencies[] = fontawesome
 dependencies[] = jquery_update
 dependencies[] = list
 dependencies[] = options
@@ -16,6 +17,8 @@ dependencies[] = ug_date_format
 dependencies[] = ug_event
 dependencies[] = ug_front
 dependencies[] = ug_page
+dependencies[] = ug_social
 dependencies[] = ug_theme_settings
+dependencies[] = ug_user
 dependencies[] = ug_wysiwyg
 
