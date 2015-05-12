@@ -139,6 +139,18 @@ function ug_theme_preprocess_views_view_fields__p1(&$vars) {
 
 
 /**
+ * PG1 - Listing page for one page.
+ */
+function ug_theme_preprocess_views_view_fields__pg1(&$vars) {
+  $vars['title']        = $vars['fields']['title']->content;
+  $vars['image']        = $vars['fields']['field_page_image']->content;
+  $vars['caption']      = $vars['fields']['field_page_caption']->content;
+  $vars['body']         = $vars['fields']['field_page_body']->content;
+  $vars['attachments']  = $vars['fields']['field_page_attachments']->content;
+}
+
+
+/**
  * P2 - Detail page for single person profile
  */
 function ug_theme_preprocess_views_view_fields__p2(&$vars) {
