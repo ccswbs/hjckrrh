@@ -13,7 +13,4 @@ features[ctools][] = strongarm:strongarm:1
 features[features_api][] = api:2
 features[ldap_servers][] = ug
 features[variable][] = ldap_authentication_conf
-features[variable][] = ldap_servers_encrypt_key
-features[variable][] = ldap_servers_encryption
-features[variable][] = ldap_servers_require_ssl_for_credentails
 features[variable][] = user_register
