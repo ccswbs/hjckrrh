@@ -71,4 +71,5 @@ p a[href] { text-decoration: underline; }
  */
 .fa.fa-flickr-square::before { content: "\f16e"; }
 .fa.fa-myspace-square::before { content: "\f007"; }
+.fa.fa-instagram-square::before { content: "\f16d"; }
 

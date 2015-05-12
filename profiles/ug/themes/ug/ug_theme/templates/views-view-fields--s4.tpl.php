@@ -29,8 +29,8 @@
  *
  */
 ?>
-<li class="h3">
-  <a href="<?php print $link; ?>">
+<li>
+  <a class="h3" href="<?php print $link; ?>">
     <span class="social-icon fa fa-<?php print $network; ?>-square"></span>
     <?php print $title; ?>
   </a>
