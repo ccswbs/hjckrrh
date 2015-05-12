@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the UG Feature feature.
+ */
+
+include_once 'ug_feature.features.inc';
