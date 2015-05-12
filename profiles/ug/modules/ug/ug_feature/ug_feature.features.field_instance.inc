@@ -99,6 +99,11 @@ function ug_feature_field_default_field_instances() {
         'url_cutoff' => 80,
       ),
       'enable_tokens' => 1,
+      'linkit' => array(
+        'button_text' => 'Search',
+        'enable' => 1,
+        'profile' => 'basic',
+      ),
       'rel_remove' => 'default',
       'title' => 'none',
       'title_label_use_field_label' => 0,
