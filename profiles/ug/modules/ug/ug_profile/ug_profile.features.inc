@@ -45,7 +45,7 @@ function ug_profile_default_profile2_type() {
     "type" : "main",
     "label" : "Main profile",
     "weight" : "0",
-    "data" : { "registration" : 0 }
+    "data" : { "registration" : true, "use_page" : true }
   }');
   return $items;
 }
