@@ -14,7 +14,7 @@ function ug_event_user_default_permissions() {
   $permissions['create event content'] = array(
     'name' => 'create event content',
     'roles' => array(
-      'events editor' => 'events editor',
+      'author' => 'author',
     ),
     'module' => 'node',
   );
@@ -22,18 +22,14 @@ function ug_event_user_default_permissions() {
   // Exported permission: 'delete any event content'.
   $permissions['delete any event content'] = array(
     'name' => 'delete any event content',
-    'roles' => array(
-      'events editor' => 'events editor',
-    ),
+    'roles' => array(),
     'module' => 'node',
   );
 
   // Exported permission: 'delete own event content'.
   $permissions['delete own event content'] = array(
     'name' => 'delete own event content',
-    'roles' => array(
-      'events editor' => 'events editor',
-    ),
+    'roles' => array(),
     'module' => 'node',
   );
 
@@ -41,7 +37,9 @@ function ug_event_user_default_permissions() {
   $permissions['edit any event content'] = array(
     'name' => 'edit any event content',
     'roles' => array(
-      'events editor' => 'events editor',
+      'editor' => 'editor',
+      'moderator' => 'moderator',
+      'publisher' => 'publisher',
     ),
     'module' => 'node',
   );
@@ -50,7 +48,7 @@ function ug_event_user_default_permissions() {
   $permissions['edit own event content'] = array(
     'name' => 'edit own event content',
     'roles' => array(
-      'events editor' => 'events editor',
+      'author' => 'author',
     ),
     'module' => 'node',
   );

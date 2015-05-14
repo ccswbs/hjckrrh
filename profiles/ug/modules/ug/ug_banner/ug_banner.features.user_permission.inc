@@ -14,7 +14,7 @@ function ug_banner_user_default_permissions() {
   $permissions['create banner content'] = array(
     'name' => 'create banner content',
     'roles' => array(
-      'banner editor' => 'banner editor',
+      'author' => 'author',
     ),
     'module' => 'node',
   );
@@ -22,18 +22,14 @@ function ug_banner_user_default_permissions() {
   // Exported permission: 'delete any banner content'.
   $permissions['delete any banner content'] = array(
     'name' => 'delete any banner content',
-    'roles' => array(
-      'banner editor' => 'banner editor',
-    ),
+    'roles' => array(),
     'module' => 'node',
   );
 
   // Exported permission: 'delete own banner content'.
   $permissions['delete own banner content'] = array(
     'name' => 'delete own banner content',
-    'roles' => array(
-      'banner editor' => 'banner editor',
-    ),
+    'roles' => array(),
     'module' => 'node',
   );
 
@@ -41,7 +37,9 @@ function ug_banner_user_default_permissions() {
   $permissions['edit any banner content'] = array(
     'name' => 'edit any banner content',
     'roles' => array(
-      'banner editor' => 'banner editor',
+      'editor' => 'editor',
+      'moderator' => 'moderator',
+      'publisher' => 'publisher',
     ),
     'module' => 'node',
   );
@@ -50,7 +48,7 @@ function ug_banner_user_default_permissions() {
   $permissions['edit own banner content'] = array(
     'name' => 'edit own banner content',
     'roles' => array(
-      'banner editor' => 'banner editor',
+      'author' => 'author',
     ),
     'module' => 'node',
   );

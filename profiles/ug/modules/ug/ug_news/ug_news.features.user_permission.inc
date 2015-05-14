@@ -14,7 +14,7 @@ function ug_news_user_default_permissions() {
   $permissions['create news content'] = array(
     'name' => 'create news content',
     'roles' => array(
-      'news editor' => 'news editor',
+      'author' => 'author',
     ),
     'module' => 'node',
   );
@@ -22,18 +22,14 @@ function ug_news_user_default_permissions() {
   // Exported permission: 'delete any news content'.
   $permissions['delete any news content'] = array(
     'name' => 'delete any news content',
-    'roles' => array(
-      'news editor' => 'news editor',
-    ),
+    'roles' => array(),
     'module' => 'node',
   );
 
   // Exported permission: 'delete own news content'.
   $permissions['delete own news content'] = array(
     'name' => 'delete own news content',
-    'roles' => array(
-      'news editor' => 'news editor',
-    ),
+    'roles' => array(),
     'module' => 'node',
   );
 
@@ -41,7 +37,9 @@ function ug_news_user_default_permissions() {
   $permissions['edit any news content'] = array(
     'name' => 'edit any news content',
     'roles' => array(
-      'news editor' => 'news editor',
+      'editor' => 'editor',
+      'moderator' => 'moderator',
+      'publisher' => 'publisher',
     ),
     'module' => 'node',
   );
@@ -50,7 +48,7 @@ function ug_news_user_default_permissions() {
   $permissions['edit own news content'] = array(
     'name' => 'edit own news content',
     'roles' => array(
-      'news editor' => 'news editor',
+      'author' => 'author',
     ),
     'module' => 'node',
   );

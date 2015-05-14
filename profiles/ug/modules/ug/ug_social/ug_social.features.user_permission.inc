@@ -14,7 +14,7 @@ function ug_social_user_default_permissions() {
   $permissions['create social content'] = array(
     'name' => 'create social content',
     'roles' => array(
-      'social media editor' => 'social media editor',
+      'author' => 'author',
     ),
     'module' => 'node',
   );
@@ -22,18 +22,14 @@ function ug_social_user_default_permissions() {
   // Exported permission: 'delete any social content'.
   $permissions['delete any social content'] = array(
     'name' => 'delete any social content',
-    'roles' => array(
-      'social media editor' => 'social media editor',
-    ),
+    'roles' => array(),
     'module' => 'node',
   );
 
   // Exported permission: 'delete own social content'.
   $permissions['delete own social content'] = array(
     'name' => 'delete own social content',
-    'roles' => array(
-      'social media editor' => 'social media editor',
-    ),
+    'roles' => array(),
     'module' => 'node',
   );
 
@@ -41,7 +37,9 @@ function ug_social_user_default_permissions() {
   $permissions['edit any social content'] = array(
     'name' => 'edit any social content',
     'roles' => array(
-      'social media editor' => 'social media editor',
+      'editor' => 'editor',
+      'moderator' => 'moderator',
+      'publisher' => 'publisher',
     ),
     'module' => 'node',
   );
@@ -50,7 +48,7 @@ function ug_social_user_default_permissions() {
   $permissions['edit own social content'] = array(
     'name' => 'edit own social content',
     'roles' => array(
-      'social media editor' => 'social media editor',
+      'author' => 'author',
     ),
     'module' => 'node',
   );

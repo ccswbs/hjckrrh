@@ -14,7 +14,7 @@ function ug_feature_user_default_permissions() {
   $permissions['create feature content'] = array(
     'name' => 'create feature content',
     'roles' => array(
-      'feature editor' => 'feature editor',
+      'author' => 'author',
     ),
     'module' => 'node',
   );
@@ -22,18 +22,14 @@ function ug_feature_user_default_permissions() {
   // Exported permission: 'delete any feature content'.
   $permissions['delete any feature content'] = array(
     'name' => 'delete any feature content',
-    'roles' => array(
-      'feature editor' => 'feature editor',
-    ),
+    'roles' => array(),
     'module' => 'node',
   );
 
   // Exported permission: 'delete own feature content'.
   $permissions['delete own feature content'] = array(
     'name' => 'delete own feature content',
-    'roles' => array(
-      'feature editor' => 'feature editor',
-    ),
+    'roles' => array(),
     'module' => 'node',
   );
 
@@ -41,7 +37,9 @@ function ug_feature_user_default_permissions() {
   $permissions['edit any feature content'] = array(
     'name' => 'edit any feature content',
     'roles' => array(
-      'feature editor' => 'feature editor',
+      'editor' => 'editor',
+      'moderator' => 'moderator',
+      'publisher' => 'publisher',
     ),
     'module' => 'node',
   );
@@ -50,7 +48,7 @@ function ug_feature_user_default_permissions() {
   $permissions['edit own feature content'] = array(
     'name' => 'edit own feature content',
     'roles' => array(
-      'feature editor' => 'feature editor',
+      'author' => 'author',
     ),
     'module' => 'node',
   );

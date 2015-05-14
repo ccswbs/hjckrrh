@@ -10,10 +10,16 @@
 function ug_page_user_default_roles() {
   $roles = array();
 
+  // Exported role: page author.
+  $roles['page author'] = array(
+    'name' => 'page author',
+    'weight' => 7,
+  );
+
   // Exported role: page editor.
   $roles['page editor'] = array(
     'name' => 'page editor',
-    'weight' => 7,
+    'weight' => 6,
   );
 
   return $roles;
