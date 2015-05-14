@@ -24,6 +24,18 @@ function ug_role_user_default_permissions() {
     'module' => 'node',
   );
 
+  // Exported permission: 'access content overview'.
+  $permissions['access content overview'] = array(
+    'name' => 'access content overview',
+    'roles' => array(
+      'author' => 'author',
+      'editor' => 'editor',
+      'moderator' => 'moderator',
+      'publisher' => 'publisher',
+    ),
+    'module' => 'node',
+  );
+
   // Exported permission: 'access toolbar'.
   $permissions['access toolbar'] = array(
     'name' => 'access toolbar',
@@ -43,6 +55,17 @@ function ug_role_user_default_permissions() {
       'editor' => 'editor',
     ),
     'module' => 'menu',
+  );
+
+  // Exported permission: 'administer nodes'.
+  $permissions['administer nodes'] = array(
+    'name' => 'administer nodes',
+    'roles' => array(
+      'editor' => 'editor',
+      'moderator' => 'moderator',
+      'publisher' => 'publisher',
+    ),
+    'module' => 'node',
   );
 
   // Exported permission: 'revert revisions'.
