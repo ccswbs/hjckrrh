@@ -13,7 +13,7 @@ function ug_page_field_default_field_bases() {
   // Exported field_base: 'field_page_attachments'
   $field_bases['field_page_attachments'] = array(
     'active' => 1,
-    'cardinality' => 1,
+    'cardinality' => -1,
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_page_attachments',
@@ -27,6 +27,7 @@ function ug_page_field_default_field_bases() {
     'settings' => array(
       'display_default' => 0,
       'display_field' => 0,
+      'profile2_private' => FALSE,
       'uri_scheme' => 'public',
     ),
     'translatable' => 0,
