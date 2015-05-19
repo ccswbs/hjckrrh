@@ -64,12 +64,12 @@ function ug_wysiwyg_strongarm() {
       ),
     ),
     2 => array(
-      'name' => 'Basic',
+      'name' => 'Role-2',
       'usertab' => 0,
       'filesize' => '20',
       'quota' => '0',
       'tuquota' => '0',
-      'extensions' => '*',
+      'extensions' => 'gif png jpg jpeg pdf',
       'dimensions' => '800x600',
       'filenum' => '1',
       'directories' => array(
@@ -102,27 +102,33 @@ function ug_wysiwyg_strongarm() {
   $strongarm->value = array(
     3 => array(
       'weight' => '0',
-      'public_pid' => 2,
+      'public_pid' => 0,
+      'private_pid' => 0,
     ),
     5 => array(
       'weight' => '0',
       'public_pid' => 0,
+      'private_pid' => 0,
     ),
     4 => array(
       'weight' => '0',
       'public_pid' => 0,
+      'private_pid' => 0,
     ),
     6 => array(
       'weight' => '0',
       'public_pid' => 0,
+      'private_pid' => 0,
     ),
     2 => array(
       'weight' => 11,
-      'public_pid' => 0,
+      'public_pid' => '2',
+      'private_pid' => 0,
     ),
     1 => array(
       'weight' => 12,
       'public_pid' => 0,
+      'private_pid' => 0,
     ),
   );
   $export['imce_roles_profiles'] = $strongarm;
