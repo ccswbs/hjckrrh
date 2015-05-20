@@ -102,7 +102,7 @@ function ug_feature_field_default_field_instances() {
       'linkit' => array(
         'button_text' => 'Search',
         'enable' => 1,
-        'profile' => 'basic',
+        'profile' => 'feature',
       ),
       'rel_remove' => 'default',
       'title' => 'none',
