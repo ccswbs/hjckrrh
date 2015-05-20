@@ -9,6 +9,14 @@
  */
 function ug_news_taxonomy_default_vocabularies() {
   return array(
+    'news_category' => array(
+      'name' => 'News category',
+      'machine_name' => 'news_category',
+      'description' => '',
+      'hierarchy' => 0,
+      'module' => 'taxonomy',
+      'weight' => 0,
+    ),
     'tags' => array(
       'name' => 'Tags',
       'machine_name' => 'tags',

@@ -38,6 +38,7 @@ features[field_instance][] = node-news-field_news_tags
 features[field_instance][] = node-news-field_news_writer
 features[node][] = news
 features[page_manager_pages][] = news
+features[taxonomy][] = news_category
 features[taxonomy][] = tags
 features[user_permission][] = create news content
 features[user_permission][] = delete any news content

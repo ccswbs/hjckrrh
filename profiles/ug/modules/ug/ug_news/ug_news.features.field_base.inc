@@ -141,7 +141,7 @@ function ug_news_field_default_field_bases() {
     'settings' => array(
       'allowed_values' => array(
         0 => array(
-          'vocabulary' => 'tags',
+          'vocabulary' => 'news_category',
           'parent' => 0,
         ),
       ),
