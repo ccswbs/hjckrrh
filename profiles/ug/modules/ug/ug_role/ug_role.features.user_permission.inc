@@ -68,6 +68,15 @@ function ug_role_user_default_permissions() {
     'module' => 'node',
   );
 
+  // Exported permission: 'create url aliases'.
+  $permissions['create url aliases'] = array(
+    'name' => 'create url aliases',
+    'roles' => array(
+      'author' => 'author',
+    ),
+    'module' => 'path',
+  );
+
   // Exported permission: 'revert revisions'.
   $permissions['revert revisions'] = array(
     'name' => 'revert revisions',
