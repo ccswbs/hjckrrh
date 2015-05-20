@@ -68,11 +68,20 @@ function ug_role_user_default_permissions() {
     'module' => 'node',
   );
 
+  // Exported permission: 'administer redirects'.
+  $permissions['administer redirects'] = array(
+    'name' => 'administer redirects',
+    'roles' => array(
+      'editor' => 'editor',
+    ),
+    'module' => 'redirect',
+  );
+
   // Exported permission: 'create url aliases'.
   $permissions['create url aliases'] = array(
     'name' => 'create url aliases',
     'roles' => array(
-      'author' => 'author',
+      'editor' => 'editor',
     ),
     'module' => 'path',
   );
