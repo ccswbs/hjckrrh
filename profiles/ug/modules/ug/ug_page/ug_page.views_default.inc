@@ -63,6 +63,8 @@ function ug_page_views_default_views() {
   $handler->display->display_options['fields']['field_page_attachments']['label'] = '';
   $handler->display->display_options['fields']['field_page_attachments']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_page_attachments']['click_sort_column'] = 'fid';
+  $handler->display->display_options['fields']['field_page_attachments']['type'] = 'file_table';
+  $handler->display->display_options['fields']['field_page_attachments']['delta_offset'] = '0';
   /* Field: Content: Image */
   $handler->display->display_options['fields']['field_page_image']['id'] = 'field_page_image';
   $handler->display->display_options['fields']['field_page_image']['table'] = 'field_data_field_page_image';
