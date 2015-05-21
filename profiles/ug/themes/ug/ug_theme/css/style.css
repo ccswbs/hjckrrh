@@ -34,6 +34,7 @@ body.toolbar-drawer {
 
 #navbar {
   margin-bottom: 40px; /* leave some space between navbar and content */
+  height: 150px;
 }
 
 .navbar-nav {
@@ -46,13 +47,17 @@ body.toolbar-drawer {
   background-repeat: no-repeat;
   padding: 36px 0 0 120px;
   margin-left: 0;
-  width: 100px;
   color: white;
   font-size: 1.5em;
+  position: absolute;
 }
 
 .navbar.container {
   margin-top: 0;
+}
+
+.navbar-default .navbar-collapse {
+  padding-left: 100px;
 }
 
 

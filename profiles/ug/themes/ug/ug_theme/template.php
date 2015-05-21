@@ -235,3 +235,18 @@ function ug_theme_preprocess_views_view_fields__s6(&$vars) {
 }
 
 
+
+/**
+ * N2 - Detail page for single news article
+ */
+function ug_theme_preprocess_views_view_fields__n2(&$vars) {
+  $vars['title']        = $vars['fields']['title']->content;
+  $vars['created']      = $vars['fields']['created']->content;
+  $vars['writer']       = $vars['fields']['field_news_writer']->content;
+  $vars['image']        = $vars['fields']['field_news_image']->content;
+  $vars['caption']      = $vars['fields']['field_news_caption']->content;
+  $vars['body']         = $vars['fields']['field_news_body']->content;
+  $vars['attachments']  = $vars['fields']['field_news_attachment']->content;
+  $vars['tags']         = $vars['fields']['field_news_tags']->content;
+}
+
