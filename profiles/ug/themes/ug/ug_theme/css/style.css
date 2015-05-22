@@ -13,19 +13,9 @@ div.row {
   margin-top: 0;
 }
 
-
-/*
- * Toolbar
- */
-
-body.toolbar {
-  background-position: 0 30px;
+body {
+  background: none;
 }
-
-body.toolbar-drawer {
-  padding-top: 30px !important;
-}
-
 
 
 /*
@@ -35,6 +25,8 @@ body.toolbar-drawer {
 #navbar {
   margin-bottom: 40px; /* leave some space between navbar and content */
   height: 150px;
+  background-repeat: repeat-x;
+  background-image: url("http://www.uoguelph.ca/img/headerbg.jpg");
 }
 
 .navbar-nav {
