@@ -235,7 +235,6 @@ function ug_theme_preprocess_views_view_fields__s6(&$vars) {
 }
 
 
-
 /**
  * N2 - Detail page for single news article
  */
@@ -248,5 +247,25 @@ function ug_theme_preprocess_views_view_fields__n2(&$vars) {
   $vars['body']         = $vars['fields']['field_news_body']->content;
   $vars['attachments']  = $vars['fields']['field_news_attachment']->content;
   $vars['tags']         = $vars['fields']['field_news_tags']->content;
+}
+
+
+/**
+ * F1 - FAQ listing
+ */
+function ug_theme_preprocess_views_view_fields__f1(&$vars) {
+  $nid = $vars['fields']['nid']->content;
+  $question = $vars['fields']['title']->content;
+  $vars['question'] = format_string("<a href='#faq@nid'>@q</a>", array('@q' => $question, '@nid' => $nid));
+}
+
+
+/**
+ * F2 - FAQ detail
+ */
+function ug_theme_preprocess_views_view_fields__f2(&$vars) {
+  $vars['nid']      = $vars['fields']['nid']->content;
+  $vars['question'] = $vars['fields']['title']->content;
+  $vars['answer']   = $vars['fields']['field_faq_answer']->content;
 }
 
