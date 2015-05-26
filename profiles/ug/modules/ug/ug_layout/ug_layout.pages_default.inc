@@ -261,18 +261,7 @@ function ug_layout_default_page_manager_handlers() {
     'name' => '',
     'access' => array(
       'logic' => 'and',
-      'plugins' => array(
-        0 => array(
-          'name' => 'entity_bundle:user',
-          'settings' => array(
-            'type' => array(
-              'user' => 'user',
-            ),
-          ),
-          'context' => 'argument_entity_id:user_1',
-          'not' => FALSE,
-        ),
-      ),
+      'plugins' => array(),
     ),
   );
   $display = new panels_display();
