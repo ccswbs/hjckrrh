@@ -171,7 +171,6 @@ function ug_profile_views_default_views() {
   $handler->display->display_options['relationships']['profile_1']['table'] = 'users';
   $handler->display->display_options['relationships']['profile_1']['field'] = 'profile';
   $handler->display->display_options['relationships']['profile_1']['label'] = 'Faculty profile';
-  $handler->display->display_options['relationships']['profile_1']['required'] = TRUE;
   $handler->display->display_options['relationships']['profile_1']['bundle_types'] = array(
     'faculty' => 'faculty',
   );
