@@ -134,7 +134,8 @@ function ug_theme_preprocess_views_view_fields__p1(&$vars) {
   $vars['unit']      = $vars['fields']['field_profile_unit']->content;
   $vars['phone']     = $vars['fields']['field_profile_telephonenumber']->content;
   $vars['email']     = $vars['fields']['field_profile_email']->content;
-  $vars['user_url']  = url('user/'.$vars['uid']);
+  $vars['user_url']  = 'user/'.$vars['uid'];
+  $vars['fullname']  = l($vars['name'].' '.$vars['lastname'], 'user/'.$vars['uid']);
 }
 
 

@@ -42,7 +42,7 @@
     </div>
   <?php endif; ?>
   <div class="col-md-<?php print $image ? 8 : 4; ?>">
-    <?php print l($name . " " . $lastname, $user_url); ?><br/>
+    <?php print $fullname; ?><br/>
     <?php print $title; if ($unit): print ', '.$unit; endif; ?><br/>
     <?php if ($phone): ?>
       <?php print t("<span class='text-muted'>@label: </span>", array('@label' => 'Phone')); ?>
