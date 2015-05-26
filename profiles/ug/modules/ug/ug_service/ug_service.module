@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the UG Service catalogue feature.
+ */
+
+include_once 'ug_service.features.inc';
