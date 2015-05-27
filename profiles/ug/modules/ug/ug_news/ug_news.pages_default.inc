@@ -154,20 +154,8 @@ function ug_news_default_page_manager_pages() {
     );
     $pane->cache = array();
     $pane->style = array(
-      'settings' => array(
-        'hide_classes' => array(
-          'hidden-xs' => 0,
-          'hidden-sm' => 0,
-          'hidden-md' => 0,
-          'hidden-lg' => 0,
-        ),
-        'additional_classes' => array(
-          'pull-left' => 0,
-          'pull-right' => 0,
-          'clearfix' => 0,
-        ),
-      ),
-      'style' => 'bootstrap_styles:well',
+      'style' => 'default',
+      'settings' => NULL,
     );
     $pane->css = array();
     $pane->extras = array();
