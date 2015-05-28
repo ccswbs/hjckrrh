@@ -38,6 +38,9 @@ function ug_event_strongarm() {
         'title' => array(
           'weight' => '0',
         ),
+        'redirect' => array(
+          'weight' => '13',
+        ),
       ),
       'display' => array(),
     ),

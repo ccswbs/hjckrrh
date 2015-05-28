@@ -117,6 +117,9 @@ function ug_theme_preprocess_views_view_fields__e2(&$vars) {
   $vars['attachments'] = $vars['fields']['field_event_attachments']->content;
   $vars['location']    = $vars['fields']['field_event_location']->content; 
   $vars['link']        = $vars['fields']['field_event_link']->content; 
+  $vars['address']     = $vars['fields']['field_event_address']->content;
+  $vars['city']        = $vars['fields']['field_event_city']->content;
+  $vars['category']    = $vars['fields']['field_event_category']->content;
 }
 
 

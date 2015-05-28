@@ -15,6 +15,9 @@
  * - $attachments: file attachments
  * - $location: location of the event
  * - $link: more information url
+ * - $address: street address
+ * - $city: city part of event location
+ * - $category: event category
  *
  * Other variables:
  * - $view: The view in use.
@@ -48,6 +51,12 @@
     <?php print t('Location'); ?>
   <dd>
     <?php print $location; ?>
+    <?php if (!empty($address)): ?>
+      <br><?php print $address; ?>
+    <?php endif; ?>
+    <?php if (!empty($city)): ?>
+      <br><?php print $city; ?>
+    <?php endif; ?>
 </dl>
 
 <div class="thumbnail">
