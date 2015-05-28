@@ -17,6 +17,9 @@ body {
   background: none;
 }
 
+dt {
+  margin-top: 10px;
+}
 
 /*
  * Navbar

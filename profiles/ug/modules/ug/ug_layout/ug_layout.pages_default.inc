@@ -243,6 +243,94 @@ function ug_layout_default_page_manager_handlers() {
   $handler = new stdClass();
   $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
   $handler->api_version = 1;
+  $handler->name = 'node_view__panel_context_626675f3-46af-46d8-9b83-9f8b00d92e69';
+  $handler->task = 'node_view';
+  $handler->subtask = '';
+  $handler->handler = 'panel_context';
+  $handler->weight = 3;
+  $handler->conf = array(
+    'title' => 'Event',
+    'no_blocks' => 0,
+    'pipeline' => 'standard',
+    'body_classes_to_remove' => '',
+    'body_classes_to_add' => '',
+    'css_id' => '',
+    'css' => '',
+    'contexts' => array(),
+    'relationships' => array(),
+    'name' => '',
+    'access' => array(
+      'plugins' => array(
+        0 => array(
+          'name' => 'node_type',
+          'settings' => array(
+            'type' => array(
+              'event' => 'event',
+            ),
+          ),
+          'context' => 'argument_entity_id:node_1',
+          'not' => FALSE,
+        ),
+      ),
+      'logic' => 'and',
+    ),
+  );
+  $display = new panels_display();
+  $display->layout = 'bootstrap_twocol_stacked';
+  $display->layout_settings = array();
+  $display->panel_settings = array(
+    'style_settings' => array(
+      'default' => NULL,
+      'top' => NULL,
+      'left' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '8',
+        'offset_type' => 'col-lg-offset',
+        'offset_size' => '0',
+      ),
+      'right' => NULL,
+      'bottom' => NULL,
+    ),
+    'left' => array(
+      'style' => 'bootstrap_region',
+    ),
+  );
+  $display->cache = array();
+  $display->title = '';
+  $display->uuid = '4f0a3459-5e24-491d-9abe-ba357d368e61';
+  $display->content = array();
+  $display->panels = array();
+    $pane = new stdClass();
+    $pane->pid = 'new-9d9e063f-e130-4c5d-9744-7d5390e81a06';
+    $pane->panel = 'left';
+    $pane->type = 'views_panes';
+    $pane->subtype = 'e2-panel_pane_1';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 0,
+      'override_title_text' => '',
+      'override_title_heading' => 'h2',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = '9d9e063f-e130-4c5d-9744-7d5390e81a06';
+    $display->content['new-9d9e063f-e130-4c5d-9744-7d5390e81a06'] = $pane;
+    $display->panels['left'][0] = 'new-9d9e063f-e130-4c5d-9744-7d5390e81a06';
+  $display->hide_title = PANELS_TITLE_FIXED;
+  $display->title_pane = 'new-9d9e063f-e130-4c5d-9744-7d5390e81a06';
+  $handler->conf['display'] = $display;
+  $export['node_view__panel_context_626675f3-46af-46d8-9b83-9f8b00d92e69'] = $handler;
+
+  $handler = new stdClass();
+  $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
+  $handler->api_version = 1;
   $handler->name = 'user_view__panel_context_4b915309-9fda-4c42-900d-72fc35fe6822';
   $handler->task = 'user_view';
   $handler->subtask = '';
