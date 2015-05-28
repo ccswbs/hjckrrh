@@ -256,6 +256,25 @@ function ug_event_views_default_views() {
   $handler->display->display_options['fields']['field_event_link']['label'] = '';
   $handler->display->display_options['fields']['field_event_link']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_event_link']['click_sort_column'] = 'url';
+  /* Field: Content: Category */
+  $handler->display->display_options['fields']['field_event_category']['id'] = 'field_event_category';
+  $handler->display->display_options['fields']['field_event_category']['table'] = 'field_data_field_event_category';
+  $handler->display->display_options['fields']['field_event_category']['field'] = 'field_event_category';
+  $handler->display->display_options['fields']['field_event_category']['label'] = '';
+  $handler->display->display_options['fields']['field_event_category']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_event_category']['delta_offset'] = '0';
+  /* Field: Content: City */
+  $handler->display->display_options['fields']['field_event_city']['id'] = 'field_event_city';
+  $handler->display->display_options['fields']['field_event_city']['table'] = 'field_data_field_event_city';
+  $handler->display->display_options['fields']['field_event_city']['field'] = 'field_event_city';
+  $handler->display->display_options['fields']['field_event_city']['label'] = '';
+  $handler->display->display_options['fields']['field_event_city']['element_label_colon'] = FALSE;
+  /* Field: Content: Street address */
+  $handler->display->display_options['fields']['field_event_address']['id'] = 'field_event_address';
+  $handler->display->display_options['fields']['field_event_address']['table'] = 'field_data_field_event_address';
+  $handler->display->display_options['fields']['field_event_address']['field'] = 'field_event_address';
+  $handler->display->display_options['fields']['field_event_address']['label'] = '';
+  $handler->display->display_options['fields']['field_event_address']['element_label_colon'] = FALSE;
   /* Sort criterion: Content: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
