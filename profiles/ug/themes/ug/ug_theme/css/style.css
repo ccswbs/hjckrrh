@@ -1,66 +1,8 @@
-@import url("//www.uoguelph.ca/css/uofg.css");
-@import url("//fonts.googleapis.com/css?family=Lato:300,400");
 
 /*
- * Global styles
- */
-h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-  font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
-  font-weight: 300;
-}
-
-div.row {
-  margin-top: 0;
-}
-
-body {
-  background: none;
-}
-
-dt {
-  margin-top: 10px;
-}
-
-/*
- * Navbar
- */
-
-#navbar {
-  margin-bottom: 40px; /* leave some space between navbar and content */
-  height: 150px;
-  background-repeat: repeat-x;
-  background-image: url("http://www.uoguelph.ca/img/headerbg.jpg");
-}
-
-.navbar-nav {
-  clear: right;
-  margin-top: 100px;
-}
-
-.navbar > .container .navbar-brand {
-  background-image: url(//www.uoguelph.ca/img/universityofguelph.gif);
-  background-repeat: no-repeat;
-  padding: 36px 0 0 120px;
-  margin-left: 0;
-  color: white;
-  font-size: 1.5em;
-  position: absolute;
-}
-
-.navbar.container {
-  margin-top: 0;
-}
-
-.navbar-default .navbar-collapse {
-  padding-left: 108px;
-}
-
-
-/*
- * Links
+ * Accessibility
  */
 p a[href] { text-decoration: underline; }
-
 
 
 /*

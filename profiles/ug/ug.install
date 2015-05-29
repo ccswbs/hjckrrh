@@ -12,11 +12,6 @@
  * @see system_install()
  */
 function ug_install() {
-
-  // Enable the UG theme and set it as the default.
-  theme_enable(array('ug_theme'));
-  variable_set('theme_default', 'ug_theme');
-
   // The Bartik theme is automatically enabled during installation. Disable it.
   db_update('system')
     ->fields(array('status' => 0))
@@ -26,9 +21,6 @@ function ug_install() {
 
   // Set Seven as the administration theme.
   variable_set('admin_theme', 'seven');
-
-  // Do not use the administration theme when editing or creating content.
-  variable_set('node_admin_theme', FALSE);
 
   // Only allow administrators (and LDAP) to create accounts.
   variable_set('user_register', USER_REGISTER_ADMINISTRATORS_ONLY);
