@@ -57,6 +57,7 @@
 	clear: right;
 	margin-top: 0;
 	margin-bottom: 2.5em;
+	max-width: 239px;
 }
 #ug-header .navbar-default .navbar-nav li a,
 #ug-header .navbar-default .navbar-nav .open .dropdown-menu>li>a,
