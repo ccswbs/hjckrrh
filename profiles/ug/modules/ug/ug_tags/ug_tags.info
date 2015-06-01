@@ -10,4 +10,5 @@ dependencies[] = ug_news
 features[features_api][] = api:2
 features[field_base][] = field_tags
 features[taxonomy][] = tags
+features[user_permission][] = delete terms in tags
 features[user_permission][] = edit terms in tags

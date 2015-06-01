@@ -33,6 +33,17 @@ function ug_news_user_default_permissions() {
     'module' => 'node',
   );
 
+  // Exported permission: 'delete terms in news_category'.
+  $permissions['delete terms in news_category'] = array(
+    'name' => 'delete terms in news_category',
+    'roles' => array(
+      'editor' => 'editor',
+      'moderator' => 'moderator',
+      'publisher' => 'publisher',
+    ),
+    'module' => 'taxonomy',
+  );
+
   // Exported permission: 'edit any news content'.
   $permissions['edit any news content'] = array(
     'name' => 'edit any news content',
@@ -51,6 +62,17 @@ function ug_news_user_default_permissions() {
       'author' => 'author',
     ),
     'module' => 'node',
+  );
+
+  // Exported permission: 'edit terms in news_category'.
+  $permissions['edit terms in news_category'] = array(
+    'name' => 'edit terms in news_category',
+    'roles' => array(
+      'editor' => 'editor',
+      'moderator' => 'moderator',
+      'publisher' => 'publisher',
+    ),
+    'module' => 'taxonomy',
   );
 
   return $permissions;

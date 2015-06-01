@@ -33,6 +33,17 @@ function ug_social_user_default_permissions() {
     'module' => 'node',
   );
 
+  // Exported permission: 'delete terms in social_media_category'.
+  $permissions['delete terms in social_media_category'] = array(
+    'name' => 'delete terms in social_media_category',
+    'roles' => array(
+      'editor' => 'editor',
+      'moderator' => 'moderator',
+      'publisher' => 'publisher',
+    ),
+    'module' => 'taxonomy',
+  );
+
   // Exported permission: 'edit any social content'.
   $permissions['edit any social content'] = array(
     'name' => 'edit any social content',
@@ -51,6 +62,17 @@ function ug_social_user_default_permissions() {
       'author' => 'author',
     ),
     'module' => 'node',
+  );
+
+  // Exported permission: 'edit terms in social_media_category'.
+  $permissions['edit terms in social_media_category'] = array(
+    'name' => 'edit terms in social_media_category',
+    'roles' => array(
+      'editor' => 'editor',
+      'moderator' => 'moderator',
+      'publisher' => 'publisher',
+    ),
+    'module' => 'taxonomy',
   );
 
   return $permissions;
