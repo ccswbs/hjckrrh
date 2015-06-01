@@ -36,7 +36,11 @@ function ug_event_user_default_permissions() {
   // Exported permission: 'delete terms in event_category'.
   $permissions['delete terms in event_category'] = array(
     'name' => 'delete terms in event_category',
-    'roles' => array(),
+    'roles' => array(
+      'editor' => 'editor',
+      'moderator' => 'moderator',
+      'publisher' => 'publisher',
+    ),
     'module' => 'taxonomy',
   );
 

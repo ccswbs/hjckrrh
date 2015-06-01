@@ -4,6 +4,7 @@ core = 7.x
 package = UG
 version = 7.x-1.1
 project = ug_podcast
+dependencies[] = ctools
 dependencies[] = ctools_custom_content
 features[ctools][] = ctools_custom_content:ctools_content:1
 features[features_api][] = api:2
