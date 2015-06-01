@@ -30,7 +30,7 @@
  */
 ?>
 <li>
-  <a class="h3" href="<?php print $link; ?>">
+  <a class="h4" href="<?php print $link; ?>">
     <?php print $icon; ?>
     <?php print $title; ?>
   </a>

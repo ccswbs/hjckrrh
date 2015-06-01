@@ -15,3 +15,5 @@
     <?php print $row; ?>
   <?php endforeach; ?>
 </ul>
+<?php print $connect; ?>
+
