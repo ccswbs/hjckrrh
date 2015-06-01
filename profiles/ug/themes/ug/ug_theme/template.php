@@ -236,21 +236,6 @@ function ug_theme_preprocess_views_view_fields__s3(&$vars) {
 
 
 /**
- * S4 - Find us on Social Media (icons and names)
- */
-function ug_theme_preprocess_views_view_unformatted__s4(&$vars) {
-  $vars['connect']  = t("Find more ways to connect with our <a href='@connect'>Social Media Directory</a>.",
-                        array('@connect' => url('connect')));
-}
-function ug_theme_preprocess_views_view_fields__s4(&$vars) {
-  $vars['title']    = $vars['fields']['title']->content;
-  $vars['network']  = $vars['fields']['field_social_network']->content;
-  $vars['link']     = $vars['fields']['field_social_link']->content;
-  $vars['icon']     = theme('icon', array('bundle' => 'icomoon', 'icon' => $vars['network']));
-}
-
-
-/**
  * S6 - Social media directory
  */
 function ug_theme_preprocess_views_view_fields__s6(&$vars) {
