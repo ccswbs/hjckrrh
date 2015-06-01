@@ -237,6 +237,109 @@ function ug_social_views_default_views() {
   $export['s4'] = $view;
 
   $view = new view();
+  $view->name = 's5';
+  $view->description = 'Displays the 3 most recent feed items.';
+  $view->tag = 'default';
+  $view->base_table = 'aggregator_item';
+  $view->human_name = 'S5 - Live feed';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['access']['type'] = 'none';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['query']['options']['distinct'] = TRUE;
+  $handler->display->display_options['query']['options']['pure_distinct'] = TRUE;
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['pager']['type'] = 'some';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '3';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['style_plugin'] = 'default';
+  $handler->display->display_options['style_options']['default_row_class'] = FALSE;
+  $handler->display->display_options['style_options']['row_class_special'] = FALSE;
+  $handler->display->display_options['row_plugin'] = 'fields';
+  /* Field: Aggregator feed: Title */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'aggregator_feed';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['label'] = 'See more from this feed';
+  /* Contextual filter: Aggregator feed: Feed ID */
+  $handler->display->display_options['arguments']['fid']['id'] = 'fid';
+  $handler->display->display_options['arguments']['fid']['table'] = 'aggregator_feed';
+  $handler->display->display_options['arguments']['fid']['field'] = 'fid';
+  $handler->display->display_options['arguments']['fid']['default_action'] = 'empty';
+  $handler->display->display_options['arguments']['fid']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['fid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['fid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['fid']['summary_options']['items_per_page'] = '25';
+
+  /* Display: Content pane */
+  $handler = $view->new_display('panel_pane', 'Content pane', 'panel_pane_1');
+  $handler->display->display_options['allow']['use_pager'] = 0;
+  $handler->display->display_options['allow']['items_per_page'] = 0;
+  $handler->display->display_options['allow']['offset'] = 0;
+  $handler->display->display_options['allow']['link_to_view'] = 0;
+  $handler->display->display_options['allow']['more_link'] = 0;
+  $handler->display->display_options['allow']['path_override'] = 0;
+  $handler->display->display_options['allow']['title_override'] = 'title_override';
+  $handler->display->display_options['allow']['exposed_form'] = 0;
+  $handler->display->display_options['allow']['fields_override'] = 0;
+  $handler->display->display_options['argument_input'] = array(
+    'fid' => array(
+      'type' => 'user',
+      'context' => 'entity:file.fid',
+      'context_optional' => 0,
+      'panel' => '0',
+      'fixed' => '',
+      'label' => 'Aggregator feed: Feed ID',
+    ),
+  );
+
+  /* Display: Attachment */
+  $handler = $view->new_display('attachment', 'Attachment', 'attachment_1');
+  $handler->display->display_options['pager']['type'] = 'some';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '3';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['defaults']['style_plugin'] = FALSE;
+  $handler->display->display_options['style_plugin'] = 'list';
+  $handler->display->display_options['style_options']['row_class'] = 'media';
+  $handler->display->display_options['style_options']['class'] = 'media-list';
+  $handler->display->display_options['defaults']['style_options'] = FALSE;
+  $handler->display->display_options['defaults']['row_plugin'] = FALSE;
+  $handler->display->display_options['row_plugin'] = 'fields';
+  $handler->display->display_options['defaults']['row_options'] = FALSE;
+  $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Field: Aggregator: Title */
+  $handler->display->display_options['fields']['title_1']['id'] = 'title_1';
+  $handler->display->display_options['fields']['title_1']['table'] = 'aggregator_item';
+  $handler->display->display_options['fields']['title_1']['field'] = 'title';
+  $handler->display->display_options['fields']['title_1']['label'] = '';
+  $handler->display->display_options['fields']['title_1']['element_label_colon'] = FALSE;
+  /* Field: Aggregator: Timestamp */
+  $handler->display->display_options['fields']['timestamp']['id'] = 'timestamp';
+  $handler->display->display_options['fields']['timestamp']['table'] = 'aggregator_item';
+  $handler->display->display_options['fields']['timestamp']['field'] = 'timestamp';
+  $handler->display->display_options['fields']['timestamp']['label'] = 'Posted';
+  $handler->display->display_options['fields']['timestamp']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['timestamp']['date_format'] = 'short';
+  $handler->display->display_options['fields']['timestamp']['second_date_format'] = 'long';
+  /* Field: Aggregator: Body */
+  $handler->display->display_options['fields']['description']['id'] = 'description';
+  $handler->display->display_options['fields']['description']['table'] = 'aggregator_item';
+  $handler->display->display_options['fields']['description']['field'] = 'description';
+  $handler->display->display_options['fields']['description']['label'] = '';
+  $handler->display->display_options['fields']['description']['element_label_colon'] = FALSE;
+  $handler->display->display_options['displays'] = array(
+    'panel_pane_1' => 'panel_pane_1',
+    'default' => 0,
+  );
+  $export['s5'] = $view;
+
+  $view = new view();
   $view->name = 's6';
   $view->description = 'Allows users to visit external social media pages affiliated with the website.';
   $view->tag = 'default';
