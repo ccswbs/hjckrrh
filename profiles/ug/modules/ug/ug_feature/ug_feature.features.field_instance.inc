@@ -100,7 +100,7 @@ function ug_feature_field_default_field_instances() {
       ),
       'enable_tokens' => 1,
       'linkit' => array(
-        'button_text' => 'Search',
+        'button_text' => 'Search for content',
         'enable' => 1,
         'profile' => 'feature',
       ),
