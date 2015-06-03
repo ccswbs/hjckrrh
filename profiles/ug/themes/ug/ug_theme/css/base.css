@@ -2,8 +2,10 @@
 /*
  * Accessibility
  */
-p a[href] { text-decoration: underline; }
-
+a[href] { text-decoration: underline; }
+.navbar a, a.btn-default {
+  text-decoration: none;
+}
 
 /*
  * Icons. The social media feature expects an icon class of the
@@ -14,4 +16,11 @@ p a[href] { text-decoration: underline; }
 .fa.fa-flickr-square::before { content: "\f16e"; }
 .fa.fa-myspace-square::before { content: "\f007"; }
 .fa.fa-instagram-square::before { content: "\f16d"; }
+
+/*
+ * Toolbar
+ *
+ * Latest salvo in the arms race that is top of the z-order:
+ */
+#toolbar { z-index: 1002; }
 

@@ -12,7 +12,7 @@
 function ug_theme_theme() {
   return array(
     'icon' => array(
-      'variables' => array('icon' => NULL, 'bundle' => NULL),
+      'variables' => array('icon' => NULL, 'bundle' => 'glyphicon'),
     ),
   );
 }
@@ -40,7 +40,9 @@ function ug_theme_image($variables) {
  * Outputs an icon.
  */
 function ug_theme_icon($variables) {
-  $attributes = array('class' => array('fa', 'fa-' . $variables['icon']));
+  $icon = $variables['icon'];
+  $bundle = $variables['bundle'];
+  $attributes = array('class' => array($bundle, $bundle.'-'.$icon));
   return '<span' . drupal_attributes($attributes) . '></span>';
 }
 
@@ -231,7 +233,7 @@ function ug_theme_preprocess_views_view_fields__s3(&$vars) {
   $vars['title']    = $vars['fields']['title']->content;
   $vars['network']  = $vars['fields']['field_social_network']->content;
   $vars['link']     = $vars['fields']['field_social_link']->content;
-  $vars['icon']     = theme('icon', array('bundle' => 'icomoon', 'icon' => $vars['network']));
+  $vars['icon']     = theme('icon', array('bundle' => 'fa', 'icon' => $vars['network']));
 }
 
 
@@ -242,7 +244,7 @@ function ug_theme_preprocess_views_view_fields__s6(&$vars) {
   $vars['title']    = $vars['fields']['title']->content;
   $vars['network']  = $vars['fields']['field_social_network']->content;
   $vars['link']     = $vars['fields']['field_social_link']->content;
-  $vars['icon']     = theme('icon', array('bundle' => 'icomoon', 'icon' => $vars['network']));
+  $vars['icon']     = theme('icon', array('bundle' => 'fa', 'icon' => $vars['network']));
 }
 
 
@@ -279,4 +281,15 @@ function ug_theme_preprocess_views_view_fields__f2(&$vars) {
   $vars['question'] = $vars['fields']['title']->content;
   $vars['answer']   = $vars['fields']['field_faq_answer']->content;
 }
+
+
+/**
+ * SR1 - List of all services by category
+ */
+function ug_theme_preprocess_views_view_fields__sr1(&$vars) {
+  $vars['icon'] = theme('icon', array('icon' => $vars['fields']['field_service_icon']->content));
+  $vars['name'] = $vars['fields']['name']->content;
+  $vars['description'] = $vars['fields']['description']->content;
+}
+
 
