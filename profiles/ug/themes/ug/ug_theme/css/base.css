@@ -3,7 +3,7 @@
  * Accessibility
  */
 a[href] { text-decoration: underline; }
-.navbar a, a.btn-default {
+.navbar a, a.btn-default, .menu a {
   text-decoration: none;
 }
 
