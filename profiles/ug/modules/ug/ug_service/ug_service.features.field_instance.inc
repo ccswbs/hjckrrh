@@ -80,7 +80,7 @@ function ug_service_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 3,
+      'weight' => 12,
     ),
   );
 
@@ -251,7 +251,7 @@ function ug_service_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 37,
+      'weight' => 7,
     ),
   );
 
@@ -296,7 +296,7 @@ function ug_service_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 39,
+      'weight' => 11,
     ),
   );
 
@@ -341,7 +341,87 @@ function ug_service_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 35,
+      'weight' => 9,
+    ),
+  );
+
+  // Exported field_instance: 'node-service-field_service_hours'
+  $field_instances['node-service-field_service_hours'] = array(
+    'bundle' => 'service',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 12,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_service_hours',
+    'label' => 'Hours of service',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 1,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 5,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 6,
+    ),
+  );
+
+  // Exported field_instance: 'node-service-field_service_internal'
+  $field_instances['node-service-field_service_internal'] = array(
+    'bundle' => 'service',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 14,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_service_internal',
+    'label' => 'Internal notes',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 1,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 5,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 14,
     ),
   );
 
@@ -381,7 +461,7 @@ function ug_service_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'taxonomy_autocomplete',
-      'weight' => 40,
+      'weight' => 15,
     ),
   );
 
@@ -426,7 +506,46 @@ function ug_service_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 36,
+      'weight' => 3,
+    ),
+  );
+
+  // Exported field_instance: 'node-service-field_service_related'
+  $field_instances['node-service-field_service_related'] = array(
+    'bundle' => 'service',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'entityreference',
+        'settings' => array(
+          'link' => FALSE,
+        ),
+        'type' => 'entityreference_label',
+        'weight' => 13,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_service_related',
+    'label' => 'Related services',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 13,
     ),
   );
 
@@ -471,7 +590,7 @@ function ug_service_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 6,
+      'weight' => 8,
     ),
   );
 
@@ -498,14 +617,9 @@ function ug_service_field_default_field_instances() {
     ),
     'entity_type' => 'node',
     'field_name' => 'field_service_training',
-    'label' => 'Service training',
+    'label' => 'Training and documentation',
     'required' => 0,
     'settings' => array(
-      'linkit' => array(
-        'button_text' => 'Search',
-        'enable' => 0,
-        'profile' => '',
-      ),
       'text_processing' => 1,
       'user_register_form' => FALSE,
     ),
@@ -516,7 +630,7 @@ function ug_service_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 38,
+      'weight' => 10,
     ),
   );
 
@@ -557,16 +671,19 @@ function ug_service_field_default_field_instances() {
   t('Cost');
   t('Frequently Asked Questions');
   t('Help and support');
+  t('Hours of service');
   t('How do I request this service?');
+  t('Internal notes');
   t('Keywords');
   t('Long description');
+  t('Related services');
   t('Service audience');
   t('Service category');
   t('Service details');
   t('Service expectations');
   t('Service icon');
-  t('Service training');
   t('Short description');
+  t('Training and documentation');
 
   return $field_instances;
 }

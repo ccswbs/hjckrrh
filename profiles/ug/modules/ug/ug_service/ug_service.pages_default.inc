@@ -16,7 +16,10 @@ function ug_service_default_page_manager_pages() {
   $page->admin_title = 'Services';
   $page->admin_description = '';
   $page->path = 'services';
-  $page->access = array();
+  $page->access = array(
+    'type' => 'none',
+    'settings' => NULL,
+  );
   $page->menu = array();
   $page->arguments = array();
   $page->conf = array(
