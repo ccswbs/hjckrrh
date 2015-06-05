@@ -96,6 +96,9 @@ function ug_banner_views_default_views() {
   $handler->display->display_options['allow']['title_override'] = 'title_override';
   $handler->display->display_options['allow']['exposed_form'] = 0;
   $handler->display->display_options['allow']['fields_override'] = 0;
+
+  /* Display: Autoplay */
+  $handler = $view->new_display('panel_pane', 'Autoplay', 'autoplay');
   $export['b1'] = $view;
 
   return $export;

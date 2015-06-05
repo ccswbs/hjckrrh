@@ -33,8 +33,8 @@ function ug_banner_image_default_styles() {
       1 => array(
         'name' => 'image_resize',
         'data' => array(
-          'width' => 860,
-          'height' => 220,
+          'width' => 1140,
+          'height' => 320,
         ),
         'weight' => 1,
       ),
