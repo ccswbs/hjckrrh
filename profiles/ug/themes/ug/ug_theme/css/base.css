@@ -3,19 +3,9 @@
  * Accessibility
  */
 a[href] { text-decoration: underline; }
-.navbar a, a.btn-default, .menu a {
+.navbar a, a.btn, .menu a, a.active {
   text-decoration: none;
 }
-
-/*
- * Icons. The social media feature expects an icon class of the
- * form fa-{network}-square for the icon. All but flickr and 
- * myspace have an icon of this form, so we fill in the 2 missing
- * icon classes here.
- */
-.fa.fa-flickr-square::before { content: "\f16e"; }
-.fa.fa-myspace-square::before { content: "\f007"; }
-.fa.fa-instagram-square::before { content: "\f16d"; }
 
 /*
  * Toolbar
@@ -24,3 +14,7 @@ a[href] { text-decoration: underline; }
  */
 #toolbar { z-index: 1002; }
 
+/*
+ * Slideshow
+ */
+.slidesjs-slide { display: none; } /* prevent slides from flashing */
