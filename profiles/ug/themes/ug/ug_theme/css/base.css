@@ -17,4 +17,4 @@ a[href] { text-decoration: underline; }
 /*
  * Slideshow
  */
-.slidesjs-slide { display: none; } /* prevent slides from flashing */
+#slides { display: none; } /* prevent slides from flashing */
