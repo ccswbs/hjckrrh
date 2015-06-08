@@ -33,6 +33,17 @@ function ug_page_user_default_permissions() {
     'module' => 'node',
   );
 
+  // Exported permission: 'delete terms in page_category'.
+  $permissions['delete terms in page_category'] = array(
+    'name' => 'delete terms in page_category',
+    'roles' => array(
+      'editor' => 'editor',
+      'moderator' => 'moderator',
+      'publisher' => 'publisher',
+    ),
+    'module' => 'taxonomy',
+  );
+
   // Exported permission: 'edit any page content'.
   $permissions['edit any page content'] = array(
     'name' => 'edit any page content',
@@ -51,6 +62,17 @@ function ug_page_user_default_permissions() {
       'author' => 'author',
     ),
     'module' => 'node',
+  );
+
+  // Exported permission: 'edit terms in page_category'.
+  $permissions['edit terms in page_category'] = array(
+    'name' => 'edit terms in page_category',
+    'roles' => array(
+      'editor' => 'editor',
+      'moderator' => 'moderator',
+      'publisher' => 'publisher',
+    ),
+    'module' => 'taxonomy',
   );
 
   return $permissions;
