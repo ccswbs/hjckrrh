@@ -68,7 +68,7 @@ function ug_news_views_default_views() {
   $handler->display->display_options['fields']['field_news_image']['type'] = 'image_url';
   $handler->display->display_options['fields']['field_news_image']['settings'] = array(
     'url_type' => '0',
-    'image_style' => 'medium',
+    'image_style' => '',
     'image_link' => '',
   );
   /* Sort criterion: Content: Post date */
