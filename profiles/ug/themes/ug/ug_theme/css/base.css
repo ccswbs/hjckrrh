@@ -3,7 +3,7 @@
  * Accessibility
  */
 a[href] { text-decoration: underline; }
-.navbar a, a.btn, .menu a, a.active {
+.navbar a, a.btn, .menu a, a.active, .nav a {
   text-decoration: none;
 }
 
@@ -25,8 +25,15 @@ a[href] { text-decoration: underline; }
  * Some classes that are available in newer versions of bootstrap.
  */
 @media screen and (min-width: 768px) {
+  /* This visible-xs-* classes are in Bootstrap 3.2.0+ */
   .visible-xs-inline{
     display:none!important
   }
 }
+
+/*
+ * Icons - FontAwesome icons are variable width, which makes it hard
+ * to do layout. Enforce a minimum width.
+ */
+.fa { min-width: 1.8ex; text-align: center; }
 
