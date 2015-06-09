@@ -33,6 +33,50 @@ function ug_service_user_default_permissions() {
     'module' => 'node',
   );
 
+  // Exported permission: 'delete terms in service_audience'.
+  $permissions['delete terms in service_audience'] = array(
+    'name' => 'delete terms in service_audience',
+    'roles' => array(
+      'editor' => 'editor',
+      'moderator' => 'moderator',
+      'publisher' => 'publisher',
+    ),
+    'module' => 'taxonomy',
+  );
+
+  // Exported permission: 'delete terms in service_category'.
+  $permissions['delete terms in service_category'] = array(
+    'name' => 'delete terms in service_category',
+    'roles' => array(
+      'editor' => 'editor',
+      'moderator' => 'moderator',
+      'publisher' => 'publisher',
+    ),
+    'module' => 'taxonomy',
+  );
+
+  // Exported permission: 'delete terms in service_headings'.
+  $permissions['delete terms in service_headings'] = array(
+    'name' => 'delete terms in service_headings',
+    'roles' => array(
+      'editor' => 'editor',
+      'moderator' => 'moderator',
+      'publisher' => 'publisher',
+    ),
+    'module' => 'taxonomy',
+  );
+
+  // Exported permission: 'delete terms in service_keywords'.
+  $permissions['delete terms in service_keywords'] = array(
+    'name' => 'delete terms in service_keywords',
+    'roles' => array(
+      'editor' => 'editor',
+      'moderator' => 'moderator',
+      'publisher' => 'publisher',
+    ),
+    'module' => 'taxonomy',
+  );
+
   // Exported permission: 'edit any service content'.
   $permissions['edit any service content'] = array(
     'name' => 'edit any service content',
@@ -51,6 +95,50 @@ function ug_service_user_default_permissions() {
       'author' => 'author',
     ),
     'module' => 'node',
+  );
+
+  // Exported permission: 'edit terms in service_audience'.
+  $permissions['edit terms in service_audience'] = array(
+    'name' => 'edit terms in service_audience',
+    'roles' => array(
+      'editor' => 'editor',
+      'moderator' => 'moderator',
+      'publisher' => 'publisher',
+    ),
+    'module' => 'taxonomy',
+  );
+
+  // Exported permission: 'edit terms in service_category'.
+  $permissions['edit terms in service_category'] = array(
+    'name' => 'edit terms in service_category',
+    'roles' => array(
+      'editor' => 'editor',
+      'moderator' => 'moderator',
+      'publisher' => 'publisher',
+    ),
+    'module' => 'taxonomy',
+  );
+
+  // Exported permission: 'edit terms in service_headings'.
+  $permissions['edit terms in service_headings'] = array(
+    'name' => 'edit terms in service_headings',
+    'roles' => array(
+      'editor' => 'editor',
+      'moderator' => 'moderator',
+      'publisher' => 'publisher',
+    ),
+    'module' => 'taxonomy',
+  );
+
+  // Exported permission: 'edit terms in service_keywords'.
+  $permissions['edit terms in service_keywords'] = array(
+    'name' => 'edit terms in service_keywords',
+    'roles' => array(
+      'editor' => 'editor',
+      'moderator' => 'moderator',
+      'publisher' => 'publisher',
+    ),
+    'module' => 'taxonomy',
   );
 
   return $permissions;

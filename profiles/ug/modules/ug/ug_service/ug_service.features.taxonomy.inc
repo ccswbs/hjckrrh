@@ -25,6 +25,14 @@ function ug_service_taxonomy_default_vocabularies() {
       'module' => 'taxonomy',
       'weight' => 0,
     ),
+    'service_headings' => array(
+      'name' => 'Service heading',
+      'machine_name' => 'service_headings',
+      'description' => '',
+      'hierarchy' => 0,
+      'module' => 'taxonomy',
+      'weight' => 0,
+    ),
     'service_keywords' => array(
       'name' => 'Service keywords',
       'machine_name' => 'service_keywords',

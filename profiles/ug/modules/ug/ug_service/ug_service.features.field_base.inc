@@ -10,6 +10,51 @@
 function ug_service_field_default_field_bases() {
   $field_bases = array();
 
+  // Exported field_base: 'field_section_content'
+  $field_bases['field_section_content'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_section_content',
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(),
+    'translatable' => 0,
+    'type' => 'text_long',
+  );
+
+  // Exported field_base: 'field_section_heading'
+  $field_bases['field_section_heading'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_section_heading',
+    'indexes' => array(
+      'tid' => array(
+        0 => 'tid',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'taxonomy',
+    'settings' => array(
+      'allowed_values' => array(
+        0 => array(
+          'vocabulary' => 'service_headings',
+          'parent' => 0,
+        ),
+      ),
+    ),
+    'translatable' => 0,
+    'type' => 'taxonomy_term_reference',
+  );
+
   // Exported field_base: 'field_service_audience'
   $field_bases['field_service_audience'] = array(
     'active' => 1,
@@ -62,25 +107,6 @@ function ug_service_field_default_field_bases() {
     'type' => 'taxonomy_term_reference',
   );
 
-  // Exported field_base: 'field_service_cost'
-  $field_bases['field_service_cost'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_service_cost',
-    'indexes' => array(
-      'format' => array(
-        0 => 'format',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'text',
-    'settings' => array(),
-    'translatable' => 0,
-    'type' => 'text_long',
-  );
-
   // Exported field_base: 'field_service_description'
   $field_bases['field_service_description'] = array(
     'active' => 1,
@@ -97,102 +123,7 @@ function ug_service_field_default_field_bases() {
     'module' => 'text',
     'settings' => array(),
     'translatable' => 0,
-    'type' => 'text_long',
-  );
-
-  // Exported field_base: 'field_service_details'
-  $field_bases['field_service_details'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_service_details',
-    'indexes' => array(
-      'format' => array(
-        0 => 'format',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'text',
-    'settings' => array(),
-    'translatable' => 0,
-    'type' => 'text_long',
-  );
-
-  // Exported field_base: 'field_service_expectations'
-  $field_bases['field_service_expectations'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_service_expectations',
-    'indexes' => array(
-      'format' => array(
-        0 => 'format',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'text',
-    'settings' => array(),
-    'translatable' => 0,
-    'type' => 'text_long',
-  );
-
-  // Exported field_base: 'field_service_faq'
-  $field_bases['field_service_faq'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_service_faq',
-    'indexes' => array(
-      'format' => array(
-        0 => 'format',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'text',
-    'settings' => array(),
-    'translatable' => 0,
-    'type' => 'text_long',
-  );
-
-  // Exported field_base: 'field_service_help'
-  $field_bases['field_service_help'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_service_help',
-    'indexes' => array(
-      'format' => array(
-        0 => 'format',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'text',
-    'settings' => array(),
-    'translatable' => 0,
-    'type' => 'text_long',
-  );
-
-  // Exported field_base: 'field_service_hours'
-  $field_bases['field_service_hours'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_service_hours',
-    'indexes' => array(
-      'format' => array(
-        0 => 'format',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'text',
-    'settings' => array(),
-    'translatable' => 0,
-    'type' => 'text_long',
+    'type' => 'text_with_summary',
   );
 
   // Exported field_base: 'field_service_icon'
@@ -463,25 +394,6 @@ function ug_service_field_default_field_bases() {
     'type' => 'taxonomy_term_reference',
   );
 
-  // Exported field_base: 'field_service_longdesc'
-  $field_bases['field_service_longdesc'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_service_longdesc',
-    'indexes' => array(
-      'format' => array(
-        0 => 'format',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'text',
-    'settings' => array(),
-    'translatable' => 0,
-    'type' => 'text_long',
-  );
-
   // Exported field_base: 'field_service_related'
   $field_bases['field_service_related'] = array(
     'active' => 1,
@@ -517,42 +429,26 @@ function ug_service_field_default_field_bases() {
     'type' => 'entityreference',
   );
 
-  // Exported field_base: 'field_service_request'
-  $field_bases['field_service_request'] = array(
+  // Exported field_base: 'field_service_section'
+  $field_bases['field_service_section'] = array(
     'active' => 1,
-    'cardinality' => 1,
+    'cardinality' => -1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_service_request',
+    'field_name' => 'field_service_section',
     'indexes' => array(
-      'format' => array(
-        0 => 'format',
+      'revision_id' => array(
+        0 => 'revision_id',
       ),
     ),
     'locked' => 0,
-    'module' => 'text',
-    'settings' => array(),
-    'translatable' => 0,
-    'type' => 'text_long',
-  );
-
-  // Exported field_base: 'field_service_training'
-  $field_bases['field_service_training'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_service_training',
-    'indexes' => array(
-      'format' => array(
-        0 => 'format',
-      ),
+    'module' => 'field_collection',
+    'settings' => array(
+      'hide_blank_items' => 1,
+      'path' => '',
     ),
-    'locked' => 0,
-    'module' => 'text',
-    'settings' => array(),
     'translatable' => 0,
-    'type' => 'text_long',
+    'type' => 'field_collection',
   );
 
   return $field_bases;
