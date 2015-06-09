@@ -18,3 +18,15 @@ a[href] { text-decoration: underline; }
  * Slideshow
  */
 #slides { display: none; } /* prevent slides from flashing */
+
+/*
+ * Bootstrap
+ * 
+ * Some classes that are available in newer versions of bootstrap.
+ */
+@media screen and (min-width: 768px) {
+  .visible-xs-inline{
+    display:none!important
+  }
+}
+

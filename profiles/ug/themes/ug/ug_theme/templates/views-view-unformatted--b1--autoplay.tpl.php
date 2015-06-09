@@ -6,42 +6,45 @@
  */
 ?>
 <div id="slides">
-  <?php foreach ($rows as $id => $row): ?>
-    <?php print $row; ?>
-  <?php endforeach; ?>
   <div class="row slidesjs-navigation">
-    <div class="col-sm-6">
-      <div class="btn-group" role="group">
-        <button class="btn btn-default slidesjs-psply">
+    <div class="col-sm-2 col-xs-12">
+      <button class="btn btn-block slidesjs-psply">
           <span class="slidesjs-stop">
             <span class="glyphicon glyphicon-pause" aria-hidden="true"></span>
-            <span class="sr-only"><?php print t('Pause slideshow'); ?></span>
+            <?php print t('Pause<span class="visible-xs-inline"> slideshow</span>'); ?>
           </span>
           <span class="slidesjs-play" style="display:none;">
             <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
-            <span class="sr-only"><?php print t('Play slideshow'); ?></span>
+            <?php print t('Play<span class="visible-xs-inline"> slideshow</span>'); ?>
           </span>
-        </button>
-      </div>
-      <a href="#" class="btn btn-link slidesjs-slide-link slidesjs-slide-title"></a>
+      </button>
     </div>
-    <div class="col-sm-6">
-      <div class="btn-toolbar pull-right" role="toolbar">
-        <div class="btn-group" role="group">
-          <button class="btn btn-default slidesjs-previous" role="button">
-            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-            <span class="sr-only"><?php print t('Previous slide'); ?></span>
-          </button>
-          <div class="btn btn-default" disabled>
-            <?php print t('Slide <span class="slidesjs-slide-number">@number</span> of @count',
-                        array('@number' => $slide_number, '@count' => $slide_count)); ?>
-          </div>
-          <button class="btn btn-default slidesjs-next" role="button">
-            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-            <span class="sr-only"><?php print t('Next slide'); ?></span>
-          </button>
-        </div>
+  </div>
+    <?php foreach ($rows as $id => $row): ?>
+      <?php print $row; ?>
+    <?php endforeach; ?>
+  <div class="row slidesjs-navigation">
+    <div class="col-sm-8 col-xsdk-9">
+        <a href="#" class="slidesjs-slide-link slidesjs-slide-title"></a>
+        <p>More text here.</p>
+    </div>
+    <div class="col-sm-1 col-xs-3">
+      <button class="btn btn-block slidesjs-previous" role="button">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only"><?php print t('Previous slide'); ?></span>
+      </button>
+    </div>
+    <div class="col-sm-2 col-xs-6">
+      <div class="btn btn-block" disabled>
+        <?php print t('Slide <span class="slidesjs-slide-number">@number</span> of @count',
+                    array('@number' => $slide_number, '@count' => $slide_count)); ?>
       </div>
+    </div>
+    <div class="col-sm-1 col-xs-3">
+      <button class="btn btn-block slidesjs-next" role="button">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only"><?php print t('Next slide'); ?></span>
+      </button>
     </div>
   </div>
 </div>
