@@ -194,9 +194,9 @@ function ug_social_views_default_views() {
   $handler->display->display_options['pager']['type'] = 'some';
   $handler->display->display_options['pager']['options']['items_per_page'] = '8';
   $handler->display->display_options['pager']['options']['offset'] = '0';
-  $handler->display->display_options['style_plugin'] = 'list';
-  $handler->display->display_options['style_options']['row_class'] = 'media h4';
-  $handler->display->display_options['style_options']['class'] = 'media-list';
+  $handler->display->display_options['style_plugin'] = 'default';
+  $handler->display->display_options['style_options']['default_row_class'] = FALSE;
+  $handler->display->display_options['style_options']['row_class_special'] = FALSE;
   $handler->display->display_options['row_plugin'] = 'fields';
   $handler->display->display_options['row_options']['default_field_elements'] = FALSE;
   /* Field: Content: Social media network */
@@ -204,8 +204,6 @@ function ug_social_views_default_views() {
   $handler->display->display_options['fields']['field_social_network']['table'] = 'field_data_field_social_network';
   $handler->display->display_options['fields']['field_social_network']['field'] = 'field_social_network';
   $handler->display->display_options['fields']['field_social_network']['label'] = '';
-  $handler->display->display_options['fields']['field_social_network']['alter']['alter_text'] = TRUE;
-  $handler->display->display_options['fields']['field_social_network']['alter']['text'] = '<span class="fa fa-[field_social_network]"></span>';
   $handler->display->display_options['fields']['field_social_network']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_social_network']['type'] = 'list_key';
   /* Field: Content: Account URL */
@@ -213,27 +211,25 @@ function ug_social_views_default_views() {
   $handler->display->display_options['fields']['field_social_link']['table'] = 'field_data_field_social_link';
   $handler->display->display_options['fields']['field_social_link']['field'] = 'field_social_link';
   $handler->display->display_options['fields']['field_social_link']['label'] = '';
-  $handler->display->display_options['fields']['field_social_link']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_social_link']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_social_link']['click_sort_column'] = 'url';
-  $handler->display->display_options['fields']['field_social_link']['type'] = 'link_title_plain';
+  $handler->display->display_options['fields']['field_social_link']['type'] = 'link_plain';
   /* Field: Content: Title */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
   $handler->display->display_options['fields']['title']['label'] = '';
-  $handler->display->display_options['fields']['title']['alter']['make_link'] = TRUE;
-  $handler->display->display_options['fields']['title']['alter']['path'] = '[field_social_link]';
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
   $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['title']['element_default_classes'] = FALSE;
+  $handler->display->display_options['fields']['title']['hide_alter_empty'] = FALSE;
   $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
   /* Field: Content: Account category */
   $handler->display->display_options['fields']['field_social_category']['id'] = 'field_social_category';
   $handler->display->display_options['fields']['field_social_category']['table'] = 'field_data_field_social_category';
   $handler->display->display_options['fields']['field_social_category']['field'] = 'field_social_category';
   $handler->display->display_options['fields']['field_social_category']['label'] = '';
-  $handler->display->display_options['fields']['field_social_category']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_social_category']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_social_category']['type'] = 'taxonomy_term_reference_plain';
   /* Sort criterion: Content: Post date */
@@ -370,6 +366,83 @@ function ug_social_views_default_views() {
     'default' => 0,
   );
   $export['s5'] = $view;
+
+  $view = new view();
+  $view->name = 's5twtr';
+  $view->description = '';
+  $view->tag = 'default';
+  $view->base_table = 'twitter';
+  $view->human_name = 'S5 - Live Feed (Twitter)';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['access']['type'] = 'none';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['pager']['type'] = 'some';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '3';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['style_plugin'] = 'default';
+  $handler->display->display_options['row_plugin'] = 'fields';
+  $handler->display->display_options['row_options']['default_field_elements'] = FALSE;
+  /* Field: Twitter: Twitter status message ID */
+  $handler->display->display_options['fields']['twitter_id']['id'] = 'twitter_id';
+  $handler->display->display_options['fields']['twitter_id']['table'] = 'twitter';
+  $handler->display->display_options['fields']['twitter_id']['field'] = 'twitter_id';
+  /* Field: Twitter: Created time */
+  $handler->display->display_options['fields']['created_time']['id'] = 'created_time';
+  $handler->display->display_options['fields']['created_time']['table'] = 'twitter';
+  $handler->display->display_options['fields']['created_time']['field'] = 'created_time';
+  $handler->display->display_options['fields']['created_time']['date_format'] = 'time ago';
+  $handler->display->display_options['fields']['created_time']['second_date_format'] = 'long';
+  /* Field: Twitter: Full name */
+  $handler->display->display_options['fields']['name']['id'] = 'name';
+  $handler->display->display_options['fields']['name']['table'] = 'twitter_account';
+  $handler->display->display_options['fields']['name']['field'] = 'name';
+  /* Field: Twitter: Message text */
+  $handler->display->display_options['fields']['text']['id'] = 'text';
+  $handler->display->display_options['fields']['text']['table'] = 'twitter';
+  $handler->display->display_options['fields']['text']['field'] = 'text';
+  $handler->display->display_options['fields']['text']['link_urls'] = 1;
+  $handler->display->display_options['fields']['text']['link_usernames'] = 1;
+  $handler->display->display_options['fields']['text']['link_hashtags'] = 0;
+  $handler->display->display_options['fields']['text']['link_attributes'] = 1;
+  /* Field: Twitter: Profile image */
+  $handler->display->display_options['fields']['profile_image_url']['id'] = 'profile_image_url';
+  $handler->display->display_options['fields']['profile_image_url']['table'] = 'twitter_account';
+  $handler->display->display_options['fields']['profile_image_url']['field'] = 'profile_image_url';
+  /* Field: Twitter: URL */
+  $handler->display->display_options['fields']['url']['id'] = 'url';
+  $handler->display->display_options['fields']['url']['table'] = 'twitter_account';
+  $handler->display->display_options['fields']['url']['field'] = 'url';
+  $handler->display->display_options['fields']['url']['display_as_link'] = FALSE;
+  /* Field: Twitter: Login name */
+  $handler->display->display_options['fields']['screen_name']['id'] = 'screen_name';
+  $handler->display->display_options['fields']['screen_name']['table'] = 'twitter_account';
+  $handler->display->display_options['fields']['screen_name']['field'] = 'screen_name';
+  /* Sort criterion: Twitter: Created time */
+  $handler->display->display_options['sorts']['created_time']['id'] = 'created_time';
+  $handler->display->display_options['sorts']['created_time']['table'] = 'twitter';
+  $handler->display->display_options['sorts']['created_time']['field'] = 'created_time';
+  $handler->display->display_options['sorts']['created_time']['order'] = 'DESC';
+
+  /* Display: Content pane */
+  $handler = $view->new_display('panel_pane', 'Content pane', 'panel_pane_1');
+  $handler->display->display_options['allow']['use_pager'] = 0;
+  $handler->display->display_options['allow']['items_per_page'] = 'items_per_page';
+  $handler->display->display_options['allow']['offset'] = 0;
+  $handler->display->display_options['allow']['link_to_view'] = 0;
+  $handler->display->display_options['allow']['more_link'] = 0;
+  $handler->display->display_options['allow']['path_override'] = 0;
+  $handler->display->display_options['allow']['title_override'] = 'title_override';
+  $handler->display->display_options['allow']['exposed_form'] = 0;
+  $handler->display->display_options['allow']['fields_override'] = 0;
+  $export['s5twtr'] = $view;
 
   $view = new view();
   $view->name = 's6';
