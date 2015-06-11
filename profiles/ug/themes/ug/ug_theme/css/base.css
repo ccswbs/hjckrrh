@@ -37,3 +37,11 @@ a[href] { text-decoration: underline; }
  */
 .fa { min-width: 1.8ex; text-align: center; }
 
+
+/*
+ * The Bootstrap theme does not use nested menus, but we need
+ * to have menu blocks that show multiple levels. Add extra styles
+ * to indent nested menus by 12px, and reduce the font size.
+ */
+.menu .menu { padding-left: 12px; font-size: 12px; }
+

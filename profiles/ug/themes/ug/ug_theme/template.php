@@ -8,11 +8,12 @@
 
 /**
  * Implements hook_menu_link__menu_block.
- * Calls the bootstrap menu_link theme function which
- * renders drop down menus for menu links with children.
+ * Use Drupal's default theme_menu_link for menu blocks. The Drupal
+ * theme provides its own menu_link theme function, but it renders
+ * submenus as drop down menus, and only to 2 levels.
  */
 function ug_theme_menu_link__menu_block(array $variables) {
-  return bootstrap_menu_link($variables);
+  return theme_menu_link($variables);
 }
 
 
