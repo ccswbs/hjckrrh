@@ -21,6 +21,9 @@ function ug_banner_strongarm() {
         'title' => array(
           'weight' => '-5',
         ),
+        'redirect' => array(
+          'weight' => '30',
+        ),
       ),
       'display' => array(),
     ),
