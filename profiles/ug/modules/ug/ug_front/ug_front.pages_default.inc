@@ -111,44 +111,6 @@ function ug_front_default_page_manager_pages() {
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-e32fe533-441a-4a29-8cd8-ae7a018a12f6';
-    $pane->panel = 'left';
-    $pane->type = 'views_panes';
-    $pane->subtype = 's5-panel_pane_1';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'link_to_view' => 0,
-      'more_link' => 0,
-      'use_pager' => 0,
-      'pager_id' => '0',
-      'items_per_page' => '3',
-      'offset' => '0',
-      'path' => '',
-      'fields_override' => array(
-        'title_1' => 1,
-        'timestamp' => 1,
-        'description' => 1,
-      ),
-      'override_title' => 1,
-      'override_title_text' => '<span class="fa fa-rss"></span> CBC News',
-      'override_title_heading' => 'h2',
-      'arguments' => array(
-        'fid' => '1',
-      ),
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 0;
-    $pane->locks = array();
-    $pane->uuid = 'e32fe533-441a-4a29-8cd8-ae7a018a12f6';
-    $display->content['new-e32fe533-441a-4a29-8cd8-ae7a018a12f6'] = $pane;
-    $display->panels['left'][0] = 'new-e32fe533-441a-4a29-8cd8-ae7a018a12f6';
-    $pane = new stdClass();
     $pane->pid = 'new-1027894c-128f-4486-91a4-842f5ca7d3be';
     $pane->panel = 'left';
     $pane->type = 'views';
@@ -178,11 +140,11 @@ function ug_front_default_page_manager_pages() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 1;
+    $pane->position = 0;
     $pane->locks = array();
     $pane->uuid = '1027894c-128f-4486-91a4-842f5ca7d3be';
     $display->content['new-1027894c-128f-4486-91a4-842f5ca7d3be'] = $pane;
-    $display->panels['left'][1] = 'new-1027894c-128f-4486-91a4-842f5ca7d3be';
+    $display->panels['left'][0] = 'new-1027894c-128f-4486-91a4-842f5ca7d3be';
     $pane = new stdClass();
     $pane->pid = 'new-5568fdab-d4d7-4e64-98b2-cf2ba466c7d6';
     $pane->panel = 'middle';

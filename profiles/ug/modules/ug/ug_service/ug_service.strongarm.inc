@@ -35,7 +35,7 @@ function ug_service_strongarm() {
           'weight' => '0',
         ),
         'redirect' => array(
-          'weight' => '9',
+          'weight' => '8',
         ),
       ),
       'display' => array(),

@@ -25,17 +25,25 @@ function ug_service_taxonomy_default_vocabularies() {
       'module' => 'taxonomy',
       'weight' => 0,
     ),
-    'service_headings' => array(
-      'name' => 'Service heading',
-      'machine_name' => 'service_headings',
+    'service_keywords' => array(
+      'name' => 'Service keywords',
+      'machine_name' => 'service_keywords',
       'description' => '',
       'hierarchy' => 0,
       'module' => 'taxonomy',
       'weight' => 0,
     ),
-    'service_keywords' => array(
-      'name' => 'Service keywords',
-      'machine_name' => 'service_keywords',
+    'service_private_heading' => array(
+      'name' => 'Service private heading',
+      'machine_name' => 'service_private_heading',
+      'description' => '',
+      'hierarchy' => 0,
+      'module' => 'taxonomy',
+      'weight' => 0,
+    ),
+    'service_public_heading' => array(
+      'name' => 'Service public heading',
+      'machine_name' => 'service_public_heading',
       'description' => '',
       'hierarchy' => 0,
       'module' => 'taxonomy',

@@ -123,7 +123,10 @@ function ug_service_default_page_manager_pages() {
   $page->admin_title = 'Services by audience';
   $page->admin_description = '';
   $page->path = 'services/audience';
-  $page->access = array();
+  $page->access = array(
+    'type' => 'none',
+    'settings' => NULL,
+  );
   $page->menu = array(
     'type' => 'tab',
     'title' => 'Services by audience',
@@ -223,7 +226,10 @@ function ug_service_default_page_manager_pages() {
   $page->admin_title = 'Services alphabetical';
   $page->admin_description = '';
   $page->path = 'services/alphabetical/!a';
-  $page->access = array();
+  $page->access = array(
+    'type' => 'none',
+    'settings' => NULL,
+  );
   $page->menu = array(
     'type' => 'tab',
     'title' => 'All Services (A-Z)',

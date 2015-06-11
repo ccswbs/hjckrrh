@@ -77,6 +77,17 @@ function ug_role_user_default_permissions() {
     'module' => 'redirect',
   );
 
+  // Exported permission: 'bypass node access'.
+  $permissions['bypass node access'] = array(
+    'name' => 'bypass node access',
+    'roles' => array(
+      'editor' => 'editor',
+      'moderator' => 'moderator',
+      'publisher' => 'publisher',
+    ),
+    'module' => 'node',
+  );
+
   // Exported permission: 'create url aliases'.
   $permissions['create url aliases'] = array(
     'name' => 'create url aliases',
@@ -101,6 +112,9 @@ function ug_role_user_default_permissions() {
     'name' => 'view own unpublished content',
     'roles' => array(
       'author' => 'author',
+      'editor' => 'editor',
+      'moderator' => 'moderator',
+      'publisher' => 'publisher',
     ),
     'module' => 'node',
   );
