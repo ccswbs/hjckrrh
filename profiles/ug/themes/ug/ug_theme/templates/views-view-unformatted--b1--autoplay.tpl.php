@@ -31,7 +31,7 @@
     <div class="col-sm-1 col-xs-3">
       <button class="btn btn-block slidesjs-previous" role="button">
         <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-        <span class="sr-only"><?php print t('Previous slide'); ?></span>
+        <span class="sr-only"><?php print t('Previous item'); ?></span>
       </button>
     </div>
     <div class="col-sm-2 col-xs-6">
@@ -43,7 +43,7 @@
     <div class="col-sm-1 col-xs-3">
       <button class="btn btn-block slidesjs-next" role="button">
         <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-        <span class="sr-only"><?php print t('Next slide'); ?></span>
+        <span class="sr-only"><?php print t('Next item'); ?></span>
       </button>
     </div>
   </div>
