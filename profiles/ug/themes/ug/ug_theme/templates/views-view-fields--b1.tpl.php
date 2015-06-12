@@ -7,6 +7,7 @@
  * - $title: Banner title.
  * - $image: Absolute URL of banner image.
  * - $link: URL for title link.
+ * - $text: banner text to display below title.
  *
  * Other variables:
  * - $view: The view in use.
@@ -31,5 +32,6 @@
 <img class="img-responsive"
      alt="<?php print $title; ?>"
      data-link="<?php print $link; ?>"
+     data-text="<?php print $text; ?>"
      src="<?php print $image; ?>"
 >

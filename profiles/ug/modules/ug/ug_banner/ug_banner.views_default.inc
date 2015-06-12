@@ -65,11 +65,20 @@ function ug_banner_views_default_views() {
   $handler->display->display_options['fields']['field_banner_link']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_banner_link']['click_sort_column'] = 'url';
   $handler->display->display_options['fields']['field_banner_link']['type'] = 'link_plain';
-  /* Sort criterion: Content: Post date */
-  $handler->display->display_options['sorts']['created']['id'] = 'created';
-  $handler->display->display_options['sorts']['created']['table'] = 'node';
-  $handler->display->display_options['sorts']['created']['field'] = 'created';
-  $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  /* Field: Content: Summary */
+  $handler->display->display_options['fields']['field_banner_text']['id'] = 'field_banner_text';
+  $handler->display->display_options['fields']['field_banner_text']['table'] = 'field_data_field_banner_text';
+  $handler->display->display_options['fields']['field_banner_text']['field'] = 'field_banner_text';
+  $handler->display->display_options['fields']['field_banner_text']['label'] = '';
+  $handler->display->display_options['fields']['field_banner_text']['element_label_colon'] = FALSE;
+  /* Sort criterion: Content: Order (field_banner_weight) */
+  $handler->display->display_options['sorts']['field_banner_weight_value']['id'] = 'field_banner_weight_value';
+  $handler->display->display_options['sorts']['field_banner_weight_value']['table'] = 'field_data_field_banner_weight';
+  $handler->display->display_options['sorts']['field_banner_weight_value']['field'] = 'field_banner_weight_value';
+  /* Sort criterion: Global: Random */
+  $handler->display->display_options['sorts']['random']['id'] = 'random';
+  $handler->display->display_options['sorts']['random']['table'] = 'views';
+  $handler->display->display_options['sorts']['random']['field'] = 'random';
   /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
