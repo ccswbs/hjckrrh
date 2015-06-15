@@ -29,9 +29,12 @@ function ug_theme_theme() {
 }
 
 
+function ug_theme_preprocess_image_style(&$vars) {
+  $vars['attributes']['class'][] = 'img-responsive';
+}
+
 /**
  * Outputs a responsive image.
- */
 function ug_theme_image($variables) {
   $attributes = $variables['attributes'];
   $attributes['src'] = file_create_url($variables['path']);
@@ -45,6 +48,7 @@ function ug_theme_image($variables) {
 
   return '<img' . drupal_attributes($attributes) . '/>';
 }
+ */
 
 
 /**
@@ -85,37 +89,6 @@ function ug_theme_preprocess_views_view_fields(&$vars) {
 
 
 /**
- * N1 - Listing page for multiple news articles.
- */
-function ug_theme_preprocess_views_view_fields__n1(&$vars) {
-  $vars['title']     = $vars['fields']['title']->content;
-  $vars['created']   = $vars['fields']['created']->content;
-  $vars['body']      = $vars['fields']['field_news_body']->content;
-  $vars['image']     = $vars['fields']['field_news_image']->content;
-}
-
-
-/**
- * N3 - Recent news teaser list.
- */
-function ug_theme_preprocess_views_view_fields__n3(&$vars) {
-  $vars['title']     = $vars['fields']['title']->content;
-  $vars['created']   = $vars['fields']['created']->content;
-}
-
-
-/**
- * E1 - Listing page for multiple events.
- */
-function ug_theme_preprocess_views_view_fields__e1(&$vars) {
-  $vars['title']    = $vars['fields']['title']->content;
-  $vars['date']     = $vars['fields']['field_event_date']->content;
-  $vars['image']    = $vars['fields']['field_event_image']->content;
-  $vars['body']     = $vars['fields']['field_event_body']->content;
-}
-
-
-/**
  * E2 - Detail page for single event.
  */
 function ug_theme_preprocess_views_view_fields__e2(&$vars) {
@@ -134,16 +107,6 @@ function ug_theme_preprocess_views_view_fields__e2(&$vars) {
   $vars['city']        = $vars['fields']['field_event_city']->content;
   $vars['category']    = $vars['fields']['field_event_category']->content;
 }
-
-
-/**
- * E3 - Upcoming events teaser list.
- */
-function ug_theme_preprocess_views_view_fields__e3(&$vars) {
-  $vars['title']    = $vars['fields']['title']->content;
-  $vars['date']     = $vars['fields']['field_event_date']->content;
-}
-
 
 
 /**
@@ -248,16 +211,6 @@ function ug_theme_preprocess_views_view_fields__s3(&$vars) {
   $vars['icon']     = theme('icon', array('bundle' => 'fa', 'icon' => $vars['network']));
 }
 
-
-/**
- * S4 - Follow us icons and names
- */
-function ug_theme_preprocess_views_view_fields__s4(&$vars) {
-  $vars['link']     = $vars['fields']['field_social_link']->content;
-  $vars['title']    = l($vars['fields']['title']->content, $vars['link']);
-  $vars['network']  = $vars['fields']['field_social_network']->content;
-  $vars['icon']     = theme('icon', array('bundle' => 'fa', 'icon' => $vars['network']));
-}
 
 
 /**

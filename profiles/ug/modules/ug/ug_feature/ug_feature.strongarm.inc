@@ -19,10 +19,10 @@ function ug_feature_strongarm() {
     'extra_fields' => array(
       'form' => array(
         'title' => array(
-          'weight' => '-5',
+          'weight' => '1',
         ),
         'redirect' => array(
-          'weight' => '30',
+          'weight' => '6',
         ),
       ),
       'display' => array(),

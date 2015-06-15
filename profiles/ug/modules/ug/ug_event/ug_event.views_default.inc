@@ -36,17 +36,21 @@ function ug_event_views_default_views() {
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
   $handler->display->display_options['fields']['title']['label'] = '';
+  $handler->display->display_options['fields']['title']['exclude'] = TRUE;
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+  $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
   /* Field: Content: Feature image */
   $handler->display->display_options['fields']['field_event_image']['id'] = 'field_event_image';
   $handler->display->display_options['fields']['field_event_image']['table'] = 'field_data_field_event_image';
   $handler->display->display_options['fields']['field_event_image']['field'] = 'field_event_image';
   $handler->display->display_options['fields']['field_event_image']['label'] = '';
+  $handler->display->display_options['fields']['field_event_image']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_event_image']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_event_image']['element_default_classes'] = FALSE;
   $handler->display->display_options['fields']['field_event_image']['click_sort_column'] = 'fid';
   $handler->display->display_options['fields']['field_event_image']['settings'] = array(
-    'image_style' => 'thumbnail',
+    'image_style' => 'large',
     'image_link' => '',
   );
   /* Field: Content: Date */
@@ -54,7 +58,9 @@ function ug_event_views_default_views() {
   $handler->display->display_options['fields']['field_event_date']['table'] = 'field_data_field_event_date';
   $handler->display->display_options['fields']['field_event_date']['field'] = 'field_event_date';
   $handler->display->display_options['fields']['field_event_date']['label'] = '';
-  $handler->display->display_options['fields']['field_event_date']['element_type'] = 'strong';
+  $handler->display->display_options['fields']['field_event_date']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_event_date']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['field_event_date']['alter']['text'] = '<div><strong>[field_event_date]</strong></div>';
   $handler->display->display_options['fields']['field_event_date']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_event_date']['element_default_classes'] = FALSE;
   $handler->display->display_options['fields']['field_event_date']['settings'] = array(
@@ -69,6 +75,7 @@ function ug_event_views_default_views() {
   $handler->display->display_options['fields']['field_event_body']['table'] = 'field_data_field_event_body';
   $handler->display->display_options['fields']['field_event_body']['field'] = 'field_event_body';
   $handler->display->display_options['fields']['field_event_body']['label'] = '';
+  $handler->display->display_options['fields']['field_event_body']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_event_body']['element_type'] = 'p';
   $handler->display->display_options['fields']['field_event_body']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_event_body']['element_default_classes'] = FALSE;
@@ -76,6 +83,18 @@ function ug_event_views_default_views() {
   $handler->display->display_options['fields']['field_event_body']['settings'] = array(
     'trim_length' => '255',
   );
+  /* Field: Global: Custom text */
+  $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['label'] = '';
+  $handler->display->display_options['fields']['nothing']['alter']['text'] = '<div class="row">
+  <div class="col-md-4">[field_event_image]</div>
+  <div class="col-md-8">[title][field_event_date][field_event_body]</div>
+</div>
+<hr/>
+';
+  $handler->display->display_options['fields']['nothing']['element_label_colon'] = FALSE;
   /* Sort criterion: Content: Date -  start date (field_event_date) */
   $handler->display->display_options['sorts']['field_event_date_value']['id'] = 'field_event_date_value';
   $handler->display->display_options['sorts']['field_event_date_value']['table'] = 'field_data_field_event_date';
@@ -370,6 +389,7 @@ function ug_event_views_default_views() {
   $handler->display->display_options['pager']['options']['items_per_page'] = '5';
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['style_plugin'] = 'default';
+  $handler->display->display_options['style_options']['row_class'] = 'media';
   $handler->display->display_options['style_options']['default_row_class'] = FALSE;
   $handler->display->display_options['style_options']['row_class_special'] = FALSE;
   $handler->display->display_options['row_plugin'] = 'fields';
@@ -380,8 +400,10 @@ function ug_event_views_default_views() {
   $handler->display->display_options['fields']['field_event_date']['field'] = 'field_event_date';
   $handler->display->display_options['fields']['field_event_date']['label'] = '';
   $handler->display->display_options['fields']['field_event_date']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_event_date']['element_wrapper_type'] = 'div';
+  $handler->display->display_options['fields']['field_event_date']['element_default_classes'] = FALSE;
   $handler->display->display_options['fields']['field_event_date']['settings'] = array(
-    'format_type' => 'event_date',
+    'format_type' => 'short',
     'fromto' => 'both',
     'multiple_number' => '',
     'multiple_from' => '',

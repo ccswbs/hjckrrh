@@ -10,11 +10,48 @@
 function ug_feature_field_default_field_instances() {
   $field_instances = array();
 
+  // Exported field_instance: 'node-feature-field_feature_category'
+  $field_instances['node-feature-field_feature_category'] = array(
+    'bundle' => 'feature',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'taxonomy',
+        'settings' => array(),
+        'type' => 'taxonomy_term_reference_link',
+        'weight' => 4,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_feature_category',
+    'label' => 'Category',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 4,
+    ),
+  );
+
   // Exported field_instance: 'node-feature-field_feature_image'
   $field_instances['node-feature-field_feature_image'] = array(
     'bundle' => 'feature',
     'deleted' => 0,
-    'description' => '',
+    'description' => 'The recommended image size is 760x570px.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -40,11 +77,11 @@ function ug_feature_field_default_field_instances() {
     'settings' => array(
       'alt_field' => 1,
       'default_image' => 0,
-      'file_directory' => '',
+      'file_directory' => 'field_feature_image',
       'file_extensions' => 'png gif jpg jpeg',
       'max_filesize' => '',
-      'max_resolution' => '',
-      'min_resolution' => '',
+      'max_resolution' => '1140x570',
+      'min_resolution' => '380x200',
       'title_field' => 0,
       'user_register_form' => FALSE,
     ),
@@ -56,7 +93,7 @@ function ug_feature_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'image_image',
-      'weight' => -4,
+      'weight' => 0,
     ),
   );
 
@@ -118,7 +155,52 @@ function ug_feature_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => -3,
+      'weight' => 2,
+    ),
+  );
+
+  // Exported field_instance: 'node-feature-field_feature_text'
+  $field_instances['node-feature-field_feature_text'] = array(
+    'bundle' => 'feature',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 3,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_feature_text',
+    'label' => 'Summary',
+    'required' => 0,
+    'settings' => array(
+      'linkit' => array(
+        'button_text' => 'Search',
+        'enable' => 0,
+        'profile' => '',
+      ),
+      'text_processing' => 1,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 5,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 3,
     ),
   );
 
@@ -158,15 +240,18 @@ function ug_feature_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'taxonomy_autocomplete',
-      'weight' => 32,
+      'weight' => 5,
     ),
   );
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('Category');
   t('Image');
   t('Keywords');
   t('Link');
+  t('Summary');
+  t('The recommended image size is 760x570px.');
 
   return $field_instances;
 }
