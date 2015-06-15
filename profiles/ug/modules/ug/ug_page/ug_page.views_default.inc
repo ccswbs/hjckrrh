@@ -50,7 +50,7 @@ function ug_page_views_default_views() {
   $handler->display->display_options['fields']['field_page_body']['field'] = 'field_page_body';
   $handler->display->display_options['fields']['field_page_body']['label'] = '';
   $handler->display->display_options['fields']['field_page_body']['element_label_colon'] = FALSE;
-  /* Field: Content: Caption */
+  /* Field: Broken/missing handler */
   $handler->display->display_options['fields']['field_page_caption']['id'] = 'field_page_caption';
   $handler->display->display_options['fields']['field_page_caption']['table'] = 'field_data_field_page_caption';
   $handler->display->display_options['fields']['field_page_caption']['field'] = 'field_page_caption';
@@ -65,17 +65,12 @@ function ug_page_views_default_views() {
   $handler->display->display_options['fields']['field_page_attachments']['click_sort_column'] = 'fid';
   $handler->display->display_options['fields']['field_page_attachments']['type'] = 'file_table';
   $handler->display->display_options['fields']['field_page_attachments']['delta_offset'] = '0';
-  /* Field: Content: Image */
+  /* Field: Broken/missing handler */
   $handler->display->display_options['fields']['field_page_image']['id'] = 'field_page_image';
   $handler->display->display_options['fields']['field_page_image']['table'] = 'field_data_field_page_image';
   $handler->display->display_options['fields']['field_page_image']['field'] = 'field_page_image';
   $handler->display->display_options['fields']['field_page_image']['label'] = '';
   $handler->display->display_options['fields']['field_page_image']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['field_page_image']['click_sort_column'] = 'fid';
-  $handler->display->display_options['fields']['field_page_image']['settings'] = array(
-    'image_style' => '',
-    'image_link' => '',
-  );
   /* Sort criterion: Content: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
