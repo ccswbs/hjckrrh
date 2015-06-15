@@ -110,16 +110,6 @@ function ug_theme_preprocess_views_view_fields__e2(&$vars) {
 
 
 /**
- * FT1 - Featured item
- */
-function ug_theme_preprocess_views_view_fields__ft1(&$vars) {
-  $vars['title']  = $vars['fields']['title']->content;
-  $vars['image']  = $vars['fields']['field_feature_image']->content;
-  $vars['link']   = $vars['fields']['field_feature_link']->content;
-}
-
-
-/**
  * P1 - Listing page for multiple people profiles.
  */
 function ug_theme_preprocess_views_view_fields__p1(&$vars) {
