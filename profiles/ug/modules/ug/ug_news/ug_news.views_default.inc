@@ -29,6 +29,7 @@ function ug_news_views_default_views() {
   $handler->display->display_options['exposed_form']['type'] = 'basic';
   $handler->display->display_options['pager']['type'] = 'full';
   $handler->display->display_options['style_plugin'] = 'default';
+  $handler->display->display_options['style_options']['row_class'] = 'row media';
   $handler->display->display_options['style_options']['default_row_class'] = FALSE;
   $handler->display->display_options['style_options']['row_class_special'] = FALSE;
   $handler->display->display_options['row_plugin'] = 'fields';
@@ -38,14 +39,15 @@ function ug_news_views_default_views() {
   $handler->display->display_options['fields']['field_news_image']['table'] = 'field_data_field_news_image';
   $handler->display->display_options['fields']['field_news_image']['field'] = 'field_news_image';
   $handler->display->display_options['fields']['field_news_image']['label'] = '';
-  $handler->display->display_options['fields']['field_news_image']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_news_image']['element_type'] = 'div';
+  $handler->display->display_options['fields']['field_news_image']['element_class'] = 'thumbnail';
   $handler->display->display_options['fields']['field_news_image']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_news_image']['element_wrapper_type'] = 'div';
   $handler->display->display_options['fields']['field_news_image']['element_wrapper_class'] = 'col-md-4';
   $handler->display->display_options['fields']['field_news_image']['element_default_classes'] = FALSE;
   $handler->display->display_options['fields']['field_news_image']['click_sort_column'] = 'fid';
   $handler->display->display_options['fields']['field_news_image']['settings'] = array(
-    'image_style' => 'medium',
+    'image_style' => 'large',
     'image_link' => '',
   );
   /* Field: Content: Title */
@@ -85,13 +87,12 @@ function ug_news_views_default_views() {
   $handler->display->display_options['fields']['nothing']['table'] = 'views';
   $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
   $handler->display->display_options['fields']['nothing']['label'] = '';
-  $handler->display->display_options['fields']['nothing']['alter']['text'] = '<div class="row">
-  <div class="col-md-4">[field_news_image]</div>
-  <div class="col-md-8">[title][created][field_news_body]</div>
-</div>
-<hr/>
+  $handler->display->display_options['fields']['nothing']['alter']['text'] = '[title][created][field_news_body]
+
 ';
   $handler->display->display_options['fields']['nothing']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['nothing']['element_wrapper_type'] = 'div';
+  $handler->display->display_options['fields']['nothing']['element_wrapper_class'] = 'col-md-8';
   $handler->display->display_options['fields']['nothing']['element_default_classes'] = FALSE;
   /* Sort criterion: Content: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
