@@ -33,6 +33,17 @@ function ug_feature_user_default_permissions() {
     'module' => 'node',
   );
 
+  // Exported permission: 'delete terms in feature_category'.
+  $permissions['delete terms in feature_category'] = array(
+    'name' => 'delete terms in feature_category',
+    'roles' => array(
+      'editor' => 'editor',
+      'moderator' => 'moderator',
+      'publisher' => 'publisher',
+    ),
+    'module' => 'taxonomy',
+  );
+
   // Exported permission: 'edit any feature content'.
   $permissions['edit any feature content'] = array(
     'name' => 'edit any feature content',
@@ -51,6 +62,17 @@ function ug_feature_user_default_permissions() {
       'author' => 'author',
     ),
     'module' => 'node',
+  );
+
+  // Exported permission: 'edit terms in feature_category'.
+  $permissions['edit terms in feature_category'] = array(
+    'name' => 'edit terms in feature_category',
+    'roles' => array(
+      'editor' => 'editor',
+      'moderator' => 'moderator',
+      'publisher' => 'publisher',
+    ),
+    'module' => 'taxonomy',
   );
 
   return $permissions;
