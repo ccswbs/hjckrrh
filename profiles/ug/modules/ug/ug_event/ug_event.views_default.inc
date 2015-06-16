@@ -48,11 +48,10 @@ function ug_event_views_default_views() {
   $handler->display->display_options['fields']['field_event_image']['table'] = 'field_data_field_event_image';
   $handler->display->display_options['fields']['field_event_image']['field'] = 'field_event_image';
   $handler->display->display_options['fields']['field_event_image']['label'] = '';
-  $handler->display->display_options['fields']['field_event_image']['element_type'] = 'div';
-  $handler->display->display_options['fields']['field_event_image']['element_class'] = 'thumbnail';
+  $handler->display->display_options['fields']['field_event_image']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_event_image']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['field_event_image']['alter']['text'] = '<div class="thumbnail">[field_event_image]</div>';
   $handler->display->display_options['fields']['field_event_image']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['field_event_image']['element_wrapper_type'] = 'div';
-  $handler->display->display_options['fields']['field_event_image']['element_wrapper_class'] = 'col-md-4';
   $handler->display->display_options['fields']['field_event_image']['element_default_classes'] = FALSE;
   $handler->display->display_options['fields']['field_event_image']['click_sort_column'] = 'fid';
   $handler->display->display_options['fields']['field_event_image']['settings'] = array(
@@ -94,12 +93,11 @@ function ug_event_views_default_views() {
   $handler->display->display_options['fields']['nothing']['table'] = 'views';
   $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
   $handler->display->display_options['fields']['nothing']['label'] = '';
-  $handler->display->display_options['fields']['nothing']['alter']['text'] = '[title][field_event_date][field_event_body]
+  $handler->display->display_options['fields']['nothing']['alter']['text'] = '<div class="col-md-4">[field_event_image]</div>
+<div class="col-md-8">[title][field_event_date][field_event_body]</div>
 
 ';
   $handler->display->display_options['fields']['nothing']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['nothing']['element_wrapper_type'] = 'div';
-  $handler->display->display_options['fields']['nothing']['element_wrapper_class'] = 'col-md-8';
   $handler->display->display_options['fields']['nothing']['element_default_classes'] = FALSE;
   /* Sort criterion: Content: Date -  start date (field_event_date) */
   $handler->display->display_options['sorts']['field_event_date_value']['id'] = 'field_event_date_value';
