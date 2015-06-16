@@ -1,0 +1,10 @@
+name = UG Image
+core = 7.x
+package = UG
+dependencies[] = image
+features[features_api][] = api:2
+features[image][] = banner
+features[image][] = small
+features[image][] = medium
+features[image][] = large
+features[image][] = thumbnail

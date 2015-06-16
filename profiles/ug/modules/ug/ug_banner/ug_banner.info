@@ -25,7 +25,6 @@ features[field_instance][] = node-banner-field_banner_link
 features[field_instance][] = node-banner-field_banner_text
 features[field_instance][] = node-banner-field_banner_weight
 features[field_instance][] = node-banner-field_tags
-features[image][] = banner
 features[node][] = banner
 features[user_permission][] = create banner content
 features[user_permission][] = delete any banner content

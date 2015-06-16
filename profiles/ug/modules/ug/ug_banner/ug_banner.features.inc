@@ -21,30 +21,6 @@ function ug_banner_views_api($module = NULL, $api = NULL) {
 }
 
 /**
- * Implements hook_image_default_styles().
- */
-function ug_banner_image_default_styles() {
-  $styles = array();
-
-  // Exported image style: banner.
-  $styles['banner'] = array(
-    'label' => 'Banner',
-    'effects' => array(
-      1 => array(
-        'name' => 'image_resize',
-        'data' => array(
-          'width' => 1140,
-          'height' => 320,
-        ),
-        'weight' => 1,
-      ),
-    ),
-  );
-
-  return $styles;
-}
-
-/**
  * Implements hook_node_info().
  */
 function ug_banner_node_info() {

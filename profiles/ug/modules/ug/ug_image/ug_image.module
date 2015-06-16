@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the ug_image feature.
+ */
+
+include_once 'ug_image.features.inc';

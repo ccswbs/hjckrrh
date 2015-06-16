@@ -45,7 +45,7 @@ function ug_feature_views_default_views() {
   $handler->display->display_options['fields']['field_feature_image']['element_default_classes'] = FALSE;
   $handler->display->display_options['fields']['field_feature_image']['click_sort_column'] = 'fid';
   $handler->display->display_options['fields']['field_feature_image']['settings'] = array(
-    'image_style' => 'large',
+    'image_style' => 'small',
     'image_link' => '',
   );
   /* Field: Content: Link */

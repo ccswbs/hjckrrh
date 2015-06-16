@@ -78,7 +78,7 @@ function ug_feature_default_page_manager_pages() {
     $pane->configuration = array(
       'items_per_page' => '10',
       'arguments' => array(
-        'field_feature_category_tid' => '',
+        'field_feature_category_tid' => '21',
       ),
       'override_title' => 0,
       'override_title_text' => '',
