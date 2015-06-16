@@ -32,7 +32,7 @@ function ug_news_strongarm() {
           'weight' => '0',
         ),
         'redirect' => array(
-          'weight' => '30',
+          'weight' => '9',
         ),
       ),
       'display' => array(),
