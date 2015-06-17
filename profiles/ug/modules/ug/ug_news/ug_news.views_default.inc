@@ -123,6 +123,8 @@ function ug_news_views_default_views() {
   $handler->display->display_options['arguments']['created_year_month']['id'] = 'created_year_month';
   $handler->display->display_options['arguments']['created_year_month']['table'] = 'node';
   $handler->display->display_options['arguments']['created_year_month']['field'] = 'created_year_month';
+  $handler->display->display_options['arguments']['created_year_month']['title_enable'] = TRUE;
+  $handler->display->display_options['arguments']['created_year_month']['title'] = 'News from %2';
   $handler->display->display_options['arguments']['created_year_month']['default_argument_type'] = 'raw';
   $handler->display->display_options['arguments']['created_year_month']['default_argument_options']['index'] = '1';
   $handler->display->display_options['arguments']['created_year_month']['summary']['number_of_records'] = '0';
