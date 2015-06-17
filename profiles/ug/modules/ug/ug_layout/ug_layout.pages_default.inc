@@ -98,6 +98,29 @@ function ug_layout_default_page_manager_handlers() {
     $display->content['new-b7f70136-5f5b-4806-b113-45fd60740023'] = $pane;
     $display->panels['left'][0] = 'new-b7f70136-5f5b-4806-b113-45fd60740023';
     $pane = new stdClass();
+    $pane->pid = 'new-d40c27a3-4e25-4684-90b9-00fc3f700ee4';
+    $pane->panel = 'left';
+    $pane->type = 'views_panes';
+    $pane->subtype = 'n7-panel_pane_1';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 1,
+      'override_title_text' => 'Find related news by keyword',
+      'override_title_heading' => 'h3',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 1;
+    $pane->locks = array();
+    $pane->uuid = 'd40c27a3-4e25-4684-90b9-00fc3f700ee4';
+    $display->content['new-d40c27a3-4e25-4684-90b9-00fc3f700ee4'] = $pane;
+    $display->panels['left'][1] = 'new-d40c27a3-4e25-4684-90b9-00fc3f700ee4';
+    $pane = new stdClass();
     $pane->pid = 'new-7a7badc9-4f28-4430-b81a-66538d9be30b';
     $pane->panel = 'right';
     $pane->type = 'views_panes';
