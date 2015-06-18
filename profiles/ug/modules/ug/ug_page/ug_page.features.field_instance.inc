@@ -136,7 +136,7 @@ function ug_page_field_default_field_instances() {
     'bundle' => 'page',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => 'Enter a comma separated list of keywords.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -174,6 +174,7 @@ function ug_page_field_default_field_instances() {
   // Translatables
   // Included for use with string extractors like potx.
   t('Body');
+  t('Enter a comma separated list of keywords.');
   t('File attachments');
   t('Keywords');
   t('Page category');
