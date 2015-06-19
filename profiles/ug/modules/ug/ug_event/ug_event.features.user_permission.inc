@@ -44,6 +44,17 @@ function ug_event_user_default_permissions() {
     'module' => 'taxonomy',
   );
 
+  // Exported permission: 'delete terms in event_heading'.
+  $permissions['delete terms in event_heading'] = array(
+    'name' => 'delete terms in event_heading',
+    'roles' => array(
+      'editor' => 'editor',
+      'moderator' => 'moderator',
+      'publisher' => 'publisher',
+    ),
+    'module' => 'taxonomy',
+  );
+
   // Exported permission: 'edit any event content'.
   $permissions['edit any event content'] = array(
     'name' => 'edit any event content',
@@ -67,6 +78,17 @@ function ug_event_user_default_permissions() {
   // Exported permission: 'edit terms in event_category'.
   $permissions['edit terms in event_category'] = array(
     'name' => 'edit terms in event_category',
+    'roles' => array(
+      'editor' => 'editor',
+      'moderator' => 'moderator',
+      'publisher' => 'publisher',
+    ),
+    'module' => 'taxonomy',
+  );
+
+  // Exported permission: 'edit terms in event_heading'.
+  $permissions['edit terms in event_heading'] = array(
+    'name' => 'edit terms in event_heading',
     'roles' => array(
       'editor' => 'editor',
       'moderator' => 'moderator',

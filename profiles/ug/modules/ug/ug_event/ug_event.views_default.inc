@@ -75,7 +75,7 @@ function ug_event_views_default_views() {
     'multiple_from' => '',
     'multiple_to' => '',
   );
-  /* Field: Content: Body */
+  /* Field: Broken/missing handler */
   $handler->display->display_options['fields']['field_event_body']['id'] = 'field_event_body';
   $handler->display->display_options['fields']['field_event_body']['table'] = 'field_data_field_event_body';
   $handler->display->display_options['fields']['field_event_body']['field'] = 'field_event_body';
@@ -84,10 +84,6 @@ function ug_event_views_default_views() {
   $handler->display->display_options['fields']['field_event_body']['element_type'] = 'p';
   $handler->display->display_options['fields']['field_event_body']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_event_body']['element_default_classes'] = FALSE;
-  $handler->display->display_options['fields']['field_event_body']['type'] = 'text_summary_or_trimmed';
-  $handler->display->display_options['fields']['field_event_body']['settings'] = array(
-    'trim_length' => '255',
-  );
   /* Field: Global: Custom text */
   $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
   $handler->display->display_options['fields']['nothing']['table'] = 'views';
@@ -221,25 +217,25 @@ function ug_event_views_default_views() {
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
   $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
-  /* Field: Content: Body */
+  /* Field: Broken/missing handler */
   $handler->display->display_options['fields']['field_event_body']['id'] = 'field_event_body';
   $handler->display->display_options['fields']['field_event_body']['table'] = 'field_data_field_event_body';
   $handler->display->display_options['fields']['field_event_body']['field'] = 'field_event_body';
   $handler->display->display_options['fields']['field_event_body']['label'] = '';
   $handler->display->display_options['fields']['field_event_body']['element_label_colon'] = FALSE;
-  /* Field: Content: Contact email */
+  /* Field: Broken/missing handler */
   $handler->display->display_options['fields']['field_event_email']['id'] = 'field_event_email';
   $handler->display->display_options['fields']['field_event_email']['table'] = 'field_data_field_event_email';
   $handler->display->display_options['fields']['field_event_email']['field'] = 'field_event_email';
   $handler->display->display_options['fields']['field_event_email']['label'] = '';
   $handler->display->display_options['fields']['field_event_email']['element_label_colon'] = FALSE;
-  /* Field: Content: Contact information */
+  /* Field: Broken/missing handler */
   $handler->display->display_options['fields']['field_event_contact']['id'] = 'field_event_contact';
   $handler->display->display_options['fields']['field_event_contact']['table'] = 'field_data_field_event_contact';
   $handler->display->display_options['fields']['field_event_contact']['field'] = 'field_event_contact';
   $handler->display->display_options['fields']['field_event_contact']['label'] = '';
   $handler->display->display_options['fields']['field_event_contact']['element_label_colon'] = FALSE;
-  /* Field: Content: Cost */
+  /* Field: Broken/missing handler */
   $handler->display->display_options['fields']['field_event_cost']['id'] = 'field_event_cost';
   $handler->display->display_options['fields']['field_event_cost']['table'] = 'field_data_field_event_cost';
   $handler->display->display_options['fields']['field_event_cost']['field'] = 'field_event_cost';
@@ -290,7 +286,7 @@ function ug_event_views_default_views() {
   $handler->display->display_options['fields']['field_event_location']['field'] = 'field_event_location';
   $handler->display->display_options['fields']['field_event_location']['label'] = '';
   $handler->display->display_options['fields']['field_event_location']['element_label_colon'] = FALSE;
-  /* Field: Content: More information URL */
+  /* Field: Content: Related website */
   $handler->display->display_options['fields']['field_event_link']['id'] = 'field_event_link';
   $handler->display->display_options['fields']['field_event_link']['table'] = 'field_data_field_event_link';
   $handler->display->display_options['fields']['field_event_link']['field'] = 'field_event_link';
@@ -304,13 +300,13 @@ function ug_event_views_default_views() {
   $handler->display->display_options['fields']['field_event_category']['label'] = '';
   $handler->display->display_options['fields']['field_event_category']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_event_category']['delta_offset'] = '0';
-  /* Field: Content: City */
+  /* Field: Broken/missing handler */
   $handler->display->display_options['fields']['field_event_city']['id'] = 'field_event_city';
   $handler->display->display_options['fields']['field_event_city']['table'] = 'field_data_field_event_city';
   $handler->display->display_options['fields']['field_event_city']['field'] = 'field_event_city';
   $handler->display->display_options['fields']['field_event_city']['label'] = '';
   $handler->display->display_options['fields']['field_event_city']['element_label_colon'] = FALSE;
-  /* Field: Content: Street address */
+  /* Field: Broken/missing handler */
   $handler->display->display_options['fields']['field_event_address']['id'] = 'field_event_address';
   $handler->display->display_options['fields']['field_event_address']['table'] = 'field_data_field_event_address';
   $handler->display->display_options['fields']['field_event_address']['field'] = 'field_event_address';
@@ -715,6 +711,88 @@ function ug_event_views_default_views() {
   $handler->display->display_options['allow']['fields_override'] = 0;
   $handler->display->display_options['inherit_panels_path'] = '0';
   $export['e9'] = $view;
+
+  $view = new view();
+  $view->name = 'event_multipart';
+  $view->description = '';
+  $view->tag = 'default';
+  $view->base_table = 'field_collection_item';
+  $view->human_name = 'Event multipart';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['access']['type'] = 'none';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['style_plugin'] = 'default';
+  $handler->display->display_options['row_plugin'] = 'fields';
+  /* Relationship: Field collection item: Entity with the Sections (field_event_multipart) */
+  $handler->display->display_options['relationships']['field_event_multipart_node']['id'] = 'field_event_multipart_node';
+  $handler->display->display_options['relationships']['field_event_multipart_node']['table'] = 'field_collection_item';
+  $handler->display->display_options['relationships']['field_event_multipart_node']['field'] = 'field_event_multipart_node';
+  $handler->display->display_options['relationships']['field_event_multipart_node']['required'] = TRUE;
+  /* Relationship: Field collection item: Heading (field_event_heading) */
+  $handler->display->display_options['relationships']['field_event_heading_tid']['id'] = 'field_event_heading_tid';
+  $handler->display->display_options['relationships']['field_event_heading_tid']['table'] = 'field_data_field_event_heading';
+  $handler->display->display_options['relationships']['field_event_heading_tid']['field'] = 'field_event_heading_tid';
+  /* Field: Taxonomy term: Icon */
+  $handler->display->display_options['fields']['field_glyphicon']['id'] = 'field_glyphicon';
+  $handler->display->display_options['fields']['field_glyphicon']['table'] = 'field_data_field_glyphicon';
+  $handler->display->display_options['fields']['field_glyphicon']['field'] = 'field_glyphicon';
+  $handler->display->display_options['fields']['field_glyphicon']['relationship'] = 'field_event_heading_tid';
+  $handler->display->display_options['fields']['field_glyphicon']['label'] = '';
+  $handler->display->display_options['fields']['field_glyphicon']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_glyphicon']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['field_glyphicon']['alter']['text'] = '<span class="glyphicon glyphicon-[field_glyphicon]"></span>';
+  $handler->display->display_options['fields']['field_glyphicon']['element_label_colon'] = FALSE;
+  /* Field: Field collection item: Heading */
+  $handler->display->display_options['fields']['field_event_heading']['id'] = 'field_event_heading';
+  $handler->display->display_options['fields']['field_event_heading']['table'] = 'field_data_field_event_heading';
+  $handler->display->display_options['fields']['field_event_heading']['field'] = 'field_event_heading';
+  $handler->display->display_options['fields']['field_event_heading']['label'] = '';
+  $handler->display->display_options['fields']['field_event_heading']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['field_event_heading']['alter']['text'] = '[field_glyphicon] [field_event_heading]';
+  $handler->display->display_options['fields']['field_event_heading']['element_type'] = 'h2';
+  $handler->display->display_options['fields']['field_event_heading']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_event_heading']['element_default_classes'] = FALSE;
+  $handler->display->display_options['fields']['field_event_heading']['type'] = 'taxonomy_term_reference_plain';
+  /* Field: Field collection item: Content */
+  $handler->display->display_options['fields']['field_event_content']['id'] = 'field_event_content';
+  $handler->display->display_options['fields']['field_event_content']['table'] = 'field_data_field_event_content';
+  $handler->display->display_options['fields']['field_event_content']['field'] = 'field_event_content';
+  $handler->display->display_options['fields']['field_event_content']['label'] = '';
+  $handler->display->display_options['fields']['field_event_content']['element_label_colon'] = FALSE;
+  /* Contextual filter: Content: Nid */
+  $handler->display->display_options['arguments']['nid']['id'] = 'nid';
+  $handler->display->display_options['arguments']['nid']['table'] = 'node';
+  $handler->display->display_options['arguments']['nid']['field'] = 'nid';
+  $handler->display->display_options['arguments']['nid']['relationship'] = 'field_event_multipart_node';
+  $handler->display->display_options['arguments']['nid']['default_action'] = 'not found';
+  $handler->display->display_options['arguments']['nid']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['nid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['nid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['nid']['summary_options']['items_per_page'] = '25';
+
+  /* Display: Content pane */
+  $handler = $view->new_display('panel_pane', 'Content pane', 'panel_pane_1');
+  $handler->display->display_options['argument_input'] = array(
+    'nid' => array(
+      'type' => 'panel',
+      'context' => 'entity:file.fid',
+      'context_optional' => 0,
+      'panel' => '0',
+      'fixed' => '',
+      'label' => 'Content: Nid',
+    ),
+  );
+  $export['event_multipart'] = $view;
 
   return $export;
 }

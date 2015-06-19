@@ -17,5 +17,13 @@ function ug_event_taxonomy_default_vocabularies() {
       'module' => 'taxonomy',
       'weight' => 0,
     ),
+    'event_heading' => array(
+      'name' => 'Event heading',
+      'machine_name' => 'event_heading',
+      'description' => '',
+      'hierarchy' => 0,
+      'module' => 'taxonomy',
+      'weight' => 0,
+    ),
   );
 }

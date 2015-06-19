@@ -48,7 +48,7 @@ function ug_page_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'file_generic',
-      'weight' => 0,
+      'weight' => 3,
     ),
   );
 
@@ -90,7 +90,7 @@ function ug_page_field_default_field_instances() {
         'summary_rows' => 5,
       ),
       'type' => 'text_textarea_with_summary',
-      'weight' => -3,
+      'weight' => 2,
     ),
   );
 
@@ -127,7 +127,7 @@ function ug_page_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 31,
+      'weight' => 1,
     ),
   );
 
@@ -167,7 +167,7 @@ function ug_page_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'taxonomy_autocomplete',
-      'weight' => 33,
+      'weight' => 4,
     ),
   );
 

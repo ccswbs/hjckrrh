@@ -39,7 +39,7 @@ function ug_event_strongarm() {
           'weight' => '0',
         ),
         'redirect' => array(
-          'weight' => '13',
+          'weight' => '11',
         ),
       ),
       'display' => array(),

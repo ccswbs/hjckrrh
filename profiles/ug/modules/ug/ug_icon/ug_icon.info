@@ -1,0 +1,7 @@
+name = ug_icon
+core = 7.x
+package = Features
+dependencies[] = features
+dependencies[] = list
+features[features_api][] = api:2
+features[field_base][] = field_glyphicon
