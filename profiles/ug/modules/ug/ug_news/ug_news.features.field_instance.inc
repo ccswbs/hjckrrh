@@ -48,7 +48,7 @@ function ug_news_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'file_generic',
-      'weight' => 5,
+      'weight' => 6,
     ),
   );
 
@@ -90,7 +90,7 @@ function ug_news_field_default_field_instances() {
         'summary_rows' => 5,
       ),
       'type' => 'text_textarea_with_summary',
-      'weight' => 1,
+      'weight' => 3,
     ),
   );
 
@@ -130,7 +130,7 @@ function ug_news_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 4,
+      'weight' => 5,
     ),
   );
 
@@ -180,7 +180,7 @@ function ug_news_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'image_image',
-      'weight' => 3,
+      'weight' => 4,
     ),
   );
 
@@ -237,7 +237,7 @@ function ug_news_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 6,
+      'weight' => 7,
     ),
   );
 
@@ -277,7 +277,7 @@ function ug_news_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'options_select',
-      'weight' => 7,
+      'weight' => 1,
     ),
   );
 
@@ -326,7 +326,7 @@ function ug_news_field_default_field_instances() {
     'bundle' => 'news',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => 'Enter a comma separated list of keywords.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -366,6 +366,7 @@ function ug_news_field_default_field_instances() {
   t('Attachment');
   t('Body');
   t('Category');
+  t('Enter a comma separated list of keywords.');
   t('Feature image');
   t('Feature image caption');
   t('Keywords');
