@@ -22,6 +22,7 @@ dependencies[] = toolbar
 dependencies[] = ug_date_format
 dependencies[] = ug_event
 dependencies[] = ug_front
+dependencies[] = ug_image
 dependencies[] = ug_layout
 dependencies[] = ug_page
 dependencies[] = ug_social

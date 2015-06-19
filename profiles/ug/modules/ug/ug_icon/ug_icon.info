@@ -1,6 +1,6 @@
-name = ug_icon
+name = UG Icon
 core = 7.x
-package = Features
+package = UG
 dependencies[] = features
 dependencies[] = list
 features[features_api][] = api:2
