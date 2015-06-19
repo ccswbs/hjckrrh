@@ -16,7 +16,10 @@ function ug_feature_default_page_manager_pages() {
   $page->admin_title = 'Features';
   $page->admin_description = '';
   $page->path = 'features';
-  $page->access = array();
+  $page->access = array(
+    'type' => 'none',
+    'settings' => NULL,
+  );
   $page->menu = array();
   $page->arguments = array();
   $page->conf = array(
