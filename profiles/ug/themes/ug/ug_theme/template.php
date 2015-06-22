@@ -177,6 +177,7 @@ function ug_theme_preprocess_views_view_fields__b1(&$vars) {
   $vars['image'] = $vars['fields']['field_banner_image']->content;
   $vars['link']  = $vars['fields']['field_banner_link']->content;
   $vars['text']  = $vars['fields']['field_banner_text']->content;
+  $vars['alt']   = $vars['fields']['field_banner_alttext']->content;
 }
 
 

@@ -9,7 +9,7 @@
   <?php foreach ($rows as $id => $row): ?>
     <?php print $row; ?>
   <?php endforeach; ?>
-  <div class="row slidesjs-navigation">
+  <div class="row slidesjs-navigation slidesjs-navigation-bottom">
     <div class="col-sm-8 col-xsdk-9">
         <a href="#" class="slidesjs-slide-link slidesjs-slide-title"></a>
         <p class="slidesjs-slide-text"></p>
@@ -42,7 +42,7 @@
     function update(number) {
       var active = $('.slidesjs-control').children()[number-1];
       $('.slidesjs-slide-number').text(number);
-      $('.slidesjs-slide-title').text($(active).attr('alt'));
+      $('.slidesjs-slide-title').text($(active).data('title'));
       $('.slidesjs-slide-link').attr('href', $(active).data('link'));
       $('.slidesjs-slide-text').text($(active).data('text'));
     }

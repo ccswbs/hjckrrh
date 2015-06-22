@@ -71,6 +71,12 @@ function ug_banner_views_default_views() {
   $handler->display->display_options['fields']['field_banner_text']['field'] = 'field_banner_text';
   $handler->display->display_options['fields']['field_banner_text']['label'] = '';
   $handler->display->display_options['fields']['field_banner_text']['element_label_colon'] = FALSE;
+  /* Field: Content: Alt text */
+  $handler->display->display_options['fields']['field_banner_alttext']['id'] = 'field_banner_alttext';
+  $handler->display->display_options['fields']['field_banner_alttext']['table'] = 'field_data_field_banner_alttext';
+  $handler->display->display_options['fields']['field_banner_alttext']['field'] = 'field_banner_alttext';
+  $handler->display->display_options['fields']['field_banner_alttext']['label'] = '';
+  $handler->display->display_options['fields']['field_banner_alttext']['element_label_colon'] = FALSE;
   /* Sort criterion: Content: Order (field_banner_weight) */
   $handler->display->display_options['sorts']['field_banner_weight_value']['id'] = 'field_banner_weight_value';
   $handler->display->display_options['sorts']['field_banner_weight_value']['table'] = 'field_data_field_banner_weight';

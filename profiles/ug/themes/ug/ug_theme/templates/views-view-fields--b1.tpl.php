@@ -30,7 +30,8 @@
  */
 ?>
 <img class="img-responsive"
-     alt="<?php print $title; ?>"
+     alt="<?php print $alt; ?>"
+     data-title="<?php print $title; ?>"
      data-link="<?php print $link; ?>"
      data-text="<?php print $text; ?>"
      src="<?php print $image; ?>"
