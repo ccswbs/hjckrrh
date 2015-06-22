@@ -15,7 +15,7 @@ function ug_event_default_page_manager_pages() {
   $page->task = 'page';
   $page->admin_title = 'Upcoming Events';
   $page->admin_description = '';
-  $page->path = 'events/upcoming';
+  $page->path = 'events/upcoming/!tid';
   $page->access = array(
     'type' => 'none',
     'settings' => NULL,
@@ -32,7 +32,27 @@ function ug_event_default_page_manager_pages() {
       'weight' => '0',
     ),
   );
-  $page->arguments = array();
+  $page->arguments = array(
+    'tid' => array(
+      'id' => 1,
+      'identifier' => 'Taxonomy term: ID',
+      'name' => 'term',
+      'settings' => array(
+        'input_form' => 'tid',
+        'vids' => array(
+          1 => '1',
+          2 => 0,
+          3 => 0,
+          7 => 0,
+          4 => 0,
+          5 => 0,
+          6 => 0,
+        ),
+        'breadcrumb' => 1,
+        'transform' => 0,
+      ),
+    ),
+  );
   $page->conf = array(
     'admin_paths' => FALSE,
   );
