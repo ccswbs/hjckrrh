@@ -75,22 +75,20 @@ function ug_event_views_default_views() {
     'multiple_from' => '',
     'multiple_to' => '',
   );
-  /* Field: Broken/missing handler */
-  $handler->display->display_options['fields']['field_event_body']['id'] = 'field_event_body';
-  $handler->display->display_options['fields']['field_event_body']['table'] = 'field_data_field_event_body';
-  $handler->display->display_options['fields']['field_event_body']['field'] = 'field_event_body';
-  $handler->display->display_options['fields']['field_event_body']['label'] = '';
-  $handler->display->display_options['fields']['field_event_body']['exclude'] = TRUE;
-  $handler->display->display_options['fields']['field_event_body']['element_type'] = 'p';
-  $handler->display->display_options['fields']['field_event_body']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['field_event_body']['element_default_classes'] = FALSE;
+  /* Field: Content: Summary */
+  $handler->display->display_options['fields']['field_event_summary']['id'] = 'field_event_summary';
+  $handler->display->display_options['fields']['field_event_summary']['table'] = 'field_data_field_event_summary';
+  $handler->display->display_options['fields']['field_event_summary']['field'] = 'field_event_summary';
+  $handler->display->display_options['fields']['field_event_summary']['label'] = '';
+  $handler->display->display_options['fields']['field_event_summary']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_event_summary']['element_label_colon'] = FALSE;
   /* Field: Global: Custom text */
   $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
   $handler->display->display_options['fields']['nothing']['table'] = 'views';
   $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
   $handler->display->display_options['fields']['nothing']['label'] = '';
   $handler->display->display_options['fields']['nothing']['alter']['text'] = '<div class="col-md-4">[field_event_image]</div>
-<div class="col-md-8">[title][field_event_date][field_event_body]</div>
+<div class="col-md-8">[title][field_event_date][field_event_summary]</div>
 
 ';
   $handler->display->display_options['fields']['nothing']['element_label_colon'] = FALSE;
