@@ -943,6 +943,8 @@ function ug_news_views_default_views() {
   $handler->display->display_options['fields']['field_news_writer']['table'] = 'field_data_field_news_writer';
   $handler->display->display_options['fields']['field_news_writer']['field'] = 'field_news_writer';
   $handler->display->display_options['fields']['field_news_writer']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_news_writer']['hide_empty'] = TRUE;
+  $handler->display->display_options['fields']['field_news_writer']['hide_alter_empty'] = FALSE;
   /* Contextual filter: Content: Nid */
   $handler->display->display_options['arguments']['nid']['id'] = 'nid';
   $handler->display->display_options['arguments']['nid']['table'] = 'node';

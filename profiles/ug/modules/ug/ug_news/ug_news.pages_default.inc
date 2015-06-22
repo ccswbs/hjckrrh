@@ -172,7 +172,10 @@ function ug_news_default_page_manager_pages() {
   $page->admin_title = 'News archive';
   $page->admin_description = '';
   $page->path = 'news/archive/%date';
-  $page->access = array();
+  $page->access = array(
+    'type' => 'none',
+    'settings' => NULL,
+  );
   $page->menu = array();
   $page->arguments = array(
     'date' => array(
@@ -300,7 +303,10 @@ function ug_news_default_page_manager_pages() {
   $page->admin_title = 'News category';
   $page->admin_description = '';
   $page->path = 'news/category/%category';
-  $page->access = array();
+  $page->access = array(
+    'type' => 'none',
+    'settings' => NULL,
+  );
   $page->menu = array();
   $page->arguments = array(
     'category' => array(
