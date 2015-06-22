@@ -19,7 +19,10 @@ function ug_social_strongarm() {
     'extra_fields' => array(
       'form' => array(
         'title' => array(
-          'weight' => '-5',
+          'weight' => '0',
+        ),
+        'redirect' => array(
+          'weight' => '4',
         ),
       ),
       'display' => array(),
