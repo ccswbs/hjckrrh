@@ -64,7 +64,7 @@
     }
     $('#slides').slidesjs({
       width: 1140,
-      height: 334,
+      height: 292,
       play: {
         auto: <?php print $slide_count > 1 ? 'true' : 'false'; ?>,
         interval: 6000,
