@@ -269,11 +269,22 @@ function ug_feature_views_default_views() {
   $handler->display->display_options['pager']['options']['items_per_page'] = '3';
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['style_plugin'] = 'default';
-  $handler->display->display_options['style_options']['row_class'] = 'row media';
   $handler->display->display_options['style_options']['default_row_class'] = FALSE;
   $handler->display->display_options['style_options']['row_class_special'] = FALSE;
   $handler->display->display_options['row_plugin'] = 'fields';
   $handler->display->display_options['row_options']['default_field_elements'] = FALSE;
+  /* Field: Content: Image */
+  $handler->display->display_options['fields']['field_feature_image']['id'] = 'field_feature_image';
+  $handler->display->display_options['fields']['field_feature_image']['table'] = 'field_data_field_feature_image';
+  $handler->display->display_options['fields']['field_feature_image']['field'] = 'field_feature_image';
+  $handler->display->display_options['fields']['field_feature_image']['label'] = '';
+  $handler->display->display_options['fields']['field_feature_image']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_feature_image']['element_default_classes'] = FALSE;
+  $handler->display->display_options['fields']['field_feature_image']['click_sort_column'] = 'fid';
+  $handler->display->display_options['fields']['field_feature_image']['settings'] = array(
+    'image_style' => 'medium',
+    'image_link' => '',
+  );
   /* Field: Content: Link */
   $handler->display->display_options['fields']['field_feature_link']['id'] = 'field_feature_link';
   $handler->display->display_options['fields']['field_feature_link']['table'] = 'field_data_field_feature_link';
@@ -283,30 +294,11 @@ function ug_feature_views_default_views() {
   $handler->display->display_options['fields']['field_feature_link']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_feature_link']['click_sort_column'] = 'url';
   $handler->display->display_options['fields']['field_feature_link']['type'] = 'link_plain';
-  /* Field: Content: Image */
-  $handler->display->display_options['fields']['field_feature_image']['id'] = 'field_feature_image';
-  $handler->display->display_options['fields']['field_feature_image']['table'] = 'field_data_field_feature_image';
-  $handler->display->display_options['fields']['field_feature_image']['field'] = 'field_feature_image';
-  $handler->display->display_options['fields']['field_feature_image']['label'] = '';
-  $handler->display->display_options['fields']['field_feature_image']['element_type'] = 'div';
-  $handler->display->display_options['fields']['field_feature_image']['element_class'] = 'thumbnail';
-  $handler->display->display_options['fields']['field_feature_image']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['field_feature_image']['element_wrapper_type'] = 'div';
-  $handler->display->display_options['fields']['field_feature_image']['element_wrapper_class'] = 'col-md-4';
-  $handler->display->display_options['fields']['field_feature_image']['element_default_classes'] = FALSE;
-  $handler->display->display_options['fields']['field_feature_image']['click_sort_column'] = 'fid';
-  $handler->display->display_options['fields']['field_feature_image']['settings'] = array(
-    'image_style' => 'medium',
-    'image_link' => '',
-  );
   /* Field: Content: Title */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
   $handler->display->display_options['fields']['title']['label'] = '';
-  $handler->display->display_options['fields']['title']['exclude'] = TRUE;
-  $handler->display->display_options['fields']['title']['alter']['alter_text'] = TRUE;
-  $handler->display->display_options['fields']['title']['alter']['text'] = '<p class="media-heading">[title]</p>';
   $handler->display->display_options['fields']['title']['alter']['make_link'] = TRUE;
   $handler->display->display_options['fields']['title']['alter']['path'] = '[field_feature_link]';
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
@@ -319,22 +311,11 @@ function ug_feature_views_default_views() {
   $handler->display->display_options['fields']['field_feature_text']['table'] = 'field_data_field_feature_text';
   $handler->display->display_options['fields']['field_feature_text']['field'] = 'field_feature_text';
   $handler->display->display_options['fields']['field_feature_text']['label'] = '';
-  $handler->display->display_options['fields']['field_feature_text']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_feature_text']['alter']['max_length'] = '80';
   $handler->display->display_options['fields']['field_feature_text']['alter']['trim'] = TRUE;
   $handler->display->display_options['fields']['field_feature_text']['alter']['html'] = TRUE;
   $handler->display->display_options['fields']['field_feature_text']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_feature_text']['element_default_classes'] = FALSE;
-  /* Field: Global: Custom text */
-  $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
-  $handler->display->display_options['fields']['nothing']['table'] = 'views';
-  $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
-  $handler->display->display_options['fields']['nothing']['label'] = '';
-  $handler->display->display_options['fields']['nothing']['alter']['text'] = '[title][field_feature_text]';
-  $handler->display->display_options['fields']['nothing']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['nothing']['element_wrapper_type'] = 'div';
-  $handler->display->display_options['fields']['nothing']['element_wrapper_class'] = 'col-md-8';
-  $handler->display->display_options['fields']['nothing']['element_default_classes'] = FALSE;
   /* Sort criterion: Content: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
