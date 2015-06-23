@@ -10,27 +10,6 @@
 function ug_profile_field_default_field_bases() {
   $field_bases = array();
 
-  // Exported field_base: 'field_profile_about'
-  $field_bases['field_profile_about'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_profile_about',
-    'indexes' => array(
-      'format' => array(
-        0 => 'format',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'text',
-    'settings' => array(
-      'profile2_private' => 0,
-    ),
-    'translatable' => 0,
-    'type' => 'text_long',
-  );
-
   // Exported field_base: 'field_profile_address'
   $field_bases['field_profile_address'] = array(
     'active' => 1,
@@ -55,7 +34,7 @@ function ug_profile_field_default_field_bases() {
   // Exported field_base: 'field_profile_attachments'
   $field_bases['field_profile_attachments'] = array(
     'active' => 1,
-    'cardinality' => 10,
+    'cardinality' => -1,
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_profile_attachments',
@@ -76,13 +55,13 @@ function ug_profile_field_default_field_bases() {
     'type' => 'file',
   );
 
-  // Exported field_base: 'field_profile_building'
-  $field_bases['field_profile_building'] = array(
+  // Exported field_base: 'field_profile_caption'
+  $field_bases['field_profile_caption'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_profile_building',
+    'field_name' => 'field_profile_caption',
     'indexes' => array(
       'format' => array(
         0 => 'format',
@@ -98,13 +77,13 @@ function ug_profile_field_default_field_bases() {
     'type' => 'text',
   );
 
-  // Exported field_base: 'field_profile_education'
-  $field_bases['field_profile_education'] = array(
+  // Exported field_base: 'field_profile_content'
+  $field_bases['field_profile_content'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_profile_education',
+    'field_name' => 'field_profile_content',
     'indexes' => array(
       'format' => array(
         0 => 'format',
@@ -113,7 +92,7 @@ function ug_profile_field_default_field_bases() {
     'locked' => 0,
     'module' => 'text',
     'settings' => array(
-      'profile2_private' => 0,
+      'profile2_private' => FALSE,
     ),
     'translatable' => 0,
     'type' => 'text_long',
@@ -161,6 +140,33 @@ function ug_profile_field_default_field_bases() {
     ),
     'translatable' => 0,
     'type' => 'text',
+  );
+
+  // Exported field_base: 'field_profile_heading'
+  $field_bases['field_profile_heading'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_profile_heading',
+    'indexes' => array(
+      'tid' => array(
+        0 => 'tid',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'taxonomy',
+    'settings' => array(
+      'allowed_values' => array(
+        0 => array(
+          'vocabulary' => 'profile_field_headings',
+          'parent' => 0,
+        ),
+      ),
+      'profile2_private' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'taxonomy_term_reference',
   );
 
   // Exported field_base: 'field_profile_image'
@@ -230,6 +236,29 @@ function ug_profile_field_default_field_bases() {
     'type' => 'text',
   );
 
+  // Exported field_base: 'field_profile_multipart'
+  $field_bases['field_profile_multipart'] = array(
+    'active' => 1,
+    'cardinality' => -1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_profile_multipart',
+    'indexes' => array(
+      'revision_id' => array(
+        0 => 'revision_id',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'field_collection',
+    'settings' => array(
+      'hide_blank_items' => 1,
+      'path' => '',
+      'profile2_private' => 0,
+    ),
+    'translatable' => 0,
+    'type' => 'field_collection',
+  );
+
   // Exported field_base: 'field_profile_name'
   $field_bases['field_profile_name'] = array(
     'active' => 1,
@@ -252,46 +281,31 @@ function ug_profile_field_default_field_bases() {
     'type' => 'text',
   );
 
-  // Exported field_base: 'field_profile_publications'
-  $field_bases['field_profile_publications'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_profile_publications',
-    'indexes' => array(
-      'format' => array(
-        0 => 'format',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'text',
-    'settings' => array(
-      'profile2_private' => 0,
-    ),
-    'translatable' => 0,
-    'type' => 'text_long',
-  );
-
   // Exported field_base: 'field_profile_research'
   $field_bases['field_profile_research'] = array(
     'active' => 1,
-    'cardinality' => 1,
+    'cardinality' => -1,
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_profile_research',
     'indexes' => array(
-      'format' => array(
-        0 => 'format',
+      'tid' => array(
+        0 => 'tid',
       ),
     ),
     'locked' => 0,
-    'module' => 'text',
+    'module' => 'taxonomy',
     'settings' => array(
+      'allowed_values' => array(
+        0 => array(
+          'vocabulary' => 'profile_research',
+          'parent' => 0,
+        ),
+      ),
       'profile2_private' => 0,
     ),
     'translatable' => 0,
-    'type' => 'text_long',
+    'type' => 'taxonomy_term_reference',
   );
 
   // Exported field_base: 'field_profile_role'
@@ -368,6 +382,28 @@ function ug_profile_field_default_field_bases() {
     ),
     'translatable' => 0,
     'type' => 'taxonomy_term_reference',
+  );
+
+  // Exported field_base: 'field_profile_summary'
+  $field_bases['field_profile_summary'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_profile_summary',
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(
+      'max_length' => 255,
+      'profile2_private' => 0,
+    ),
+    'translatable' => 0,
+    'type' => 'text',
   );
 
   // Exported field_base: 'field_profile_telephonenumber'

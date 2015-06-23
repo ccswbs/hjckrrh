@@ -13,14 +13,9 @@
  * - $subunit: the person's sub-unit.
  * - $phone: the person's telephone number.
  * - $email: the person's email address. 
- * - $building: office building.
  * - $room: room number.
  * - $lab: lab number.
  * - $website: website link.
- * - $about: person's bio.
- * - $education: person's education.
- * - $research: person's research.
- * - $publications: a list of publications
  * - $attachments: files attached to faculty profile.
  *
  * Other variables:
@@ -46,7 +41,7 @@
 
 <div class="row">
   <div class="col-md-4">
-    <img class="img-responsive" src="<?php print $image; ?>"/>
+    <?php print $image; ?>
   </div>
   <div class="col-md-8">
     <p class='h3'>
@@ -69,9 +64,9 @@
       <?php print t("<span class='text-muted'>@label: </span>", array('@label' => 'Fax')); ?>
       <?php print $fax; ?><br/>
     <?php endif; ?>
-    <?php if ($building && $room): ?>
+    <?php if ($room): ?>
       <?php print t("<span class='text-muted'>@label: </span>", array('@label' => 'Office')); ?>
-      <?php print $building.', '.$room; ?><br/>
+      <?php print $room; ?><br/>
     <?php endif; ?>
     <?php if ($lab): ?>
       <?php print t("<span class='text-muted'>@label: </span>", array('@label' => 'Lab')); ?>
@@ -83,24 +78,4 @@
     <?php endif; ?>
   </div>
 </div>
-<?php if ($about): ?>
-  <h2><?php print t('About'); ?></h2>
-  <?php print $about; ?>
-<?php endif; ?>
-<?php if ($education): ?>
-  <h2><?php print t('Education'); ?></h2>
-  <?php print $education; ?>
-<?php endif; ?>
-<?php if ($publications): ?>
-  <h2><?php print t('Publications'); ?></h2>
-  <?php print $publications; ?>
-<?php endif; ?>
-<?php if ($research): ?>
-  <h2><?php print t('Research'); ?></h2>
-  <?php print $research; ?>
-<?php endif; ?>
-<?php if ($attachments): ?>
-  <h2><?php print t('Relevant Files'); ?></h2>
-  <?php print $attachments; ?>
-<?php endif; ?>
 

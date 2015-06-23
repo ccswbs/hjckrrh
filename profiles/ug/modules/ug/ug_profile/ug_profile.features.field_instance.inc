@@ -10,9 +10,10 @@
 function ug_profile_field_default_field_instances() {
   $field_instances = array();
 
-  // Exported field_instance: 'profile2-faculty-field_profile_about'
-  $field_instances['profile2-faculty-field_profile_about'] = array(
-    'bundle' => 'faculty',
+  // Exported field_instance:
+  // 'field_collection_item-field_profile_multipart-field_profile_content'
+  $field_instances['field_collection_item-field_profile_multipart-field_profile_content'] = array(
+    'bundle' => 'field_profile_multipart',
     'default_value' => NULL,
     'deleted' => 0,
     'description' => '',
@@ -22,85 +23,15 @@ function ug_profile_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 4,
+        'weight' => 1,
       ),
     ),
-    'entity_type' => 'profile2',
-    'field_name' => 'field_profile_about',
-    'label' => 'About',
+    'entity_type' => 'field_collection_item',
+    'field_name' => 'field_profile_content',
+    'label' => 'Content',
     'required' => 0,
     'settings' => array(
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'rows' => 5,
-      ),
-      'type' => 'text_textarea',
-      'weight' => 1,
-    ),
-  );
-
-  // Exported field_instance: 'profile2-faculty-field_profile_attachments'
-  $field_instances['profile2-faculty-field_profile_attachments'] = array(
-    'bundle' => 'faculty',
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'file',
-        'settings' => array(),
-        'type' => 'file_default',
-        'weight' => 11,
-      ),
-    ),
-    'entity_type' => 'profile2',
-    'field_name' => 'field_profile_attachments',
-    'label' => 'File attachments',
-    'required' => 0,
-    'settings' => array(
-      'description_field' => 0,
-      'file_directory' => '',
-      'file_extensions' => 'txt',
-      'max_filesize' => '',
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'file',
-      'settings' => array(
-        'progress_indicator' => 'throbber',
-      ),
-      'type' => 'file_generic',
-      'weight' => 6,
-    ),
-  );
-
-  // Exported field_instance: 'profile2-faculty-field_profile_education'
-  $field_instances['profile2-faculty-field_profile_education'] = array(
-    'bundle' => 'faculty',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 5,
-      ),
-    ),
-    'entity_type' => 'profile2',
-    'field_name' => 'field_profile_education',
-    'label' => 'Education',
-    'required' => 0,
-    'settings' => array(
-      'text_processing' => 0,
+      'text_processing' => 1,
       'user_register_form' => FALSE,
     ),
     'widget' => array(
@@ -114,115 +45,35 @@ function ug_profile_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'profile2-faculty-field_profile_image'
-  $field_instances['profile2-faculty-field_profile_image'] = array(
-    'bundle' => 'faculty',
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'image',
-        'settings' => array(
-          'image_link' => '',
-          'image_style' => '',
-        ),
-        'type' => 'image',
-        'weight' => 10,
-      ),
-    ),
-    'entity_type' => 'profile2',
-    'field_name' => 'field_profile_image',
-    'label' => 'Feature image',
-    'required' => 0,
-    'settings' => array(
-      'alt_field' => 0,
-      'default_image' => 0,
-      'file_directory' => '',
-      'file_extensions' => 'png gif jpg jpeg',
-      'max_filesize' => '',
-      'max_resolution' => '',
-      'min_resolution' => '',
-      'title_field' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'image',
-      'settings' => array(
-        'preview_image_style' => 'thumbnail',
-        'progress_indicator' => 'throbber',
-      ),
-      'type' => 'image_image',
-      'weight' => 14,
-    ),
-  );
-
-  // Exported field_instance: 'profile2-faculty-field_profile_publications'
-  $field_instances['profile2-faculty-field_profile_publications'] = array(
-    'bundle' => 'faculty',
+  // Exported field_instance:
+  // 'field_collection_item-field_profile_multipart-field_profile_heading'
+  $field_instances['field_collection_item-field_profile_multipart-field_profile_heading'] = array(
+    'bundle' => 'field_profile_multipart',
     'default_value' => NULL,
     'deleted' => 0,
     'description' => '',
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'text',
+        'module' => 'taxonomy',
         'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 6,
+        'type' => 'taxonomy_term_reference_link',
+        'weight' => 2,
       ),
     ),
-    'entity_type' => 'profile2',
-    'field_name' => 'field_profile_publications',
-    'label' => 'Publications',
-    'required' => 0,
+    'entity_type' => 'field_collection_item',
+    'field_name' => 'field_profile_heading',
+    'label' => 'Heading',
+    'required' => 1,
     'settings' => array(
-      'text_processing' => 0,
       'user_register_form' => FALSE,
     ),
     'widget' => array(
       'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'rows' => 5,
-      ),
-      'type' => 'text_textarea',
-      'weight' => 3,
-    ),
-  );
-
-  // Exported field_instance: 'profile2-faculty-field_profile_research'
-  $field_instances['profile2-faculty-field_profile_research'] = array(
-    'bundle' => 'faculty',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 7,
-      ),
-    ),
-    'entity_type' => 'profile2',
-    'field_name' => 'field_profile_research',
-    'label' => 'Research',
-    'required' => 0,
-    'settings' => array(
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'rows' => 5,
-      ),
-      'type' => 'text_textarea',
-      'weight' => 4,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 1,
     ),
   );
 
@@ -256,12 +107,48 @@ function ug_profile_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 14,
+      'weight' => 18,
     ),
   );
 
-  // Exported field_instance: 'profile2-main-field_profile_building'
-  $field_instances['profile2-main-field_profile_building'] = array(
+  // Exported field_instance: 'profile2-main-field_profile_attachments'
+  $field_instances['profile2-main-field_profile_attachments'] = array(
+    'bundle' => 'main',
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'file',
+        'settings' => array(),
+        'type' => 'file_default',
+        'weight' => 15,
+      ),
+    ),
+    'entity_type' => 'profile2',
+    'field_name' => 'field_profile_attachments',
+    'label' => 'Attachments',
+    'required' => 0,
+    'settings' => array(
+      'description_field' => 0,
+      'file_directory' => '',
+      'file_extensions' => 'pdf doc docx txt rtf png git jpg jpeg xls xlsx ppt pptx',
+      'max_filesize' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'file',
+      'settings' => array(
+        'progress_indicator' => 'throbber',
+      ),
+      'type' => 'file_generic',
+      'weight' => 12,
+    ),
+  );
+
+  // Exported field_instance: 'profile2-main-field_profile_caption'
+  $field_instances['profile2-main-field_profile_caption'] = array(
     'bundle' => 'main',
     'default_value' => NULL,
     'deleted' => 0,
@@ -272,12 +159,12 @@ function ug_profile_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 10,
+        'weight' => 17,
       ),
     ),
     'entity_type' => 'profile2',
-    'field_name' => 'field_profile_building',
-    'label' => 'Building',
+    'field_name' => 'field_profile_caption',
+    'label' => 'Image caption',
     'required' => 0,
     'settings' => array(
       'text_processing' => 0,
@@ -290,7 +177,7 @@ function ug_profile_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 18,
+      'weight' => 3,
     ),
   );
 
@@ -324,7 +211,7 @@ function ug_profile_field_default_field_instances() {
         'size' => 20,
       ),
       'type' => 'text_textfield',
-      'weight' => 15,
+      'weight' => 19,
     ),
   );
 
@@ -358,7 +245,51 @@ function ug_profile_field_default_field_instances() {
         'size' => 10,
       ),
       'type' => 'text_textfield',
-      'weight' => 17,
+      'weight' => 21,
+    ),
+  );
+
+  // Exported field_instance: 'profile2-main-field_profile_image'
+  $field_instances['profile2-main-field_profile_image'] = array(
+    'bundle' => 'main',
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'image',
+        'settings' => array(
+          'image_link' => '',
+          'image_style' => '',
+        ),
+        'type' => 'image',
+        'weight' => 16,
+      ),
+    ),
+    'entity_type' => 'profile2',
+    'field_name' => 'field_profile_image',
+    'label' => 'Image',
+    'required' => 0,
+    'settings' => array(
+      'alt_field' => 1,
+      'default_image' => 0,
+      'file_directory' => '',
+      'file_extensions' => 'png gif jpg jpeg',
+      'max_filesize' => '',
+      'max_resolution' => '1140x570',
+      'min_resolution' => '380x200',
+      'title_field' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'image',
+      'settings' => array(
+        'preview_image_style' => 'thumbnail',
+        'progress_indicator' => 'throbber',
+      ),
+      'type' => 'image_image',
+      'weight' => 2,
     ),
   );
 
@@ -392,7 +323,7 @@ function ug_profile_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 20,
+      'weight' => 23,
     ),
   );
 
@@ -426,7 +357,44 @@ function ug_profile_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 3,
+      'weight' => 1,
+    ),
+  );
+
+  // Exported field_instance: 'profile2-main-field_profile_multipart'
+  $field_instances['profile2-main-field_profile_multipart'] = array(
+    'bundle' => 'main',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'field_collection',
+        'settings' => array(
+          'add' => 'Add',
+          'delete' => 'Delete',
+          'description' => TRUE,
+          'edit' => 'Edit',
+          'view_mode' => 'full',
+        ),
+        'type' => 'field_collection_view',
+        'weight' => 18,
+      ),
+    ),
+    'entity_type' => 'profile2',
+    'field_name' => 'field_profile_multipart',
+    'label' => 'Profile sections',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'field_collection',
+      'settings' => array(),
+      'type' => 'field_collection_embed',
+      'weight' => 10,
     ),
   );
 
@@ -460,7 +428,38 @@ function ug_profile_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 2,
+      'weight' => 0,
+    ),
+  );
+
+  // Exported field_instance: 'profile2-main-field_profile_research'
+  $field_instances['profile2-main-field_profile_research'] = array(
+    'bundle' => 'main',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'taxonomy',
+        'settings' => array(),
+        'type' => 'taxonomy_term_reference_link',
+        'weight' => 14,
+      ),
+    ),
+    'entity_type' => 'profile2',
+    'field_name' => 'field_profile_research',
+    'label' => 'Area of research',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 11,
     ),
   );
 
@@ -482,7 +481,7 @@ function ug_profile_field_default_field_instances() {
     'entity_type' => 'profile2',
     'field_name' => 'field_profile_role',
     'label' => 'Role',
-    'required' => 0,
+    'required' => 1,
     'settings' => array(
       'user_register_form' => FALSE,
     ),
@@ -491,7 +490,7 @@ function ug_profile_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 4,
+      'weight' => 8,
     ),
   );
 
@@ -525,7 +524,7 @@ function ug_profile_field_default_field_instances() {
         'size' => 6,
       ),
       'type' => 'text_textfield',
-      'weight' => 19,
+      'weight' => 22,
     ),
   );
 
@@ -560,6 +559,40 @@ function ug_profile_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'profile2-main-field_profile_summary'
+  $field_instances['profile2-main-field_profile_summary'] = array(
+    'bundle' => 'main',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 19,
+      ),
+    ),
+    'entity_type' => 'profile2',
+    'field_name' => 'field_profile_summary',
+    'label' => 'Summary',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 1,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 9,
+    ),
+  );
+
   // Exported field_instance: 'profile2-main-field_profile_telephonenumber'
   $field_instances['profile2-main-field_profile_telephonenumber'] = array(
     'bundle' => 'main',
@@ -590,7 +623,7 @@ function ug_profile_field_default_field_instances() {
         'size' => 10,
       ),
       'type' => 'text_textfield',
-      'weight' => 16,
+      'weight' => 20,
     ),
   );
 
@@ -624,7 +657,7 @@ function ug_profile_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 7,
+      'weight' => 4,
     ),
   );
 
@@ -646,7 +679,7 @@ function ug_profile_field_default_field_instances() {
     'entity_type' => 'profile2',
     'field_name' => 'field_profile_unit',
     'label' => 'Unit',
-    'required' => 0,
+    'required' => 1,
     'settings' => array(
       'user_register_form' => FALSE,
     ),
@@ -706,30 +739,31 @@ function ug_profile_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 10,
+      'weight' => 24,
     ),
   );
 
   // Translatables
   // Included for use with string extractors like potx.
-  t('About');
-  t('Building');
-  t('Education');
+  t('Area of research');
+  t('Attachments');
+  t('Content');
   t('Email');
   t('Fax');
-  t('Feature image');
-  t('File attachments');
+  t('Heading');
+  t('Image');
+  t('Image caption');
   t('Lab');
   t('Last name');
   t('Mailing address');
   t('Phone number');
   t('Position/title');
   t('Preferred name');
-  t('Publications');
-  t('Research');
+  t('Profile sections');
   t('Role');
   t('Room');
   t('Sub-unit');
+  t('Summary');
   t('Unit');
   t('Website link');
 

@@ -38,7 +38,7 @@
 <div class="row">
   <?php if ($image): ?>
     <div class="col-md-4">
-      <img class="img-responsive" src="<?php print $image; ?>"/>
+      <?php print $image; ?>
     </div>
   <?php endif; ?>
   <div class="col-md-<?php print $image ? 8 : 4; ?>">

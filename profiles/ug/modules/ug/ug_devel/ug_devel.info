@@ -6,6 +6,7 @@ version = 7.x-1.0
 project = ug_devel
 dependencies[] = devel
 dependencies[] = devel_generate
+dependencies[] = diff
 dependencies[] = field_ui
 dependencies[] = views_ui
 features[features_api][] = api:2
