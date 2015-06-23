@@ -48,7 +48,7 @@
     }
     $('#slides').slidesjs({
       width: 1140,
-      height: 334,
+      height: 292,
       play: {
         auto: false,
         interval: 6000,

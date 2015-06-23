@@ -45,7 +45,7 @@ function ug_banner_views_default_views() {
   $handler->display->display_options['fields']['field_banner_image']['type'] = 'image_url';
   $handler->display->display_options['fields']['field_banner_image']['settings'] = array(
     'url_type' => '1',
-    'image_style' => 'banner',
+    'image_style' => '',
     'image_link' => '',
   );
   /* Field: Content: Title */
