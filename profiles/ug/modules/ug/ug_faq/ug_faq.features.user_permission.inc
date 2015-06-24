@@ -33,6 +33,17 @@ function ug_faq_user_default_permissions() {
     'module' => 'node',
   );
 
+  // Exported permission: 'delete terms in faq_category'.
+  $permissions['delete terms in faq_category'] = array(
+    'name' => 'delete terms in faq_category',
+    'roles' => array(
+      'editor' => 'editor',
+      'moderator' => 'moderator',
+      'publisher' => 'publisher',
+    ),
+    'module' => 'taxonomy',
+  );
+
   // Exported permission: 'edit any faq content'.
   $permissions['edit any faq content'] = array(
     'name' => 'edit any faq content',
@@ -51,6 +62,17 @@ function ug_faq_user_default_permissions() {
       'author' => 'author',
     ),
     'module' => 'node',
+  );
+
+  // Exported permission: 'edit terms in faq_category'.
+  $permissions['edit terms in faq_category'] = array(
+    'name' => 'edit terms in faq_category',
+    'roles' => array(
+      'editor' => 'editor',
+      'moderator' => 'moderator',
+      'publisher' => 'publisher',
+    ),
+    'module' => 'taxonomy',
   );
 
   return $permissions;

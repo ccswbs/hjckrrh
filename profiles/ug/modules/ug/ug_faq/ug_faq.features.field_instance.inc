@@ -51,7 +51,7 @@ function ug_faq_field_default_field_instances() {
         'rows' => 10,
       ),
       'type' => 'text_textarea',
-      'weight' => 31,
+      'weight' => 2,
     ),
   );
 
@@ -88,7 +88,7 @@ function ug_faq_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 32,
+      'weight' => 0,
     ),
   );
 
@@ -128,7 +128,7 @@ function ug_faq_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'taxonomy_autocomplete',
-      'weight' => 34,
+      'weight' => 3,
     ),
   );
 
