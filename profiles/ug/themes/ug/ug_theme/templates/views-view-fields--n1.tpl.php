@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Template to display one news article page.
+ * Template to display multiple news articles.
  *
  * Available variables:
  * - $title: the article title.
@@ -38,7 +38,7 @@
 <?php endif; ?>
 <div class="col-md-<?php print empty($image)?12:8; ?>">
   <h1><?php print $title; ?></h1>
-  <?php print $created; ?>
+  <div class="created"><?php print $created; ?></div>
   <?php print $body; ?>
 </div>
 

@@ -62,9 +62,8 @@ function ug_news_views_default_views() {
   $handler->display->display_options['fields']['created']['table'] = 'node';
   $handler->display->display_options['fields']['created']['field'] = 'created';
   $handler->display->display_options['fields']['created']['label'] = '';
-  $handler->display->display_options['fields']['created']['alter']['alter_text'] = TRUE;
-  $handler->display->display_options['fields']['created']['alter']['text'] = '<div>[created]</div>';
   $handler->display->display_options['fields']['created']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['created']['element_default_classes'] = FALSE;
   $handler->display->display_options['fields']['created']['date_format'] = 'medium';
   $handler->display->display_options['fields']['created']['second_date_format'] = 'long';
   /* Field: Content: Body */
