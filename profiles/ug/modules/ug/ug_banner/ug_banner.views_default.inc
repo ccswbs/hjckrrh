@@ -114,6 +114,12 @@ function ug_banner_views_default_views() {
 
   /* Display: Autoplay */
   $handler = $view->new_display('panel_pane', 'Autoplay', 'autoplay');
+
+  /* Display: Block */
+  $handler = $view->new_display('block', 'Block', 'block_1');
+
+  /* Display: Autoplay */
+  $handler = $view->new_display('block', 'Autoplay', 'block_autoplay');
   $export['b1'] = $view;
 
   return $export;

@@ -30,6 +30,9 @@ a[href] { text-decoration: underline; }
     display:none!important
   }
 }
+/* Bootstrap removes margins from the 'last' paragraph, but Drupal
+ * often wraps paragraphs in extra divs and such. */
+p:last-child { margin-bottom: 10px }
 
 /*
  * Icons - FontAwesome icons are variable width, which makes it hard
