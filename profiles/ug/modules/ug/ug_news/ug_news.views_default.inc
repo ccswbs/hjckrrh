@@ -40,9 +40,6 @@ function ug_news_views_default_views() {
   $handler->display->display_options['fields']['field_news_image']['table'] = 'field_data_field_news_image';
   $handler->display->display_options['fields']['field_news_image']['field'] = 'field_news_image';
   $handler->display->display_options['fields']['field_news_image']['label'] = '';
-  $handler->display->display_options['fields']['field_news_image']['exclude'] = TRUE;
-  $handler->display->display_options['fields']['field_news_image']['alter']['alter_text'] = TRUE;
-  $handler->display->display_options['fields']['field_news_image']['alter']['text'] = '<div class="thumbnail">[field_news_image]</div>';
   $handler->display->display_options['fields']['field_news_image']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_news_image']['element_default_classes'] = FALSE;
   $handler->display->display_options['fields']['field_news_image']['hide_alter_empty'] = FALSE;
@@ -56,7 +53,6 @@ function ug_news_views_default_views() {
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
   $handler->display->display_options['fields']['title']['label'] = '';
-  $handler->display->display_options['fields']['title']['exclude'] = TRUE;
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
   $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
@@ -66,7 +62,6 @@ function ug_news_views_default_views() {
   $handler->display->display_options['fields']['created']['table'] = 'node';
   $handler->display->display_options['fields']['created']['field'] = 'created';
   $handler->display->display_options['fields']['created']['label'] = '';
-  $handler->display->display_options['fields']['created']['exclude'] = TRUE;
   $handler->display->display_options['fields']['created']['alter']['alter_text'] = TRUE;
   $handler->display->display_options['fields']['created']['alter']['text'] = '<div>[created]</div>';
   $handler->display->display_options['fields']['created']['element_label_colon'] = FALSE;
@@ -77,23 +72,11 @@ function ug_news_views_default_views() {
   $handler->display->display_options['fields']['field_news_body']['table'] = 'field_data_field_news_body';
   $handler->display->display_options['fields']['field_news_body']['field'] = 'field_news_body';
   $handler->display->display_options['fields']['field_news_body']['label'] = '';
-  $handler->display->display_options['fields']['field_news_body']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_news_body']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_news_body']['type'] = 'text_summary_or_trimmed';
   $handler->display->display_options['fields']['field_news_body']['settings'] = array(
     'trim_length' => '600',
   );
-  /* Field: Global: Custom text */
-  $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
-  $handler->display->display_options['fields']['nothing']['table'] = 'views';
-  $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
-  $handler->display->display_options['fields']['nothing']['label'] = '';
-  $handler->display->display_options['fields']['nothing']['alter']['text'] = '<div class="col-md-4">[field_news_image]</div>
-<div class="col-md-8">[title][created][field_news_body]</div>
-
-';
-  $handler->display->display_options['fields']['nothing']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['nothing']['element_default_classes'] = FALSE;
   /* Sort criterion: Content: Sticky */
   $handler->display->display_options['sorts']['sticky']['id'] = 'sticky';
   $handler->display->display_options['sorts']['sticky']['table'] = 'node';
@@ -611,6 +594,7 @@ function ug_news_views_default_views() {
 
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['title'] = 'Find Related News by Keyword';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -618,12 +602,11 @@ function ug_news_views_default_views() {
   $handler->display->display_options['exposed_form']['type'] = 'basic';
   $handler->display->display_options['pager']['type'] = 'none';
   $handler->display->display_options['pager']['options']['offset'] = '0';
-  $handler->display->display_options['style_plugin'] = 'list';
+  $handler->display->display_options['style_plugin'] = 'default';
   $handler->display->display_options['style_options']['default_row_class'] = FALSE;
   $handler->display->display_options['style_options']['row_class_special'] = FALSE;
-  $handler->display->display_options['style_options']['class'] = 'list-inline';
-  $handler->display->display_options['style_options']['wrapper_class'] = '';
   $handler->display->display_options['row_plugin'] = 'fields';
+  $handler->display->display_options['row_options']['default_field_elements'] = FALSE;
   /* Relationship: Taxonomy term: Content with term */
   $handler->display->display_options['relationships']['nid']['id'] = 'nid';
   $handler->display->display_options['relationships']['nid']['table'] = 'taxonomy_index';

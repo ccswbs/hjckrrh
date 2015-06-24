@@ -193,6 +193,17 @@ function ug_theme_preprocess_views_view_fields__s6(&$vars) {
 
 
 /**
+ * N1 - Listing page for multiple news articles.
+ */
+function ug_theme_preprocess_views_view_fields__n1(&$vars) {
+  $vars['image']     = $vars['fields']['field_news_image']->content;
+  $vars['title']     = $vars['fields']['title']->content;
+  $vars['created']   = $vars['fields']['created']->content;
+  $vars['body']      = $vars['fields']['field_news_body']->content;
+}
+
+
+/**
  * N2 - Detail page for single news article
  */
 function ug_theme_preprocess_views_view_fields__n2(&$vars) {
