@@ -233,9 +233,7 @@ function ug_theme_preprocess_views_view_fields__n2(&$vars) {
  * F1 - FAQ listing
  */
 function ug_theme_preprocess_views_view_fields__f1(&$vars) {
-  $nid = $vars['fields']['nid']->content;
-  $question = $vars['fields']['title']->content;
-  $vars['question'] = format_string("<a href='#faq@nid'>@q</a>", array('@q' => $question, '@nid' => $nid));
+  $vars['question'] = $vars['fields']['title']->content;
 }
 
 

@@ -27,10 +27,8 @@
  *
  */
 ?>
-<dt id="faq<?php print $nid; ?>"><?php print $question; ?></dt>
+<dt><?php print $question; ?></dt>
 <dd>
   <?php print $answer; ?>
-  <p><a href="#top">Back to top</a></p>
 </dd>
-<hr/>
 

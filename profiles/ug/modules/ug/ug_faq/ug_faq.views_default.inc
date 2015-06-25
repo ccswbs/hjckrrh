@@ -22,6 +22,7 @@ function ug_faq_views_default_views() {
 
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['title'] = 'Frequently Asked Questions';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -30,23 +31,10 @@ function ug_faq_views_default_views() {
   $handler->display->display_options['pager']['type'] = 'none';
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['style_plugin'] = 'default';
-  $handler->display->display_options['style_options']['grouping'] = array(
-    0 => array(
-      'field' => 'field_faq_category',
-      'rendered' => 1,
-      'rendered_strip' => 0,
-    ),
-  );
   $handler->display->display_options['style_options']['default_row_class'] = FALSE;
   $handler->display->display_options['style_options']['row_class_special'] = FALSE;
   $handler->display->display_options['row_plugin'] = 'fields';
   $handler->display->display_options['row_options']['default_field_elements'] = FALSE;
-  /* Field: Content: Nid */
-  $handler->display->display_options['fields']['nid']['id'] = 'nid';
-  $handler->display->display_options['fields']['nid']['table'] = 'node';
-  $handler->display->display_options['fields']['nid']['field'] = 'nid';
-  $handler->display->display_options['fields']['nid']['label'] = '';
-  $handler->display->display_options['fields']['nid']['element_label_colon'] = FALSE;
   /* Field: Content: Title */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
@@ -55,7 +43,7 @@ function ug_faq_views_default_views() {
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
   $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
+  $handler->display->display_options['fields']['title']['element_default_classes'] = FALSE;
   /* Field: Content: Category */
   $handler->display->display_options['fields']['field_faq_category']['id'] = 'field_faq_category';
   $handler->display->display_options['fields']['field_faq_category']['table'] = 'field_data_field_faq_category';
@@ -67,6 +55,22 @@ function ug_faq_views_default_views() {
   $handler->display->display_options['sorts']['title']['id'] = 'title';
   $handler->display->display_options['sorts']['title']['table'] = 'node';
   $handler->display->display_options['sorts']['title']['field'] = 'title';
+  /* Contextual filter: Content: Category (field_faq_category) */
+  $handler->display->display_options['arguments']['field_faq_category_tid']['id'] = 'field_faq_category_tid';
+  $handler->display->display_options['arguments']['field_faq_category_tid']['table'] = 'field_data_field_faq_category';
+  $handler->display->display_options['arguments']['field_faq_category_tid']['field'] = 'field_faq_category_tid';
+  $handler->display->display_options['arguments']['field_faq_category_tid']['title_enable'] = TRUE;
+  $handler->display->display_options['arguments']['field_faq_category_tid']['title'] = '%1';
+  $handler->display->display_options['arguments']['field_faq_category_tid']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['field_faq_category_tid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_faq_category_tid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_faq_category_tid']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['field_faq_category_tid']['specify_validation'] = TRUE;
+  $handler->display->display_options['arguments']['field_faq_category_tid']['validate']['type'] = 'taxonomy_term';
+  $handler->display->display_options['arguments']['field_faq_category_tid']['validate_options']['vocabularies'] = array(
+    'faq_category' => 'faq_category',
+  );
+  $handler->display->display_options['arguments']['field_faq_category_tid']['validate_options']['type'] = 'convert';
   /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
@@ -93,6 +97,16 @@ function ug_faq_views_default_views() {
   $handler->display->display_options['allow']['title_override'] = 'title_override';
   $handler->display->display_options['allow']['exposed_form'] = 0;
   $handler->display->display_options['allow']['fields_override'] = 0;
+  $handler->display->display_options['argument_input'] = array(
+    'field_faq_category_tid' => array(
+      'type' => 'panel',
+      'context' => 'entity:file.fid',
+      'context_optional' => 0,
+      'panel' => '0',
+      'fixed' => '',
+      'label' => 'Content: Category (field_faq_category)',
+    ),
+  );
   $export['f1'] = $view;
 
   $view = new view();
@@ -144,6 +158,20 @@ function ug_faq_views_default_views() {
   $handler->display->display_options['sorts']['title']['id'] = 'title';
   $handler->display->display_options['sorts']['title']['table'] = 'node';
   $handler->display->display_options['sorts']['title']['field'] = 'title';
+  /* Contextual filter: Content: Category (field_faq_category) */
+  $handler->display->display_options['arguments']['field_faq_category_tid']['id'] = 'field_faq_category_tid';
+  $handler->display->display_options['arguments']['field_faq_category_tid']['table'] = 'field_data_field_faq_category';
+  $handler->display->display_options['arguments']['field_faq_category_tid']['field'] = 'field_faq_category_tid';
+  $handler->display->display_options['arguments']['field_faq_category_tid']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['field_faq_category_tid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_faq_category_tid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_faq_category_tid']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['field_faq_category_tid']['specify_validation'] = TRUE;
+  $handler->display->display_options['arguments']['field_faq_category_tid']['validate']['type'] = 'taxonomy_term';
+  $handler->display->display_options['arguments']['field_faq_category_tid']['validate_options']['vocabularies'] = array(
+    'faq_category' => 'faq_category',
+  );
+  $handler->display->display_options['arguments']['field_faq_category_tid']['validate_options']['type'] = 'convert';
   /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
@@ -170,6 +198,16 @@ function ug_faq_views_default_views() {
   $handler->display->display_options['allow']['title_override'] = 'title_override';
   $handler->display->display_options['allow']['exposed_form'] = 0;
   $handler->display->display_options['allow']['fields_override'] = 0;
+  $handler->display->display_options['argument_input'] = array(
+    'field_faq_category_tid' => array(
+      'type' => 'panel',
+      'context' => 'entity:file.fid',
+      'context_optional' => 0,
+      'panel' => '0',
+      'fixed' => '',
+      'label' => 'Content: Category (field_faq_category)',
+    ),
+  );
   $export['f2'] = $view;
 
   return $export;
