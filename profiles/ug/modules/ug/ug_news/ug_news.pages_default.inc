@@ -5,6 +5,251 @@
  */
 
 /**
+ * Implements hook_default_page_manager_handlers().
+ */
+function ug_news_default_page_manager_handlers() {
+  $export = array();
+
+  $handler = new stdClass();
+  $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
+  $handler->api_version = 1;
+  $handler->name = 'node_view__news';
+  $handler->task = 'node_view';
+  $handler->subtask = '';
+  $handler->handler = 'panel_context';
+  $handler->weight = -29;
+  $handler->conf = array(
+    'title' => 'News',
+    'no_blocks' => 0,
+    'pipeline' => 'standard',
+    'body_classes_to_remove' => '',
+    'body_classes_to_add' => '',
+    'css_id' => '',
+    'css' => '',
+    'contexts' => array(),
+    'relationships' => array(),
+    'name' => 'news',
+    'access' => array(
+      'plugins' => array(
+        0 => array(
+          'name' => 'entity_bundle:node',
+          'settings' => array(
+            'type' => array(
+              'news' => 'news',
+            ),
+          ),
+          'context' => 'argument_entity_id:node_1',
+          'not' => FALSE,
+        ),
+      ),
+      'logic' => 'and',
+    ),
+  );
+  $display = new panels_display();
+  $display->layout = 'bootstrap_twocol_stacked';
+  $display->layout_settings = array();
+  $display->panel_settings = array(
+    'style_settings' => array(
+      'left' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '8',
+        'offset_type' => 'col-lg-offset',
+        'offset_size' => '0',
+      ),
+      'default' => NULL,
+      'top' => NULL,
+      'right' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '4',
+        'offset_type' => 'col-lg-offset',
+        'offset_size' => '0',
+      ),
+      'bottom' => NULL,
+    ),
+    'left' => array(
+      'style' => 'bootstrap_region',
+    ),
+    'right' => array(
+      'style' => 'bootstrap_region',
+    ),
+  );
+  $display->cache = array();
+  $display->title = '%node:title';
+  $display->uuid = '0f98c601-13f0-4d54-8f36-87b06be6b7c3';
+  $display->content = array();
+  $display->panels = array();
+    $pane = new stdClass();
+    $pane->pid = 'new-5e3d6294-e02b-4968-82a6-f4fe67c88f09';
+    $pane->panel = 'left';
+    $pane->type = 'views_panes';
+    $pane->subtype = 'posted_on-panel_pane_1';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array();
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = '5e3d6294-e02b-4968-82a6-f4fe67c88f09';
+    $display->content['new-5e3d6294-e02b-4968-82a6-f4fe67c88f09'] = $pane;
+    $display->panels['left'][0] = 'new-5e3d6294-e02b-4968-82a6-f4fe67c88f09';
+    $pane = new stdClass();
+    $pane->pid = 'new-f2c1e5e7-c3df-40f5-a234-b921c139ffc6';
+    $pane->panel = 'left';
+    $pane->type = 'views_panes';
+    $pane->subtype = 'written_by-panel_pane_1';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array();
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 1;
+    $pane->locks = array();
+    $pane->uuid = 'f2c1e5e7-c3df-40f5-a234-b921c139ffc6';
+    $display->content['new-f2c1e5e7-c3df-40f5-a234-b921c139ffc6'] = $pane;
+    $display->panels['left'][1] = 'new-f2c1e5e7-c3df-40f5-a234-b921c139ffc6';
+    $pane = new stdClass();
+    $pane->pid = 'new-f8c35af1-c486-4fc9-ad1f-050e19f863df';
+    $pane->panel = 'left';
+    $pane->type = 'views_panes';
+    $pane->subtype = 'news_image-panel_pane_1';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array();
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 2;
+    $pane->locks = array();
+    $pane->uuid = 'f8c35af1-c486-4fc9-ad1f-050e19f863df';
+    $display->content['new-f8c35af1-c486-4fc9-ad1f-050e19f863df'] = $pane;
+    $display->panels['left'][2] = 'new-f8c35af1-c486-4fc9-ad1f-050e19f863df';
+    $pane = new stdClass();
+    $pane->pid = 'new-44a2c678-3480-4fb2-a66d-913f4f82c626';
+    $pane->panel = 'left';
+    $pane->type = 'entity_field';
+    $pane->subtype = 'node:field_news_body';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'label' => 'hidden',
+      'formatter' => 'text_default',
+      'delta_limit' => 0,
+      'delta_offset' => '0',
+      'delta_reversed' => FALSE,
+      'formatter_settings' => array(),
+      'context' => 'argument_entity_id:node_1',
+      'override_title' => 0,
+      'override_title_text' => '',
+      'override_title_heading' => 'h2',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 3;
+    $pane->locks = array();
+    $pane->uuid = '44a2c678-3480-4fb2-a66d-913f4f82c626';
+    $display->content['new-44a2c678-3480-4fb2-a66d-913f4f82c626'] = $pane;
+    $display->panels['left'][3] = 'new-44a2c678-3480-4fb2-a66d-913f4f82c626';
+    $pane = new stdClass();
+    $pane->pid = 'new-ca11576b-5ec6-4ef0-880b-c19f08cf846a';
+    $pane->panel = 'left';
+    $pane->type = 'entity_field';
+    $pane->subtype = 'node:field_news_attachment';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'label' => 'hidden',
+      'formatter' => 'file_table',
+      'delta_limit' => '0',
+      'delta_offset' => '0',
+      'delta_reversed' => 0,
+      'formatter_settings' => array(),
+      'context' => 'argument_entity_id:node_1',
+      'override_title' => 1,
+      'override_title_text' => 'File Attachments',
+      'override_title_heading' => 'h2',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 4;
+    $pane->locks = array();
+    $pane->uuid = 'ca11576b-5ec6-4ef0-880b-c19f08cf846a';
+    $display->content['new-ca11576b-5ec6-4ef0-880b-c19f08cf846a'] = $pane;
+    $display->panels['left'][4] = 'new-ca11576b-5ec6-4ef0-880b-c19f08cf846a';
+    $pane = new stdClass();
+    $pane->pid = 'new-d40c27a3-4e25-4684-90b9-00fc3f700ee4';
+    $pane->panel = 'left';
+    $pane->type = 'views_panes';
+    $pane->subtype = 'n7-panel_pane_1';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 1,
+      'override_title_text' => 'Find related news by keyword',
+      'override_title_heading' => 'h2',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 5;
+    $pane->locks = array();
+    $pane->uuid = 'd40c27a3-4e25-4684-90b9-00fc3f700ee4';
+    $display->content['new-d40c27a3-4e25-4684-90b9-00fc3f700ee4'] = $pane;
+    $display->panels['left'][5] = 'new-d40c27a3-4e25-4684-90b9-00fc3f700ee4';
+    $pane = new stdClass();
+    $pane->pid = 'new-7a7badc9-4f28-4430-b81a-66538d9be30b';
+    $pane->panel = 'right';
+    $pane->type = 'views_panes';
+    $pane->subtype = 's1-panel_pane_1';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 0,
+      'override_title_text' => '',
+      'override_title_heading' => 'h2',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = '7a7badc9-4f28-4430-b81a-66538d9be30b';
+    $display->content['new-7a7badc9-4f28-4430-b81a-66538d9be30b'] = $pane;
+    $display->panels['right'][0] = 'new-7a7badc9-4f28-4430-b81a-66538d9be30b';
+  $display->hide_title = PANELS_TITLE_FIXED;
+  $display->title_pane = '0';
+  $handler->conf['display'] = $display;
+  $export['node_view__news'] = $handler;
+
+  return $export;
+}
+
+/**
  * Implements hook_default_page_manager_pages().
  */
 function ug_news_default_page_manager_pages() {

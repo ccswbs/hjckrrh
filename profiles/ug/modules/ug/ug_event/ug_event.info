@@ -47,6 +47,7 @@ features[field_instance][] = node-event-field_event_summary
 features[field_instance][] = node-event-field_tags
 features[field_instance][] = taxonomy_term-event_heading-field_glyphicon
 features[node][] = event
+features[page_manager_handlers][] = node_view__event
 features[page_manager_pages][] = events
 features[page_manager_pages][] = events_archive
 features[page_manager_pages][] = events_month
