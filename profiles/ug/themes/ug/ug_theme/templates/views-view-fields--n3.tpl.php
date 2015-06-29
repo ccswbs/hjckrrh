@@ -1,16 +1,13 @@
 <?php
+
 /**
  * @file
- * Template to display multiple news articles.
+ * Default simple view template to all the fields as a row.
  *
- * Available variables:
- * - $title: the article title.
- * - $image: the article image.
- * - $created: the post date.
- * - $body: the article body
- * - $link: link to news article (external or internal)
+ * Variables:
+ * - $title: title of article (linked)
+ * - $created: post date
  *
- * Other variables:
  * - $view: The view in use.
  * - $fields: an array of $field objects. Each one contains:
  *   - $field->content: The output of the field.
@@ -28,20 +25,8 @@
  *     configured element type.
  * - $row: The raw result object from the query, with all data it fetched.
  *
+ * @ingroup views_templates
  */
 ?>
-<?php if (!empty($image)): ?>
-  <div class="col-md-4">
-    <div class="thumbnail">
-      <?php print $image; ?>
-    </div>
-  </div>
-<?php endif; ?>
-<div class="col-md-<?php print empty($image)?12:8; ?>">
-  <header>
-    <h1 class="media-heading"><a href="<?php print $link; ?>"><?php print $title; ?></a></h1>
-    <time class="created"><?php print $created; ?></time>
-  </header>
-  <?php print $body; ?>
-</div>
-
+<time><?php print $created; ?></time>
+<div><?php print $title; ?></div>

@@ -184,8 +184,8 @@ function ug_news_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-news-field_news_source'
-  $field_instances['node-news-field_news_source'] = array(
+  // Exported field_instance: 'node-news-field_news_link'
+  $field_instances['node-news-field_news_link'] = array(
     'bundle' => 'news',
     'default_value' => NULL,
     'deleted' => 0,
@@ -196,7 +196,7 @@ function ug_news_field_default_field_instances() {
         'module' => 'link',
         'settings' => array(),
         'type' => 'link_default',
-        'weight' => 5,
+        'weight' => 8,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -206,8 +206,8 @@ function ug_news_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'field_news_source',
-    'label' => 'Related website',
+    'field_name' => 'field_news_link',
+    'label' => 'External link',
     'required' => 0,
     'settings' => array(
       'absolute_url' => 1,
@@ -223,8 +223,13 @@ function ug_news_field_default_field_instances() {
         'url_cutoff' => 80,
       ),
       'enable_tokens' => 1,
+      'linkit' => array(
+        'button_text' => 'Search',
+        'enable' => 0,
+        'profile' => '',
+      ),
       'rel_remove' => 'default',
-      'title' => 'optional',
+      'title' => 'none',
       'title_label_use_field_label' => 0,
       'title_maxlength' => 128,
       'title_value' => '',
@@ -237,7 +242,7 @@ function ug_news_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 7,
+      'weight' => 9,
     ),
   );
 
@@ -357,7 +362,7 @@ function ug_news_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'taxonomy_autocomplete',
-      'weight' => 8,
+      'weight' => 7,
     ),
   );
 
@@ -367,10 +372,10 @@ function ug_news_field_default_field_instances() {
   t('Body');
   t('Category');
   t('Enter a comma separated list of keywords.');
+  t('External link');
   t('Feature image');
   t('Feature image caption');
   t('Keywords');
-  t('Related website');
   t('Written by');
 
   return $field_instances;
