@@ -261,7 +261,6 @@ function ug_theme_preprocess_views_view_fields__f1(&$vars) {
  * F2 - FAQ detail
  */
 function ug_theme_preprocess_views_view_fields__f2(&$vars) {
-  $vars['nid']      = $vars['fields']['nid']->content;
   $vars['question'] = $vars['fields']['title']->content;
   $vars['answer']   = $vars['fields']['field_faq_answer']->content;
 }
