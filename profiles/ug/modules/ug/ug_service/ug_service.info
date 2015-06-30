@@ -52,7 +52,6 @@ features[page_manager_pages][] = services_audience
 features[page_manager_pages][] = services_az
 features[taxonomy][] = service_audience
 features[taxonomy][] = service_category
-features[taxonomy][] = service_headings
 features[taxonomy][] = service_keywords
 features[taxonomy][] = service_private_heading
 features[taxonomy][] = service_public_heading
