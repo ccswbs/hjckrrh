@@ -393,6 +393,206 @@ function ug_event_default_page_manager_pages() {
   $page = new stdClass();
   $page->disabled = FALSE; /* Edit this to true to make a default page disabled initially */
   $page->api_version = 1;
+  $page->name = 'event_month_list';
+  $page->task = 'page';
+  $page->admin_title = 'Event month list';
+  $page->admin_description = '';
+  $page->path = 'events/month/list';
+  $page->access = array();
+  $page->menu = array(
+    'type' => 'tab',
+    'title' => 'View Calendar as a List',
+    'name' => 'navigation',
+    'weight' => '1',
+    'parent' => array(
+      'type' => 'none',
+      'title' => '',
+      'name' => 'navigation',
+      'weight' => '0',
+    ),
+  );
+  $page->arguments = array();
+  $page->conf = array(
+    'admin_paths' => FALSE,
+  );
+  $page->default_handlers = array();
+  $handler = new stdClass();
+  $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
+  $handler->api_version = 1;
+  $handler->name = 'page_event_month_list__panel_context_166ed494-172b-4e0f-ab30-b7a256023522';
+  $handler->task = 'page';
+  $handler->subtask = 'event_month_list';
+  $handler->handler = 'panel_context';
+  $handler->weight = 0;
+  $handler->conf = array(
+    'title' => 'Panel',
+    'no_blocks' => 0,
+    'pipeline' => 'standard',
+    'body_classes_to_remove' => '',
+    'body_classes_to_add' => '',
+    'css_id' => '',
+    'css' => '',
+    'contexts' => array(),
+    'relationships' => array(),
+  );
+  $display = new panels_display();
+  $display->layout = 'bootstrap_threecol_stacked';
+  $display->layout_settings = array();
+  $display->panel_settings = array(
+    'style_settings' => array(
+      'default' => NULL,
+      'top' => NULL,
+      'left' => NULL,
+      'middle' => array(
+        'column_type' => 'col-lg',
+        'column_size' => '12',
+        'offset_type' => 'col-lg-offset',
+        'offset_size' => '0',
+      ),
+      'right' => NULL,
+      'bottom' => NULL,
+    ),
+    'middle' => array(
+      'style' => 'bootstrap_region',
+    ),
+  );
+  $display->cache = array();
+  $display->title = '';
+  $display->uuid = '2c5f51a7-d1f2-4ce2-be5c-fa76a37467e3';
+  $display->content = array();
+  $display->panels = array();
+    $pane = new stdClass();
+    $pane->pid = 'new-9ce9d150-7af5-4daa-8816-feaec7dd34b3';
+    $pane->panel = 'middle';
+    $pane->type = 'views_panes';
+    $pane->subtype = 'event_month_list-panel_pane_1';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 0,
+      'override_title_text' => '',
+      'override_title_heading' => 'h2',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = '9ce9d150-7af5-4daa-8816-feaec7dd34b3';
+    $display->content['new-9ce9d150-7af5-4daa-8816-feaec7dd34b3'] = $pane;
+    $display->panels['middle'][0] = 'new-9ce9d150-7af5-4daa-8816-feaec7dd34b3';
+  $display->hide_title = PANELS_TITLE_FIXED;
+  $display->title_pane = '0';
+  $handler->conf['display'] = $display;
+  $page->default_handlers[$handler->name] = $handler;
+  $pages['event_month_list'] = $page;
+
+  $page = new stdClass();
+  $page->disabled = FALSE; /* Edit this to true to make a default page disabled initially */
+  $page->api_version = 1;
+  $page->name = 'event_week_list';
+  $page->task = 'page';
+  $page->admin_title = 'Event week list';
+  $page->admin_description = '';
+  $page->path = 'events/week/list';
+  $page->access = array();
+  $page->menu = array(
+    'type' => 'default tab',
+    'title' => 'View Calendar as a List',
+    'name' => 'navigation',
+    'weight' => '0',
+    'parent' => array(
+      'type' => 'tab',
+      'title' => 'This Week',
+      'name' => 'navigation',
+      'weight' => '1',
+    ),
+  );
+  $page->arguments = array();
+  $page->conf = array(
+    'admin_paths' => FALSE,
+  );
+  $page->default_handlers = array();
+  $handler = new stdClass();
+  $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
+  $handler->api_version = 1;
+  $handler->name = 'page_event_week_list__panel_context_5d2802dd-66b2-4971-8d8e-525c7683e13d';
+  $handler->task = 'page';
+  $handler->subtask = 'event_week_list';
+  $handler->handler = 'panel_context';
+  $handler->weight = 0;
+  $handler->conf = array(
+    'title' => 'Panel',
+    'no_blocks' => 0,
+    'pipeline' => 'standard',
+    'body_classes_to_remove' => '',
+    'body_classes_to_add' => '',
+    'css_id' => '',
+    'css' => '',
+    'contexts' => array(),
+    'relationships' => array(),
+  );
+  $display = new panels_display();
+  $display->layout = 'bootstrap_threecol_stacked';
+  $display->layout_settings = array();
+  $display->panel_settings = array(
+    'style_settings' => array(
+      'default' => NULL,
+      'top' => NULL,
+      'left' => NULL,
+      'middle' => array(
+        'column_type' => 'col-lg',
+        'column_size' => '12',
+        'offset_type' => 'col-lg-offset',
+        'offset_size' => '0',
+      ),
+      'right' => NULL,
+      'bottom' => NULL,
+    ),
+    'middle' => array(
+      'style' => 'bootstrap_region',
+    ),
+  );
+  $display->cache = array();
+  $display->title = '';
+  $display->uuid = '2c5f51a7-d1f2-4ce2-be5c-fa76a37467e3';
+  $display->content = array();
+  $display->panels = array();
+    $pane = new stdClass();
+    $pane->pid = 'new-b979c707-5ca6-4141-8338-fb5be584e8eb';
+    $pane->panel = 'middle';
+    $pane->type = 'views_panes';
+    $pane->subtype = 'event_week_list-panel_pane_1';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 0,
+      'override_title_text' => '',
+      'override_title_heading' => 'h2',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = 'b979c707-5ca6-4141-8338-fb5be584e8eb';
+    $display->content['new-b979c707-5ca6-4141-8338-fb5be584e8eb'] = $pane;
+    $display->panels['middle'][0] = 'new-b979c707-5ca6-4141-8338-fb5be584e8eb';
+  $display->hide_title = PANELS_TITLE_FIXED;
+  $display->title_pane = '0';
+  $handler->conf['display'] = $display;
+  $page->default_handlers[$handler->name] = $handler;
+  $pages['event_week_list'] = $page;
+
+  $page = new stdClass();
+  $page->disabled = FALSE; /* Edit this to true to make a default page disabled initially */
+  $page->api_version = 1;
   $page->name = 'events';
   $page->task = 'page';
   $page->admin_title = 'Upcoming Events';
@@ -673,21 +873,21 @@ function ug_event_default_page_manager_pages() {
   $page->task = 'page';
   $page->admin_title = 'Events Month';
   $page->admin_description = '';
-  $page->path = 'events/month';
+  $page->path = 'events/month/grid';
   $page->access = array(
     'type' => 'none',
     'settings' => NULL,
   );
   $page->menu = array(
-    'type' => 'tab',
-    'title' => 'Monthly Calendar',
+    'type' => 'default tab',
+    'title' => 'View Calendar as a Grid',
     'name' => 'navigation',
-    'weight' => '2',
+    'weight' => '0',
     'parent' => array(
-      'type' => 'none',
-      'title' => '',
+      'type' => 'tab',
+      'title' => 'Monthly Calendar',
       'name' => 'navigation',
-      'weight' => '0',
+      'weight' => '2',
     ),
   );
   $page->arguments = array();
@@ -870,19 +1070,19 @@ function ug_event_default_page_manager_pages() {
   $page->task = 'page';
   $page->admin_title = 'Events Week';
   $page->admin_description = '';
-  $page->path = 'events/week';
+  $page->path = 'events/week/grid';
   $page->access = array(
     'type' => 'none',
     'settings' => NULL,
   );
   $page->menu = array(
     'type' => 'tab',
-    'title' => 'This Week',
+    'title' => 'View Calendar as a Grid',
     'name' => 'navigation',
     'weight' => '1',
     'parent' => array(
-      'type' => 'none',
-      'title' => '',
+      'type' => 'tab',
+      'title' => 'This Week',
       'name' => 'navigation',
       'weight' => '0',
     ),

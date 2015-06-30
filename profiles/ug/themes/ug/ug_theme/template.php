@@ -103,6 +103,28 @@ function ug_theme_preprocess_views_view_fields__e2(&$vars) {
 }
 
 
+/** 
+ * Event month list
+ */ 
+function ug_theme_preprocess_views_view_fields__event_month_list(&$vars) { 
+  $vars['title']    = $vars['fields']['title']->content; 
+  $vars['date']     = $vars['fields']['field_event_date']->content; 
+  $vars['image']    = $vars['fields']['field_event_image']->content; 
+  $vars['body']     = $vars['fields']['field_event_summary']->content; 
+} 
+
+
+/**
+ * Event week list
+ */
+function ug_theme_preprocess_views_view_fields__event_week_list(&$vars) {
+  $vars['title']    = $vars['fields']['title']->content;
+  $vars['date']     = $vars['fields']['field_event_date']->content;
+  $vars['image']    = $vars['fields']['field_event_image']->content;
+  $vars['body']     = $vars['fields']['field_event_summary']->content;
+}
+
+
 /**
  * P1 - Listing page for multiple people profiles.
  */
