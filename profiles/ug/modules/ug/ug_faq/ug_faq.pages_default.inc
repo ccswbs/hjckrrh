@@ -320,6 +320,181 @@ function ug_faq_default_page_manager_pages() {
   $page->default_handlers[$handler->name] = $handler;
   $pages['faq'] = $page;
 
+  $page = new stdClass();
+  $page->disabled = FALSE; /* Edit this to true to make a default page disabled initially */
+  $page->api_version = 1;
+  $page->name = 'faq_category';
+  $page->task = 'page';
+  $page->admin_title = 'FAQ category';
+  $page->admin_description = '';
+  $page->path = 'faq/category/%category';
+  $page->access = array(
+    'type' => 'none',
+    'settings' => NULL,
+  );
+  $page->menu = array();
+  $page->arguments = array(
+    'category' => array(
+      'id' => 2,
+      'identifier' => 'Taxonomy term: ID 2',
+      'name' => 'term',
+      'settings' => array(
+        'input_form' => 'tid',
+        'vids' => array(
+          7 => '7',
+          2 => 0,
+          3 => 0,
+          8 => 0,
+          4 => 0,
+          5 => 0,
+          9 => 0,
+          10 => 0,
+          11 => 0,
+          12 => 0,
+          13 => 0,
+          6 => 0,
+          1 => 0,
+        ),
+        'breadcrumb' => 0,
+        'transform' => 0,
+      ),
+    ),
+  );
+  $page->conf = array(
+    'admin_paths' => FALSE,
+  );
+  $page->default_handlers = array();
+  $handler = new stdClass();
+  $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
+  $handler->api_version = 1;
+  $handler->name = 'page_faq_category__panel_context_5c7e987c-1b7d-4064-b6da-7df97fe5b475';
+  $handler->task = 'page';
+  $handler->subtask = 'faq_category';
+  $handler->handler = 'panel_context';
+  $handler->weight = 0;
+  $handler->conf = array(
+    'title' => 'Panel',
+    'no_blocks' => 0,
+    'pipeline' => 'standard',
+    'body_classes_to_remove' => '',
+    'body_classes_to_add' => '',
+    'css_id' => '',
+    'css' => '',
+    'contexts' => array(),
+    'relationships' => array(),
+  );
+  $display = new panels_display();
+  $display->layout = 'bootstrap_twocol_stacked';
+  $display->layout_settings = array();
+  $display->panel_settings = array(
+    'style_settings' => array(
+      'default' => NULL,
+      'top' => array(
+        'column_type' => 'col-lg',
+        'column_size' => '12',
+        'offset_type' => 'col-lg-offset',
+        'offset_size' => '0',
+      ),
+      'left' => array(
+        'column_type' => 'col-lg',
+        'column_size' => '8',
+        'offset_type' => 'col-lg-offset',
+        'offset_size' => '0',
+      ),
+      'right' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '4',
+        'offset_type' => 'col-lg-offset',
+        'offset_size' => '0',
+      ),
+      'bottom' => array(
+        'column_type' => 'col-lg',
+        'column_size' => '12',
+        'offset_type' => 'col-lg-offset',
+        'offset_size' => '0',
+      ),
+    ),
+    'left' => array(
+      'style' => 'bootstrap_region',
+    ),
+    'right' => array(
+      'style' => 'bootstrap_region',
+    ),
+    'top' => array(
+      'style' => 'bootstrap_region',
+    ),
+    'bottom' => array(
+      'style' => 'bootstrap_region',
+    ),
+  );
+  $display->cache = array();
+  $display->title = '';
+  $display->uuid = 'da7c3324-cb38-431c-a92d-699e7fe619e6';
+  $display->content = array();
+  $display->panels = array();
+    $pane = new stdClass();
+    $pane->pid = 'new-1f56d272-85e8-4c84-bea2-861a57033b22';
+    $pane->panel = 'left';
+    $pane->type = 'views_panes';
+    $pane->subtype = 'f1-panel_pane_2';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array();
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = '1f56d272-85e8-4c84-bea2-861a57033b22';
+    $display->content['new-1f56d272-85e8-4c84-bea2-861a57033b22'] = $pane;
+    $display->panels['left'][0] = 'new-1f56d272-85e8-4c84-bea2-861a57033b22';
+    $pane = new stdClass();
+    $pane->pid = 'new-93902679-525c-429a-bc28-876a81d75e4f';
+    $pane->panel = 'left';
+    $pane->type = 'views_panes';
+    $pane->subtype = 'f2-panel_pane_2';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array();
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 1;
+    $pane->locks = array();
+    $pane->uuid = '93902679-525c-429a-bc28-876a81d75e4f';
+    $display->content['new-93902679-525c-429a-bc28-876a81d75e4f'] = $pane;
+    $display->panels['left'][1] = 'new-93902679-525c-429a-bc28-876a81d75e4f';
+    $pane = new stdClass();
+    $pane->pid = 'new-d60c41fd-2506-4922-9007-20143489d84f';
+    $pane->panel = 'right';
+    $pane->type = 'views_panes';
+    $pane->subtype = 'faq_filter_category-panel_pane_1';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array();
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = 'd60c41fd-2506-4922-9007-20143489d84f';
+    $display->content['new-d60c41fd-2506-4922-9007-20143489d84f'] = $pane;
+    $display->panels['right'][0] = 'new-d60c41fd-2506-4922-9007-20143489d84f';
+  $display->hide_title = PANELS_TITLE_PANE;
+  $display->title_pane = '0';
+  $handler->conf['display'] = $display;
+  $page->default_handlers[$handler->name] = $handler;
+  $pages['faq_category'] = $page;
+
   return $pages;
 
 }

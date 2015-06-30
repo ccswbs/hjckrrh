@@ -21,6 +21,7 @@ features[field_instance][] = node-faq-field_tags
 features[node][] = faq
 features[page_manager_handlers][] = node_view__faq
 features[page_manager_pages][] = faq
+features[page_manager_pages][] = faq_category
 features[taxonomy][] = faq_category
 features[user_permission][] = create faq content
 features[user_permission][] = delete any faq content
