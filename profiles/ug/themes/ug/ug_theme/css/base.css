@@ -38,7 +38,7 @@ p:last-child { margin-bottom: 10px }
  * Icons - FontAwesome icons are variable width, which makes it hard
  * to do layout. Enforce a minimum width.
  */
-.fa { min-width: 1.8ex; text-align: center; }
+.media-object { min-width: 1.8ex; text-align: center; }
 
 
 /*

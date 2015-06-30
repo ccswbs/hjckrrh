@@ -28,8 +28,10 @@
  *
  */
 ?>
-<a class="h1" data-toggle="tooltip" data-placement="bottom"
-  href="<?php print $link; ?>"
-  title="<?php print $title; ?>"
-  ><?php print $icon; ?></span></a>
+<li>
+  <a class="h1" data-toggle="tooltip" data-placement="bottom"
+    href="<?php print $link; ?>"
+    title="<?php print $title; ?>"
+    ><?php print $icon; ?></span></a>
+</li>
 
