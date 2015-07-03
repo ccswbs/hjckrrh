@@ -398,7 +398,10 @@ function ug_event_default_page_manager_pages() {
   $page->admin_title = 'Event month list';
   $page->admin_description = '';
   $page->path = 'events/month/list';
-  $page->access = array();
+  $page->access = array(
+    'type' => 'none',
+    'settings' => NULL,
+  );
   $page->menu = array(
     'type' => 'tab',
     'title' => 'View Calendar as a List',
@@ -498,7 +501,10 @@ function ug_event_default_page_manager_pages() {
   $page->admin_title = 'Event week list';
   $page->admin_description = '';
   $page->path = 'events/week/list';
-  $page->access = array();
+  $page->access = array(
+    'type' => 'none',
+    'settings' => NULL,
+  );
   $page->menu = array(
     'type' => 'default tab',
     'title' => 'View Calendar as a List',

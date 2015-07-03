@@ -210,7 +210,7 @@ function ug_event_field_default_field_instances() {
         'text_parts' => array(),
         'year_range' => '-3:+3',
       ),
-      'type' => 'date_text',
+      'type' => 'date_select',
       'weight' => 2,
     ),
   );
