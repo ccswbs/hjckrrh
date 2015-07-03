@@ -239,6 +239,29 @@ function ug_service_default_page_manager_handlers() {
     $pane->uuid = '57a599f7-be4e-452e-b2ee-b7b518f6446e';
     $display->content['new-57a599f7-be4e-452e-b2ee-b7b518f6446e'] = $pane;
     $display->panels['middle'][4] = 'new-57a599f7-be4e-452e-b2ee-b7b518f6446e';
+    $pane = new stdClass();
+    $pane->pid = 'new-5825d927-013f-441b-b72c-34f20d4b143b';
+    $pane->panel = 'right';
+    $pane->type = 'views_panes';
+    $pane->subtype = 'service_keywords-panel_pane_1';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 0,
+      'override_title_text' => '',
+      'override_title_heading' => 'h2',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = '5825d927-013f-441b-b72c-34f20d4b143b';
+    $display->content['new-5825d927-013f-441b-b72c-34f20d4b143b'] = $pane;
+    $display->panels['right'][0] = 'new-5825d927-013f-441b-b72c-34f20d4b143b';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
@@ -583,6 +606,125 @@ function ug_service_default_page_manager_pages() {
   $handler->conf['display'] = $display;
   $page->default_handlers[$handler->name] = $handler;
   $pages['services_az'] = $page;
+
+  $page = new stdClass();
+  $page->disabled = FALSE; /* Edit this to true to make a default page disabled initially */
+  $page->api_version = 1;
+  $page->name = 'services_by_keyword';
+  $page->task = 'page';
+  $page->admin_title = 'Services by keyword';
+  $page->admin_description = '';
+  $page->path = 'services/tags/!tid';
+  $page->access = array();
+  $page->menu = array();
+  $page->arguments = array(
+    'tid' => array(
+      'id' => 1,
+      'identifier' => 'Taxonomy term: ID',
+      'name' => 'term',
+      'settings' => array(
+        'input_form' => 'tid',
+        'vids' => array(
+          11 => '11',
+          2 => 0,
+          3 => 0,
+          7 => 0,
+          8 => 0,
+          4 => 0,
+          5 => 0,
+          9 => 0,
+          10 => 0,
+          12 => 0,
+          13 => 0,
+          6 => 0,
+          1 => 0,
+        ),
+        'breadcrumb' => 0,
+        'transform' => 0,
+      ),
+    ),
+  );
+  $page->conf = array(
+    'admin_paths' => FALSE,
+  );
+  $page->default_handlers = array();
+  $handler = new stdClass();
+  $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
+  $handler->api_version = 1;
+  $handler->name = 'page_services_by_keyword__panel_context_49d0a65b-3d2e-4a25-8fca-ae7cdc059a41';
+  $handler->task = 'page';
+  $handler->subtask = 'services_by_keyword';
+  $handler->handler = 'panel_context';
+  $handler->weight = 0;
+  $handler->conf = array(
+    'title' => 'Panel',
+    'no_blocks' => 0,
+    'pipeline' => 'standard',
+    'body_classes_to_remove' => '',
+    'body_classes_to_add' => '',
+    'css_id' => '',
+    'css' => '',
+    'contexts' => array(),
+    'relationships' => array(),
+  );
+  $display = new panels_display();
+  $display->layout = 'bootstrap_threecol_stacked';
+  $display->layout_settings = array();
+  $display->panel_settings = array(
+    'style_settings' => array(
+      'default' => NULL,
+      'top' => NULL,
+      'left' => NULL,
+      'middle' => array(
+        'column_type' => 'col-lg',
+        'column_size' => '12',
+        'offset_type' => 'col-lg-offset',
+        'offset_size' => '0',
+      ),
+      'right' => NULL,
+      'bottom' => NULL,
+    ),
+    'middle' => array(
+      'style' => 'bootstrap_region',
+    ),
+  );
+  $display->cache = array();
+  $display->title = '';
+  $display->uuid = 'a0498d57-30f3-4a81-84ef-d482fbc07633';
+  $display->content = array();
+  $display->panels = array();
+    $pane = new stdClass();
+    $pane->pid = 'new-23a6efb5-4533-4dea-9e42-04efffac5d03';
+    $pane->panel = 'middle';
+    $pane->type = 'views_panes';
+    $pane->subtype = 'services_keyword-panel_pane_1';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'fields_override' => array(
+        'title' => 1,
+        'field_service_description' => 1,
+      ),
+      'override_title' => 1,
+      'override_title_text' => '',
+      'override_title_heading' => 'h2',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = '23a6efb5-4533-4dea-9e42-04efffac5d03';
+    $display->content['new-23a6efb5-4533-4dea-9e42-04efffac5d03'] = $pane;
+    $display->panels['middle'][0] = 'new-23a6efb5-4533-4dea-9e42-04efffac5d03';
+  $display->hide_title = PANELS_TITLE_PANE;
+  $display->title_pane = 'new-23a6efb5-4533-4dea-9e42-04efffac5d03';
+  $handler->conf['display'] = $display;
+  $page->default_handlers[$handler->name] = $handler;
+  $pages['services_by_keyword'] = $page;
 
   return $pages;
 

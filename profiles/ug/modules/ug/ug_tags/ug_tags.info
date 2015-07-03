@@ -15,3 +15,4 @@ features[taxonomy][] = tags
 features[user_permission][] = delete terms in tags
 features[user_permission][] = edit terms in tags
 features[views_view][] = keyword_search_results
+features[views_view][] = tags_search
