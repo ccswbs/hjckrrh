@@ -32,12 +32,12 @@ function ug_profile_views_api($module = NULL, $api = NULL) {
 function ug_profile_default_profile2_type() {
   $items = array();
   $items['main'] = entity_import('profile2_type', '{
-    "userCategory" : true,
-    "userView" : true,
+    "userCategory" : false,
+    "userView" : false,
     "type" : "main",
     "label" : "Main profile",
     "weight" : "0",
-    "data" : { "registration" : 0 }
+    "data" : { "registration" : 0, "use_page" : 1 }
   }');
   return $items;
 }

@@ -248,7 +248,7 @@ function ug_profile_views_default_views() {
   $handler->display->display_options['fields']['field_profile_telephonenumber']['relationship'] = 'profile';
   $handler->display->display_options['fields']['field_profile_telephonenumber']['label'] = '';
   $handler->display->display_options['fields']['field_profile_telephonenumber']['element_label_colon'] = FALSE;
-  /* Field: Profile: Room */
+  /* Field: Broken/missing handler */
   $handler->display->display_options['fields']['field_profile_room']['id'] = 'field_profile_room';
   $handler->display->display_options['fields']['field_profile_room']['table'] = 'field_data_field_profile_room';
   $handler->display->display_options['fields']['field_profile_room']['field'] = 'field_profile_room';

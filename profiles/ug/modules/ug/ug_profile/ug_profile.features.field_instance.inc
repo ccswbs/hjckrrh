@@ -107,7 +107,7 @@ function ug_profile_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 18,
+      'weight' => 13,
     ),
   );
 
@@ -143,7 +143,7 @@ function ug_profile_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'file_generic',
-      'weight' => 12,
+      'weight' => 9,
     ),
   );
 
@@ -177,7 +177,7 @@ function ug_profile_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 3,
+      'weight' => 11,
     ),
   );
 
@@ -211,7 +211,7 @@ function ug_profile_field_default_field_instances() {
         'size' => 20,
       ),
       'type' => 'text_textfield',
-      'weight' => 19,
+      'weight' => 14,
     ),
   );
 
@@ -245,7 +245,7 @@ function ug_profile_field_default_field_instances() {
         'size' => 10,
       ),
       'type' => 'text_textfield',
-      'weight' => 21,
+      'weight' => 16,
     ),
   );
 
@@ -289,7 +289,7 @@ function ug_profile_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'image_image',
-      'weight' => 2,
+      'weight' => 10,
     ),
   );
 
@@ -323,7 +323,7 @@ function ug_profile_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 23,
+      'weight' => 18,
     ),
   );
 
@@ -394,7 +394,7 @@ function ug_profile_field_default_field_instances() {
       'module' => 'field_collection',
       'settings' => array(),
       'type' => 'field_collection_embed',
-      'weight' => 10,
+      'weight' => 12,
     ),
   );
 
@@ -432,6 +432,45 @@ function ug_profile_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'profile2-main-field_profile_office'
+  $field_instances['profile2-main-field_profile_office'] = array(
+    'bundle' => 'main',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 20,
+      ),
+    ),
+    'entity_type' => 'profile2',
+    'field_name' => 'field_profile_office',
+    'label' => 'Office',
+    'required' => 0,
+    'settings' => array(
+      'linkit' => array(
+        'button_text' => 'Search',
+        'enable' => 0,
+        'profile' => '',
+      ),
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 17,
+    ),
+  );
+
   // Exported field_instance: 'profile2-main-field_profile_research'
   $field_instances['profile2-main-field_profile_research'] = array(
     'bundle' => 'main',
@@ -459,7 +498,7 @@ function ug_profile_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 11,
+      'weight' => 8,
     ),
   );
 
@@ -490,41 +529,7 @@ function ug_profile_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 8,
-    ),
-  );
-
-  // Exported field_instance: 'profile2-main-field_profile_room'
-  $field_instances['profile2-main-field_profile_room'] = array(
-    'bundle' => 'main',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 11,
-      ),
-    ),
-    'entity_type' => 'profile2',
-    'field_name' => 'field_profile_room',
-    'label' => 'Room',
-    'required' => 0,
-    'settings' => array(
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 6,
-      ),
-      'type' => 'text_textfield',
-      'weight' => 22,
+      'weight' => 2,
     ),
   );
 
@@ -555,7 +560,7 @@ function ug_profile_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 6,
+      'weight' => 7,
     ),
   );
 
@@ -571,7 +576,7 @@ function ug_profile_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 19,
+        'weight' => 21,
       ),
     ),
     'entity_type' => 'profile2',
@@ -579,6 +584,11 @@ function ug_profile_field_default_field_instances() {
     'label' => 'Summary',
     'required' => 0,
     'settings' => array(
+      'linkit' => array(
+        'button_text' => 'Search',
+        'enable' => 0,
+        'profile' => '',
+      ),
       'text_processing' => 1,
       'user_register_form' => FALSE,
     ),
@@ -586,10 +596,10 @@ function ug_profile_field_default_field_instances() {
       'active' => 1,
       'module' => 'text',
       'settings' => array(
-        'size' => 60,
+        'rows' => 10,
       ),
-      'type' => 'text_textfield',
-      'weight' => 9,
+      'type' => 'text_textarea',
+      'weight' => 5,
     ),
   );
 
@@ -623,7 +633,7 @@ function ug_profile_field_default_field_instances() {
         'size' => 10,
       ),
       'type' => 'text_textfield',
-      'weight' => 20,
+      'weight' => 15,
     ),
   );
 
@@ -688,7 +698,7 @@ function ug_profile_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 5,
+      'weight' => 3,
     ),
   );
 
@@ -739,7 +749,41 @@ function ug_profile_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 24,
+      'weight' => 19,
+    ),
+  );
+
+  // Exported field_instance: 'profile2-main-field_tags'
+  $field_instances['profile2-main-field_tags'] = array(
+    'bundle' => 'main',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Enter a comma separated list of keywords.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'taxonomy',
+        'settings' => array(),
+        'type' => 'taxonomy_term_reference_link',
+        'weight' => 22,
+      ),
+    ),
+    'entity_type' => 'profile2',
+    'field_name' => 'field_tags',
+    'label' => 'Keywords',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'taxonomy',
+      'settings' => array(
+        'autocomplete_path' => 'taxonomy/autocomplete',
+        'size' => 60,
+      ),
+      'type' => 'taxonomy_autocomplete',
+      'weight' => 6,
     ),
   );
 
@@ -749,19 +793,21 @@ function ug_profile_field_default_field_instances() {
   t('Attachments');
   t('Content');
   t('Email');
+  t('Enter a comma separated list of keywords.');
   t('Fax');
   t('Heading');
   t('Image');
   t('Image caption');
+  t('Keywords');
   t('Lab');
   t('Last name');
   t('Mailing address');
+  t('Office');
   t('Phone number');
   t('Position/title');
   t('Preferred name');
   t('Profile sections');
   t('Role');
-  t('Room');
   t('Sub-unit');
   t('Summary');
   t('Unit');
