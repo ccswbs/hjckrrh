@@ -120,7 +120,54 @@ function ug_event_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'file_generic',
-      'weight' => 8,
+      'weight' => 9,
+    ),
+  );
+
+  // Exported field_instance: 'node-event-field_event_body'
+  $field_instances['node-event-field_event_body'] = array(
+    'bundle' => 'event',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 16,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_event_body',
+    'label' => 'Body',
+    'required' => 0,
+    'settings' => array(
+      'display_summary' => 1,
+      'linkit' => array(
+        'button_text' => 'Search',
+        'enable' => 0,
+        'profile' => '',
+      ),
+      'text_processing' => 1,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 20,
+        'summary_rows' => 5,
+      ),
+      'type' => 'text_textarea_with_summary',
+      'weight' => 4,
     ),
   );
 
@@ -210,7 +257,7 @@ function ug_event_field_default_field_instances() {
         'text_parts' => array(),
         'year_range' => '-3:+3',
       ),
-      'type' => 'date_select',
+      'type' => 'date_popup',
       'weight' => 2,
     ),
   );
@@ -261,7 +308,7 @@ function ug_event_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'image_image',
-      'weight' => 6,
+      'weight' => 7,
     ),
   );
 
@@ -301,7 +348,7 @@ function ug_event_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 7,
+      'weight' => 8,
     ),
   );
 
@@ -363,7 +410,7 @@ function ug_event_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 9,
+      'weight' => 10,
     ),
   );
 
@@ -451,52 +498,7 @@ function ug_event_field_default_field_instances() {
       'module' => 'field_collection',
       'settings' => array(),
       'type' => 'field_collection_embed',
-      'weight' => 5,
-    ),
-  );
-
-  // Exported field_instance: 'node-event-field_event_summary'
-  $field_instances['node-event-field_event_summary'] = array(
-    'bundle' => 'event',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 14,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_event_summary',
-    'label' => 'Summary',
-    'required' => 0,
-    'settings' => array(
-      'linkit' => array(
-        'button_text' => 'Search',
-        'enable' => 0,
-        'profile' => '',
-      ),
-      'text_processing' => 1,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'rows' => 5,
-      ),
-      'type' => 'text_textarea',
-      'weight' => 4,
+      'weight' => 6,
     ),
   );
 
@@ -536,7 +538,7 @@ function ug_event_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'taxonomy_autocomplete',
-      'weight' => 10,
+      'weight' => 11,
     ),
   );
 
@@ -573,6 +575,7 @@ function ug_event_field_default_field_instances() {
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('Body');
   t('Category');
   t('Content');
   t('Date');
@@ -585,7 +588,6 @@ function ug_event_field_default_field_instances() {
   t('Location');
   t('Related website');
   t('Sections');
-  t('Summary');
 
   return $field_instances;
 }

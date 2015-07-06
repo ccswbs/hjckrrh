@@ -78,29 +78,8 @@ function ug_theme_preprocess_views_view_fields__e1(&$vars) {
   $vars['title']    = $vars['fields']['title']->content; 
   $vars['date']     = $vars['fields']['field_event_date']->content; 
   $vars['image']    = $vars['fields']['field_event_image']->content; 
-  $vars['body']     = $vars['fields']['field_event_summary']->content; 
+  $vars['body']     = $vars['fields']['field_event_body']->content; 
 } 
-
-
-/**
- * E2 - Detail page for single event.
- */
-function ug_theme_preprocess_views_view_fields__e2(&$vars) {
-  $vars['title']       = $vars['fields']['title']->content;
-  $vars['body']        = $vars['fields']['field_event_body']->content;
-  $vars['email']       = $vars['fields']['field_event_email']->content;
-  $vars['contact']     = $vars['fields']['field_event_contact']->content;
-  $vars['cost']        = $vars['fields']['field_event_cost']->content;
-  $vars['date']        = $vars['fields']['field_event_date']->content;
-  $vars['image']       = $vars['fields']['field_event_image']->content;
-  $vars['caption']     = $vars['fields']['field_event_image_caption']->content;
-  $vars['attachments'] = $vars['fields']['field_event_attachments']->content;
-  $vars['location']    = $vars['fields']['field_event_location']->content; 
-  $vars['link']        = $vars['fields']['field_event_link']->content; 
-  $vars['address']     = $vars['fields']['field_event_address']->content;
-  $vars['city']        = $vars['fields']['field_event_city']->content;
-  $vars['category']    = $vars['fields']['field_event_category']->content;
-}
 
 
 /** 

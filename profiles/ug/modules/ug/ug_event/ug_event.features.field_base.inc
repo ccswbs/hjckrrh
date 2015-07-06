@@ -33,6 +33,25 @@ function ug_event_field_default_field_bases() {
     'type' => 'file',
   );
 
+  // Exported field_base: 'field_event_body'
+  $field_bases['field_event_body'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_event_body',
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(),
+    'translatable' => 0,
+    'type' => 'text_with_summary',
+  );
+
   // Exported field_base: 'field_event_category'
   $field_bases['field_event_category'] = array(
     'active' => 1,
@@ -245,25 +264,6 @@ function ug_event_field_default_field_bases() {
     ),
     'translatable' => 0,
     'type' => 'field_collection',
-  );
-
-  // Exported field_base: 'field_event_summary'
-  $field_bases['field_event_summary'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_event_summary',
-    'indexes' => array(
-      'format' => array(
-        0 => 'format',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'text',
-    'settings' => array(),
-    'translatable' => 0,
-    'type' => 'text_long',
   );
 
   return $field_bases;
