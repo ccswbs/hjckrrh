@@ -29,4 +29,4 @@
  */
 ?>
 <time><?php print $created; ?></time>
-<div><?php print $title; ?></div>
+<h3 class="media-title"><?php print $title; ?></h3>
