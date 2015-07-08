@@ -31,6 +31,7 @@ function ug_theme_theme() {
 
 function ug_theme_preprocess_image_style(&$vars) {
   $vars['attributes']['class'][] = 'img-responsive';
+  $vars['attributes']['class'][] = 'img-rounded';
 }
 
 
