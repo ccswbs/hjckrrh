@@ -32,16 +32,16 @@
 ?>
 <?php if (!empty($image)): ?>
   <div class="col-md-4">
-    <div class="thumbnail">
+    <div class="media-thumbnail">
       <?php print $image; ?>
     </div>
   </div>
 <?php endif; ?>
 <div class="col-md-<?php print empty($image)?12:8; ?>">
-  <header>
-    <h1 class="media-heading"><a href="<?php print $link; ?>"><?php print $title; ?></a></h1>
-    <time class="created"><?php print $created; ?></time>
+  <header class="media-header">
+    <h1 class="media-title"><a href="<?php print $link; ?>"><?php print $title; ?></a></h1>
+    <div class="media-meta"><time><?php print $created; ?></time></div>
   </header>
-  <?php print $body; ?>
+  <div class="media-summary"><?php print $body; ?></div>
 </div>
 
