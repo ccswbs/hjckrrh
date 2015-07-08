@@ -278,3 +278,22 @@ function ug_theme_preprocess_views_view_fields__sr1(&$vars) {
 }
 
  
+/**
+ * Returns HTML for a date element formatted as a single date.
+ */
+function ug_theme_date_display_single($variables) {
+  $date = $variables['date'];
+  $timezone = $variables['timezone'];
+  $attributes = $variables['attributes'];
+
+  // Wrap the result with the attributes.
+  $output = '<time class="date-display-single"' . drupal_attributes($attributes) . '>' . $date . $timezone . '</time>
+';
+
+  if (!empty($variables['add_microdata'])) {
+    $output .= '<meta' . drupal_attributes($variables['microdata']['value']['#attributes']) . '/>';
+  }
+
+  return $output;
+}
+
