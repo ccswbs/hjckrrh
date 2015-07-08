@@ -10,7 +10,7 @@
     <?php print $row; ?>
   <?php endforeach; ?>
   <div class="row slidesjs-navigation slidesjs-navigation-bottom">
-    <div class="col-sm-8 col-xsdk-9">
+    <div class="col-sm-8 slidesjs-summary">
         <a href="#" class="slidesjs-slide-link slidesjs-slide-title"></a>
         <p class="slidesjs-slide-text"></p>
     </div>
