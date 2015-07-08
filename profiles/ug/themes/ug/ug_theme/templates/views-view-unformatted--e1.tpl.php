@@ -7,6 +7,7 @@
  * @ingroup views_templates
  */
 ?>
+<div class="media-listing-page">
 <?php if (!empty($title)): ?>
   <h3><?php print $title; ?></h3>
 <?php endif; ?>
@@ -15,3 +16,5 @@
     <?php print $row; ?>
   </article>
 <?php endforeach; ?>
+</div>
+
