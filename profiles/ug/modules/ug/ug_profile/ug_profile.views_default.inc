@@ -30,6 +30,9 @@ function ug_profile_views_default_views() {
   $handler->display->display_options['exposed_form']['type'] = 'basic';
   $handler->display->display_options['pager']['type'] = 'full';
   $handler->display->display_options['style_plugin'] = 'default';
+  $handler->display->display_options['style_options']['row_class'] = 'row media';
+  $handler->display->display_options['style_options']['default_row_class'] = FALSE;
+  $handler->display->display_options['style_options']['row_class_special'] = FALSE;
   $handler->display->display_options['row_plugin'] = 'fields';
   $handler->display->display_options['row_options']['default_field_elements'] = FALSE;
   /* Relationship: User: Profile */
@@ -62,11 +65,16 @@ function ug_profile_views_default_views() {
   $handler->display->display_options['fields']['field_profile_telephonenumber']['table'] = 'field_data_field_profile_telephonenumber';
   $handler->display->display_options['fields']['field_profile_telephonenumber']['field'] = 'field_profile_telephonenumber';
   $handler->display->display_options['fields']['field_profile_telephonenumber']['relationship'] = 'profile';
+  $handler->display->display_options['fields']['field_profile_telephonenumber']['element_label_type'] = 'strong';
+  $handler->display->display_options['fields']['field_profile_telephonenumber']['element_wrapper_type'] = 'p';
+  $handler->display->display_options['fields']['field_profile_telephonenumber']['element_default_classes'] = FALSE;
   /* Field: Profile: Position/title */
   $handler->display->display_options['fields']['field_profile_title']['id'] = 'field_profile_title';
   $handler->display->display_options['fields']['field_profile_title']['table'] = 'field_data_field_profile_title';
   $handler->display->display_options['fields']['field_profile_title']['field'] = 'field_profile_title';
   $handler->display->display_options['fields']['field_profile_title']['relationship'] = 'profile';
+  $handler->display->display_options['fields']['field_profile_title']['element_type'] = 'p';
+  $handler->display->display_options['fields']['field_profile_title']['element_default_classes'] = FALSE;
   /* Field: Profile: Preferred name */
   $handler->display->display_options['fields']['field_profile_name']['id'] = 'field_profile_name';
   $handler->display->display_options['fields']['field_profile_name']['table'] = 'field_data_field_profile_name';
@@ -77,6 +85,9 @@ function ug_profile_views_default_views() {
   $handler->display->display_options['fields']['field_profile_unit']['table'] = 'field_data_field_profile_unit';
   $handler->display->display_options['fields']['field_profile_unit']['field'] = 'field_profile_unit';
   $handler->display->display_options['fields']['field_profile_unit']['relationship'] = 'profile';
+  $handler->display->display_options['fields']['field_profile_unit']['element_type'] = 'p';
+  $handler->display->display_options['fields']['field_profile_unit']['element_default_classes'] = FALSE;
+  $handler->display->display_options['fields']['field_profile_unit']['type'] = 'taxonomy_term_reference_plain';
   /* Field: Profile: Image */
   $handler->display->display_options['fields']['field_profile_image']['id'] = 'field_profile_image';
   $handler->display->display_options['fields']['field_profile_image']['table'] = 'field_data_field_profile_image';
