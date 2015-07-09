@@ -105,24 +105,25 @@ function ug_profile_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Contact information',
-    'weight' => '7',
+    'weight' => '13',
     'children' => array(
       0 => 'field_profile_address',
       1 => 'field_profile_email',
       2 => 'field_profile_faxnumber',
       3 => 'field_profile_lab',
-      4 => 'field_profile_room',
+      4 => 'field_profile_office',
       5 => 'field_profile_telephonenumber',
       6 => 'field_profile_website',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
-      'formatter' => 'collapsible',
+      'label' => 'Contact information',
       'instance_settings' => array(
-        'description' => '',
+        'required_fields' => 0,
         'classes' => '',
-        'required_fields' => 1,
+        'description' => '',
       ),
+      'formatter' => 'collapsible',
     ),
   );
   $export['group_contact|profile2|main|form'] = $field_group;

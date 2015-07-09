@@ -34,25 +34,35 @@
  *
  */
 ?>
-
-<div class="row">
-  <?php if ($image): ?>
-    <div class="col-md-4">
+<?php if ($image): ?>
+  <div class="col-md-4">
+    <div class="media-thumbnail">
       <?php print $image; ?>
     </div>
-  <?php endif; ?>
-  <div class="col-md-<?php print $image ? 8 : 4; ?>">
-    <?php print $fullname; ?><br/>
-    <?php print $title; if ($unit): print ', '.$unit; endif; ?><br/>
+  </div>
+<?php endif; ?>
+<div class="col-md-<?php print $image ? 8 : 4; ?>">
+  <header class="media-header">
+    <h1 class="media-title">
+      <?php print $fullname; ?>
+    </h1>
+    <div class="media-meta">
+      <?php print $title; ?>
+      <?php print $unit; ?>
+    </div>
+  </header>
+  <div class="media-summary">
     <?php if ($phone): ?>
-      <?php print t("<span class='text-muted'>@label: </span>", array('@label' => 'Phone')); ?>
-      <?php print $phone; ?><br/>
+      <p>
+        <?php print t("<strong>@label:</strong>", array('@label' => 'Phone')); ?>
+        <?php print $phone; ?>
+      </p>
     <?php endif; ?>
     <?php if ($email): ?>
-      <?php print t("<span class='text-muted'>@label: </span>", array('@label' => 'Email')); ?>
-      <?php print $email; ?><br/>
+      <p>
+        <?php print t("<strong>@label:</strong>", array('@label' => 'Email')); ?>
+        <?php print $email; ?>
+      </p>
     <?php endif; ?>
   </div>
-</div> 
-<hr/>
-
+</div>
