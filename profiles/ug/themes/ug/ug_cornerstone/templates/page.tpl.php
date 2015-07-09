@@ -143,7 +143,7 @@
         <div class="highlighted jumbotron"><?php print render($page['highlighted']); ?></div>
       <?php endif; ?>
       <?php if (!empty($breadcrumb)): ?>
-        <div class="row">
+        <div class="row search-and-breadcrumb">
           <div class="col-sm-9">
             <?php print $breadcrumb; ?>
           </div>
