@@ -116,6 +116,7 @@ function ug_feature_views_default_views() {
 
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['css_class'] = 'media-listing-page';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -147,7 +148,7 @@ function ug_feature_views_default_views() {
   $handler->display->display_options['fields']['field_feature_image']['field'] = 'field_feature_image';
   $handler->display->display_options['fields']['field_feature_image']['label'] = '';
   $handler->display->display_options['fields']['field_feature_image']['element_type'] = 'div';
-  $handler->display->display_options['fields']['field_feature_image']['element_class'] = 'thumbnail';
+  $handler->display->display_options['fields']['field_feature_image']['element_class'] = 'media-thumbnail';
   $handler->display->display_options['fields']['field_feature_image']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_feature_image']['element_wrapper_type'] = 'div';
   $handler->display->display_options['fields']['field_feature_image']['element_wrapper_class'] = 'col-sm-4';
@@ -162,11 +163,12 @@ function ug_feature_views_default_views() {
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
   $handler->display->display_options['fields']['title']['label'] = '';
-  $handler->display->display_options['fields']['title']['exclude'] = TRUE;
   $handler->display->display_options['fields']['title']['alter']['make_link'] = TRUE;
   $handler->display->display_options['fields']['title']['alter']['path'] = '[field_feature_link]';
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+  $handler->display->display_options['fields']['title']['element_type'] = 'h1';
+  $handler->display->display_options['fields']['title']['element_class'] = 'media-title';
   $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['title']['element_default_classes'] = FALSE;
   $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
@@ -175,24 +177,11 @@ function ug_feature_views_default_views() {
   $handler->display->display_options['fields']['field_feature_text']['table'] = 'field_data_field_feature_text';
   $handler->display->display_options['fields']['field_feature_text']['field'] = 'field_feature_text';
   $handler->display->display_options['fields']['field_feature_text']['label'] = '';
-  $handler->display->display_options['fields']['field_feature_text']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_feature_text']['alter']['max_length'] = '255';
   $handler->display->display_options['fields']['field_feature_text']['alter']['trim'] = TRUE;
   $handler->display->display_options['fields']['field_feature_text']['alter']['html'] = TRUE;
   $handler->display->display_options['fields']['field_feature_text']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_feature_text']['element_default_classes'] = FALSE;
-  /* Field: Global: Custom text */
-  $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
-  $handler->display->display_options['fields']['nothing']['table'] = 'views';
-  $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
-  $handler->display->display_options['fields']['nothing']['label'] = '';
-  $handler->display->display_options['fields']['nothing']['alter']['text'] = '[title][field_feature_text]
-
-';
-  $handler->display->display_options['fields']['nothing']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['nothing']['element_wrapper_type'] = 'div';
-  $handler->display->display_options['fields']['nothing']['element_wrapper_class'] = 'col-sm-8';
-  $handler->display->display_options['fields']['nothing']['element_default_classes'] = FALSE;
   /* Sort criterion: Content: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
