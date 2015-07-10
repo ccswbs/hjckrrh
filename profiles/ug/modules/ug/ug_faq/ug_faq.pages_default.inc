@@ -296,13 +296,17 @@ function ug_faq_default_page_manager_pages() {
     $display->content['new-49c6ceb5-97dc-42e3-8f9b-3a21b7b9ec06'] = $pane;
     $display->panels['left'][1] = 'new-49c6ceb5-97dc-42e3-8f9b-3a21b7b9ec06';
     $pane = new stdClass();
-    $pane->pid = 'new-5257da10-74df-4971-8cb1-2ca1be647cf3';
+    $pane->pid = 'new-4c4655c5-8b45-421e-b392-792418d92d95';
     $pane->panel = 'right';
     $pane->type = 'views_panes';
-    $pane->subtype = 'faq_filter_category-panel_pane_1';
+    $pane->subtype = 'f3-panel_pane_1';
     $pane->shown = TRUE;
     $pane->access = array();
-    $pane->configuration = array();
+    $pane->configuration = array(
+      'override_title' => 0,
+      'override_title_text' => '',
+      'override_title_heading' => 'h2',
+    );
     $pane->cache = array();
     $pane->style = array(
       'settings' => NULL,
@@ -311,9 +315,9 @@ function ug_faq_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $pane->uuid = '5257da10-74df-4971-8cb1-2ca1be647cf3';
-    $display->content['new-5257da10-74df-4971-8cb1-2ca1be647cf3'] = $pane;
-    $display->panels['right'][0] = 'new-5257da10-74df-4971-8cb1-2ca1be647cf3';
+    $pane->uuid = '4c4655c5-8b45-421e-b392-792418d92d95';
+    $display->content['new-4c4655c5-8b45-421e-b392-792418d92d95'] = $pane;
+    $display->panels['right'][0] = 'new-4c4655c5-8b45-421e-b392-792418d92d95';
   $display->hide_title = PANELS_TITLE_PANE;
   $display->title_pane = 'new-d0294c34-5bf1-4089-b3d3-5119b803afb1';
   $handler->conf['display'] = $display;
@@ -471,13 +475,17 @@ function ug_faq_default_page_manager_pages() {
     $display->content['new-93902679-525c-429a-bc28-876a81d75e4f'] = $pane;
     $display->panels['left'][1] = 'new-93902679-525c-429a-bc28-876a81d75e4f';
     $pane = new stdClass();
-    $pane->pid = 'new-d60c41fd-2506-4922-9007-20143489d84f';
+    $pane->pid = 'new-66f0888c-8815-4e17-b572-40a6d572773f';
     $pane->panel = 'right';
     $pane->type = 'views_panes';
-    $pane->subtype = 'faq_filter_category-panel_pane_1';
+    $pane->subtype = 'f3-panel_pane_1';
     $pane->shown = TRUE;
     $pane->access = array();
-    $pane->configuration = array();
+    $pane->configuration = array(
+      'override_title' => 0,
+      'override_title_text' => '',
+      'override_title_heading' => 'h2',
+    );
     $pane->cache = array();
     $pane->style = array(
       'settings' => NULL,
@@ -486,9 +494,9 @@ function ug_faq_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $pane->uuid = 'd60c41fd-2506-4922-9007-20143489d84f';
-    $display->content['new-d60c41fd-2506-4922-9007-20143489d84f'] = $pane;
-    $display->panels['right'][0] = 'new-d60c41fd-2506-4922-9007-20143489d84f';
+    $pane->uuid = '66f0888c-8815-4e17-b572-40a6d572773f';
+    $display->content['new-66f0888c-8815-4e17-b572-40a6d572773f'] = $pane;
+    $display->panels['right'][0] = 'new-66f0888c-8815-4e17-b572-40a6d572773f';
   $display->hide_title = PANELS_TITLE_PANE;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
