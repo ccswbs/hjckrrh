@@ -54,3 +54,149 @@ p:last-child { margin-bottom: 10px }
  */
 .more-link { margin-top: 15px; }
 
+/*************************
+Base Styles
+*************************/
+
+  body {
+  	font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+
+  /*---------------------
+  Headings
+  ---------------------**/
+
+  h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    color: #666666;
+    font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+
+  h1, h2, h3, h4 {
+    font-weight: 300;
+  }
+
+  /*--- Pixel to EM Conversion ---*/
+  h1 { font-size: 2.571em; /* 36 px */ }
+  h2 { font-size: 2.143em; /* 30 px */ }
+  h3 { font-size: 1.714em; /* 24 px */ }
+  h4 { font-size: 1.286em; /* 18 px */ }
+  h5 { font-size: 1em; /* 14 px */ }
+  h6 { font-size: .857em; /* 12 px */ }
+
+  /*---------------------
+  Links
+  ---------------------**/
+  a{
+      color: #3174AE;
+  }
+
+  a:link {
+      text-decoration: none;
+  }
+
+  a:focus, a:hover {
+      text-decoration: underline;
+  }
+
+  /*---------------------
+  Lists
+  ---------------------**/
+  dd{
+      margin-bottom: 15px;
+  }
+
+  /*---------------------
+  Images
+  ---------------------**/
+
+  figure {
+      margin-bottom: 20px;
+  }
+
+  figcaption {
+      color: #666666;
+      font-size: 1em; /* 14px */
+      font-style: italic;
+      padding: 9px;
+      text-align: center;
+  }
+
+  /*---------------------
+  File Attachments
+  ---------------------**/
+
+  img.file-icon {
+    margin-right: 10px;
+  }
+
+  /*---------------------
+  Form Elements
+  ---------------------**/
+
+  input::-webkit-input-placeholder { color: #767676 !important; }
+  input::-moz-placeholder { color: #767676 !important; }
+  input:-moz-placeholder { color: #767676 !important; /* Older versions of Firefox */ }
+  input:-ms-input-placeholder { color: #767676 !important; }
+
+/*************************
+ Layout Styles
+*************************/
+
+  /*---------------------
+     Regions
+    ---------------------**/
+
+    aside { 
+      padding-top: 20px; 
+    }
+
+    @media all and (min-width:992px) { 
+      aside{ 
+        padding-top: 0;
+      }
+    }
+
+  /*---------------------
+     Gutters
+    ---------------------**/
+
+    @media all and (min-width:992px) { 
+      .xs-gutter {
+        padding-left: 5px;
+        padding-right: 5px;
+      }
+    }
+
+    /*---------------------
+     Panels
+    ---------------------**/
+
+    /* Inherits Bootstrap (default) heading colours instead of set heading colour */
+    .panel-title {
+      color: inherit;
+    }
+
+    /*---------------------
+     Blocks
+    ---------------------**/
+
+    /*--- Theming ---*/
+
+    /* title links - underline made thinner */
+    .block-title a:focus,
+    .block-title a:hover {
+      border-bottom: 2px solid;
+      text-decoration: none;
+    }
+
+    /*---------------------
+     Panes
+    ---------------------**/
+
+    /* title links - underline made thinner */
+    .pane-title a:focus,
+    .pane-title a:hover {
+      border-bottom: 2px solid;
+      text-decoration: none;
+    }
+

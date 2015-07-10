@@ -25,6 +25,9 @@ regions[page_bottom]    = 'Page bottom'
 ;;;;;;;;;;;;;;;;;;;;;
 
 stylesheets[all][] = css/base.css
+stylesheets[all][] = css/header.css
+stylesheets[all][] = css/media.css
+stylesheets[all][] = css/b1-banner.css
 
 
 ; For information on choosing the desired method, please read the Drupal
