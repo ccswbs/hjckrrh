@@ -34,7 +34,7 @@ function ug_banner_field_default_field_instances() {
     'entity_type' => 'node',
     'field_name' => 'field_banner_alttext',
     'label' => 'Alt text',
-    'required' => 1,
+    'required' => 0,
     'settings' => array(
       'linkit' => array(
         'button_text' => 'Search',
