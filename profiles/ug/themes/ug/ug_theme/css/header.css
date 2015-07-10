@@ -1,0 +1,104 @@
+/***********************
+ Header
+***********************/
+
+    /*---------------------
+    Site Title
+    ---------------------**/
+
+        /*--- Layout ---*/
+
+        .navbar-brand {
+            padding-top: 10px;
+            width: 75%;
+        }
+
+        @media all and (min-width: 768px) {
+            .navbar-brand{
+                width: auto;
+            }
+        }
+
+        /*--- Theming ---*/
+
+        .navbar-brand {
+            font-size: 2.143em; /* 30px */
+            line-height: 1.1;
+        }
+
+    /*---------------------
+    Site Slogan
+    ---------------------**/
+
+        /*--- Layout ---*/
+
+        .navbar-header .lead {
+            float: left;
+            margin: 0 0 0 15px;
+            position: relative;
+            top: -10px;
+        }
+
+        @media all and (min-width: 768px) {
+            .navbar-header .lead {
+                clear: left;
+                margin: 0;
+            }
+        }
+
+        /*--- Theming ---*/
+
+        .navbar-header .lead {
+            font-size: 1em; /* 14px */
+        }
+
+        .navbar-inverse .navbar-header .lead {
+            color: #999999;
+        }
+
+    /*---------------------
+    Navigation - Toggle
+    ---------------------**/
+
+    /*--- Layout ---*/
+
+    .navbar-header .navbar-toggle {
+        position: absolute;
+        top: 5px;
+        right: 0;
+    }
+
+    /*---------------------
+    Navigation - Local
+    ---------------------**/
+
+        /*--- Theming ---*/
+
+        #navbar .navbar-inverse {
+            background: #000000;
+        }
+
+        #navbar .navbar-inverse .navbar-brand, 
+        #navbar .navbar-inverse .navbar-nav>li>a {
+            color: #9B9B9B;
+        }
+
+    /*---------------------
+    Page Header
+    ---------------------**/
+
+        /*--- Layout ---*/
+
+        #page-header{
+            position: relative;
+            top: -20px;
+        }
+
+
+    /*---------------------
+     Breadcrumbs
+    ---------------------**/
+        /*--- Theming ---*/
+        .breadcrumb>.active { 
+            color: #696969; 
+        }

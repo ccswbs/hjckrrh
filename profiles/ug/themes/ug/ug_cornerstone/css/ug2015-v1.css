@@ -1,0 +1,52 @@
+/***********************
+UG Theme v1.0
+Live Date: June 23, 2015
+***********************/
+
+	/*---------------------
+	Header
+	-----------------------**/
+
+		/*--- Theming ---*/
+
+	    #page-header{
+		    background: #45403A url("http://www.uoguelph.ca/img/featurebg.jpg");
+	        background-repeat: repeat-x;
+		}
+
+	/*---------------------
+	Navigation - Global
+	---------------------**/
+
+	    /*--- Theming ---*/
+
+	    #ug-header .navbar-small {
+	        font-size: .857em;
+	    }
+
+
+	    /* TO DO - Update to include visual focus colour changes */
+	    #ug-navbar .navbar-nav>.dropdown>a:hover .caret,
+	    #ug-navbar .navbar-nav>.dropdown>a:focus .caret, 
+	    #ug-navbar .navbar-nav>.dropdown>a .caret,
+	    #ug-navbar .navbar-nav>.open>a .caret,
+	    #ug-navbar .navbar-nav>.open>a:hover .caret,
+	    #ug-navbar .navbar-nav>.open>a:focus .caret {
+	        border-bottom-color: #FFFFFF;
+	        border-top-color: #FFFFFF;
+	    }
+
+	/*---------------------
+	Footer - Global
+	---------------------**/
+
+	    /*--- Theming ---*/
+
+	    footer.navbar-inverse{
+	        background: #45403A;
+	        border:000;
+	    }
+
+	    footer.navbar-inverse .navbar-nav>li>a {
+	        color: #CCCCCC;
+	    }

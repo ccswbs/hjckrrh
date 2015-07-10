@@ -1,0 +1,217 @@
+/******************
+ Media
+*****************/
+
+    /*--- Layout ---*/
+    .media-listing-page .media, 
+    .teaser-list .media { 
+        margin-top: 0; 
+    }
+
+    /*--- Theming ---*/
+
+    .media-listing-page .media,
+    .teaser-list .media,
+    .detail-page {
+        border-bottom: 1px solid #EEEEEE;
+    }
+
+    /*---------------------
+    Thumbnails
+    ---------------------**/
+
+        /*--- Layout ---*/
+        .media .media-thumbnail { 
+            margin-bottom: 20px; 
+        }
+
+        @media all and (min-width:992px) { 
+            .media .media-thumbnail { 
+                margin-bottom: 0;
+            } 
+        }
+
+    /*---------------------
+    Titles
+    ---------------------**/
+
+        /*--- Layout ---*/
+        .media .media-title { 
+            margin-top: 0;
+            line-height: 1.2em;
+        }
+
+
+/******************
+ Listing Pages
+*****************/
+
+    /*--- Layout ---*/
+
+    .media-listing-page .media {
+        margin-bottom: 20px;
+        padding: 0 0 30px 0;
+    }
+
+
+    /*---------------------
+    Metadata
+    ---------------------**/
+
+        /*--- Layout ---*/
+        .media-listing-page .media .media-header .media-meta {
+            margin-bottom: 1.143em; /* 16px */
+        }
+
+        /*--- Theming ---*/
+        .media-listing-page .media-header .media-meta {
+            color:#767676;
+            font-size: 1.143em; /* 16px */
+        }
+
+    /*---------------------
+    Titles
+    ---------------------**/
+
+        /*--- Theming ---*/
+
+        /* title links - underline made thinner */
+        .media-listing-page .media-title a:focus,
+        .media-listing-page .media-title a:hover {
+            border-bottom: 2px solid;
+            text-decoration: none;
+        }
+
+    /*---------------------
+    Text
+    ---------------------**/
+
+        /*--- Layout ---*/
+        .media-listing-page .media p,
+        .media-listing-page .media p:last-child { 
+            margin-bottom: 0;
+        }
+
+
+/**************
+Teaser Lists
+***************/
+
+    /*--- Layout ---*/
+
+    .teaser-list {
+        padding-top: 10px;
+    }
+
+    .teaser-list .media {
+        margin-bottom: 10px;
+    }
+
+
+    /*---------------------
+    Thumbnails
+    ---------------------**/
+
+        /*--- Layout ---*/
+        .teaser-list .media .media-thumbnail {
+            margin-bottom: 10px;
+        }
+
+    /*---------------------
+    Titles
+    ---------------------**/
+
+        /*--- Layout ---*/
+        .teaser-list .media .media-title {
+            margin: 0 0 10px 0;
+        }
+
+        /*--- Theming ---*/
+        .teaser-list .media-title {
+            font-size: 1em; /* 14px */
+            font-weight: 500;
+            line-height: 1.5em;
+        }
+
+    /*---------------------
+    More Button
+    ---------------------**/
+        /*--- Theming ---*/
+        .teaser-list .more-link .btn-default{
+            color: #696969;
+        }
+
+/******************
+ Detail Pages
+*****************/
+
+    /*--- Layout ---*/
+/*    .detail-page {
+        margin-bottom: ;
+    }*/
+
+    /*---------------------
+    Meta Data
+    ---------------------**/
+        /*--- Layout ---*/
+        .detail-page .media-meta {
+            margin-bottom: 16px;
+        }
+
+        /*--- Theming ---*/
+        .detail-page .media-meta {
+            color: #767676;
+            font-size: 1.143em; /* 16px */
+        }
+
+    /*---------------------
+    Highlights
+    ---------------------**/
+
+        /*--- Layout ---*/
+
+        .detail-page .media-highlight {
+            display: block;
+            margin-left: 45px;
+            position: relative;
+        }
+
+        .detail-page .media-highlight span.glyphicon {
+            left: -45px;
+            padding-top: 1px;
+            position: absolute;
+        }
+
+        .detail-page .media-highlight .pane-title {
+            margin-top: 0;
+        }
+
+    /*---------------------
+    Text
+    ---------------------**/
+
+        /*--- Theming ---*/
+
+        .detail-page p {
+            color: #666666;
+            font-size: 1.143em; /* 16px */
+            line-height: 150%;
+            margin: 0 0 1.5em 0;
+        }
+
+    /*---------------------
+    File Attachments
+    ---------------------**/
+
+/*    .detail-page .file {
+        position: relative;
+    }*/
+
+/*    .file-icon {
+        position: absolute;
+    }*/
+
+/*    .detail-page .file {
+        position: relative;
+        left: 25px;
+    }*/
