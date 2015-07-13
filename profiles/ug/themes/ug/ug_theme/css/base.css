@@ -54,6 +54,8 @@ p:last-child { margin-bottom: 10px }
  */
 .more-link { margin-top: 15px; }
 
+
+
 /*************************
 Base Styles
 *************************/
@@ -141,66 +143,4 @@ Base Styles
   input::-moz-placeholder { color: #767676 !important; }
   input:-moz-placeholder { color: #767676 !important; /* Older versions of Firefox */ }
   input:-ms-input-placeholder { color: #767676 !important; }
-
-/*************************
- Layout Styles
-*************************/
-
-  /*---------------------
-     Regions
-    ---------------------**/
-
-    aside { 
-      padding-top: 20px; 
-    }
-
-    @media all and (min-width:992px) { 
-      aside{ 
-        padding-top: 0;
-      }
-    }
-
-  /*---------------------
-     Gutters
-    ---------------------**/
-
-    @media all and (min-width:992px) { 
-      .xs-gutter {
-        padding-left: 5px;
-        padding-right: 5px;
-      }
-    }
-
-    /*---------------------
-     Panels
-    ---------------------**/
-
-    /* Inherits Bootstrap (default) heading colours instead of set heading colour */
-    .panel-title {
-      color: inherit;
-    }
-
-    /*---------------------
-     Blocks
-    ---------------------**/
-
-    /*--- Theming ---*/
-
-    /* title links - underline made thinner */
-    .block-title a:focus,
-    .block-title a:hover {
-      border-bottom: 2px solid;
-      text-decoration: none;
-    }
-
-    /*---------------------
-     Panes
-    ---------------------**/
-
-    /* title links - underline made thinner */
-    .pane-title a:focus,
-    .pane-title a:hover {
-      border-bottom: 2px solid;
-      text-decoration: none;
-    }
 
