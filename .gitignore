@@ -4,4 +4,7 @@ sites/*/settings*.php
 # Ignore paths that contain user-generated content.
 sites/*/files
 sites/*/private
+
+# Ignore local machine configuration
 .DS_Store
+sites/all/modules/module_filter/
