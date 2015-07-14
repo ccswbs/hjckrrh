@@ -9,8 +9,6 @@
         /*--- Layout ---*/
 
         .navbar-brand {
-            padding-top: 10px;
-            padding-bottom: 10px;
             width: 75%;
         }
 
@@ -37,13 +35,13 @@
             float: left;
             margin: 0 0 0 15px;
             position: relative;
-            top: -10px;
+            top: -12px;
         }
 
         @media all and (min-width: 768px) {
             .navbar-header .lead {
                 clear: left;
-                margin: 0;
+                margin: 0 0 5px 0;
             }
         }
 
