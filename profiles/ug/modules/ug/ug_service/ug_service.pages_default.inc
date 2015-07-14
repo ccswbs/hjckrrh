@@ -615,7 +615,10 @@ function ug_service_default_page_manager_pages() {
   $page->admin_title = 'Services by keyword';
   $page->admin_description = '';
   $page->path = 'services/tags/!tid';
-  $page->access = array();
+  $page->access = array(
+    'type' => 'none',
+    'settings' => NULL,
+  );
   $page->menu = array();
   $page->arguments = array(
     'tid' => array(
