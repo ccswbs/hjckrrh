@@ -24,7 +24,6 @@ Live Date: June 23, 2015
 	        font-size: .857em;
 	    }
 
-
 	    /* TO DO - Update to include visual focus colour changes */
 	    #ug-navbar .navbar-nav>.dropdown>a:hover .caret,
 	    #ug-navbar .navbar-nav>.dropdown>a:focus .caret, 
@@ -47,9 +46,47 @@ Live Date: June 23, 2015
 	Navigation - Local
 	---------------------**/
 
-	#navbar .container .navbar-collapse {
-		margin-right: 15px;
-	}
+	    /*--- Layout ---*/
+		#navbar .container .navbar-collapse {
+			margin-right: 15px;
+		}
+
+	/*---------------------
+	Footer - Local
+	---------------------**/
+
+
+	    /*--- Theming ---*/
+
+		#ug-footer-local {
+			background: #F5F5F5;
+			border-top: 1px solid #E5E5E5;
+		}
+
+		#ug-footer-local .footer {
+			border-top: 0;
+		}
+
+		/* Extend global footer across full width */
+		#ug-footer-global {
+			background: #45403A;
+		}
+
+		/* Menu styling in footer */
+		#ug-footer-local .footer .nav>li>a:focus,
+		#ug-footer-local .footer .nav>li>a:hover {
+			background: #FFFFFF;
+		}
+
+	    /*--- Layout ---*/
+
+		#ug-footer-local {
+			margin-top: 45px;
+		}
+
+		#ug-footer-local .footer {
+			margin-top: 0;
+		}
 
 	/*---------------------
 	Footer - Global
