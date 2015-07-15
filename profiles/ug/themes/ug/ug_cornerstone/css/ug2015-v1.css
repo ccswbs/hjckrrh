@@ -36,6 +36,21 @@ Live Date: June 23, 2015
 	        border-top-color: #FFFFFF;
 	    }
 
+	    /*--- Layout ---*/
+
+	    #globalnav.navbar-right {
+	    	margin-right:0;
+	    }
+
+
+	/*---------------------
+	Navigation - Local
+	---------------------**/
+
+	#navbar .container .navbar-collapse {
+		margin-right: 15px;
+	}
+
 	/*---------------------
 	Footer - Global
 	---------------------**/

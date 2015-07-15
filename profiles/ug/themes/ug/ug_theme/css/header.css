@@ -60,13 +60,13 @@
     Navigation - Toggle
     ---------------------**/
 
-    /*--- Layout ---*/
+        /*--- Layout ---*/
 
-    .navbar-header .navbar-toggle {
-        position: absolute;
-        top: 5px;
-        right: 0;
-    }
+        .navbar-header .navbar-toggle {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+        }
 
     /*---------------------
     Navigation - Local
@@ -86,6 +86,11 @@
         /*--- Layout ---*/
 
         @media all and (min-width: 768px) {
+
+            #navbar .container .navbar-collapse {
+                padding-right: 0;
+            }
+
             .flex-container {
                 display: -webkit-flex;
                 display: flex !important;
