@@ -42,26 +42,37 @@
         </form>
 
         <ul id="globalnav" class="nav navbar-nav navbar-right nav-clear">
+
           <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Academics <span class="caret"></span></a>
             <ul class="dropdown-menu navbar-default dropdown-menu-left" role="menu">
-              <li><a href="/admissions/">Undergraduate Admissions</a></li>
-              <li><a href="/graduatestudies/">Graduate Studies</a></li>
-              <li><a href="http://www.coles.uoguelph.ca">Distance Education</a></li>
+              <li><a href="//www.uoguelph.ca/admissions/">Undergraduate Admissions</a></li>
+              <li><a href="//www.uoguelph.ca/graduatestudies/">Graduate Studies</a></li>
+              <li><a href="//www.coles.uoguelph.ca">Distance Education</a></li>
+              <li><a href="//www.uoguelph.ca/registrar/calendars/">Academic Calendars</a></li>
               <li class="divider"></li>
-              <li><a href="http://www.uoguelph.ca/arts">College of Arts</a></li>
-              <li><a href="http://www.uoguelph.ca/cbs/">College of Biological Science</a></li>
-              <li><a href="http://www.uoguelph.ca/business/">College of Business &amp; Economics</a> </li>
-              <li><a href="http://www.uoguelph.ca/cpes/">College of Physical &amp; 
-                Engineering Science</a></li>
-              <li><a href="http://www.csahs.uoguelph.ca/">College of Social &amp; Applied 
-                Human Sciences</a></li>
-              <li><a href="http://www.oac.uoguelph.ca/">Ontario Agricultural College</a></li>
-              <li><a href="http://www.ovc.uoguelph.ca/">Ontario Veterinary College</a></li>
+              <li><a href="//www.uoguelph.ca/arts">College of Arts</a></li>
+              <li><a href="//www.uoguelph.ca/cbs/">College of Biological Science</a></li>
+              <li><a href="//www.uoguelph.ca/business/">College of Business &amp; Economics</a> </li>
+              <li><a href="//www.uoguelph.ca/cpes/">College of Physical &amp; Engineering Science</a></li>
+              <li><a href="//www.csahs.uoguelph.ca/">College of Social &amp; Applied Human Sciences</a></li>
+              <li><a href="//www.oac.uoguelph.ca/">Ontario Agricultural College</a></li>
+              <li><a href="//www.ovc.uoguelph.ca/">Ontario Veterinary College</a></li>
               <li class="divider"></li>
+              <li><a href="http://www.ridgetownc.uoguelph.ca/">Ridgetown Campus</a></li>
               <li><a href="http://www.guelphhumber.ca/">University of Guelph-Humber</a></li>
             </ul>
           </li>
-                    <li><a href="about.html">About</a></li>
+
+          <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">About <span class="caret"></span></a>
+            <ul class="dropdown-menu navbar-default dropdown-menu-left" role="menu">
+              <li><a href="//www.uoguelph.ca/about.html">About the University</a></li>
+                          <li class="divider"></li>
+              <li><a href="//www.uoguelph.ca/secretariat/office-services/board-governors">Board of Governors</a></li>
+              <li><a href="//www.uoguelph.ca/secretariat/office-services/senate">Senate</a></li>
+              <li><a href="//www.uoguelph.ca/info/senioradmin">Senior Administration</a></li>
+            </ul>
+            </li>
+
          <!-- <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Info For<span class="caret"></span></a>
             <ul class="dropdown-menu navbar-default dropdown-menu-left" role="menu">
 				<li><a href="http://www.uoguelph.ca/applying/">Future Students</a></li>
@@ -72,9 +83,12 @@
                 <li><a href="http://www.uoguelph.ca/cpa/media/">Media</a></li>
             </ul>
           </li> -->
+
           <!-- <li><a href="/campus/">Community</a></li> -->
           <li><a href="/international/">International</a></li>
-          <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Leadership <span class="caret"></span></a>
+          <li><a href="//www.uoguelph.ca/president/">President</a></li>
+
+          <!-- <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Leadership <span class="caret"></span></a>
             <ul class="dropdown-menu navbar-default" role="menu">
               <li><a href="http://www.uoguelph.ca/president/">President</a></li>
               <li><a href="http://www.uoguelph.ca/vpacademic/">Provost and Vice-President (Academic)</a></li>
@@ -85,7 +99,8 @@
               <li class="divider"></li>
               <li><a href="/info/senioradmin">Senior Administration</a></li>
             </ul>
-          </li>
+          </li> -->
+
           <li><a href="/research/">Research</a></li>
           <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Services <span class="caret"></span></a>
             <ul class="dropdown-menu navbar-default" role="menu">
@@ -98,7 +113,7 @@
               <li><a href="//www.uoguelph.ca/studentaffairs/">Student Affairs</a></li>
               <li><a href="//www.housing.uoguelph.ca">Student Housing Services</a></li>
               <li class="divider"></li>
-              <li><a href="/services/">More Services</a></li>
+              <li><a href="//www.uoguelph.ca/services/">More Services</a></li>
             </ul>
           </li>
         </ul>
