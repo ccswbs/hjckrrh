@@ -79,11 +79,6 @@
             background: #000000;
         }
 
-        #navbar.navbar-inverse .navbar-brand, 
-        #navbar.navbar-inverse .navbar-nav>li>a {
-            color: #9B9B9B;
-        }
-
         /*--- Layout ---*/
 
         @media all and (min-width: 768px) {
