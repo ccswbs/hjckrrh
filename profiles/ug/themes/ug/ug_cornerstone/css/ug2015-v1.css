@@ -57,13 +57,18 @@ Live Date: June 23, 2015
 
 	    /*--- Theming ---*/
 
-	    footer.navbar-inverse{
+	    #ug-footer-global footer.navbar-inverse{
 	        background: #45403A;
 	        border:000;
 	    }
 
-	    footer.navbar-inverse .navbar-nav>li>a {
+	    #ug-footer-global footer.navbar-inverse .navbar-nav>li>a {
 	        color: #CCCCCC;
+	    }
+
+		#ug-footer-global footer.navbar-inverse .navbar-nav>li>a:focus,
+	    #ug-footer-global footer.navbar-inverse .navbar-nav>li>a:hover {
+	        color: #FFFFFF;
 	    }
 
 	/*---------------------
