@@ -50,6 +50,7 @@
 
         .navbar-header .lead {
             font-size: 1.071em; /* 14px */
+            font-weight: 400;
         }
 
         .navbar-inverse .navbar-header .lead {
