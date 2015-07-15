@@ -5,14 +5,19 @@
       <div class="navbar-header">
         <a class="navbar-brand" href="//www.uoguelph.ca/"><img alt="University of Guelph" src="http://www.uoguelph.ca/img/universityofguelph.gif"></a> </div>
       <div id="ug-navbar" class="navbar-collapse collapse">
+
         <ul class="nav navbar-nav navbar-right navbar-small">
           <li><a href="https://mail.uoguelph.ca/"><span class="glyphicon glyphicon-envelope fa-fw" aria-hidden="true"></span> GryphMail</a></li>
           <li><a href="https://courselink.uoguelph.ca/"><span class="glyphicon glyphicon-pencil fa-fw" aria-hidden="true"></span> CourseLink</a></li>
-          <li><a href="/directory/"><span class="glyphicon glyphicon-user fa-fw" aria-hidden="true"></span> Contacts</a></li>
+          <li><a href="//www.uoguelph.ca/directory/"><span class="glyphicon glyphicon-user fa-fw" aria-hidden="true"></span> Contacts</a></li>
           <li><a href="//www.lib.uoguelph.ca"><span class="glyphicon glyphicon-book fa-fw" aria-hidden="true"></span> Library</a></li>
-          <li><a href="/campus/map/"><span class="glyphicon glyphicon-road fa-fw" aria-hidden="true"></span> Maps</a></li>
+          <li><a href="//www.uoguelph.ca/campus/map/"><span class="glyphicon glyphicon-road fa-fw" aria-hidden="true"></span> Maps</a></li>
+      <li><a href="//webadvisor.uoguelph.ca/"><span class="glyphicon glyphicon-list-alt fa-fw" aria-hidden="true"></span> WebAdvisor</a></li>
           <li><a href="http://weather.gc.ca/city/pages/on-5_metric_e.html"><span class="glyphicon glyphicon-cloud fa-fw" aria-hidden="true"></span>  <div id="weatherFeed"></div></a></li>
+
         </ul>
+
+
         <form class="navbar-form navbar-right" role="form" id="searchbox_011117603928904778939:tp3ks5ha2dw" name="searchform" action="http://www.uoguelph.ca/search/">
           <input type="hidden" name="commonname" size="20" maxlength="256" class="search1" id="searchtext2">
           <input type="hidden" name="vl(freeText0)" size="20" maxlength="256" class="search1" id="searchtext3">
