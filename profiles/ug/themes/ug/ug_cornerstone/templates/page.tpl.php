@@ -193,6 +193,8 @@
 
   </div>
 </div>
-<footer class="footer container">
-  <?php print render($page['footer']); ?>
-</footer>
+<div id="ug-footer-local">
+  <footer class="footer container">
+    <?php print render($page['footer']); ?>
+  </footer>
+</div>
