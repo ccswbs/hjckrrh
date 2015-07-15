@@ -10,6 +10,7 @@
 
         .navbar-brand {
             width: 75%;
+            /*padding-bottom: 8px;*/
         }
 
         @media all and (min-width: 768px) {
@@ -33,22 +34,22 @@
 
         .navbar-header .lead {
             float: left;
-            margin: 0 0 0 15px;
+            margin-left: 15px;
             position: relative;
-            top: -12px;
+            top: -5px;
         }
 
         @media all and (min-width: 768px) {
             .navbar-header .lead {
                 clear: left;
-                margin: 0 0 5px 0;
+                margin: 0 0 10px 0;
             }
         }
 
         /*--- Theming ---*/
 
         .navbar-header .lead {
-            font-size: 1em; /* 14px */
+            font-size: 1.071em; /* 14px */
         }
 
         .navbar-inverse .navbar-header .lead {
@@ -73,13 +74,33 @@
 
         /*--- Theming ---*/
 
-        #navbar .navbar-inverse {
+        #navbar.navbar-inverse {
             background: #000000;
         }
 
-        #navbar .navbar-inverse .navbar-brand, 
-        #navbar .navbar-inverse .navbar-nav>li>a {
+        #navbar.navbar-inverse .navbar-brand, 
+        #navbar.navbar-inverse .navbar-nav>li>a {
             color: #9B9B9B;
+        }
+
+        /*--- Layout ---*/
+
+        @media all and (min-width: 768px) {
+            .flex-container {
+                display: -webkit-flex;
+                display: flex !important;
+                flex-wrap: wrap;
+                -webkit-flex-wrap: wrap;
+            }
+
+            .flex-bottom {
+                align-self: flex-end;
+                -webkit-align-self: flex-end;
+            }
+
+            .flex-right {
+                margin-left: auto;
+            }
         }
 
     /*---------------------
