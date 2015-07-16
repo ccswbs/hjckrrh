@@ -197,4 +197,5 @@ Base Styles
     aside .menu li a.active {
       border-bottom: 1px solid #E4E4E4;
       color: #666666;
+      font-weight: 700;
     }
