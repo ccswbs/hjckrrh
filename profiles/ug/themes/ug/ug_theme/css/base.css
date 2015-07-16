@@ -148,13 +148,14 @@ Base Styles
      * to indent nested menus by 12px. Leave font-size as is (12px too small to read).
      */
 
-    /*.menu .menu {
-      padding-left: 12px;
-    }*/
+    .menu .menu li a {  padding-left: 30px; }
+    .menu .menu .menu li a {  padding-left: 45px; }
+    .menu .menu .menu .menu li a {  padding-left: 60px; }
 
-    .menu .menu li a{  padding-left: 24px; }
-    .menu .menu .menu li a {  padding-left: 36px; }
-    .menu .menu .menu .menu li a {  padding-left: 48px; }
+    .panel-panel .menu li a.active-trail,
+    aside .menu li a.active-trail {
+      padding-right: 30px;
+    }
 
     /*--- Theming ---*/
 
@@ -169,11 +170,6 @@ Base Styles
     .panel-panel .menu li a:hover { 
       background: #F3F3F3;
       color: #2F70A9;
-    }
-
-    .panel-panel .menu li a.active-trail,
-    aside .menu li a.active-trail {
-      padding-right: 30px;
     }
 
     /* Caret for parents of active item */
