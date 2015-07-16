@@ -51,6 +51,13 @@ Live Date: June 23, 2015
 			margin-right: 15px;
 		}
 
+	    /*--- Theming ---*/
+	    .navbar-nav>li>.dropdown-menu>.active>a, 
+	    .navbar-nav>li>.dropdown-menu>.active>a:hover, 
+	    .navbar-nav>li>.dropdown-menu>.active>a:focus {
+	      background: #333333;
+	    }
+
 	/*---------------------
 	Footer - Local
 	---------------------**/
