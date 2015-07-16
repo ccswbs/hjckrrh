@@ -148,6 +148,51 @@ Base Styles
      * to indent nested menus by 12px. Leave font-size as is (12px too small to read).
      */
 
-    .menu .menu {
+    /*.menu .menu {
       padding-left: 12px;
+    }*/
+
+    .menu .menu li a{  padding-left: 24px; }
+    .menu .menu .menu li a {  padding-left: 36px; }
+    .menu .menu .menu .menu li a {  padding-left: 48px; }
+
+    /*--- Theming ---*/
+
+    aside .menu li a,
+    .panel-panel .menu li a { 
+      border-bottom: 1px solid #EEEEEE;
+    }
+
+    aside .menu li a:focus,
+    aside .menu li a:hover,
+    .panel-panel .menu li a:focus,
+    .panel-panel .menu li a:hover { 
+      background: #F3F3F3;
+      color: #2F70A9;
+    }
+
+    .panel-panel .menu li a.active-trail,
+    aside .menu li a.active-trail {
+      padding-right: 30px;
+    }
+
+    /* Caret for parents of active item */
+    .panel-panel .menu li a.active-trail:not(.active):after,
+    aside .menu li a.active-trail:not(.active):after { 
+      border-top: 4px dashed;
+      border-right: 4px solid transparent;
+      border-left:4px solid transparent;
+      content: "";
+      display: block;
+      height:0;
+      position: absolute;
+      right: 10px;
+      top: 20px;
+      width: 0;
+    }    
+
+    .panel-panel .menu li a.active,
+    aside .menu li a.active {
+      border-bottom: 1px solid #EEEEEE;
+      color: #333333;
     }
