@@ -127,6 +127,20 @@
 
 <div class="main-container container">
 
+
+
+  <?php if (!empty($breadcrumb)): ?>
+    <div class="row search-and-breadcrumb">
+      <div class="col-sm-9">
+        <?php print $breadcrumb; ?>
+      </div>
+      <div class="col-sm-3">
+        <?php $block = module_invoke('search', 'block_view', 'form');
+        print render($block['content']); ?>
+     </div>
+   </div>
+  <?php endif; ?>
+
   <div class="row">
 
     <?php if (empty($variables['page']['sidebar_first']) && empty($variables['page']['sidebar_second'])): ?>
@@ -145,17 +159,7 @@
       <?php if (!empty($page['highlighted'])): ?>
         <div class="highlighted jumbotron"><?php print render($page['highlighted']); ?></div>
       <?php endif; ?>
-      <?php if (!empty($breadcrumb)): ?>
-        <div class="row search-and-breadcrumb">
-          <div class="col-sm-9">
-            <?php print $breadcrumb; ?>
-          </div>
-          <div class="col-sm-3">
-            <?php $block = module_invoke('search', 'block_view', 'form');
-            print render($block['content']); ?>
-         </div>
-       </div>
-      <?php endif; ?>
+
       <a id="main-content"></a>
       <?php print render($title_prefix); ?>
       <?php if (!empty($title)): ?>
