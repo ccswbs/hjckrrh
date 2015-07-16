@@ -42,14 +42,6 @@ p:last-child { margin-bottom: 10px }
 
 
 /*
- * The Bootstrap theme does not use nested menus, but we need
- * to have menu blocks that show multiple levels. Add extra styles
- * to indent nested menus by 12px, and reduce the font size.
- */
-.menu .menu { padding-left: 12px; font-size: 12px; }
-
-
-/*
  * More link.
  */
 .more-link { margin-top: 15px; }
@@ -93,7 +85,7 @@ Base Styles
   Links
   ---------------------**/
   a{
-      color: #3174AE;
+      color: #2F70A9; /* WCAG 2.0 AA on #EEEEEE, #F5F5F5, #FFFFFF */
   }
 
   a:link {
@@ -144,3 +136,18 @@ Base Styles
   input:-moz-placeholder { color: #767676 !important; /* Older versions of Firefox */ }
   input:-ms-input-placeholder { color: #767676 !important; }
 
+  /*---------------------
+  Menus
+  ---------------------**/
+
+    /*--- Layout ---*/
+
+    /*
+     * The Bootstrap theme does not use nested menus, but we need
+     * to have menu blocks that show multiple levels. Add extra styles
+     * to indent nested menus by 12px. Leave font-size as is (12px too small to read).
+     */
+
+    .menu .menu {
+      padding-left: 12px;
+    }
