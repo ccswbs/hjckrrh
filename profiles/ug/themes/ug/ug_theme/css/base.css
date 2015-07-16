@@ -152,10 +152,9 @@ Base Styles
     .menu .menu .menu li a {  padding-left: 45px; }
     .menu .menu .menu .menu li a {  padding-left: 60px; }
 
-    .panel-panel .menu li a.active-trail,
-    aside .menu li a.active-trail {
+    .panel-panel .menu li a.active-trail:not(.active),
+    aside .menu li a.active-trail:not(.active) {
       padding-right: 30px;
-      border-bottom: 1px solid #E4E4E4;
     }
 
     /*--- Theming ---*/
@@ -163,6 +162,12 @@ Base Styles
     aside .menu li a,
     .panel-panel .menu li a { 
       border-bottom: 1px solid #EEEEEE;
+    }
+
+    .panel-panel .menu li a.active-trail:not(.active),
+    aside .menu li a.active-trail:not(.active){
+      border-bottom: 1px solid #E4E4E4;
+      font-weight: 700;
     }
 
     aside .menu li a:focus,
