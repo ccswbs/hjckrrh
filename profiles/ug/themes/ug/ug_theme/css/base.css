@@ -155,6 +155,7 @@ Base Styles
     .panel-panel .menu li a.active-trail,
     aside .menu li a.active-trail {
       padding-right: 30px;
+      border-bottom: 1px solid #E4E4E4;
     }
 
     /*--- Theming ---*/
@@ -189,6 +190,6 @@ Base Styles
 
     .panel-panel .menu li a.active,
     aside .menu li a.active {
-      border-bottom: 1px solid #EEEEEE;
-      color: #333333;
+      border-bottom: 1px solid #E4E4E4;
+      color: #666666;
     }
