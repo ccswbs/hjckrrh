@@ -15,6 +15,20 @@ Live Date: June 23, 2015
 		}
 
 	/*---------------------
+	Site Title
+	-----------------------**/
+
+		/*--- Theming ---*/
+        #navbar.navbar-inverse .navbar-brand {
+            color: #F5F5F5;
+        }
+
+        #navbar.navbar-inverse a.navbar-brand:focus,
+        #navbar.navbar-inverse a.navbar-brand:hover {
+            color: #999999;
+        }
+
+	/*---------------------
 	Navigation - Global
 	---------------------**/
 
@@ -47,15 +61,24 @@ Live Date: June 23, 2015
 	---------------------**/
 
 	    /*--- Layout ---*/
-		#navbar .container .navbar-collapse {
+		#navbar.navbar-inverse .container .navbar-collapse {
 			margin-right: 15px;
 		}
 
 	    /*--- Theming ---*/
-	    .navbar-nav>li>.dropdown-menu>.active>a, 
-	    .navbar-nav>li>.dropdown-menu>.active>a:hover, 
-	    .navbar-nav>li>.dropdown-menu>.active>a:focus {
+	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>.active>a, 
+	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>.active>a:hover, 
+	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>.active>a:focus {
 	      background: #333333;
+	    }
+
+	    #navbar.navbar-inverse .navbar-nav>li>a {
+	      color: #F5F5F5;
+	    }
+
+	    #navbar.navbar-inverse .navbar-nav>li>a:focus,
+	    #navbar.navbar-inverse .navbar-nav>li>a:hover {
+	      color: #999999;
 	    }
 
 	/*---------------------
