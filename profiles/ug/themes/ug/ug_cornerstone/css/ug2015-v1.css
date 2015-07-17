@@ -82,8 +82,8 @@ Live Date: June 23, 2015
 	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>.active>a,
 	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>.active>a:hover,
 	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>.active>a:focus {
-	      background: #CCCCCC;
-	      color: #333333;
+	      background: #333333;
+	      color: #FFFFFF;
 	    }
 
 		/** Dropdown menu item - hover/focus **/
@@ -173,7 +173,12 @@ Live Date: June 23, 2015
 	    /*--- Theming ---*/
 
 	    /* Sidebar elements have smaller font-size regardless of heading */
-		.not-front .panel-panel.right .pane-title {
+		/*.not-front .panel-panel.right .pane-title,*/
+		.not-front .panel-panel.col-sm-4 .pane-title,
+		.not-front .panel-panel.col-sm-3 .pane-title,
+		.not-front .panel-panel.col-sm-2 .pane-title,
+		.not-front .panel-panel.col-sm-1 .pane-title,
+		.not-front aside .block-title {
 			font-size: 1.286em; /* 18px */
 			font-weight: 400;
 		}
