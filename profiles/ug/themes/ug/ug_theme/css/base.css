@@ -144,59 +144,52 @@ Base Styles
 
     /*
      * The Bootstrap theme does not use nested menus, but we need
-     * to have menu blocks that show multiple levels. Add extra styles
-     * to indent nested menus by 12px. Leave font-size as is (12px too small to read).
+     * to have menu blocks that show multiple levels.
      */
 
-    .menu .menu li a {  padding-left: 30px; }
-    .menu .menu .menu li a {  padding-left: 45px; }
-    .menu .menu .menu .menu li a {  padding-left: 60px; }
+     /*.main-container .menu .menu {
+      padding-left: 20px;
+     }*/
 
+    .main-container .menu .menu li a {  padding-left: 30px; }
+    .main-container .menu .menu .menu li a {  padding-left: 50px; }
+    .main-container .menu .menu .menu .menu li a {  padding-left: 70px; }
 
-    .panel-panel .menu li.collapsed>a,
-    aside .menu li.collapsed>a,
-    .panel-panel .menu li.expanded>a, 
-    aside .menu li.expanded>a {
- /*   .panel-panel .menu li a.active-trail:not(.active),
-    aside .menu li a.active-trail:not(.active) {*/
+    .main-container .menu li.collapsed>a,
+    .main-container .menu li.expanded>a {
       padding-right: 30px;
     }
 
     /*--- Theming ---*/
 
-    aside .menu li a,
-    .panel-panel .menu li a { 
+    .main-container .menu li a { 
       border-bottom: 1px solid #EEEEEE;
+      color: #777777;
+      font-size: 1.071em;
     }
 
-    .panel-panel .menu li a.active-trail,
-    aside .menu li a.active-trail{
-      border-bottom: 1px solid #E4E4E4;
-      font-weight: 700;
+    .main-container .menu .menu li a {
+      font-size: 1em;
     }
 
-    .panel-panel .menu li a.active,
-    aside .menu li a.active {
-      color: #666666;
-      font-weight: 700;
-    }
-
-    aside .menu li a:focus,
-    aside .menu li a:hover,
-    .panel-panel .menu li a:focus,
-    .panel-panel .menu li a:hover { 
-      background: #F3F3F3;
+    .main-container .menu li a.active-trail {
       color: #2F70A9;
+      font-weight: 700;
     }
 
-    /* Caret for parents of active item */
-    /*.panel-panel .menu li a.active-trail:not(.active):after,
-    aside .menu li a.active-trail:not(.active):after {*/ 
+    .main-container .menu li a.active {
+      border-bottom: 2px solid #EEEEEE;
+    }
 
-    .panel-panel .menu li.collapsed>a:after,
-    aside .menu li.collapsed>a:after,
-    .panel-panel .menu li.expanded>a:after, 
-    aside .menu li.expanded>a:after {
+    .main-container .menu li a:focus,
+    .main-container .menu li a:hover { 
+      background: #F3F3F3;
+    }
+
+    /* Caret for all parent menu items */
+    .caret-down,
+    .main-container .menu li.collapsed>a:after,
+    .main-container .menu li.expanded>a:after {
       border-top: 4px dashed;
       border-right: 4px solid transparent;
       border-left:4px solid transparent;
@@ -207,6 +200,20 @@ Base Styles
       right: 10px;
       top: 20px;
       width: 0;
-    }    
+    }
+
+    
+/*  .caret-right {
+      border-bottom: 4px solid transparent;
+      border-top: 4px solid transparent;
+      border-left: 4px solid;
+      content: "";
+      display: block;
+      height:0;
+      position: absolute;
+      right: 10px;
+      top: 20px;
+      width: 0;
+    }*/
 
 
