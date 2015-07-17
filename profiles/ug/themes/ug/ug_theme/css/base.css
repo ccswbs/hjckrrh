@@ -152,8 +152,13 @@ Base Styles
     .menu .menu .menu li a {  padding-left: 45px; }
     .menu .menu .menu .menu li a {  padding-left: 60px; }
 
-    .panel-panel .menu li a.active-trail:not(.active),
-    aside .menu li a.active-trail:not(.active) {
+
+    .panel-panel .menu li.collapsed>a,
+    aside .menu li.collapsed>a,
+    .panel-panel .menu li.expanded>a, 
+    aside .menu li.expanded>a {
+ /*   .panel-panel .menu li a.active-trail:not(.active),
+    aside .menu li a.active-trail:not(.active) {*/
       padding-right: 30px;
     }
 
@@ -164,9 +169,15 @@ Base Styles
       border-bottom: 1px solid #EEEEEE;
     }
 
-    .panel-panel .menu li a.active-trail:not(.active),
-    aside .menu li a.active-trail:not(.active){
+    .panel-panel .menu li a.active-trail,
+    aside .menu li a.active-trail{
       border-bottom: 1px solid #E4E4E4;
+      font-weight: 700;
+    }
+
+    .panel-panel .menu li a.active,
+    aside .menu li a.active {
+      color: #666666;
       font-weight: 700;
     }
 
@@ -179,8 +190,13 @@ Base Styles
     }
 
     /* Caret for parents of active item */
-    .panel-panel .menu li a.active-trail:not(.active):after,
-    aside .menu li a.active-trail:not(.active):after { 
+    /*.panel-panel .menu li a.active-trail:not(.active):after,
+    aside .menu li a.active-trail:not(.active):after {*/ 
+
+    .panel-panel .menu li.collapsed>a:after,
+    aside .menu li.collapsed>a:after,
+    .panel-panel .menu li.expanded>a:after, 
+    aside .menu li.expanded>a:after {
       border-top: 4px dashed;
       border-right: 4px solid transparent;
       border-left:4px solid transparent;
@@ -193,9 +209,4 @@ Base Styles
       width: 0;
     }    
 
-    .panel-panel .menu li a.active,
-    aside .menu li a.active {
-      border-bottom: 1px solid #E4E4E4;
-      color: #666666;
-      font-weight: 700;
-    }
+
