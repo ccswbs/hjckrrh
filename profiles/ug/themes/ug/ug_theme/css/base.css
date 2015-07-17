@@ -147,13 +147,13 @@ Base Styles
      * to have menu blocks that show multiple levels.
      */
 
-     /*.main-container .menu .menu {
+     .main-container .menu .menu {
       padding-left: 20px;
-     }*/
+     }
 
-    .main-container .menu .menu li a {  padding-left: 30px; }
+/*    .main-container .menu .menu li a {  padding-left: 30px; }
     .main-container .menu .menu .menu li a {  padding-left: 50px; }
-    .main-container .menu .menu .menu .menu li a {  padding-left: 70px; }
+    .main-container .menu .menu .menu .menu li a {  padding-left: 70px; }*/
 
     .main-container .menu li.collapsed>a,
     .main-container .menu li.expanded>a {
@@ -177,9 +177,9 @@ Base Styles
       font-weight: 700;
     }
 
-    .main-container .menu li a.active {
+/*    .main-container .menu li a.active {
       border-bottom: 2px solid #EEEEEE;
-    }
+    }*/
 
     .main-container .menu li a:focus,
     .main-container .menu li a:hover { 
