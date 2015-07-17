@@ -142,16 +142,14 @@ Base Styles
 
     /*--- Layout ---*/
 
-    /*
-     * The Bootstrap theme does not use nested menus, but we need
-     * to have menu blocks that show multiple levels.
-     */
 
+     /** Option A - Add nested menus **/
      .main-container .menu .menu {
       padding-left: 20px;
      }
 
-/*    .main-container .menu .menu li a {  padding-left: 30px; }
+    /** Option B - Add nested menus that keep full width of menu container **/
+    /* .main-container .menu .menu li a {  padding-left: 30px; }
     .main-container .menu .menu .menu li a {  padding-left: 50px; }
     .main-container .menu .menu .menu .menu li a {  padding-left: 70px; }*/
 
@@ -164,7 +162,7 @@ Base Styles
 
     .main-container .menu li a { 
       border-bottom: 1px solid #EEEEEE;
-      color: #777777;
+      color: #666666;
       font-size: 1.071em;
     }
 
@@ -177,17 +175,13 @@ Base Styles
       font-weight: 700;
     }
 
-/*    .main-container .menu li a.active {
-      border-bottom: 2px solid #EEEEEE;
-    }*/
-
     .main-container .menu li a:focus,
     .main-container .menu li a:hover { 
       background: #F3F3F3;
     }
 
     /* Caret for all parent menu items */
-    .caret-down,
+    .caret-default,
     .main-container .menu li.collapsed>a:after,
     .main-container .menu li.expanded>a:after {
       border-top: 4px dashed;
@@ -202,18 +196,10 @@ Base Styles
       width: 0;
     }
 
-    
-/*  .caret-right {
+    .caret-right {
       border-bottom: 4px solid transparent;
       border-top: 4px solid transparent;
       border-left: 4px solid;
-      content: "";
-      display: block;
-      height:0;
-      position: absolute;
-      right: 10px;
-      top: 20px;
-      width: 0;
-    }*/
+    }
 
 
