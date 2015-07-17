@@ -32,29 +32,40 @@ Live Date: June 23, 2015
 	Navigation - Global
 	---------------------**/
 
-	    /*--- Theming ---*/
-
-	    #ug-header .navbar-small {
-	        font-size: .857em;
-	    }
-
-	    /* TO DO - Update to include visual focus colour changes */
-	    #ug-navbar .navbar-nav>.dropdown>a:hover .caret,
-	    #ug-navbar .navbar-nav>.dropdown>a:focus .caret, 
-	    #ug-navbar .navbar-nav>.dropdown>a .caret,
-	    #ug-navbar .navbar-nav>.open>a .caret,
-	    #ug-navbar .navbar-nav>.open>a:hover .caret,
-	    #ug-navbar .navbar-nav>.open>a:focus .caret {
-	        border-bottom-color: #FFFFFF;
-	        border-top-color: #FFFFFF;
-	    }
-
 	    /*--- Layout ---*/
 
 	    #globalnav.navbar-right {
 	    	margin-right:0;
 	    }
 
+	    /*--- Theming ---*/
+
+	    #ug-navbar .navbar-nav .dropdown a .caret{
+	        border-bottom-color: #FFFFFF;
+	        border-top-color: #FFFFFF;
+	    }
+
+	    #globalnav>li>a:nth-child(1):focus,
+	    #globalnav>li>a:nth-child(1):hover {
+	    	background: #8B0101;
+	    	height: 36px;
+	    }
+
+	/*---------------------
+	Navigation - Global - Small Widgets
+	---------------------**/
+
+	    /*--- Theming ---*/
+
+	    #ug-header .navbar-small {
+	        font-size: .857em;
+	    }
+
+	    #ug-header .navbar-small li a:focus,
+	    #ug-header .navbar-small li a:hover {
+	    	background: #740000;
+
+	    }
 
 	/*---------------------
 	Navigation - Local
@@ -71,7 +82,8 @@ Live Date: June 23, 2015
 	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>.active>a,
 	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>.active>a:hover,
 	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>.active>a:focus {
-	      background: #333333;
+	      background: #CCCCCC;
+	      color: #333333;
 	    }
 
 		/** Dropdown menu item - hover/focus **/
@@ -84,8 +96,8 @@ Live Date: June 23, 2015
 	    #navbar.navbar-inverse .navbar-nav>li>a{ color: #F5F5F5; }
 	    #navbar.navbar-inverse .navbar-nav>li>a .caret,
 	    #navbar.navbar-inverse .navbar-nav>li>a .caret {
-	    	border-top-color: inherit;
-	    	border-bottom-color: inherit;
+	    	border-top-color: #F5F5F5;
+	    	border-bottom-color: #F5F5F5;
 	    }
 
 		/** Default menu item - hover focus **/
@@ -93,14 +105,24 @@ Live Date: June 23, 2015
 	    #navbar.navbar-inverse .navbar-nav>li>a:hover { color: #999999; }
 	    #navbar.navbar-inverse .navbar-nav>li>a:focus .caret,
 	    #navbar.navbar-inverse .navbar-nav>li>a:hover .caret {
-	    	border-top-color: inherit;
-	    	border-bottom-color: inherit;
+	    	border-top-color: #999999;
+	    	border-bottom-color: #999999;
 	    }
 
 	/*---------------------
 	Footer - Local
 	---------------------**/
 
+
+	    /*--- Layout ---*/
+
+		#ug-footer-local {
+			margin-top: 45px;
+		}
+
+		#ug-footer-local .footer {
+			margin-top: 0;
+		}
 
 	    /*--- Theming ---*/
 
@@ -122,16 +144,6 @@ Live Date: June 23, 2015
 		#ug-footer-local .footer .nav>li>a:focus,
 		#ug-footer-local .footer .nav>li>a:hover {
 			background: #FFFFFF;
-		}
-
-	    /*--- Layout ---*/
-
-		#ug-footer-local {
-			margin-top: 45px;
-		}
-
-		#ug-footer-local .footer {
-			margin-top: 0;
 		}
 
 	/*---------------------
