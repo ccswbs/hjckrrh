@@ -45,10 +45,23 @@ Live Date: June 23, 2015
 	        border-top-color: #FFFFFF;
 	    }
 
-	    #globalnav>li>a:nth-child(1):focus,
-	    #globalnav>li>a:nth-child(1):hover {
-	    	background: #8B0101;
+		#globalnav>li>a:nth-child(1):focus:after{
+			border: 1px dotted #FFFFFF;
+		}
+
+		/* Focus/Hover styling for homepage menu */
+	    #globalnav>li>a:nth-child(1):focus:after,
+	    #globalnav>li>a:nth-child(1):hover:after {
+	    	background: #b30100;
+	    	bottom: 4px;
+	    	content:"";
+	    	display: block;
 	    	height: 36px;
+	    	left: 0;
+	    	padding: 10px 15px;
+	    	position:absolute;
+	    	width: 100%;
+	    	z-index: -10;
 	    }
 
 	/*---------------------
@@ -63,7 +76,7 @@ Live Date: June 23, 2015
 
 	    #ug-header .navbar-small li a:focus,
 	    #ug-header .navbar-small li a:hover {
-	    	background: #740000;
+	    	background: #990100;
 
 	    }
 
@@ -77,6 +90,10 @@ Live Date: June 23, 2015
 		}
 
 	    /*--- Theming ---*/
+
+	    #navbar.navbar-inverse .navbar-nav>li>a:focus{
+			border: 1px dotted #FFFFFF;
+		}
 
 	    /** Dropdown menu item - active hover/focus **/
 	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>.active>a,
@@ -173,7 +190,6 @@ Live Date: June 23, 2015
 	    /*--- Theming ---*/
 
 	    /* Sidebar elements have smaller font-size regardless of heading */
-		/*.not-front .panel-panel.right .pane-title,*/
 		.not-front .panel-panel.col-sm-4 .pane-title,
 		.not-front .panel-panel.col-sm-3 .pane-title,
 		.not-front .panel-panel.col-sm-2 .pane-title,
