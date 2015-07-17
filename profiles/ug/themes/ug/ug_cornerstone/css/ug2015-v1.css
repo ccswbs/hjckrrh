@@ -66,10 +66,15 @@ Live Date: June 23, 2015
 		}
 
 	    /*--- Theming ---*/
-	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>.active>a, 
-	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>.active>a:hover, 
+	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>.active>a,
+	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>.active>a:hover,
 	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>.active>a:focus {
 	      background: #333333;
+	    }
+
+	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>li>a:hover, 
+	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>li>a:focus {
+	    	background: #E4E4E4;
 	    }
 
 	    #navbar.navbar-inverse .navbar-nav>li>a {
