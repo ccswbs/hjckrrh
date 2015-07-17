@@ -91,9 +91,10 @@ Live Date: June 23, 2015
 
 	    /*--- Theming ---*/
 
-	    #navbar.navbar-inverse .navbar-nav>li>a:focus{
+	    /** Dotted border styling causes slight change in padding. Fix before adding. */
+	    /*#navbar.navbar-inverse .navbar-nav>li>a:focus{
 			border: 1px dotted #FFFFFF;
-		}
+		}*/
 
 	    /** Dropdown menu item - active hover/focus **/
 	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>.active>a,
