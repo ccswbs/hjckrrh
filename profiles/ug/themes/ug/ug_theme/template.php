@@ -277,6 +277,15 @@ function ug_theme_preprocess_views_view_fields__sr1(&$vars) {
   $vars['description'] = $vars['fields']['description']->content;
 }
 
+/**
+ * SR8 - Service Category teaser list
+ */
+function ug_theme_preprocess_views_view_fields__sr8(&$vars) {
+  $vars['icon'] = theme('icon', array('icon' => $vars['fields']['field_service_icon']->content));
+  $vars['name'] = $vars['fields']['name']->content;
+  $vars['description'] = $vars['fields']['description']->content;
+}
+
  
 /**
  * Returns HTML for a date element formatted as a single date.
