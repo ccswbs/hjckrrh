@@ -28,7 +28,6 @@
  *
  */
 ?>
-<div class="media">
   <div class="media-left pull-left media-top">
     <div class="h3 media-heading media-object"><?php print $icon; ?></div>
   </div>
@@ -36,4 +35,3 @@
     <h3 class="media-heading"><?php print $name; ?></h3>
     <div class="media-summary"><?php print $description; ?></div>
   </div>
-</div>
