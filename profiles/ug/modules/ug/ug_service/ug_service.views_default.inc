@@ -560,7 +560,6 @@ function ug_service_views_default_views() {
   $handler->display->display_options['fields']['field_service_icon']['field'] = 'field_service_icon';
   $handler->display->display_options['fields']['field_service_icon']['label'] = '';
   $handler->display->display_options['fields']['field_service_icon']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['field_service_icon']['hide_empty'] = TRUE;
   $handler->display->display_options['fields']['field_service_icon']['type'] = 'list_key';
   /* Field: Taxonomy term: Term description */
   $handler->display->display_options['fields']['description']['id'] = 'description';
