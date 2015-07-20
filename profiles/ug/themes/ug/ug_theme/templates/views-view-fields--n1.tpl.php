@@ -39,7 +39,7 @@
 <?php endif; ?>
 <div class="col-md-<?php print empty($image)?12:8; ?>">
   <header class="media-header">
-    <h1 class="media-title"><a href="<?php print $link; ?>"><?php print $title; ?></a></h1>
+    <h2 class="media-title"><a href="<?php print $link; ?>"><?php print $title; ?></a></h2>
     <div class="media-meta"><time><?php print $created; ?></time></div>
   </header>
   <div class="media-summary"><?php print $body; ?></div>

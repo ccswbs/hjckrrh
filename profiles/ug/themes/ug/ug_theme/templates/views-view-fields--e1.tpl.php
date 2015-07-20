@@ -37,7 +37,7 @@
 <?php endif; ?>
 <div class="col-md-<?php print empty($image)?12:8; ?>">
   <header class="media-header">
-    <h1 class="media-title"><?php print $title; ?></h1>
+    <h2 class="media-title"><?php print $title; ?></h2>
     <div class="media-meta"><?php print $date; ?></div>
   </header>
   <div class="media-summary"><?php print $body; ?></div>

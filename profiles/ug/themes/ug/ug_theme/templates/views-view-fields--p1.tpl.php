@@ -43,9 +43,9 @@
 <?php endif; ?>
 <div class="col-md-<?php print $image ? 8 : 4; ?>">
   <header class="media-header">
-    <h1 class="media-title">
+    <h2 class="media-title">
       <?php print $fullname; ?>
-    </h1>
+    </h2>
     <div class="media-meta">
       <?php print $title; ?>
       <?php print $unit; ?>
