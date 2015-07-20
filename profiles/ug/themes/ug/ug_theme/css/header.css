@@ -123,3 +123,11 @@
         .breadcrumb>.active { 
             color: #696969; 
         }
+
+      /*---------------------
+       Navigation Tabs (Horizontal)
+      ---------------------**/a
+
+        .nav-tabs {
+          margin-bottom: 30px;
+        }        
