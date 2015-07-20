@@ -159,9 +159,27 @@ Live Date: June 23, 2015
 		}
 
 		/* Menu styling in footer */
+		#ug-footer-local .footer .nav>li {
+			border-bottom: 1px solid #E5E5E5;
+		}
+
 		#ug-footer-local .footer .nav>li>a:focus,
 		#ug-footer-local .footer .nav>li>a:hover {
 			background: #FFFFFF;
+		}
+
+		/* List styling in footer */
+		#ug-footer-local .footer ul {
+			padding-left: 0;
+		}
+
+		#ug-footer-local .footer ul:not(.menu) li {
+			list-style-type: none;
+			margin-bottom: 10px;
+		}
+
+		#ug-footer-local .footer ul:not(.menu) li:first-child{
+			padding-top: 10px;
 		}
 
 	/*---------------------
@@ -190,12 +208,12 @@ Live Date: June 23, 2015
 
 	    /*--- Theming ---*/
 
-	    /* Sidebar elements have smaller font-size regardless of heading */
-		.not-front .panel-panel.col-sm-4 .pane-title,
-		.not-front .panel-panel.col-sm-3 .pane-title,
-		.not-front .panel-panel.col-sm-2 .pane-title,
-		.not-front .panel-panel.col-sm-1 .pane-title,
-		.not-front aside .block-title {
+	    /* Main container sidebar elements have smaller font-size regardless of heading */
+		.not-front .main-container .panel-panel.col-sm-4 .pane-title,
+		.not-front .main-container .panel-panel.col-sm-3 .pane-title,
+		.not-front .main-container .panel-panel.col-sm-2 .pane-title,
+		.not-front .main-container .panel-panel.col-sm-1 .pane-title,
+		.not-front .main-container aside .block-title {
 			font-size: 1.286em; /* 18px */
 			font-weight: 400;
 		}
