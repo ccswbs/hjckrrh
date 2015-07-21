@@ -89,6 +89,12 @@ Base Styles
     font-weight: 500;
   }
 
+  blockquote h1, 
+  blockquote h2, 
+  blockquote h3 {
+    margin-top: 0;
+  }
+
   /*---------------------
   Links
   ---------------------**/
