@@ -82,8 +82,11 @@ Base Styles
   h6 { font-size: .857em; /* 12 px */ }
 
   blockquote {
-    font-size: 1.286em;
-    font-style: italic;
+    font-size: 1.250em;
+  }
+
+  blockquote p {
+    font-weight: 500;
   }
 
   /*---------------------
