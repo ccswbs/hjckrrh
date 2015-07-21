@@ -3,8 +3,8 @@
 *************************/
 
   /*---------------------
-     Regions
-    ---------------------**/
+   Regions
+  ---------------------**/
 
     aside { 
       padding-top: 20px; 
@@ -17,8 +17,8 @@
     }
 
   /*---------------------
-     Gutters
-    ---------------------**/
+   Gutters
+  ---------------------**/
 
     @media all and (min-width:992px) { 
       .xs-gutter {
@@ -26,37 +26,3 @@
         padding-right: 5px;
       }
     }
-
-    /*---------------------
-     Panels
-    ---------------------**/
-
-    /* Inherits Bootstrap (default) heading colours instead of set heading colour */
-    .panel-title {
-      color: inherit;
-    }
-
-    /*---------------------
-     Blocks
-    ---------------------**/
-
-    /*--- Theming ---*/
-
-    /* title links - underline made thinner */
-    .block-title a:focus,
-    .block-title a:hover {
-      border-bottom: 2px solid;
-      text-decoration: none;
-    }
-
-    /*---------------------
-     Panes
-    ---------------------**/
-
-    /* title links - underline made thinner */
-    .pane-title a:focus,
-    .pane-title a:hover {
-      border-bottom: 2px solid;
-      text-decoration: none;
-    }
-
