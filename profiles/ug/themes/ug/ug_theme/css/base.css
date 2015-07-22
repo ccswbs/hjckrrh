@@ -259,6 +259,12 @@ Base Styles
       border-color: #E0B0B8;
     }
 
+    /*--- Layout ---*/
+
+    .panel-bootstrap-pane {
+      margin-top: 20px;
+    }
+
   /*---------------------
    Blocks
   ---------------------**/
