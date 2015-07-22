@@ -282,11 +282,19 @@ Base Styles
    Panes
   ---------------------**/
 
+
+    /*--- Theming ---*/
+
     /* title links - underline made thinner */
     .pane-title a:focus,
     .pane-title a:hover {
       border-bottom: 2px solid;
       text-decoration: none;
+    }
+
+    /*--- Layout ---*/
+    .panel-pane {
+      margin-bottom: 40px;
     }
 
   /*---------------------
