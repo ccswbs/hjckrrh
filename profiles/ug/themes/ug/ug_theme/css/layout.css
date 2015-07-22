@@ -26,3 +26,28 @@
         padding-right: 5px;
       }
     }
+
+  /*---------------------
+   Panel + Block Margins
+  ---------------------**/
+
+    /****
+    *
+    *  Panel-pane margins need extra spacing on bottom
+    *  
+    *  Only affects:
+    *  - front page (main-container) panels,
+    *  - not-front page (aside) blocks
+    *  - not-front page (4 columns or smaller) panel panes
+    *
+    *****/
+
+    .front .main-container .panel-pane,
+    .front .main-container .panel-bootstrap-pane,
+    .not-front .main-container aside .block,
+    .not-front .main-container .panel-panel.col-sm-4 .panel-pane,
+    .not-front .main-container .panel-panel.col-sm-3 .panel-pane,
+    .not-front .main-container .panel-panel.col-sm-2 .panel-pane,
+    .not-front .main-container .panel-panel.col-sm-1 .panel-pane {
+      margin-bottom: 40px;
+    }
