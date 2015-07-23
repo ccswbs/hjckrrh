@@ -134,12 +134,21 @@ Live Date: June 23, 2015
 
 	    /*--- Layout ---*/
 
-		#ug-footer-local {
-			margin-top: 45px;
-		}
-
 		#ug-footer-local .footer {
 			margin-top: 0;
+		}
+
+		/* List styling in footer */
+		#ug-footer-local .footer ul {
+			padding-left: 0;
+		}
+
+		#ug-footer-local .footer ul:not(.menu) li {
+			margin-bottom: 10px;
+		}
+
+		#ug-footer-local .footer ul:not(.menu) li:first-child{
+			padding-top: 10px;
 		}
 
 	    /*--- Theming ---*/
@@ -158,6 +167,11 @@ Live Date: June 23, 2015
 			background: #45403A;
 		}
 
+		/* List styling in footer */
+		#ug-footer-local .footer ul:not(.menu) li {
+			list-style-type: none;
+		}
+
 		/* Menu styling in footer */
 		#ug-footer-local .footer .nav>li {
 			border-bottom: 1px solid #E5E5E5;
@@ -168,19 +182,6 @@ Live Date: June 23, 2015
 			background: #FFFFFF;
 		}
 
-		/* List styling in footer */
-		#ug-footer-local .footer ul {
-			padding-left: 0;
-		}
-
-		#ug-footer-local .footer ul:not(.menu) li {
-			list-style-type: none;
-			margin-bottom: 10px;
-		}
-
-		#ug-footer-local .footer ul:not(.menu) li:first-child{
-			padding-top: 10px;
-		}
 
 	/*---------------------
 	Footer - Global
