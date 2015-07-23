@@ -22,7 +22,7 @@ function ug_banner_strongarm() {
           'weight' => '0',
         ),
         'redirect' => array(
-          'weight' => '6',
+          'weight' => '8',
         ),
       ),
       'display' => array(),

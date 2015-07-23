@@ -57,6 +57,12 @@ function ug_banner_views_default_views() {
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
   $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
+  /* Field: Content: Headline */
+  $handler->display->display_options['fields']['field_banner_headline']['id'] = 'field_banner_headline';
+  $handler->display->display_options['fields']['field_banner_headline']['table'] = 'field_data_field_banner_headline';
+  $handler->display->display_options['fields']['field_banner_headline']['field'] = 'field_banner_headline';
+  $handler->display->display_options['fields']['field_banner_headline']['label'] = '';
+  $handler->display->display_options['fields']['field_banner_headline']['element_label_colon'] = FALSE;
   /* Field: Content: Link */
   $handler->display->display_options['fields']['field_banner_link']['id'] = 'field_banner_link';
   $handler->display->display_options['fields']['field_banner_link']['table'] = 'field_data_field_banner_link';
@@ -100,8 +106,8 @@ function ug_banner_views_default_views() {
     'banner' => 'banner',
   );
 
-  /* Display: Content pane */
-  $handler = $view->new_display('panel_pane', 'Content pane', 'panel_pane_1');
+  /* Display: Manual */
+  $handler = $view->new_display('panel_pane', 'Manual', 'panel_pane_1');
   $handler->display->display_options['allow']['use_pager'] = 0;
   $handler->display->display_options['allow']['items_per_page'] = 0;
   $handler->display->display_options['allow']['offset'] = 0;
@@ -115,11 +121,11 @@ function ug_banner_views_default_views() {
   /* Display: Autoplay */
   $handler = $view->new_display('panel_pane', 'Autoplay', 'autoplay');
 
-  /* Display: Block */
-  $handler = $view->new_display('block', 'Block', 'block_1');
+  /* Display: Block - Manual */
+  $handler = $view->new_display('block', 'Block - Manual', 'block_1');
 
-  /* Display: Autoplay */
-  $handler = $view->new_display('block', 'Autoplay', 'block_autoplay');
+  /* Display: Block - Autoplay */
+  $handler = $view->new_display('block', 'Block - Autoplay', 'block_autoplay');
   $export['b1'] = $view;
 
   return $export;
