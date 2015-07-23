@@ -142,7 +142,7 @@ Headlines must be <strong>60</strong> characters or less.',
   $field_instances['node-banner-field_banner_image'] = array(
     'bundle' => 'banner',
     'deleted' => 0,
-    'description' => '',
+    'description' => 'The recommended image size is <strong>1140 x 292</strong> pixels.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -390,6 +390,7 @@ Headlines must be <strong>60</strong> characters or less.');
   t('Order');
   t('Summary');
   t('Summary must be <strong>80</strong> characters or less.');
+  t('The recommended image size is <strong>1140 x 292</strong> pixels.');
 
   return $field_instances;
 }
