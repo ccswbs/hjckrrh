@@ -16,6 +16,7 @@ B1 - Banner
 
     #slides {
         background: #000000;
+        display: none; /* prevent slides from flashing */
     }
 
     /*---------------------
@@ -40,6 +41,60 @@ B1 - Banner
             }
         }
 
+        @media all and (min-width:992px) {
+            .slidesjs-psply {
+                width: 80px !important;
+            }
+        }
+
+    /*---------------------
+    Headline (Title)
+    ---------------------**/
+
+        /*--- Theming ---*/
+
+        .row.slidesjs-navigation-bottom .slidesjs-slide-title {
+            font-weight: 500;
+            font-size: 1.143em; /* 16px */
+        }
+
+        .row.slidesjs-navigation-bottom .slidesjs-slide-link {
+            color: #428BCA;
+        }
+
+        @media all and (min-width:768px) {
+            .row.slidesjs-navigation-bottom .slidesjs-slide-title {
+                font-size: 1.214em; /* 17px */
+            }
+        }
+
+        @media all and (min-width:992px) {
+            .row.slidesjs-navigation-bottom .slidesjs-slide-title {
+                font-size: 1.429em; /* 20px */
+            }
+        }
+
+    /*---------------------
+    Pagination
+    ---------------------**/
+
+        .slidesjs-pagination {
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        @media all and (min-width:768px) {
+            .slidesjs-pagination .btn-block {
+                font-size: .857em;
+            }
+        }
+
+        @media all and (min-width:992px) {
+            .slidesjs-pagination .btn-block {
+                font-size: 1em;
+            }
+        }
+
     /*---------------------
     Overlay (Summary Text)
     ---------------------**/
@@ -58,30 +113,17 @@ B1 - Banner
             z-index:12;
         }
 
-        /* Default - height adjusted for 2 lines of text */
         /* Default - padding adjusted for stacked rows (summary above controls) */
-        .row.slidesjs-navigation-bottom .slidesjs-summary,
-        .row.slidesjs-navigation-bottom .col-sm-8 {
-            min-height: 75px;
+        .row.slidesjs-navigation-bottom .slidesjs-summary {
+            min-height: 50px;
             padding-bottom: 10px;
-        }
-
-        /* Narrow Screens */
-        @media all and (min-width:480px){
-
-            /* height adjusted for 2 lines of text */
-            .row.slidesjs-navigation-bottom .slidesjs-summary,
-            .row.slidesjs-navigation-bottom .col-sm-8 {
-                min-height: 60px;
-            }
         }
 
         /* Small Screens */
         @media all and (min-width:768px) {
 
             /* padding adjusted for single row (summary beside controls) */
-            .row.slidesjs-navigation-bottom .slidesjs-summary,
-            .row.slidesjs-navigation-bottom .col-sm-8 {
+            .row.slidesjs-navigation-bottom .slidesjs-summary {
                 padding-bottom: 0;
             }
         }
@@ -95,12 +137,6 @@ B1 - Banner
                 position: absolute;
             }
             
-             /* height adjusted for 2 lines of text */
-            .row.slidesjs-navigation-bottom .slidesjs-summary,
-            .row.slidesjs-navigation-bottom .col-sm-8 {
-                min-height: 40px;
-            }
-            
         }
 
         /*--- Theming ---*/
@@ -111,6 +147,3 @@ B1 - Banner
             color: #FFFFFF;
         }
 
-        .row.slidesjs-navigation-bottom .slidesjs-slide-link {
-            color: #428BCA;
-        }
