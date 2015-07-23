@@ -51,7 +51,7 @@ function ug_banner_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 4,
+      'weight' => 5,
     ),
   );
 
@@ -97,7 +97,8 @@ function ug_banner_field_default_field_instances() {
     'bundle' => 'banner',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => 'Enter a headline to display with your banner.<br>
+Headlines must be <strong>60</strong> characters or less.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -183,7 +184,7 @@ function ug_banner_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'image_image',
-      'weight' => 3,
+      'weight' => 4,
     ),
   );
 
@@ -210,7 +211,7 @@ function ug_banner_field_default_field_instances() {
     ),
     'entity_type' => 'node',
     'field_name' => 'field_banner_link',
-    'label' => 'Link',
+    'label' => 'Headline Link',
     'required' => 1,
     'settings' => array(
       'absolute_url' => 1,
@@ -226,6 +227,11 @@ function ug_banner_field_default_field_instances() {
         'url_cutoff' => 80,
       ),
       'enable_tokens' => 1,
+      'linkit' => array(
+        'button_text' => 'Search',
+        'enable' => 0,
+        'profile' => '',
+      ),
       'rel_remove' => 'default',
       'title' => 'none',
       'title_label_use_field_label' => 0,
@@ -240,7 +246,7 @@ function ug_banner_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 6,
+      'weight' => 3,
     ),
   );
 
@@ -249,7 +255,7 @@ function ug_banner_field_default_field_instances() {
     'bundle' => 'banner',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => 'Summary must be <strong>80</strong> characters or less.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -285,7 +291,7 @@ function ug_banner_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 5,
+      'weight' => 6,
     ),
   );
 
@@ -375,12 +381,15 @@ function ug_banner_field_default_field_instances() {
   t('Alt text');
   t('Banners are ordered by weight. Lower weighted banners appear first. Banners of equal weight are ordered randomly.');
   t('Category');
+  t('Enter a headline to display with your banner.<br>
+Headlines must be <strong>60</strong> characters or less.');
   t('Headline');
+  t('Headline Link');
   t('Image');
   t('Keywords');
-  t('Link');
   t('Order');
   t('Summary');
+  t('Summary must be <strong>80</strong> characters or less.');
 
   return $field_instances;
 }
