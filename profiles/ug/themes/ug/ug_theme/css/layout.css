@@ -2,6 +2,13 @@
  Layout Styles
 *************************/
 
+  /*
+   * Toolbar - Latest salvo in the arms race that is top of the z-order:
+   * (Place Drupal toolbar at top of the z-order)
+   */
+
+  #toolbar { z-index: 1002; }
+
   /*---------------------
    Regions
   ---------------------**/
@@ -24,6 +31,18 @@
       .xs-gutter {
         padding-left: 5px;
         padding-right: 5px;
+      }
+    }
+
+    /*
+     * Bootstrap
+     * 
+     * Some classes that are available in newer versions of bootstrap.
+     */
+    @media screen and (min-width: 768px) {
+      /* This visible-xs-* classes are in Bootstrap 3.2.0+ */
+      .visible-xs-inline{
+        display:none!important
       }
     }
 
