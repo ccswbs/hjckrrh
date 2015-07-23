@@ -163,11 +163,12 @@ function ug_theme_preprocess_views_view_unformatted__b1(&$vars) {
   $vars['slide_count'] = count($vars['view']->result);
 } 
 function ug_theme_preprocess_views_view_fields__b1(&$vars) {
-  $vars['title'] = $vars['fields']['title']->content;
-  $vars['image'] = $vars['fields']['field_banner_image']->content;
-  $vars['link']  = $vars['fields']['field_banner_link']->content;
-  $vars['text']  = $vars['fields']['field_banner_text']->content;
-  $vars['alt']   = $vars['fields']['field_banner_alttext']->content;
+  // $vars['title']    = $vars['fields']['title']->content;
+  $vars['title']    = $vars['fields']['field_banner_headline']->content;
+  $vars['image']    = $vars['fields']['field_banner_image']->content;
+  $vars['link']     = $vars['fields']['field_banner_link']->content;
+  $vars['text']     = $vars['fields']['field_banner_text']->content;
+  $vars['alt']      = $vars['fields']['field_banner_alttext']->content;
 }
 
 
@@ -254,7 +255,7 @@ function ug_theme_preprocess_views_view_fields__n3(&$vars) {
 /**
  * F1 - FAQ listing
  */
-function ug_theme_preprocess_views_view_fields__f1(&$vars) {
+function ug_theme_preprocess_views_view_fields__f1(&$vars) { 
   $vars['question'] = $vars['fields']['title']->content;
 }
 
