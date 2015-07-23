@@ -9,6 +9,15 @@
 
   #toolbar { z-index: 1002; }
 
+
+  /*---------------------
+   Main Container
+  ---------------------**/
+
+  .main-container {
+    margin-bottom: 45px;
+  }
+
   /*---------------------
    Regions
   ---------------------**/
@@ -47,30 +56,37 @@
     }
 
   /*---------------------
-   Panel + Block Margins
+   Vertical Spacing
   ---------------------**/
 
-    /****
-    *
-    *  Panel-pane margins need extra spacing on bottom
-    *  
-    *  Only affects:
-    *  - front page (main-container) panels,
-    *  - not-front page (aside) blocks
-    *  - not-front page (4 columns or smaller) panel panes
-    *
-    *****/
+    /*--- Layout ---*/
 
-    .front .main-container .panel-pane,
-    .front .main-container .panel-bootstrap-pane,
-    .not-front .main-container aside .block,
-    .not-front .main-container .panel-panel.col-sm-4 .panel-pane,
-    .not-front .main-container .panel-panel.col-sm-3 .panel-pane,
-    .not-front .main-container .panel-panel.col-sm-2 .panel-pane,
-    .not-front .main-container .panel-panel.col-sm-1 .panel-pane {
+    .front .main-container .panel-panel.top {
+      margin-bottom: 30px;
+    }
+
+    /* Add spacing between panels and blocks (but not after last panel) */
+    .front .main-container .panel-panel>div,
+    .not-front .main-container aside section.block,
+    .not-front .main-container .panel-panel.col-sm-4>div,
+    .not-front .main-container .panel-panel.col-sm-3>div,
+    .not-front .main-container .panel-panel.col-sm-2>div,
+    .not-front .main-container .panel-panel.col-sm-1>div {
       margin-bottom: 40px;
     }
 
-    .main-container .panel-panel.top .panel-pane {
+    .front .main-container .panel-panel>div:last-child,
+    .not-front .main-container aside section:last-child{
       margin-bottom: 0;
+    }
+
+    /* Remove spacing above headings in panels */
+    .panel-panel h1,
+    .panel-panel h2,
+    .panel-panel h3 {
+      margin-top: 0;
+    }
+
+    .panel-panel .panel-pane {
+      margin-bottom: 20px;
     }
