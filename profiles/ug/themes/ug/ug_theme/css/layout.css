@@ -18,6 +18,14 @@
     margin-bottom: 45px;
   }
 
+  .main-container .region-content>section{
+    margin-bottom: 20px;
+  }
+
+  .main-container .region-content>section:last-child {
+    margin-bottom: 0;
+  }
+
   /*---------------------
    Regions
   ---------------------**/
