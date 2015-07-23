@@ -70,3 +70,7 @@
     .not-front .main-container .panel-panel.col-sm-1 .panel-pane {
       margin-bottom: 40px;
     }
+
+    .main-container .panel-panel.top .panel-pane {
+      margin-bottom: 0;
+    }
