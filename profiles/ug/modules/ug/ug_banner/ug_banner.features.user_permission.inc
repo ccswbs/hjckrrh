@@ -33,6 +33,17 @@ function ug_banner_user_default_permissions() {
     'module' => 'node',
   );
 
+  // Exported permission: 'delete terms in banner_category'.
+  $permissions['delete terms in banner_category'] = array(
+    'name' => 'delete terms in banner_category',
+    'roles' => array(
+      'editor' => 'editor',
+      'moderator' => 'moderator',
+      'publisher' => 'publisher',
+    ),
+    'module' => 'taxonomy',
+  );
+
   // Exported permission: 'edit any banner content'.
   $permissions['edit any banner content'] = array(
     'name' => 'edit any banner content',
@@ -51,6 +62,17 @@ function ug_banner_user_default_permissions() {
       'author' => 'author',
     ),
     'module' => 'node',
+  );
+
+  // Exported permission: 'edit terms in banner_category'.
+  $permissions['edit terms in banner_category'] = array(
+    'name' => 'edit terms in banner_category',
+    'roles' => array(
+      'editor' => 'editor',
+      'moderator' => 'moderator',
+      'publisher' => 'publisher',
+    ),
+    'module' => 'taxonomy',
   );
 
   return $permissions;
