@@ -2,7 +2,7 @@
 
 /**
  * @file
- * B1 - Image slider (banner)
+ * B1 - Image slider (banner) - Autoplay
  */
 ?>
 <div id="slides">
@@ -26,10 +26,12 @@
     <?php print $row; ?>
   <?php endforeach; ?>
   <div class="row slidesjs-navigation slidesjs-navigation-bottom">
-    <div class="col-sm-8 col-xsdk-9 slidesjs-summary">
+
+    <div class="col-sm-9 slidesjs-summary">
         <a href="#" class="slidesjs-slide-link slidesjs-slide-title"></a>
         <p class="slidesjs-slide-text"></p>
     </div>
+
     <?php if ($slide_count > 1): ?>
       <div class="col-sm-1 col-xs-3">
         <button class="btn btn-block slidesjs-previous" role="button">
@@ -37,7 +39,7 @@
           <span class="sr-only"><?php print t('Previous item'); ?></span>
         </button>
       </div>
-      <div class="col-sm-2 col-xs-6">
+      <div class="col-sm-1 col-xs-6 slidesjs-pagination">
         <div class="btn btn-block" disabled>
           <?php print t('Slide <span class="slidesjs-slide-number">@number</span> of @count',
                       array('@number' => $slide_number, '@count' => $slide_count)); ?>
@@ -50,6 +52,7 @@
         </button>
       </div>
     <?php endif; ?>
+
   </div>
 </div>
 <script src="//www.uoguelph.ca/js/jquery.slides.min.js"></script>
