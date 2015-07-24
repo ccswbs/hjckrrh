@@ -10,6 +10,15 @@
 function ug_service_user_default_permissions() {
   $permissions = array();
 
+  // Exported permission: 'create field_service_private'.
+  $permissions['create field_service_private'] = array(
+    'name' => 'create field_service_private',
+    'roles' => array(
+      'author' => 'author',
+    ),
+    'module' => 'field_permissions',
+  );
+
   // Exported permission: 'create service content'.
   $permissions['create service content'] = array(
     'name' => 'create service content',
@@ -99,6 +108,26 @@ function ug_service_user_default_permissions() {
     'module' => 'node',
   );
 
+  // Exported permission: 'edit field_service_private'.
+  $permissions['edit field_service_private'] = array(
+    'name' => 'edit field_service_private',
+    'roles' => array(
+      'editor' => 'editor',
+      'moderator' => 'moderator',
+      'publisher' => 'publisher',
+    ),
+    'module' => 'field_permissions',
+  );
+
+  // Exported permission: 'edit own field_service_private'.
+  $permissions['edit own field_service_private'] = array(
+    'name' => 'edit own field_service_private',
+    'roles' => array(
+      'author' => 'author',
+    ),
+    'module' => 'field_permissions',
+  );
+
   // Exported permission: 'edit own service content'.
   $permissions['edit own service content'] = array(
     'name' => 'edit own service content',
@@ -161,6 +190,26 @@ function ug_service_user_default_permissions() {
       'publisher' => 'publisher',
     ),
     'module' => 'taxonomy',
+  );
+
+  // Exported permission: 'view field_service_private'.
+  $permissions['view field_service_private'] = array(
+    'name' => 'view field_service_private',
+    'roles' => array(
+      'editor' => 'editor',
+      'moderator' => 'moderator',
+      'publisher' => 'publisher',
+    ),
+    'module' => 'field_permissions',
+  );
+
+  // Exported permission: 'view own field_service_private'.
+  $permissions['view own field_service_private'] = array(
+    'name' => 'view own field_service_private',
+    'roles' => array(
+      'author' => 'author',
+    ),
+    'module' => 'field_permissions',
   );
 
   return $permissions;
