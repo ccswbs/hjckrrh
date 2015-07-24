@@ -138,8 +138,8 @@ Live Date: June 23, 2015
 	        line-height: 1.5em;
 	    }
 
-	    /* Revert media-heading styles */
-	    .teaser-list .media-heading.revert {
+	    /* Revert teaser list media-heading styles */
+	    .teaser-list.revert .media-heading {
 	    	font-size: 1.714em;
 	    	font-weight: 300;
 	    	line-height: 1.1em;
