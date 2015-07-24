@@ -209,7 +209,18 @@ function ug_service_default_page_manager_handlers() {
     $pane->type = 'entity_field';
     $pane->subtype = 'node:field_service_private';
     $pane->shown = TRUE;
-    $pane->access = array();
+    $pane->access = array(
+      'plugins' => array(
+        0 => array(
+          'name' => 'perm',
+          'settings' => array(
+            'perm' => 'view field_service_private',
+          ),
+          'context' => 'logged-in-user',
+          'not' => FALSE,
+        ),
+      ),
+    );
     $pane->configuration = array(
       'label' => 'title',
       'formatter' => 'field_collection_view',
