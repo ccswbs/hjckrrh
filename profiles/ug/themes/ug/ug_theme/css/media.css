@@ -137,33 +137,17 @@ Teaser Lists
     /*---------------------
     Header
     ---------------------**/
-    .teaser-list .media .media-header {
-        margin-bottom: 10px;
-    }
+        .teaser-list .media .media-header {
+            margin-bottom: 10px;
+        }
 
     /*---------------------
     Titles
     ---------------------**/
 
-/*
-
-To do: Bootstrap has a media-heading class.
- - Switch media-title styles to media-heading
- - Update templates to use media-heading instead of media-title
-*/
-
         /*--- Layout ---*/
-        .teaser-list .media .media-title,
         .teaser-list .media .media-heading {
             margin-bottom: 0;
-        }
-
-        /*--- Theming ---*/
-        .teaser-list .media-title,
-        .teaser-list .media-heading {
-            font-size: 1em; /* 14px */
-            font-weight: 500;
-            line-height: 1.5em;
         }
 
     /*---------------------
@@ -185,11 +169,6 @@ To do: Bootstrap has a media-heading class.
 /******************
  Detail Pages
 *****************/
-
-    /*--- Layout ---*/
-/*    .detail-page {
-        margin-bottom: ;
-    }*/
 
     /*---------------------
     Meta Data
