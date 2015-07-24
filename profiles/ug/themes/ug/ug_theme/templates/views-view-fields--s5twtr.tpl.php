@@ -30,10 +30,15 @@
     </div>
   </div>
   <div class="media-body">
-    <div class="media-heading"
-      ><a href="//twitter.com/<?php print $fields['screen_name']->content; ?>"
-      ><?php print $fields['name']->content; ?></a></div>
-    <div><?php print $fields['created_time']->content; ?></div>
-    <p><?php print $fields['text']->content; ?></p>
+    <div class="media-header">
+      <div class="media-heading">
+        <a href="//twitter.com/<?php print $fields['screen_name']->content; ?>"><?php print $fields['name']->content; ?></a>
+      </div>
+      <div class="media-meta">
+        <time><?php print $fields['created_time']->content; ?></time>
+      </div>
+    </div>
+
+    <p class="media-summary"><?php print $fields['text']->content; ?></p>
   </div>
 </div>

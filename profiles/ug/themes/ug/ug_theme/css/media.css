@@ -35,6 +35,13 @@
     Titles
     ---------------------**/
 
+/*
+
+To do: Bootstrap has a media-heading class.
+ - Switch media-title styles to media-heading
+ - Update templates to use media-heading instead of media-title
+*/
+
         /*--- Layout ---*/
         .media .media-title { 
             margin-top: 0;
@@ -75,9 +82,18 @@
 
         /*--- Theming ---*/
 
+/*
+
+To do: Bootstrap has a media-heading class.
+ - Switch media-title styles to media-heading
+ - Update templates to use media-heading instead of media-title
+*/
+
         /* title links - underline made thinner */
         .media-listing-page .media-title a:focus,
-        .media-listing-page .media-title a:hover {
+        .media-listing-page .media-title a:hover,
+        .media-listing-page .media-heading a:focus,
+        .media-listing-page .media-heading a:hover {
             border-bottom: 2px solid;
             text-decoration: none;
         }
@@ -105,6 +121,7 @@ Teaser Lists
 
     .teaser-list .media {
         margin-bottom: 10px;
+        padding-bottom: 10px;
     }
 
 
@@ -118,20 +135,44 @@ Teaser Lists
         }
 
     /*---------------------
+    Header
+    ---------------------**/
+    .teaser-list .media .media-header {
+        margin-bottom: 10px;
+    }
+
+    /*---------------------
     Titles
     ---------------------**/
 
+/*
+
+To do: Bootstrap has a media-heading class.
+ - Switch media-title styles to media-heading
+ - Update templates to use media-heading instead of media-title
+*/
+
         /*--- Layout ---*/
-        .teaser-list .media .media-title {
-            margin: 0 0 10px 0;
+        .teaser-list .media .media-title,
+        .teaser-list .media .media-heading {
+            margin-bottom: 0;
         }
 
         /*--- Theming ---*/
-        .teaser-list .media-title {
+        .teaser-list .media-title,
+        .teaser-list .media-heading {
             font-size: 1em; /* 14px */
             font-weight: 500;
             line-height: 1.5em;
         }
+
+    /*---------------------
+    Summary
+    ---------------------**/
+    .teaser-list .media .media-meta {
+        color: #767676;
+    }
+
 
     /*---------------------
     More Button

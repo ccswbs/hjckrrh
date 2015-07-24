@@ -28,5 +28,5 @@
  * @ingroup views_templates
  */
 ?>
-<time><?php print $created; ?></time>
-<h3 class="media-title"><?php print $title; ?></h3>
+<time datetime="<?php echo date("Y-m-d\TH:i:s", strtotime($created)); ?>"><?php print $created; ?></time>
+<h3 class="media-heading"><?php print $title; ?></h3>
