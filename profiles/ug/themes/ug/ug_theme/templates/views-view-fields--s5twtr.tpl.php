@@ -35,7 +35,7 @@
         <a href="//twitter.com/<?php print $fields['screen_name']->content; ?>"><?php print $fields['name']->content; ?></a>
       </div>
       <div class="media-meta">
-        <time datetime="<?php echo date("Y-m-d\TH:i:s", strtotime($fields['created_time']->content)); ?>"><?php print $fields['created_time']->content; ?></time>
+        <time ><?php print $fields['created_time']->content; ?></time>
       </div>
     </div>
 
