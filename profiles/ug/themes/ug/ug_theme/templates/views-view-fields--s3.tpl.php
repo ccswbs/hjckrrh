@@ -30,8 +30,12 @@
 ?>
 <li>
   <a class="h1" data-toggle="tooltip" data-placement="bottom"
-    href="<?php print $link; ?>"
-    title="<?php print $title; ?>"
-    ><?php print $icon; ?></span></a>
+     href="<?php print $link; ?>"
+     title="<?php print $title; ?>">
+    <?php print $icon; ?>
+    <span class="element-invisible">
+      <?php print $title; ?>
+    </span>
+  </a>
 </li>
 
