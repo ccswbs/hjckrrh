@@ -79,6 +79,10 @@
             background: #000000;
         }
 
+        #navbar.navbar-inverse .navbar-nav>li>a:focus{
+            outline: thin dotted;
+        }
+
         /*--- Layout ---*/
 
         @media all and (min-width: 768px) {
