@@ -34,8 +34,8 @@
 	<div class="pull-left">
 	  	<div class="media-object h3"><?php print $icon; ?></div>
 	</div>  
-	<div class="media-body">
-		<p class="media-heading h4">
+	<div class="media-body media-middle">
+		<p class="media-heading">
 			<?php print $title; ?>
 		</p>
 	</div>
