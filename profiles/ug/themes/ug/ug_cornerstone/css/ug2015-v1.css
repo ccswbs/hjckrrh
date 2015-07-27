@@ -40,13 +40,21 @@ Live Date: June 23, 2015
 
 	    /*--- Theming ---*/
 
+	    /* Add focus styling (in addition to hover) */
+		#ug-header .dropdown-menu>li>a:hover,
+		#ug-header .dropdown-menu>li>a:focus {
+			background: #000000;
+		}
+
+		/* Set caret to white */
 	    #ug-navbar .navbar-nav .dropdown a .caret{
 	        border-bottom-color: #FFFFFF;
 	        border-top-color: #FFFFFF;
 	    }
 
-		#globalnav>li>a:nth-child(1):focus:after{
-			border: 1px dotted #FFFFFF;
+	    /* Force outline for dropdowns */
+		#globalnav li.dropdown>a:nth-child(1):focus:after{
+			outline: thin dotted;
 		}
 
 		/* Focus/Hover styling for homepage menu */
@@ -63,6 +71,11 @@ Live Date: June 23, 2015
 	    	width: 100%;
 	    	z-index: -10;
 	    }
+
+	    /* Remove red text-shadow glow when tabbing through open dropdown menu */
+		#ug-header #globalnav li.dropdown.open a {
+			text-shadow: none !important;
+		}
 
 	/*---------------------
 	Navigation - Global - Small Widgets
@@ -90,11 +103,6 @@ Live Date: June 23, 2015
 		}
 
 	    /*--- Theming ---*/
-
-	    /** Dotted border styling causes slight change in padding. Fix before adding. */
-	    /*#navbar.navbar-inverse .navbar-nav>li>a:focus{
-			border: 1px dotted #FFFFFF;
-		}*/
 
 	    /** Dropdown menu item - active hover/focus **/
 	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>.active>a,
