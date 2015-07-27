@@ -193,6 +193,16 @@ function ug_theme_preprocess_views_view_fields__s3(&$vars) {
   $vars['icon']     = theme('icon', array('bundle' => 'fa', 'icon' => $vars['network']));
 }
 
+/**
+ * S4 - Find us on Social Media (Icons and Names)
+ */
+function ug_theme_preprocess_views_view_fields__s4(&$vars) {
+  $vars['title']    = $vars['fields']['title']->content;
+  $vars['network']  = $vars['fields']['field_social_network']->content;
+  $vars['link']     = $vars['fields']['field_social_link']->content;
+  $vars['icon']     = theme('icon', array('bundle' => 'fa', 'icon' => $vars['network']));
+}
+
 
 
 /**
