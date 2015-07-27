@@ -67,9 +67,6 @@ function ug_feature_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_feature_link',
-    'field_permissions' => array(
-      'type' => 0,
-    ),
     'indexes' => array(),
     'locked' => 0,
     'module' => 'link',
@@ -83,7 +80,6 @@ function ug_feature_field_default_field_bases() {
         'url_cutoff' => 80,
       ),
       'enable_tokens' => 1,
-      'profile2_private' => FALSE,
       'title' => 'optional',
       'title_maxlength' => 128,
       'title_value' => '',
