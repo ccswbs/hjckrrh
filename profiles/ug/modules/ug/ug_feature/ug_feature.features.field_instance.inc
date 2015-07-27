@@ -138,7 +138,7 @@ function ug_feature_field_default_field_instances() {
       'enable_tokens' => 1,
       'linkit' => array(
         'button_text' => 'Search for content',
-        'enable' => 1,
+        'enable' => 0,
         'profile' => 'feature',
       ),
       'rel_remove' => 'default',
