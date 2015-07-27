@@ -92,6 +92,7 @@ function ug_social_field_default_field_bases() {
         'instagram' => 'Instagram',
         'flickr' => 'Flickr',
         'google-plus' => 'GooglePlus',
+        'rss' => 'RSS',
       ),
       'allowed_values_function' => '',
     ),
