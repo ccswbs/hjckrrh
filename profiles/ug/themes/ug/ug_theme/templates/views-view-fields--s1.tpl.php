@@ -34,17 +34,29 @@
 <a class="h1" data-toggle="tooltip" data-placement="bottom"
   href="https://www.facebook.com/sharer/sharer.php?u=<?php print $link; ?>"
   title="<?php print t('Share on Facebook'); ?>"
-  ><span class="fa fa-facebook-square"></span></a>
+  ><span class="fa fa-facebook-square"></span>
+  <span class="element-invisible">
+    <?php print t('Share on Facebook'); ?>
+  </span>
+</a>
 
 <!-- Twitter -->
 <a class="h1" data-toggle="tooltip" data-placement="bottom"
   href="http://twitter.com/home?status=<?php print $link; ?>"
   title="<?php print t('Share on Twitter'); ?>"
-  ><span class="fa fa-twitter-square"></span></a>
+  ><span class="fa fa-twitter-square"></span>
+  <span class="element-invisible">
+    <?php print t('Share on Twitter'); ?>
+  </span>
+</a>
 
 <!-- LinkedIn -->
 <a class="h1" data-toggle="tooltip" data-placement="bottom"
   href="http://www.linkedin.com/shareArticle?mini=true&url=&title=&summary=<?php print $link; ?>"
   title="<?php print t('Share on LinkedIn'); ?>"
-  ><span class="fa fa-linkedin-square"></span></a>
+  ><span class="fa fa-linkedin-square"></span>
+  <span class="element-invisible">
+    <?php print t('Share on LinkedIn'); ?>
+  </span>
+</a>
 
