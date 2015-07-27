@@ -16,6 +16,11 @@
         border-bottom: 1px solid #EEEEEE;
     }
 
+    .media-middle,
+    .media-middle a {
+        vertical-align: middle;
+    }
+
     /*---------------------
     Thumbnails
     ---------------------**/
