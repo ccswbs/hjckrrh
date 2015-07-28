@@ -23,7 +23,7 @@ function ug_news_default_page_manager_handlers() {
     'no_blocks' => 0,
     'pipeline' => 'standard',
     'body_classes_to_remove' => '',
-    'body_classes_to_add' => '',
+    'body_classes_to_add' => 'detail-page',
     'css_id' => '',
     'css' => '',
     'contexts' => array(),
@@ -50,12 +50,6 @@ function ug_news_default_page_manager_handlers() {
   $display->layout_settings = array();
   $display->panel_settings = array(
     'style_settings' => array(
-      'left' => array(
-        'column_type' => 'col-sm',
-        'column_size' => '8',
-        'offset_type' => 'col-lg-offset',
-        'offset_size' => '0',
-      ),
       'default' => NULL,
       'top' => NULL,
       'right' => array(
@@ -65,6 +59,12 @@ function ug_news_default_page_manager_handlers() {
         'offset_size' => '1',
       ),
       'bottom' => NULL,
+      'left' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '8',
+        'offset_type' => 'col-lg-offset',
+        'offset_size' => '0',
+      ),
     ),
     'left' => array(
       'style' => 'bootstrap_region',
