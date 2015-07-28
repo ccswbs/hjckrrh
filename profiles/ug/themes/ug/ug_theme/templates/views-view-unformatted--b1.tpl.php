@@ -85,6 +85,9 @@
         $('.slidesjs-stop').show();
       }
     });
+    <?php if ($slide_count < 2): ?>
+    $('#slides img').css({left:'0'});
+    <?php endif; ?>
   });
 </script>
 
