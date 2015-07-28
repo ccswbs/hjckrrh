@@ -83,8 +83,8 @@
         /*--- Theming ---*/
 
         /* title links - underline made thinner */
-        .media-listing-page .media-heading a:focus,
-        .media-listing-page .media-heading a:hover {
+        .media-listing-page .media .media-heading a:focus,
+        .media-listing-page .media .media-heading a:hover {
             border-bottom: 2px solid;
             text-decoration: none;
         }

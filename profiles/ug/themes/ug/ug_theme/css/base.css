@@ -62,7 +62,12 @@ Base Styles
     text-decoration: underline;
   }
 
-  .navbar a, a.btn, .menu a, a.active, .nav a, .breadcrumb a, .table a {
+  /* temporary fix until media-heading is used across all listing views */
+  h1 a, h2 a, h3 a {
+    text-decoration: none;
+  }
+
+  .navbar a, a.btn, .menu a, a.active, .nav a, .breadcrumb a, .table a{
       text-decoration: none;
   }
 
