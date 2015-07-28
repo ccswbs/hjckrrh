@@ -19,6 +19,13 @@ function ug_install() {
     ->condition('name', 'bartik')
     ->execute();
 
+  // Enable UG Cornerstone theme
+  db_update('system')
+    ->fields(array('status' => 1))
+    ->condition('type', 'theme')
+    ->condition('name', 'ug_cornerstone')
+    ->execute();
+
   // Set Seven as the administration theme.
   variable_set('admin_theme', 'seven');
 
