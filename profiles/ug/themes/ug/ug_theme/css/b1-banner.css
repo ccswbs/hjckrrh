@@ -100,10 +100,15 @@ B1 - Banner
 
         /*--- Theming ---*/
 
-        .row.slidesjs-navigation-bottom .slidesjs-slide-title {
+        .row.slidesjs-navigation-bottom a.slidesjs-slide-title {
             font-weight: 500;
             font-size: 1.214em; /* 17px */
-            
+            text-decoration: none;
+        }
+
+        .row.slidesjs-navigation-bottom a.slidesjs-slide-title:focus,
+        .row.slidesjs-navigation-bottom a.slidesjs-slide-title:hover{
+            text-decoration: underline;
         }
 
         .row.slidesjs-navigation-bottom .slidesjs-slide-link {
