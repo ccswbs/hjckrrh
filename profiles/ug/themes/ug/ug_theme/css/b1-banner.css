@@ -47,35 +47,34 @@ B1 - Banner
             }
         }
 
-    /*---------------------
-    Headline (Title)
-    ---------------------**/
-
         /*--- Theming ---*/
 
-        .row.slidesjs-navigation-bottom .slidesjs-slide-title {
-            font-weight: 500;
-            font-size: 1.143em; /* 16px */
-        }
-
-        .row.slidesjs-navigation-bottom .slidesjs-slide-link {
-            color: #428BCA;
+        .slidesjs-navigation-top .slidesjs-psply {
+            background: #000000;
+            color: #FFFFFF;
+            opacity: .85;
+            /*border: 1px solid #666666;*/
         }
 
         @media all and (min-width:768px) {
-            .row.slidesjs-navigation-bottom .slidesjs-slide-title {
-                font-size: 1.214em; /* 17px */
-            }
-        }
-
-        @media all and (min-width:992px) {
-            .row.slidesjs-navigation-bottom .slidesjs-slide-title {
-                font-size: 1.429em; /* 20px */
+            .slidesjs-navigation-top .slidesjs-psply {
+                border: 0;
             }
         }
 
     /*---------------------
-    Pagination
+    Slide Navigation Buttons
+    ---------------------**/
+
+        .slidesjs-navigation-bottom .slidesjs-next,
+        .slidesjs-navigation-bottom .slidesjs-previous {
+            background: #000000;
+            color: #FFFFFF;
+            /*border: 1px solid #666666;*/
+        }
+
+    /*---------------------
+    Pagination (Slide # of #)
     ---------------------**/
 
         .slidesjs-pagination {
@@ -92,6 +91,28 @@ B1 - Banner
         @media all and (min-width:992px) {
             .slidesjs-pagination .btn-block {
                 font-size: 1em;
+            }
+        }
+
+    /*---------------------
+    Headline (Title)
+    ---------------------**/
+
+        /*--- Theming ---*/
+
+        .row.slidesjs-navigation-bottom .slidesjs-slide-title {
+            font-weight: 500;
+            font-size: 1.214em; /* 17px */
+            
+        }
+
+        .row.slidesjs-navigation-bottom .slidesjs-slide-link {
+            color: #428BCA;
+        }
+
+        @media all and (min-width:992px) {
+            .row.slidesjs-navigation-bottom .slidesjs-slide-title {
+                font-size: 1.429em; /* 20px */
             }
         }
 
@@ -115,7 +136,7 @@ B1 - Banner
 
         /* Default - padding adjusted for stacked rows (summary above controls) */
         .row.slidesjs-navigation-bottom .slidesjs-summary {
-            min-height: 50px;
+            min-height: 40px;
             padding-bottom: 10px;
         }
 
@@ -131,11 +152,11 @@ B1 - Banner
         /* Medium + Larger Screens */
         @media all and (min-width:992px) {
 
-            /* Medium + Large Screens - overlay displayed over slides */
-            .row.slidesjs-navigation-bottom {
+            /* [DISABLED OVERLAY] - Medium + Large Screens - option to have overlay displayed over slides */
+            /*.row.slidesjs-navigation-bottom {
                 bottom:0;
                 position: absolute;
-            }
+            }*/
             
         }
 

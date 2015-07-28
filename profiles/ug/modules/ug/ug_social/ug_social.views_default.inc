@@ -199,34 +199,10 @@ function ug_social_views_default_views() {
   $handler->display->display_options['pager']['options']['items_per_page'] = '8';
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['style_plugin'] = 'default';
-  $handler->display->display_options['style_options']['row_class'] = 'media';
   $handler->display->display_options['style_options']['default_row_class'] = FALSE;
   $handler->display->display_options['style_options']['row_class_special'] = FALSE;
   $handler->display->display_options['row_plugin'] = 'fields';
   $handler->display->display_options['row_options']['default_field_elements'] = FALSE;
-  /* Field: Content: Social media network */
-  $handler->display->display_options['fields']['field_social_network']['id'] = 'field_social_network';
-  $handler->display->display_options['fields']['field_social_network']['table'] = 'field_data_field_social_network';
-  $handler->display->display_options['fields']['field_social_network']['field'] = 'field_social_network';
-  $handler->display->display_options['fields']['field_social_network']['label'] = '';
-  $handler->display->display_options['fields']['field_social_network']['alter']['alter_text'] = TRUE;
-  $handler->display->display_options['fields']['field_social_network']['alter']['text'] = '<span class="fa fa-[field_social_network]"></span>';
-  $handler->display->display_options['fields']['field_social_network']['element_type'] = 'div';
-  $handler->display->display_options['fields']['field_social_network']['element_class'] = 'media-object';
-  $handler->display->display_options['fields']['field_social_network']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['field_social_network']['element_wrapper_type'] = 'div';
-  $handler->display->display_options['fields']['field_social_network']['element_wrapper_class'] = 'pull-left';
-  $handler->display->display_options['fields']['field_social_network']['element_default_classes'] = FALSE;
-  $handler->display->display_options['fields']['field_social_network']['type'] = 'list_key';
-  /* Field: Content: Account URL */
-  $handler->display->display_options['fields']['field_social_link']['id'] = 'field_social_link';
-  $handler->display->display_options['fields']['field_social_link']['table'] = 'field_data_field_social_link';
-  $handler->display->display_options['fields']['field_social_link']['field'] = 'field_social_link';
-  $handler->display->display_options['fields']['field_social_link']['label'] = '';
-  $handler->display->display_options['fields']['field_social_link']['exclude'] = TRUE;
-  $handler->display->display_options['fields']['field_social_link']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['field_social_link']['click_sort_column'] = 'url';
-  $handler->display->display_options['fields']['field_social_link']['type'] = 'link_plain';
   /* Field: Content: Title */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
@@ -236,22 +212,28 @@ function ug_social_views_default_views() {
   $handler->display->display_options['fields']['title']['alter']['path'] = '[field_social_link]';
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
-  $handler->display->display_options['fields']['title']['element_type'] = 'p';
-  $handler->display->display_options['fields']['title']['element_class'] = 'media-heading';
   $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['title']['element_wrapper_type'] = 'div';
-  $handler->display->display_options['fields']['title']['element_wrapper_class'] = 'media-body';
-  $handler->display->display_options['fields']['title']['element_default_classes'] = FALSE;
   $handler->display->display_options['fields']['title']['hide_alter_empty'] = FALSE;
   $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
   /* Field: Content: Account category */
   $handler->display->display_options['fields']['field_social_category']['id'] = 'field_social_category';
   $handler->display->display_options['fields']['field_social_category']['table'] = 'field_data_field_social_category';
   $handler->display->display_options['fields']['field_social_category']['field'] = 'field_social_category';
-  $handler->display->display_options['fields']['field_social_category']['label'] = '';
-  $handler->display->display_options['fields']['field_social_category']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_social_category']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_social_category']['type'] = 'taxonomy_term_reference_plain';
+  /* Field: Content: Account URL */
+  $handler->display->display_options['fields']['field_social_link']['id'] = 'field_social_link';
+  $handler->display->display_options['fields']['field_social_link']['table'] = 'field_data_field_social_link';
+  $handler->display->display_options['fields']['field_social_link']['field'] = 'field_social_link';
+  $handler->display->display_options['fields']['field_social_link']['click_sort_column'] = 'url';
+  $handler->display->display_options['fields']['field_social_link']['type'] = 'link_plain';
+  /* Field: Content: Social media network */
+  $handler->display->display_options['fields']['field_social_network']['id'] = 'field_social_network';
+  $handler->display->display_options['fields']['field_social_network']['table'] = 'field_data_field_social_network';
+  $handler->display->display_options['fields']['field_social_network']['field'] = 'field_social_network';
+  $handler->display->display_options['fields']['field_social_network']['label'] = 'Social media network:';
+  $handler->display->display_options['fields']['field_social_network']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['field_social_network']['type'] = 'list_key';
   /* Sort criterion: Content: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';

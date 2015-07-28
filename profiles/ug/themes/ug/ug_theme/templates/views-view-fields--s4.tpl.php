@@ -1,12 +1,12 @@
 <?php
 /**
  * @file
- * SR8 - Teaser list of all service categories
+ * S4 - Find us on Social Media (Icons and Names)
  *
  * Available variables:
- * - $name: service category name
- * - $description: service category description
- * - $icon: service icon
+ * - $title: title of news article
+ * - $network: social network this account belongs to
+ * - $link: link to social media page
  *
  * Other variables:
  * - $view: The view in use.
@@ -26,12 +26,17 @@
  *     configured element type.
  * - $row: The raw result object from the query, with all data it fetched.
  *
+ * @ingroup views_templates
  */
 ?>
-  <div class="media-left pull-left media-top">
-    <div class="h3 media-heading media-object"><?php print $icon; ?></div>
-  </div>
-  <div class="media-body">
-    <p class="media-heading h3"><?php print $name; ?></p>
-    <div class="media-summary"><?php print $description; ?></div>
-  </div>
+
+<li class="media">
+	<div class="pull-left">
+	  	<div class="media-object h3"><?php print $icon; ?></div>
+	</div>  
+	<div class="media-body media-middle">
+		<p class="media-heading">
+			<?php print $title; ?>
+		</p>
+	</div>
+  </li>

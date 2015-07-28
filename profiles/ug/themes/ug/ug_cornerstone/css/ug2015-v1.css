@@ -139,19 +139,11 @@ Live Date: June 23, 2015
 	Media
 	---------------------**/
 
-    /*--- Theming ---*/
-	    /*.teaser-list .media-heading {*/
-	        /*font-size: 1em;*/ /* 14px */
-	        /*font-weight: 500;
-	        line-height: 1.5em;
-	    }*/
-
-	    /* Revert teaser list media-heading styles */
-	    /*.teaser-list.revert .media-heading {
-	    	font-size: 1.714em;
-	    	font-weight: 300;
-	    	line-height: 1.1em;
-	    }*/
+	    .teaser-list .ug-media-heading {
+	    	font-size: 1em; /* 14px */
+		    font-weight: 500;
+	        line-height: 1.5em;	
+	    }
 
 	/*---------------------
 	Footer - Local
