@@ -62,9 +62,8 @@ To do: Bootstrap has a media-heading class.
 
     .media-listing-page .media {
         margin-bottom: 20px;
-        padding: 0 0 30px 0;
+        padding: 0 0 20px 0;
     }
-
 
     /*---------------------
     Metadata
@@ -76,7 +75,7 @@ To do: Bootstrap has a media-heading class.
         }
 
         /*--- Theming ---*/
-        .media-listing-page .media-header .media-meta {
+        .media-listing-page .media .media-header .media-meta {
             color:#767676;
             font-size: 1.143em; /* 16px */
         }

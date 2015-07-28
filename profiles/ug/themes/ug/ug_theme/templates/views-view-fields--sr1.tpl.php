@@ -30,10 +30,10 @@
 ?>
 <div class="media">
   <div class="media-left pull-left media-top">
-    <div class="h2 media-heading media-object"><?php print $icon; ?></div>
+    <div class="h4 media-heading media-object"><?php print $icon; ?></div>
   </div>
   <div class="media-body">
-    <h2 class="media-heading"><?php print $name; ?></h2>
+    <p class="media-heading h4"><?php print $name; ?></p>
     <?php print $description; ?>
   </div>
 </div>
