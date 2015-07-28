@@ -430,7 +430,7 @@ function ug_event_views_default_views() {
   /* Display: Content pane */
   $handler = $view->new_display('panel_pane', 'Content pane', 'panel_pane_1');
   $handler->display->display_options['allow']['use_pager'] = 0;
-  $handler->display->display_options['allow']['items_per_page'] = 'items_per_page';
+  $handler->display->display_options['allow']['items_per_page'] = 0;
   $handler->display->display_options['allow']['offset'] = 0;
   $handler->display->display_options['allow']['link_to_view'] = 0;
   $handler->display->display_options['allow']['more_link'] = 0;
@@ -613,7 +613,7 @@ function ug_event_views_default_views() {
   $view->description = 'Provides a monthly calendar view of events in grid format.';
   $view->tag = 'default';
   $view->base_table = 'node';
-  $view->human_name = 'E8 - Monthly calendar';
+  $view->human_name = 'E8b - Monthly Calendar - Grid Format';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
@@ -703,7 +703,7 @@ function ug_event_views_default_views() {
   $view->description = 'Provides a weekly calendar view of events in grid format.';
   $view->tag = 'default';
   $view->base_table = 'node';
-  $view->human_name = 'E9 - Weekly calendar';
+  $view->human_name = 'E9b - Weekly Calendar - Grid Format';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
@@ -794,7 +794,7 @@ function ug_event_views_default_views() {
   $view->description = '';
   $view->tag = 'default';
   $view->base_table = 'node';
-  $view->human_name = 'Event image';
+  $view->human_name = 'E2a - Event image';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
@@ -859,10 +859,10 @@ function ug_event_views_default_views() {
 
   $view = new view();
   $view->name = 'event_month_list';
-  $view->description = 'Provides a monthly calendar view of events in grid format.';
+  $view->description = 'Provides a monthly calendar view of events in list format.';
   $view->tag = 'default';
   $view->base_table = 'node';
-  $view->human_name = 'Event month list';
+  $view->human_name = 'E8a - Monthly Calendar - List Format';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
@@ -916,12 +916,6 @@ function ug_event_views_default_views() {
   );
   $handler->display->display_options['fields']['field_event_date']['group_rows'] = FALSE;
   $handler->display->display_options['fields']['field_event_date']['delta_offset'] = '0';
-  /* Field: Broken/missing handler */
-  $handler->display->display_options['fields']['field_event_summary']['id'] = 'field_event_summary';
-  $handler->display->display_options['fields']['field_event_summary']['table'] = 'field_data_field_event_summary';
-  $handler->display->display_options['fields']['field_event_summary']['field'] = 'field_event_summary';
-  $handler->display->display_options['fields']['field_event_summary']['label'] = '';
-  $handler->display->display_options['fields']['field_event_summary']['element_label_colon'] = FALSE;
   /* Field: Content: Feature image */
   $handler->display->display_options['fields']['field_event_image']['id'] = 'field_event_image';
   $handler->display->display_options['fields']['field_event_image']['table'] = 'field_data_field_event_image';
@@ -973,7 +967,7 @@ function ug_event_views_default_views() {
   $view->description = '';
   $view->tag = 'default';
   $view->base_table = 'field_collection_item';
-  $view->human_name = 'Event multipart';
+  $view->human_name = 'E2b - Event multipart';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
@@ -1052,10 +1046,10 @@ function ug_event_views_default_views() {
 
   $view = new view();
   $view->name = 'event_week_list';
-  $view->description = 'Provides a weekly calendar view of events in grid format.';
+  $view->description = 'Provides a weekly calendar view of events in list format.';
   $view->tag = 'default';
   $view->base_table = 'node';
-  $view->human_name = 'Event week list';
+  $view->human_name = 'E9a - Weekly Calendar - List Format';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
@@ -1119,12 +1113,6 @@ function ug_event_views_default_views() {
     'image_style' => 'medium',
     'image_link' => '',
   );
-  /* Field: Broken/missing handler */
-  $handler->display->display_options['fields']['field_event_summary']['id'] = 'field_event_summary';
-  $handler->display->display_options['fields']['field_event_summary']['table'] = 'field_data_field_event_summary';
-  $handler->display->display_options['fields']['field_event_summary']['field'] = 'field_event_summary';
-  $handler->display->display_options['fields']['field_event_summary']['label'] = '';
-  $handler->display->display_options['fields']['field_event_summary']['element_label_colon'] = FALSE;
   /* Sort criterion: Content: Date -  start date (field_event_date) */
   $handler->display->display_options['sorts']['field_event_date_value']['id'] = 'field_event_date_value';
   $handler->display->display_options['sorts']['field_event_date_value']['table'] = 'field_data_field_event_date';
