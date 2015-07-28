@@ -63,9 +63,10 @@ Base Styles
   }
 
   /* temporary fix until media-heading is used across all listing views */
-  h1 a, h2 a, h3 a {
-    text-decoration: none;
-  }
+  h1 a, h2 a, h3 a { text-decoration: none !important; }
+  h1 a:focus, h1 a:hover,
+  h2 a:focus, h2 a:hover,
+  h3 a:focus, h3 a:hover { text-decoration: underline; }
 
   .navbar a, a.btn, .menu a, a.active, .nav a, .breadcrumb a, .table a{
       text-decoration: none;
