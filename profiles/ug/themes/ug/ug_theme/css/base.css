@@ -58,8 +58,11 @@ Base Styles
       /* WCAG 2.0 AA on #EEEEEE, #F5F5F5, #FFFFFF */
   }
 
-  a:link,
-  .navbar a, a.btn, .menu a, a.active, .nav a {
+  a:link{
+    text-decoration: underline;
+  }
+
+  .navbar a, a.btn, .menu a, a.active, .nav a, .breadcrumb a, .table a {
       text-decoration: none;
   }
 

@@ -40,17 +40,13 @@
     Titles
     ---------------------**/
 
-/*
+        .media .media-heading a {
+            text-decoration: none;
+        }
 
-To do: Bootstrap has a media-heading class.
- - Switch media-title styles to media-heading
- - Update templates to use media-heading instead of media-title
-*/
-
-        /*--- Layout ---*/
-        .media .media-title { 
-            margin-top: 0;
-            line-height: 1.2em;
+        .media .media-heading a:focus,
+        .media .media-heading a:hover{
+            text-decoration: underline;   
         }
 
 
@@ -86,16 +82,7 @@ To do: Bootstrap has a media-heading class.
 
         /*--- Theming ---*/
 
-/*
-
-To do: Bootstrap has a media-heading class.
- - Switch media-title styles to media-heading
- - Update templates to use media-heading instead of media-title
-*/
-
         /* title links - underline made thinner */
-        .media-listing-page .media-title a:focus,
-        .media-listing-page .media-title a:hover,
         .media-listing-page .media-heading a:focus,
         .media-listing-page .media-heading a:hover {
             border-bottom: 2px solid;
