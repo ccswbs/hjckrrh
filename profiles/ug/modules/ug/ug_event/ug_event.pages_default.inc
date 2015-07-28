@@ -65,9 +65,9 @@ function ug_event_default_page_manager_handlers() {
       ),
       'right' => array(
         'column_type' => 'col-sm',
-        'column_size' => '4',
-        'offset_type' => 'col-lg-offset',
-        'offset_size' => '0',
+        'column_size' => '3',
+        'offset_type' => 'col-sm-offset',
+        'offset_size' => '1',
       ),
       'bottom' => array(
         'column_type' => 'col-lg',

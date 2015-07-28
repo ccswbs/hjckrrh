@@ -58,9 +58,9 @@ function ug_page_default_page_manager_handlers() {
       ),
       'right' => array(
         'column_type' => 'col-sm',
-        'column_size' => '4',
+        'column_size' => '3',
         'offset_type' => 'col-lg-offset',
-        'offset_size' => '0',
+        'offset_size' => '1',
       ),
       'default' => NULL,
       'top' => NULL,
