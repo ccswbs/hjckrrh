@@ -327,8 +327,8 @@ function ug_news_default_page_manager_pages() {
       ),
       'right' => array(
         'column_type' => 'col-sm',
-        'column_size' => '4',
-        'offset_type' => 'col-lg-offset',
+        'column_size' => '3',
+        'offset_type' => 'col-sm-offset',
         'offset_size' => '0',
       ),
       'bottom' => NULL,
@@ -458,9 +458,9 @@ function ug_news_default_page_manager_pages() {
       ),
       'right' => array(
         'column_type' => 'col-sm',
-        'column_size' => '4',
-        'offset_type' => 'col-lg-offset',
-        'offset_size' => '0',
+        'column_size' => '3',
+        'offset_type' => 'col-sm-offset',
+        'offset_size' => '1',
       ),
       'bottom' => NULL,
     ),
@@ -613,33 +613,10 @@ function ug_news_default_page_manager_pages() {
     ),
   );
   $display->cache = array();
-  $display->title = 'Recent News';
+  $display->title = 'News';
   $display->uuid = '44c1c8d1-d8fe-40f0-89f0-ffbd4e9a68a2';
   $display->content = array();
   $display->panels = array();
-    $pane = new stdClass();
-    $pane->pid = 'new-fce372ec-b149-4288-b162-b39d890ebb3b';
-    $pane->panel = 'bottom';
-    $pane->type = 'views_panes';
-    $pane->subtype = 's1-panel_pane_1';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'override_title' => 0,
-      'override_title_text' => '',
-      'override_title_heading' => 'h2',
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 0;
-    $pane->locks = array();
-    $pane->uuid = 'fce372ec-b149-4288-b162-b39d890ebb3b';
-    $display->content['new-fce372ec-b149-4288-b162-b39d890ebb3b'] = $pane;
-    $display->panels['bottom'][0] = 'new-fce372ec-b149-4288-b162-b39d890ebb3b';
     $pane = new stdClass();
     $pane->pid = 'new-e521219a-590e-4275-98f3-96d126f5fffa';
     $pane->panel = 'left';
@@ -664,7 +641,7 @@ function ug_news_default_page_manager_pages() {
     $display->content['new-e521219a-590e-4275-98f3-96d126f5fffa'] = $pane;
     $display->panels['left'][0] = 'new-e521219a-590e-4275-98f3-96d126f5fffa';
     $pane = new stdClass();
-    $pane->pid = 'new-b8e9fec5-ee71-42c0-ba95-5c158dca03fb';
+    $pane->pid = 'new-68a43b6c-8b3c-40ad-a9fd-c2180d1b2121';
     $pane->panel = 'right';
     $pane->type = 'views_panes';
     $pane->subtype = 'news_filter_date-panel_pane_1';
@@ -683,32 +660,9 @@ function ug_news_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $pane->uuid = 'b8e9fec5-ee71-42c0-ba95-5c158dca03fb';
-    $display->content['new-b8e9fec5-ee71-42c0-ba95-5c158dca03fb'] = $pane;
-    $display->panels['right'][0] = 'new-b8e9fec5-ee71-42c0-ba95-5c158dca03fb';
-    $pane = new stdClass();
-    $pane->pid = 'new-9be50603-17fa-423b-8532-14a2312bc422';
-    $pane->panel = 'right';
-    $pane->type = 'views_panes';
-    $pane->subtype = 'n6-panel_pane_1';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'override_title' => 0,
-      'override_title_text' => '',
-      'override_title_heading' => 'h2',
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 1;
-    $pane->locks = array();
-    $pane->uuid = '9be50603-17fa-423b-8532-14a2312bc422';
-    $display->content['new-9be50603-17fa-423b-8532-14a2312bc422'] = $pane;
-    $display->panels['right'][1] = 'new-9be50603-17fa-423b-8532-14a2312bc422';
+    $pane->uuid = '68a43b6c-8b3c-40ad-a9fd-c2180d1b2121';
+    $display->content['new-68a43b6c-8b3c-40ad-a9fd-c2180d1b2121'] = $pane;
+    $display->panels['right'][0] = 'new-68a43b6c-8b3c-40ad-a9fd-c2180d1b2121';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = 'new-e521219a-590e-4275-98f3-96d126f5fffa';
   $handler->conf['display'] = $display;
