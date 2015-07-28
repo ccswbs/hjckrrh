@@ -829,7 +829,8 @@ function ug_news_views_default_views() {
   $handler->display->display_options['fields']['created']['label'] = 'Posted on';
   $handler->display->display_options['fields']['created']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['created']['element_default_classes'] = FALSE;
-  $handler->display->display_options['fields']['created']['date_format'] = 'long';
+  $handler->display->display_options['fields']['created']['date_format'] = 'custom';
+  $handler->display->display_options['fields']['created']['custom_date_format'] = 'l, F jS, Y';
   $handler->display->display_options['fields']['created']['second_date_format'] = 'long';
   /* Contextual filter: Content: Nid */
   $handler->display->display_options['arguments']['nid']['id'] = 'nid';
