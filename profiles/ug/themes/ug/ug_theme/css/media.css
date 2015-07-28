@@ -210,18 +210,6 @@ Teaser Lists
             margin-top: 0;
         }
 
-    /*---------------------
-    Text
-    ---------------------**/
-
-        /*--- Theming ---*/
-
-        .detail-page p {
-            color: #666666;
-            font-size: 1.143em; /* 16px */
-            line-height: 150%;
-            margin: 0 0 1.5em 0;
-        }
 
     /*---------------------
     File Attachments
