@@ -73,7 +73,7 @@
       margin-bottom: 30px;
     }
 
-    /* Add spacing between panels and blocks (but not after last panel) */
+    /* Add spacing after panels and blocks (but not after last panel) */
     .front .main-container .panel-panel>div,
     .not-front .main-container aside section.block,
     .not-front .main-container .panel-panel.col-sm-4>div,
@@ -83,9 +83,16 @@
       margin-bottom: 40px;
     }
 
-    .front .main-container .panel-panel>div:last-child,
-    .not-front .main-container aside section:last-child{
-      margin-bottom: 0;
+    @media screen and (min-width: 768px) {
+      /* Remove spacing from last front-page panel or block in aside */
+      .front .main-container .panel-panel>div:last-child,
+      .not-front .main-container .panel-panel.col-sm-4>div:last-child,
+      .not-front .main-container .panel-panel.col-sm-3>div:last-child,
+      .not-front .main-container .panel-panel.col-sm-2>div:last-child,
+      .not-front .main-container .panel-panel.col-sm-1>div:last-child,
+      .not-front .main-container aside section:last-child{
+        margin-bottom: 0;
+      }
     }
 
     /* Remove spacing above headings in panels */
