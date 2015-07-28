@@ -46,23 +46,39 @@ function ug_faq_default_page_manager_handlers() {
     ),
   );
   $display = new panels_display();
-  $display->layout = 'bootstrap_threecol_stacked';
+  $display->layout = 'bootstrap_twocol_stacked';
   $display->layout_settings = array();
   $display->panel_settings = array(
     'style_settings' => array(
       'default' => NULL,
       'top' => NULL,
-      'left' => NULL,
+      'left' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '8',
+        'offset_type' => 'col-lg-offset',
+        'offset_size' => '0',
+      ),
       'middle' => array(
         'column_type' => 'col-lg',
         'column_size' => '12',
         'offset_type' => 'col-lg-offset',
         'offset_size' => '0',
       ),
-      'right' => NULL,
+      'right' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '3',
+        'offset_type' => 'col-sm-offset',
+        'offset_size' => '1',
+      ),
       'bottom' => NULL,
     ),
     'middle' => array(
+      'style' => 'bootstrap_region',
+    ),
+    'left' => array(
+      'style' => 'bootstrap_region',
+    ),
+    'right' => array(
       'style' => 'bootstrap_region',
     ),
   );
@@ -73,7 +89,7 @@ function ug_faq_default_page_manager_handlers() {
   $display->panels = array();
     $pane = new stdClass();
     $pane->pid = 'new-ff2caa01-7597-456d-8481-f98d528de82a';
-    $pane->panel = 'middle';
+    $pane->panel = 'left';
     $pane->type = 'entity_field';
     $pane->subtype = 'node:field_faq_answer';
     $pane->shown = TRUE;
@@ -100,10 +116,10 @@ function ug_faq_default_page_manager_handlers() {
     $pane->locks = array();
     $pane->uuid = 'ff2caa01-7597-456d-8481-f98d528de82a';
     $display->content['new-ff2caa01-7597-456d-8481-f98d528de82a'] = $pane;
-    $display->panels['middle'][0] = 'new-ff2caa01-7597-456d-8481-f98d528de82a';
+    $display->panels['left'][0] = 'new-ff2caa01-7597-456d-8481-f98d528de82a';
     $pane = new stdClass();
     $pane->pid = 'new-d413c67a-3f67-4c0b-b4c5-1f4d669c18a9';
-    $pane->panel = 'middle';
+    $pane->panel = 'left';
     $pane->type = 'views_panes';
     $pane->subtype = 'faq_filter_keyword-panel_pane_1';
     $pane->shown = TRUE;
@@ -123,7 +139,7 @@ function ug_faq_default_page_manager_handlers() {
     $pane->locks = array();
     $pane->uuid = 'd413c67a-3f67-4c0b-b4c5-1f4d669c18a9';
     $display->content['new-d413c67a-3f67-4c0b-b4c5-1f4d669c18a9'] = $pane;
-    $display->panels['middle'][1] = 'new-d413c67a-3f67-4c0b-b4c5-1f4d669c18a9';
+    $display->panels['left'][1] = 'new-d413c67a-3f67-4c0b-b4c5-1f4d669c18a9';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
