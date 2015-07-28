@@ -68,7 +68,7 @@ Base Styles
   h2 a:focus, h2 a:hover,
   h3 a:focus, h3 a:hover { border-bottom: 2px solid; !important;}
 
-  .navbar a, a.btn, .menu a, a.active, .nav a, .breadcrumb a, .table a{
+  .navbar a, a.btn, .menu a, a.active, .nav a, .breadcrumb a, .table .file a {
       text-decoration: none;
   }
 
