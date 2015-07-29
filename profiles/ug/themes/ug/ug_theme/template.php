@@ -357,3 +357,12 @@ function ug_theme_node_view_alter(&$build) {
   }
 }
 
+
+/**
+ * Implements hook_preprocess_node.
+ */
+function ug_theme_preprocess_node (&$variables) {
+  // Hide read more link.
+  unset($variables['content']['links']['node']['#links']['node-readmore']);
+}
+
