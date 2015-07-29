@@ -10,7 +10,6 @@
 
         .navbar-brand {
             width: 75%;
-            /*padding-bottom: 8px;*/
         }
 
         @media all and (min-width: 768px) {
@@ -128,9 +127,20 @@
             color: #696969; 
         }
 
-      /*---------------------
-       Navigation Tabs (Horizontal)
-      ---------------------**/
+        /*--- Layout ---*/
+        .search-and-breadcrumb {
+            margin-bottom: 20px;
+        }
+
+        @media all  and (min-width: 768px) {
+            .search-and-breadcrumb {
+                margin-bottom: 0;
+            }
+        }
+
+    /*---------------------
+     Navigation Tabs (Horizontal)
+    ---------------------**/
 
         .nav-tabs {
           margin-bottom: 30px;
