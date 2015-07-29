@@ -385,7 +385,7 @@ function ug_faq_views_default_views() {
   $view->description = 'Provides a comma-separated list of keyword tags';
   $view->tag = 'default';
   $view->base_table = 'taxonomy_term_data';
-  $view->human_name = 'Find related FAQ by keyword';
+  $view->human_name = 'F4 - Find related FAQ by keyword';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
