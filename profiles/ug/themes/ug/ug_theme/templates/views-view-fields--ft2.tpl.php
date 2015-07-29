@@ -29,7 +29,7 @@
 </div>
 <div class="col-md-8">
   <header class="media-header">
-    <?php print $fields['title']->content; ?>
+    <h2 class="media-heading"><?php print $fields['title']->content; ?></h2>
   </header>
   <div class="media-summary">
     <?php print $fields['field_feature_text']->content; ?>

@@ -136,16 +136,6 @@ Live Date: June 23, 2015
 	    }
 
 	/*---------------------
-	Media
-	---------------------**/
-
-	    .teaser-list .ug-media-heading {
-	    	font-size: 1em; /* 14px */
-		    font-weight: 500;
-	        line-height: 1.5em;	
-	    }
-
-	/*---------------------
 	Footer - Local
 	---------------------**/
 
@@ -222,7 +212,7 @@ Live Date: June 23, 2015
 	    }
 
 	/*---------------------
-	Sidebar
+	Sidebars
 	---------------------**/
 
 	    /*--- Theming ---*/
@@ -236,3 +226,41 @@ Live Date: June 23, 2015
 			font-size: 1.286em; /* 18px */
 			font-weight: 400;
 		}
+
+		.not-front .main-container .panel-panel.col-sm-4 p,
+		.not-front .main-container .panel-panel.col-sm-3 p,
+		.not-front .main-container .panel-panel.col-sm-2 p,
+		.not-front .main-container .panel-panel.col-sm-1 p,
+		.not-front .main-container aside p {
+			color: #333333;
+            font-size: 1em; /* 16px */
+            margin: 0 0 1.5em 0;
+		}
+
+
+/******************
+ Media
+*****************/
+
+	/*---------------------
+	Teaser Lists
+	---------------------**/
+
+        /*--- Theming ---*/
+	    .teaser-list .ug-media-heading {
+	    	font-size: 1em; /* 14px */
+		    font-weight: 500;
+	        line-height: 1.5em;	
+	    }
+
+	/*---------------------
+	Detail pages
+	---------------------**/
+
+        /*--- Theming ---*/
+        .detail-page .main-container p {
+            color: #666666;
+            font-size: 1.143em; /* 16px */
+            line-height: 150%;
+            margin: 0 0 1.5em 0;
+        }

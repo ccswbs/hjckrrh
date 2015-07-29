@@ -43,7 +43,7 @@
 <?php endif; ?>
 <div class="col-md-<?php print $image ? 8 : 4; ?>">
   <header class="media-header">
-    <h2 class="media-title">
+    <h2 class="media-heading">
       <?php print $fullname; ?>
     </h2>
     <div class="media-meta">

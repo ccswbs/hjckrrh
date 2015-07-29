@@ -58,8 +58,17 @@ Base Styles
       /* WCAG 2.0 AA on #EEEEEE, #F5F5F5, #FFFFFF */
   }
 
-  a:link,
-  .navbar a, a.btn, .menu a, a.active, .nav a {
+  a:link{
+    text-decoration: underline;
+  }
+
+  /* temporary fix until media-heading is used across all listing views */
+  h1 a, h2 a, h3 a { text-decoration: none !important; }
+  h1 a:focus, h1 a:hover,
+  h2 a:focus, h2 a:hover,
+  h3 a:focus, h3 a:hover { border-bottom: 2px solid; !important;}
+
+  .navbar a, a.btn, .menu a, a.active, .nav a, .breadcrumb a, .table .file a {
       text-decoration: none;
   }
 
