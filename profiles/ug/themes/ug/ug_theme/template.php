@@ -343,3 +343,16 @@ function ug_theme_date_display_range($variables) {
     '!end-date' => $end_date,
   ));
 }
+
+
+/**
+ * Implements node_view_alter.
+ */
+function ug_theme_node_view_alter(&$build) {
+  $node = $build['#node'];
+  // When viewing a FAQ node, add the FAQ page into the breadcrumb.
+  if($build['#view_mode'] == "full" && $node->type == "faq") {
+    drupal_set_breadcrumb(array(l(t('Home'), NULL), l(t('FAQ'), 'faq')));
+  }
+}
+
