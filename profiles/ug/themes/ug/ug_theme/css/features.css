@@ -1,0 +1,182 @@
+/***********************************
+*
+*  AODA Web Remediation Feature Styles
+*
+************************************/
+
+
+/*************************
+BR - Banner
+*************************/
+
+    /*--- Layout ---*/
+
+    #slides {
+        position: relative;
+    }
+
+    .slidesjs-container {
+        z-index:10;
+    }
+
+    /*--- Theming ---*/
+
+    #slides {
+        background: #000000;
+        display: none; /* prevent slides from flashing */
+    }
+
+    /*---------------------
+    Pause/Play Button
+    ---------------------**/
+
+        /*--- Layout ---*/
+
+        .slidesjs-navigation-top{
+            padding: 5px;
+        }
+
+        /* Medium + Large Screens - pause/play button displayed over slides */
+        @media all and (min-width:768px) {
+            .slidesjs-navigation-top {
+                margin: 0 auto;
+                padding: 0;
+                position: absolute;
+                top: 8px;
+                width:100%;
+                z-index:15;
+            }
+        }
+
+        @media all and (min-width:992px) {
+            .slidesjs-psply {
+                width: 80px !important;
+            }
+        }
+
+        /*--- Theming ---*/
+
+        .slidesjs-navigation-top .slidesjs-psply {
+            background: #000000;
+            color: #FFFFFF;
+            opacity: .85;
+            /*border: 1px solid #666666;*/
+        }
+
+        @media all and (min-width:768px) {
+            .slidesjs-navigation-top .slidesjs-psply {
+                border: 0;
+            }
+        }
+
+    /*---------------------
+    Slide Navigation Buttons
+    ---------------------**/
+
+        .slidesjs-navigation-bottom .slidesjs-next,
+        .slidesjs-navigation-bottom .slidesjs-previous {
+            background: #000000;
+            color: #FFFFFF;
+            /*border: 1px solid #666666;*/
+        }
+
+    /*---------------------
+    Pagination (Slide # of #)
+    ---------------------**/
+
+        .slidesjs-pagination {
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        @media all and (min-width:768px) {
+            .slidesjs-pagination .btn-block {
+                font-size: .857em;
+            }
+        }
+
+        @media all and (min-width:992px) {
+            .slidesjs-pagination .btn-block {
+                font-size: 1em;
+            }
+        }
+
+    /*---------------------
+    Headline (Title)
+    ---------------------**/
+
+        /*--- Theming ---*/
+
+        .row.slidesjs-navigation-bottom a.slidesjs-slide-title {
+            font-weight: 500;
+            font-size: 1.214em; /* 17px */
+            text-decoration: none;
+        }
+
+        .row.slidesjs-navigation-bottom a.slidesjs-slide-title:focus,
+        .row.slidesjs-navigation-bottom a.slidesjs-slide-title:hover{
+            text-decoration: underline;
+        }
+
+        .row.slidesjs-navigation-bottom .slidesjs-slide-link {
+            color: #428BCA;
+        }
+
+        @media all and (min-width:992px) {
+            .row.slidesjs-navigation-bottom .slidesjs-slide-title {
+                font-size: 1.429em; /* 20px */
+            }
+        }
+
+    /*---------------------
+    Overlay (Summary Text)
+    ---------------------**/
+
+        /*--- Layout ---*/
+
+        .slidesjs-slide-text {
+            margin-bottom: 0 !important;
+        }
+
+        /* Default for Mobile - overlay below slides */
+        .row.slidesjs-navigation-bottom {
+            margin-left:0;
+            padding: 10px 0;
+            width:100%;
+            z-index:12;
+        }
+
+        /* Default - padding adjusted for stacked rows (summary above controls) */
+        .row.slidesjs-navigation-bottom .slidesjs-summary {
+            min-height: 40px;
+            padding-bottom: 10px;
+        }
+
+        /* Small Screens */
+        @media all and (min-width:768px) {
+
+            /* padding adjusted for single row (summary beside controls) */
+            .row.slidesjs-navigation-bottom .slidesjs-summary {
+                padding-bottom: 0;
+            }
+        }
+        
+        /* Medium + Larger Screens */
+        @media all and (min-width:992px) {
+
+            /* [DISABLED OVERLAY] - Medium + Large Screens - option to have overlay displayed over slides */
+            /*.row.slidesjs-navigation-bottom {
+                bottom:0;
+                position: absolute;
+            }*/
+            
+        }
+
+        /*--- Theming ---*/
+
+        .row.slidesjs-navigation-bottom {
+            background: rgb(0,0,0);
+            background: rgba(0,0,0,0.85);
+            color: #FFFFFF;
+        }
+
