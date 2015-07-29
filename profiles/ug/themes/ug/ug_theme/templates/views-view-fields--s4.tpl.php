@@ -7,6 +7,7 @@
  * - $title: title of news article
  * - $network: social network this account belongs to
  * - $link: link to social media page
+ * - $icon: icon for social media network
  *
  * Other variables:
  * - $view: The view in use.
@@ -31,12 +32,13 @@
 ?>
 
 <li class="media">
-	<div class="pull-left">
-	  	<div class="media-object h3"><?php print $icon; ?></div>
-	</div>  
-	<div class="media-body media-middle">
-		<p class="media-heading">
-			<?php print $title; ?>
-		</p>
-	</div>
-  </li>
+  <div class="pull-left">
+    <div class="media-object h3"><?php print $icon; ?></div>
+  </div>  
+  <div class="media-body media-middle">
+    <p class="media-heading">
+      <?php print $title; ?>
+    </p>
+  </div>
+</li>
+
