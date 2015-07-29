@@ -42,6 +42,7 @@ function ug_social_views_default_views() {
   $handler->display->display_options['fields']['path']['id'] = 'path';
   $handler->display->display_options['fields']['path']['table'] = 'node';
   $handler->display->display_options['fields']['path']['field'] = 'path';
+  $handler->display->display_options['fields']['path']['absolute'] = TRUE;
   /* Sort criterion: Content: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
@@ -208,31 +209,35 @@ function ug_social_views_default_views() {
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
   $handler->display->display_options['fields']['title']['label'] = '';
-  $handler->display->display_options['fields']['title']['alter']['make_link'] = TRUE;
-  $handler->display->display_options['fields']['title']['alter']['path'] = '[field_social_link]';
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
   $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['title']['element_default_classes'] = FALSE;
   $handler->display->display_options['fields']['title']['hide_alter_empty'] = FALSE;
   $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
   /* Field: Content: Account category */
   $handler->display->display_options['fields']['field_social_category']['id'] = 'field_social_category';
   $handler->display->display_options['fields']['field_social_category']['table'] = 'field_data_field_social_category';
   $handler->display->display_options['fields']['field_social_category']['field'] = 'field_social_category';
+  $handler->display->display_options['fields']['field_social_category']['label'] = '';
   $handler->display->display_options['fields']['field_social_category']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_social_category']['element_default_classes'] = FALSE;
   $handler->display->display_options['fields']['field_social_category']['type'] = 'taxonomy_term_reference_plain';
   /* Field: Content: Account URL */
   $handler->display->display_options['fields']['field_social_link']['id'] = 'field_social_link';
   $handler->display->display_options['fields']['field_social_link']['table'] = 'field_data_field_social_link';
   $handler->display->display_options['fields']['field_social_link']['field'] = 'field_social_link';
+  $handler->display->display_options['fields']['field_social_link']['label'] = '';
+  $handler->display->display_options['fields']['field_social_link']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_social_link']['click_sort_column'] = 'url';
   $handler->display->display_options['fields']['field_social_link']['type'] = 'link_plain';
   /* Field: Content: Social media network */
   $handler->display->display_options['fields']['field_social_network']['id'] = 'field_social_network';
   $handler->display->display_options['fields']['field_social_network']['table'] = 'field_data_field_social_network';
   $handler->display->display_options['fields']['field_social_network']['field'] = 'field_social_network';
-  $handler->display->display_options['fields']['field_social_network']['label'] = 'Social media network:';
-  $handler->display->display_options['fields']['field_social_network']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['field_social_network']['label'] = '';
+  $handler->display->display_options['fields']['field_social_network']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_social_network']['element_default_classes'] = FALSE;
   $handler->display->display_options['fields']['field_social_network']['type'] = 'list_key';
   /* Sort criterion: Content: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
