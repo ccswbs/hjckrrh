@@ -16,7 +16,10 @@ function ug_tags_default_page_manager_pages() {
   $page->admin_title = 'Keyword search';
   $page->admin_description = '';
   $page->path = 'tags/!tid';
-  $page->access = array();
+  $page->access = array(
+    'type' => 'none',
+    'settings' => NULL,
+  );
   $page->menu = array();
   $page->arguments = array(
     'tid' => array(

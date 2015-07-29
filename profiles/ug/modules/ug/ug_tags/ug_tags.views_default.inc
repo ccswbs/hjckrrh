@@ -15,7 +15,7 @@ function ug_tags_views_default_views() {
   $view->description = '';
   $view->tag = 'default';
   $view->base_table = 'node';
-  $view->human_name = 'Keyword search results';
+  $view->human_name = 'G11 - Keyword search results';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
@@ -71,16 +71,6 @@ function ug_tags_views_default_views() {
   $handler->display->display_options['fields']['field_news_body']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_news_body']['type'] = 'text_summary_or_trimmed';
   $handler->display->display_options['fields']['field_news_body']['settings'] = array(
-    'trim_length' => '600',
-  );
-  /* Field: Content: Summary */
-  $handler->display->display_options['fields']['field_event_summary']['id'] = 'field_event_summary';
-  $handler->display->display_options['fields']['field_event_summary']['table'] = 'field_data_field_event_summary';
-  $handler->display->display_options['fields']['field_event_summary']['field'] = 'field_event_summary';
-  $handler->display->display_options['fields']['field_event_summary']['label'] = '';
-  $handler->display->display_options['fields']['field_event_summary']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['field_event_summary']['type'] = 'text_trimmed';
-  $handler->display->display_options['fields']['field_event_summary']['settings'] = array(
     'trim_length' => '600',
   );
   /* Sort criterion: Content: Post date */
@@ -149,7 +139,7 @@ function ug_tags_views_default_views() {
   $view->description = 'Provides a comma-separated list of keyword tags';
   $view->tag = 'default';
   $view->base_table = 'taxonomy_term_data';
-  $view->human_name = 'Find related content by keyword';
+  $view->human_name = 'G10 - Find related content by keyword';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
