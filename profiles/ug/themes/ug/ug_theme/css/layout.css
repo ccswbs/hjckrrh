@@ -79,29 +79,38 @@
     .not-front .main-container .panel-panel.col-sm-4>div,
     .not-front .main-container .panel-panel.col-sm-3>div,
     .not-front .main-container .panel-panel.col-sm-2>div,
-    .not-front .main-container .panel-panel.col-sm-1>div {
+    .not-front .main-container .panel-panel.col-sm-1>div,
+    .footer .panel-panel>div {
       margin-bottom: 40px;
     }
 
+    /* Remove margin-bottom from bottom of right panel always */
+    .front .main-container .panel-panel.right>div,
+    .footer .panel-panel.right>div {
+      margin-bottom: 0;
+    }
+
     @media screen and (min-width: 768px) {
-      /* Remove spacing from last front-page panel or block in aside */
+      /* Remove margin-bottom from last front-page panel or block in aside */
       .front .main-container .panel-panel>div:last-child,
       .not-front .main-container .panel-panel.col-sm-4>div:last-child,
       .not-front .main-container .panel-panel.col-sm-3>div:last-child,
       .not-front .main-container .panel-panel.col-sm-2>div:last-child,
       .not-front .main-container .panel-panel.col-sm-1>div:last-child,
-      .not-front .main-container aside section:last-child{
+      .not-front .main-container aside section:last-child,
+      .footer .panel-panel>div:last-child {
         margin-bottom: 0;
       }
     }
 
-    /* Remove spacing above headings in panels */
+    /* Remove margin-top above headings in panels */
     .panel-panel h1,
     .panel-panel h2,
     .panel-panel h3 {
       margin-top: 0;
     }
 
+    /* Add margin-bottom (20px) after all panel panes */
     .panel-panel .panel-pane {
       margin-bottom: 20px;
     }
