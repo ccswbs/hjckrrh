@@ -127,7 +127,21 @@
             color: #696969; 
         }
 
+        .breadcrumb li a:link {
+            border-bottom: 0;
+        }
+
+        .breadcrumb li a:focus,
+        .breadcrumb li a:hover {
+            border-bottom: 1px solid;
+        }
+
         /*--- Layout ---*/
+
+        .detail-page .main-container .breadcrumb li{
+            margin-bottom: 0;
+        }
+
         .search-and-breadcrumb {
             margin-bottom: 20px;
         }

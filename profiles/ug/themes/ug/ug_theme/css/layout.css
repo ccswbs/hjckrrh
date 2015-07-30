@@ -85,8 +85,8 @@
     }
 
     /* Remove margin-bottom from bottom of right panel always */
-    .front .main-container .panel-panel.right>div,
-    .footer .panel-panel.right>div {
+    .front .main-container .panel-panel.right>div:last-child,
+    .footer .panel-panel.right>div:last-child {
       margin-bottom: 0;
     }
 
