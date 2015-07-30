@@ -42,11 +42,21 @@
 
         .media .media-heading a {
             text-decoration: none;
+            border-bottom: 0;
         }
 
         .media .media-heading a:focus,
         .media .media-heading a:hover{
-            text-decoration: underline;   
+            border-bottom: 1px solid;
+            text-decoration: none;
+        }
+
+        /* H1 and h2 title links - underline made thinner */
+        .media h1.media-heading a:focus,
+        .media h1.media-heading a:hover,
+        .media h2.media-heading a:focus,
+        .media h2.media-heading a:hover {
+            border-bottom: 2px solid;
         }
 
 
@@ -74,19 +84,6 @@
         .media-listing-page .media .media-header .media-meta {
             color:#767676;
             font-size: 1.143em; /* 16px */
-        }
-
-    /*---------------------
-    Titles
-    ---------------------**/
-
-        /*--- Theming ---*/
-
-        /* title links - underline made thinner */
-        .media-listing-page .media .media-heading a:focus,
-        .media-listing-page .media .media-heading a:hover {
-            border-bottom: 2px solid;
-            text-decoration: none;
         }
 
     /*---------------------

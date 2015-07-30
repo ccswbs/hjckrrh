@@ -59,26 +59,36 @@ Base Styles
   }
 
   a:link{
-    text-decoration: underline;
-  }
-
-  /* temporary fix until media-heading is used across all listing views */
-  h1 a, h2 a, h3 a { text-decoration: none !important; }
-  h1 a:focus, h1 a:hover,
-  h2 a:focus, h2 a:hover,
-  h3 a:focus, h3 a:hover { border-bottom: 2px solid; !important;}
-
-  .navbar a, a.btn, .menu a, a.active, .nav a, .breadcrumb a, .table .file a {
-      text-decoration: none;
+    text-decoration: none;
   }
 
   a:focus { 
     outline: thin dotted; 
   }
 
-  a:focus, a:hover,
-  .table .file a:focus, .table .file a:hover {
+  a:focus, a:hover {
       text-decoration: underline;
+  }
+
+  /* Links surrounded by text - underline */
+  p a:link {
+   text-decoration: none; 
+   border-bottom: 1px solid;
+  }
+
+  /* Links surrounded by text - stronger underline on focus, hover */
+  p a:focus, p a:hover {
+   text-decoration: none; 
+   border-bottom: 2px solid; 
+  }
+
+  /* temporary fix until media-heading is used across all listing views */
+  h1 a, h2 a { text-decoration: none !important; }
+  h1 a:focus, h1 a:hover,
+  h2 a:focus, h2 a:hover { border-bottom: 2px solid !important;}
+
+  .navbar a, a.btn, .menu a, a.active, .nav a {
+      text-decoration: none;
   }
 
   .more-link { margin-top: 15px; }
