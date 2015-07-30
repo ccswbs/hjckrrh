@@ -70,17 +70,23 @@ Base Styles
       text-decoration: underline;
   }
 
-  /* Links surrounded by text - underline */
-  p a:link {
+  /*--- Links surrounded by text ---*/
+
+  p a:link, li a {
    text-decoration: none; 
    border-bottom: 1px solid;
   }
 
-  /* Links surrounded by text - stronger underline on focus, hover */
-  p a:focus, p a:hover {
+  ul.list-inline li a{
+    border-bottom: 0;
+  }
+
+  p a:focus, p a:hover, li a:focus, li a:hover {
    text-decoration: none; 
    border-bottom: 2px solid; 
   }
+
+  /*--- Links styled as buttons ---*/
 
   p a.btn:focus, p a.btn:hover {
     border-bottom: 1px solid;
@@ -91,8 +97,15 @@ Base Styles
   h1 a:focus, h1 a:hover,
   h2 a:focus, h2 a:hover { border-bottom: 2px solid !important;}
 
-  .navbar a, a.btn, .menu a, a.active, .nav a {
+  nav li a, .navbar a, .menu a, a.active, .nav a {
       text-decoration: none;
+      border-bottom: 0;
+  }
+
+  nav li a:focus, nav li a:hover, 
+  .navbar a:focus, .navbar a:hover, 
+  .nav a:focus, .nav a:hover {
+    border-bottom: 0;
   }
 
   .more-link { margin-top: 15px; }
