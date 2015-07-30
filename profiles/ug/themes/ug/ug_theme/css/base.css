@@ -92,11 +92,8 @@ Base Styles
     border-bottom: 1px solid;
   }
 
-  /* temporary fix until media-heading is used across all listing views */
-  h1 a, h2 a { text-decoration: none !important; }
-  h1 a:focus, h1 a:hover,
-  h2 a:focus, h2 a:hover { border-bottom: 2px solid !important;}
 
+  /*--- Exceptions ---*/
   nav li a, .navbar a, .menu a, a.active, .nav a {
       text-decoration: none;
       border-bottom: 0;
@@ -110,6 +107,11 @@ Base Styles
 
   .more-link { margin-top: 15px; }
 
+
+  /* temporary fix until media-heading is used across all listing views */
+  h1 a, h2 a { text-decoration: none !important; }
+  h1 a:focus, h1 a:hover,
+  h2 a:focus, h2 a:hover { border-bottom: 2px solid !important;}
 
   /*---------------------
   Lists
