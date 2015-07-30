@@ -295,7 +295,8 @@ Live Date: June 23, 2015
 
         /*--- Theming ---*/
         .detail-page .main-container p,
-        .detail-page .main-container li {
+        .detail-page .main-container li,
+        .detail-page .main-container table {
             color: #666666;
             font-size: 1.143em; /* 16px */
             line-height: 150%;
