@@ -82,6 +82,10 @@ Base Styles
    border-bottom: 2px solid; 
   }
 
+  p a.btn:focus, p a.btn:hover {
+    border-bottom: 1px solid;
+  }
+
   /* temporary fix until media-heading is used across all listing views */
   h1 a, h2 a { text-decoration: none !important; }
   h1 a:focus, h1 a:hover,
@@ -306,11 +310,16 @@ Base Styles
   Buttons
   ---------------------**/
 
+    /* Default */
+    p a.btn-default:link { border-bottom-color: #CCCCCC;}
+
     /* Primary */
     .btn-primary {
       background: #2B669A;
       border-color: #265C8A;
     }
+
+    p a.btn-primary:link { border-bottom-color: #265C8A;}
 
     .btn-primary:focus,
     .btn-primary:hover,
@@ -335,6 +344,8 @@ Base Styles
       background: #088856;
       border-color: #07754A;
     }
+
+    p a.btn-success:link { border-bottom-color: #07754A;}
 
     .btn-success:focus,
     .btn-success:hover,
@@ -361,6 +372,8 @@ Base Styles
       border-color: #537179;
     }
 
+    p a.btn-info:link { border-bottom-color: #537179;}
+
     .btn-info:hover,
     .btn-info:focus,
     .btn-info:active,
@@ -385,6 +398,8 @@ Base Styles
       border-color: #B8490E;
     }
 
+    p a.btn-warning:link { border-bottom-color: #B8490E;}
+
     .btn-warning:focus,
     .btn-warning:hover,
     .btn-warning:active,
@@ -408,6 +423,8 @@ Base Styles
       background: #AC2118;
       border-color: #9B1E16;
     }
+
+    p a.btn-danger:link { border-bottom-color: #9B1E16;}
 
     .btn-danger:focus,
     .btn-danger:hover,
