@@ -351,9 +351,24 @@ function ug_theme_date_display_range($variables) {
  */
 function ug_theme_node_view_alter(&$build) {
   $node = $build['#node'];
-  // When viewing a FAQ node, add the FAQ page into the breadcrumb.
-  if($build['#view_mode'] == "full" && $node->type == "faq") {
-    drupal_set_breadcrumb(array(l(t('Home'), NULL), l(t('FAQ'), 'faq')));
+  // Set custom breadcrumb.
+  if($build['#view_mode'] == "full" && node_is_page($node)) {
+    $breadcrumb = drupal_get_breadcrumb();
+    switch ($node->type) {
+      case "faq":
+        $breadcrumb[] = l(t('FAQ'), 'faq');
+        break;
+      case "event":
+        $breadcrumb[] = l(t('Events'), 'events');
+        break;
+      case "news":
+        $breadcrumb[] = l(t('News'), 'news');
+        break;
+      case "service":
+        $breadcrumb[] = l(t('Services'), 'services');
+        break;
+    }
+    drupal_set_breadcrumb($breadcrumb);
   }
 }
 
