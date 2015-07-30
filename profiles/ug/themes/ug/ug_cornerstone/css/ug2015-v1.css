@@ -3,8 +3,12 @@ UG Theme v1.0
 Live Date: June 23, 2015
 ***********************/
 
+/******************
+ Headers
+*****************/
+
 	/*---------------------
-	Header
+	Page Header
 	-----------------------**/
 
 		/*--- Theming ---*/
@@ -27,6 +31,10 @@ Live Date: June 23, 2015
         #navbar.navbar-inverse a.navbar-brand:hover {
             color: #999999;
         }
+
+/******************
+ Navigation
+*****************/
 
 	/*---------------------
 	Navigation - Global
@@ -135,6 +143,10 @@ Live Date: June 23, 2015
 	    	border-bottom-color: #999999;
 	    }
 
+/******************
+ Footers
+*****************/
+
 	/*---------------------
 	Footer - Local
 	---------------------**/
@@ -211,8 +223,15 @@ Live Date: June 23, 2015
 	        color: #FFFFFF;
 	    }
 
+/******************
+ Sidebars
+*****************/
+
 	/*---------------------
-	Sidebars
+	Includes:
+
+	- panels - 4 col or less on small/medium
+	- blocks in asides
 	---------------------**/
 
 	    /*--- Theming ---*/
@@ -237,6 +256,23 @@ Live Date: June 23, 2015
             margin: 0 0 1.5em 0;
 		}
 
+/**********************
+ Panel Regions
+**********************/
+
+	/*---------------------
+	Bottom
+	---------------------**/
+
+	    /*--- Theming ---*/
+
+	    /* [DISABLED] - Make bottom pane titles same font-size as sidebar pane-titles */
+
+	    /*.panel-panel.bottom .pane-title {*/
+	    	/*font-size: 1.286em;*/ /* 18px */
+	    	/*font-weight: 400;
+	    }*/
+
 
 /******************
  Media
@@ -258,9 +294,17 @@ Live Date: June 23, 2015
 	---------------------**/
 
         /*--- Theming ---*/
-        .detail-page .main-container p {
+        .detail-page .main-container p,
+        .detail-page .main-container li {
             color: #666666;
             font-size: 1.143em; /* 16px */
             line-height: 150%;
+        }
+
+        .detail-page .main-container p {
             margin: 0 0 1.5em 0;
+        }
+
+        .detail-page .main-container li {
+            margin: 0 0 .857em 0;
         }
