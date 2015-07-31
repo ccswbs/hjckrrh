@@ -194,6 +194,10 @@ Base Styles
       padding-right: 30px;
     }
 
+    .main-container .menu li {
+      margin-bottom: 0;
+    }
+
     /*--- Theming ---*/
 
     .main-container .menu li a { 
