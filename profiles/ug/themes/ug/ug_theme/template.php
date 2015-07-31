@@ -366,9 +366,6 @@ function ug_theme_node_view_alter(&$build) {
       case "news":
         $breadcrumb[] = l(t('News'), 'news');
         break;
-      case "service":
-        $breadcrumb[] = l(t('Services'), 'services');
-        break;
     }
     drupal_set_breadcrumb($breadcrumb);
   }
