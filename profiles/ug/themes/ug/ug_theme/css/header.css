@@ -8,7 +8,7 @@
 
         /*--- Layout ---*/
 
-        .navbar-brand {
+        #navbar .navbar-brand {
             width: 75%;
         }
 
