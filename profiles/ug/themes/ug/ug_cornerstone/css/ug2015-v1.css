@@ -67,6 +67,25 @@ Live Date: June 23, 2015
 	    	margin-right:0;
 	    }
 
+
+		/* [ENABLED] - Fix display issues when going past 768px width after opening toggle in narrow view */
+		@media all and (min-width: 768px){
+			#ug-header .in .navbar-small>li>a, 
+			#ug-header .collapsing .navbar-small>li>a {
+				font-size: .857em;
+				padding: 5px 10px;
+			}
+
+			#ug-header .dropdown-menu, 
+			#ug-header footer.navbar-default, 
+			#ug-header nav.navbar div.in, 
+			#ug-header nav.navbar div.collapsing, 
+			#ug-header nav.navbar div.in form, 
+			#ug-header nav.navbar div.collapsing form {
+				background-color: inherit;
+			}
+		}
+
 	    /*--- Theming ---*/
 
 	    /* Dropdowns - FOCUS/HOVER */
