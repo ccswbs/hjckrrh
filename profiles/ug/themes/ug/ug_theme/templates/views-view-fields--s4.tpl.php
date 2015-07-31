@@ -5,7 +5,8 @@
  *
  * Available variables:
  * - $title: title of news article
- * - $network: social network this account belongs to
+ * - $network_key: key of social network this account belongs to
+ * - $network_name: name of social network this account belongs to
  * - $link: link to social media page
  * - $icon: icon for social media network
  *
@@ -37,7 +38,7 @@
   </div>  
   <div class="media-body media-middle">
     <p class="media-heading">
-      <?php print $title; ?>
+      <span class="element-invisible"><?php print $network_name; ?> - </span><?php print $title; ?>
     </p>
   </div>
 </li>
