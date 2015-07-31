@@ -37,6 +37,19 @@ Live Date: June 23, 2015
 *****************/
 
 	/*---------------------
+	Navigation - Global Toggle
+	-----------------------**/
+
+	#ug-header .navbar-default .navbar-toggle .icon-bar {
+		background-color: #888888;
+	}
+
+	#ug-header .navbar-default .navbar-toggle:focus,
+	#ug-header .navbar-default .navbar-toggle:hover {
+		background-color: #DDDDDD;
+	}
+
+	/*---------------------
 	Navigation - Global
 	---------------------**/
 
@@ -142,6 +155,27 @@ Live Date: June 23, 2015
 	    	border-top-color: #999999;
 	    	border-bottom-color: #999999;
 	    }
+
+	/*---------------------
+	Navigation - Local Toggle
+	-----------------------**/
+
+		#navbar.navbar-inverse .navbar-toggle .glyphicon {
+			color: #FFFFFF;
+			width: 22px;
+		}
+
+		#navbar .navbar-header .navbar-toggle {
+			border-color: #444444;
+		}
+
+        /*--- Layout ---*/
+
+        #navbar .navbar-header .navbar-toggle {
+            position: absolute;
+            top: 5px;
+            right: 15px;
+        }
 
 /******************
  Footers
