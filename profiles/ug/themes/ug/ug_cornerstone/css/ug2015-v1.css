@@ -309,6 +309,11 @@ Live Date: June 23, 2015
             font-size: inherit;
         }
 
+        .detail-page .main-container ol.breadcrumb li,
+        .detail-page .main-container ul.breadcrumb li{
+            margin-bottom: 0;
+            font-size: inherit;
+        }
 
         /*--- Layout ---*/
 
