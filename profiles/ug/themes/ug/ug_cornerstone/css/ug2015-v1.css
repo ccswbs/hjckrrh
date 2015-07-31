@@ -296,11 +296,21 @@ Live Date: June 23, 2015
         /*--- Theming ---*/
         .detail-page .main-container p,
         .detail-page .main-container ul:not(.menu) li,
+        .detail-page .main-container ol:not(.menu) li,
         .detail-page .main-container table {
             color: #666666;
             font-size: 1.143em; /* 16px */
             line-height: 150%;
         }
+
+        .detail-page .main-container table p,
+        .detail-page .main-container table ul:not(.menu) li,
+        .detail-page .main-container table ol:not(.menu) li {
+            font-size: inherit;
+        }
+
+
+        /*--- Layout ---*/
 
         .detail-page .main-container p {
             margin: 0 0 1.5em 0;
