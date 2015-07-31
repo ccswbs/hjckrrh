@@ -158,10 +158,10 @@ Live Date: June 23, 2015
 			margin-top: 0;
 		}
 
-		/* List styling in footer */
-		#ug-footer-local .footer ul {
+		/* [DISABLED] List styling in footer - use list-unstyled class instead */
+		/*#ug-footer-local .footer ul {
 			padding-left: 0;
-		}
+		}*/
 
 		#ug-footer-local .footer ul:not(.menu) li {
 			margin-bottom: 10px;
@@ -187,10 +187,10 @@ Live Date: June 23, 2015
 			background: #45403A;
 		}
 
-		/* List styling in footer */
-		#ug-footer-local .footer ul:not(.menu) li {
+		/* [DISABLED] List styling in footer - use list-unstyled class instead */
+		/*#ug-footer-local .footer ul:not(.menu) li {
 			list-style-type: none;
-		}
+		}*/
 
 		/* Menu styling in footer */
 		#ug-footer-local .footer .nav>li {
@@ -309,3 +309,7 @@ Live Date: June 23, 2015
         .detail-page .main-container li {
             margin: 0 0 .643em 0;
         }
+
+	    .detail-page .main-container .menu li {
+	      margin-bottom: 0;
+	    }

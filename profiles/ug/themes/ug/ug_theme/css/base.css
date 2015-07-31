@@ -77,13 +77,15 @@ Base Styles
    border-bottom: 1px solid;
   }
 
-  ul.list-inline li a{
-    border-bottom: 0;
-  }
-
   p a:focus, p a:hover, li a:focus, li a:hover {
    text-decoration: none; 
    border-bottom: 2px solid; 
+  }
+
+  /*--- Inline link lists ---*/
+
+  ul.list-inline li a{
+    border-bottom: 0;
   }
 
   /*--- Links styled as buttons ---*/
@@ -92,8 +94,19 @@ Base Styles
     border-bottom: 1px solid;
   }
 
+  /*--- Remove line from list links ---*/
+  ul.no-link-lines li a {
+    text-decoration: none;
+    border-bottom: 0;
+  }
 
-  /*--- Exceptions ---*/
+  ul.no-link-lines li a:focus,
+  ul.no-link-lines li a:hover {
+    text-decoration: none;
+    border-bottom: 1px solid;
+  }
+
+  /*--- Exceptions ---*/  
   nav li a, .navbar a, .menu a, a.active, .nav a {
       text-decoration: none;
       border-bottom: 0;
