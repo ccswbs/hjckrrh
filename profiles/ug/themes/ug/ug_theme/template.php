@@ -200,7 +200,7 @@ function ug_theme_preprocess_views_view_fields__s3(&$vars) {
 function ug_theme_preprocess_views_view_fields__s4(&$vars) {
   $title = $vars['fields']['title']->content;
   $link  = $vars['fields']['field_social_link']->content;
-  $vars['title'] = l($title, $link);
+  $vars['title'] = l($title, $link, array('html' => TRUE));
   $vars['network_key'] = $vars['fields']['field_social_network']->content;
   $vars['network_name'] = $vars['fields']['field_social_network_1']->content;
   $vars['link'] = $vars['fields']['field_social_link']->content;
