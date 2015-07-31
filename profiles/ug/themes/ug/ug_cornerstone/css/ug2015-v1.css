@@ -76,37 +76,31 @@ Live Date: June 23, 2015
 				padding: 5px 10px;
 			}
 
-			#ug-header .dropdown-menu, 
+			/*#ug-header .dropdown-menu, 
 			#ug-header footer.navbar-default, 
 			#ug-header nav.navbar div.in, 
 			#ug-header nav.navbar div.collapsing, 
 			#ug-header nav.navbar div.in form, 
 			#ug-header nav.navbar div.collapsing form {
 				background-color: inherit;
-			}
+			}*/
 		}
 
 	    /*--- Theming ---*/
+/*
+		#globalnav>li>a:focus,
+		#globalnav>li>a:hover {
+			background: #333333;
+		}*/
 
-	    /* Dropdowns - FOCUS/HOVER */
-		#ug-header .dropdown-menu>li>a:hover,
-		#ug-header .dropdown-menu>li>a:focus {
-			background: #000000;
-		}
-
-		/* Dropdowns - Set caret to white */
-	    #ug-navbar .navbar-nav .dropdown a .caret{
-	        border-bottom-color: #FFFFFF;
-	        border-top-color: #FFFFFF;
-	    }
-
-	    /* Dropdowns - Force OUTLINE on FOCUS */
-		#globalnav li.dropdown>a:nth-child(1):focus:after{
-			outline: thin dotted;
-		}
-
+		/* Red Nav (Top Level) - FOCUS/HOVER styling */
 		@media all and (min-width: 768px){
-			/* Red Nav (Top Level) - FOCUS/HOVER styling */
+
+			/*#globalnav>li>a:focus,
+			#globalnav>li>a:hover {
+				background: inherit;
+			}
+*/
 		    #globalnav>li>a:nth-child(1):focus:after,
 		    #globalnav>li>a:nth-child(1):hover:after {
 		    	background: #b30100;
@@ -126,6 +120,23 @@ Live Date: June 23, 2015
 				text-shadow: none !important;
 			}
 		}
+
+	    /* Dropdowns - FOCUS/HOVER */
+		#ug-header .dropdown-menu>li>a:hover,
+		#ug-header .dropdown-menu>li>a:focus {
+			background: #000000;
+		}
+
+	    /* Dropdowns - Force OUTLINE on FOCUS */
+		#globalnav li.dropdown>a:nth-child(1):focus:after{
+			outline: thin dotted;
+		}
+
+		/* Dropdowns - Set caret to white */
+	    #ug-navbar .navbar-nav .dropdown a .caret{
+	        border-bottom-color: #FFFFFF;
+	        border-top-color: #FFFFFF;
+	    }
 
 	/*---------------------
 	Navigation - Global - Small Widgets
