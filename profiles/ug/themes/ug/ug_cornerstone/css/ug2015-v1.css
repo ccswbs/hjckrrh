@@ -68,7 +68,7 @@ Live Date: June 23, 2015
 	    }
 
 
-		/* [ENABLED] - Fix display issues when going past 768px width after opening toggle in narrow view */
+		/* [DISABLED - still buggy] - Fix display issues when going past 768px width after opening toggle in narrow view
 		@media all and (min-width: 768px){
 			#ug-header .in .navbar-small>li>a, 
 			#ug-header .collapsing .navbar-small>li>a {
@@ -76,31 +76,20 @@ Live Date: June 23, 2015
 				padding: 5px 10px;
 			}
 
-			/*#ug-header .dropdown-menu, 
-			#ug-header footer.navbar-default, 
+			/*#ug-header footer.navbar-default, 
 			#ug-header nav.navbar div.in, 
 			#ug-header nav.navbar div.collapsing, 
 			#ug-header nav.navbar div.in form, 
 			#ug-header nav.navbar div.collapsing form {
-				background-color: inherit;
+				background: inherit;
 			}*/
 		}
 
 	    /*--- Theming ---*/
-/*
-		#globalnav>li>a:focus,
-		#globalnav>li>a:hover {
-			background: #333333;
-		}*/
 
 		/* Red Nav (Top Level) - FOCUS/HOVER styling */
 		@media all and (min-width: 768px){
 
-			/*#globalnav>li>a:focus,
-			#globalnav>li>a:hover {
-				background: inherit;
-			}
-*/
 		    #globalnav>li>a:nth-child(1):focus:after,
 		    #globalnav>li>a:nth-child(1):hover:after {
 		    	background: #b30100;
