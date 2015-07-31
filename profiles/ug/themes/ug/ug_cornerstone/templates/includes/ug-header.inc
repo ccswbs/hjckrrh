@@ -91,7 +91,7 @@
           </li> -->
 
           <!-- <li><a href="/campus/">Community</a></li> -->
-          <li><a href="/international/">International</a></li>
+          <li><a href="//www.uoguelph.ca/international/">International</a></li>
           <li><a href="//www.uoguelph.ca/president/">President</a></li>
 
           <!-- <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Leadership <span class="caret"></span></a>
@@ -107,7 +107,7 @@
             </ul>
           </li> -->
 
-          <li><a href="/research/">Research</a></li>
+          <li><a href="//www.uoguelph.ca/research/">Research</a></li>
           <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Services <span class="caret"></span></a>
             <ul class="dropdown-menu navbar-default" role="menu">
 	              <li><a href="http://gryphons.ca/">Athletics</a></li>
