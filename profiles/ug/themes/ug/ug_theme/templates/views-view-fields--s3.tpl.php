@@ -5,8 +5,10 @@
  *
  * Available variables:
  * - $title: title of news article
- * - $network: social network this account belongs to
+ * - $network_key: key for social network this account belongs to
+ * - $network_name: name of social network this account belongs to
  * - $link: link to social media page
+ * - $icon: social network icon
  *
  * Other variables:
  * - $view: The view in use.
@@ -34,7 +36,7 @@
      title="<?php print $title; ?>">
     <?php print $icon; ?>
     <span class="element-invisible">
-      <?php print $title; ?>
+      <?php print $network_name; ?> - <?php print $title; ?>
     </span>
   </a>
 </li>

@@ -186,10 +186,11 @@ function ug_theme_preprocess_views_view_fields__s1(&$vars) {
  * S3 - Find us on Social Media icons
  */
 function ug_theme_preprocess_views_view_fields__s3(&$vars) {
-  $vars['title']    = $vars['fields']['title']->content;
-  $vars['network']  = $vars['fields']['field_social_network']->content;
-  $vars['link']     = $vars['fields']['field_social_link']->content;
-  $vars['icon']     = theme('icon', array('bundle' => 'fa', 'icon' => $vars['network']));
+  $vars['title']        = $vars['fields']['title']->content;
+  $vars['network_key']  = $vars['fields']['field_social_network']->content;
+  $vars['network_name'] = $vars['fields']['field_social_network_1']->content;
+  $vars['link']         = $vars['fields']['field_social_link']->content;
+  $vars['icon']         = theme('icon', array('bundle' => 'fa', 'icon' => $vars['network_key']));
 }
 
 
@@ -199,10 +200,11 @@ function ug_theme_preprocess_views_view_fields__s3(&$vars) {
 function ug_theme_preprocess_views_view_fields__s4(&$vars) {
   $title = $vars['fields']['title']->content;
   $link  = $vars['fields']['field_social_link']->content;
-  $vars['title']    = l($title, $link);
-  $vars['network']  = $vars['fields']['field_social_network']->content;
-  $vars['link']     = $vars['fields']['field_social_link']->content;
-  $vars['icon']     = theme('icon', array('bundle' => 'fa', 'icon' => $vars['network']));
+  $vars['title'] = l($title, $link);
+  $vars['network_key'] = $vars['fields']['field_social_network']->content;
+  $vars['network_name'] = $vars['fields']['field_social_network_1']->content;
+  $vars['link'] = $vars['fields']['field_social_link']->content;
+  $vars['icon'] = theme('icon', array('bundle' => 'fa', 'icon' => $vars['network_key']));
 }
 
 
