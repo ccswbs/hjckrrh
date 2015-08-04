@@ -57,18 +57,6 @@
         }
 
     /*---------------------
-    Navigation - Toggle
-    ---------------------**/
-
-        /*--- Layout ---*/
-
-        .navbar-header .navbar-toggle {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-        }
-
-    /*---------------------
     Navigation - Local
     ---------------------**/
 
@@ -137,10 +125,6 @@
         }
 
         /*--- Layout ---*/
-
-        .detail-page .main-container .breadcrumb li{
-            margin-bottom: 0;
-        }
 
         .search-and-breadcrumb {
             margin-bottom: 20px;

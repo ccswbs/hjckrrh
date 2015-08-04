@@ -32,9 +32,30 @@ Live Date: June 23, 2015
             color: #999999;
         }
 
+	/*---------------------
+	Logo
+	-----------------------**/
+
+    #ug-header .navbar-brand {
+        width: inherit;
+    }
+
 /******************
  Navigation
 *****************/
+
+	/*---------------------
+	Navigation - Global Toggle
+	-----------------------**/
+
+	#ug-header .navbar-default .navbar-toggle .icon-bar {
+		background-color: #888888;
+	}
+
+	#ug-header .navbar-default .navbar-toggle:focus,
+	#ug-header .navbar-default .navbar-toggle:hover {
+		background-color: #DDDDDD;
+	}
 
 	/*---------------------
 	Navigation - Global
@@ -46,44 +67,65 @@ Live Date: June 23, 2015
 	    	margin-right:0;
 	    }
 
+
+		/* [DISABLED - still buggy] - Fix display issues when going past 768px width after opening toggle in narrow view
+		@media all and (min-width: 768px){
+			#ug-header .in .navbar-small>li>a, 
+			#ug-header .collapsing .navbar-small>li>a {
+				font-size: .857em;
+				padding: 5px 10px;
+			}
+
+			/*#ug-header footer.navbar-default, 
+			#ug-header nav.navbar div.in, 
+			#ug-header nav.navbar div.collapsing, 
+			#ug-header nav.navbar div.in form, 
+			#ug-header nav.navbar div.collapsing form {
+				background: inherit;
+			}*/
+		}
+
 	    /*--- Theming ---*/
 
-	    /* Add focus styling (in addition to hover) */
+		/* Red Nav (Top Level) - FOCUS/HOVER styling */
+		@media all and (min-width: 768px){
+
+		    #globalnav>li>a:nth-child(1):focus:after,
+		    #globalnav>li>a:nth-child(1):hover:after {
+		    	background: #b30100;
+		    	bottom: 4px;
+		    	content:"";
+		    	display: block;
+		    	height: 36px;
+		    	left: 0;
+		    	padding: 10px 15px;
+		    	position:absolute;
+		    	width: 100%;
+		    	z-index: -10;
+		    }
+
+		    /* Remove red text-shadow glow when tabbing through open dropdown menu */
+			#ug-header #globalnav li.dropdown.open a {
+				text-shadow: none !important;
+			}
+		}
+
+	    /* Dropdowns - FOCUS/HOVER */
 		#ug-header .dropdown-menu>li>a:hover,
 		#ug-header .dropdown-menu>li>a:focus {
 			background: #000000;
 		}
 
-		/* Set caret to white */
-	    #ug-navbar .navbar-nav .dropdown a .caret{
-	        border-bottom-color: #FFFFFF;
-	        border-top-color: #FFFFFF;
-	    }
-
-	    /* Force outline for dropdowns */
+	    /* Dropdowns - Force OUTLINE on FOCUS */
 		#globalnav li.dropdown>a:nth-child(1):focus:after{
 			outline: thin dotted;
 		}
 
-		/* Focus/Hover styling for homepage menu */
-	    #globalnav>li>a:nth-child(1):focus:after,
-	    #globalnav>li>a:nth-child(1):hover:after {
-	    	background: #b30100;
-	    	bottom: 4px;
-	    	content:"";
-	    	display: block;
-	    	height: 36px;
-	    	left: 0;
-	    	padding: 10px 15px;
-	    	position:absolute;
-	    	width: 100%;
-	    	z-index: -10;
+		/* Dropdowns - Set caret to white */
+	    #ug-navbar .navbar-nav .dropdown a .caret{
+	        border-bottom-color: #FFFFFF;
+	        border-top-color: #FFFFFF;
 	    }
-
-	    /* Remove red text-shadow glow when tabbing through open dropdown menu */
-		#ug-header #globalnav li.dropdown.open a {
-			text-shadow: none !important;
-		}
 
 	/*---------------------
 	Navigation - Global - Small Widgets
@@ -95,10 +137,12 @@ Live Date: June 23, 2015
 	        font-size: .857em;
 	    }
 
-	    #ug-header .navbar-small li a:focus,
-	    #ug-header .navbar-small li a:hover {
-	    	background: #990100;
+	    @media all and (min-width: 768px){
+		    #ug-header .navbar-small li a:focus,
+		    #ug-header .navbar-small li a:hover {
+		    	background: #990100;
 
+		    }
 	    }
 
 	/*---------------------
@@ -142,6 +186,27 @@ Live Date: June 23, 2015
 	    	border-top-color: #999999;
 	    	border-bottom-color: #999999;
 	    }
+
+	/*---------------------
+	Navigation - Local Toggle
+	-----------------------**/
+
+		#navbar.navbar-inverse .navbar-toggle .glyphicon {
+			color: #FFFFFF;
+			width: 22px;
+		}
+
+		#navbar .navbar-header .navbar-toggle {
+			border-color: #444444;
+		}
+
+        /*--- Layout ---*/
+
+        #navbar .navbar-header .navbar-toggle {
+            position: absolute;
+            top: 5px;
+            right: 15px;
+        }
 
 /******************
  Footers
@@ -295,12 +360,27 @@ Live Date: June 23, 2015
 
         /*--- Theming ---*/
         .detail-page .main-container p,
-        .detail-page .main-container li,
+        .detail-page .main-container ul:not(.menu) li,
+        .detail-page .main-container ol:not(.menu) li,
         .detail-page .main-container table {
             color: #666666;
             font-size: 1.143em; /* 16px */
             line-height: 150%;
         }
+
+        .detail-page .main-container table p,
+        .detail-page .main-container table ul:not(.menu) li,
+        .detail-page .main-container table ol:not(.menu) li {
+            font-size: inherit;
+        }
+
+        .detail-page .main-container ol.breadcrumb li,
+        .detail-page .main-container ul.breadcrumb li{
+            margin-bottom: 0;
+            font-size: inherit;
+        }
+
+        /*--- Layout ---*/
 
         .detail-page .main-container p {
             margin: 0 0 1.5em 0;
