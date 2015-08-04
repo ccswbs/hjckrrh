@@ -14,7 +14,7 @@
           <li><a href="//www.lib.uoguelph.ca"><span class="glyphicon glyphicon-book fa-fw" aria-hidden="true"></span> Library</a></li>
           <li><a href="//www.uoguelph.ca/campus/map/"><span class="glyphicon glyphicon-road fa-fw" aria-hidden="true"></span> Maps</a></li>
       <li><a href="//webadvisor.uoguelph.ca/"><span class="glyphicon glyphicon-list-alt fa-fw" aria-hidden="true"></span> WebAdvisor</a></li>
-          <li><a href="http://weather.gc.ca/city/pages/on-5_metric_e.html"><span class="glyphicon glyphicon-cloud fa-fw" aria-hidden="true"></span>  <div id="weatherFeed"></div></a></li>
+          <li><a href="http://weather.gc.ca/city/pages/on-5_metric_e.html"><span class="glyphicon glyphicon-cloud fa-fw" aria-hidden="true"></span> <span class="sr-only">Guelph </span>Weather</a></li>
 
         </ul>
 
