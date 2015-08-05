@@ -197,6 +197,15 @@ Teaser Lists
 
 
     /*---------------------
+    Vertical Spacing (View Rows)
+    ---------------------**/
+
+        .detail-page .panel-panel .panel-pane .views-row  {
+            margin-bottom: 2em;
+        }
+
+
+    /*---------------------
     File Attachments
     ---------------------**/
 
