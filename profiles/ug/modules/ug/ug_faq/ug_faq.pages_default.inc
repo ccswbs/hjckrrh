@@ -194,11 +194,11 @@ function ug_faq_default_page_manager_pages() {
   $handler = new stdClass();
   $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
   $handler->api_version = 1;
-  $handler->name = 'page_faq__panel_context_0713fb5d-c16e-4e21-95ed-7ca4c8093473';
+  $handler->name = 'page_faq__panel_context_cf043979-c421-4a07-9258-40e91ea651da';
   $handler->task = 'page';
   $handler->subtask = 'faq';
   $handler->handler = 'panel_context';
-  $handler->weight = 0;
+  $handler->weight = 1;
   $handler->conf = array(
     'title' => 'Panel',
     'no_blocks' => 0,
@@ -211,33 +211,39 @@ function ug_faq_default_page_manager_pages() {
     'relationships' => array(),
   );
   $display = new panels_display();
-  $display->layout = 'bootstrap_twocol_stacked';
+  $display->layout = 'bootstrap_threecol_stacked';
   $display->layout_settings = array();
   $display->panel_settings = array(
     'style_settings' => array(
       'default' => NULL,
       'top' => array(
-        'column_type' => 'col-lg',
+        'column_type' => 'col-sm',
         'column_size' => '12',
-        'offset_type' => 'col-lg-offset',
+        'offset_type' => 'col-sm-offset',
         'offset_size' => '0',
       ),
       'left' => array(
         'column_type' => 'col-sm',
-        'column_size' => '8',
-        'offset_type' => 'col-lg-offset',
+        'column_size' => '0',
+        'offset_type' => 'col-sm-offset',
         'offset_size' => '0',
       ),
       'right' => array(
         'column_type' => 'col-sm',
-        'column_size' => '4',
-        'offset_type' => 'col-lg-offset',
-        'offset_size' => '0',
+        'column_size' => '3',
+        'offset_type' => 'col-sm-offset',
+        'offset_size' => '1',
       ),
       'bottom' => array(
-        'column_type' => 'col-lg',
+        'column_type' => 'col-sm',
         'column_size' => '12',
-        'offset_type' => 'col-lg-offset',
+        'offset_type' => 'col-sm-offset',
+        'offset_size' => '0',
+      ),
+      'middle' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '8',
+        'offset_type' => 'col-sm-offset',
         'offset_size' => '0',
       ),
     ),
@@ -253,6 +259,9 @@ function ug_faq_default_page_manager_pages() {
     'bottom' => array(
       'style' => 'bootstrap_region',
     ),
+    'middle' => array(
+      'style' => 'bootstrap_region',
+    ),
   );
   $display->cache = array();
   $display->title = '';
@@ -261,7 +270,7 @@ function ug_faq_default_page_manager_pages() {
   $display->panels = array();
     $pane = new stdClass();
     $pane->pid = 'new-d0294c34-5bf1-4089-b3d3-5119b803afb1';
-    $pane->panel = 'left';
+    $pane->panel = 'middle';
     $pane->type = 'views_panes';
     $pane->subtype = 'f1-panel_pane_1';
     $pane->shown = TRUE;
@@ -284,10 +293,10 @@ function ug_faq_default_page_manager_pages() {
     $pane->locks = array();
     $pane->uuid = 'd0294c34-5bf1-4089-b3d3-5119b803afb1';
     $display->content['new-d0294c34-5bf1-4089-b3d3-5119b803afb1'] = $pane;
-    $display->panels['left'][0] = 'new-d0294c34-5bf1-4089-b3d3-5119b803afb1';
+    $display->panels['middle'][0] = 'new-d0294c34-5bf1-4089-b3d3-5119b803afb1';
     $pane = new stdClass();
     $pane->pid = 'new-49c6ceb5-97dc-42e3-8f9b-3a21b7b9ec06';
-    $pane->panel = 'left';
+    $pane->panel = 'middle';
     $pane->type = 'views_panes';
     $pane->subtype = 'f2-panel_pane_1';
     $pane->shown = TRUE;
@@ -310,7 +319,7 @@ function ug_faq_default_page_manager_pages() {
     $pane->locks = array();
     $pane->uuid = '49c6ceb5-97dc-42e3-8f9b-3a21b7b9ec06';
     $display->content['new-49c6ceb5-97dc-42e3-8f9b-3a21b7b9ec06'] = $pane;
-    $display->panels['left'][1] = 'new-49c6ceb5-97dc-42e3-8f9b-3a21b7b9ec06';
+    $display->panels['middle'][1] = 'new-49c6ceb5-97dc-42e3-8f9b-3a21b7b9ec06';
     $pane = new stdClass();
     $pane->pid = 'new-4c4655c5-8b45-421e-b392-792418d92d95';
     $pane->panel = 'right';
@@ -392,11 +401,11 @@ function ug_faq_default_page_manager_pages() {
   $handler = new stdClass();
   $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
   $handler->api_version = 1;
-  $handler->name = 'page_faq_category__panel_context_5c7e987c-1b7d-4064-b6da-7df97fe5b475';
+  $handler->name = 'page_faq_category__panel_context_6cdacd7b-2695-4291-92d8-da7ad5a53ffe';
   $handler->task = 'page';
   $handler->subtask = 'faq_category';
   $handler->handler = 'panel_context';
-  $handler->weight = 0;
+  $handler->weight = 1;
   $handler->conf = array(
     'title' => 'Panel',
     'no_blocks' => 0,
@@ -409,33 +418,39 @@ function ug_faq_default_page_manager_pages() {
     'relationships' => array(),
   );
   $display = new panels_display();
-  $display->layout = 'bootstrap_twocol_stacked';
+  $display->layout = 'bootstrap_threecol_stacked';
   $display->layout_settings = array();
   $display->panel_settings = array(
     'style_settings' => array(
       'default' => NULL,
       'top' => array(
-        'column_type' => 'col-lg',
+        'column_type' => 'col-sm',
         'column_size' => '12',
-        'offset_type' => 'col-lg-offset',
+        'offset_type' => 'col-sm-offset',
         'offset_size' => '0',
       ),
       'left' => array(
-        'column_type' => 'col-lg',
-        'column_size' => '8',
-        'offset_type' => 'col-lg-offset',
+        'column_type' => 'col-sm',
+        'column_size' => '0',
+        'offset_type' => 'col-sm-offset',
         'offset_size' => '0',
       ),
       'right' => array(
         'column_type' => 'col-sm',
-        'column_size' => '4',
-        'offset_type' => 'col-lg-offset',
-        'offset_size' => '0',
+        'column_size' => '3',
+        'offset_type' => 'col-sm-offset',
+        'offset_size' => '1',
       ),
       'bottom' => array(
-        'column_type' => 'col-lg',
+        'column_type' => 'col-sm',
         'column_size' => '12',
-        'offset_type' => 'col-lg-offset',
+        'offset_type' => 'col-sm-offset',
+        'offset_size' => '0',
+      ),
+      'middle' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '8',
+        'offset_type' => 'col-sm-offset',
         'offset_size' => '0',
       ),
     ),
@@ -451,6 +466,9 @@ function ug_faq_default_page_manager_pages() {
     'bottom' => array(
       'style' => 'bootstrap_region',
     ),
+    'middle' => array(
+      'style' => 'bootstrap_region',
+    ),
   );
   $display->cache = array();
   $display->title = '';
@@ -459,7 +477,7 @@ function ug_faq_default_page_manager_pages() {
   $display->panels = array();
     $pane = new stdClass();
     $pane->pid = 'new-1f56d272-85e8-4c84-bea2-861a57033b22';
-    $pane->panel = 'left';
+    $pane->panel = 'middle';
     $pane->type = 'views_panes';
     $pane->subtype = 'f1-panel_pane_2';
     $pane->shown = TRUE;
@@ -475,10 +493,10 @@ function ug_faq_default_page_manager_pages() {
     $pane->locks = array();
     $pane->uuid = '1f56d272-85e8-4c84-bea2-861a57033b22';
     $display->content['new-1f56d272-85e8-4c84-bea2-861a57033b22'] = $pane;
-    $display->panels['left'][0] = 'new-1f56d272-85e8-4c84-bea2-861a57033b22';
+    $display->panels['middle'][0] = 'new-1f56d272-85e8-4c84-bea2-861a57033b22';
     $pane = new stdClass();
     $pane->pid = 'new-93902679-525c-429a-bc28-876a81d75e4f';
-    $pane->panel = 'left';
+    $pane->panel = 'middle';
     $pane->type = 'views_panes';
     $pane->subtype = 'f2-panel_pane_2';
     $pane->shown = TRUE;
@@ -494,7 +512,7 @@ function ug_faq_default_page_manager_pages() {
     $pane->locks = array();
     $pane->uuid = '93902679-525c-429a-bc28-876a81d75e4f';
     $display->content['new-93902679-525c-429a-bc28-876a81d75e4f'] = $pane;
-    $display->panels['left'][1] = 'new-93902679-525c-429a-bc28-876a81d75e4f';
+    $display->panels['middle'][1] = 'new-93902679-525c-429a-bc28-876a81d75e4f';
     $pane = new stdClass();
     $pane->pid = 'new-66f0888c-8815-4e17-b572-40a6d572773f';
     $pane->panel = 'right';
