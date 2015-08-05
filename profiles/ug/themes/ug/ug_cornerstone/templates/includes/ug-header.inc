@@ -43,7 +43,7 @@
           <div class="input-group">
             <input class="form-control search1" placeholder="Search U of G" name="q" type="text" size="20" maxlength="256" id="searchtext">
             <span class="input-group-btn">
-            <button class="btn btn-default" id="searchsubmit" type="submit" name="submit" value="search" onclick="javascript: this.form.elements['commonname'].value = this.form.elements['q'].value; this.form.elements['vl(freeText0)'].value = this.form.elements['q'].value;"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+            <button class="btn btn-default" id="searchsubmit" type="submit" name="submit" value="search" onclick="javascript: this.form.elements['commonname'].value = this.form.elements['q'].value; this.form.elements['vl(freeText0)'].value = this.form.elements['q'].value;"><span class="glyphicon glyphicon-search" aria-hidden="true"></span><span class="sr-only">Search</span></button>
             </span> </div>
         </form>
 
