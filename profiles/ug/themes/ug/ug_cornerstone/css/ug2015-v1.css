@@ -363,7 +363,8 @@ Live Date: June 23, 2015
         .detail-page .main-container p,
         .detail-page .main-container ul:not(.menu) li,
         .detail-page .main-container ol:not(.menu) li,
-        .detail-page .main-container table {
+        .detail-page .main-container table,
+        .detail-page .main-container dl {
             color: #666666;
             font-size: 1.143em; /* 16px */
             line-height: 150%;
@@ -371,13 +372,10 @@ Live Date: June 23, 2015
 
         .detail-page .main-container table p,
         .detail-page .main-container table ul:not(.menu) li,
-        .detail-page .main-container table ol:not(.menu) li {
-            font-size: inherit;
-        }
-
+        .detail-page .main-container table ol:not(.menu) li,
+        .detail-page .main-container dl p,
         .detail-page .main-container ol.breadcrumb li,
-        .detail-page .main-container ul.breadcrumb li{
-            margin-bottom: 0;
+        .detail-page .main-container ul.breadcrumb li {
             font-size: inherit;
         }
 
@@ -387,10 +385,16 @@ Live Date: June 23, 2015
             margin: 0 0 1.5em 0;
         }
 
+        .detail-page .main-container p:last-child {
+        	margin-bottom: 0;
+        }
+
         .detail-page .main-container li {
             margin: 0 0 .643em 0;
         }
 
-	    .detail-page .main-container .menu li {
-	      margin-bottom: 0;
-	    }
+		.detail-page .main-container .menu li,
+        .detail-page .main-container ol.breadcrumb li,
+        .detail-page .main-container ul.breadcrumb li{
+        	margin-bottom: 0;
+        }
