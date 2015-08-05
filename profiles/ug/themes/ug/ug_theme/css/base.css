@@ -129,8 +129,14 @@ Base Styles
   /*---------------------
   Lists
   ---------------------**/
-  dd{
-      margin-bottom: 15px;
+
+  dt {
+     padding: 1.5em 0 1em 0;
+  }
+
+  dd {
+    padding-bottom: 1.5em;
+    border-bottom: 1px solid #EFEFEF;
   }
 
   /*---------------------
