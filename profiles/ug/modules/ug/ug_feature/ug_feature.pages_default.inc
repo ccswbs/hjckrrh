@@ -29,11 +29,11 @@ function ug_feature_default_page_manager_pages() {
   $handler = new stdClass();
   $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
   $handler->api_version = 1;
-  $handler->name = 'page_features__panel_context_ddcb4e7e-9264-4346-a2c4-129403949256';
+  $handler->name = 'page_features__panel_context_9a6dccff-22ef-4d28-8ca0-3b99949d5b6a';
   $handler->task = 'page';
   $handler->subtask = 'features';
   $handler->handler = 'panel_context';
-  $handler->weight = 0;
+  $handler->weight = 1;
   $handler->conf = array(
     'title' => 'Panel',
     'no_blocks' => 0,
@@ -53,16 +53,48 @@ function ug_feature_default_page_manager_pages() {
       'middle' => array(
         'column_type' => 'col-sm',
         'column_size' => '8',
-        'offset_type' => 'col-lg-offset',
+        'offset_type' => 'col-sm-offset',
         'offset_size' => '0',
       ),
       'default' => NULL,
-      'top' => NULL,
-      'left' => NULL,
-      'right' => NULL,
-      'bottom' => NULL,
+      'top' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '12',
+        'offset_type' => 'col-sm-offset',
+        'offset_size' => '0',
+      ),
+      'left' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '0',
+        'offset_type' => 'col-sm-offset',
+        'offset_size' => '0',
+      ),
+      'right' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '3',
+        'offset_type' => 'col-sm-offset',
+        'offset_size' => '1',
+      ),
+      'bottom' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '12',
+        'offset_type' => 'col-sm-offset',
+        'offset_size' => '0',
+      ),
     ),
     'middle' => array(
+      'style' => 'bootstrap_region',
+    ),
+    'top' => array(
+      'style' => 'bootstrap_region',
+    ),
+    'left' => array(
+      'style' => 'bootstrap_region',
+    ),
+    'right' => array(
+      'style' => 'bootstrap_region',
+    ),
+    'bottom' => array(
       'style' => 'bootstrap_region',
     ),
   );
