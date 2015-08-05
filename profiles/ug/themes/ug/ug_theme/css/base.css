@@ -130,8 +130,16 @@ Base Styles
   Lists
   ---------------------**/
 
+  dl {
+    margin-top: 0;
+  }
+
   dt {
      padding: 1.5em 0 1em 0;
+  }
+
+  dt:first-child {
+    padding-top: 0;
   }
 
   dd {
