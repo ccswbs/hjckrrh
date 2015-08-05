@@ -114,5 +114,5 @@
     /* Add margin-bottom (20px) after all panel panes */
     .panel-panel .panel-pane,
     .panel-panel .panel-pane .views-row {
-      margin-bottom: 20px;
+      margin-bottom: 2em;
     }
