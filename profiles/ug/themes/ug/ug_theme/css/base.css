@@ -472,3 +472,11 @@ Base Styles
       border-color: #9B1E16;
     }
 
+  /*---------------------
+  Pagination
+  ---------------------**/
+    .pagination>.disabled>span, 
+    .pagination>.disabled>span:hover, 
+    .pagination>.disabled>span:focus {
+      color: #666666;
+    }
