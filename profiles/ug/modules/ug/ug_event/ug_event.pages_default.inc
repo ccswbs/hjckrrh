@@ -481,11 +481,11 @@ function ug_event_default_page_manager_pages() {
   $handler = new stdClass();
   $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
   $handler->api_version = 1;
-  $handler->name = 'page_event_week_list__panel_context_5d2802dd-66b2-4971-8d8e-525c7683e13d';
+  $handler->name = 'page_event_week_list__panel_context_988be4f8-6478-4554-b36d-69260face346';
   $handler->task = 'page';
   $handler->subtask = 'event_week_list';
   $handler->handler = 'panel_context';
-  $handler->weight = 0;
+  $handler->weight = 2;
   $handler->conf = array(
     'title' => 'Panel',
     'no_blocks' => 0,
@@ -503,18 +503,50 @@ function ug_event_default_page_manager_pages() {
   $display->panel_settings = array(
     'style_settings' => array(
       'default' => NULL,
-      'top' => NULL,
-      'left' => NULL,
-      'middle' => array(
-        'column_type' => 'col-lg',
+      'top' => array(
+        'column_type' => 'col-sm',
         'column_size' => '12',
-        'offset_type' => 'col-lg-offset',
+        'offset_type' => 'col-sm-offset',
         'offset_size' => '0',
       ),
-      'right' => NULL,
-      'bottom' => NULL,
+      'left' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '0',
+        'offset_type' => 'col-sm-offset',
+        'offset_size' => '0',
+      ),
+      'middle' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '12',
+        'offset_type' => 'col-sm-offset',
+        'offset_size' => '0',
+      ),
+      'right' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '0',
+        'offset_type' => 'col-sm-offset',
+        'offset_size' => '0',
+      ),
+      'bottom' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '12',
+        'offset_type' => 'col-sm-offset',
+        'offset_size' => '0',
+      ),
     ),
     'middle' => array(
+      'style' => 'bootstrap_region',
+    ),
+    'top' => array(
+      'style' => 'bootstrap_region',
+    ),
+    'left' => array(
+      'style' => 'bootstrap_region',
+    ),
+    'right' => array(
+      'style' => 'bootstrap_region',
+    ),
+    'bottom' => array(
       'style' => 'bootstrap_region',
     ),
   );
@@ -604,11 +636,11 @@ function ug_event_default_page_manager_pages() {
   $handler = new stdClass();
   $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
   $handler->api_version = 1;
-  $handler->name = 'page_events__panel_context_e04e5a91-fd0c-4a59-a29c-622261beafc5';
+  $handler->name = 'page_events__panel_context_47721aee-618f-4a1c-9e64-15809545a438';
   $handler->task = 'page';
   $handler->subtask = 'events';
   $handler->handler = 'panel_context';
-  $handler->weight = 0;
+  $handler->weight = 1;
   $handler->conf = array(
     'title' => 'Panel',
     'no_blocks' => 0,
@@ -621,30 +653,55 @@ function ug_event_default_page_manager_pages() {
     'relationships' => array(),
   );
   $display = new panels_display();
-  $display->layout = 'bootstrap_twocol_stacked';
+  $display->layout = 'bootstrap_threecol_stacked';
   $display->layout_settings = array();
   $display->panel_settings = array(
     'style_settings' => array(
       'default' => NULL,
-      'top' => NULL,
+      'top' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '12',
+        'offset_type' => 'col-sm-offset',
+        'offset_size' => '0',
+      ),
       'left' => array(
         'column_type' => 'col-sm',
-        'column_size' => '8',
-        'offset_type' => 'col-lg-offset',
+        'column_size' => '0',
+        'offset_type' => 'col-sm-offset',
         'offset_size' => '0',
       ),
       'right' => array(
         'column_type' => 'col-sm',
-        'column_size' => '4',
+        'column_size' => '3',
         'offset_type' => 'col-lg-offset',
+        'offset_size' => '1',
+      ),
+      'bottom' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '12',
+        'offset_type' => 'col-sm-offset',
         'offset_size' => '0',
       ),
-      'bottom' => NULL,
+      'middle' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '8',
+        'offset_type' => 'col-sm-offset',
+        'offset_size' => '0',
+      ),
     ),
     'left' => array(
       'style' => 'bootstrap_region',
     ),
     'right' => array(
+      'style' => 'bootstrap_region',
+    ),
+    'top' => array(
+      'style' => 'bootstrap_region',
+    ),
+    'middle' => array(
+      'style' => 'bootstrap_region',
+    ),
+    'bottom' => array(
       'style' => 'bootstrap_region',
     ),
   );
@@ -655,7 +712,7 @@ function ug_event_default_page_manager_pages() {
   $display->panels = array();
     $pane = new stdClass();
     $pane->pid = 'new-7275a56e-cb3c-4c10-8e82-99e3db828217';
-    $pane->panel = 'left';
+    $pane->panel = 'middle';
     $pane->type = 'views_panes';
     $pane->subtype = 'e1-panel_pane_1';
     $pane->shown = TRUE;
@@ -671,7 +728,30 @@ function ug_event_default_page_manager_pages() {
     $pane->locks = array();
     $pane->uuid = '7275a56e-cb3c-4c10-8e82-99e3db828217';
     $display->content['new-7275a56e-cb3c-4c10-8e82-99e3db828217'] = $pane;
-    $display->panels['left'][0] = 'new-7275a56e-cb3c-4c10-8e82-99e3db828217';
+    $display->panels['middle'][0] = 'new-7275a56e-cb3c-4c10-8e82-99e3db828217';
+    $pane = new stdClass();
+    $pane->pid = 'new-e71b1aab-c9fd-4cd6-b0b0-95626b05a29c';
+    $pane->panel = 'right';
+    $pane->type = 'views_panes';
+    $pane->subtype = 'e5-panel_pane_1';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 0,
+      'override_title_text' => '',
+      'override_title_heading' => 'h2',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = 'e71b1aab-c9fd-4cd6-b0b0-95626b05a29c';
+    $display->content['new-e71b1aab-c9fd-4cd6-b0b0-95626b05a29c'] = $pane;
+    $display->panels['right'][0] = 'new-e71b1aab-c9fd-4cd6-b0b0-95626b05a29c';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
@@ -955,11 +1035,11 @@ function ug_event_default_page_manager_pages() {
   $handler = new stdClass();
   $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
   $handler->api_version = 1;
-  $handler->name = 'page_events_past__panel_context_739576bd-e6d3-4ec1-acef-67fc02be3275';
+  $handler->name = 'page_events_past__panel_context_dacd44c5-4185-4bb1-bc7c-c24cca1b3ee4';
   $handler->task = 'page';
   $handler->subtask = 'events_past';
   $handler->handler = 'panel_context';
-  $handler->weight = 0;
+  $handler->weight = 1;
   $handler->conf = array(
     'title' => 'Panel',
     'no_blocks' => 0,
@@ -976,22 +1056,55 @@ function ug_event_default_page_manager_pages() {
     ),
   );
   $display = new panels_display();
-  $display->layout = 'bootstrap_twocol_stacked';
+  $display->layout = 'bootstrap_threecol_stacked';
   $display->layout_settings = array();
   $display->panel_settings = array(
     'style_settings' => array(
       'default' => NULL,
-      'top' => NULL,
-      'left' => array(
+      'top' => array(
         'column_type' => 'col-sm',
-        'column_size' => '8',
-        'offset_type' => 'col-lg-offset',
+        'column_size' => '12',
+        'offset_type' => 'col-sm-offset',
         'offset_size' => '0',
       ),
-      'right' => NULL,
-      'bottom' => NULL,
+      'left' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '0',
+        'offset_type' => 'col-sm-offset',
+        'offset_size' => '0',
+      ),
+      'right' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '3',
+        'offset_type' => 'col-sm-offset',
+        'offset_size' => '1',
+      ),
+      'bottom' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '12',
+        'offset_type' => 'col-sm-offset',
+        'offset_size' => '0',
+      ),
+      'middle' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '8',
+        'offset_type' => 'col-sm-offset',
+        'offset_size' => '0',
+      ),
     ),
     'left' => array(
+      'style' => 'bootstrap_region',
+    ),
+    'top' => array(
+      'style' => 'bootstrap_region',
+    ),
+    'middle' => array(
+      'style' => 'bootstrap_region',
+    ),
+    'right' => array(
+      'style' => 'bootstrap_region',
+    ),
+    'bottom' => array(
       'style' => 'bootstrap_region',
     ),
   );
@@ -1002,7 +1115,7 @@ function ug_event_default_page_manager_pages() {
   $display->panels = array();
     $pane = new stdClass();
     $pane->pid = 'new-996a5287-d5bf-4139-8ce1-1973b0ddadd2';
-    $pane->panel = 'left';
+    $pane->panel = 'middle';
     $pane->type = 'views_panes';
     $pane->subtype = 'e1-panel_pane_2';
     $pane->shown = TRUE;
@@ -1018,7 +1131,30 @@ function ug_event_default_page_manager_pages() {
     $pane->locks = array();
     $pane->uuid = '996a5287-d5bf-4139-8ce1-1973b0ddadd2';
     $display->content['new-996a5287-d5bf-4139-8ce1-1973b0ddadd2'] = $pane;
-    $display->panels['left'][0] = 'new-996a5287-d5bf-4139-8ce1-1973b0ddadd2';
+    $display->panels['middle'][0] = 'new-996a5287-d5bf-4139-8ce1-1973b0ddadd2';
+    $pane = new stdClass();
+    $pane->pid = 'new-d999c1d5-3298-4f20-bda2-c671ce5b0c28';
+    $pane->panel = 'right';
+    $pane->type = 'views_panes';
+    $pane->subtype = 'e5-panel_pane_1';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 0,
+      'override_title_text' => '',
+      'override_title_heading' => 'h2',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = 'd999c1d5-3298-4f20-bda2-c671ce5b0c28';
+    $display->content['new-d999c1d5-3298-4f20-bda2-c671ce5b0c28'] = $pane;
+    $display->panels['right'][0] = 'new-d999c1d5-3298-4f20-bda2-c671ce5b0c28';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = 'new-996a5287-d5bf-4139-8ce1-1973b0ddadd2';
   $handler->conf['display'] = $display;
