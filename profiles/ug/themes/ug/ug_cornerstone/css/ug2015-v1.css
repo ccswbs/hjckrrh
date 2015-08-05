@@ -133,11 +133,12 @@ Live Date: June 23, 2015
 
 	    /*--- Theming ---*/
 
-	    #ug-header .navbar-small {
-	        font-size: .857em;
-	    }
-
 	    @media all and (min-width: 768px){
+			#ug-header .navbar-small {
+				font-size: .857em;
+		        padding: 0;
+			}
+
 		    #ug-header .navbar-small li a:focus,
 		    #ug-header .navbar-small li a:hover {
 		    	background: #990100;
