@@ -49,7 +49,7 @@
 
         <ul id="globalnav" class="nav navbar-nav navbar-right nav-clear">
 
-          <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Academics <span class="caret"></span></a>
+          <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="sr-only">University of Guelph </span>Academics <span class="caret"></span></a>
             <ul class="dropdown-menu navbar-default dropdown-menu-left" role="menu">
               <li><a href="//www.uoguelph.ca/admissions/">Undergraduate Admissions</a></li>
               <li><a href="//www.uoguelph.ca/graduatestudies/">Graduate Studies</a></li>
@@ -69,7 +69,7 @@
             </ul>
           </li>
 
-          <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">About <span class="caret"></span></a>
+          <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">About <span class="sr-only">the University of Guelph</span><span class="caret"></span></a>
             <ul class="dropdown-menu navbar-default dropdown-menu-left" role="menu">
               <li><a href="//www.uoguelph.ca/about.html">About the University</a></li>
                           <li class="divider"></li>
@@ -107,8 +107,8 @@
             </ul>
           </li> -->
 
-          <li><a href="//www.uoguelph.ca/research/">Research</a></li>
-          <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Services <span class="caret"></span></a>
+          <li><a href="//www.uoguelph.ca/research/"><span class="sr-only">University of Guelph </span>Research</a></li>
+          <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="sr-only">University of Guelph </span>Services <span class="caret"></span></a>
             <ul class="dropdown-menu navbar-default" role="menu">
 	              <li><a href="http://gryphons.ca/">Athletics</a></li>
               <li><a href="//www.bookstore.uoguelph.ca">Bookstore</a></li>
