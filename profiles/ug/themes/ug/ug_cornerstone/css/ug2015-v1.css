@@ -360,7 +360,7 @@ Live Date: June 23, 2015
 
 	/*
 	*  - Middle (Bootstrap) section should contain main content
-	*  - For sites that are still using Left and Right, add styles to col-sm-8 as fallback
+	*  - Temporary: For sites that are still using Left and Right, add styles to col-sm-8 as fallback
 	*/
 
         /*--- Theming ---*/
