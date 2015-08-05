@@ -23,7 +23,7 @@ function ug_faq_default_page_manager_handlers() {
     'no_blocks' => 0,
     'pipeline' => 'standard',
     'body_classes_to_remove' => '',
-    'body_classes_to_add' => '',
+    'body_classes_to_add' => 'detail-page',
     'css_id' => '',
     'css' => '',
     'contexts' => array(),
@@ -471,7 +471,7 @@ function ug_faq_default_page_manager_pages() {
     ),
   );
   $display->cache = array();
-  $display->title = '';
+  $display->title = '%category:name';
   $display->uuid = 'da7c3324-cb38-431c-a92d-699e7fe619e6';
   $display->content = array();
   $display->panels = array();
@@ -482,7 +482,11 @@ function ug_faq_default_page_manager_pages() {
     $pane->subtype = 'f1-panel_pane_2';
     $pane->shown = TRUE;
     $pane->access = array();
-    $pane->configuration = array();
+    $pane->configuration = array(
+      'override_title' => 1,
+      'override_title_text' => '',
+      'override_title_heading' => 'h2',
+    );
     $pane->cache = array();
     $pane->style = array(
       'settings' => NULL,
@@ -536,7 +540,7 @@ function ug_faq_default_page_manager_pages() {
     $pane->uuid = '66f0888c-8815-4e17-b572-40a6d572773f';
     $display->content['new-66f0888c-8815-4e17-b572-40a6d572773f'] = $pane;
     $display->panels['right'][0] = 'new-66f0888c-8815-4e17-b572-40a6d572773f';
-  $display->hide_title = PANELS_TITLE_PANE;
+  $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
   $page->default_handlers[$handler->name] = $handler;
