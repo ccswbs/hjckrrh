@@ -407,12 +407,16 @@ Live Date: June 23, 2015
         	margin-bottom: 0;
         }
 
-        .detail-page .main-container li {
+        .detail-page .main-container .middle li,
+        .detail-page .main-container .col-sm-8 li {
             margin: 0 0 .643em 0;
         }
 
-		.detail-page .main-container .menu li,
-        .detail-page .main-container ol.breadcrumb li,
-        .detail-page .main-container ul.breadcrumb li{
+		.detail-page .main-container .middle .menu li,
+		.detail-page .main-container .col-sm-8 .menu li,
+        .detail-page .main-container .middle ol.breadcrumb li,
+        .detail-page .main-container .col-sm-8 ol.breadcrumb li,
+        .detail-page .main-container .middle ul.breadcrumb li,
+        .detail-page .main-container .col-sm-8 ul.breadcrumb li{
         	margin-bottom: 0;
         }
