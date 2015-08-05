@@ -378,5 +378,11 @@ function ug_theme_node_view_alter(&$build) {
 function ug_theme_preprocess_node (&$variables) {
   // Hide read more link.
   unset($variables['content']['links']['node']['#links']['node-readmore']);
+
+  // if taxonomy page, use taxonomy node template
+  $path_args = explode('/', current_path());
+  if($path_args[0] == 'taxonomy') {
+    array_push($variables['theme_hook_suggestions'], 'node__taxonomy');
+  }
 }
 
