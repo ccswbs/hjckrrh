@@ -216,27 +216,34 @@ Live Date: June 23, 2015
  Local Navigation
 *****************/
 
-	    /*--- Layout ---*/
-		#navbar.navbar-inverse .container .navbar-collapse {
-			margin-right: 15px;
-		}
-
+    /*--- Layout ---*/
+	#navbar.navbar-inverse .container .navbar-collapse {
+		margin-right: 15px;
+	}
 
 	/*---------------------
 	Local Menu Tabs
 	---------------------**/
 
-		/** Default menu item **/
-	    #navbar.navbar-inverse .navbar-nav>li>a{ color: #F5F5F5; }
+		/** Menu Tab - White (Almost) by default) */
+	    #navbar.navbar-inverse .navbar-nav>li>a { 
+	    	color: #F5F5F5; 
+	    }
+
+		/* Menu Tab - Light Grey on hover focus */
+	    #navbar.navbar-inverse .navbar-nav>li>a:focus,
+	    #navbar.navbar-inverse .navbar-nav>li>a:hover { 
+	    	color: #999999; 
+	    }
+
+		/* Carets - White (Almost) by default */
 	    #navbar.navbar-inverse .navbar-nav>li>a .caret,
 	    #navbar.navbar-inverse .navbar-nav>li>a .caret {
 	    	border-top-color: #F5F5F5;
 	    	border-bottom-color: #F5F5F5;
 	    }
 
-		/** Default menu item - hover focus **/
-	    #navbar.navbar-inverse .navbar-nav>li>a:focus,
-	    #navbar.navbar-inverse .navbar-nav>li>a:hover { color: #999999; }
+	    /* Carets - Light Grey on focus/hover */
 	    #navbar.navbar-inverse .navbar-nav>li>a:focus .caret,
 	    #navbar.navbar-inverse .navbar-nav>li>a:hover .caret {
 	    	border-top-color: #999999;
@@ -248,18 +255,52 @@ Live Date: June 23, 2015
 	---------------------**/
 	    /*--- Theming ---*/
 
-	    /** Dropdown menu item - active hover/focus **/
-	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>.active>a,
-	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>.active>a:hover,
-	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>.active>a:focus {
-	      background: #333333;
-	      color: #FFFFFF;
+		/** Dropdown Menu Items **/
+	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu li a {
+	    	color: #F5F5F5;
 	    }
 
-		/** Dropdown menu item - hover/focus **/
-	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>li>a:hover, 
-	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>li>a:focus {
-	    	background: #E4E4E4;
+		/** Dropdown Menu Items - Narrow/Black - HOVER/FOCUS **/
+	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>li>a:focus, 
+	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>li>a:hover {
+	    	color: #999999;
+	    }	    
+
+		/** Active Dropdown Menu Item - Narrow/Black **/
+	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>.active>a,
+	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>.active>a:focus,
+	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>.active>a:hover {
+	    	background: #181818;
+	    	color: #F5F5F5;
+	    }
+
+		/** Active Dropdown Menu Item - force outline on focus **/
+	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>.active>a:focus {
+	    	outline: thin dotted;
+	    }
+
+
+		@media all and (min-width: 768px){
+
+			/** Dropdown Menu - Wide/White **/
+			#navbar.navbar-inverse .navbar-nav>li>.dropdown-menu li a {
+				color: inherit;
+			}
+
+			/** Dropdown Menu Items - Wide/White - HOVER/FOCUS **/
+		    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>li>a:focus, 
+		    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>li>a:hover {
+		    	background: #E4E4E4;
+		    	color: inherit;
+		    }	   
+
+		    /** Active Dropdown Menu Item - Wide/White **/
+		    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>.active>a,
+		    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>.active>a:focus,
+		    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>.active>a:hover {
+		      background: #333333;
+		      color: #FFFFFF;
+		    }
 	    }
 
 	/*---------------------
