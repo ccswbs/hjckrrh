@@ -34,7 +34,7 @@ Base Styles
 
   /* Bootstrap removes margins from the 'last' paragraph, but Drupal
    * often wraps paragraphs in extra divs and such. */
-  p:last-child { margin-bottom: 10px }
+  p:last-child { margin-bottom: 10px; }
 
   blockquote {
     font-size: 1.250em;
