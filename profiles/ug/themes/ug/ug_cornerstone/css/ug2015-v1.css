@@ -83,6 +83,10 @@ Live Date: June 23, 2015
 		background-color: #DDDDDD;
 	}
 
+	#ug-header .navbar-default .navbar-toggle:focus {
+		outline: thin dotted #FFFFFF;
+	}
+
 	/*---------------------
 	Global - Menu Tabs (Level 1)
 	---------------------**/
@@ -310,6 +314,11 @@ Live Date: June 23, 2015
 		#navbar.navbar-inverse .navbar-toggle .glyphicon {
 			color: #FFFFFF;
 			width: 22px;
+		}
+
+
+		#navbar .navbar-header .navbar-toggle:focus {
+			outline: thin dotted #FFFFFF;
 		}
 
 		#navbar .navbar-header .navbar-toggle {
