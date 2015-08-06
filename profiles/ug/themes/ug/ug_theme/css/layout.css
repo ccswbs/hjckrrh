@@ -59,7 +59,7 @@
     @media screen and (min-width: 768px) {
       /* This visible-xs-* classes are in Bootstrap 3.2.0+ */
       .visible-xs-inline{
-        display:none!important
+        display:none !important;
       }
     }
 
