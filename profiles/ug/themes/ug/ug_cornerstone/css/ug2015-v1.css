@@ -41,11 +41,37 @@ Live Date: June 23, 2015
     }
 
 /******************
- Navigation
+ Global Navigation
 *****************/
 
+    /*--- Theming ---*/
+
+	@media all and (min-width: 768px){
+		#globalnav.navbar-right {
+	    	margin-right:0;
+	    }
+	}
+
+	/* [DISABLED - still buggy] - Fix display issues */
+	/* Issue occurs past 768px width after opening toggle in narrow view */
+	/*@media all and (min-width: 768px){
+		#ug-header .in .navbar-small>li>a, 
+		#ug-header .collapsing .navbar-small>li>a {
+			font-size: .857em;
+			padding: 5px 10px;
+		}
+
+		#ug-header footer.navbar-default, 
+		#ug-header nav.navbar div.in, 
+		#ug-header nav.navbar div.collapsing, 
+		#ug-header nav.navbar div.in form, 
+		#ug-header nav.navbar div.collapsing form {
+			background: inherit;
+		}
+	}*/
+
 	/*---------------------
-	Navigation - Global Toggle
+	Global Toggle
 	-----------------------**/
 
 	#ug-header .navbar-default .navbar-toggle .icon-bar {
@@ -58,41 +84,34 @@ Live Date: June 23, 2015
 	}
 
 	/*---------------------
-	Navigation - Global
+	Global - Menu Tabs (Level 1)
 	---------------------**/
-
-	    /*--- Layout ---*/
-
-	    #globalnav.navbar-right {
-	    	margin-right:0;
-	    }
-
-
-		/* [DISABLED - still buggy] - Fix display issues when going past 768px width after opening toggle in narrow view
-		@media all and (min-width: 768px){
-			#ug-header .in .navbar-small>li>a, 
-			#ug-header .collapsing .navbar-small>li>a {
-				font-size: .857em;
-				padding: 5px 10px;
-			}
-
-			/*#ug-header footer.navbar-default, 
-			#ug-header nav.navbar div.in, 
-			#ug-header nav.navbar div.collapsing, 
-			#ug-header nav.navbar div.in form, 
-			#ug-header nav.navbar div.collapsing form {
-				background: inherit;
-			}
-		}*/
 
 	    /*--- Theming ---*/
 
-		/* Red Nav (Top Level) - FOCUS/HOVER styling */
+		/* FOCUS/HOVER */
+	    #ug-header #globalnav li a:focus,
+	    #ug-header #globalnav li a:hover{
+	    	background: #000000;
+	    }
+
+		/* OUTLINE on focus */
+	    #ug-header #globalnav li a:focus {
+	    	outline: thin dotted;
+	    }
+
+		/* Set caret to white */
+	    #ug-navbar .navbar-nav .dropdown a .caret{
+	        border-bottom-color: #FFFFFF;
+	        border-top-color: #FFFFFF;
+	    }
+
 		@media all and (min-width: 768px){
 
+			/* Menu Tabs CLOSED - FOCUS/HOVER styling (Wide) */
 		    #globalnav>li>a:nth-child(1):focus:after,
 		    #globalnav>li>a:nth-child(1):hover:after {
-		    	background: #b30100;
+		    	background: #B30100;
 		    	bottom: 4px;
 		    	content:"";
 		    	display: block;
@@ -104,39 +123,72 @@ Live Date: June 23, 2015
 		    	z-index: -10;
 		    }
 
-		    /* Remove red text-shadow glow when tabbing through open dropdown menu */
+			/* Menu Tabs CLOSED - Override background styling so focus/hover styling on :after shows */
+		    #ug-header #globalnav>li>a:focus,
+		    #ug-header #globalnav>li>a:hover{
+		    	background: transparent;
+		    }
+
+			/* Menu Tabs OPEN - Override background styling so grey colour shows */
+		    #ug-header #globalnav>li.dropdown.open>a {
+		    	background: #45403A;
+		    }
+
+		    /* Menu Tabs OPEN - Remove red text-shadow glow */
 			#ug-header #globalnav li.dropdown.open a {
 				text-shadow: none !important;
 			}
 		}
 
-	    /* Dropdowns - FOCUS/HOVER */
+	/*---------------------
+	Global - Dropdown Menus (Level 2)
+	---------------------**/
+
+		/* Darken background (#45403A) to differentiate between open dropdown menu */
+	    #ug-header #globalnav li.dropdown.open ul.dropdown-menu {
+	    	background: #302C28;
+	    }
+
+	    /* FOCUS/HOVER */
 		#ug-header .dropdown-menu>li>a:hover,
 		#ug-header .dropdown-menu>li>a:focus {
 			background: #000000;
 		}
 
-	    /* Dropdowns - Force OUTLINE on FOCUS */
-		#globalnav li.dropdown>a:nth-child(1):focus:after{
-			outline: thin dotted;
+		@media all and (min-width: 768px){
+			/* Revert background to #45403A on wide view */
+		    #ug-header #globalnav li.dropdown.open ul.dropdown-menu {
+		    	background: #45403A;
+		    }
 		}
 
-		/* Dropdowns - Set caret to white */
-	    #ug-navbar .navbar-nav .dropdown a .caret{
-	        border-bottom-color: #FFFFFF;
-	        border-top-color: #FFFFFF;
-	    }
-
 	/*---------------------
-	Navigation - Global - Small Widgets
+	Global - Small Widgets
 	---------------------**/
 
 	    /*--- Theming ---*/
 
+	    #ug-header .navbar-small,
+	    #ug-header .navbar-small li {
+	    	padding: 0;
+	    }
+
+
+		#ug-header .in .navbar-small>li>a, 
+		#ug-header .collapsing .navbar-small>li>a {
+			padding-left: 15px;
+			padding-right: 15px;
+		}
+
+	    #ug-header .navbar-small li a:focus,
+	    #ug-header .navbar-small li a:hover {
+	    	background: #000000;
+	    }
+
 	    @media all and (min-width: 768px){
+
 			#ug-header .navbar-small {
 				font-size: .857em;
-		        padding: 0;
 			}
 
 		    #ug-header .navbar-small li a:focus,
@@ -147,29 +199,32 @@ Live Date: June 23, 2015
 	    }
 
 	/*---------------------
-	Navigation - Local
+	Global Search
 	---------------------**/
+
+	#ug-header .navbar-form {
+		max-width: inherit;
+	}
+
+	@media all and (min-width: 768px){
+		#ug-header .navbar-form {
+			max-width: 239px;
+		}
+	}
+
+/******************
+ Local Navigation
+*****************/
 
 	    /*--- Layout ---*/
 		#navbar.navbar-inverse .container .navbar-collapse {
 			margin-right: 15px;
 		}
 
-	    /*--- Theming ---*/
 
-	    /** Dropdown menu item - active hover/focus **/
-	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>.active>a,
-	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>.active>a:hover,
-	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>.active>a:focus {
-	      background: #333333;
-	      color: #FFFFFF;
-	    }
-
-		/** Dropdown menu item - hover/focus **/
-	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>li>a:hover, 
-	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>li>a:focus {
-	    	background: #E4E4E4;
-	    }
+	/*---------------------
+	Local Menu Tabs
+	---------------------**/
 
 		/** Default menu item **/
 	    #navbar.navbar-inverse .navbar-nav>li>a{ color: #F5F5F5; }
@@ -189,7 +244,26 @@ Live Date: June 23, 2015
 	    }
 
 	/*---------------------
-	Navigation - Local Toggle
+	Local Dropdown Menu
+	---------------------**/
+	    /*--- Theming ---*/
+
+	    /** Dropdown menu item - active hover/focus **/
+	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>.active>a,
+	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>.active>a:hover,
+	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>.active>a:focus {
+	      background: #333333;
+	      color: #FFFFFF;
+	    }
+
+		/** Dropdown menu item - hover/focus **/
+	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>li>a:hover, 
+	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>li>a:focus {
+	    	background: #E4E4E4;
+	    }
+
+	/*---------------------
+	Local Toggle
 	-----------------------**/
 
 		#navbar.navbar-inverse .navbar-toggle .glyphicon {
