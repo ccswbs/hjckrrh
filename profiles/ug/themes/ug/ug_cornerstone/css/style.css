@@ -109,20 +109,21 @@
 }
 
 @media (min-width: 992px) {
-#ug-header .navbar-default .navbar-nav li a,
-#ug-header .navbar-default .navbar-nav .open .dropdown-menu>li>a,
-#ug-header .navbar-default .navbar-nav>li>a:hover,
-#ug-header .navbar-default .navbar-nav>li>a:focus {
-	text-shadow: 1px 1px 0 #a60, -1px -1px 0 #a60, 1px -1px 0 #a60, -1px 1px 0 #a60, 1px 1px 0 #a60;
-}
+	#ug-header .navbar-default .navbar-nav li a,
+	#ug-header .navbar-default .navbar-nav .open .dropdown-menu>li>a,
+	#ug-header .navbar-default .navbar-nav>li>a:hover,
+	#ug-header .navbar-default .navbar-nav>li>a:focus {
+		text-shadow: 1px 1px 0 #a60, -1px -1px 0 #a60, 1px -1px 0 #a60, -1px 1px 0 #a60, 1px 1px 0 #a60;
+	}
 
-#ug-header #globalnav li a,
-#ug-header #globalnav>li>a:hover { 
-	text-shadow: 1px 1px 0 #600, -1px -1px 0 #600, 1px -1px 0 #600, -1px 1px 0 #600, 1px 1px 0 #600 !important;
-}
+	#ug-header #globalnav li a,
+	#ug-header #globalnav>li>a:hover { 
+		text-shadow: 1px 1px 0 #600, -1px -1px 0 #600, 1px -1px 0 #600, -1px 1px 0 #600, 1px 1px 0 #600 !important;
+	}
 
-#ug-header #globalnav .open .dropdown-menu>li>a,
-#ug-header #globalnav>li>a:focus  {
-	text-shadow: 1px 1px 0 #333, -1px -1px 0 #333, 1px -1px 0 #333, -1px 1px 0 #333, 1px 1px 0 #333 !important;
+	#ug-header #globalnav .open .dropdown-menu>li>a,
+	#ug-header #globalnav>li>a:focus  {
+		text-shadow: 1px 1px 0 #333, -1px -1px 0 #333, 1px -1px 0 #333, -1px 1px 0 #333, 1px 1px 0 #333 !important;
+	}
 }
 
