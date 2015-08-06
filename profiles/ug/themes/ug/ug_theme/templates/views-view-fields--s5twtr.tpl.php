@@ -26,7 +26,7 @@
 <div class="media">
   <div class="media-left pull-left media-top">
     <div class="media-object">
-      <?php print $fields['profile_image_url']->content; ?>
+      <?php print str_replace('http:', '', $fields['profile_image_url']->content); ?>
     </div>
   </div>
   <div class="media-body">
