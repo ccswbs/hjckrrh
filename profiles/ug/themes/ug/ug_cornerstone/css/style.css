@@ -11,7 +11,7 @@
 	display: inline !important;
 }
 #ug-header {
-	background-image: url(http://www.uoguelph.ca/img/headerbg.jpg);
+	background-image: url(//www.uoguelph.ca/img/headerbg.jpg);
 	background-repeat: repeat-x;
 }
 #ug-header .navbar-toggle {

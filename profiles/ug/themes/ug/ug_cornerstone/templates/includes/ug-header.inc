@@ -4,7 +4,7 @@
     <div class="container-fluid">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#ug-navbar" aria-expanded="false" aria-controls="navbar"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-        <a class="navbar-brand" href="//www.uoguelph.ca/"><img alt="University of Guelph" src="http://www.uoguelph.ca/img/universityofguelph.gif"></a> </div>
+        <a class="navbar-brand" href="//www.uoguelph.ca/"><img alt="University of Guelph" src="//www.uoguelph.ca/img/universityofguelph.gif"></a> </div>
       <div id="ug-navbar" class="navbar-collapse collapse">
 
         <ul class="nav navbar-nav navbar-right navbar-small">
@@ -19,7 +19,7 @@
         </ul>
 
 
-        <form class="navbar-form navbar-right" role="form" id="searchbox_011117603928904778939:tp3ks5ha2dw" name="searchform" action="http://www.uoguelph.ca/search/">
+        <form class="navbar-form navbar-right" role="form" id="searchbox_011117603928904778939:tp3ks5ha2dw" name="searchform" action="//www.uoguelph.ca/search/">
           <input type="hidden" name="commonname" size="20" maxlength="256" class="search1" id="searchtext2">
           <input type="hidden" name="vl(freeText0)" size="20" maxlength="256" class="search1" id="searchtext3">
           <input type="hidden" name="cx" value="011117603928904778939:tp3ks5ha2dw">
