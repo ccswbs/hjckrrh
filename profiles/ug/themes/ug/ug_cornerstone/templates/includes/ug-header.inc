@@ -20,8 +20,8 @@
 
 
         <form class="navbar-form navbar-right" role="form" id="searchbox_011117603928904778939:tp3ks5ha2dw" name="searchform" action="//www.uoguelph.ca/search/">
-          <input type="hidden" name="commonname" size="20" maxlength="256" class="search1" id="searchtext2">
-          <input type="hidden" name="vl(freeText0)" size="20" maxlength="256" class="search1" id="searchtext3">
+          <input type="hidden" name="commonname" class="search1" id="searchtext2">
+          <input type="hidden" name="vl(freeText0)" class="search1" id="searchtext3">
           <input type="hidden" name="cx" value="011117603928904778939:tp3ks5ha2dw">
           <input type="hidden" name="cof" value="FORID:11">
           <input type="hidden" name="orgstatus" value="all">

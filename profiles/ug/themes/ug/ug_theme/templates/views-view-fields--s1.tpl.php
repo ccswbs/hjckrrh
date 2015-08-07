@@ -57,7 +57,7 @@
 <!-- LinkedIn -->
 <li>
   <a class="h1" data-toggle="tooltip" data-placement="bottom"
-    href="http://www.linkedin.com/shareArticle?mini=true&url=&title=&summary=<?php print $link; ?>"
+    href="http://www.linkedin.com/shareArticle?mini=true&amp;url=&amp;title=&amp;summary=<?php print $link; ?>"
     title="<?php print t('Share on LinkedIn'); ?>"
     ><span class="fa fa-linkedin-square"></span>
     <span class="element-invisible">
