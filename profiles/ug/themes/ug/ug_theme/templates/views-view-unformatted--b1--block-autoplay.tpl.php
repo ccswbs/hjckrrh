@@ -40,7 +40,7 @@
         </button>
       </div>
       <div class="col-sm-1 col-xs-6 slidesjs-pagination">
-        <div class="btn btn-block" disabled>
+        <div class="btn btn-block">
           <?php print t('Slide <span class="slidesjs-slide-number">@number</span> of @count',
                       array('@number' => $slide_number, '@count' => $slide_count)); ?>
         </div>
