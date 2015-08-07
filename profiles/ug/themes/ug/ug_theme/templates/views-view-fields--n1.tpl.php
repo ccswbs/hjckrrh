@@ -40,7 +40,7 @@
 <div class="col-md-<?php print empty($image)?12:8; ?>">
   <header class="media-header">
     <h2 class="media-heading"><a href="<?php print $link; ?>"><?php print $title; ?></a></h2>
-    <div class="media-meta"><time><?php print $created; ?></time></div>
+    <div class="media-meta"><time datetime="<?php echo date("Y-m-d\TH:i:s", strtotime($created)); ?>"><?php print $created; ?></time></div>
   </header>
   <div class="media-summary"><?php print $body; ?></div>
 </div>
