@@ -422,6 +422,7 @@ function ug_theme_menu_link(array $variables) {
       $element['#localized_options']['attributes']['data-target'] = '#';
       $element['#localized_options']['attributes']['class'][] = 'dropdown-toggle';
       $element['#localized_options']['attributes']['aria-haspopup'] = 'true';
+      $element['#localized_options']['attributes']['role'] = 'button';
       $element['#localized_options']['attributes']['data-toggle'] = 'dropdown';
     }
   }
