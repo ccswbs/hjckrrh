@@ -118,13 +118,12 @@ Base Styles
     border-bottom: 0;
   }
 
-  .more-link { margin-top: 15px; }
-
-
   /* temporary fix until media-heading is used across all listing views */
   h1 a, h2 a { text-decoration: none !important; }
   h1 a:focus, h1 a:hover,
   h2 a:focus, h2 a:hover { border-bottom: 2px solid !important;}
+
+  .more-link { margin-top: 15px; }
 
   /*---------------------
   Lists
@@ -493,4 +492,15 @@ Base Styles
     .pagination>.disabled>span:hover, 
     .pagination>.disabled>span:focus {
       color: #666666;
+    }
+
+    .pagination>.active>a, .pagination>.active>span, 
+    .pagination>.active>a:hover, .pagination>.active>span:hover, 
+    .pagination>.active>a:focus, .pagination>.active>span:focus{
+      background-color: #2F70A9;
+      border-color: #2F70A9;
+    }
+
+    .pagination>li>a:focus, .pagination>li>a:hover {
+      border: 1px solid #DDDDDD;
     }
