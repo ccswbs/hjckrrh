@@ -233,7 +233,8 @@ function bootstrap_js_alter(&$js) {
 
   // Add CDN.
   if (theme_get_setting('bootstrap_cdn')) {
-    $cdn = '//netdna.bootstrapcdn.com/bootstrap/' . theme_get_setting('bootstrap_cdn')  . '/js/bootstrap.min.js';
+    //$cdn = '//netdna.bootstrapcdn.com/bootstrap/' . theme_get_setting('bootstrap_cdn')  . '/js/bootstrap.min.js';
+    $cdn = '//netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js';
     $js[$cdn] = drupal_js_defaults();
     $js[$cdn]['data'] = $cdn;
     $js[$cdn]['type'] = 'external';
