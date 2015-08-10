@@ -29,4 +29,4 @@
  */
 ?>
 <time datetime="<?php echo date("Y-m-d\TH:i:s", strtotime($created)); ?>"><?php print $created; ?></time>
-<p class="media-heading"><?php print $title; ?></p>
+<p class="media-heading"><a href="<?php print $link; ?>"><?php print $title; ?></a></p>

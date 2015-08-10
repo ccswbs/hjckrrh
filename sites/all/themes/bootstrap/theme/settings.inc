@@ -423,6 +423,7 @@ function _bootstrap_settings_form(&$form, $form_state) {
       '3.0.0',
       '3.0.1',
       '3.0.2',
+      '3.3.5',
     )),
     '#default_value' => theme_get_setting('bootstrap_cdn'),
     '#empty_option' => t('Disabled'),

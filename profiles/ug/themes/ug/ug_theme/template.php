@@ -259,8 +259,15 @@ function ug_theme_preprocess_views_view_fields__n2(&$vars) {
 function ug_theme_preprocess_views_view_fields__n3(&$vars) {
   $nid = $vars['fields']['nid']->content;
   $link = $vars['fields']['field_news_link']->content;
-  $href = empty($link)? 'node/'.$nid: $link;
-  $vars['title']     = l($vars['fields']['title']->content, $href);
+  // $href = empty($link)? 'node/'.$nid: $link;
+  if (!empty($link)) {
+    $vars['link'] = $link;
+  } else {
+    $path = 'node/' . $nid;
+    $vars['link'] = url($path);
+  }
+  // $vars['title']     = l($vars['fields']['title']->content, $href);
+  $vars['title']     = $vars['fields']['title']->content;
   $vars['created']   = $vars['fields']['created']->content;
 }
 
