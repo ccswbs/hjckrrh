@@ -411,9 +411,11 @@ function ug_theme_menu_link(array $variables) {
     elseif ((!empty($element['#original_link']['depth'])) && ($element['#original_link']['depth'] == 1)) {
       // Add our own wrapper.
       unset($element['#below']['#theme_wrappers']);
-      $sub_menu = '<ul class="dropdown-menu">' . drupal_render($element['#below']) . '</ul>';
+      $sub_menu = '<ul class="dropdown-menu" role="menu">' . drupal_render($element['#below']) . '</ul>';
       // Generate as standard dropdown.
-      $element['#title'] .= ' <span class="caret"></span>';
+      // $element['#title'] .= ' <span class="caret"></span>';
+      $element['#title'] .= ' <span class="toggle-indicator sr-only">show menu </span><span class="caret"></span>';
+      // $element['#title'] = '<span class="toggle-indicator sr-only">Show </span>' . $element['#title'] . ' <span class="caret"></span>';
       $element['#attributes']['class'][] = 'dropdown';
       $element['#localized_options']['html'] = TRUE;
 
@@ -421,7 +423,7 @@ function ug_theme_menu_link(array $variables) {
       // when a submenu link is clicked.
       $element['#localized_options']['attributes']['data-target'] = '#';
       $element['#localized_options']['attributes']['class'][] = 'dropdown-toggle';
-      $element['#localized_options']['attributes']['aria-haspopup'] = 'true';
+      // $element['#localized_options']['attributes']['aria-haspopup'] = 'true';
       $element['#localized_options']['attributes']['aria-expanded'] = 'false';
       $element['#localized_options']['attributes']['role'] = 'button';
       $element['#localized_options']['attributes']['data-toggle'] = 'dropdown';
