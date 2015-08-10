@@ -13,7 +13,7 @@ Dropdown Menus
 		  var dropdown = $(event.target);
 		 
 		  // Set aria-expanded to true
-		  dropdown.find('.dropdown-menu').attr('aria-expanded', true);
+		  // dropdown.find('.dropdown-menu').attr('aria-expanded', true);
 		  dropdown.find('.dropdown-toggle .toggle-indicator').html('hide menu ');
 		 
 		  // Set focus on the first link in the dropdown
@@ -27,7 +27,7 @@ Dropdown Menus
 			 var dropdown = $(event.target);
 			 
 			 // Set aria-expanded to false 
-			 dropdown.find('.dropdown-menu').attr('aria-expanded', false);
+			 // dropdown.find('.dropdown-menu').attr('aria-expanded', false);
 			 dropdown.find('.dropdown-toggle .toggle-indicator').html('show menu ');
 			 
 			 // Set focus back to dropdown toggle
