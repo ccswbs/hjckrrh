@@ -490,6 +490,7 @@ function ug_event_views_default_views() {
   $handler->display->display_options['arguments']['field_event_date_value']['field'] = 'field_event_date_value';
   $handler->display->display_options['arguments']['field_event_date_value']['default_action'] = 'summary';
   $handler->display->display_options['arguments']['field_event_date_value']['default_argument_type'] = 'date';
+  $handler->display->display_options['arguments']['field_event_date_value']['summary']['sort_order'] = 'desc';
   $handler->display->display_options['arguments']['field_event_date_value']['summary']['number_of_records'] = '0';
   $handler->display->display_options['arguments']['field_event_date_value']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['field_event_date_value']['summary_options']['base_path'] = 'events/archive';
