@@ -459,6 +459,7 @@ function ug_event_views_default_views() {
 
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['title'] = 'Browse Events by Date';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -467,6 +468,8 @@ function ug_event_views_default_views() {
   $handler->display->display_options['pager']['type'] = 'none';
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['style_plugin'] = 'default';
+  $handler->display->display_options['style_options']['default_row_class'] = FALSE;
+  $handler->display->display_options['style_options']['row_class_special'] = FALSE;
   $handler->display->display_options['row_plugin'] = 'fields';
   /* Field: Content: Title */
   $handler->display->display_options['fields']['title']['id'] = 'title';
@@ -489,7 +492,10 @@ function ug_event_views_default_views() {
   $handler->display->display_options['arguments']['field_event_date_value']['summary']['number_of_records'] = '0';
   $handler->display->display_options['arguments']['field_event_date_value']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['field_event_date_value']['summary_options']['base_path'] = 'events/archive';
+  $handler->display->display_options['arguments']['field_event_date_value']['summary_options']['count'] = FALSE;
   $handler->display->display_options['arguments']['field_event_date_value']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['field_event_date_value']['title_format'] = 'custom';
+  $handler->display->display_options['arguments']['field_event_date_value']['title_format_custom'] = 'F Y';
   /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
