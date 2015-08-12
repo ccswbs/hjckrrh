@@ -438,3 +438,47 @@ function ug_theme_menu_link(array $variables) {
   return '<li' . drupal_attributes($element['#attributes']) . '>' . $output . $sub_menu . "</li>\n";
 }
 
+/**
+ * Theme the calendar title
+ */
+function ug_theme_date_nav_title($params) {
+  $granularity = $params['granularity'];
+  $view = $params['view'];
+  $date_info = $view->date_info;
+  $link = !empty($params['link']) ? $params['link'] : FALSE;
+  $format = !empty($params['format']) ? $params['format'] : NULL;
+  // added underscore to format_with_year and format_without_year (allows month format to show with August 2015)
+  $format_with_year = variable_get('date_views_' . $granularity . '_format_with_year', 'l, F j, Y');
+  $format_without_year = variable_get('date_views_' . $granularity . '_format_without_year', 'l, F j');
+  switch ($granularity) {
+    case 'year':
+      $title = $date_info->year;
+      $date_arg = $date_info->year;
+      break;
+    case 'month':
+      $format = !empty($format) ? $format : (empty($date_info->mini) ? $format_with_year : $format_without_year);
+      $title = date_format_date($date_info->min_date, 'custom', $format);
+      $date_arg = $date_info->year . '-' . date_pad($date_info->month);
+      break;
+    case 'day':
+      $format = !empty($format) ? $format : (empty($date_info->mini) ? $format_with_year : $format_without_year);
+      $title = date_format_date($date_info->min_date, 'custom', $format);
+      $date_arg = $date_info->year . '-' . date_pad($date_info->month) . '-' . date_pad($date_info->day);
+      break;
+    case 'week':
+      $format = !empty($format) ? $format : (empty($date_info->mini) ? $format_with_year : $format_without_year);
+      $title = t('Week of @date', array('@date' => date_format_date($date_info->min_date, 'custom', $format)));
+      $date_arg = $date_info->year . '-W' . date_pad($date_info->week);
+      break;
+  }
+  if (!empty($date_info->mini) || $link) {
+    // Month navigation titles are used as links in the mini view.
+    $attributes = array('title' => t('View full page month'));
+    $url = date_pager_url($view, $granularity, $date_arg, TRUE);
+    return l($title, $url, array('attributes' => $attributes));
+  }
+  else {
+    return $title;
+  }
+}
+
