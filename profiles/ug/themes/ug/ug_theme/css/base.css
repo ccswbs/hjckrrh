@@ -157,7 +157,7 @@ Base Styles
   figcaption {
       color: #666666;
       font-size: 1em; /* 14px */
-      font-style: italic;
+      /*font-style: italic;*/
       padding: 9px;
       text-align: center;
   }
