@@ -504,3 +504,25 @@ Base Styles
     .pagination>li>a:focus, .pagination>li>a:hover {
       border: 1px solid #DDDDDD;
     }
+
+  /*---------------------
+  Tabs - Secondary
+  ---------------------**/
+
+  .tabs--secondary.pagination-sm>li>a,
+  .tabs--secondary.pagination-sm>li>a>span {
+    font-size: 14px;
+  }
+
+  .tabs--secondary.pagination>.active>a, 
+  .tabs--secondary.pagination>.active>span, 
+  .tabs--secondary.pagination>.active>a:hover, 
+  .tabs--secondary.pagination>.active>span:hover, 
+  .tabs--secondary.pagination>.active>a:focus, 
+  .tabs--secondary.pagination>.active>span:focus {
+      background-color: #FFFFFF;
+      border-color: #DDDDDD;
+      color: #333333;
+  }
+
+

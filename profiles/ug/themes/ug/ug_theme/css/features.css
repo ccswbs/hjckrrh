@@ -180,3 +180,92 @@ BR - Banner
             color: #FFFFFF;
         }
 
+/*************************
+E - Events Grid/List View
+*************************/
+
+    /*---------------------
+    Previous/Next Buttons
+    ---------------------**/
+
+    /*--- Theming ---*/
+
+    .view .date-nav-wrapper .date-prev,
+    .view .date-nav-wrapper .date-next {
+        background: none;
+    }
+
+    .view .date-nav-wrapper .date-prev a,
+    .view .date-nav-wrapper .date-next a {
+        border-bottom: #DDDDDD 1px solid;
+        border-radius: 5px;
+        color: #2F70A9;
+        font-size: 14px;
+        font-weight: normal;
+        text-align: center;
+    }
+
+    .view .date-nav-wrapper .date-heading{
+        text-align: left;
+    }
+
+    /*--- Layout ---*/
+
+    .view .date-nav-wrapper .date-prev a,
+    .view .date-nav-wrapper .date-next a {
+        margin: 0;
+        width: 100%;
+    }
+
+    .view .date-nav-wrapper .date-prev,
+    .view .date-nav-wrapper .date-next {
+        float:left;
+        position: relative;
+        max-width: 90px;
+    }
+
+    .view .date-nav-wrapper .date-prev{
+        left: 0;
+        margin-right: 5px;
+        right: auto;
+    }
+
+    /*---------------------------------
+    Previous/Next Buttons - Containers
+    ----------------------------------**/
+
+    .view .date-nav-wrapper .pager {
+        margin-top: 0;
+        padding-right: 0;
+    }
+
+    .view .date-nav-wrapper .date-nav {
+        margin-left: 0;
+    }
+
+    .view .date-nav-wrapper .pager .row {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    /* Date Heading */
+    .view .date-nav-wrapper .date-heading{
+        padding-left: 0;
+    }
+
+
+    @media all and (min-width: 768px){
+        .view .date-nav-wrapper .pager .row {
+            float:right;
+        }
+
+        /* Reinforce Bootstrap Grid */
+        .view .date-nav-wrapper .date-heading.col-sm-10 { width: 83.33333333333334%;}
+        .view .date-nav-wrapper .date-heading.col-sm-9 { width: 75%;}
+        .view .date-nav-wrapper .date-heading.col-sm-8 { width: 66.66666666666666%; }
+        .view .date-nav-wrapper .pager.col-sm-offset-1 { margin-left: 8.333333333333332%;}
+        .view .date-nav-wrapper .date-prev.col-xs-6,
+        .view .date-nav-wrapper .date-next.col-xs-6,
+        .view .date-nav-wrapper .date-prev.col-sm-6,
+        .view .date-nav-wrapper .date-next.col-sm-6 {width: 50%;}
+    }
