@@ -35,19 +35,23 @@
       <h2><?php print $nav_title ?></h2>
     </div>
 
-    <ul class="pager col-sm-3 col-sm-offset-1">
+    <div class="pager-wrapper col-sm-3 col-sm-offset-1">
       <div class="row">
-      <?php if (!empty($prev_url)) : ?>
-        <li class="date-prev col-xs-2">
-          <?php print l('&laquo;' . ($mini ? '' : ' ' . t('prev', array(), array('context' => 'date_nav'))), $prev_url, $prev_options); ?>
-        </li>
-      <?php endif; ?>
-      <?php if (!empty($next_url)) : ?>
-        <li class="date-next col-xs-2">
-          <?php print l(($mini ? '' : t('next', array(), array('context' => 'date_nav')) . ' ') . '&raquo;', $next_url, $next_options); ?>
-        </li>
-      <?php endif; ?>
+        <ul class="pager">
+  <!--    <div class="row"> -->
+        <?php if (!empty($prev_url)) : ?>
+          <li class="date-prev col-xs-2">
+            <?php print l('&laquo;' . ($mini ? '' : ' ' . t('prev', array(), array('context' => 'date_nav'))), $prev_url, $prev_options); ?>
+          </li>
+        <?php endif; ?>
+        <?php if (!empty($next_url)) : ?>
+          <li class="date-next col-xs-2">
+            <?php print l(($mini ? '' : t('next', array(), array('context' => 'date_nav')) . ' ') . '&raquo;', $next_url, $next_options); ?>
+          </li>
+        <?php endif; ?>
+        <!-- </div> -->
+        </ul>
       </div>
-    </ul>
+    </div>
   </div>
 </div>

@@ -231,41 +231,52 @@ E - Events Grid/List View
     }
 
     /*---------------------------------
-    Previous/Next Buttons - Containers
+    Previous/Next Buttons - Wrappers
     ----------------------------------**/
+
+    .view .date-nav-wrapper .date-nav {
+        margin-left: 0;
+    }
+
+    .view .date-nav-wrapper .pager-wrapper .row {
+        margin-left: 0;
+        margin-right: 0;
+    }
 
     .view .date-nav-wrapper .pager {
         margin-top: 0;
         padding-right: 0;
     }
 
-    .view .date-nav-wrapper .date-nav {
-        margin-left: 0;
-    }
+    /*---------------------------------
+    Date Heading
+    ----------------------------------**/
 
-    .view .date-nav-wrapper .pager .row {
-        margin-left: 0;
-        margin-right: 0;
-    }
-
-    /* Date Heading */
     .view .date-nav-wrapper .date-heading{
         padding-left: 0;
     }
 
 
     @media all and (min-width: 768px){
-        .view .date-nav-wrapper .pager .row {
+
+        /* Shift pager to the right on Wide views */
+        .view .date-nav-wrapper .pager-wrapper{
+            padding-right: 0;
+        }
+        
+        .view .date-nav-wrapper .pager-wrapper .row {
             float:right;
         }
 
-        /* Reinforce Bootstrap Grid */
+        /* Reinforce Bootstrap Grid - Date Heading */
         .view .date-nav-wrapper .date-heading.col-sm-10 { width: 83.33333333333334%;}
         .view .date-nav-wrapper .date-heading.col-sm-9 { width: 75%;}
         .view .date-nav-wrapper .date-heading.col-sm-8 { width: 66.66666666666666%; }
-        .view .date-nav-wrapper .pager.col-sm-offset-1 { margin-left: 8.333333333333332%;}
+
+        /* Reinforce Bootstrap Grid - Buttons */
         .view .date-nav-wrapper .date-prev.col-xs-6,
         .view .date-nav-wrapper .date-next.col-xs-6,
         .view .date-nav-wrapper .date-prev.col-sm-6,
         .view .date-nav-wrapper .date-next.col-sm-6 {width: 50%;}
+        .view .date-nav-wrapper .pager.col-sm-offset-1 { margin-left: 8.333333333333332%;}
     }
