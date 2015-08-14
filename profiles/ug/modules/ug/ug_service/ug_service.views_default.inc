@@ -15,14 +15,14 @@ function ug_service_views_default_views() {
   $view->description = 'Provides a comma-separated list of keyword tags';
   $view->tag = 'default';
   $view->base_table = 'taxonomy_term_data';
-  $view->human_name = 'SR9 - Service keywords';
+  $view->human_name = 'SR9 - Find related services by keyword';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
 
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
-  $handler->display->display_options['title'] = 'Find Related Services by Keyword';
+  $handler->display->display_options['title'] = 'Find related services by keyword';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['cache']['type'] = 'none';

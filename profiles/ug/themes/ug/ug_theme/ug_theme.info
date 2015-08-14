@@ -34,7 +34,7 @@ stylesheets[all][] = css/features.css
 ;; Scripts
 ;;;;;;;;;;;;;;;;;;;;;
 
-scripts[] = 'js/ug_scripts.js'
+; scripts[] = 'js/ug_scripts.js'
 
 ; For information on choosing the desired method, please read the Drupal
 ; Bootstrap sub-theme "how-to" documentation:

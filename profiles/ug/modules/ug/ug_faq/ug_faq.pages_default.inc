@@ -46,22 +46,27 @@ function ug_faq_default_page_manager_handlers() {
     ),
   );
   $display = new panels_display();
-  $display->layout = 'bootstrap_twocol_stacked';
+  $display->layout = 'bootstrap_threecol_stacked';
   $display->layout_settings = array();
   $display->panel_settings = array(
     'style_settings' => array(
       'default' => NULL,
-      'top' => NULL,
+      'top' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '12',
+        'offset_type' => 'col-sm-offset',
+        'offset_size' => '0',
+      ),
       'left' => array(
         'column_type' => 'col-sm',
-        'column_size' => '8',
-        'offset_type' => 'col-lg-offset',
+        'column_size' => '0',
+        'offset_type' => 'col-sm-offset',
         'offset_size' => '0',
       ),
       'middle' => array(
-        'column_type' => 'col-lg',
-        'column_size' => '12',
-        'offset_type' => 'col-lg-offset',
+        'column_type' => 'col-sm',
+        'column_size' => '8',
+        'offset_type' => 'col-sm-offset',
         'offset_size' => '0',
       ),
       'right' => array(
@@ -70,7 +75,12 @@ function ug_faq_default_page_manager_handlers() {
         'offset_type' => 'col-sm-offset',
         'offset_size' => '1',
       ),
-      'bottom' => NULL,
+      'bottom' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '12',
+        'offset_type' => 'col-sm-offset',
+        'offset_size' => '0',
+      ),
     ),
     'middle' => array(
       'style' => 'bootstrap_region',
@@ -81,6 +91,12 @@ function ug_faq_default_page_manager_handlers() {
     'right' => array(
       'style' => 'bootstrap_region',
     ),
+    'top' => array(
+      'style' => 'bootstrap_region',
+    ),
+    'bottom' => array(
+      'style' => 'bootstrap_region',
+    ),
   );
   $display->cache = array();
   $display->title = '%node:title';
@@ -89,7 +105,7 @@ function ug_faq_default_page_manager_handlers() {
   $display->panels = array();
     $pane = new stdClass();
     $pane->pid = 'new-ff2caa01-7597-456d-8481-f98d528de82a';
-    $pane->panel = 'left';
+    $pane->panel = 'middle';
     $pane->type = 'entity_field';
     $pane->subtype = 'node:field_faq_answer';
     $pane->shown = TRUE;
@@ -116,10 +132,33 @@ function ug_faq_default_page_manager_handlers() {
     $pane->locks = array();
     $pane->uuid = 'ff2caa01-7597-456d-8481-f98d528de82a';
     $display->content['new-ff2caa01-7597-456d-8481-f98d528de82a'] = $pane;
-    $display->panels['left'][0] = 'new-ff2caa01-7597-456d-8481-f98d528de82a';
+    $display->panels['middle'][0] = 'new-ff2caa01-7597-456d-8481-f98d528de82a';
+    $pane = new stdClass();
+    $pane->pid = 'new-e5f51bf0-4c3f-4631-9a5b-6d09afa42ef6';
+    $pane->panel = 'right';
+    $pane->type = 'views_panes';
+    $pane->subtype = 's1-panel_pane_1';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 0,
+      'override_title_text' => '',
+      'override_title_heading' => 'h2',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = 'e5f51bf0-4c3f-4631-9a5b-6d09afa42ef6';
+    $display->content['new-e5f51bf0-4c3f-4631-9a5b-6d09afa42ef6'] = $pane;
+    $display->panels['right'][0] = 'new-e5f51bf0-4c3f-4631-9a5b-6d09afa42ef6';
     $pane = new stdClass();
     $pane->pid = 'new-d413c67a-3f67-4c0b-b4c5-1f4d669c18a9';
-    $pane->panel = 'left';
+    $pane->panel = 'right';
     $pane->type = 'views_panes';
     $pane->subtype = 'faq_filter_keyword-panel_pane_1';
     $pane->shown = TRUE;
@@ -139,7 +178,7 @@ function ug_faq_default_page_manager_handlers() {
     $pane->locks = array();
     $pane->uuid = 'd413c67a-3f67-4c0b-b4c5-1f4d669c18a9';
     $display->content['new-d413c67a-3f67-4c0b-b4c5-1f4d669c18a9'] = $pane;
-    $display->panels['left'][1] = 'new-d413c67a-3f67-4c0b-b4c5-1f4d669c18a9';
+    $display->panels['right'][1] = 'new-d413c67a-3f67-4c0b-b4c5-1f4d669c18a9';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;

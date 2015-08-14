@@ -40,7 +40,7 @@
         </button>
       </div>
       <div class="col-sm-1 col-xs-6 slidesjs-pagination">
-        <div class="btn btn-block">
+        <div class="btn btn-block disabled">
           <?php print t('Slide <span class="slidesjs-slide-number">@number</span> of @count',
                       array('@number' => $slide_number, '@count' => $slide_count)); ?>
         </div>
@@ -64,6 +64,13 @@
       $('.slidesjs-slide-title').text($(active).data('title'));
       $('.slidesjs-slide-link').attr('href', $(active).data('link'));
       $('.slidesjs-slide-text').text($(active).data('text'));
+
+      <?php 
+        if ($slide_count == 1) {
+          // Force banner to display when there's only 1 slide
+          print '$(".slidesjs-slide").css("left","0px");';
+        }
+      ?>
     }
     $('#slides').slidesjs({
       width: 1140,

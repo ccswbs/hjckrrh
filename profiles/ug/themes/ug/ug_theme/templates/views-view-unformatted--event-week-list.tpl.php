@@ -7,11 +7,15 @@
  * @ingroup views_templates
  */
 ?>
+<div class="media-listing-page">
 <?php if (!empty($title)): ?>
   <h3><?php print $title; ?></h3>
 <?php endif; ?>
 <?php foreach ($rows as $id => $row): ?>
-  <div class="row">
+  <!-- <div class="row"> -->
+  <article<?php if ($classes_array[$id]) { print ' class="' . $classes_array[$id] .'"';  } ?>>
     <?php print $row; ?>
-  </div>
+  <!-- </div> -->
+	</article>
 <?php endforeach; ?>
+</div>

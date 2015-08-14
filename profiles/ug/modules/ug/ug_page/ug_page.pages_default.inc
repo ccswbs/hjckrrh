@@ -46,14 +46,14 @@ function ug_page_default_page_manager_handlers() {
     ),
   );
   $display = new panels_display();
-  $display->layout = 'bootstrap_twocol_stacked';
+  $display->layout = 'bootstrap_threecol_stacked';
   $display->layout_settings = array();
   $display->panel_settings = array(
     'style_settings' => array(
       'left' => array(
         'column_type' => 'col-sm',
-        'column_size' => '8',
-        'offset_type' => 'col-lg-offset',
+        'column_size' => '0',
+        'offset_type' => 'col-sm-offset',
         'offset_size' => '0',
       ),
       'right' => array(
@@ -63,13 +63,38 @@ function ug_page_default_page_manager_handlers() {
         'offset_size' => '1',
       ),
       'default' => NULL,
-      'top' => NULL,
-      'bottom' => NULL,
+      'top' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '12',
+        'offset_type' => 'col-sm-offset',
+        'offset_size' => '0',
+      ),
+      'bottom' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '12',
+        'offset_type' => 'col-sm-offset',
+        'offset_size' => '0',
+      ),
+      'middle' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '8',
+        'offset_type' => 'col-sm-offset',
+        'offset_size' => '0',
+      ),
     ),
     'left' => array(
       'style' => 'bootstrap_region',
     ),
     'right' => array(
+      'style' => 'bootstrap_region',
+    ),
+    'top' => array(
+      'style' => 'bootstrap_region',
+    ),
+    'middle' => array(
+      'style' => 'bootstrap_region',
+    ),
+    'bottom' => array(
       'style' => 'bootstrap_region',
     ),
   );
@@ -80,7 +105,7 @@ function ug_page_default_page_manager_handlers() {
   $display->panels = array();
     $pane = new stdClass();
     $pane->pid = 'new-51497ab9-4ab6-40ae-9e08-005f2d3fca1b';
-    $pane->panel = 'left';
+    $pane->panel = 'middle';
     $pane->type = 'entity_field';
     $pane->subtype = 'node:field_page_body';
     $pane->shown = TRUE;
@@ -107,10 +132,10 @@ function ug_page_default_page_manager_handlers() {
     $pane->locks = array();
     $pane->uuid = '51497ab9-4ab6-40ae-9e08-005f2d3fca1b';
     $display->content['new-51497ab9-4ab6-40ae-9e08-005f2d3fca1b'] = $pane;
-    $display->panels['left'][0] = 'new-51497ab9-4ab6-40ae-9e08-005f2d3fca1b';
+    $display->panels['middle'][0] = 'new-51497ab9-4ab6-40ae-9e08-005f2d3fca1b';
     $pane = new stdClass();
     $pane->pid = 'new-7751ae44-ca1d-4259-ae2b-ec3acf986b9a';
-    $pane->panel = 'left';
+    $pane->panel = 'middle';
     $pane->type = 'entity_field';
     $pane->subtype = 'node:field_page_attachments';
     $pane->shown = TRUE;
@@ -137,7 +162,7 @@ function ug_page_default_page_manager_handlers() {
     $pane->locks = array();
     $pane->uuid = '7751ae44-ca1d-4259-ae2b-ec3acf986b9a';
     $display->content['new-7751ae44-ca1d-4259-ae2b-ec3acf986b9a'] = $pane;
-    $display->panels['left'][1] = 'new-7751ae44-ca1d-4259-ae2b-ec3acf986b9a';
+    $display->panels['middle'][1] = 'new-7751ae44-ca1d-4259-ae2b-ec3acf986b9a';
     $pane = new stdClass();
     $pane->pid = 'new-94e8fb6f-785f-437c-9cc4-e1050c918f84';
     $pane->panel = 'right';
