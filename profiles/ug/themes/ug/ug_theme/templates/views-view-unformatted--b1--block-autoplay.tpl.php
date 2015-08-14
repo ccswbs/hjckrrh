@@ -58,13 +58,22 @@
 <script src="//www.uoguelph.ca/js/jquery.slides.min.js"></script>
 <script>
   jQuery(function($) {
+
     function update(number) {
       var active = $('.slidesjs-control').children()[number-1];
       $('.slidesjs-slide-number').text(number);
       $('.slidesjs-slide-title').text($(active).data('title'));
       $('.slidesjs-slide-link').attr('href', $(active).data('link'));
       $('.slidesjs-slide-text').text($(active).data('text'));
+
+      <?php 
+        if ($slide_count == 1) {
+          // Force banner to display when there's only 1 slide
+          print '$(".slidesjs-slide").css("left","0px");';
+        }
+      ?>
     }
+
     $('#slides').slidesjs({
       width: 1140,
       height: 292,
@@ -86,10 +95,12 @@
         complete: update,
       },
     });
+
     $('.slidesjs-next, .slidesjs-previous').click(function () {
       $('.slidesjs-stop').hide();
       $('.slidesjs-play').show();
     });
+
     $('.slidesjs-psply').click(function () {
       var plugin = $('#slides').first().data('plugin_slidesjs');
       if ($.data(plugin, 'playing')) {

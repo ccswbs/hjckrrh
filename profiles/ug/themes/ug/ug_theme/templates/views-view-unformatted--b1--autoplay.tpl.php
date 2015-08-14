@@ -64,6 +64,13 @@
       $('.slidesjs-slide-title').text($(active).data('title'));
       $('.slidesjs-slide-link').attr('href', $(active).data('link'));
       $('.slidesjs-slide-text').text($(active).data('text'));
+
+      <?php 
+        if ($slide_count == 1) {
+          // Force banner to display when there's only 1 slide
+          print '$(".slidesjs-slide").css("left","0px");';
+        }
+      ?>
     }
     $('#slides').slidesjs({
       width: 1140,
