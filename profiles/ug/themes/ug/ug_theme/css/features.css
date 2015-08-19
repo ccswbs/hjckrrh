@@ -63,6 +63,11 @@ BR - Banner
             /*border: 1px solid #666666;*/
         }
 
+        .slidesjs-navigation-top button.slidesjs-psply:focus,
+        .slidesjs-navigation-top button.slidesjs-psply:hover {
+            background: #222222;
+        }
+
         @media all and (min-width:768px) {
             .slidesjs-navigation-top .slidesjs-psply {
                 border: 0;
@@ -72,6 +77,13 @@ BR - Banner
     /*---------------------
     Slide Navigation Buttons
     ---------------------**/
+
+        .slidesjs-navigation-bottom button.slidesjs-previous:focus,
+        .slidesjs-navigation-bottom button.slidesjs-previous:hover,
+        .slidesjs-navigation-bottom button.slidesjs-next:focus,
+        .slidesjs-navigation-bottom button.slidesjs-next:hover {
+            background: #222222;
+        }
 
         .slidesjs-navigation-bottom .slidesjs-next,
         .slidesjs-navigation-bottom .slidesjs-previous {
