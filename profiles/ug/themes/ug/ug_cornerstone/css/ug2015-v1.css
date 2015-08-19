@@ -489,6 +489,8 @@ Live Date: June 23, 2015
 
         /*--- Theming ---*/
 
+		.detail-page .main-container .middle time,
+		.detail-page .main-container .col-sm-8 time,
         .detail-page .main-container .middle p,
         .detail-page .main-container .col-sm-8 p,
         .detail-page .main-container .middle ul:not(.menu) li,
