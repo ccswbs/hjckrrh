@@ -204,20 +204,15 @@ Teaser Lists
             margin-bottom: 2em;
         }
 
+/*************************
+Browse By Lists
+*************************/
 
-    /*---------------------
-    File Attachments
-    ---------------------**/
+    .browse-by-list ul li a:hover,
+    .browse-by-list ul li a:focus {
+        border-bottom: 1px solid;
+    }
 
-/*    .detail-page .file {
-        position: relative;
-    }*/
-
-/*    .file-icon {
-        position: absolute;
-    }*/
-
-/*    .detail-page .file {
-        position: relative;
-        left: 25px;
-    }*/
+    .browse-by-list ul li a {
+        border-bottom: none;
+    }

@@ -3,7 +3,7 @@ Base Styles
 *************************/
 
   body {
-  	font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
   }
 
   /*---------------------
@@ -58,56 +58,43 @@ Base Styles
       /* WCAG 2.0 AA on #EEEEEE, #F5F5F5, #FFFFFF */
   }
 
+  /* default - no underline */
+
   a:link{
     text-decoration: none;
+  }
+
+  /* hover/focus - underline */
+  a:focus, a:hover {
+      text-decoration: underline;
   }
 
   a:focus { 
     outline: thin dotted; 
   }
 
-  a:focus, a:hover {
-      text-decoration: underline;
-  }
-
   /*--- Links surrounded by text ---*/
 
+  /* default - underline (border-bottom) */
   p a:link, li a {
    text-decoration: none; 
    border-bottom: 1px solid;
   }
 
+  /* hover/focus - stronger underline (border-bottom) */
   p a:focus, p a:hover, li a:focus, li a:hover {
    text-decoration: none; 
    border-bottom: 2px solid; 
   }
 
-  /*--- Inline link lists ---*/
+  /*--- EXCEPTIONS ---*/ 
 
-  ul.list-inline li a{
-    border-bottom: 0;
-  }
-
-  /*--- Links styled as buttons ---*/
-
+  /* hover/focus - links styled as buttons */
   p a.btn:focus, p a.btn:hover {
     border-bottom: 1px solid;
   }
 
-  /*--- Remove line from list links ---*/
-  ul.no-link-lines li a {
-    text-decoration: none;
-    border-bottom: 0;
-  }
-
-  ul.no-link-lines li a:focus,
-  ul.no-link-lines li a:hover {
-    text-decoration: none;
-    border-bottom: 1px solid;
-  }
-
-  /*--- Exceptions ---*/  
-  nav li a, .navbar a, .menu a, a.active, .nav a {
+  nav li a, .navbar a, .menu a, a.active, .nav a, ul.list-inline li a {
       text-decoration: none;
       border-bottom: 0;
   }
@@ -124,6 +111,18 @@ Base Styles
   h2 a:focus, h2 a:hover { border-bottom: 2px solid !important;}
 
   .more-link { margin-top: 15px; }
+
+  /*--- Optional class to remove line from list links ---*/
+  ul.no-link-lines li a {
+    text-decoration: none;
+    border-bottom: 0;
+  }
+
+  ul.no-link-lines li a:focus,
+  ul.no-link-lines li a:hover {
+    text-decoration: none;
+    border-bottom: 1px solid;
+  }
 
   /*---------------------
   Lists
