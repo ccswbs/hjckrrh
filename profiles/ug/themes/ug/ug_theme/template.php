@@ -396,7 +396,7 @@ function ug_theme_preprocess_node (&$variables) {
 
 
 /**
- * Implements hook_preprocess_node.
+ * Add aria-expanded to Drupal menus.
  */
 function ug_theme_menu_link(array $variables) {
   $element = $variables['element'];
@@ -414,8 +414,6 @@ function ug_theme_menu_link(array $variables) {
       $sub_menu = '<ul class="dropdown-menu" role="menu">' . drupal_render($element['#below']) . '</ul>';
       // Generate as standard dropdown.
       $element['#title'] .= ' <span class="caret"></span>';
-      // $element['#title'] .= ' <span class="toggle-indicator sr-only">show menu </span><span class="caret"></span>';
-      // $element['#title'] = '<span class="toggle-indicator sr-only">Show </span>' . $element['#title'] . ' <span class="caret"></span>';
       $element['#attributes']['class'][] = 'dropdown';
       $element['#localized_options']['html'] = TRUE;
 
@@ -423,7 +421,6 @@ function ug_theme_menu_link(array $variables) {
       // when a submenu link is clicked.
       $element['#localized_options']['attributes']['data-target'] = '#';
       $element['#localized_options']['attributes']['class'][] = 'dropdown-toggle';
-      // $element['#localized_options']['attributes']['aria-haspopup'] = 'true';
       $element['#localized_options']['attributes']['aria-expanded'] = 'false';
       $element['#localized_options']['attributes']['role'] = 'button';
       $element['#localized_options']['attributes']['data-toggle'] = 'dropdown';
@@ -482,3 +479,272 @@ function ug_theme_date_nav_title($params) {
   }
 }
 
+/**
+ * Add additional labelling info to pagination links
+ * Source: includes/pager.inc
+ */
+
+function ug_theme_pager_link($variables) {
+  $text = $variables['text'];
+  $page_new = $variables['page_new'];
+  $element = $variables['element'];
+  $parameters = $variables['parameters'];
+  $attributes = $variables['attributes'];
+
+  $page = isset($_GET['page']) ? $_GET['page'] : '';
+  if ($new_page = implode(',', pager_load_array($page_new[$element], $element, explode(',', $page)))) {
+    $parameters['page'] = $new_page;
+  }
+
+  $query = array();
+  if (count($parameters)) {
+    $query = drupal_get_query_parameters($parameters, array());
+  }
+  if ($query_pager = pager_get_query_parameters()) {
+    $query = array_merge($query, $query_pager);
+  }
+
+  // Set each pager link title
+  if (!isset($attributes['title'])) {
+    static $titles = NULL;
+    if (!isset($titles)) {
+      $titles = array(
+        t('« first') => t('Go to first page'),
+        t('‹ previous') => t('Go to previous page'),
+        t('next ›') => t('Go to next page'),
+        t('last »') => t('Go to last page'),
+      );
+    }
+
+    if (isset($titles[$text])) {
+      $attributes['title'] = $titles[$text];
+    }
+    elseif (is_numeric($text)) {
+      $attributes['title'] = t('Go to page @number', array('@number' => $text));
+    }
+  }
+
+  // @todo l() cannot be used here, since it adds an 'active' class based on the
+  //   path only (which is always the current path for pager links). Apparently,
+  //   none of the pager links is active at any time - but it should still be
+  //   possible to use l() here.
+  // @see http://drupal.org/node/1410574
+  $attributes['href'] = url($_GET['q'], array('query' => $query));
+
+  // OVERRIDE - update return link to inclue "page" prior to page number
+  $pager_label = ' <span class="sr-only">page</span>';
+  if(is_numeric($text)) {
+    $return_link = '<a' . drupal_attributes($attributes) . '>' . check_plain($text) . '</a>';
+  }else {
+    $return_link = '<a' . drupal_attributes($attributes) . '>' . check_plain($text) . $pager_label .'</a>';
+  }
+  
+  return $return_link;
+}
+
+
+/**
+ * Override Bootstrap pager
+ * Source: sites/all/theme/bootstrap/system/pager.func.php
+ */
+
+function ug_theme_pager($variables) {
+  $output = "";
+  $items = array();
+  $tags = $variables['tags'];
+  $element = $variables['element'];
+  $parameters = $variables['parameters'];
+  $quantity = $variables['quantity'];
+
+  global $pager_page_array, $pager_total;
+
+  // Calculate various markers within this pager piece:
+  // Middle is used to "center" pages around the current page.
+  $pager_middle = ceil($quantity / 2);
+  // Current is the page we are currently paged to.
+  $pager_current = $pager_page_array[$element] + 1;
+  // First is the first page listed by this pager piece (re quantity).
+  $pager_first = $pager_current - $pager_middle + 1;
+  // Last is the last page listed by this pager piece (re quantity).
+  $pager_last = $pager_current + $quantity - $pager_middle;
+  // Max is the maximum page number.
+  $pager_max = $pager_total[$element];
+
+  // Prepare for generation loop.
+  $i = $pager_first;
+  if ($pager_last > $pager_max) {
+    // Adjust "center" if at end of query.
+    $i = $i + ($pager_max - $pager_last);
+    $pager_last = $pager_max;
+  }
+  if ($i <= 0) {
+    // Adjust "center" if at start of query.
+    $pager_last = $pager_last + (1 - $i);
+    $i = 1;
+  }
+
+  // End of generation loop preparation.
+
+  // OVERRIDE - add back in FIRST link preparation
+  // @todo add theme setting for this.
+  // --- Uncommented section
+  $li_first = theme('pager_first', array(
+    //OVERRIDE - trim «‹<>›» characters from FIRST link
+    'text' => (isset($tags[0]) ? trim($tags[0],'«‹<>›»') : t('first')),
+    'element' => $element,
+    'parameters' => $parameters,
+  ));
+  // --- End of Uncommented section
+
+  $li_previous = theme('pager_previous', array(
+    //OVERRIDE - trim «‹<>›» characters from PREVIOUS link
+    'text' => (isset($tags[1]) ? trim($tags[1],'«‹<>›»') : t('previous')),
+    'element' => $element,
+    'interval' => 1,
+    'parameters' => $parameters,
+  ));
+  $li_next = theme('pager_next', array(
+    //OVERRIDE - trim «‹<>›» characters from NEXT link
+    'text' => (isset($tags[3]) ? trim($tags[3],'«‹<>›»') : t('next')),
+    'element' => $element,
+    'interval' => 1,
+    'parameters' => $parameters,
+  ));
+
+  // OVERRIDE - add back in LAST link preparation
+  // @todo add theme setting for this.
+  // --- Uncommented section
+    $li_last = theme('pager_last', array(
+      //OVERRIDE - trim «‹<>›» characters from LAST link
+      'text' => (isset($tags[4]) ? trim($tags[4],'«‹<>›»') : t('last')),
+      'element' => $element,
+      'parameters' => $parameters,
+    ));
+  // --- End of Uncommented section
+
+  if ($pager_total[$element] > 1) {
+
+
+    // OVERRIDE - add back in FIRST link
+    // @todo add theme setting for this.
+    // --- Uncommented section
+    if ($li_first) {
+      $items[] = array(
+        'class' => array('pager-first'),
+        'data' => $li_first,
+      );
+    }
+    // --- End of Uncommented section
+
+    if ($li_previous) {
+      $items[] = array(
+        'class' => array('prev'),
+        'data' => $li_previous,
+      );
+    }
+    // When there is more than one page, create the pager list.
+    if ($i != $pager_max) {
+
+      // OVERRIDE - remove pager ellipsis
+      // --- Commented out section
+      /*if ($i > 1) {
+        $items[] = array(
+          'class' => array('pager-ellipsis', 'disabled'),
+          'data' => '<span>…</span>',
+        );
+      }*/
+      // --- End of Commented out section
+
+
+      // Now generate the actual pager piece.
+      for (; $i <= $pager_last && $i <= $pager_max; $i++) {
+
+        // OVERRIDE - remove PAGER ITEMS BEFORE current page
+        // --- Commented out section
+        /*if ($i < $pager_current) {
+          $items[] = array(
+            // 'class' => array('pager-item'),
+            'data' => theme('pager_previous', array(
+              'text' => $i,
+              'element' => $element,
+              'interval' => ($pager_current - $i),
+              'parameters' => $parameters,
+            )),
+          );
+        }*/
+        // --- End of Commented out section
+
+        if ($i == $pager_current) {
+          $items[] = array(
+
+            //ORIGINAL CODE
+            // --- Commented out section
+            // Add the active class.
+            /*'class' => array('active'),
+             'data' => l($i, '#', array('fragment' => '', 'external' => TRUE)),
+             */
+             // --- End of Commented out section
+
+            //OVERRIDE #1 - Provide sr-only current page notification
+            //'data' => t('<a href="@url"><span class="sr-only">Current page</span>' . $i .'</a>', array('@url' => '#'), array('fragment' => '', 'external' => TRUE)),
+
+            //OVERRIDE #2 - Change to Page $i of Total # format
+            'class' => array('disabled'),
+            'data' =>'<span>Page ' . $i . ' of ' . $pager_max . '</span>',
+          );
+        }
+
+        // OVERRIDE - remove PAGER ITEMS AFTER current page
+        // --- Commented out section
+        /*if ($i > $pager_current) {
+          $items[] = array(
+            'data' => theme('pager_next', array(
+              'text' => $i,
+              'element' => $element,
+              'interval' => ($i - $pager_current),
+              'parameters' => $parameters,
+            )),
+          );
+        }*/
+        // --- End of Commented out section
+      }
+
+      // OVERRIDE - remove PAGER MAX
+      // --- Commented out section
+      /*if ($i < $pager_max) {
+        $items[] = array(
+          'class' => array('pager-ellipsis', 'disabled'),
+          'data' => '<span>…</span>',
+        );
+      }*/
+      // --- End of Commented out section
+    }
+
+
+    // End generation.
+    if ($li_next) {
+      $items[] = array(
+        'class' => array('next'),
+        'data' => $li_next,
+      );
+    }
+
+    // OVERRIDE - add back in LAST link
+    // @todo add theme setting for this. 
+    // --- Uncommented section
+    if ($li_last) {
+      $items[] = array(
+        'class' => array('pager-last'),
+        'data' => $li_last,
+      );
+    }
+    // --- End of Uncommented section
+
+    /* OVERRIDE - Add heading, nav region, navigation role, and aria-labelledby */
+    return '<div class="text-center"><nav role="navigation" aria-labelledby="pagination-heading"><h2 id="pagination-heading" class="sr-only">Pagination</h2>' . theme('item_list', array(
+      'items' => $items,
+      'attributes' => array('class' => array('pagination')),
+    )) . '</nav></div>';
+  }
+  return $output;
+}
