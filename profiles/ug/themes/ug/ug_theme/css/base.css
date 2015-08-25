@@ -503,6 +503,26 @@ Base Styles
       border: 1px solid #DDDDDD;
     }
 
+    .pagination>li.prev>a:before {
+      content: "‹";
+      padding-right: 4px;
+    }
+
+    .pagination>li.first>a:before {
+      content: "«";
+      padding-right: 4px;
+    }
+
+    .pagination>li.next>a:after {
+      content: "›";
+      padding-left: 4px;
+    }
+
+    .pagination>li.last>a:after {
+      content: "»";
+      padding-left: 4px;
+    }
+
   /*---------------------
   Tabs - Secondary
   ---------------------**/
