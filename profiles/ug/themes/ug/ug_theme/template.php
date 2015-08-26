@@ -444,7 +444,8 @@ function ug_theme_date_nav_title($params) {
   $date_info = $view->date_info;
   $link = !empty($params['link']) ? $params['link'] : FALSE;
   $format = !empty($params['format']) ? $params['format'] : NULL;
-  // added underscore to format_with_year and format_without_year (allows month format to show with August 2015)
+
+  // OVERRIDE - added underscore before format_with_year and format_without_year (allows month format to show with August 2015)
   $format_with_year = variable_get('date_views_' . $granularity . '_format_with_year', 'l, F j, Y');
   $format_without_year = variable_get('date_views_' . $granularity . '_format_without_year', 'l, F j');
   switch ($granularity) {
