@@ -34,6 +34,13 @@ function ug_event_views_default_views() {
   $handler->display->display_options['style_options']['row_class_special'] = FALSE;
   $handler->display->display_options['row_plugin'] = 'fields';
   $handler->display->display_options['row_options']['default_field_elements'] = FALSE;
+  /* No results behavior: Global: Text area */
+  $handler->display->display_options['empty']['area']['id'] = 'area';
+  $handler->display->display_options['empty']['area']['table'] = 'views';
+  $handler->display->display_options['empty']['area']['field'] = 'area';
+  $handler->display->display_options['empty']['area']['empty'] = TRUE;
+  $handler->display->display_options['empty']['area']['content'] = 'No results found.';
+  $handler->display->display_options['empty']['area']['format'] = 'full_html';
   /* Field: Content: Title */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
@@ -173,9 +180,29 @@ function ug_event_views_default_views() {
   $handler->display->display_options['arguments']['date_argument']['table'] = 'node';
   $handler->display->display_options['arguments']['date_argument']['field'] = 'date_argument';
   $handler->display->display_options['arguments']['date_argument']['title_enable'] = TRUE;
-  $handler->display->display_options['arguments']['date_argument']['title'] = 'Events from %1';
+  $handler->display->display_options['arguments']['date_argument']['title'] = 'Past Events from %1';
   $handler->display->display_options['arguments']['date_argument']['default_argument_type'] = 'date';
-  $handler->display->display_options['arguments']['date_argument']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['date_argument']['specify_validation'] = TRUE;
+  $handler->display->display_options['arguments']['date_argument']['validate']['type'] = 'php';
+  $handler->display->display_options['arguments']['date_argument']['validate_options']['code'] = '$url_date = $handler->argument;
+$month_format = preg_match(\'/^([0-9]{4})-([0-9]{2})$/\', $url_date);
+$date = strtotime($url_date);
+
+if($month_format == true){
+  $date_formatted = date(\'F Y\', $date);
+  $handler->validated_title = $date_formatted;
+  return true;
+}
+
+$year_format = preg_match(\'/^([0-9]{4})$/\', $url_date);
+if($year_format == true){
+  $date_formatted = date(\'Y\', $date);
+  $handler->validated_title = $url_date;
+  return true;
+}
+
+return false;';
+  $handler->display->display_options['arguments']['date_argument']['validate']['fail'] = 'empty';
   $handler->display->display_options['arguments']['date_argument']['date_fields'] = array(
     'field_data_field_event_date.field_event_date_value' => 'field_data_field_event_date.field_event_date_value',
   );
