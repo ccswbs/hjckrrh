@@ -394,7 +394,7 @@ function ug_event_default_page_manager_pages() {
     'type' => 'tab',
     'title' => 'View Calendar as a List',
     'name' => 'navigation',
-    'weight' => '1',
+    'weight' => '0',
     'parent' => array(
       'type' => 'none',
       'title' => '',
@@ -981,7 +981,7 @@ function ug_event_default_page_manager_pages() {
     'type' => 'default tab',
     'title' => 'View Calendar as a Grid',
     'name' => 'navigation',
-    'weight' => '0',
+    'weight' => '1',
     'parent' => array(
       'type' => 'tab',
       'title' => 'Monthly Calendar',
