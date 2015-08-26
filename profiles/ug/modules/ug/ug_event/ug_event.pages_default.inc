@@ -1218,13 +1218,13 @@ function ug_event_default_page_manager_pages() {
   $page->task = 'page';
   $page->admin_title = 'Past events';
   $page->admin_description = '';
-  $page->path = 'events/archive/!date';
+  $page->path = 'events/past/!date';
   $page->access = array(
     'type' => 'none',
     'settings' => NULL,
   );
   $page->menu = array(
-    'type' => 'tab',
+    'type' => 'none',
     'title' => 'Past Events',
     'name' => 'navigation',
     'weight' => '3',
