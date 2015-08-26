@@ -448,7 +448,7 @@ function ug_event_default_page_manager_pages() {
     ),
   );
   $display->cache = array();
-  $display->title = '';
+  $display->title = 'Monthly Calendar';
   $display->uuid = '2c5f51a7-d1f2-4ce2-be5c-fa76a37467e3';
   $display->content = array();
   $display->panels = array();
@@ -583,7 +583,7 @@ function ug_event_default_page_manager_pages() {
     ),
   );
   $display->cache = array();
-  $display->title = '';
+  $display->title = 'This Week';
   $display->uuid = '2c5f51a7-d1f2-4ce2-be5c-fa76a37467e3';
   $display->content = array();
   $display->panels = array();
@@ -738,7 +738,7 @@ function ug_event_default_page_manager_pages() {
     ),
   );
   $display->cache = array();
-  $display->title = 'Events Calendar';
+  $display->title = 'Upcoming Events';
   $display->uuid = 'b3915726-f6fc-4665-96df-a222ba62410e';
   $display->content = array();
   $display->panels = array();
@@ -1182,7 +1182,7 @@ function ug_event_default_page_manager_pages() {
     'style' => 'default',
   );
   $display->cache = array();
-  $display->title = '';
+  $display->title = 'Monthly Calendar';
   $display->uuid = '37d444c2-b46b-4924-a45f-04ad351215f1';
   $display->content = array();
   $display->panels = array();
@@ -1434,7 +1434,7 @@ function ug_event_default_page_manager_pages() {
     ),
   );
   $display->cache = array();
-  $display->title = '';
+  $display->title = 'This Week';
   $display->uuid = '7bf0db93-5d02-4600-98e3-f63d1958f771';
   $display->content = array();
   $display->panels = array();
