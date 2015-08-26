@@ -182,6 +182,7 @@ function ug_event_views_default_views() {
   $handler->display->display_options['arguments']['date_argument']['title_enable'] = TRUE;
   $handler->display->display_options['arguments']['date_argument']['title'] = 'Past Events from %1';
   $handler->display->display_options['arguments']['date_argument']['default_argument_type'] = 'date';
+  $handler->display->display_options['arguments']['date_argument']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['date_argument']['specify_validation'] = TRUE;
   $handler->display->display_options['arguments']['date_argument']['validate']['type'] = 'php';
   $handler->display->display_options['arguments']['date_argument']['validate_options']['code'] = '$url_date = $handler->argument;
