@@ -394,7 +394,7 @@ function ug_event_default_page_manager_pages() {
     'type' => 'tab',
     'title' => 'View Calendar as a List',
     'name' => 'navigation',
-    'weight' => '1',
+    'weight' => '0',
     'parent' => array(
       'type' => 'none',
       'title' => '',
@@ -448,7 +448,7 @@ function ug_event_default_page_manager_pages() {
     ),
   );
   $display->cache = array();
-  $display->title = '';
+  $display->title = 'Monthly Calendar';
   $display->uuid = '2c5f51a7-d1f2-4ce2-be5c-fa76a37467e3';
   $display->content = array();
   $display->panels = array();
@@ -583,7 +583,7 @@ function ug_event_default_page_manager_pages() {
     ),
   );
   $display->cache = array();
-  $display->title = '';
+  $display->title = 'This Week';
   $display->uuid = '2c5f51a7-d1f2-4ce2-be5c-fa76a37467e3';
   $display->content = array();
   $display->panels = array();
@@ -738,7 +738,7 @@ function ug_event_default_page_manager_pages() {
     ),
   );
   $display->cache = array();
-  $display->title = 'Events Calendar';
+  $display->title = 'Upcoming Events';
   $display->uuid = 'b3915726-f6fc-4665-96df-a222ba62410e';
   $display->content = array();
   $display->panels = array();
@@ -837,7 +837,7 @@ function ug_event_default_page_manager_pages() {
   $handler->handler = 'panel_context';
   $handler->weight = 0;
   $handler->conf = array(
-    'title' => 'Panel',
+    'title' => 'Panel (Date)',
     'no_blocks' => 0,
     'pipeline' => 'standard',
     'body_classes_to_remove' => '',
@@ -846,6 +846,19 @@ function ug_event_default_page_manager_pages() {
     'css' => '',
     'contexts' => array(),
     'relationships' => array(),
+    'access' => array(
+      'plugins' => array(
+        0 => array(
+          'name' => 'context_exists',
+          'settings' => array(
+            'exists' => '1',
+          ),
+          'context' => 'argument_string_1',
+          'not' => FALSE,
+        ),
+      ),
+      'logic' => 'and',
+    ),
   );
   $display = new panels_display();
   $display->layout = 'bootstrap_threecol_stacked';
@@ -901,7 +914,7 @@ function ug_event_default_page_manager_pages() {
     ),
   );
   $display->cache = array();
-  $display->title = 'Events Calendar';
+  $display->title = 'Past Events';
   $display->uuid = 'cd94cdf8-3c30-4b67-8a1c-311d50ba1b72';
   $display->content = array();
   $display->panels = array();
@@ -912,7 +925,11 @@ function ug_event_default_page_manager_pages() {
     $pane->subtype = 'e1-panel_pane_2';
     $pane->shown = TRUE;
     $pane->access = array();
-    $pane->configuration = array();
+    $pane->configuration = array(
+      'override_title' => 1,
+      'override_title_text' => '',
+      'override_title_heading' => 'h2',
+    );
     $pane->cache = array();
     $pane->style = array(
       'settings' => NULL,
@@ -959,8 +976,149 @@ function ug_event_default_page_manager_pages() {
     $pane->uuid = '3a0506a1-e2f1-439c-b858-e2381023bebf';
     $display->content['new-3a0506a1-e2f1-439c-b858-e2381023bebf'] = $pane;
     $display->panels['right'][0] = 'new-3a0506a1-e2f1-439c-b858-e2381023bebf';
-  $display->hide_title = PANELS_TITLE_FIXED;
+  $display->hide_title = PANELS_TITLE_PANE;
   $display->title_pane = 'new-5ac41dd9-f955-4898-bb56-13d9e8e4ae6c';
+  $handler->conf['display'] = $display;
+  $page->default_handlers[$handler->name] = $handler;
+  $handler = new stdClass();
+  $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
+  $handler->api_version = 1;
+  $handler->name = 'page_events_archive__panel_context_c969fcce-17ce-4029-82ad-32487748d497';
+  $handler->task = 'page';
+  $handler->subtask = 'events_archive';
+  $handler->handler = 'panel_context';
+  $handler->weight = 1;
+  $handler->conf = array(
+    'title' => 'Default',
+    'no_blocks' => 0,
+    'pipeline' => 'standard',
+    'body_classes_to_remove' => '',
+    'body_classes_to_add' => '',
+    'css_id' => '',
+    'css' => '',
+    'contexts' => array(),
+    'relationships' => array(),
+    'name' => '',
+    'access' => array(
+      'plugins' => array(
+        0 => array(
+          'name' => 'context_exists',
+          'settings' => array(
+            'exists' => '0',
+          ),
+          'context' => 'argument_string_1',
+          'not' => FALSE,
+        ),
+      ),
+      'logic' => 'and',
+    ),
+  );
+  $display = new panels_display();
+  $display->layout = 'bootstrap_threecol_stacked';
+  $display->layout_settings = array();
+  $display->panel_settings = array(
+    'style_settings' => array(
+      'top' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '12',
+        'offset_type' => 'col-sm-offset',
+        'offset_size' => '0',
+      ),
+      'left' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '0',
+        'offset_type' => 'col-sm-offset',
+        'offset_size' => '0',
+      ),
+      'middle' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '8',
+        'offset_type' => 'col-sm-offset',
+        'offset_size' => '0',
+      ),
+      'right' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '3',
+        'offset_type' => 'col-sm-offset',
+        'offset_size' => '1',
+      ),
+      'bottom' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '12',
+        'offset_type' => 'col-sm-offset',
+        'offset_size' => '0',
+      ),
+      'default' => NULL,
+    ),
+    'top' => array(
+      'style' => 'bootstrap_region',
+    ),
+    'left' => array(
+      'style' => 'bootstrap_region',
+    ),
+    'middle' => array(
+      'style' => 'bootstrap_region',
+    ),
+    'right' => array(
+      'style' => 'bootstrap_region',
+    ),
+    'bottom' => array(
+      'style' => 'bootstrap_region',
+    ),
+  );
+  $display->cache = array();
+  $display->title = 'Past Events';
+  $display->uuid = '2df1dab5-077c-42a7-a0a7-adb916a71a59';
+  $display->content = array();
+  $display->panels = array();
+    $pane = new stdClass();
+    $pane->pid = 'new-47c47899-7151-4aa6-ab48-627849a7c4b2';
+    $pane->panel = 'middle';
+    $pane->type = 'views_panes';
+    $pane->subtype = 'e1-panel_pane_2';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 0,
+      'override_title_text' => '',
+      'override_title_heading' => 'h2',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = '47c47899-7151-4aa6-ab48-627849a7c4b2';
+    $display->content['new-47c47899-7151-4aa6-ab48-627849a7c4b2'] = $pane;
+    $display->panels['middle'][0] = 'new-47c47899-7151-4aa6-ab48-627849a7c4b2';
+    $pane = new stdClass();
+    $pane->pid = 'new-0c8d31e2-23db-4705-b5bf-fdba6e51dc30';
+    $pane->panel = 'right';
+    $pane->type = 'views_panes';
+    $pane->subtype = 'e5-panel_pane_1';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 0,
+      'override_title_text' => '',
+      'override_title_heading' => 'h2',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = '0c8d31e2-23db-4705-b5bf-fdba6e51dc30';
+    $display->content['new-0c8d31e2-23db-4705-b5bf-fdba6e51dc30'] = $pane;
+    $display->panels['right'][0] = 'new-0c8d31e2-23db-4705-b5bf-fdba6e51dc30';
+  $display->hide_title = PANELS_TITLE_FIXED;
+  $display->title_pane = 'new-47c47899-7151-4aa6-ab48-627849a7c4b2';
   $handler->conf['display'] = $display;
   $page->default_handlers[$handler->name] = $handler;
   $pages['events_archive'] = $page;
@@ -981,7 +1139,7 @@ function ug_event_default_page_manager_pages() {
     'type' => 'default tab',
     'title' => 'View Calendar as a Grid',
     'name' => 'navigation',
-    'weight' => '0',
+    'weight' => '1',
     'parent' => array(
       'type' => 'tab',
       'title' => 'Monthly Calendar',
@@ -1024,7 +1182,7 @@ function ug_event_default_page_manager_pages() {
     'style' => 'default',
   );
   $display->cache = array();
-  $display->title = '';
+  $display->title = 'Monthly Calendar';
   $display->uuid = '37d444c2-b46b-4924-a45f-04ad351215f1';
   $display->content = array();
   $display->panels = array();
@@ -1276,7 +1434,7 @@ function ug_event_default_page_manager_pages() {
     ),
   );
   $display->cache = array();
-  $display->title = '';
+  $display->title = 'This Week';
   $display->uuid = '7bf0db93-5d02-4600-98e3-f63d1958f771';
   $display->content = array();
   $display->panels = array();
