@@ -391,15 +391,15 @@ function ug_event_default_page_manager_pages() {
     'settings' => NULL,
   );
   $page->menu = array(
-    'type' => 'tab',
+    'type' => 'default tab',
     'title' => 'View Calendar as a List',
     'name' => 'navigation',
     'weight' => '0',
     'parent' => array(
-      'type' => 'none',
-      'title' => '',
+      'type' => 'tab',
+      'title' => 'Monthly Calendar',
       'name' => 'navigation',
-      'weight' => '0',
+      'weight' => '2',
     ),
   );
   $page->arguments = array();
@@ -1136,7 +1136,7 @@ function ug_event_default_page_manager_pages() {
     'settings' => NULL,
   );
   $page->menu = array(
-    'type' => 'default tab',
+    'type' => 'tab',
     'title' => 'View Calendar as a Grid',
     'name' => 'navigation',
     'weight' => '1',
