@@ -82,6 +82,14 @@ function ug_theme_preprocess_views_view_fields__e1(&$vars) {
   $vars['body']     = $vars['fields']['field_event_body']->content; 
 } 
 
+/** 
+ * E2a - Listing page for multiple events. 
+ */ 
+function ug_theme_preprocess_views_view_fields__event_image(&$vars) { 
+  $vars['image']    = $vars['fields']['field_event_image']->content; 
+  $vars['caption']    = $vars['fields']['field_event_image_caption']->content; 
+} 
+
 
 /** 
  * Event month list
