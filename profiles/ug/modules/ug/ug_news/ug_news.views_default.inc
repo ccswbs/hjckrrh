@@ -744,8 +744,6 @@ function ug_news_views_default_views() {
   $handler->display->display_options['fields']['field_news_caption']['field'] = 'field_news_caption';
   $handler->display->display_options['fields']['field_news_caption']['label'] = '';
   $handler->display->display_options['fields']['field_news_caption']['alter']['text'] = '<div class="caption">[field_news_caption]</div>';
-  $handler->display->display_options['fields']['field_news_caption']['element_type'] = 'div';
-  $handler->display->display_options['fields']['field_news_caption']['element_class'] = 'caption';
   $handler->display->display_options['fields']['field_news_caption']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_news_caption']['element_default_classes'] = FALSE;
   /* Contextual filter: Content: Nid */
