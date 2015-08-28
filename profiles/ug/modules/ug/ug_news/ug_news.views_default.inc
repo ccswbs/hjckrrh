@@ -723,42 +723,35 @@ function ug_news_views_default_views() {
   $handler->display->display_options['style_options']['default_row_class'] = FALSE;
   $handler->display->display_options['style_options']['row_class_special'] = FALSE;
   $handler->display->display_options['row_plugin'] = 'fields';
-  $handler->display->display_options['row_options']['hide_empty'] = TRUE;
   $handler->display->display_options['row_options']['default_field_elements'] = FALSE;
-  /* Field: Content: Feature image caption */
-  $handler->display->display_options['fields']['field_news_caption']['id'] = 'field_news_caption';
-  $handler->display->display_options['fields']['field_news_caption']['table'] = 'field_data_field_news_caption';
-  $handler->display->display_options['fields']['field_news_caption']['field'] = 'field_news_caption';
-  $handler->display->display_options['fields']['field_news_caption']['label'] = '';
-  $handler->display->display_options['fields']['field_news_caption']['exclude'] = TRUE;
-  $handler->display->display_options['fields']['field_news_caption']['alter']['alter_text'] = TRUE;
-  $handler->display->display_options['fields']['field_news_caption']['alter']['text'] = '<div class="caption">[field_news_caption]</div>';
-  $handler->display->display_options['fields']['field_news_caption']['element_type'] = 'div';
-  $handler->display->display_options['fields']['field_news_caption']['element_class'] = 'caption';
-  $handler->display->display_options['fields']['field_news_caption']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['field_news_caption']['element_default_classes'] = FALSE;
   /* Field: Content: Feature image */
   $handler->display->display_options['fields']['field_news_image']['id'] = 'field_news_image';
   $handler->display->display_options['fields']['field_news_image']['table'] = 'field_data_field_news_image';
   $handler->display->display_options['fields']['field_news_image']['field'] = 'field_news_image';
   $handler->display->display_options['fields']['field_news_image']['label'] = '';
-  $handler->display->display_options['fields']['field_news_image']['alter']['alter_text'] = TRUE;
   $handler->display->display_options['fields']['field_news_image']['alter']['text'] = '[field_news_image]
 [field_news_caption]';
   $handler->display->display_options['fields']['field_news_image']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['field_news_image']['element_wrapper_type'] = 'div';
-  $handler->display->display_options['fields']['field_news_image']['element_wrapper_class'] = 'thumbnail';
   $handler->display->display_options['fields']['field_news_image']['element_default_classes'] = FALSE;
   $handler->display->display_options['fields']['field_news_image']['click_sort_column'] = 'fid';
   $handler->display->display_options['fields']['field_news_image']['settings'] = array(
     'image_style' => 'large',
     'image_link' => '',
   );
+  /* Field: Content: Feature image caption */
+  $handler->display->display_options['fields']['field_news_caption']['id'] = 'field_news_caption';
+  $handler->display->display_options['fields']['field_news_caption']['table'] = 'field_data_field_news_caption';
+  $handler->display->display_options['fields']['field_news_caption']['field'] = 'field_news_caption';
+  $handler->display->display_options['fields']['field_news_caption']['label'] = '';
+  $handler->display->display_options['fields']['field_news_caption']['alter']['text'] = '<div class="caption">[field_news_caption]</div>';
+  $handler->display->display_options['fields']['field_news_caption']['element_type'] = 'div';
+  $handler->display->display_options['fields']['field_news_caption']['element_class'] = 'caption';
+  $handler->display->display_options['fields']['field_news_caption']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_news_caption']['element_default_classes'] = FALSE;
   /* Contextual filter: Content: Nid */
   $handler->display->display_options['arguments']['nid']['id'] = 'nid';
   $handler->display->display_options['arguments']['nid']['table'] = 'node';
   $handler->display->display_options['arguments']['nid']['field'] = 'nid';
-  $handler->display->display_options['arguments']['nid']['default_action'] = 'not found';
   $handler->display->display_options['arguments']['nid']['default_argument_type'] = 'fixed';
   $handler->display->display_options['arguments']['nid']['summary']['number_of_records'] = '0';
   $handler->display->display_options['arguments']['nid']['summary']['format'] = 'default_summary';

@@ -83,7 +83,7 @@ function ug_theme_preprocess_views_view_fields__e1(&$vars) {
 } 
 
 /** 
- * E2a - Listing page for multiple events. 
+ * E2a - Event Image 
  */ 
 function ug_theme_preprocess_views_view_fields__event_image(&$vars) { 
   $vars['image']    = $vars['fields']['field_event_image']->content; 
@@ -259,6 +259,14 @@ function ug_theme_preprocess_views_view_fields__n2(&$vars) {
   $vars['attachments']  = $vars['fields']['field_news_attachment']->content;
   $vars['tags']         = $vars['fields']['field_news_tags']->content;
 }
+
+/** 
+ * N2c - News Image 
+ */ 
+function ug_theme_preprocess_views_view_fields__news_image(&$vars) { 
+  $vars['caption']  = $vars['fields']['field_news_caption']->content; 
+  $vars['image']    = $vars['fields']['field_news_image']->content; 
+} 
 
 
 /**
