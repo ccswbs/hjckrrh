@@ -82,6 +82,14 @@ function ug_theme_preprocess_views_view_fields__e1(&$vars) {
   $vars['body']     = $vars['fields']['field_event_body']->content; 
 } 
 
+/** 
+ * E2a - Event Image 
+ */ 
+function ug_theme_preprocess_views_view_fields__event_image(&$vars) { 
+  $vars['image']    = $vars['fields']['field_event_image']->content; 
+  $vars['caption']    = $vars['fields']['field_event_image_caption']->content; 
+} 
+
 
 /** 
  * Event month list
@@ -251,6 +259,14 @@ function ug_theme_preprocess_views_view_fields__n2(&$vars) {
   $vars['attachments']  = $vars['fields']['field_news_attachment']->content;
   $vars['tags']         = $vars['fields']['field_news_tags']->content;
 }
+
+/** 
+ * N2c - News Image 
+ */ 
+function ug_theme_preprocess_views_view_fields__news_image(&$vars) { 
+  $vars['caption']  = $vars['fields']['field_news_caption']->content; 
+  $vars['image']    = $vars['fields']['field_news_image']->content; 
+} 
 
 
 /**
