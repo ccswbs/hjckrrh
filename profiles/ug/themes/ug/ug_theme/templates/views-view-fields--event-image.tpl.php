@@ -2,7 +2,12 @@
 
 /**
  * @file
- * Default simple view template to all the fields as a row.
+ * Event Image
+ *
+ * Available variables:
+ * - $image: image attached to event
+ * - $caption: image caption attached to event
+ *
  *
  * - $view: The view in use.
  * - $fields: an array of $field objects. Each one contains:
@@ -25,10 +30,10 @@
  */
 ?>
 <?php if (!empty($image)): ?>
-  <figure>
+  <figure class="thumbnail">
     <?php print $image; ?>
     <?php if (!empty($caption)): ?>
-      <figcaption>
+      <figcaption class="caption">
         <?php print $caption; ?>
       </figcaption>
     <?php endif; ?>
