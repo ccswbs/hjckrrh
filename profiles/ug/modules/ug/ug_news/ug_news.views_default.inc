@@ -523,7 +523,7 @@ function ug_news_views_default_views() {
   $handler->display->display_options['arguments']['tid']['default_argument_type'] = 'fixed';
   $handler->display->display_options['arguments']['tid']['summary']['number_of_records'] = '0';
   $handler->display->display_options['arguments']['tid']['summary']['format'] = 'default_summary';
-  $handler->display->display_options['arguments']['tid']['summary_options']['base_path'] = 'faq/category';
+  $handler->display->display_options['arguments']['tid']['summary_options']['base_path'] = 'news/category';
   $handler->display->display_options['arguments']['tid']['summary_options']['count'] = FALSE;
   $handler->display->display_options['arguments']['tid']['summary_options']['items_per_page'] = '25';
   /* Filter criterion: Taxonomy vocabulary: Machine name */
