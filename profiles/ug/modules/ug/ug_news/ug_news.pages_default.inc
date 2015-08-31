@@ -716,11 +716,19 @@ function ug_news_default_page_manager_pages() {
       'settings' => array(
         'input_form' => 'tid',
         'vids' => array(
-          3 => '3',
-          2 => 0,
-          6 => 0,
+          5 => '5',
           4 => 0,
-          5 => 0,
+          2 => 0,
+          3 => 0,
+          8 => 0,
+          9 => 0,
+          6 => 0,
+          10 => 0,
+          11 => 0,
+          12 => 0,
+          13 => 0,
+          14 => 0,
+          7 => 0,
           1 => 0,
         ),
         'breadcrumb' => 1,
@@ -817,8 +825,8 @@ function ug_news_default_page_manager_pages() {
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
-      'override_title' => 0,
-      'override_title_text' => 'Recent News',
+      'override_title' => 1,
+      'override_title_text' => '',
       'override_title_heading' => 'h2',
     );
     $pane->cache = array();
@@ -878,7 +886,7 @@ function ug_news_default_page_manager_pages() {
     $pane->uuid = 'b397e46f-65f4-4a11-81c8-6a4f08c9c0a4';
     $display->content['new-b397e46f-65f4-4a11-81c8-6a4f08c9c0a4'] = $pane;
     $display->panels['right'][1] = 'new-b397e46f-65f4-4a11-81c8-6a4f08c9c0a4';
-  $display->hide_title = PANELS_TITLE_FIXED;
+  $display->hide_title = PANELS_TITLE_PANE;
   $display->title_pane = 'new-e521219a-590e-4275-98f3-96d126f5fffa';
   $handler->conf['display'] = $display;
   $page->default_handlers[$handler->name] = $handler;
