@@ -49,7 +49,7 @@
 
         <ul id="globalnav" class="nav navbar-nav navbar-right nav-clear">
 
-          <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Academics<span class="sr-only"> at University of Guelph</span> <span class="caret"></span></a>
+          <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Academics <span class="sr-only">at University of Guelph</span> <span class="caret"></span></a>
             <ul class="dropdown-menu navbar-default dropdown-menu-left" role="menu">
               <li><a href="//www.uoguelph.ca/admissions/">Undergraduate Admissions</a></li>
               <li><a href="//www.uoguelph.ca/graduatestudies/">Graduate Studies</a></li>
