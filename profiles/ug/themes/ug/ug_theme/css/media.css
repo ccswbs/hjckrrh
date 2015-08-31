@@ -21,6 +21,10 @@
         vertical-align: middle;
     }
 
+    .submitted {
+        color: #666666;   
+    }
+
     /*---------------------
     Thumbnails
     ---------------------**/
