@@ -510,8 +510,8 @@ function ug_news_default_page_manager_pages() {
     $pane->uuid = 'b290ee67-641f-426d-9c2e-31c467d18148';
     $display->content['new-b290ee67-641f-426d-9c2e-31c467d18148'] = $pane;
     $display->panels['right'][1] = 'new-b290ee67-641f-426d-9c2e-31c467d18148';
-  $display->hide_title = PANELS_TITLE_FIXED;
-  $display->title_pane = '0';
+  $display->hide_title = PANELS_TITLE_PANE;
+  $display->title_pane = 'new-50d3147c-e941-4c82-8f90-2e6710a3f20a';
   $handler->conf['display'] = $display;
   $page->default_handlers[$handler->name] = $handler;
   $pages['news'] = $page;
