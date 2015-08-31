@@ -30,7 +30,7 @@
  */
 ?><?php if (!empty($image)): ?>
   <div class="col-md-4">
-    <div class="thumbnail">
+    <div class="media-thumbnail">
       <?php print $image; ?>
     </div>
   </div>
