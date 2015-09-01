@@ -93,6 +93,14 @@
         complete: update,
       },
     });
+
+    $('.slidesjs-slide-link').focus(function() {
+      var plugin = $('#slides').first().data('plugin_slidesjs');
+      plugin.stop();
+      $('.slidesjs-stop').hide();
+      $('.slidesjs-play').show();
+    });
+
     $('.slidesjs-next, .slidesjs-previous').click(function () {
       $('.slidesjs-stop').hide();
       $('.slidesjs-play').show();
