@@ -13,7 +13,31 @@
  * submenus as drop down menus, and only to 2 levels.
  */
 function ug_theme_menu_link__menu_block(array $variables) {
-  return theme_menu_link($variables);
+  //return theme_menu_link($variables);
+  return ug_theme_theme_menu_link($variables);
+}
+
+/**
+ * Source: menu.inc
+ * Add aria-describedby current page label to menu blocks
+ */
+
+function ug_theme_theme_menu_link(array $variables) {
+  $element = $variables['element'];
+  $sub_menu = '';
+
+  if ($element['#below']) {
+    $sub_menu = drupal_render($element['#below']);
+  }
+
+  //0VERRIDE - add aria-describedby current page label
+  if(in_array('active', $element['#attributes']['class'])){
+    $element['#localized_options']['attributes']['aria-describedby'] = 'current_submenu';
+    $sub_menu .= '<div id="current_submenu" class="sr-only"> (current page)</div>';
+  }
+
+  $output = l($element['#title'], $element['#href'], $element['#localized_options']);
+  return '<li' . drupal_attributes($element['#attributes']) . '>' . $output . $sub_menu . "</li>\n";
 }
 
 
@@ -448,8 +472,8 @@ function ug_theme_menu_link(array $variables) {
   if (($element['#href'] == $_GET['q'] || ($element['#href'] == '<front>' && drupal_is_front_page())) && (empty($element['#localized_options']['language']))) {
     $element['#attributes']['class'][] = 'active';
     //OVERRIDE - add aria-describedby attribute
-    $sub_menu .= '<div id="current_label" class="sr-only">current page</div>';
-    $element['#localized_options']['attributes']['aria-describedby'] = 'current_label';
+    $sub_menu .= '<div id="current_localnav" class="sr-only"> (current page)</div>';
+    $element['#localized_options']['attributes']['aria-describedby'] = 'current_localnav';
   }
   $output = l($element['#title'], $element['#href'], $element['#localized_options']);
   return '<li' . drupal_attributes($element['#attributes']) . '>' . $output . $sub_menu . "</li>\n";
