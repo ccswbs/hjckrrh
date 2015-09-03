@@ -33,7 +33,7 @@ function ug_theme_theme_menu_link(array $variables) {
   //0VERRIDE - add aria-describedby current page label
   if(in_array('active', $element['#attributes']['class'])){
     $element['#localized_options']['attributes']['aria-describedby'] = 'current_submenu';
-    $element['#title'] .= '<span id="current_submenu" class="sr-only"> (current page)</span>';
+    $element['#title'] .= '<span id="current_submenu" class="hidden"> (current page)</span>';
     $element['#localized_options']['html'] = TRUE;
   }
 
@@ -474,7 +474,7 @@ function ug_theme_menu_link(array $variables) {
   if (($element['#href'] == $_GET['q'] || ($element['#href'] == '<front>' && drupal_is_front_page())) && (empty($element['#localized_options']['language']))) {
     $element['#attributes']['class'][] = 'active';
     //OVERRIDE - add aria-describedby attribute
-    $element['#title'] .= '<span id="current_localnav" class="sr-only"> (current page)</span>';
+    $element['#title'] .= '<span id="current_localnav" class="hidden"> (current page)</span>';
     $element['#localized_options']['attributes']['aria-describedby'] = 'current_localnav';
     $element['#localized_options']['html'] = TRUE;
   }
