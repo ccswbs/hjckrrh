@@ -33,7 +33,8 @@ function ug_theme_theme_menu_link(array $variables) {
   //0VERRIDE - add aria-describedby current page label
   if(in_array('active', $element['#attributes']['class'])){
     $element['#localized_options']['attributes']['aria-describedby'] = 'current_submenu';
-    $sub_menu .= '<div id="current_submenu" class="sr-only"> (current page)</div>';
+    $element['#title'] .= '<span id="current_submenu" class="sr-only"> (current page)</span>';
+    $element['#localized_options']['html'] = TRUE;
   }
 
   $output = l($element['#title'], $element['#href'], $element['#localized_options']);
@@ -462,6 +463,7 @@ function ug_theme_menu_link(array $variables) {
       // when a submenu link is clicked.
       $element['#localized_options']['attributes']['data-target'] = '#';
       $element['#localized_options']['attributes']['class'][] = 'dropdown-toggle';
+      //OVERRIDE - add aria-expanded attribute
       $element['#localized_options']['attributes']['aria-expanded'] = 'false';
       $element['#localized_options']['attributes']['role'] = 'button';
       $element['#localized_options']['attributes']['data-toggle'] = 'dropdown';
@@ -472,8 +474,9 @@ function ug_theme_menu_link(array $variables) {
   if (($element['#href'] == $_GET['q'] || ($element['#href'] == '<front>' && drupal_is_front_page())) && (empty($element['#localized_options']['language']))) {
     $element['#attributes']['class'][] = 'active';
     //OVERRIDE - add aria-describedby attribute
-    $sub_menu .= '<div id="current_localnav" class="sr-only"> (current page)</div>';
+    $element['#title'] .= '<span id="current_localnav" class="sr-only"> (current page)</span>';
     $element['#localized_options']['attributes']['aria-describedby'] = 'current_localnav';
+    $element['#localized_options']['html'] = TRUE;
   }
   $output = l($element['#title'], $element['#href'], $element['#localized_options']);
   return '<li' . drupal_attributes($element['#attributes']) . '>' . $output . $sub_menu . "</li>\n";
