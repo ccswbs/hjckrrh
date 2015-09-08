@@ -117,7 +117,7 @@
   </div>
 </header>
 
-<header role="banner" id="page-header">
+<header id="page-header">
   <div class="container">
     <?php print render($page['header']); ?>
   </div>
