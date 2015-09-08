@@ -57,10 +57,21 @@
      * Some classes that are available in newer versions of bootstrap.
      */
     @media screen and (min-width: 768px) {
-      /* This visible-xs-* classes are in Bootstrap 3.2.0+ */
+      /* The visible-xs-* classes are in Bootstrap 3.2.0+ */
+      
+      /* Needs to be visible to screen-readers (mimics sr-only class) */
       .visible-xs-inline{
-        display:none !important;
+        /*display:none !important;*/
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0,0,0,0);
+        border: 0;
       }
+
     }
 
   /*---------------------
