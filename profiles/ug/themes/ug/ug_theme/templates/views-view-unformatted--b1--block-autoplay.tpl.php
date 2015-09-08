@@ -81,6 +81,7 @@
 
       // Add aria-live polite announcements to slideshow title
       $('.slidesjs-slide-link').attr('aria-live', 'polite');
+      $('.slidesjs-control').attr('aria-live', 'polite');
 
       <?php 
         if ($slide_count == 1) {
