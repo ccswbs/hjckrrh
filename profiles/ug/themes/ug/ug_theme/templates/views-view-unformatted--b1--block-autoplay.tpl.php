@@ -26,7 +26,6 @@
     <?php print $row; ?>
   <?php endforeach; ?>
   <div class="row slidesjs-navigation slidesjs-navigation-bottom">
-
     <div class="col-sm-9 slidesjs-summary">
         <a href="#" class="slidesjs-slide-link slidesjs-slide-title"></a>
         <p class="slidesjs-slide-text"></p>
@@ -103,12 +102,12 @@
       },
     });
 
-    $('.slidesjs-slide-link').focus(function() {
+    /*$('.slidesjs-slide-link').focus(function() {
       var plugin = $('#slides').first().data('plugin_slidesjs');
       plugin.stop();
       $('.slidesjs-stop').hide();
       $('.slidesjs-play').show();
-    });
+    });*/
 
     $('.slidesjs-next, .slidesjs-previous').click(function () {
       $('.slidesjs-stop').hide();
