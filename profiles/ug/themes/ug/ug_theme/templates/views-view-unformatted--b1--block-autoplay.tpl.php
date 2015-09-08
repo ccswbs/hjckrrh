@@ -61,10 +61,17 @@
 
     function update(number) {
       var active = $('.slidesjs-control').children()[number-1];
+
       $('.slidesjs-slide-number').text(number);
       $('.slidesjs-slide-title').text($(active).data('title'));
       $('.slidesjs-slide-link').attr('href', $(active).data('link'));
       $('.slidesjs-slide-text').text($(active).data('text'));
+
+      // Hide inactive banners during first cycle of slideshow
+      $('.slidesjs-slide').css("display","none");
+      $('.slidesjs-slide').css("z-index","0");
+      $(active).css("display","block");
+      $(active).css("z-index","10");
 
       <?php 
         if ($slide_count == 1) {
