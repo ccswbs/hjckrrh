@@ -9,12 +9,18 @@
   <?php if ($slide_count > 1): ?>
     <div class="row slidesjs-navigation slidesjs-navigation-top">
       <div class="col-sm-2 col-xs-12">
-        <button class="btn btn-block slidesjs-psply">
+        <!-- Add aria-live polite to announce changes to slideshow pause/play button -->
+        <button class="btn btn-block slidesjs-psply" aria-live="polite">
             <span class="slidesjs-stop">
+              <!-- Add slideshow playing notification -->
+              <span id="slide-state-play" class="sr-only">slideshow playing</span>
               <span class="glyphicon glyphicon-pause" aria-hidden="true"></span>
               <?php print t('Pause<span class="visible-xs-inline"> slideshow</span>'); ?>
             </span>
+
             <span class="slidesjs-play" style="display:none;">
+              <!-- Add slideshow paused notification -->
+              <span id="slide-state-pause" class="sr-only">slideshow paused</span>
               <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
               <?php print t('Play<span class="visible-xs-inline"> slideshow</span>'); ?>
             </span>
@@ -26,9 +32,8 @@
     <?php print $row; ?>
   <?php endforeach; ?>
   <div class="row slidesjs-navigation slidesjs-navigation-bottom">
-
     <div class="col-sm-9 slidesjs-summary">
-        <a href="#" class="slidesjs-slide-link slidesjs-slide-title"></a>
+        <a href="#" class="slidesjs-slide-link slidesjs-slide-title" aria-describedby="slide-state-play"></a>
         <p class="slidesjs-slide-text"></p>
     </div>
 
@@ -61,10 +66,22 @@
 
     function update(number) {
       var active = $('.slidesjs-control').children()[number-1];
+
       $('.slidesjs-slide-number').text(number);
-      $('.slidesjs-slide-title').text($(active).data('title'));
+      // Specify slide 1 of total on title
+      $('.slidesjs-slide-link').html('<span class="sr-only">Slide ' + number + ' of ' + <?php print $slide_count ?> + ' - </span>' + $(active).data('title'));
       $('.slidesjs-slide-link').attr('href', $(active).data('link'));
       $('.slidesjs-slide-text').text($(active).data('text'));
+
+      // Hide inactive banners during first cycle of slideshow
+      $('.slidesjs-slide').css("display","none");
+      $('.slidesjs-slide').css("z-index","0");
+      $(active).css("display","block");
+      $(active).css("z-index","10");
+
+      // Add aria-live polite announcements to slideshow title
+      $('.slidesjs-slide-link').attr('aria-live', 'polite');
+      $('.slidesjs-control').attr('aria-live', 'polite');
 
       <?php 
         if ($slide_count == 1) {
@@ -96,12 +113,12 @@
       },
     });
 
-    $('.slidesjs-slide-link').focus(function() {
+    /*$('.slidesjs-slide-link').focus(function() {
       var plugin = $('#slides').first().data('plugin_slidesjs');
       plugin.stop();
       $('.slidesjs-stop').hide();
       $('.slidesjs-play').show();
-    });
+    });*/
 
     $('.slidesjs-next, .slidesjs-previous').click(function () {
       $('.slidesjs-stop').hide();
@@ -114,10 +131,13 @@
         plugin.stop();
         $('.slidesjs-stop').hide();
         $('.slidesjs-play').show();
+        $('.slidesjs-slide-link').attr('aria-describedby', 'slide-state-pause');
+
       } else {
         plugin.play(true);
         $('.slidesjs-play').hide();
         $('.slidesjs-stop').show();
+        $('.slidesjs-slide-link').attr('aria-describedby', 'slide-state-play');
       }
     });
   });
