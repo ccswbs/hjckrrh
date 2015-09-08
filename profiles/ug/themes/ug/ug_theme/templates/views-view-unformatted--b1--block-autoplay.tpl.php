@@ -5,6 +5,8 @@
  * B1 - Image slider (banner) - Block (Autoplay)
  */
 ?>
+
+<h2 class="sr-only">Slideshow Banners</h2>
 <div id="slides">
   <?php if ($slide_count > 1): ?>
     <div class="row slidesjs-navigation slidesjs-navigation-top">
@@ -69,7 +71,8 @@
 
       $('.slidesjs-slide-number').text(number);
       // Specify slide 1 of total on title
-      $('.slidesjs-slide-link').html('<span class="sr-only">Slide ' + number + ' of ' + <?php print $slide_count ?> + ' - </span>' + $(active).data('title'));
+      //$('.slidesjs-slide-title').text($(active).data('title'));
+      $('.slidesjs-slide-title').html('<span class="sr-only">Slide ' + number + ' of ' + <?php print $slide_count ?> + ' - </span>' + $(active).data('title'));
       $('.slidesjs-slide-link').attr('href', $(active).data('link'));
       $('.slidesjs-slide-text').text($(active).data('text'));
 
@@ -78,6 +81,10 @@
       $('.slidesjs-slide').css("z-index","0");
       $(active).css("display","block");
       $(active).css("z-index","10");
+
+      // if ($('.slidesjs-slide-link').children(":focus").length == 0){
+      //   $('.slidesjs-slide-link').text("Has focus");
+      // }
 
       // Add aria-live polite announcements to slideshow title
       $('.slidesjs-slide-link').attr('aria-live', 'polite');
