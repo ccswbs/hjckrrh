@@ -9,7 +9,8 @@
   <?php if ($slide_count > 1): ?>
     <div class="row slidesjs-navigation slidesjs-navigation-top">
       <div class="col-sm-2 col-xs-12">
-        <button class="btn btn-block slidesjs-psply">
+        <!-- Add aria-live polite announcements to slideshow pause/play button -->
+        <button class="btn btn-block slidesjs-psply" aria-live="polite">
             <span class="slidesjs-stop">
               <span class="glyphicon glyphicon-pause" aria-hidden="true"></span>
               <?php print t('Pause<span class="visible-xs-inline"> slideshow</span>'); ?>
@@ -62,7 +63,8 @@
       var active = $('.slidesjs-control').children()[number-1];
 
       $('.slidesjs-slide-number').text(number);
-      $('.slidesjs-slide-title').text($(active).data('title'));
+      //$('.slidesjs-slide-title').text($(active).data('title'));
+      $('.slidesjs-slide-title').html('<span class="sr-only">Slide ' + number + ' - </span>' + $(active).data('title'));
       $('.slidesjs-slide-link').attr('href', $(active).data('link'));
       $('.slidesjs-slide-text').text($(active).data('text'));
 
@@ -71,6 +73,9 @@
       $('.slidesjs-slide').css("z-index","0");
       $(active).css("display","block");
       $(active).css("z-index","10");
+
+      // Add aria-live polite announcements to slideshow title
+      $('.slidesjs-slide-link').attr('aria-live', 'polite');
 
       <?php 
         if ($slide_count == 1) {
