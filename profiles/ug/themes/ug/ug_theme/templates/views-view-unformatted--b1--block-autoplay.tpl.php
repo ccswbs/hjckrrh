@@ -8,6 +8,8 @@
 
 <h2 class="sr-only">Slideshow Banners</h2>
 <div id="slides">
+
+  <!-- Slide Pause/Play Button -->
   <?php if ($slide_count > 1): ?>
     <div class="row slidesjs-navigation slidesjs-navigation-top">
       <div class="col-sm-2 col-xs-12">
@@ -30,15 +32,20 @@
       </div>
     </div>
   <?php endif; ?>
+
+  <!-- Slide Images -->
   <?php foreach ($rows as $id => $row): ?>
     <?php print $row; ?>
   <?php endforeach; ?>
+
   <div class="row slidesjs-navigation slidesjs-navigation-bottom">
+    <!-- Slide Link and Summary -->
     <div class="col-sm-9 slidesjs-summary">
         <a href="#" class="slidesjs-slide-link slidesjs-slide-title" aria-describedby="slide-state-play"></a>
         <p class="slidesjs-slide-text"></p>
     </div>
 
+    <!-- Slide Previous and Next Buttons -->
     <?php if ($slide_count > 1): ?>
       <div class="col-sm-1 col-xs-3">
         <button class="btn btn-block slidesjs-previous" role="button">
@@ -47,7 +54,7 @@
         </button>
       </div>
       <div class="col-sm-1 col-xs-6 slidesjs-pagination">
-        <div class="btn btn-block disabled" aria-hidden="true">
+        <div class="btn btn-block disabled">
           <?php print t('Slide <span class="slidesjs-slide-number">@number</span> of @count',
                       array('@number' => $slide_number, '@count' => $slide_count)); ?>
         </div>
@@ -70,10 +77,10 @@
       var active = $('.slidesjs-control').children()[number-1];
 
       $('.slidesjs-slide-number').text(number);
-      // Provide slide context for assistive tech
-      $('.slidesjs-slide-title').html('<span class="sr-only">Slide ' + number + ' of ' + <?php print $slide_count ?> + ' - </span>' + $(active).data('title'));
+      $('.slidesjs-slide-title').html('<span class="sr-only">Slide ' + number + ' - </span>' + $(active).data('title'));
       $('.slidesjs-slide-link').attr('href', $(active).data('link'));
       $('.slidesjs-slide-text').text($(active).data('text'));
+      $(active).attr('alt','Slide ' + number + ' - ' + $(active).data('alt'));
 
       // Hide inactive banners during first cycle of slideshow
       $('.slidesjs-slide').css("display","none");
