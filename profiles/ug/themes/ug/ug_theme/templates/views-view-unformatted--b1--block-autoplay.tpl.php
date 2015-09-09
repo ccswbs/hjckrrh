@@ -41,7 +41,7 @@
   <div class="row slidesjs-navigation slidesjs-navigation-bottom">
     <!-- Slide Link and Summary -->
     <div class="col-sm-9 slidesjs-summary">
-        <a href="#" class="slidesjs-slide-link slidesjs-slide-title" aria-describedby="slide-state-play"></a>
+        <a href="#" class="slidesjs-slide-link slidesjs-slide-title"></a>
         <p class="slidesjs-slide-text"></p>
     </div>
 
