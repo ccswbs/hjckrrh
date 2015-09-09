@@ -34,5 +34,6 @@
      data-title="<?php print $title; ?>"
      data-link="<?php print $link; ?>"
      data-text="<?php print $text; ?>"
+     data-alt="<?php print $alt; ?>"
      src="<?php print $image; ?>"
 >

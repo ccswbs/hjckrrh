@@ -5,12 +5,16 @@
  * B1 - Image slider (banner) - Block (Autoplay)
  */
 ?>
+
+<h2 class="sr-only">Slideshow Banners</h2>
 <div id="slides">
+
+  <!-- Slide Pause/Play Button -->
   <?php if ($slide_count > 1): ?>
     <div class="row slidesjs-navigation slidesjs-navigation-top">
       <div class="col-sm-2 col-xs-12">
         <!-- Add aria-live polite to announce changes to slideshow pause/play button -->
-        <button class="btn btn-block slidesjs-psply" aria-live="polite">
+        <button class="btn btn-block slidesjs-psply">
             <span class="slidesjs-stop">
               <!-- Add slideshow playing notification -->
               <span id="slide-state-play" class="sr-only">slideshow playing</span>
@@ -28,15 +32,20 @@
       </div>
     </div>
   <?php endif; ?>
+
+  <!-- Slide Images -->
   <?php foreach ($rows as $id => $row): ?>
     <?php print $row; ?>
   <?php endforeach; ?>
+
   <div class="row slidesjs-navigation slidesjs-navigation-bottom">
+    <!-- Slide Link and Summary -->
     <div class="col-sm-9 slidesjs-summary">
         <a href="#" class="slidesjs-slide-link slidesjs-slide-title" aria-describedby="slide-state-play"></a>
         <p class="slidesjs-slide-text"></p>
     </div>
 
+    <!-- Slide Previous and Next Buttons -->
     <?php if ($slide_count > 1): ?>
       <div class="col-sm-1 col-xs-3">
         <button class="btn btn-block slidesjs-previous" role="button">
@@ -68,10 +77,10 @@
       var active = $('.slidesjs-control').children()[number-1];
 
       $('.slidesjs-slide-number').text(number);
-      // Specify slide 1 of total on title
-      $('.slidesjs-slide-link').html('<span class="sr-only">Slide ' + number + ' of ' + <?php print $slide_count ?> + ' - </span>' + $(active).data('title'));
+      $('.slidesjs-slide-title').html('<span class="sr-only">Slide ' + number + ' - </span>' + $(active).data('title'));
       $('.slidesjs-slide-link').attr('href', $(active).data('link'));
       $('.slidesjs-slide-text').text($(active).data('text'));
+      $(active).attr('alt','Slide ' + number + ' - ' + $(active).data('alt'));
 
       // Hide inactive banners during first cycle of slideshow
       $('.slidesjs-slide').css("display","none");
@@ -79,9 +88,21 @@
       $(active).css("display","block");
       $(active).css("z-index","10");
 
-      // Add aria-live polite announcements to slideshow title
-      $('.slidesjs-slide-link').attr('aria-live', 'polite');
-      $('.slidesjs-control').attr('aria-live', 'polite');
+      // Only add aria-live polite announcements when focus is on slideshow
+      var focusedElement = document.activeElement;
+      
+      if ($(focusedElement).is($('#slides').find(':focus'))) {
+        // Add aria-live polite announcements to slideshow title
+        /*$('.slidesjs-slide-link').attr('aria-live', 'polite');
+        $('.slidesjs-control').attr('aria-live', 'polite');
+        $('.slidesjs-psply').attr('aria-live', 'polite');*/
+        $('#slides').attr('aria-live','polite');
+      }else{
+        /*$('.slidesjs-slide-link').attr('aria-live', 'off');
+        $('.slidesjs-control').attr('aria-live', 'off');
+        $('.slidesjs-psply').attr('aria-live', 'off');*/
+        $('#slides').attr('aria-live','off');
+      }
 
       <?php 
         if ($slide_count == 1) {
@@ -113,31 +134,32 @@
       },
     });
 
-    /*$('.slidesjs-slide-link').focus(function() {
-      var plugin = $('#slides').first().data('plugin_slidesjs');
-      plugin.stop();
-      $('.slidesjs-stop').hide();
-      $('.slidesjs-play').show();
-    });*/
-
+    /* Next/Previous - Click */
     $('.slidesjs-next, .slidesjs-previous').click(function () {
       $('.slidesjs-stop').hide();
       $('.slidesjs-play').show();
     });
 
+    /* Pause/Play - On Focus */
+    $('.slidesjs-psply').focus(function() {
+      // $('.slidesjs-slide-link').attr('aria-live', 'polite');
+      // $('.slidesjs-control').attr('aria-live', 'polite');
+      // $('.slidesjs-psply').attr('aria-live', 'polite');
+      $('#slides').attr('aria-live','polite');
+    });
+
+    /* Pause/Play - Click */
     $('.slidesjs-psply').click(function () {
       var plugin = $('#slides').first().data('plugin_slidesjs');
       if ($.data(plugin, 'playing')) {
         plugin.stop();
         $('.slidesjs-stop').hide();
         $('.slidesjs-play').show();
-        $('.slidesjs-slide-link').attr('aria-describedby', 'slide-state-pause');
 
       } else {
         plugin.play(true);
         $('.slidesjs-play').hide();
         $('.slidesjs-stop').show();
-        $('.slidesjs-slide-link').attr('aria-describedby', 'slide-state-play');
       }
     });
   });
