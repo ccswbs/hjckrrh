@@ -78,10 +78,13 @@
       var focusedElement = document.activeElement;
 
       $('.slidesjs-slide-number').text(number);
-      $('.slidesjs-slide-title').html('<span class="sr-only">Slide ' + number + ' - </span>' + $(active).data('title'));
+      $('.slidesjs-slide-title').html('<span class="sr-only">slide ' + number + ' headline - </span>' + $(active).data('title'));
       $('.slidesjs-slide-link').attr('href', $(active).data('link'));
       $('.slidesjs-slide-text').text($(active).data('text'));
-      $(active).attr('alt','Slide ' + number + ' - ' + $(active).data('alt'));
+
+      if($(active).data('alt') != ""){
+        $(active).attr('alt','slide ' + number + ' banner - ' + $(active).data('alt'));
+      }
 
       // Hide inactive banners during first cycle of slideshow
       $('.slidesjs-slide').css("display","none");
