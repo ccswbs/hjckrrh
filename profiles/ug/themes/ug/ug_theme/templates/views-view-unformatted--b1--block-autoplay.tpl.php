@@ -75,6 +75,7 @@
 
     function update(number) {
       var active = $('.slidesjs-control').children()[number-1];
+      var focusedElement = document.activeElement;
 
       $('.slidesjs-slide-number').text(number);
       $('.slidesjs-slide-title').html('<span class="sr-only">Slide ' + number + ' - </span>' + $(active).data('title'));
@@ -88,19 +89,10 @@
       $(active).css("display","block");
       $(active).css("z-index","10");
 
-      // Only add aria-live polite announcements when focus is on slideshow
-      var focusedElement = document.activeElement;
-      
+      // Only add aria-live polite announcements when focus is on slideshow      
       if ($(focusedElement).is($('#slides').find(':focus'))) {
-        // Add aria-live polite announcements to slideshow title
-        /*$('.slidesjs-slide-link').attr('aria-live', 'polite');
-        $('.slidesjs-control').attr('aria-live', 'polite');
-        $('.slidesjs-psply').attr('aria-live', 'polite');*/
         $('#slides').attr('aria-live','polite');
       }else{
-        /*$('.slidesjs-slide-link').attr('aria-live', 'off');
-        $('.slidesjs-control').attr('aria-live', 'off');
-        $('.slidesjs-psply').attr('aria-live', 'off');*/
         $('#slides').attr('aria-live','off');
       }
 
@@ -142,10 +134,14 @@
 
     /* Pause/Play - On Focus */
     $('.slidesjs-psply').focus(function() {
-      // $('.slidesjs-slide-link').attr('aria-live', 'polite');
-      // $('.slidesjs-control').attr('aria-live', 'polite');
-      // $('.slidesjs-psply').attr('aria-live', 'polite');
+      var plugin = $('#slides').first().data('plugin_slidesjs');
       $('#slides').attr('aria-live','polite');
+
+      if ($.data(plugin, 'playing')) {
+        plugin.stop();
+        $('.slidesjs-stop').hide();
+        $('.slidesjs-play').show();
+      }
     });
 
     /* Pause/Play - Click */
