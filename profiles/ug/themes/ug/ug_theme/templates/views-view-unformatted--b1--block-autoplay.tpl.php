@@ -99,6 +99,7 @@
 
         //$('#slides').attr('aria-live','polite');
         $('.slidesjs-summary').attr('aria-live','polite');
+        $('.slidesjs-psply').attr('aria-live','polite');
 
         // Add aria-live assertive announcements when focus is on previous/next controls
         if (!($.data(plugin, 'playing'))) {
@@ -111,6 +112,7 @@
         // IF FOCUS OFF slideshow (exclusive)   
         //$('#slides').attr('aria-live','off');
         $('.slidesjs-summary').attr('aria-live','off');
+        $('.slidesjs-psply').attr('aria-live','off');
       }
 
       <?php 
