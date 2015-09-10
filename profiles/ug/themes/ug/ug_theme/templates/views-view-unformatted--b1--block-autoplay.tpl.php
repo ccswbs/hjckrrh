@@ -8,23 +8,19 @@
 
 <h2 class="sr-only">Slideshow Banners</h2>
 <div id="slides">
-
   <!-- Slide Pause/Play Button -->
   <?php if ($slide_count > 1): ?>
     <div class="row slidesjs-navigation slidesjs-navigation-top">
       <div class="col-sm-2 col-xs-12">
-        <!-- Add aria-live polite to announce changes to slideshow pause/play button -->
-        <button class="btn btn-block slidesjs-psply">
+        <button class="btn btn-block slidesjs-psply" aria-live="assertive">
+            <span id="slide-state" class="sr-only">slideshow playing</span>
+
             <span class="slidesjs-stop">
-              <!-- Add slideshow playing notification -->
-              <span id="slide-state-play" class="sr-only">slideshow playing</span>
               <span class="glyphicon glyphicon-pause" aria-hidden="true"></span>
               <?php print t('Pause<span class="visible-xs-inline"> slideshow</span>'); ?>
             </span>
 
             <span class="slidesjs-play" style="display:none;">
-              <!-- Add slideshow paused notification -->
-              <span id="slide-state-pause" class="sr-only">slideshow paused</span>
               <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
               <?php print t('Play<span class="visible-xs-inline"> slideshow</span>'); ?>
             </span>
@@ -93,26 +89,21 @@
       $(active).css("display","block");
       $(active).css("z-index","10");
 
+      // $('.slidesjs-psply').attr('aria-live','polite');
+
       // IF FOCUS ON slideshow (exclusive)   
       if ($(focusedElement).is($('#slides').find(':focus'))) {
         var plugin = $('#slides').first().data('plugin_slidesjs');
-
-        //$('#slides').attr('aria-live','polite');
         $('.slidesjs-summary').attr('aria-live','polite');
-        $('.slidesjs-psply').attr('aria-live','polite');
 
-        // Add aria-live assertive announcements when focus is on previous/next controls
+        /**** NEXT/PREVIOUS Buttons - Reinforce assertive aria-live ON FOCUS ****/
         if (!($.data(plugin, 'playing'))) {
           if(($(focusedElement).is($('.slidesjs-next'))) || ($(focusedElement).is($('.slidesjs-previous')))) {
-            //$('#slides').attr('aria-live','assertive');
             $('.slidesjs-summary').attr('aria-live','assertive');
           }
         }
-      }else{
-        // IF FOCUS OFF slideshow (exclusive)   
-        //$('#slides').attr('aria-live','off');
+      }else{  
         $('.slidesjs-summary').attr('aria-live','off');
-        $('.slidesjs-psply').attr('aria-live','off');
       }
 
       <?php 
@@ -145,60 +136,73 @@
       },
     });
 
-    /* Slides - On Loss of Focus (Blur) */
-    // $('#slides').blur(function (){
-    //   $('#slides').attr('aria-live','off');
-    // });
+    function pauseSlides() {
+      var plugin = $('#slides').first().data('plugin_slidesjs');
+      if ($.data(plugin, 'playing')) {
+        plugin.stop();
+        $('#slide-state').text('slideshow paused');
+        $('.slidesjs-stop').hide();
+        $('.slidesjs-play').show();
+      } 
+    }
 
-    /* Next/Previous - On Focus */
-    $('.slidesjs-next, .slidesjs-previous').focus(function () {
+    function playSlides() {
+      var plugin = $('#slides').first().data('plugin_slidesjs');
+      var timer;
+
+      if (!($.data(plugin, 'playing'))) {
+        // plugin.play(true);
+        clearTimeout(timer);
+        timer = setTimeout(function(){plugin.play(true);}, 4000); 
+        $('#slide-state').text('slideshow playing');
+        $('.slidesjs-play').hide();
+        $('.slidesjs-stop').show();
+      }
+    }
+
+    /**** Slide LINK - ON FOCUS ****/
+    $('.slidesjs-slide-link').focus(function () {
+      pauseSlides();
+    });
+
+    /**** NEXT/PREVIOUS Buttons - ON FOCUS ****/
+    $('.slidesjs-next, .slidesjs-previous').focus(function() {
       var plugin = $('#slides').first().data('plugin_slidesjs');
 
-      /* If slideshow paused - controls are assertive */
+      /* IF PAUSED - switch to aria-live ASSERTIVE Title/Summary */
       if (!($.data(plugin, 'playing'))) {
-        //$('#slides').attr('aria-live','assertive');
         $('.slidesjs-summary').attr('aria-live','assertive');
       }
     });
 
-    /* Next/Previous - On Loss of Focus (Blur) */
+    /**** NEXT/PREVIOUS - FOCUS OFF (Blur) ****/
     $('.slidesjs-next, .slidesjs-previous').blur(function () {
-      //$('#slides').attr('aria-live','polite');
+      /* switch to aria-live POLITE Title/Summary */
       $('.slidesjs-summary').attr('aria-live','polite');
     });
 
-    /* Next/Previous - Click */
-    $('.slidesjs-next, .slidesjs-previous').click(function () {
-      $('.slidesjs-stop').hide();
-      $('.slidesjs-play').show();
-      //$('#slides').attr('aria-live','assertive');
+    /**** NEXT/PREVIOUS - CLICK ****/
+    $('.slidesjs-next, .slidesjs-previous').click(function() {
+      pauseSlides();
+
+      /* switch to aria-live ASSERTIVE Title/Summary */
       $('.slidesjs-summary').attr('aria-live','assertive');
     });
 
-    /* Pause/Play - On Focus */
+    /**** PAUSE/PLAY - ON FOCUS ****/
     $('.slidesjs-psply').focus(function() {
-      var plugin = $('#slides').first().data('plugin_slidesjs');
-      //$('#slides').attr('aria-live','polite');
-
-      if ($.data(plugin, 'playing')) {
-        plugin.stop();
-        $('.slidesjs-stop').hide();
-        $('.slidesjs-play').show();
-      }
+      $('.slidesjs-psply').attr('aria-live','assertive');
+      pauseSlides();
     });
 
-    /* Pause/Play - Click */
-    $('.slidesjs-psply').click(function () {
+    /**** PAUSE/PLAY - CLICK ****/
+    $('.slidesjs-psply').click(function() {
       var plugin = $('#slides').first().data('plugin_slidesjs');
-      if ($.data(plugin, 'playing')) {
-        plugin.stop();
-        $('.slidesjs-stop').hide();
-        $('.slidesjs-play').show();
 
+      if ($.data(plugin, 'playing')) {
+        pauseSlides();
       } else {
-        plugin.play(true);
-        $('.slidesjs-play').hide();
-        $('.slidesjs-stop').show();
+        playSlides();
       }
     });
   });
