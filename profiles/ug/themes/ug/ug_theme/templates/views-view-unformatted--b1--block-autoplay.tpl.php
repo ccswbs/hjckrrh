@@ -89,8 +89,6 @@
       $(active).css("display","block");
       $(active).css("z-index","10");
 
-      // $('.slidesjs-psply').attr('aria-live','polite');
-
       // IF FOCUS ON slideshow (exclusive)   
       if ($(focusedElement).is($('#slides').find(':focus'))) {
         var plugin = $('#slides').first().data('plugin_slidesjs');
@@ -138,6 +136,7 @@
 
     function pauseSlides() {
       var plugin = $('#slides').first().data('plugin_slidesjs');
+      
       if ($.data(plugin, 'playing')) {
         plugin.stop();
         $('#slide-state').text('slideshow paused');
@@ -148,12 +147,10 @@
 
     function playSlides() {
       var plugin = $('#slides').first().data('plugin_slidesjs');
-      var timer;
 
       if (!($.data(plugin, 'playing'))) {
-        // plugin.play(true);
-        clearTimeout(timer);
-        timer = setTimeout(function(){plugin.play(true);}, 4000); 
+        //set to false to wait full interval before advancing to next slide 
+        plugin.play(false);
         $('#slide-state').text('slideshow playing');
         $('.slidesjs-play').hide();
         $('.slidesjs-stop').show();
@@ -201,7 +198,7 @@
 
       if ($.data(plugin, 'playing')) {
         pauseSlides();
-      } else {
+      }else {
         playSlides();
       }
     });
