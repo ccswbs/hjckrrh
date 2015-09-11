@@ -80,18 +80,18 @@
       // $('.slidesjs-pagination .btn').html('Slide <span class="slidesjs-slide-number">' + number + '</span> of ' + <?php print $slide_count ?>);
 
       // Add slide # context to title link
-      $('.slidesjs-slide-title').html('<span class="sr-only">Slide ' + number + ' headline – </span>' + $(active).data('title'));
+      $('.slidesjs-slide-title').html('<span class="sr-only">Slide ' + number + ' headline: </span>' + $(active).data('title'));
       $('.slidesjs-slide-link').attr('href', $(active).data('link'));
       
       // Add slide # context to alternative text (if not blank)
       if($(active).data('alt') != ""){
-        $(active).attr('alt','Slide ' + number + ' banner – ' + $(active).data('alt'));
+        $(active).attr('alt','Slide ' + number + ' banner: ' + $(active).data('alt'));
       }
 
       // Add slide # context to summary text (if not blank)
       if($(active).data('text') != ""){
         // $('.slidesjs-slide-text').text($(active).data('text'));
-        $('.slidesjs-slide-text').html('<span class="sr-only">Slide ' + number + ' summary – </span>' + $(active).data('text'));
+        $('.slidesjs-slide-text').html('<span class="sr-only">Slide ' + number + ' summary: </span>' + $(active).data('text'));
       }
 
       // Hide inactive banners during first cycle of slideshow
@@ -104,20 +104,26 @@
       if ($(focusedElement).is($('#slides').find(':focus'))) {
         var plugin = $('#slides').first().data('plugin_slidesjs');
         
-        $('.slidesjs-summary').attr('aria-live','polite');
+        // $('.slidesjs-summary').attr('aria-live','polite');
+        $('.slidesjs-slide-title').attr('aria-live','polite');
+        $('.slidesjs-slide-text').attr('aria-live','polite');
         $('.slidesjs-control').attr('aria-live','polite');
         // $('#slides').attr('aria-live','polite');
 
         /**** NEXT/PREVIOUS Buttons - Reinforce assertive aria-live ON FOCUS ****/
         if (!($.data(plugin, 'playing'))) {
           if(($(focusedElement).is($('.slidesjs-next'))) || ($(focusedElement).is($('.slidesjs-previous')))) {
-            $('.slidesjs-summary').attr('aria-live','assertive');
+            // $('.slidesjs-summary').attr('aria-live','assertive');
+            $('.slidesjs-slide-title').attr('aria-live','assertive');
+            $('.slidesjs-slide-text').attr('aria-live','assertive');
             $('.slidesjs-control').attr('aria-live','assertive');
             // $('#slides').attr('aria-live','assertive');
           }
         }
       }else{  
-        $('.slidesjs-summary').attr('aria-live','off');
+        // $('.slidesjs-summary').attr('aria-live','off');
+        $('.slidesjs-slide-title').attr('aria-live','off');
+        $('.slidesjs-slide-text').attr('aria-live','off');
         $('.slidesjs-control').attr('aria-live','off');
         // $('#slides').attr('aria-live','off');
       }
@@ -212,7 +218,9 @@
 
         /* IF PAUSED - switch to aria-live ASSERTIVE Title/Summary */
         if (!($.data(plugin, 'playing'))) {
-          $('.slidesjs-summary').attr('aria-live','assertive');
+          // $('.slidesjs-summary').attr('aria-live','assertive');
+          $('.slidesjs-slide-title').attr('aria-live','assertive');
+          $('.slidesjs-slide-text').attr('aria-live','assertive');
           $('.slidesjs-control').attr('aria-live','assertive');
           // $('#slides').attr('aria-live','assertive');
         }
@@ -221,7 +229,9 @@
       /*-- FOCUS OFF (Blur) --*/
       $('.slidesjs-next, .slidesjs-previous').blur(function () {
         /* switch to aria-live POLITE Title/Summary */
-        $('.slidesjs-summary').attr('aria-live','polite');
+        // $('.slidesjs-summary').attr('aria-live','polite');
+        $('.slidesjs-slide-title').attr('aria-live','polite');
+        $('.slidesjs-slide-text').attr('aria-live','polite');
         $('.slidesjs-control').attr('aria-live','polite');
         // $('#slides').attr('aria-live','polite');
       });
@@ -231,7 +241,9 @@
         pauseSlides();
 
         /* switch to aria-live ASSERTIVE Title/Summary */
-        $('.slidesjs-summary').attr('aria-live','assertive');
+        // $('.slidesjs-summary').attr('aria-live','assertive');
+        $('.slidesjs-slide-title').attr('aria-live','assertive');
+        $('.slidesjs-slide-text').attr('aria-live','assertive');
         $('.slidesjs-control').attr('aria-live','assertive');
         // $('#slides').attr('aria-live','assertive');
       });
