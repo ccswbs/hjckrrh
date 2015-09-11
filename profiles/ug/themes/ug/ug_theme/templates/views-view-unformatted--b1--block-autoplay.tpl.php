@@ -96,8 +96,10 @@
       // IF FOCUS ON slideshow (exclusive)   
       if ($(focusedElement).is($('#slides').find(':focus'))) {
         var plugin = $('#slides').first().data('plugin_slidesjs');
-        // $('.slidesjs-summary').attr('aria-live','polite');
-        $('#slides').attr('aria-live','polite');
+        
+        $('.slidesjs-summary').attr('aria-live','polite');
+        $('.slidesjs-control').attr('aria-live','polite');
+        // $('#slides').attr('aria-live','polite');
 
         /**** NEXT/PREVIOUS Buttons - Reinforce assertive aria-live ON FOCUS ****/
         if (!($.data(plugin, 'playing'))) {
