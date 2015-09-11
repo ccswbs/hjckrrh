@@ -13,7 +13,34 @@
  * submenus as drop down menus, and only to 2 levels.
  */
 function ug_theme_menu_link__menu_block(array $variables) {
-  return theme_menu_link($variables);
+  //return theme_menu_link($variables);
+  return ug_theme_theme_menu_link($variables);
+}
+
+/**
+ * Source: menu.inc
+ * [DISABLED] Add aria-describedby current page label to menu blocks
+ * Removed aria-describedby label in exchange for sr-only text
+ */
+
+function ug_theme_theme_menu_link(array $variables) {
+  $element = $variables['element'];
+  $sub_menu = '';
+
+  if ($element['#below']) {
+    $sub_menu = drupal_render($element['#below']);
+  }
+
+  //0VERRIDE - add aria-describedby current page label
+  if(in_array('active', $element['#attributes']['class'])){
+    //$element['#localized_options']['attributes']['aria-describedby'] = 'current_submenu';
+    //$element['#title'] .= '<span id="current_submenu" class="hidden"> (current page)</span>';
+    $element['#title'] .= '<span class="sr-only"> (current page)</span>';
+    $element['#localized_options']['html'] = TRUE;
+  }
+
+  $output = l($element['#title'], $element['#href'], $element['#localized_options']);
+  return '<li' . drupal_attributes($element['#attributes']) . '>' . $output . $sub_menu . "</li>\n";
 }
 
 
@@ -413,6 +440,8 @@ function ug_theme_preprocess_node (&$variables) {
 
 /**
  * Add aria-expanded to Drupal menus.
+ * [DISABLED] Add aria-describedby label to current menu item.
+ * Removed aria-describedby label in exchange for sr-only text
  */
 function ug_theme_menu_link(array $variables) {
   $element = $variables['element'];
@@ -437,6 +466,7 @@ function ug_theme_menu_link(array $variables) {
       // when a submenu link is clicked.
       $element['#localized_options']['attributes']['data-target'] = '#';
       $element['#localized_options']['attributes']['class'][] = 'dropdown-toggle';
+      //OVERRIDE - add aria-expanded attribute
       $element['#localized_options']['attributes']['aria-expanded'] = 'false';
       $element['#localized_options']['attributes']['role'] = 'button';
       $element['#localized_options']['attributes']['data-toggle'] = 'dropdown';
@@ -446,6 +476,11 @@ function ug_theme_menu_link(array $variables) {
   // @see https://drupal.org/node/1896674
   if (($element['#href'] == $_GET['q'] || ($element['#href'] == '<front>' && drupal_is_front_page())) && (empty($element['#localized_options']['language']))) {
     $element['#attributes']['class'][] = 'active';
+    //OVERRIDE - add aria-describedby attribute
+    //$element['#title'] .= '<span id="current_localnav" class="hidden"> (current page)</span>';
+    //$element['#localized_options']['attributes']['aria-describedby'] = 'current_localnav';
+    $element['#title'] .= '<span class="sr-only"> (current page)</span>';
+    $element['#localized_options']['html'] = TRUE;
   }
   $output = l($element['#title'], $element['#href'], $element['#localized_options']);
   return '<li' . drupal_attributes($element['#attributes']) . '>' . $output . $sub_menu . "</li>\n";
