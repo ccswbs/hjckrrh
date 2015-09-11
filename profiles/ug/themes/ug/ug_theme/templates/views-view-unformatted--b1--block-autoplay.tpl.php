@@ -78,13 +78,20 @@
 
       $('.slidesjs-slide-number').text(number);
       // $('.slidesjs-pagination .btn').html('Slide <span class="slidesjs-slide-number">' + number + '</span> of ' + <?php print $slide_count ?>);
+
+      // Add slide # context to title link
       $('.slidesjs-slide-title').html('<span class="sr-only">slide ' + number + ' headline - </span>' + $(active).data('title'));
       $('.slidesjs-slide-link').attr('href', $(active).data('link'));
-      // $('.slidesjs-slide-text').text($(active).data('text'));
-      $('.slidesjs-slide-text').html('<span class="sr-only">slide ' + number + ' summary - </span>' + $(active).data('text'));
-
+      
+      // Add slide # context to alternative text (if not blank)
       if($(active).data('alt') != ""){
         $(active).attr('alt','slide ' + number + ' banner - ' + $(active).data('alt'));
+      }
+
+      // Add slide # context to summary text (if not blank)
+      if($(active).data('text') != ""){
+        // $('.slidesjs-slide-text').text($(active).data('text'));
+        $('.slidesjs-slide-text').html('<span class="sr-only">slide ' + number + ' summary - </span>' + $(active).data('text'));
       }
 
       // Hide inactive banners during first cycle of slideshow
