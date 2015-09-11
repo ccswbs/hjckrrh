@@ -76,11 +76,12 @@
       var active = $('.slidesjs-control').children()[number-1];
       var focusedElement = document.activeElement;
 
-      //$('.slidesjs-slide-number').text(number);
-      $('.slidesjs-pagination .btn').html('Slide <span class="slidesjs-slide-number">' + number + '</span> of ' + <?php print $slide_count ?>);
+      $('.slidesjs-slide-number').text(number);
+      // $('.slidesjs-pagination .btn').html('Slide <span class="slidesjs-slide-number">' + number + '</span> of ' + <?php print $slide_count ?>);
       $('.slidesjs-slide-title').html('<span class="sr-only">slide ' + number + ' headline - </span>' + $(active).data('title'));
       $('.slidesjs-slide-link').attr('href', $(active).data('link'));
-      $('.slidesjs-slide-text').text($(active).data('text'));
+      // $('.slidesjs-slide-text').text($(active).data('text'));
+      $('.slidesjs-slide-text').html('<span class="sr-only">slide ' + number + ' summary - </span>' + $(active).data('text'));
 
       if($(active).data('alt') != ""){
         $(active).attr('alt','slide ' + number + ' banner - ' + $(active).data('alt'));
