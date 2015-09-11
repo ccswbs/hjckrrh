@@ -69,7 +69,6 @@
 <script>
   jQuery(function($) {
 
-    // var testcounter = 0;
     var mousePause = false;
     var mouseUpNxtPrv = false;
 
@@ -140,11 +139,6 @@
 
     function pauseSlides() {
       var plugin = $('#slides').first().data('plugin_slidesjs');
-      // if (testcounter <= 3){
-        // alert("pause 1b - pauseSlides()");
-        // alert($.data(plugin, 'playing'));
-      // }
-
 
       /* Bug Fix for Mouse Up on Next/Previous Pause Glitch
 
@@ -159,126 +153,99 @@
       */
 
       if (($.data(plugin, 'playing'))||(mouseUpNxtPrv == true)) {
-        // alert("pause 2b - stop slides");
         plugin.stop();
-        // alert("pause 3b - switch to play btn");
         $('#slide-state').text('slideshow paused');
         $('.slidesjs-stop').hide();
         $('.slidesjs-play').show();
-        // alert("pause 4b - end of pauseSlides()");
         mouseUpNxtPrv = false;
-      }//else{
-
-      
-      // testcounter++;
-      // }
+      }
     }
 
     function playSlides() {
       var plugin = $('#slides').first().data('plugin_slidesjs');
 
-      // alert("play 1 - playSlides()");
       if (!($.data(plugin, 'playing'))) {
-
-        // alert("play 2 - play slides");
         //set to false to wait full interval before advancing to next slide 
         plugin.play(false);
-        // alert("play 3 - switch to pause btn");
         $('#slide-state').text('slideshow playing');
         $('.slidesjs-play').hide();
         $('.slidesjs-stop').show();
-        // alert("play 4 - end of playSlides()");
       }
     }
 
-    /**** Slide LINK - ON FOCUS ****/
-    $('.slidesjs-slide-link').focus(function () {
-      pauseSlides();
-    });
+    /**** Slide LINK ****/
 
+      /*-- Focus ON --*/    
+      $('.slidesjs-slide-link').focus(function () {
+        pauseSlides();
+      });
 
-    /**** NEXT/PREVIOUS Buttons - Mouse/Key Trackers ****/
-    $(".slidesjs-previous, .slidesjs-next").mouseup( function() {
-      mouseUpNxtPrv = true;
-    });
+    /**** NEXT/PREVIOUS Buttons ****/
 
-    $(".slidesjs-previous, .slidesjs-next").keydown( function() {
-      mouseUpNxtPrv = false;
-    });
+      /*-- Mouse/Key Trackers --*/
+      $(".slidesjs-previous, .slidesjs-next").mouseup( function() {
+        mouseUpNxtPrv = true;
+      });
 
-    /**** NEXT/PREVIOUS Buttons - ON FOCUS ****/
-    $('.slidesjs-next, .slidesjs-previous').focus(function() {
-      var plugin = $('#slides').first().data('plugin_slidesjs');
+      $(".slidesjs-previous, .slidesjs-next").keydown( function() {
+        mouseUpNxtPrv = false;
+      });
 
-      /* IF PAUSED - switch to aria-live ASSERTIVE Title/Summary */
-      if (!($.data(plugin, 'playing'))) {
+      /*-- Focus ON --*/
+      $('.slidesjs-next, .slidesjs-previous').focus(function() {
+        var plugin = $('#slides').first().data('plugin_slidesjs');
+
+        /* IF PAUSED - switch to aria-live ASSERTIVE Title/Summary */
+        if (!($.data(plugin, 'playing'))) {
+          $('.slidesjs-summary').attr('aria-live','assertive');
+        }
+      });
+
+      /*-- FOCUS OFF (Blur) --*/
+      $('.slidesjs-next, .slidesjs-previous').blur(function () {
+        /* switch to aria-live POLITE Title/Summary */
+        $('.slidesjs-summary').attr('aria-live','polite');
+      });
+
+      /*-- CLICK --*/
+      $('.slidesjs-next, .slidesjs-previous').click(function() {
+        pauseSlides();
+
+        /* switch to aria-live ASSERTIVE Title/Summary */
         $('.slidesjs-summary').attr('aria-live','assertive');
-      }
-    });
+      });
 
-    /**** NEXT/PREVIOUS - FOCUS OFF (Blur) ****/
-    $('.slidesjs-next, .slidesjs-previous').blur(function () {
-      /* switch to aria-live POLITE Title/Summary */
-      $('.slidesjs-summary').attr('aria-live','polite');
-    });
+    /**** PAUSE/PLAY ****/
 
-    /**** NEXT/PREVIOUS - CLICK ****/
-    $('.slidesjs-next, .slidesjs-previous').click(function() {
-      // alert("next/prev - CLICK");
+      /*-- Mouse/Key Trackers --*/
+      $( ".slidesjs-psply" ).mousedown(function(){
+        mousePause = true;
+      });
 
-      // if (($.data(plugin, 'playing') && (mouseUser == false))) {
-        // pauseSlides();
-      // }
+      $( ".slidesjs-psply" ).keydown(function(){
+        mousePause = false;
+      });
 
-      // testcounter = 0;
-      pauseSlides();
+      /*-- Focus ON --*/
+      $('.slidesjs-psply').focus(function() {
+        var plugin = $('#slides').first().data('plugin_slidesjs');
 
-      /* switch to aria-live ASSERTIVE Title/Summary */
-      $('.slidesjs-summary').attr('aria-live','assertive');
-    });
+        $('.slidesjs-psply').attr('aria-live','assertive');
+        if (($.data(plugin, 'playing') && (mousePause == false))) {
+          pauseSlides();
+        }
+      });
 
-    /**** PAUSE/PLAY - Mouse/Key Trackers ****/
-    $( ".slidesjs-psply" ).mousedown(function(){
-      mousePause = true;
-    });
+      /*-- CLICK --*/
+      $('.slidesjs-psply').click(function() {
+        var plugin = $('#slides').first().data('plugin_slidesjs');
 
-    $( ".slidesjs-psply" ).keydown(function(){
-      mousePause = false;
-    });
-
-    /**** PAUSE/PLAY - ON FOCUS ****/
-    $('.slidesjs-psply').focus(function() {
-      var plugin = $('#slides').first().data('plugin_slidesjs');
-
-      // if (testcounter <= 3){
-      //   alert("FOCUS on psply");
-      // }
-
-      $('.slidesjs-psply').attr('aria-live','assertive');
-      if (($.data(plugin, 'playing') && (mousePause == false))) {
-        pauseSlides();
-      }
-
-      // testcounter++;
-    });
-
-    /**** PAUSE/PLAY - CLICK ****/
-    $('.slidesjs-psply').click(function() {
-      var plugin = $('#slides').first().data('plugin_slidesjs');
-
-      testcounter = 0;
-      // alert("CLICK on psply");
-
-      if ($.data(plugin, 'playing')) {
-        // alert("pause");
-        pauseSlides();
-      }else {
-        // alert("play");
-        playSlides();
-      }
-
-      // alert ('end of click');
-    });
+        if ($.data(plugin, 'playing')) {
+          pauseSlides();
+        }else {
+          playSlides();
+        }
+      });
 
   });
 </script>
