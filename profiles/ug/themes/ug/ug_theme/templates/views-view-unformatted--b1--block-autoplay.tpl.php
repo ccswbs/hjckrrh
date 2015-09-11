@@ -69,6 +69,10 @@
 <script>
   jQuery(function($) {
 
+    // var testcounter = 0;
+    var mousePause = false;
+    var mouseUpNxtPrv = false;
+
     function update(number) {
       var active = $('.slidesjs-control').children()[number-1];
       var focusedElement = document.activeElement;
@@ -136,30 +140,70 @@
 
     function pauseSlides() {
       var plugin = $('#slides').first().data('plugin_slidesjs');
-      
-      if ($.data(plugin, 'playing')) {
+      // if (testcounter <= 3){
+        // alert("pause 1b - pauseSlides()");
+        // alert($.data(plugin, 'playing'));
+      // }
+
+
+      /* Bug Fix for Mouse Up on Next/Previous Pause Glitch
+
+      Clicking next/previous buttons (specifically) with mouse causes 
+      the slideshow to pause, but does not flag the $.data(plugin, 'playing') value as TRUE.
+      We end up with the Pause button even though the slideshow is paused.
+
+      As an override, we use the mouseUpNxtPrv variable to track if the mouseup event occurred.
+      If so, allow the plugin through. At the end, we reset the variable, so keyboard-friendly
+      behaviour is not affected.
+
+      */
+
+      if (($.data(plugin, 'playing'))||(mouseUpNxtPrv == true)) {
+        // alert("pause 2b - stop slides");
         plugin.stop();
+        // alert("pause 3b - switch to play btn");
         $('#slide-state').text('slideshow paused');
         $('.slidesjs-stop').hide();
         $('.slidesjs-play').show();
-      } 
+        // alert("pause 4b - end of pauseSlides()");
+        mouseUpNxtPrv = false;
+      }//else{
+
+      
+      // testcounter++;
+      // }
     }
 
     function playSlides() {
       var plugin = $('#slides').first().data('plugin_slidesjs');
 
+      // alert("play 1 - playSlides()");
       if (!($.data(plugin, 'playing'))) {
+
+        // alert("play 2 - play slides");
         //set to false to wait full interval before advancing to next slide 
         plugin.play(false);
+        // alert("play 3 - switch to pause btn");
         $('#slide-state').text('slideshow playing');
         $('.slidesjs-play').hide();
         $('.slidesjs-stop').show();
+        // alert("play 4 - end of playSlides()");
       }
     }
 
     /**** Slide LINK - ON FOCUS ****/
     $('.slidesjs-slide-link').focus(function () {
       pauseSlides();
+    });
+
+
+    /**** NEXT/PREVIOUS Buttons - Mouse/Key Trackers ****/
+    $(".slidesjs-previous, .slidesjs-next").mouseup( function() {
+      mouseUpNxtPrv = true;
+    });
+
+    $(".slidesjs-previous, .slidesjs-next").keydown( function() {
+      mouseUpNxtPrv = false;
     });
 
     /**** NEXT/PREVIOUS Buttons - ON FOCUS ****/
@@ -180,28 +224,62 @@
 
     /**** NEXT/PREVIOUS - CLICK ****/
     $('.slidesjs-next, .slidesjs-previous').click(function() {
+      // alert("next/prev - CLICK");
+
+      // if (($.data(plugin, 'playing') && (mouseUser == false))) {
+        // pauseSlides();
+      // }
+
+      // testcounter = 0;
       pauseSlides();
 
       /* switch to aria-live ASSERTIVE Title/Summary */
       $('.slidesjs-summary').attr('aria-live','assertive');
     });
 
+    /**** PAUSE/PLAY - Mouse/Key Trackers ****/
+    $( ".slidesjs-psply" ).mousedown(function(){
+      mousePause = true;
+    });
+
+    $( ".slidesjs-psply" ).keydown(function(){
+      mousePause = false;
+    });
+
     /**** PAUSE/PLAY - ON FOCUS ****/
     $('.slidesjs-psply').focus(function() {
+      var plugin = $('#slides').first().data('plugin_slidesjs');
+
+      // if (testcounter <= 3){
+      //   alert("FOCUS on psply");
+      // }
+
       $('.slidesjs-psply').attr('aria-live','assertive');
-      pauseSlides();
+      if (($.data(plugin, 'playing') && (mousePause == false))) {
+        pauseSlides();
+      }
+
+      // testcounter++;
     });
 
     /**** PAUSE/PLAY - CLICK ****/
     $('.slidesjs-psply').click(function() {
       var plugin = $('#slides').first().data('plugin_slidesjs');
 
+      testcounter = 0;
+      // alert("CLICK on psply");
+
       if ($.data(plugin, 'playing')) {
+        // alert("pause");
         pauseSlides();
       }else {
+        // alert("play");
         playSlides();
       }
+
+      // alert ('end of click');
     });
+
   });
 </script>
 
