@@ -113,13 +113,13 @@ Base Styles
   .more-link { margin-top: 15px; }
 
   /*--- Optional class to remove line from list links ---*/
-  ul.no-link-lines li a {
+  .no-link-lines li a{
     text-decoration: none;
     border-bottom: 0;
   }
 
-  ul.no-link-lines li a:focus,
-  ul.no-link-lines li a:hover {
+  .no-link-lines li a:focus,
+  .no-link-lines li a:hover {
     text-decoration: none;
     border-bottom: 1px solid;
   }
