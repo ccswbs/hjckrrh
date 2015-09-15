@@ -453,6 +453,7 @@ function ug_service_views_default_views() {
   $handler->display->display_options['arguments']['title']['summary_options']['separator'] = '|';
   $handler->display->display_options['arguments']['title']['glossary'] = TRUE;
   $handler->display->display_options['arguments']['title']['limit'] = '1';
+  $handler->display->display_options['arguments']['title']['case'] = 'upper';
   $handler->display->display_options['inherit_panels_path'] = '1';
   $export['sr3'] = $view;
 
