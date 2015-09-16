@@ -419,7 +419,7 @@ function ug_service_default_page_manager_pages() {
   );
   $page->menu = array(
     'type' => 'tab',
-    'title' => 'Services by audience',
+    'title' => 'Services by Audience',
     'name' => 'navigation',
     'weight' => '20',
     'parent' => array(
