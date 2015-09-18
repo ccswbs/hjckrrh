@@ -487,7 +487,7 @@ function ug_service_default_page_manager_pages() {
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
-      'override_title' => 0,
+      'override_title' => 1,
       'override_title_text' => '',
       'override_title_heading' => 'h2',
     );
@@ -502,7 +502,7 @@ function ug_service_default_page_manager_pages() {
     $pane->uuid = 'f7d9ef6e-5ee6-45c9-9809-181f91082217';
     $display->content['new-f7d9ef6e-5ee6-45c9-9809-181f91082217'] = $pane;
     $display->panels['middle'][0] = 'new-f7d9ef6e-5ee6-45c9-9809-181f91082217';
-  $display->hide_title = PANELS_TITLE_FIXED;
+  $display->hide_title = PANELS_TITLE_PANE;
   $display->title_pane = 'new-f7d9ef6e-5ee6-45c9-9809-181f91082217';
   $handler->conf['display'] = $display;
   $page->default_handlers[$handler->name] = $handler;
