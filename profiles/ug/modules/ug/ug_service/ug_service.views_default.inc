@@ -348,6 +348,7 @@ function ug_service_views_default_views() {
 
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['title'] = 'All Services (A-Z)';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -407,6 +408,15 @@ function ug_service_views_default_views() {
   $handler->display->display_options['arguments']['title']['summary_options']['items_per_page'] = '25';
   $handler->display->display_options['arguments']['title']['glossary'] = TRUE;
   $handler->display->display_options['arguments']['title']['limit'] = '1';
+  $handler->display->display_options['allow']['use_pager'] = 0;
+  $handler->display->display_options['allow']['items_per_page'] = 0;
+  $handler->display->display_options['allow']['offset'] = 0;
+  $handler->display->display_options['allow']['link_to_view'] = 0;
+  $handler->display->display_options['allow']['more_link'] = 0;
+  $handler->display->display_options['allow']['path_override'] = 0;
+  $handler->display->display_options['allow']['title_override'] = 'title_override';
+  $handler->display->display_options['allow']['exposed_form'] = 0;
+  $handler->display->display_options['allow']['fields_override'] = 0;
   $handler->display->display_options['argument_input'] = array(
     'title' => array(
       'type' => 'panel',
@@ -444,6 +454,15 @@ function ug_service_views_default_views() {
   $handler->display->display_options['arguments']['title']['glossary'] = TRUE;
   $handler->display->display_options['arguments']['title']['limit'] = '1';
   $handler->display->display_options['arguments']['title']['case'] = 'upper';
+  $handler->display->display_options['allow']['use_pager'] = 0;
+  $handler->display->display_options['allow']['items_per_page'] = 0;
+  $handler->display->display_options['allow']['offset'] = 0;
+  $handler->display->display_options['allow']['link_to_view'] = 0;
+  $handler->display->display_options['allow']['more_link'] = 0;
+  $handler->display->display_options['allow']['path_override'] = 0;
+  $handler->display->display_options['allow']['title_override'] = 'title_override';
+  $handler->display->display_options['allow']['exposed_form'] = 0;
+  $handler->display->display_options['allow']['fields_override'] = 0;
   $handler->display->display_options['inherit_panels_path'] = '1';
   $export['sr3'] = $view;
 

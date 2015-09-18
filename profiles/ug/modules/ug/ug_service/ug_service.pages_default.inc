@@ -594,7 +594,11 @@ function ug_service_default_page_manager_pages() {
     $pane->subtype = 'sr3-panel_pane_2';
     $pane->shown = TRUE;
     $pane->access = array();
-    $pane->configuration = array();
+    $pane->configuration = array(
+      'override_title' => 1,
+      'override_title_text' => '',
+      'override_title_heading' => 'h2',
+    );
     $pane->cache = array();
     $pane->style = array(
       'settings' => NULL,
@@ -613,7 +617,11 @@ function ug_service_default_page_manager_pages() {
     $pane->subtype = 'sr3-panel_pane_1';
     $pane->shown = TRUE;
     $pane->access = array();
-    $pane->configuration = array();
+    $pane->configuration = array(
+      'override_title' => 1,
+      'override_title_text' => '',
+      'override_title_heading' => 'h2',
+    );
     $pane->cache = array();
     $pane->style = array(
       'settings' => NULL,
@@ -625,8 +633,8 @@ function ug_service_default_page_manager_pages() {
     $pane->uuid = 'a3e2cfe8-5f83-4092-bc01-04f45fb42bd6';
     $display->content['new-a3e2cfe8-5f83-4092-bc01-04f45fb42bd6'] = $pane;
     $display->panels['middle'][1] = 'new-a3e2cfe8-5f83-4092-bc01-04f45fb42bd6';
-  $display->hide_title = PANELS_TITLE_FIXED;
-  $display->title_pane = 'new-a3e2cfe8-5f83-4092-bc01-04f45fb42bd6';
+  $display->hide_title = PANELS_TITLE_PANE;
+  $display->title_pane = 'new-fc1e1050-bbd6-4a09-aa77-8dfefeee9d46';
   $handler->conf['display'] = $display;
   $page->default_handlers[$handler->name] = $handler;
   $pages['services_az'] = $page;
