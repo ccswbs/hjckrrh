@@ -14,7 +14,6 @@
 	<h3><?php print $title; ?></h3>
 <?php endif; ?>
 
-
 <?php
 
 	$index = array();
@@ -48,4 +47,5 @@
 
 	print $list_type_suffix;
 	print ('</div>');
+	print $wrapper_suffix;
 ?>
