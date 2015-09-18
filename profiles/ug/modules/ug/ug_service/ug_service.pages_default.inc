@@ -308,7 +308,7 @@ function ug_service_default_page_manager_pages() {
   );
   $page->menu = array(
     'type' => 'default tab',
-    'title' => 'Service Categories',
+    'title' => 'Services by Category',
     'name' => 'navigation',
     'weight' => '0',
     'parent' => array(
@@ -384,8 +384,8 @@ function ug_service_default_page_manager_pages() {
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
-      'override_title' => 0,
-      'override_title_text' => 'Service Categories',
+      'override_title' => 1,
+      'override_title_text' => '',
       'override_title_heading' => 'h2',
     );
     $pane->cache = array();
@@ -399,7 +399,7 @@ function ug_service_default_page_manager_pages() {
     $pane->uuid = '34f48c4a-d691-473d-bd0f-5579e017c2bd';
     $display->content['new-34f48c4a-d691-473d-bd0f-5579e017c2bd'] = $pane;
     $display->panels['middle'][0] = 'new-34f48c4a-d691-473d-bd0f-5579e017c2bd';
-  $display->hide_title = PANELS_TITLE_FIXED;
+  $display->hide_title = PANELS_TITLE_PANE;
   $display->title_pane = 'new-34f48c4a-d691-473d-bd0f-5579e017c2bd';
   $handler->conf['display'] = $display;
   $page->default_handlers[$handler->name] = $handler;
