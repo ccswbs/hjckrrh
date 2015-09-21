@@ -89,16 +89,12 @@
           }
         }
 
-
       }else{  
         $('.slidesjs-summary').attr('aria-live','off');
       }
 
       // UPDATE VALUES
       $('.slidesjs-slide-number').text(number);
-      // $('.slidesjs-pagination .btn').html('Slide <span class="slidesjs-slide-number">' + number + '</span> of ' + <?php print $slide_count ?>);
-
-      // Add slide # context to title link
       $('.slidesjs-slide-title').html('<span class="sr-only">Slide ' + number + ' headline: </span>' + $(active).data('title'));
       $('.slidesjs-slide-link').attr('href', $(active).data('link'));
       
