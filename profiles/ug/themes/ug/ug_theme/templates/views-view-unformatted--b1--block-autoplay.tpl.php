@@ -81,29 +81,17 @@
         var plugin = $('#slides').first().data('plugin_slidesjs');
 
         $('.slidesjs-summary').attr('aria-live','polite');
-        // $('.slidesjs-slide-title').attr('aria-live','polite');
-        // $('.slidesjs-slide-text').attr('aria-live','polite');
-        // $('.slidesjs-control').attr('aria-live','polite');
-        // $('#slides').attr('aria-live','polite');
 
         /* NEXT/PREVIOUS Buttons - Reinforce assertive aria-live ON FOCUS */
         if (!($.data(plugin, 'playing'))) {
           if(($(focusedElement).is($('.slidesjs-next'))) || ($(focusedElement).is($('.slidesjs-previous')))) {
             $('.slidesjs-summary').attr('aria-live','assertive');
-            // $('.slidesjs-slide-title').attr('aria-live','assertive');
-            // $('.slidesjs-slide-text').attr('aria-live','assertive');
-            // $('.slidesjs-control').attr('aria-live','assertive');
-            // $('#slides').attr('aria-live','assertive');
           }
         }
 
 
       }else{  
         $('.slidesjs-summary').attr('aria-live','off');
-        // $('.slidesjs-slide-title').attr('aria-live','off');
-        // $('.slidesjs-slide-text').attr('aria-live','off');
-        // $('.slidesjs-control').attr('aria-live','off');
-        // $('#slides').attr('aria-live','off');
       }
 
       // UPDATE VALUES
@@ -121,8 +109,9 @@
 
       // Add slide # context to summary text (if not blank)
       if($(active).data('text') != ""){
-        // $('.slidesjs-slide-text').text($(active).data('text'));
         $('.slidesjs-slide-text').html('<span class="sr-only">Slide ' + number + ' summary: </span>' + $(active).data('text'));
+      }else{
+        $('.slidesjs-slide-text').text($(active).data('text'));
       }
 
       // Hide inactive banners during first cycle of slideshow
@@ -222,10 +211,6 @@
         /* IF PAUSED - switch to aria-live ASSERTIVE Title/Summary */
         if (!($.data(plugin, 'playing'))) {
           $('.slidesjs-summary').attr('aria-live','assertive');
-          // $('.slidesjs-slide-title').attr('aria-live','assertive');
-          // $('.slidesjs-slide-text').attr('aria-live','assertive');
-          // $('.slidesjs-control').attr('aria-live','assertive');
-          // $('#slides').attr('aria-live','assertive');
         }
       });
 
@@ -233,10 +218,6 @@
       $('.slidesjs-next, .slidesjs-previous').blur(function () {
         /* switch to aria-live POLITE Title/Summary */
         $('.slidesjs-summary').attr('aria-live','polite');
-        // $('.slidesjs-slide-title').attr('aria-live','polite');
-        // $('.slidesjs-slide-text').attr('aria-live','polite');
-        // $('.slidesjs-control').attr('aria-live','polite');
-        // $('#slides').attr('aria-live','polite');
       });
 
       /*-- CLICK --*/
@@ -245,10 +226,6 @@
 
         /* switch to aria-live ASSERTIVE Title/Summary */
         $('.slidesjs-summary').attr('aria-live','assertive');
-        // $('.slidesjs-slide-title').attr('aria-live','assertive');
-        // $('.slidesjs-slide-text').attr('aria-live','assertive');
-        // $('.slidesjs-control').attr('aria-live','assertive');
-        // $('#slides').attr('aria-live','assertive');
       });
 
     /**** PAUSE/PLAY ****/
