@@ -5,17 +5,19 @@
  * B1 - Image slider (banner)
  */
 ?>
+<h2 class="sr-only">Slideshow Banners</h2>
 <div id="slides">
   <?php foreach ($rows as $id => $row): ?>
     <?php print $row; ?>
   <?php endforeach; ?>
   <div class="row slidesjs-navigation slidesjs-navigation-bottom">
-
-    <div class="col-sm-9 slidesjs-summary">
+    <!-- Slide Link and Summary -->
+    <div class="col-sm-9 slidesjs-summary" aria-live="polite">
         <a href="#" class="slidesjs-slide-link slidesjs-slide-title"></a>
         <p class="slidesjs-slide-text"></p>
     </div>
 
+    <!-- Slide Previous and Next Buttons -->
     <?php if ($slide_count > 1): ?>
       <div class="col-sm-1 col-xs-3">
         <button class="btn btn-block slidesjs-previous" role="button">
@@ -45,9 +47,28 @@
     function update(number) {
       var active = $('.slidesjs-control').children()[number-1];
       $('.slidesjs-slide-number').text(number);
-      $('.slidesjs-slide-title').text($(active).data('title'));
+      $('.slidesjs-slide-title').html('<span class="sr-only">Slide ' + number + ' headline: </span>' + $(active).data('title'));
+      // $('.slidesjs-slide-title').text($(active).data('title'));
       $('.slidesjs-slide-link').attr('href', $(active).data('link'));
-      $('.slidesjs-slide-text').text($(active).data('text'));
+      // $('.slidesjs-slide-text').text($(active).data('text'));
+
+      // Add slide # context to alternative text (if not blank)
+      if($(active).data('alt') != ""){
+        $(active).attr('alt','Slide ' + number + ' banner: ' + $(active).data('alt'));
+      }
+
+      // Add slide # context to summary text (if not blank)
+      if($(active).data('text') != ""){
+        $('.slidesjs-slide-text').html('<span class="sr-only">Slide ' + number + ' summary: </span>' + $(active).data('text'));
+      }else{
+        $('.slidesjs-slide-text').text($(active).data('text'));
+      }
+
+      // Hide inactive banners during first cycle of slideshow
+      $('.slidesjs-slide').css("display","none");
+      $('.slidesjs-slide').css("z-index","0");
+      $(active).css("display","block");
+      $(active).css("z-index","10");
 
       <?php 
         if ($slide_count == 1) {
@@ -80,6 +101,7 @@
       $('.slidesjs-stop').hide();
       $('.slidesjs-play').show();
     });
+
     $('.slidesjs-psply').click(function () {
       var plugin = $('#slides').first().data('plugin_slidesjs');
       if ($.data(plugin, 'playing')) {
@@ -92,6 +114,15 @@
         $('.slidesjs-stop').show();
       }
     });
+
+    $('.slidesjs-next, .slidesjs-previous').focus(function() {
+      $('.slidesjs-summary').attr('aria-live','assertive');
+    });
+
+    $('.slidesjs-next, .slidesjs-previous').blur(function () {
+      $('.slidesjs-summary').attr('aria-live','polite');
+    });
+
     <?php if ($slide_count < 2): ?>
     $('#slides img').css({left:'0'});
     <?php endif; ?>
