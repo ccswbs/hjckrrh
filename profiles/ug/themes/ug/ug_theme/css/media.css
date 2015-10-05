@@ -44,6 +44,10 @@
     Titles
     ---------------------**/
 
+        .media .media-heading {
+            margin-top: 1px;
+        }
+
         .media .media-heading a {
             text-decoration: none;
             border-bottom: 0;
