@@ -31,7 +31,7 @@
   <div class="media-left pull-left media-top">
     <div class="h3 media-heading media-object"><?php print $icon; ?></div>
   </div>
-  <div class="media-body">
+  <div class="media-header">
     <p class="media-heading h3"><?php print $name; ?></p>
     <div class="media-summary"><?php print $description; ?></div>
   </div>
