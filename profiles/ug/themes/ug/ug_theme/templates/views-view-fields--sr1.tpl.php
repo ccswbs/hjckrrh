@@ -32,7 +32,7 @@
   <div class="media-left pull-left media-top">
     <div class="h4 media-heading media-object"><?php print $icon; ?></div>
   </div>
-  <div class="media-body">
+  <div class="media-header">
     <p class="media-heading h4"><?php print $name; ?></p>
     <?php print $description; ?>
   </div>
