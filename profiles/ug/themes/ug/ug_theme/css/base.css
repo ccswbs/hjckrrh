@@ -76,13 +76,19 @@ Base Styles
   /*--- Links surrounded by text ---*/
 
   /* default - underline (border-bottom) */
-  p a:link, li a {
+  p a:link, 
+  li a, dl a, blockquote a, figcaption a, pre a {
    text-decoration: none; 
    border-bottom: 1px solid;
   }
 
   /* hover/focus - stronger underline (border-bottom) */
-  p a:focus, p a:hover, li a:focus, li a:hover {
+  p a:focus, p a:hover, 
+  li a:focus, li a:hover, 
+  dl a:focus, dl a:hover,
+  blockquote a:focus, blockquote a:hover,
+  figcaption a:focus, figcaption a:hover,
+  pre a:focus, pre a:hover {
    text-decoration: none; 
    border-bottom: 2px solid; 
   }
