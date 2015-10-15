@@ -1,0 +1,12 @@
+name = Crumbs Labs
+description = Experimental stuff for Crumbs module.
+core = 7.x
+
+dependencies[] = crumbs
+
+; Information added by Drupal.org packaging script on 2015-03-24
+version = "7.x-2.3"
+core = "7.x"
+project = "crumbs"
+datestamp = "1427225897"
+
