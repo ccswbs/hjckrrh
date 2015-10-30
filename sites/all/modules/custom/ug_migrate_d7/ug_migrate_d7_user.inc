@@ -6,10 +6,6 @@ class UGUserMigration extends DrupalUser7Migration {
 	public function __construct($arguments) {
     	parent::__construct($arguments);
 
-		/*$this->addFieldMapping('roles', 'roles')
-		  ->defaultValue(1)
-	      ->sourceMigration('UGRole');*/
-
 	}
 }
 
