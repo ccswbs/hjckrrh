@@ -6,7 +6,11 @@
 
 function ug_migrate_d6_migrate_api() {
 
-  include 'migrate_config.php';
+  include DRUPAL_ROOT . '/' . conf_path() . '/migrate_settings_d6.php';
+
+    /**
+    * @TODO: Add backup plan for when migrate_settings_d6 does not exist
+    **/
 
   //General variables
   $common_arguments = array(
