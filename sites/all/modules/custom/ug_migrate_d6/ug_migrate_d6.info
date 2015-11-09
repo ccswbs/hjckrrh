@@ -1,0 +1,11 @@
+name = "UG D6 to D7 migration"
+package = "Migration"
+core = 7.x
+
+dependencies[] = migrate
+dependencies[] = migrate_d2d
+
+files[] = ug_migrate_d6_user.inc
+files[] = ug_migrate_d6_node.inc
+files[] = ug_migrate_d6.migrate.inc
+files[] = ug_migrate_d6.module
