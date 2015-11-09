@@ -8,10 +8,13 @@ function ug_migrate_d7_migrate_api() {
 
   include DRUPAL_ROOT . '/' . conf_path() . '/migrate_settings_d7.php';
 
-
-    /**
-    * @TODO: Add backup plan for when migrate_settings_d7 does not exist
-    **/
+  /**
+  * @TODO: Configure backup settings
+  **/
+  
+  if(!isset($page_arguments)){
+    include 'migrate_config.php';
+  }
 
   //General variables
   $common_arguments = array(
