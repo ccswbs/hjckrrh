@@ -2,20 +2,20 @@
 
 
 
-class UGUserMigration extends DrupalUser7Migration {
+class UGUser7Migration extends DrupalUser7Migration {
 	public function __construct($arguments) {
     	parent::__construct($arguments);
 
 	}
 }
 
-class UGRoleMigration extends DrupalRole7Migration {
+class UGRole7Migration extends DrupalRole7Migration {
   public function __construct($arguments) {
 	    parent::__construct($arguments);
 	}
 }
 
-abstract class UGMigration extends Migration {
+abstract class UG7Migration extends Migration {
 	public function __construct($arguments) {
 		parent::__construct($arguments);
 		// With migrate_ui enabled, migration pages will indicate people involved in
