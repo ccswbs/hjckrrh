@@ -6,15 +6,13 @@
 
 function ug_migrate_d7_migrate_api() {
 
-  include DRUPAL_ROOT . '/' . conf_path() . '/migrate_settings_d7.php';
+  $migrate_config = DRUPAL_ROOT . '/' . conf_path() . '/migrate_settings_d7.php';
 
-  /**
-  * @TODO: Configure backup settings
-  **/
-  
-  if(!isset($page_arguments)){
-    include 'migrate_config.php';
+  if (!file_exists($migrate_config)){
+    $migrate_config = 'migrate_config.php'; 
   }
+
+  include $migrate_config;
 
   //General variables
   $common_arguments = array(
