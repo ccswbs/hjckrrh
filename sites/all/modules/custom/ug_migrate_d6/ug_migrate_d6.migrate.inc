@@ -9,7 +9,7 @@ function ug_migrate_d6_migrate_api() {
   $migrate_config = DRUPAL_ROOT . '/' . conf_path() . '/migrate_settings_d6.php';
 
   if (!file_exists($migrate_config)){
-    $migrate_config = 'migrate_config.php'; 
+    $migrate_config = 'migrate_settings_d6.php'; 
   }
 
   include $migrate_config;
