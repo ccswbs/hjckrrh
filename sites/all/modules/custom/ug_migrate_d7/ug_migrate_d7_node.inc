@@ -16,8 +16,8 @@ class UGEvents7Migration extends DrupalNode7Migration {
 		**/
 
 	    /* Events Body */
-	    $this->addFieldMapping('field_events_body', $this->arguments['source_events_body']);
-	    $this->addFieldMapping( 'field_events_body:format', $this->arguments['source_events_format'])
+	    $this->addFieldMapping('field_event_body', $this->arguments['source_events_body']);
+	    $this->addFieldMapping( 'field_event_body:format', $this->arguments['source_events_format'])
 		    ->defaultValue('full_html');
 
 		/* Events Category */
@@ -122,7 +122,21 @@ class UGEventsCategory7Migration extends DrupalTerm7Migration {
 	}	
 }
 
+class UGEventsKeyword7Migration extends DrupalTerm7Migration {
+	public function __construct($arguments) {
+    	parent::__construct($arguments);
+
+	}	
+}
+
 class UGNewsCategory7Migration extends DrupalTerm7Migration {
+	public function __construct($arguments) {
+    	parent::__construct($arguments);
+
+	}	
+}
+
+class UGNewsKeyword7Migration extends DrupalTerm7Migration {
 	public function __construct($arguments) {
     	parent::__construct($arguments);
 

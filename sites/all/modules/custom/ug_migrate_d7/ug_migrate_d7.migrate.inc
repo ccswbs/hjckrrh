@@ -40,14 +40,15 @@ function ug_migrate_d7_migrate_api() {
 
     'migrations' => array(
 
-      /**** ROLE migration ****/
+
+
+      /**** USER migrations ****/
       'UGRole7' => $common_arguments + array(
         'description' => t('Migration of user roles from Drupal 7'),
         'class_name' => 'UGRole7Migration',
         'role_mappings' => $role_mappings,
       ),
 
-      /**** USER migration ****/
       'UGUser7' => $common_arguments + array(
         'description' => t('Migration of users from Drupal 7'),
         'class_name' => 'UGUser7Migration',
@@ -62,7 +63,7 @@ function ug_migrate_d7_migrate_api() {
         'destination_vocabulary' => 'tags',
       ),
 
-      /**** PAGE CATEGORY migration ****/
+      /**** PAGE migration ****/
       'UGPageCategory7' => $common_arguments + array(
         'description' => t('Migration of page category terms from Drupal 7'),
         'class_name' => 'UGPageCategory7Migration',
@@ -70,7 +71,6 @@ function ug_migrate_d7_migrate_api() {
         'destination_vocabulary' => 'page_category',
       ),
 
-      /**** PAGE migration ****/
       'UGPage7' => $node_arguments + $page_arguments + array(
         'description' => t('Migration of basic pages from Drupal 7'),
         'class_name' => 'UGPage7Migration',
@@ -78,7 +78,7 @@ function ug_migrate_d7_migrate_api() {
         'destination_type' => 'page',
       ),
 
-      /**** NEWS CATEGORY migration ****/
+      /**** NEWS migration ****/
       'UGNewsCategory7' => $common_arguments + array(
         'description' => t('Migration of news category terms from Drupal 7'),
         'class_name' => 'UGNewsCategory7Migration',
@@ -86,7 +86,13 @@ function ug_migrate_d7_migrate_api() {
         'destination_vocabulary' => 'news_category',
       ),
 
-      /**** NEWS migration ****/
+      'UGNewsKeyword7' => $common_arguments + array(
+        'description' => t('Migration of news keyword terms from Drupal 7'),
+        'class_name' => 'UGNewsKeyword7Migration',
+        'source_vocabulary' => $term_news_keyword_source,
+        'destination_vocabulary' => 'tags',
+      ),
+
       'UGNews7' => $node_arguments + $news_arguments + array(
         'description' => t('Migration of news articles from Drupal 7'),
         'class_name' => 'UGNews7Migration',
@@ -94,15 +100,21 @@ function ug_migrate_d7_migrate_api() {
         'destination_type' => 'news',
       ),
 
-      /**** EVENTS CATEGORY migration ****/
+      /**** EVENTS migration ****/
       'UGEventsCategory7' => $common_arguments + array(
         'description' => t('Migration of event category terms from Drupal 7'),
         'class_name' => 'UGEventsCategory7Migration',
         'source_vocabulary' => $term_events_category_source, 
-        'destination_vocabulary' => 'events_category',
+        'destination_vocabulary' => 'event_category',
       ),
 
-      /**** EVENTS migration ****/
+      'UGEventsKeyword7' => $common_arguments + array(
+        'description' => t('Migration of events keyword terms from Drupal 7'),
+        'class_name' => 'UGEventsKeyword7Migration',
+        'source_vocabulary' => $term_events_keyword_source,
+        'destination_vocabulary' => 'tags',
+      ),
+
       'UGEvents7' => $node_arguments + $events_arguments + array(
         'description' => t('Migration of events from Drupal 7'),
         'class_name' => 'UGEvents7Migration',
