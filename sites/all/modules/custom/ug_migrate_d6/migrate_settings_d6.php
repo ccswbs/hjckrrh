@@ -39,10 +39,15 @@
   $node_news_type_source = 'story';
 
   $news_arguments = array(
-  	'source_news_body' => 'body',
+    'source_news_body' => 'body',
     'source_news_format' => 'body:format',
-  	'source_news_category' => '',
-  	'source_news_keyword' => '',
+    'source_news_category' => '',
+    'source_news_keyword' => '',
+    'source_news_writer' => '',
+    'source_news_link' => '',
+    'source_news_image' => '',
+    'source_news_caption' => '',
+    'source_news_attachment' => '',
   );
 
   /* EVENT Settings */

@@ -58,6 +58,19 @@ class UGNews7Migration extends DrupalNode7Migration {
 			->sourceMigration('UGTerm7');
 		$this->addFieldMapping('field_tags:source_type')
 			->defaultValue('tid');
+
+		/* News Writer */
+	    $this->addFieldMapping('field_news_writer', $this->arguments['source_news_writer']);
+
+		/* News Link (External) */
+	    $this->addFieldMapping('field_news_link', $this->arguments['source_news_link']);
+
+		/* News Image */
+	    $this->addFieldMapping('field_news_image', $this->arguments['source_news_image']);
+
+		/* News Image Caption */
+	    $this->addFieldMapping('field_news_caption', $this->arguments['source_news_caption']);
+
 	}
 }
 
