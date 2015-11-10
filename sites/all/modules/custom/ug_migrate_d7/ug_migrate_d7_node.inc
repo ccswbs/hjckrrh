@@ -1,6 +1,6 @@
 <?php 
 
-class UGEvents7Migration extends DrupalNode7Migration {
+class UGEvent7Migration extends DrupalNode7Migration {
 	public function __construct($arguments) {
 
     	parent::__construct($arguments);
@@ -15,19 +15,19 @@ class UGEvents7Migration extends DrupalNode7Migration {
 		*  - add File and URL Redirect
 		**/
 
-	    /* Events Body */
-	    $this->addFieldMapping('field_event_body', $this->arguments['source_events_body']);
-	    $this->addFieldMapping( 'field_event_body:format', $this->arguments['source_events_format'])
+	    /* Event Body */
+	    $this->addFieldMapping('field_event_body', $this->arguments['source_event_body']);
+	    $this->addFieldMapping( 'field_event_body:format', $this->arguments['source_event_format'])
 		    ->defaultValue('full_html');
 
-		/* Events Category */
-		$this->addFieldMapping('field_event_category', $this->arguments['source_events_category'])
-			->sourceMigration('UGEventsCategory7');
+		/* Event Category */
+		$this->addFieldMapping('field_event_category', $this->arguments['source_event_category'])
+			->sourceMigration('UGEventCategory7');
 		$this->addFieldMapping('field_event_category:source_type')
 			->defaultValue('tid');
 
-		/* Events Keyword */
-		$this->addFieldMapping('field_tags', $this->arguments['source_events_keyword'])
+		/* Event Keyword */
+		$this->addFieldMapping('field_tags', $this->arguments['source_event_keyword'])
 			->sourceMigration('UGTerm7');
 		$this->addFieldMapping('field_tags:source_type')
 			->defaultValue('tid');
@@ -115,14 +115,14 @@ class UGPage7Migration extends DrupalNode7Migration {
 	}
 }
 
-class UGEventsCategory7Migration extends DrupalTerm7Migration {
+class UGEventCategory7Migration extends DrupalTerm7Migration {
 	public function __construct($arguments) {
     	parent::__construct($arguments);
 
 	}	
 }
 
-class UGEventsKeyword7Migration extends DrupalTerm7Migration {
+class UGEventKeyword7Migration extends DrupalTerm7Migration {
 	public function __construct($arguments) {
     	parent::__construct($arguments);
 

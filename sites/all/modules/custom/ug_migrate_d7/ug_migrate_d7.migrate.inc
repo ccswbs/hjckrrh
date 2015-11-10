@@ -102,25 +102,25 @@ function ug_migrate_d7_migrate_api() {
         'destination_type' => 'news',
       ),
 
-      /**** EVENTS migration ****/
-      'UGEventsCategory7' => $common_arguments + array(
+      /**** EVENT migration ****/
+      'UGEventCategory7' => $common_arguments + array(
         'description' => t('Migration of event category terms from Drupal 7'),
-        'class_name' => 'UGEventsCategory7Migration',
-        'source_vocabulary' => $term_events_category_source, 
+        'class_name' => 'UGEventCategory7Migration',
+        'source_vocabulary' => $term_event_category_source, 
         'destination_vocabulary' => 'event_category',
       ),
 
-      'UGEventsKeyword7' => $common_arguments + array(
+      'UGEventKeyword7' => $common_arguments + array(
         'description' => t('Migration of events keyword terms from Drupal 7'),
-        'class_name' => 'UGEventsKeyword7Migration',
-        'source_vocabulary' => $term_events_keyword_source,
+        'class_name' => 'UGEventKeyword7Migration',
+        'source_vocabulary' => $term_event_keyword_source,
         'destination_vocabulary' => 'tags',
       ),
 
-      'UGEvents7' => $node_arguments + $events_arguments + array(
+      'UGEvent7' => $node_arguments + $event_arguments + array(
         'description' => t('Migration of events from Drupal 7'),
-        'class_name' => 'UGEvents7Migration',
-        'source_type' => $node_events_type_source, 
+        'class_name' => 'UGEvent7Migration',
+        'source_type' => $node_event_type_source, 
         'destination_type' => 'event',
       ),
 
