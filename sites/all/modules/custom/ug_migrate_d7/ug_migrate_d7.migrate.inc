@@ -15,7 +15,6 @@ function ug_migrate_d7_migrate_api() {
     include $migrate_settings_override;
   }
 
-
   //General variables
   $common_arguments = array(
     'source_connection' => 'legacy_d7',
@@ -41,8 +40,6 @@ function ug_migrate_d7_migrate_api() {
     ),
 
     'migrations' => array(
-
-
 
       /**** USER migrations ****/
       'UGRole7' => $common_arguments + array(

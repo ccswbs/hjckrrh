@@ -7,11 +7,7 @@ class UGEvent6Migration extends DrupalNode6Migration {
 	    $this->destination = new MigrateDestinationNode('event');
 
 		/**
-		*
-		* @TODO: 
-		*
-		*  - Add backup plan for when $arguments do not include field mappings variables
-		*  - add File and URL Redirect
+		* @TODO: add File and URL Redirect
 		**/
 
 	    /* Event Body */
@@ -40,11 +36,7 @@ class UGNews6Migration extends DrupalNode6Migration {
 	    $this->destination = new MigrateDestinationNode('news');
 
 		/**
-		*
-		* @TODO: 
-		*
-		*  - Add backup plan for when $arguments do not include field mappings variables
-		*  - add File and URL Redirect
+		* @TODO: add File and URL Redirect
 		**/
 
 	    /* News Body */
@@ -74,11 +66,7 @@ class UGPage6Migration extends DrupalNode6Migration {
 	    $this->destination = new MigrateDestinationNode('page');
 
 		/**
-		*
-		* @TODO: 
-		*
-		*  - Add backup plan for when $arguments do not include field mapping variables
-		*  - add File and URL Redirect
+		* @TODO: add File and URL Redirect
 		**/
 
 	    /* Page Body */
