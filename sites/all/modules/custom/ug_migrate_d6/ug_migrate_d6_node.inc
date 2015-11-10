@@ -1,5 +1,38 @@
 <?php 
 
+class UGEvent6Migration extends DrupalNode6Migration {
+	public function __construct($arguments) {
+    	parent::__construct($arguments);
+
+	    $this->destination = new MigrateDestinationNode('event');
+
+		/**
+		*
+		* @TODO: 
+		*
+		*  - Add backup plan for when $arguments do not include field mappings variables
+		*  - add File and URL Redirect
+		**/
+
+	    /* Event Body */
+	    $this->addFieldMapping('field_event_body', $this->arguments['source_event_body']);
+	    $this->addFieldMapping( 'field_event_body:format', $this->arguments['source_event_format'])
+		    ->defaultValue('full_html');
+
+		/* Event Category */
+		$this->addFieldMapping('field_event_tags', $this->arguments['source_event_category'])
+			->sourceMigration('UGEventCategory6');
+		$this->addFieldMapping('field_event_tags:source_type')
+			->defaultValue('tid');
+
+		/* Event Keyword */
+		$this->addFieldMapping('field_tags', $this->arguments['source_event_keyword'])
+			->sourceMigration('UGEventKeyword6');
+		$this->addFieldMapping('field_tags:source_type')
+			->defaultValue('tid');
+	}
+}
+
 class UGNews6Migration extends DrupalNode6Migration {
 	public function __construct($arguments) {
     	parent::__construct($arguments);
@@ -65,6 +98,20 @@ class UGPage6Migration extends DrupalNode6Migration {
 		$this->addFieldMapping('field_tags:source_type')
 			->defaultValue('tid');
 	}
+}
+
+class UGEventCategory6Migration extends DrupalTerm6Migration {
+	public function __construct($arguments) {
+    	parent::__construct($arguments);
+
+	}	
+}
+
+class UGEventKeyword6Migration extends DrupalTerm6Migration {
+	public function __construct($arguments) {
+    	parent::__construct($arguments);
+
+	}	
 }
 
 class UGNewsCategory6Migration extends DrupalTerm6Migration {
