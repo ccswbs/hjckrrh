@@ -7,7 +7,7 @@ class UGEvent6Migration extends DrupalNode6Migration {
 	    $this->destination = new MigrateDestinationNode('event');
 
 		/**
-		* @TODO: add File and URL Redirect
+		* @TODO: add URL Redirect
 		**/
 
 	    /* Event Body */
@@ -36,7 +36,7 @@ class UGNews6Migration extends DrupalNode6Migration {
 	    $this->destination = new MigrateDestinationNode('news');
 
 		/**
-		* @TODO: add File and URL Redirect
+		* @TODO: add URL Redirect
 		**/
 
 	    /* News Body */
@@ -67,7 +67,10 @@ class UGNews6Migration extends DrupalNode6Migration {
 
 		/* News Image Caption */
 	    $this->addFieldMapping('field_news_caption', $this->arguments['source_news_caption']);
-			
+
+		/* News File Attachment */
+	    $this->addFieldMapping('field_news_attachment', $this->arguments['source_news_attachment']);
+
 	}
 }
 
@@ -79,7 +82,7 @@ class UGPage6Migration extends DrupalNode6Migration {
 	    $this->destination = new MigrateDestinationNode('page');
 
 		/**
-		* @TODO: add File and URL Redirect
+		* @TODO: add URL Redirect
 		**/
 
 	    /* Page Body */
@@ -98,6 +101,16 @@ class UGPage6Migration extends DrupalNode6Migration {
 			->sourceMigration('UGTerm6');
 		$this->addFieldMapping('field_tags:source_type')
 			->defaultValue('tid');
+
+		/* Page File Attachment */
+	    $this->addFieldMapping('field_page_attachments', $this->arguments['source_page_attachments']);
+
+		/* Settings: Is New / Revisions */
+		/*$this->addFieldMapping('is_new', NULL, FALSE)
+			->defaultValue(TRUE);
+	    $this->addFieldMapping('revision', NULL, FALSE)
+	    	->defaultValue(TRUE);*/
+			
 	}
 }
 

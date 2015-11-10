@@ -33,6 +33,7 @@
     'source_page_format' => 'body:format',
     'source_page_category' => '',
     'source_page_keyword' => '',
+    'source_page_attachments' => '',
   );
 
   /* NEWS Settings */

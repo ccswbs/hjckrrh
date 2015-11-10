@@ -71,6 +71,9 @@ class UGNews7Migration extends DrupalNode7Migration {
 		/* News Image Caption */
 	    $this->addFieldMapping('field_news_caption', $this->arguments['source_news_caption']);
 
+		/* News File Attachment */
+	    $this->addFieldMapping('field_news_attachment', $this->arguments['source_news_attachment']);
+
 	}
 }
 
@@ -108,11 +111,15 @@ class UGPage7Migration extends DrupalNode7Migration {
 		$this->addFieldMapping('field_tags:source_type')
 			->defaultValue('tid');
 
+		/* Page File Attachments */
+	    $this->addFieldMapping('field_page_attachments', $this->arguments['source_page_attachments']);
+
 		/* Settings: Is New / Revisions */
-		$this->addFieldMapping('is_new', NULL, FALSE)
+		/*$this->addFieldMapping('is_new', NULL, FALSE)
 			->defaultValue(TRUE);
 	    $this->addFieldMapping('revision', NULL, FALSE)
-	    	->defaultValue(TRUE);
+	    	->defaultValue(TRUE);*/
+
 	}
 }
 
