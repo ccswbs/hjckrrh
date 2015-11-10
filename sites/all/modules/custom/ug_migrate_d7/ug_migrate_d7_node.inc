@@ -1,5 +1,39 @@
 <?php 
 
+class UGEvents7Migration extends DrupalNode7Migration {
+	public function __construct($arguments) {
+
+    	parent::__construct($arguments);
+
+	    $this->destination = new MigrateDestinationNode('event');
+
+		/**
+		*
+		* @TODO: 
+		*
+		*  - Add backup plan for when $arguments do not include field mappings variables
+		*  - add File and URL Redirect
+		**/
+
+	    /* Events Body */
+	    $this->addFieldMapping('field_events_body', $this->arguments['source_events_body']);
+	    $this->addFieldMapping( 'field_events_body:format', $this->arguments['source_events_format'])
+		    ->defaultValue('full_html');
+
+		/* Events Category */
+		$this->addFieldMapping('field_event_category', $this->arguments['source_events_category'])
+			->sourceMigration('UGEventsCategory7');
+		$this->addFieldMapping('field_event_category:source_type')
+			->defaultValue('tid');
+
+		/* Events Keyword */
+		$this->addFieldMapping('field_tags', $this->arguments['source_events_keyword'])
+			->sourceMigration('UGTerm7');
+		$this->addFieldMapping('field_tags:source_type')
+			->defaultValue('tid');
+	}
+}
+
 
 class UGNews7Migration extends DrupalNode7Migration {
 	public function __construct($arguments) {
@@ -24,7 +58,7 @@ class UGNews7Migration extends DrupalNode7Migration {
 		/* News Category */
 		$this->addFieldMapping('field_news_tags', $this->arguments['source_news_category'])
 			->sourceMigration('UGNewsCategory7');
-		$this->addFieldMapping('field_news_category:source_type')
+		$this->addFieldMapping('field_news_tags:source_type')
 			->defaultValue('tid');
 
 		/* News Keyword */
@@ -79,6 +113,13 @@ class UGPage7Migration extends DrupalNode7Migration {
 	    $this->addFieldMapping('revision', NULL, FALSE)
 	    	->defaultValue(TRUE);
 	}
+}
+
+class UGEventsCategory7Migration extends DrupalTerm7Migration {
+	public function __construct($arguments) {
+    	parent::__construct($arguments);
+
+	}	
 }
 
 class UGNewsCategory7Migration extends DrupalTerm7Migration {
