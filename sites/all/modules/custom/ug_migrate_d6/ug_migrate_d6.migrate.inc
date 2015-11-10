@@ -6,14 +6,13 @@
 
 function ug_migrate_d6_migrate_api() {
 
-  $migrate_config_backup = 'migrate_settings_d6.php';
-  $migrate_config = DRUPAL_ROOT . '/' . conf_path() . '/migrate_settings_d6.php';
+  $migrate_settings = 'migrate_settings_d6.php';
+  $migrate_settings_override = DRUPAL_ROOT . '/' . conf_path() . '/migrate_settings_d6.php';
 
-  include $migrate_config_backup;
+  include $migrate_settings;
 
-  if (file_exists($migrate_config)){
-    //$migrate_config = $migrate_config_backup; 
-    include $migrate_config;
+  if (file_exists($migrate_settings_override)){
+    include $migrate_settings_override;
   }
 
   //General variables
