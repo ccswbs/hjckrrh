@@ -6,16 +6,36 @@
 
 function ug_migrate_d7_migrate_api() {
 
-  $migrate_settings = 'migrate_settings_d7.php';
-  $migrate_settings_override = DRUPAL_ROOT . '/' . conf_path() . '/migrate_settings_d7.php';
+  /* BASE VARIABLES */
+  $user_arguments = array(
+    'role_mappings' => array(),
+  );
 
-  include $migrate_settings;
+  $term_arguments = array(
+    'source_term_keyword' => 'tags',
+  );
 
-  if (file_exists($migrate_settings_override)){
-    include $migrate_settings_override;
-  }
+  $page_arguments = array(
+    'source_page_node_type' => 'page',
+    'source_page_term_category' => '',
+    'source_page_term_keyword' => '',
+  );
 
-  //General variables
+  $news_arguments = array(
+    'source_news_node_type' => 'article',
+    'source_news_term_category' => '',
+    'source_news_term_keyword' => '',
+  );
+
+  $event_arguments = array(
+    'source_event_node_type' => '',
+    'source_event_term_category' => '',
+    'source_event_term_keyword' => '',
+    'source_event_term_heading' => '',
+  );
+
+  $event_multipart_arguments = array();
+
   $common_arguments = array(
     'source_connection' => 'legacy_d7',
     'source_version' => 7,
@@ -27,6 +47,16 @@ function ug_migrate_d7_migrate_api() {
     'user_migration' => 'UGUser7',
     'default_uid' => 1,
   );
+
+  /* OVERRIDE variables with site configuration files */
+  $migrate_settings = 'migrate_settings_d7.php'; //generic config filegi (part of module)
+  $migrate_settings_override = DRUPAL_ROOT . '/' . conf_path() . '/migrate_settings_d7.php'; //site config file
+
+  include $migrate_settings;
+
+  if (file_exists($migrate_settings_override)){
+    include $migrate_settings_override;
+  }
 
   $api = array(
     //set API level to 2 to work with 7.x-2.x Migrate branch
@@ -45,7 +75,7 @@ function ug_migrate_d7_migrate_api() {
       'UGRole7' => $common_arguments + array(
         'description' => t('Migration of user roles from Drupal 7'),
         'class_name' => 'UGRole7Migration',
-        'role_mappings' => $role_mappings,
+        'role_mappings' => $user_arguments['role_mappings'],
       ),
 
       'UGUser7' => $common_arguments + array(
@@ -58,7 +88,7 @@ function ug_migrate_d7_migrate_api() {
       'UGTerm7' => $common_arguments + array(
         'description' => t('Migration of terms from Drupal 7'),
         'class_name' => 'UGTerm7Migration',
-        'source_vocabulary' => $term_keyword_source, 
+        'source_vocabulary' => $term_arguments['source_term_keyword'], 
         'destination_vocabulary' => 'tags',
       ),
 
@@ -66,14 +96,14 @@ function ug_migrate_d7_migrate_api() {
       'UGPageCategory7' => $common_arguments + array(
         'description' => t('Migration of page category terms from Drupal 7'),
         'class_name' => 'UGPageCategory7Migration',
-        'source_vocabulary' => $term_page_category_source, 
+        'source_vocabulary' => $page_arguments['source_page_term_category'], 
         'destination_vocabulary' => 'page_category',
       ),
 
       'UGPage7' => $node_arguments + $page_arguments + array(
         'description' => t('Migration of basic pages from Drupal 7'),
         'class_name' => 'UGPage7Migration',
-        'source_type' => $node_page_type_source, 
+        'source_type' => $page_arguments['source_page_node_type'], 
         'destination_type' => 'page',
       ),
 
@@ -81,21 +111,21 @@ function ug_migrate_d7_migrate_api() {
       'UGNewsCategory7' => $common_arguments + array(
         'description' => t('Migration of news category terms from Drupal 7'),
         'class_name' => 'UGNewsCategory7Migration',
-        'source_vocabulary' => $term_news_category_source, 
+        'source_vocabulary' => $news_arguments['source_news_term_category'],
         'destination_vocabulary' => 'news_category',
       ),
 
       'UGNewsKeyword7' => $common_arguments + array(
         'description' => t('Migration of news keyword terms from Drupal 7'),
         'class_name' => 'UGNewsKeyword7Migration',
-        'source_vocabulary' => $term_news_keyword_source,
+        'source_vocabulary' => $news_arguments['source_news_term_keyword'],
         'destination_vocabulary' => 'tags',
       ),
 
       'UGNews7' => $node_arguments + $news_arguments + array(
         'description' => t('Migration of news articles from Drupal 7'),
         'class_name' => 'UGNews7Migration',
-        'source_type' => $node_news_type_source, 
+        'source_type' => $news_arguments['source_news_node_type'], 
         'destination_type' => 'news',
       ),
 
@@ -103,21 +133,21 @@ function ug_migrate_d7_migrate_api() {
       'UGEventCategory7' => $common_arguments + array(
         'description' => t('Migration of event category terms from Drupal 7'),
         'class_name' => 'UGEventCategory7Migration',
-        'source_vocabulary' => $term_event_category_source, 
+        'source_vocabulary' => $event_arguments['source_event_term_category'],
         'destination_vocabulary' => 'event_category',
       ),
 
       'UGEventKeyword7' => $common_arguments + array(
         'description' => t('Migration of events keyword terms from Drupal 7'),
         'class_name' => 'UGEventKeyword7Migration',
-        'source_vocabulary' => $term_event_keyword_source,
+        'source_vocabulary' => $event_arguments['source_event_term_keyword'],
         'destination_vocabulary' => 'tags',
       ),
 
       'UGEventHeading7' => $common_arguments + array(
         'description' => t('Migration of events multipart field heading from Drupal 7'),
         'class_name' => 'UGEventHeading7Migration',
-        'source_vocabulary' => $term_event_heading_source,
+        'source_vocabulary' => $event_arguments['source_event_term_heading'],
         'destination_vocabulary' => 'event_heading',
       ),
 
@@ -130,7 +160,7 @@ function ug_migrate_d7_migrate_api() {
       'UGEvent7' => $node_arguments + $event_arguments + array(
         'description' => t('Migration of events from Drupal 7'),
         'class_name' => 'UGEvent7Migration',
-        'source_type' => $node_event_type_source, 
+        'source_type' => $event_arguments['source_event_node_type'], 
         'destination_type' => 'event',
       ),
 

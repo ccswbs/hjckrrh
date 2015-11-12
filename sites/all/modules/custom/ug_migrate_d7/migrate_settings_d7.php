@@ -10,21 +10,20 @@
     // e.g. 'source-editor' => 'editor',
   );
 
+  $user_arguments = array(
+    'role_mappings' => $role_mappings,
+  );
+
   /* TAXONOMY Settings */
-  $term_keyword_source = 'tags';
-  $term_news_keyword_source = '';
-  $term_event_keyword_source = '';
+  $term_arguments = array(
+    'source_term_keyword' => 'tags',
+  );
 
-  $term_page_category_source = '';
-  $term_news_category_source = '';
-  $term_event_category_source = '';
-
-  $term_event_heading_source = '';
-  
   /* PAGE Settings */
-  $node_page_type_source = 'page';
-
   $page_arguments = array(
+    'source_page_node_type' => 'page',
+    'source_page_term_category' => '',
+    'source_page_term_keyword' => '',
     'source_page_body' => 'body',
     'source_page_summary' => 'body:summary',
     'source_page_format' => 'body:format',
@@ -34,10 +33,12 @@
   );
   
   /* NEWS Settings */
-  $node_news_type_source = 'article';
-
   $news_arguments = array(
+    'source_news_node_type' => 'article',
+    'source_news_term_category' => '',
+    'source_news_term_keyword' => '',
     'source_news_body' => 'body',
+    'source_news_summary' => 'body:summary',
     'source_news_format' => 'body:format',
     'source_news_category' => '',
     'source_news_keyword' => '',
@@ -49,10 +50,13 @@
   );
 
   /* EVENT Settings */
-  $node_event_type_source = '';
-
   $event_arguments = array(
+    'source_event_node_type' => '',
+    'source_event_term_category' => '',
+    'source_event_term_keyword' => '',
+    'source_event_term_heading' => '',
     'source_event_body' => 'body',
+    'source_event_summary' => 'body:summary',
     'source_event_format' => 'body:format',
     'source_event_category' => '',
     'source_event_keyword' => '',
@@ -111,14 +115,14 @@
 *
 */
 
-  $event_multipart_query = ''; //database query for field collection heading + content
-  $event_multipart_sourcefields = '';
-  $event_multipart_mapping = '';
+  $event_multipart_query = NULL; //database query for field collection heading + content
+  $event_multipart_sourcefields = array();
+  $event_multipart_mapping = array();
 
   /* Field collection ID, heading termID, and content fields should match fields retrieved by query */
   $event_multipart_arguments = array(
     'source_event_multipart_query' => $event_multipart_query,
-    'source_event_mulitpart_sourcefields' => $event_multipart_sourcefields,
+    'source_event_multipart_sourcefields' => $event_multipart_sourcefields,
     'source_event_multipart_mapping' => $event_multipart_mapping,
     'source_event_multipart_field_collection_ID'=>'',
     'source_event_multipart_field_collection_heading_termID'=>'',

@@ -7,31 +7,56 @@ class UGEvent7Migration extends DrupalNode7Migration {
 
 	    $this->destination = new MigrateDestinationNode('event');
 
+		/* DEFAULT arguments */
+		$event_arguments = array(
+			'source_event_body' => 'body',
+			'source_news_summary' => 'body:summary',
+			'source_event_format' => 'body:format',
+			'source_event_category' => '',
+			'source_event_keyword' => '',
+			'source_event_date' => '',
+			'source_event_location' => '',
+			'source_event_multipart' => 'field_test_field_collection',
+			'source_event_image' => '',
+			'source_event_caption' => '',
+			'source_event_attachments' => '',
+			'source_event_link' => '',
+		);
+
+
+		//Override default values with arguments if they exist
+		foreach ($event_arguments as $key => $value) {
+		    if(isset($this->arguments[$key])){
+		    	$event_arguments[$key] = $this->arguments[$key];
+		    }
+		}
+
 	    /* Event Body */
-	    $this->addFieldMapping('field_event_body', $this->arguments['source_event_body']);
-	    $this->addFieldMapping( 'field_event_body:format', $this->arguments['source_event_format'])
+	    $this->addFieldMapping('field_event_body', $event_arguments['source_event_body']);
+	    $this->addFieldMapping('field_event_body:summary', $event_arguments['source_event_summary']);
+	    $this->addFieldMapping( 'field_event_body:format', $event_arguments['source_event_format'])
 		    ->defaultValue('full_html');
 
 		/* Event Category */
-		$this->addFieldMapping('field_event_category', $this->arguments['source_event_category'])
+		$this->addFieldMapping('field_event_category', $event_arguments['source_event_category'])
 			->sourceMigration('UGEventCategory7');
 		$this->addFieldMapping('field_event_category:source_type')
 			->defaultValue('tid');
 
 		/* Event Keyword */
-		$this->addFieldMapping('field_tags', $this->arguments['source_event_keyword'])
+		$this->addFieldMapping('field_tags', $event_arguments['source_event_keyword'])
 			->sourceMigration('UGTerm7');
 		$this->addFieldMapping('field_tags:source_type')
 			->defaultValue('tid');
 
 		/* Event Fields */
-		$this->addFieldMapping('field_event_date', $this->arguments['source_event_date']);
-		$this->addFieldMapping('field_event_location', $this->arguments['source_event_location']);
-		$this->addFieldMapping('field_event_image', $this->arguments['source_event_image']);
-		$this->addFieldMapping('field_event_multipart', $this->arguments['source_event_multipart']);
-		$this->addFieldMapping('field_event_caption', $this->arguments['source_event_caption']);
-		$this->addFieldMapping('field_event_attachments', $this->arguments['source_event_attachments']);
-		$this->addFieldMapping('field_event_link', $this->arguments['source_event_link']);
+		$this->addFieldMapping('field_event_date', $event_arguments['source_event_date']);
+		$this->addFieldMapping('field_event_location', $event_arguments['source_event_location']);
+		$this->addFieldMapping('field_event_image', $event_arguments['source_event_image']);
+		$this->addFieldMapping('field_event_multipart', $event_arguments['source_event_multipart']);
+		$this->addFieldMapping('field_event_caption', $event_arguments['source_event_caption']);
+		$this->addFieldMapping('field_event_attachments', $event_arguments['source_event_attachments']);
+		$this->addFieldMapping('field_event_link', $event_arguments['source_event_link']);
 	}
 }
 
@@ -39,11 +64,41 @@ class UGEventMultifield7Migration extends DrupalMigration {
 	public function __construct($arguments) {
 		parent::__construct($arguments);
 
-		$query = $this->arguments['source_event_multipart_query'];
-		$this->source = new MigrateSourceSQL($query, $this->arguments['source_event_mulitpart_sourcefields'], NULL);
+		/* PSEUDO D7 QUERY - used when site config file fails to define an override query */
+		$pseudo_query = Database::getConnection('default', 'legacy_d7')
+		    ->select('node', 'n');
+		$pseudo_query->fields('n',array('nid'));
+		$pseudo_query->range(0, 1);
+		$skip_count = TRUE;
+
+		/* DEFAULT arguments */
+		$event_multipart_arguments = array(
+			'source_event_multipart_query' => $pseudo_query,
+			'source_event_multipart_sourcefields' => array(),
+			'source_event_multipart_mapping' => array(),
+			'source_event_multipart_field_collection_ID'=>'',
+			'source_event_multipart_field_collection_heading_termID'=>'',
+			'source_event_multipart_field_collection_content' => '',
+		);
+
+		//Override default values with arguments if they exist
+		foreach ($event_multipart_arguments as $key => $value) {
+		    if(isset($this->arguments[$key])){
+		    	$event_multipart_arguments[$key] = $this->arguments[$key];
+		    }
+		}
+
+		if(isset($this->arguments['source_event_multipart_query'])) {
+			$skip_count = FALSE;
+		}
+
+		$this->source = new MigrateSourceSQL(
+			$event_multipart_arguments['source_event_multipart_query'],
+			$event_multipart_arguments['source_event_multipart_sourcefields'],
+			NULL, array('map_joinable' => FALSE, 'skip_count' => $skip_count));
 
 		$this->map = new MigrateSQLMap($this->machineName, 
-			$this->arguments['source_event_multipart_mapping'],
+			$event_multipart_arguments['source_event_multipart_mapping'],
 	      	MigrateDestinationFieldCollection::getKeySchema()
 	    );
 
@@ -52,17 +107,17 @@ class UGEventMultifield7Migration extends DrupalMigration {
 			array('host_entity_type' => 'node')
 	    );
 
-		$this->addFieldMapping('item_id', $this->arguments['source_event_multipart_field_collection_ID']);
+		$this->addFieldMapping('item_id', $event_multipart_arguments['source_event_multipart_field_collection_ID']);
 
 	    $this->addFieldMapping('host_entity_id', 'entity_id')
 	    	->sourceMigration('UGEvent7');
 
-    	$this->addFieldMapping('field_event_heading', $this->arguments['source_event_multipart_field_collection_heading_termID'])
+    	$this->addFieldMapping('field_event_heading', $event_multipart_arguments['source_event_multipart_field_collection_heading_termID'])
 	    	->sourceMigration('UGEventHeading7');
 		$this->addFieldMapping('field_event_heading:source_type')
 			->defaultValue('tid');
 
-		$this->addFieldMapping('field_event_content', $this->arguments['source_event_multipart_field_collection_content']);
+		$this->addFieldMapping('field_event_content', $event_multipart_arguments['source_event_multipart_field_collection_content']);
 	}
 
 	protected function query() {
@@ -91,29 +146,52 @@ class UGNews7Migration extends DrupalNode7Migration {
 
 	    $this->destination = new MigrateDestinationNode('news');
 
+		/* DEFAULT arguments */
+		$news_arguments = array(
+			'source_news_body' => 'body',
+			'source_news_summary' => 'body:summary',
+			'source_news_format' => 'body:format',
+			'source_news_category' => '',
+			'source_news_keyword' => '',
+			'source_news_writer' => '',
+			'source_news_link' => '',
+			'source_news_image' => '',
+			'source_news_caption' => '',
+			'source_news_attachment' => '',
+		);
+
+
+		//Override default values with arguments if they exist
+		foreach ($news_arguments as $key => $value) {
+		    if(isset($this->arguments[$key])){
+		    	$news_arguments[$key] = $this->arguments[$key];
+		    }
+		}
+
 	    /* News Body */
-	    $this->addFieldMapping('field_news_body', $this->arguments['source_news_body']);
-	    $this->addFieldMapping( 'field_news_body:format', $this->arguments['source_news_format'])
+	    $this->addFieldMapping('field_news_body', $news_arguments['source_news_body']);
+	    $this->addFieldMapping('field_news_body:summary', $news_arguments['source_news_summary']);
+	    $this->addFieldMapping( 'field_news_body:format', $news_arguments['source_news_format'])
 		    ->defaultValue('full_html');
 
 		/* News Category */
-		$this->addFieldMapping('field_news_tags', $this->arguments['source_news_category'])
+		$this->addFieldMapping('field_news_tags', $news_arguments['source_news_category'])
 			->sourceMigration('UGNewsCategory7');
 		$this->addFieldMapping('field_news_tags:source_type')
 			->defaultValue('tid');
 
 		/* News Keyword */
-		$this->addFieldMapping('field_tags', $this->arguments['source_news_keyword'])
+		$this->addFieldMapping('field_tags', $news_arguments['source_news_keyword'])
 			->sourceMigration('UGTerm7');
 		$this->addFieldMapping('field_tags:source_type')
 			->defaultValue('tid');
 
 		/* News Fields */
-	    $this->addFieldMapping('field_news_writer', $this->arguments['source_news_writer']);
-	    $this->addFieldMapping('field_news_link', $this->arguments['source_news_link']);
-	    $this->addFieldMapping('field_news_image', $this->arguments['source_news_image']);
-	    $this->addFieldMapping('field_news_caption', $this->arguments['source_news_caption']);
-	    $this->addFieldMapping('field_news_attachment', $this->arguments['source_news_attachment']);
+	    $this->addFieldMapping('field_news_writer', $news_arguments['source_news_writer']);
+	    $this->addFieldMapping('field_news_link', $news_arguments['source_news_link']);
+	    $this->addFieldMapping('field_news_image', $news_arguments['source_news_image']);
+	    $this->addFieldMapping('field_news_caption', $news_arguments['source_news_caption']);
+	    $this->addFieldMapping('field_news_attachment', $news_arguments['source_news_attachment']);
 
 	}
 }
@@ -125,15 +203,32 @@ class UGPage7Migration extends DrupalNode7Migration {
 
 	    $this->destination = new MigrateDestinationNode('page');
 
+	    /* DEFAULT arguments */
+		$page_arguments = array(
+			'source_page_body' => 'body',
+			'source_page_summary' => 'body:summary',
+			'source_page_format' => 'body:format',
+			'source_page_category' => '',
+			'source_page_keyword' => '',
+			'source_page_attachments' => '',
+		);
+
+		//Override default values with arguments if they exist
+		foreach ($page_arguments as $key => $value) {
+		    if(isset($this->arguments[$key])){
+		    	$page_arguments[$key] = $this->arguments[$key];
+		    }
+		}
+
 	    /* Page Body */
-	    $this->addFieldMapping('field_page_body', $this->arguments['source_page_body']);
-	    $this->addFieldMapping('field_page_body:summary', $this->arguments['source_page_summary']);
-	    $this->addFieldMapping( 'field_page_body:format', $this->arguments['source_page_format'])
+	    $this->addFieldMapping('field_page_body', $page_arguments['source_page_body']);
+	    $this->addFieldMapping('field_page_body:summary', $page_arguments['source_page_summary']);
+	    $this->addFieldMapping( 'field_page_body:format', $page_arguments['source_page_format'])
 		    ->callbacks(array($this, 'mapFormat'))
 		    ->defaultValue('full_html');
 
 		/* Page Category */
-		$this->addFieldMapping('field_page_category', $this->arguments['source_page_category'])
+		$this->addFieldMapping('field_page_category', $page_arguments['source_page_category'])
 			->sourceMigration('UGPageCategory7');
 		$this->addFieldMapping('field_page_category:source_type')
 			->defaultValue('tid');
@@ -143,19 +238,13 @@ class UGPage7Migration extends DrupalNode7Migration {
 		    ->defaultValue(TRUE);
 
 		/* Page Keyword */
-		$this->addFieldMapping('field_tags', $this->arguments['source_page_keyword'])
+		$this->addFieldMapping('field_tags', $page_arguments['source_page_keyword'])
 			->sourceMigration('UGTerm7');
 		$this->addFieldMapping('field_tags:source_type')
 			->defaultValue('tid');
 
 		/* Page File Attachments */
-	    $this->addFieldMapping('field_page_attachments', $this->arguments['source_page_attachments']);
-
-		/* Settings: Is New / Revisions */
-		/*$this->addFieldMapping('is_new', NULL, FALSE)
-			->defaultValue(TRUE);
-	    $this->addFieldMapping('revision', NULL, FALSE)
-	    	->defaultValue(TRUE);*/
+	    $this->addFieldMapping('field_page_attachments', $page_arguments['source_page_attachments']);
 
 	}
 }
