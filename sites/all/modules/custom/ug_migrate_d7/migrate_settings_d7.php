@@ -18,6 +18,8 @@
   $term_page_category_source = '';
   $term_news_category_source = '';
   $term_event_category_source = '';
+
+  $term_event_heading_source = '';
   
   /* PAGE Settings */
   $node_page_type_source = 'page';
@@ -54,6 +56,73 @@
     'source_event_format' => 'body:format',
     'source_event_category' => '',
     'source_event_keyword' => '',
+    'source_event_date' => '',
+    'source_event_location' => '',
+    'source_event_multipart' => '',
+    'source_event_multipart_heading' => '',
+    'source_event_multipart_content' => '',
+    'source_event_image' => '',
+    'source_event_caption' => '',
+    'source_event_attachments' => '',
+    'source_event_link' => '',
+  );
+
+ /* EVENT Multipart (Field Collection) Settings */
+
+/******
+*
+*   VARIABLES
+*
+*   $event_multipart_query: Contains SOURCE database query for collecting event field collection heading + content
+*   $event_multipart_sourcefields: Contains array of source fields (heading + content) used in event field collection
+*   $event_multipart_mapping: Contains mapping for field collection ID
+*
+******/
+
+/******
+*
+*   SAMPLE CODE:
+*
+*   $event_multipart_query = Database::getConnection('default','legacy_d7')
+*     -> select('tableA', 'tableA_alias');
+*
+*   $event_multipart_query->join('tableB','tableB_alias','tableA_alias.fieldCollectionID = tableB_alias.id');
+*   $event_multipart_query->join('tableC','tableC_alias','tableA_alias.fieldCollectionID = tableC_alias.id');
+*
+*   $event_multipart_query->fields('tableA',array('eventID', 'fieldCollectionID'));
+*   $event_multipart_query->fields('tableB',array('id','heading'));
+*   $event_multipart_query->fields('tablec',array('id','content'));
+*
+*   $event_multipart_sourcefields = array(
+*       'heading' => 'Field Collection Heading Term ID',
+*       'content' => 'Field Collection Content',
+*   );
+*
+*
+*  $event_multipart_mapping = array(
+*    'fieldCollectionID' => array(
+*      'type' => 'int',
+*      'not signed' => true,
+*      'not null' => true,
+*      'description' => t('Field Collection ID'),
+*      'alias' => 'f',
+*    ),
+*  );
+*
+*/
+
+  $event_multipart_query = ''; //database query for field collection heading + content
+  $event_multipart_sourcefields = '';
+  $event_multipart_mapping = '';
+
+  /* Field collection ID, heading termID, and content fields should match fields retrieved by query */
+  $event_multipart_arguments = array(
+    'source_event_multipart_query' => $event_multipart_query,
+    'source_event_mulitpart_sourcefields' => $event_multipart_sourcefields,
+    'source_event_multipart_mapping' => $event_multipart_mapping,
+    'source_event_multipart_field_collection_ID'=>'',
+    'source_event_multipart_field_collection_heading_termID'=>'',
+    'source_event_multipart_field_collection_content'=>'',
   );
 
 ?>

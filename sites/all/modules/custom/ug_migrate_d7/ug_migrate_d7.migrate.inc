@@ -114,6 +114,19 @@ function ug_migrate_d7_migrate_api() {
         'destination_vocabulary' => 'tags',
       ),
 
+      'UGEventHeading7' => $common_arguments + array(
+        'description' => t('Migration of events multipart field heading from Drupal 7'),
+        'class_name' => 'UGEventHeading7Migration',
+        'source_vocabulary' => $term_event_heading_source,
+        'destination_vocabulary' => 'event_heading',
+      ),
+
+      'UGEventMultifield7' => $common_arguments + $event_multipart_arguments + array(
+        'description' => t('Migration of events multipart field from Drupal 7'),
+        'class_name' => 'UGEventMultifield7Migration',
+        'dependencies' => array('UGEvent7','UGEventHeading7'),
+      ),
+
       'UGEvent7' => $node_arguments + $event_arguments + array(
         'description' => t('Migration of events from Drupal 7'),
         'class_name' => 'UGEvent7Migration',
