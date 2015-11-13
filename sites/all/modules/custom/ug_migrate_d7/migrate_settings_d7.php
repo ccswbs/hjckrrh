@@ -117,7 +117,7 @@
 
   $event_multipart_query = NULL; //database query for field collection heading + content
   $event_multipart_sourcefields = array();
-  $event_multipart_mapping = array();
+  $event_multipart_mapping = NULL;
 
   /* Field collection ID, heading termID, and content fields should match fields retrieved by query */
   $event_multipart_arguments = array(

@@ -16,7 +16,7 @@ class UGEvent7Migration extends DrupalNode7Migration {
 			'source_event_keyword' => '',
 			'source_event_date' => '',
 			'source_event_location' => '',
-			'source_event_multipart' => 'field_test_field_collection',
+			'source_event_multipart' => '',
 			'source_event_image' => '',
 			'source_event_caption' => '',
 			'source_event_attachments' => '',
@@ -45,7 +45,7 @@ class UGEvent7Migration extends DrupalNode7Migration {
 
 		/* Event Keyword */
 		$this->addFieldMapping('field_tags', $event_arguments['source_event_keyword'])
-			->sourceMigration('UGTerm7');
+			->sourceMigration('UGEventKeyword7');
 		$this->addFieldMapping('field_tags:source_type')
 			->defaultValue('tid');
 
@@ -71,11 +71,20 @@ class UGEventMultifield7Migration extends DrupalMigration {
 		$pseudo_query->range(0, 1);
 		$skip_count = TRUE;
 
+	    $pseudo_mapping = array('nid' => array(
+		      'type' => 'int',
+		      'not signed' => true,
+		      'not null' => true,
+		      'description' => t('Define query in site configuration file'),
+		      'alias' => 'n',
+		    )
+	    );
+
 		/* DEFAULT arguments */
 		$event_multipart_arguments = array(
 			'source_event_multipart_query' => $pseudo_query,
 			'source_event_multipart_sourcefields' => array(),
-			'source_event_multipart_mapping' => array(),
+			'source_event_multipart_mapping' => $pseudo_mapping,
 			'source_event_multipart_field_collection_ID'=>'',
 			'source_event_multipart_field_collection_heading_termID'=>'',
 			'source_event_multipart_field_collection_content' => '',
