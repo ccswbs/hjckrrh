@@ -6,13 +6,38 @@
 
 function ug_migrate_d6_migrate_api() {
 
-  $migrate_config = DRUPAL_ROOT . '/' . conf_path() . '/migrate_settings_d6.php';
+  /* BASE VARIABLES */
+  $user_arguments = array(
+    'role_mappings' => array(),
+    'picture_source' => '',
+    'picture_destination' => 'public://',
 
-  if (!file_exists($migrate_config)){
-    $migrate_config = 'migrate_settings_d6.php'; 
-  }
+  );
 
-  include $migrate_config;
+  $term_arguments = array(
+    'source_term_keyword' => 'tags',
+  );
+
+  $page_arguments = array(
+    'source_page_node_type' => 'page',
+    'source_page_term_category' => '',
+    'source_page_term_keyword' => '',
+  );
+
+  $news_arguments = array(
+    'source_news_node_type' => 'article',
+    'source_news_term_category' => '',
+    'source_news_term_keyword' => '',
+  );
+
+  $event_arguments = array(
+    'source_event_node_type' => '',
+    'source_event_term_category' => '',
+    'source_event_term_keyword' => '',
+    'source_event_term_heading' => '',
+  );
+
+  $event_multipart_arguments = array();
 
   //General variables
   $common_arguments = array(
@@ -27,6 +52,16 @@ function ug_migrate_d6_migrate_api() {
     'default_uid' => 1,
   );
 
+  /* OVERRIDE variables with site configuration files */
+  $migrate_settings = 'migrate_settings_d6.php';
+  $migrate_settings_override = DRUPAL_ROOT . '/' . conf_path() . '/migrate_settings_d6.php';
+
+  include $migrate_settings;
+
+  if (file_exists($migrate_settings_override)){
+    include $migrate_settings_override;
+  }
+
   $api = array(
     //set API level to 2 to work with 7.x-2.x Migrate branch
     'api' => 2,
@@ -40,23 +75,21 @@ function ug_migrate_d6_migrate_api() {
 
     'migrations' => array(
 
-      /**** ROLE migration ****/
+      /**** USER migration ****/
       'UGRole6' => $common_arguments + array(
         'description' => t('Migration of user roles from Drupal 6'),
         'class_name' => 'UGRole6Migration',
-        'role_mappings' => $role_mappings,
+        'role_mappings' => $user_arguments['role_mappings'],
       ),
 
-      /**** PICTURE (Avatar) migration ****/
       'UGPicture6' => $common_arguments + array(
         'description' => t('Migration of user pictures from Drupal 6'),
         'class_name' => 'UGPicture6Migration',
         'default_uid' => 1,
-        'source_dir' => $picture_source,
-        'destination_dir' => $picture_destination,
+        'source_dir' => $user_arguments['picture_source'],
+        'destination_dir' => $user_arguments['picture_destination'],
       ),
 
-      /**** USER migration ****/
       'UGUser6' => $common_arguments + array(
         'description' => t('Migration of users from Drupal 6'),
         'class_name' => 'UGUser6Migration',
@@ -68,51 +101,83 @@ function ug_migrate_d6_migrate_api() {
       'UGTerm6' => $common_arguments + array(
         'description' => t('Migration of terms from Drupal 6'),
         'class_name' => 'UGTerm6Migration',
-        'source_vocabulary' => $term_keyword_source,
+        'source_vocabulary' => $term_arguments['source_term_keyword'],
         'destination_vocabulary' => 'tags',
-      ),
-
-      /**** PAGE CATEGORY migration ****/
-      'UGPageCategory6' => $common_arguments + array(
-        'description' => t('Migration of page category terms from Drupal 6'),
-        'class_name' => 'UGPageCategory6Migration',
-        'source_vocabulary' => $term_page_category_source, 
-        'destination_vocabulary' => 'page_category',
       ),
 
       /**** PAGE migration ****/
+      'UGPageCategory6' => $common_arguments + array(
+        'description' => t('Migration of page category terms from Drupal 6'),
+        'class_name' => 'UGPageCategory6Migration',
+        'source_vocabulary' => $page_arguments['source_page_term_category'], 
+        'destination_vocabulary' => 'page_category',
+      ),
+
       'UGPage6' => $node_arguments + $page_arguments + array(
         'description' => t('Migration of basic pages from Drupal 6'),
         'class_name' => 'UGPage6Migration',
-        'source_type' => $node_page_type_source, 
+        'source_type' => $page_arguments['source_page_node_type'], 
         'destination_type' => 'page',
       ),
 
-      /**** NEWS CATEGORY migration ****/
+      /**** NEWS migration ****/
       'UGNewsCategory6' => $common_arguments + array(
         'description' => t('Migration of news category terms from Drupal 6'),
         'class_name' => 'UGNewsCategory6Migration',
-        'source_vocabulary' => $term_news_category_source, 
+        'source_vocabulary' => $news_arguments['source_news_term_category'], 
         'destination_vocabulary' => 'news_category',
       ),
 
-      /**** NEWS KEYWORD migration ****/
       'UGNewsKeyword6' => $common_arguments + array(
         'description' => t('Migration of news keyword terms from Drupal 6'),
         'class_name' => 'UGNewsKeyword6Migration',
-        'source_vocabulary' => $term_news_keyword_source,
+        'source_vocabulary' => $news_arguments['source_news_term_keyword'],
         'destination_vocabulary' => 'tags',
       ),
 
-      /**** NEWS migration ****/
       'UGNews6' => $node_arguments + $news_arguments + array(
         'description' => t('Migration of news articles from Drupal 6'),
         'class_name' => 'UGNews6Migration',
-        'source_type' => $node_news_type_source, 
+        'source_type' => $news_arguments['source_news_node_type'], 
         'destination_type' => 'news',
       ),
 
+      /**** EVENT migration ****/
+      'UGEventCategory6' => $common_arguments + array(
+        'description' => t('Migration of event category terms from Drupal 6'),
+        'class_name' => 'UGEventCategory6Migration',
+        'source_vocabulary' => $event_arguments['source_event_term_category'], 
+        'destination_vocabulary' => 'event_category',
+      ),
+
+      'UGEventKeyword6' => $common_arguments + array(
+        'description' => t('Migration of event keyword terms from Drupal 6'),
+        'class_name' => 'UGEventKeyword6Migration',
+        'source_vocabulary' => $event_arguments['source_event_term_keyword'],
+        'destination_vocabulary' => 'tags',
+      ),
+
+      'UGEventHeading6' => $common_arguments + array(
+        'description' => t('Migration of events multipart field heading from Drupal 6'),
+        'class_name' => 'UGEventHeading6Migration',
+        'source_vocabulary' => $event_arguments['source_event_term_heading'],
+        'destination_vocabulary' => 'event_heading',
+      ),
+
+      'UGEventMultifield6' => $common_arguments + $event_multipart_arguments + array(
+        'description' => t('Migration of events multipart field from Drupal 6'),
+        'class_name' => 'UGEventMultifield6Migration',
+        'dependencies' => array('UGEvent6','UGEventHeading6'),
+      ),
+
+      'UGEvent6' => $node_arguments + $event_arguments + array(
+        'description' => t('Migration of events from Drupal 6'),
+        'class_name' => 'UGEvent6Migration',
+        'source_type' => $event_arguments['source_event_node_type'], 
+        'destination_type' => 'event',
+      ),
     ),
+
   );
 
   return $api;
