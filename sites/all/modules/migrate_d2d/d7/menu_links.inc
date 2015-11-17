@@ -1,7 +1,8 @@
 <?php
+
 /**
  * @file
- * Implementation of DrupalMenuLinksMigration for Drupal 6 sources.
+ * Implementation of DrupalMenuLinksMigration for Drupal 7 sources.
  */
 
 /* PATCH SOURCE: https://www.drupal.org/files/issues/migrate_d2d-menu_names_and_cleanup-1489858-11.patch */
@@ -9,10 +10,10 @@
 /*
  * Class for menu link migrations: from {menu_links} into {menu_links}.
  */
-class DrupalMenuLinks6Migration extends DrupalMenuLinksMigration {
+class DrupalMenuLinks7Migration extends DrupalMenuLinksMigration {
 
   protected $menu_names = array();
- 
+
   /**
    * @param array $arguments
    *     $arguments['menu_migration'] should be defined -- menu links are normally
@@ -58,8 +59,8 @@ class DrupalMenuLinks6Migration extends DrupalMenuLinksMigration {
    */
   protected function query() {
     $query = Database::getConnection('default', $this->sourceConnection)
-             ->select('menu_links', 'm')
-             ->fields('m');
+      ->select('menu_links', 'm')
+      ->fields('m');
 
     if (!empty($this->menu_names)) {
       $query->condition('m.menu_name', $this->menu_names, 'IN');
@@ -78,42 +79,14 @@ class DrupalMenuLinks6Migration extends DrupalMenuLinksMigration {
       return FALSE;
     }
 
-    //if (!($row->menu_name == 'primary-links' ||
-
-    // D6 prefixes menus added through the UI with 'menu-'. If 'menu_names'
+    // D7 prefixes menus added through the UI with 'menu-'. If 'menu_names'
     // was not specified in $arguments, then limit to these UI-added menus,
-    // as well as primary-links and secondary-links.
+    // as well as main-menu.
     if (empty($this->menu_names)) {
-      if (!($row->menu_name == 'primary-links' ||
-        $row->menu_name == 'secondary-links' ||
-        substr($row->menu_name, 0, 5) == 'menu-')
-      ) {
+      if (!($row->menu_name == 'main-menu'||
+        substr($row->menu_name, 0, 5) == 'menu-')) {
         return FALSE;
       }
     }
-
-    if ($row->menu_name == 'primary-links') {
-      $row->menu_name = 'main-menu';
-    }
-  }
-
-  /**
-   * Migrate menu link language, if set.
-   */
-  public function prepare($menu_link, $row) {
-    $options = unserialize($row->options);
-    if (isset($options['langcode']) && module_exists('i18n_menu')) {
-      $menu_link->language = $options['langcode'];
-    }
-  }
-
-  /**
-   * Actions to take after a menu has been saved.
-   *
-   * @param $menu
-   * @param $row
-   */
-  public function complete($menu, $row) {
-    // @todo: anything needed here? Keeping complete() as a placeholder for now
   }
 }
