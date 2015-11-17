@@ -4,6 +4,8 @@
  * Base class for migrating menu links into Drupal.
  */
 
+/* PATCH SOURCE: https://www.drupal.org/files/issues/migrate_d2d-menu_names_and_cleanup-1489858-11.patch */
+
 /*
  * Class for menu link migrations: from {menu_links} into {menu_links}.
  */
@@ -98,4 +100,56 @@ abstract class DrupalMenuLinksMigration extends DrupalMigration {
       return FALSE;
     }
   }
+
+  /**
+   * Review a data row after fetch, returning FALSE to skip it.
+   *
+   * @param $row
+   */
+  function prepareRow($row) {
+
+    if (parent::prepareRow($row) === FALSE) {
+      return FALSE;
+    }
+
+    /*
+     * Fun with link_path!
+     *
+     * check for nids
+     *   if pattern 'node/nid', replace nid with handleSourceMigration($node_migrations, $nid)
+     * check for tids
+     *   if pattern 'term/tid', replace tid with handleSourceMigration($term_migrations, $tid)
+     * check for potential alias (after basepath, I believe)
+     *   if (handleSourceMigration($path_migration, $potentialalias), replace potentialalias with result
+     */
+
+    // Grabs numbers preceded by 'node/', followed by end of string or '/'
+    // eg: 'node/63' -> '63', 'node/17/edit' -> '17', 'node/53ea' -> NULL
+    $regexes = array(
+      'node_migrations' => "/(?<=node\/)[\d]+(?=$|\/)/",
+      'term_migrations' => "/(?<=taxonomy\/term\/)[\d]+(?=$|\/)/",
+    );
+    // @todo: extend the lookbehind so it returns NULL for inputs like 'awetnode/34'
+
+    foreach ($regexes as $property => $regex) {
+
+      $matches = array();
+      $value = '';
+
+      if (!empty($this->{$property})) {
+
+        if (preg_match($regex, $row->link_path, $matches)) {
+          if ($value = $this->handleSourceMigration($this->{$property}, $matches[0])) {
+            $new_path = preg_replace('/' . $matches[0] . '/', $value, $row->link_path);
+            if ($new_path) {
+              $row->link_path = $new_path;
+            }
+          }
+        }
+      }
+    }
+
+    // @todo: handle url_alias
+  }
+
 }

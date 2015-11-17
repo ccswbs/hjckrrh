@@ -2,20 +2,15 @@
 
 /**
  * @file
- * Implementation of DrupalMenuMigration for Drupal 6 sources.
+ * Implementation of DrupalMenuMigration for Drupal 7 sources.
  */
 
 /* PATCH SOURCE: https://www.drupal.org/files/issues/migrate_d2d-menu_names_and_cleanup-1489858-11.patch */
 
 /*
  * Class for menu migrations: from {menu_custom} into {menu_custom}.
- * Dependent on this patch for Migrate:
- * http://drupal.org/node/1403044#comment-5740118
  */
-class DrupalMenu6Migration extends DrupalMenuMigration {
-
-  protected $menu_names = array();
-
+class DrupalMenu7Migration extends DrupalMenuMigration {
 
   /**
    * @param array $arguments
@@ -31,6 +26,8 @@ class DrupalMenu6Migration extends DrupalMenuMigration {
 
     parent::__construct($arguments);
   }
+
+  protected $menu_names = array();
 
   /**
    * Query for the basic menu data.
@@ -60,21 +57,10 @@ class DrupalMenu6Migration extends DrupalMenuMigration {
       return FALSE;
     }
 
-    // D6 prefixes menus added through the UI with 'menu-'. If 'menu_names'
-    // was not specified in $arguments, then limit to these UI-added menus,
-    // as well as secondary-links.
+    // D7 prefixes menus added through the UI with 'menu-'. If 'menu_names'
+    // was not specified in $arguments, then limit to these UI-added menus.
     if (empty($this->menu_names)) {
-      if ($row->menu_name == 'secondary-links' ||
-        substr($row->menu_name, 0, 5) === 'menu-'
-      ) {
-        return TRUE;
-      }
-      else {
-        return FALSE;
-      }
-
-
+      return (substr($row->menu_name, 0, 5) === 'menu-');
     }
   }
-
 }
