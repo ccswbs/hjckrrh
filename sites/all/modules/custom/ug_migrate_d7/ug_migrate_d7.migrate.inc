@@ -6,13 +6,17 @@
 
 function ug_migrate_d7_migrate_api() {
 
-  /* BASE VARIABLES */
-  $user_arguments = array(
-    'role_mappings' => array(),
+  /* COMMON VARIABLES */
+  $common_arguments = array(
+    'source_connection' => 'legacy_d7',
+    'source_version' => 7,
+    'group_name' => 'ug_migrate_d7',
   );
 
-  $term_arguments = array(
-    'source_term_keyword' => 'tags',
+  /* NODE VARIABLES */
+  $node_arguments = $common_arguments + array(
+    'user_migration' => 'UGUser7',
+    'default_uid' => 1,
   );
 
   $page_arguments = array(
@@ -36,23 +40,20 @@ function ug_migrate_d7_migrate_api() {
 
   $event_multipart_arguments = array();
 
-  $common_arguments = array(
-    'source_connection' => 'legacy_d7',
-    'source_version' => 7,
-    'group_name' => 'ug_migrate_d7',
+  /* USER VARIABLES */
+  $user_arguments = array(
+    'role_mappings' => array(),
   );
 
-  //Node variables
-  $node_arguments = $common_arguments + array(
-    'user_migration' => 'UGUser7',
-    'default_uid' => 1,
+  /* TAXONOMY VARIABLES */
+  $term_arguments = array(
+    'source_term_keyword' => 'tags',
   );
 
-  $menu_arguments = $common_arguments + array(
-    'menu_names' => array('main-menu'),
-  );
+  /* MENU VARIABLES */
+  $menu_names = array('main-menu');
 
-  $menu_link_arguments = $common_arguments + $menu_arguments + array(
+  $menu_link_arguments = array(
     'menu_migration' => 'UGMenu7',
     'node_migrations' => array('UGPage7', 'UGNews7', 'UGEvent7'),
     'term_migrations' => array('UGTerm7', 'UGPageCategory7', 'UGNewsCategory7', 'UGNewsKeyword7', 'UGEventCategory7', 'UGEventKeyword7'),
@@ -175,14 +176,16 @@ function ug_migrate_d7_migrate_api() {
       ),
 
       /**** MENU migration ****/
-      'UGMenu7' => $menu_arguments + array(
+      'UGMenu7' => $common_arguments + array(
         'description' => t('Migration of menus from Drupal 7'),
         'class_name' => 'UGMenu7Migration',
+        'menu_names' => $menu_names,
       ),
 
-      'UGMenuLinks7' => $menu_link_arguments + array(
+      'UGMenuLinks7' => $common_arguments + $menu_link_arguments + array(
         'description' => t('Migration of menu links from Drupal 7'),
         'class_name' => 'UGMenuLinks7Migration',
+        'menu_names' => $menu_names,
       ),
 
     ) ,

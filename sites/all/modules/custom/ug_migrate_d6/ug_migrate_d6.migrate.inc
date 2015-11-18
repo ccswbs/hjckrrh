@@ -6,16 +6,17 @@
 
 function ug_migrate_d6_migrate_api() {
 
-  /* BASE VARIABLES */
-  $user_arguments = array(
-    'role_mappings' => array(),
-    'picture_source' => '',
-    'picture_destination' => 'public://',
-
+  /* COMMON VARIABLES */
+  $common_arguments = array(
+    'source_connection' => 'legacy_d6',
+    'source_version' => 6,
+    'group_name' => 'ug_migrate_d6',
   );
 
-  $term_arguments = array(
-    'source_term_keyword' => 'tags',
+  /* NODE VARIABLES */
+  $node_arguments = $common_arguments + array(
+    'user_migration' => 'UGUser6',
+    'default_uid' => 1,
   );
 
   $page_arguments = array(
@@ -39,24 +40,21 @@ function ug_migrate_d6_migrate_api() {
 
   $event_multipart_arguments = array();
 
-  //General variables
-  $common_arguments = array(
-    'source_connection' => 'legacy_d6',
-    'source_version' => 6,
-    'group_name' => 'ug_migrate_d6',
+  /* USER VARIABLES */
+  $user_arguments = array(
+    'role_mappings' => array(),
+    'picture_source' => '',
+    'picture_destination' => 'public://',
   );
 
-  //Node variables
-  $node_arguments = $common_arguments + array(
-    'user_migration' => 'UGUser6',
-    'default_uid' => 1,
+  /* TAXONOMY VARIABLES */
+  $term_arguments = array(
+    'source_term_keyword' => 'tags',
   );
 
-  $menu_arguments = $common_arguments + array(
-    'menu_names' => array('primary-links'),
-  );
-
-  $menu_link_arguments = $common_arguments + $menu_arguments + array(
+  /* MENU VARIABLES */
+  $menu_names = array('primary-links');
+  $menu_link_arguments = array(
     'menu_migration' => 'UGMenu6',
     'node_migrations' => array('UGPage6', 'UGNews6', 'UGEvent6'),
     'term_migrations' => array('UGTerm6', 'UGPageCategory6', 'UGNewsCategory6', 'UGNewsKeyword6', 'UGEventCategory6', 'UGEventKeyword6'),
@@ -188,14 +186,16 @@ function ug_migrate_d6_migrate_api() {
       ),
 
       /**** MENU migration ****/
-      'UGMenu6' => $menu_arguments + array(
+      'UGMenu6' => $common_arguments + array(
         'description' => t('Migration of menus from Drupal 6'),
         'class_name' => 'UGMenu6Migration',
+        'menu_names' => $menu_names,
       ),
 
-      'UGMenuLinks6' => $menu_link_arguments + array(
+      'UGMenuLinks6' => $common_arguments + $menu_link_arguments + array(
         'description' => t('Migration of menu links from Drupal 6'),
         'class_name' => 'UGMenuLinks6Migration',
+        'menu_names' => $menu_names,
       ),
 
     ),

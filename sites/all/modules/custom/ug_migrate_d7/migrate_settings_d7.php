@@ -5,6 +5,9 @@
   (source => destination)
   ******************************/
 
+  /* MENU Settings */
+  $menu_names = array('main-menu');
+
   /* USER SETTINGS */
   $role_mappings = array(
     // e.g. 'source-editor' => 'editor',
