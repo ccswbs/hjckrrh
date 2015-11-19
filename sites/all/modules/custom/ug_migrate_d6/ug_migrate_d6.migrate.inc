@@ -60,6 +60,15 @@ function ug_migrate_d6_migrate_api() {
     'term_migrations' => array('UGTerm6', 'UGPageCategory6', 'UGNewsCategory6', 'UGNewsKeyword6', 'UGEventCategory6', 'UGEventKeyword6'),
   );
 
+  $menu_arguments = $common_arguments + array(
+    'protected_system_menus' => array(
+      'navigation', 
+      'user-menu', 
+      'devel', 
+      'management',
+    ),
+  );
+
   /* OVERRIDE variables with site configuration files */
   $migrate_settings = 'migrate_settings_d6.php';
   $migrate_settings_override = DRUPAL_ROOT . '/' . conf_path() . '/migrate_settings_d6.php';
@@ -186,13 +195,13 @@ function ug_migrate_d6_migrate_api() {
       ),
 
       /**** MENU migration ****/
-      'UGMenu6' => $common_arguments + array(
+      'UGMenu6' => $menu_arguments + array(
         'description' => t('Migration of menus from Drupal 6'),
         'class_name' => 'UGMenu6Migration',
         'menu_names' => $menu_names,
       ),
 
-      'UGMenuLinks6' => $common_arguments + $menu_link_arguments + array(
+      'UGMenuLinks6' => $menu_arguments + $menu_link_arguments + array(
         'description' => t('Migration of menu links from Drupal 6'),
         'class_name' => 'UGMenuLinks6Migration',
         'menu_names' => $menu_names,
