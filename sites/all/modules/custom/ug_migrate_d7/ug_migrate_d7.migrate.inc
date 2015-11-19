@@ -59,6 +59,15 @@ function ug_migrate_d7_migrate_api() {
     'term_migrations' => array('UGTerm7', 'UGPageCategory7', 'UGNewsCategory7', 'UGNewsKeyword7', 'UGEventCategory7', 'UGEventKeyword7'),
   );
 
+  $menu_arguments = $common_arguments + array(
+    'protected_system_menus' => array(
+      'navigation', 
+      'user-menu', 
+      'devel', 
+      'management',
+    ),
+  );
+
   /* OVERRIDE variables with site configuration files */
   $migrate_settings = 'migrate_settings_d7.php'; //generic config filegi (part of module)
   $migrate_settings_override = DRUPAL_ROOT . '/' . conf_path() . '/migrate_settings_d7.php'; //site config file
@@ -176,13 +185,13 @@ function ug_migrate_d7_migrate_api() {
       ),
 
       /**** MENU migration ****/
-      'UGMenu7' => $common_arguments + array(
+      'UGMenu7' => $menu_arguments + array(
         'description' => t('Migration of menus from Drupal 7'),
         'class_name' => 'UGMenu7Migration',
         'menu_names' => $menu_names,
       ),
 
-      'UGMenuLinks7' => $common_arguments + $menu_link_arguments + array(
+      'UGMenuLinks7' => $menu_arguments + $menu_link_arguments + array(
         'description' => t('Migration of menu links from Drupal 7'),
         'class_name' => 'UGMenuLinks7Migration',
         'menu_names' => $menu_names,
