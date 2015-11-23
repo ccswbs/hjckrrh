@@ -38,3 +38,4 @@ features[user_role][] = author
 features[user_role][] = editor
 features[user_role][] = moderator
 features[user_role][] = publisher
+features[user_role][] = site manager
