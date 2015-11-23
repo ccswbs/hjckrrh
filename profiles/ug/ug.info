@@ -26,6 +26,7 @@ dependencies[] = ug_front
 dependencies[] = ug_image
 dependencies[] = ug_layout
 dependencies[] = ug_page
+dependencies[] = ug_page_layouts
 dependencies[] = ug_social
 dependencies[] = ug_theme_settings
 dependencies[] = ug_user
