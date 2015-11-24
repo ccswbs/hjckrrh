@@ -10,6 +10,7 @@ dependencies[] = file
 dependencies[] = image
 dependencies[] = strongarm
 dependencies[] = taxonomy
+dependencies[] = ug_page_layouts
 dependencies[] = ug_tags
 dependencies[] = views_content
 features[ctools][] = strongarm:strongarm:1

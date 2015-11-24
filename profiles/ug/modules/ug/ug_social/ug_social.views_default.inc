@@ -425,7 +425,7 @@ function ug_social_views_default_views() {
   $handler->display->display_options['fields']['created_time']['field'] = 'created_time';
   $handler->display->display_options['fields']['created_time']['date_format'] = 'time ago';
   $handler->display->display_options['fields']['created_time']['second_date_format'] = 'long';
-  /* Field: Twitter: Full name */
+  /* Field: Twitter Account: Full name */
   $handler->display->display_options['fields']['name']['id'] = 'name';
   $handler->display->display_options['fields']['name']['table'] = 'twitter_account';
   $handler->display->display_options['fields']['name']['field'] = 'name';
@@ -437,16 +437,16 @@ function ug_social_views_default_views() {
   $handler->display->display_options['fields']['text']['link_usernames'] = 1;
   $handler->display->display_options['fields']['text']['link_hashtags'] = 0;
   $handler->display->display_options['fields']['text']['link_attributes'] = 1;
-  /* Field: Twitter: Profile image */
+  /* Field: Twitter Account: Profile image */
   $handler->display->display_options['fields']['profile_image_url']['id'] = 'profile_image_url';
   $handler->display->display_options['fields']['profile_image_url']['table'] = 'twitter_account';
   $handler->display->display_options['fields']['profile_image_url']['field'] = 'profile_image_url';
-  /* Field: Twitter: URL */
+  /* Field: Twitter Account: URL */
   $handler->display->display_options['fields']['url']['id'] = 'url';
   $handler->display->display_options['fields']['url']['table'] = 'twitter_account';
   $handler->display->display_options['fields']['url']['field'] = 'url';
   $handler->display->display_options['fields']['url']['display_as_link'] = FALSE;
-  /* Field: Twitter: Login name */
+  /* Field: Twitter Account: Login name */
   $handler->display->display_options['fields']['screen_name']['id'] = 'screen_name';
   $handler->display->display_options['fields']['screen_name']['table'] = 'twitter_account';
   $handler->display->display_options['fields']['screen_name']['field'] = 'screen_name';

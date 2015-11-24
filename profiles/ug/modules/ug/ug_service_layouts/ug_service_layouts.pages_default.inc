@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * ug_service.pages_default.inc
+ * ug_service_layouts.pages_default.inc
  */
 
 /**
  * Implements hook_default_page_manager_handlers().
  */
-function ug_service_default_page_manager_handlers() {
+function ug_service_layouts_default_page_manager_handlers() {
   $export = array();
 
   $handler = new stdClass();
@@ -21,7 +21,7 @@ function ug_service_default_page_manager_handlers() {
   $handler->conf = array(
     'title' => 'Service',
     'no_blocks' => 0,
-    'pipeline' => 'standard',
+    'pipeline' => 'ipe',
     'body_classes_to_remove' => '',
     'body_classes_to_add' => 'detail-page',
     'css_id' => '',
@@ -293,7 +293,7 @@ function ug_service_default_page_manager_handlers() {
 /**
  * Implements hook_default_page_manager_pages().
  */
-function ug_service_default_page_manager_pages() {
+function ug_service_layouts_default_page_manager_pages() {
   $page = new stdClass();
   $page->disabled = FALSE; /* Edit this to true to make a default page disabled initially */
   $page->api_version = 1;
@@ -334,7 +334,7 @@ function ug_service_default_page_manager_pages() {
   $handler->conf = array(
     'title' => 'Panel',
     'no_blocks' => 0,
-    'pipeline' => 'standard',
+    'pipeline' => 'ipe',
     'body_classes_to_remove' => '',
     'body_classes_to_add' => '',
     'css_id' => '',
@@ -445,7 +445,7 @@ function ug_service_default_page_manager_pages() {
   $handler->conf = array(
     'title' => 'Panel',
     'no_blocks' => 0,
-    'pipeline' => 'standard',
+    'pipeline' => 'ipe',
     'body_classes_to_remove' => '',
     'body_classes_to_add' => '',
     'css_id' => '',
@@ -553,7 +553,7 @@ function ug_service_default_page_manager_pages() {
   $handler->conf = array(
     'title' => 'Panel',
     'no_blocks' => 0,
-    'pipeline' => 'standard',
+    'pipeline' => 'ipe',
     'body_classes_to_remove' => '',
     'body_classes_to_add' => '',
     'css_id' => '',
@@ -694,7 +694,7 @@ function ug_service_default_page_manager_pages() {
   $handler->conf = array(
     'title' => 'Panel',
     'no_blocks' => 0,
-    'pipeline' => 'standard',
+    'pipeline' => 'ipe',
     'body_classes_to_remove' => '',
     'body_classes_to_add' => '',
     'css_id' => '',
