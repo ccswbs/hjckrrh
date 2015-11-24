@@ -176,7 +176,6 @@ function ug_feature_views_default_views() {
   $handler->display->display_options['fields']['field_feature_text']['field'] = 'field_feature_text';
   $handler->display->display_options['fields']['field_feature_text']['label'] = '';
   $handler->display->display_options['fields']['field_feature_text']['alter']['max_length'] = '255';
-  $handler->display->display_options['fields']['field_feature_text']['alter']['trim'] = TRUE;
   $handler->display->display_options['fields']['field_feature_text']['alter']['html'] = TRUE;
   $handler->display->display_options['fields']['field_feature_text']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_feature_text']['element_default_classes'] = FALSE;
@@ -310,7 +309,7 @@ function ug_feature_views_default_views() {
   $handler->display->display_options['fields']['field_feature_text']['field'] = 'field_feature_text';
   $handler->display->display_options['fields']['field_feature_text']['label'] = '';
   $handler->display->display_options['fields']['field_feature_text']['alter']['max_length'] = '80';
-  $handler->display->display_options['fields']['field_feature_text']['alter']['trim'] = TRUE;
+  $handler->display->display_options['fields']['field_feature_text']['alter']['ellipsis'] = FALSE;
   $handler->display->display_options['fields']['field_feature_text']['alter']['html'] = TRUE;
   $handler->display->display_options['fields']['field_feature_text']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_feature_text']['element_default_classes'] = FALSE;
