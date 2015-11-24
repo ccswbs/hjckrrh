@@ -17,6 +17,7 @@ function ug_role_user_default_permissions() {
       'editor' => 'editor',
       'moderator' => 'moderator',
       'publisher' => 'publisher',
+      'site manager' => 'site manager',
     ),
     'module' => 'system',
   );
@@ -55,6 +56,7 @@ function ug_role_user_default_permissions() {
       'editor' => 'editor',
       'moderator' => 'moderator',
       'publisher' => 'publisher',
+      'site manager' => 'site manager',
     ),
     'module' => 'toolbar',
   );
@@ -206,6 +208,7 @@ function ug_role_user_default_permissions() {
       'editor' => 'editor',
       'moderator' => 'moderator',
       'publisher' => 'publisher',
+      'site manager' => 'site manager',
     ),
     'module' => 'system',
   );
