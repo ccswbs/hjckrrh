@@ -37,9 +37,7 @@ function ug_news_user_default_permissions() {
   $permissions['delete terms in news_category'] = array(
     'name' => 'delete terms in news_category',
     'roles' => array(
-      'editor' => 'editor',
-      'moderator' => 'moderator',
-      'publisher' => 'publisher',
+      'site manager' => 'site manager',
     ),
     'module' => 'taxonomy',
   );
@@ -68,9 +66,7 @@ function ug_news_user_default_permissions() {
   $permissions['edit terms in news_category'] = array(
     'name' => 'edit terms in news_category',
     'roles' => array(
-      'editor' => 'editor',
-      'moderator' => 'moderator',
-      'publisher' => 'publisher',
+      'site manager' => 'site manager',
     ),
     'module' => 'taxonomy',
   );
