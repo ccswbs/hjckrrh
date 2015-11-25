@@ -501,7 +501,7 @@ function ug_news_views_default_views() {
       'context_optional' => 0,
       'panel' => '0',
       'fixed' => '',
-      'label' => 'Content: Category (field_news_tags)',
+      'label' => 'Category',
     ),
   );
   $export['n3'] = $view;
