@@ -242,6 +242,14 @@ function ug_news_views_default_views() {
       'label' => 'Content: Created year + month',
     ),
   );
+
+  /* Display: Feed */
+  $handler = $view->new_display('feed', 'Feed', 'feed_1');
+  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['style_plugin'] = 'rss';
+  $handler->display->display_options['row_plugin'] = 'node_rss';
+  $handler->display->display_options['path'] = 'news/%/feed';
   $export['n1'] = $view;
 
   $view = new view();
