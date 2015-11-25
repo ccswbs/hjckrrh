@@ -91,6 +91,20 @@ function ug_banner_views_default_views() {
   $handler->display->display_options['sorts']['random']['id'] = 'random';
   $handler->display->display_options['sorts']['random']['table'] = 'views';
   $handler->display->display_options['sorts']['random']['field'] = 'random';
+  /* Contextual filter: Content: Category (field_banner_category) */
+  $handler->display->display_options['arguments']['field_banner_category_tid']['id'] = 'field_banner_category_tid';
+  $handler->display->display_options['arguments']['field_banner_category_tid']['table'] = 'field_data_field_banner_category';
+  $handler->display->display_options['arguments']['field_banner_category_tid']['field'] = 'field_banner_category_tid';
+  $handler->display->display_options['arguments']['field_banner_category_tid']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['field_banner_category_tid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_banner_category_tid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_banner_category_tid']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['field_banner_category_tid']['specify_validation'] = TRUE;
+  $handler->display->display_options['arguments']['field_banner_category_tid']['validate']['type'] = 'taxonomy_term';
+  $handler->display->display_options['arguments']['field_banner_category_tid']['validate_options']['vocabularies'] = array(
+    'banner_category' => 'banner_category',
+  );
+  $handler->display->display_options['arguments']['field_banner_category_tid']['validate_options']['type'] = 'convert';
   /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
@@ -117,9 +131,29 @@ function ug_banner_views_default_views() {
   $handler->display->display_options['allow']['title_override'] = 'title_override';
   $handler->display->display_options['allow']['exposed_form'] = 0;
   $handler->display->display_options['allow']['fields_override'] = 0;
+  $handler->display->display_options['argument_input'] = array(
+    'field_banner_category_tid' => array(
+      'type' => 'user',
+      'context' => 'entity:file.fid',
+      'context_optional' => 0,
+      'panel' => '0',
+      'fixed' => '',
+      'label' => 'Category',
+    ),
+  );
 
   /* Display: Autoplay */
   $handler = $view->new_display('panel_pane', 'Autoplay', 'autoplay');
+  $handler->display->display_options['argument_input'] = array(
+    'field_banner_category_tid' => array(
+      'type' => 'user',
+      'context' => 'entity:file.fid',
+      'context_optional' => 0,
+      'panel' => '0',
+      'fixed' => '',
+      'label' => 'Category',
+    ),
+  );
 
   /* Display: Block - Manual */
   $handler = $view->new_display('block', 'Block - Manual', 'block_1');
