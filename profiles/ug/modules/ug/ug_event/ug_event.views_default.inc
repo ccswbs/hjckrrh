@@ -447,6 +447,20 @@ return false;';
   $handler->display->display_options['sorts']['field_event_date_value']['id'] = 'field_event_date_value';
   $handler->display->display_options['sorts']['field_event_date_value']['table'] = 'field_data_field_event_date';
   $handler->display->display_options['sorts']['field_event_date_value']['field'] = 'field_event_date_value';
+  /* Contextual filter: Content: Category (field_event_category) */
+  $handler->display->display_options['arguments']['field_event_category_tid']['id'] = 'field_event_category_tid';
+  $handler->display->display_options['arguments']['field_event_category_tid']['table'] = 'field_data_field_event_category';
+  $handler->display->display_options['arguments']['field_event_category_tid']['field'] = 'field_event_category_tid';
+  $handler->display->display_options['arguments']['field_event_category_tid']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['field_event_category_tid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_event_category_tid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_event_category_tid']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['field_event_category_tid']['specify_validation'] = TRUE;
+  $handler->display->display_options['arguments']['field_event_category_tid']['validate']['type'] = 'taxonomy_term';
+  $handler->display->display_options['arguments']['field_event_category_tid']['validate_options']['vocabularies'] = array(
+    'event_category' => 'event_category',
+  );
+  $handler->display->display_options['arguments']['field_event_category_tid']['validate_options']['type'] = 'convert';
   /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
