@@ -45,7 +45,7 @@ class UGEvent7Migration extends DrupalNode7Migration {
 
 		/* Event Keyword */
 		$this->addFieldMapping('field_tags', $event_arguments['source_event_keyword'])
-			->sourceMigration('UGEventKeyword7');
+			->sourceMigration('UGTerm7');
 		$this->addFieldMapping('field_tags:source_type')
 			->defaultValue('tid');
 
