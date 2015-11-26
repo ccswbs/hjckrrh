@@ -36,14 +36,14 @@ class UGEvent6Migration extends DrupalNode6Migration {
 		    ->defaultValue('full_html');
 
 		/* Event Category */
-		$this->addFieldMapping('field_event_tags', $event_arguments['source_event_category'])
+		$this->addFieldMapping('field_event_category', $event_arguments['source_event_category'])
 			->sourceMigration('UGEventCategory6');
-		$this->addFieldMapping('field_event_tags:source_type')
+		$this->addFieldMapping('field_event_category:source_type')
 			->defaultValue('tid');
 
 		/* Event Keyword */
 		$this->addFieldMapping('field_tags', $event_arguments['source_event_keyword'])
-			->sourceMigration('UGEventKeyword6');
+			->sourceMigration('UGTerm6');
 		$this->addFieldMapping('field_tags:source_type')
 			->defaultValue('tid');
 
@@ -189,7 +189,7 @@ class UGNews6Migration extends DrupalNode6Migration {
 
 		/* News Keyword */
 		$this->addFieldMapping('field_tags', $news_arguments['source_news_keyword'])
-			->sourceMigration('UGNewsKeyword6');
+			->sourceMigration('UGTerm6');
 		$this->addFieldMapping('field_tags:source_type')
 			->defaultValue('tid');
 
