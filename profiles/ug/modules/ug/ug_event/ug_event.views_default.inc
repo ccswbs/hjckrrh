@@ -106,6 +106,20 @@ function ug_event_views_default_views() {
   $handler->display->display_options['arguments']['tid']['validate_options']['vocabularies'] = array(
     'tags' => 'tags',
   );
+  /* Contextual filter: Content: Category (field_event_category) */
+  $handler->display->display_options['arguments']['field_event_category_tid']['id'] = 'field_event_category_tid';
+  $handler->display->display_options['arguments']['field_event_category_tid']['table'] = 'field_data_field_event_category';
+  $handler->display->display_options['arguments']['field_event_category_tid']['field'] = 'field_event_category_tid';
+  $handler->display->display_options['arguments']['field_event_category_tid']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['field_event_category_tid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_event_category_tid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_event_category_tid']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['field_event_category_tid']['specify_validation'] = TRUE;
+  $handler->display->display_options['arguments']['field_event_category_tid']['validate']['type'] = 'taxonomy_term';
+  $handler->display->display_options['arguments']['field_event_category_tid']['validate_options']['vocabularies'] = array(
+    'event_category' => 'event_category',
+  );
+  $handler->display->display_options['arguments']['field_event_category_tid']['validate_options']['type'] = 'convert';
   /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
@@ -153,10 +167,11 @@ function ug_event_views_default_views() {
   $handler->display->display_options['filters']['field_event_date_value']['operator'] = '>=';
   $handler->display->display_options['filters']['field_event_date_value']['default_date'] = 'now';
   $handler->display->display_options['allow']['use_pager'] = 0;
-  $handler->display->display_options['allow']['items_per_page'] = 0;
+  $handler->display->display_options['allow']['items_per_page'] = 'items_per_page';
   $handler->display->display_options['allow']['offset'] = 0;
   $handler->display->display_options['allow']['link_to_view'] = 0;
   $handler->display->display_options['allow']['more_link'] = 0;
+  $handler->display->display_options['allow']['more_text'] = 0;
   $handler->display->display_options['allow']['path_override'] = 0;
   $handler->display->display_options['allow']['title_override'] = 'title_override';
   $handler->display->display_options['allow']['exposed_form'] = 0;
@@ -169,6 +184,14 @@ function ug_event_views_default_views() {
       'panel' => '0',
       'fixed' => '',
       'label' => 'Content: Has taxonomy term ID',
+    ),
+    'field_event_category_tid' => array(
+      'type' => 'user',
+      'context' => 'entity:file.fid',
+      'context_optional' => 0,
+      'panel' => '0',
+      'fixed' => '',
+      'label' => 'Category',
     ),
   );
 
@@ -214,10 +237,11 @@ return false;';
     'field_data_field_event_date.field_event_date_value' => 'field_data_field_event_date.field_event_date_value',
   );
   $handler->display->display_options['allow']['use_pager'] = 0;
-  $handler->display->display_options['allow']['items_per_page'] = 0;
+  $handler->display->display_options['allow']['items_per_page'] = 'items_per_page';
   $handler->display->display_options['allow']['offset'] = 0;
   $handler->display->display_options['allow']['link_to_view'] = 0;
   $handler->display->display_options['allow']['more_link'] = 0;
+  $handler->display->display_options['allow']['more_text'] = 0;
   $handler->display->display_options['allow']['path_override'] = 0;
   $handler->display->display_options['allow']['title_override'] = 'title_override';
   $handler->display->display_options['allow']['exposed_form'] = 0;
@@ -447,6 +471,20 @@ return false;';
   $handler->display->display_options['sorts']['field_event_date_value']['id'] = 'field_event_date_value';
   $handler->display->display_options['sorts']['field_event_date_value']['table'] = 'field_data_field_event_date';
   $handler->display->display_options['sorts']['field_event_date_value']['field'] = 'field_event_date_value';
+  /* Contextual filter: Content: Category (field_event_category) */
+  $handler->display->display_options['arguments']['field_event_category_tid']['id'] = 'field_event_category_tid';
+  $handler->display->display_options['arguments']['field_event_category_tid']['table'] = 'field_data_field_event_category';
+  $handler->display->display_options['arguments']['field_event_category_tid']['field'] = 'field_event_category_tid';
+  $handler->display->display_options['arguments']['field_event_category_tid']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['field_event_category_tid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_event_category_tid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_event_category_tid']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['field_event_category_tid']['specify_validation'] = TRUE;
+  $handler->display->display_options['arguments']['field_event_category_tid']['validate']['type'] = 'taxonomy_term';
+  $handler->display->display_options['arguments']['field_event_category_tid']['validate_options']['vocabularies'] = array(
+    'event_category' => 'event_category',
+  );
+  $handler->display->display_options['arguments']['field_event_category_tid']['validate_options']['type'] = 'convert';
   /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
@@ -480,6 +518,16 @@ return false;';
   $handler->display->display_options['allow']['title_override'] = 'title_override';
   $handler->display->display_options['allow']['exposed_form'] = 0;
   $handler->display->display_options['allow']['fields_override'] = 0;
+  $handler->display->display_options['argument_input'] = array(
+    'field_event_category_tid' => array(
+      'type' => 'user',
+      'context' => 'entity:file.fid',
+      'context_optional' => 0,
+      'panel' => '0',
+      'fixed' => '',
+      'label' => 'Category',
+    ),
+  );
   $export['e3'] = $view;
 
   $view = new view();
@@ -726,6 +774,20 @@ return false;';
   $handler->display->display_options['arguments']['field_event_date_value']['summary']['number_of_records'] = '0';
   $handler->display->display_options['arguments']['field_event_date_value']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['field_event_date_value']['summary_options']['items_per_page'] = '25';
+  /* Contextual filter: Content: Category (field_event_category) */
+  $handler->display->display_options['arguments']['field_event_category_tid']['id'] = 'field_event_category_tid';
+  $handler->display->display_options['arguments']['field_event_category_tid']['table'] = 'field_data_field_event_category';
+  $handler->display->display_options['arguments']['field_event_category_tid']['field'] = 'field_event_category_tid';
+  $handler->display->display_options['arguments']['field_event_category_tid']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['field_event_category_tid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_event_category_tid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_event_category_tid']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['field_event_category_tid']['specify_validation'] = TRUE;
+  $handler->display->display_options['arguments']['field_event_category_tid']['validate']['type'] = 'taxonomy_term';
+  $handler->display->display_options['arguments']['field_event_category_tid']['validate_options']['vocabularies'] = array(
+    'event_category' => 'event_category',
+  );
+  $handler->display->display_options['arguments']['field_event_category_tid']['validate_options']['type'] = 'convert';
   /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
@@ -745,6 +807,24 @@ return false;';
   $handler->display->display_options['allow']['title_override'] = 'title_override';
   $handler->display->display_options['allow']['exposed_form'] = 0;
   $handler->display->display_options['allow']['fields_override'] = 0;
+  $handler->display->display_options['argument_input'] = array(
+    'field_event_date_value' => array(
+      'type' => 'none',
+      'context' => 'entity:file.fid',
+      'context_optional' => 0,
+      'panel' => '0',
+      'fixed' => '',
+      'label' => 'Content: Date -  start date (field_event_date)',
+    ),
+    'field_event_category_tid' => array(
+      'type' => 'user',
+      'context' => 'entity:file.fid',
+      'context_optional' => 0,
+      'panel' => '0',
+      'fixed' => '',
+      'label' => 'Category',
+    ),
+  );
   $handler->display->display_options['inherit_panels_path'] = '0';
   $export['e8'] = $view;
 
@@ -817,6 +897,20 @@ return false;';
   $handler->display->display_options['arguments']['field_event_date_value']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['field_event_date_value']['summary_options']['items_per_page'] = '25';
   $handler->display->display_options['arguments']['field_event_date_value']['granularity'] = 'week';
+  /* Contextual filter: Content: Category (field_event_category) */
+  $handler->display->display_options['arguments']['field_event_category_tid']['id'] = 'field_event_category_tid';
+  $handler->display->display_options['arguments']['field_event_category_tid']['table'] = 'field_data_field_event_category';
+  $handler->display->display_options['arguments']['field_event_category_tid']['field'] = 'field_event_category_tid';
+  $handler->display->display_options['arguments']['field_event_category_tid']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['field_event_category_tid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_event_category_tid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_event_category_tid']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['field_event_category_tid']['specify_validation'] = TRUE;
+  $handler->display->display_options['arguments']['field_event_category_tid']['validate']['type'] = 'taxonomy_term';
+  $handler->display->display_options['arguments']['field_event_category_tid']['validate_options']['vocabularies'] = array(
+    'event_category' => 'event_category',
+  );
+  $handler->display->display_options['arguments']['field_event_category_tid']['validate_options']['type'] = 'convert';
   /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
@@ -836,6 +930,24 @@ return false;';
   $handler->display->display_options['allow']['title_override'] = 'title_override';
   $handler->display->display_options['allow']['exposed_form'] = 0;
   $handler->display->display_options['allow']['fields_override'] = 0;
+  $handler->display->display_options['argument_input'] = array(
+    'field_event_date_value' => array(
+      'type' => 'none',
+      'context' => 'entity:file.fid',
+      'context_optional' => 0,
+      'panel' => '0',
+      'fixed' => '',
+      'label' => 'Content: Date -  start date (field_event_date)',
+    ),
+    'field_event_category_tid' => array(
+      'type' => 'user',
+      'context' => 'entity:file.fid',
+      'context_optional' => 0,
+      'panel' => '0',
+      'fixed' => '',
+      'label' => 'Category',
+    ),
+  );
   $handler->display->display_options['inherit_panels_path'] = '0';
   $export['e9'] = $view;
 
@@ -999,6 +1111,20 @@ return false;';
   $handler->display->display_options['arguments']['field_event_date_value']['summary']['number_of_records'] = '0';
   $handler->display->display_options['arguments']['field_event_date_value']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['field_event_date_value']['summary_options']['items_per_page'] = '25';
+  /* Contextual filter: Content: Category (field_event_category) */
+  $handler->display->display_options['arguments']['field_event_category_tid']['id'] = 'field_event_category_tid';
+  $handler->display->display_options['arguments']['field_event_category_tid']['table'] = 'field_data_field_event_category';
+  $handler->display->display_options['arguments']['field_event_category_tid']['field'] = 'field_event_category_tid';
+  $handler->display->display_options['arguments']['field_event_category_tid']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['field_event_category_tid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_event_category_tid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_event_category_tid']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['field_event_category_tid']['specify_validation'] = TRUE;
+  $handler->display->display_options['arguments']['field_event_category_tid']['validate']['type'] = 'taxonomy_term';
+  $handler->display->display_options['arguments']['field_event_category_tid']['validate_options']['vocabularies'] = array(
+    'event_category' => 'event_category',
+  );
+  $handler->display->display_options['arguments']['field_event_category_tid']['validate_options']['type'] = 'convert';
   /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
@@ -1010,14 +1136,33 @@ return false;';
   /* Display: Content pane */
   $handler = $view->new_display('panel_pane', 'Content pane', 'panel_pane_1');
   $handler->display->display_options['allow']['use_pager'] = 0;
-  $handler->display->display_options['allow']['items_per_page'] = 0;
+  $handler->display->display_options['allow']['items_per_page'] = 'items_per_page';
   $handler->display->display_options['allow']['offset'] = 0;
   $handler->display->display_options['allow']['link_to_view'] = 0;
   $handler->display->display_options['allow']['more_link'] = 0;
+  $handler->display->display_options['allow']['more_text'] = 0;
   $handler->display->display_options['allow']['path_override'] = 0;
   $handler->display->display_options['allow']['title_override'] = 'title_override';
   $handler->display->display_options['allow']['exposed_form'] = 0;
   $handler->display->display_options['allow']['fields_override'] = 0;
+  $handler->display->display_options['argument_input'] = array(
+    'field_event_date_value' => array(
+      'type' => 'none',
+      'context' => 'entity:file.fid',
+      'context_optional' => 0,
+      'panel' => '0',
+      'fixed' => '',
+      'label' => 'Content: Date -  start date (field_event_date)',
+    ),
+    'field_event_category_tid' => array(
+      'type' => 'user',
+      'context' => 'entity:file.fid',
+      'context_optional' => 0,
+      'panel' => '0',
+      'fixed' => '',
+      'label' => 'Category',
+    ),
+  );
   $handler->display->display_options['inherit_panels_path'] = '0';
   $export['event_month_list'] = $view;
 
@@ -1197,6 +1342,20 @@ return false;';
   $handler->display->display_options['arguments']['field_event_date_value']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['field_event_date_value']['summary_options']['items_per_page'] = '25';
   $handler->display->display_options['arguments']['field_event_date_value']['granularity'] = 'week';
+  /* Contextual filter: Content: Category (field_event_category) */
+  $handler->display->display_options['arguments']['field_event_category_tid']['id'] = 'field_event_category_tid';
+  $handler->display->display_options['arguments']['field_event_category_tid']['table'] = 'field_data_field_event_category';
+  $handler->display->display_options['arguments']['field_event_category_tid']['field'] = 'field_event_category_tid';
+  $handler->display->display_options['arguments']['field_event_category_tid']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['field_event_category_tid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_event_category_tid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_event_category_tid']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['field_event_category_tid']['specify_validation'] = TRUE;
+  $handler->display->display_options['arguments']['field_event_category_tid']['validate']['type'] = 'taxonomy_term';
+  $handler->display->display_options['arguments']['field_event_category_tid']['validate_options']['vocabularies'] = array(
+    'event_category' => 'event_category',
+  );
+  $handler->display->display_options['arguments']['field_event_category_tid']['validate_options']['type'] = 'convert';
   /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
@@ -1208,14 +1367,33 @@ return false;';
   /* Display: Content pane */
   $handler = $view->new_display('panel_pane', 'Content pane', 'panel_pane_1');
   $handler->display->display_options['allow']['use_pager'] = 0;
-  $handler->display->display_options['allow']['items_per_page'] = 0;
+  $handler->display->display_options['allow']['items_per_page'] = 'items_per_page';
   $handler->display->display_options['allow']['offset'] = 0;
   $handler->display->display_options['allow']['link_to_view'] = 0;
   $handler->display->display_options['allow']['more_link'] = 0;
+  $handler->display->display_options['allow']['more_text'] = 0;
   $handler->display->display_options['allow']['path_override'] = 0;
   $handler->display->display_options['allow']['title_override'] = 'title_override';
   $handler->display->display_options['allow']['exposed_form'] = 0;
   $handler->display->display_options['allow']['fields_override'] = 0;
+  $handler->display->display_options['argument_input'] = array(
+    'field_event_date_value' => array(
+      'type' => 'none',
+      'context' => 'entity:file.fid',
+      'context_optional' => 0,
+      'panel' => '0',
+      'fixed' => '',
+      'label' => 'Content: Date -  start date (field_event_date)',
+    ),
+    'field_event_category_tid' => array(
+      'type' => 'user',
+      'context' => 'entity:file.fid',
+      'context_optional' => 0,
+      'panel' => '0',
+      'fixed' => '',
+      'label' => 'Category',
+    ),
+  );
   $handler->display->display_options['inherit_panels_path'] = '0';
   $export['event_week_list'] = $view;
 

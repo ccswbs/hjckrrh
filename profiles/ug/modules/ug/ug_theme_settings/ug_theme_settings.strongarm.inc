@@ -73,7 +73,7 @@ function ug_theme_settings_strongarm() {
     'favicon_path' => '',
     'favicon_upload' => '',
     'general__active_tab' => 'edit-theme-settings',
-    'bootstrap__active_tab' => 'edit-javascript',
+    'bootstrap__active_tab' => 'edit-components',
     'bootstrap_breadcrumb' => '1',
     'bootstrap_breadcrumb_home' => 1,
     'bootstrap_breadcrumb_title' => 0,
@@ -84,7 +84,7 @@ function ug_theme_settings_strongarm() {
     'bootstrap_region_well-highlighted' => '',
     'bootstrap_region_well-help' => '',
     'bootstrap_region_well-content' => '',
-    'bootstrap_region_well-sidebar_first' => 'well',
+    'bootstrap_region_well-sidebar_first' => '',
     'bootstrap_region_well-sidebar_second' => '',
     'bootstrap_region_well-footer' => '',
     'bootstrap_region_well-page_top' => '',
@@ -124,7 +124,6 @@ function ug_theme_settings_strongarm() {
     'bootstrap_bootswatch' => '',
     'bootstrap_rebuild_registry' => 0,
     'bootstrap_toggle_jquery_error' => 0,
-    'jquery_update_jquery_version' => '',
   );
   $export['theme_ug_cornerstone_settings'] = $strongarm;
 

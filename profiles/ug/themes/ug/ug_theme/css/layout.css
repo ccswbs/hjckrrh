@@ -122,7 +122,12 @@
       margin-top: 0;
     }
 
-    /* Add margin-bottom (20px) after all panel panes */
+    /* Add margin-bottom (20px) after all panel panes... */
     .panel-panel .panel-pane {
       margin-bottom: 2em;
     }
+    /* ...except the last. */
+    .panel-panel :last-child.panel-pane {
+      margin-bottom: 0;
+    }
+
