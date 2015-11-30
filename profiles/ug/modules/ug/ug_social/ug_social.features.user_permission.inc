@@ -37,9 +37,7 @@ function ug_social_user_default_permissions() {
   $permissions['delete terms in social_media_category'] = array(
     'name' => 'delete terms in social_media_category',
     'roles' => array(
-      'editor' => 'editor',
-      'moderator' => 'moderator',
-      'publisher' => 'publisher',
+      'site manager' => 'site manager',
     ),
     'module' => 'taxonomy',
   );
@@ -68,9 +66,7 @@ function ug_social_user_default_permissions() {
   $permissions['edit terms in social_media_category'] = array(
     'name' => 'edit terms in social_media_category',
     'roles' => array(
-      'editor' => 'editor',
-      'moderator' => 'moderator',
-      'publisher' => 'publisher',
+      'site manager' => 'site manager',
     ),
     'module' => 'taxonomy',
   );

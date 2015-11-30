@@ -34,5 +34,11 @@ function ug_role_user_default_roles() {
     'weight' => 12,
   );
 
+  // Exported role: site manager.
+  $roles['site manager'] = array(
+    'name' => 'site manager',
+    'weight' => 13,
+  );
+
   return $roles;
 }

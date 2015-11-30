@@ -17,6 +17,7 @@ function ug_role_user_default_permissions() {
       'editor' => 'editor',
       'moderator' => 'moderator',
       'publisher' => 'publisher',
+      'site manager' => 'site manager',
     ),
     'module' => 'system',
   );
@@ -55,6 +56,7 @@ function ug_role_user_default_permissions() {
       'editor' => 'editor',
       'moderator' => 'moderator',
       'publisher' => 'publisher',
+      'site manager' => 'site manager',
     ),
     'module' => 'toolbar',
   );
@@ -63,9 +65,7 @@ function ug_role_user_default_permissions() {
   $permissions['administer blocks'] = array(
     'name' => 'administer blocks',
     'roles' => array(
-      'editor' => 'editor',
-      'moderator' => 'moderator',
-      'publisher' => 'publisher',
+      'site manager' => 'site manager',
     ),
     'module' => 'block',
   );
@@ -74,7 +74,7 @@ function ug_role_user_default_permissions() {
   $permissions['administer menu'] = array(
     'name' => 'administer menu',
     'roles' => array(
-      'editor' => 'editor',
+      'site manager' => 'site manager',
     ),
     'module' => 'menu',
   );
@@ -103,11 +103,45 @@ function ug_role_user_default_permissions() {
   $permissions['administer taxonomy'] = array(
     'name' => 'administer taxonomy',
     'roles' => array(
-      'editor' => 'editor',
-      'moderator' => 'moderator',
-      'publisher' => 'publisher',
+      'site manager' => 'site manager',
     ),
     'module' => 'taxonomy',
+  );
+
+  // Exported permission: 'assign author role'.
+  $permissions['assign author role'] = array(
+    'name' => 'assign author role',
+    'roles' => array(
+      'site manager' => 'site manager',
+    ),
+    'module' => 'role_delegation',
+  );
+
+  // Exported permission: 'assign editor role'.
+  $permissions['assign editor role'] = array(
+    'name' => 'assign editor role',
+    'roles' => array(
+      'site manager' => 'site manager',
+    ),
+    'module' => 'role_delegation',
+  );
+
+  // Exported permission: 'assign moderator role'.
+  $permissions['assign moderator role'] = array(
+    'name' => 'assign moderator role',
+    'roles' => array(
+      'site manager' => 'site manager',
+    ),
+    'module' => 'role_delegation',
+  );
+
+  // Exported permission: 'assign publisher role'.
+  $permissions['assign publisher role'] = array(
+    'name' => 'assign publisher role',
+    'roles' => array(
+      'site manager' => 'site manager',
+    ),
+    'module' => 'role_delegation',
   );
 
   // Exported permission: 'bypass node access'.
@@ -172,6 +206,7 @@ function ug_role_user_default_permissions() {
       'editor' => 'editor',
       'moderator' => 'moderator',
       'publisher' => 'publisher',
+      'site manager' => 'site manager',
     ),
     'module' => 'system',
   );

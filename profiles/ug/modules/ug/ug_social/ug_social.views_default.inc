@@ -28,7 +28,9 @@ function ug_social_views_default_views() {
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['exposed_form']['type'] = 'basic';
-  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['type'] = 'some';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '10';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['style_plugin'] = 'default';
   $handler->display->display_options['style_options']['default_row_class'] = FALSE;
   $handler->display->display_options['style_options']['row_class_special'] = FALSE;
@@ -74,10 +76,11 @@ function ug_social_views_default_views() {
   /* Display: Content pane */
   $handler = $view->new_display('panel_pane', 'Content pane', 'panel_pane_1');
   $handler->display->display_options['allow']['use_pager'] = 0;
-  $handler->display->display_options['allow']['items_per_page'] = 0;
+  $handler->display->display_options['allow']['items_per_page'] = 'items_per_page';
   $handler->display->display_options['allow']['offset'] = 0;
   $handler->display->display_options['allow']['link_to_view'] = 0;
   $handler->display->display_options['allow']['more_link'] = 0;
+  $handler->display->display_options['allow']['more_text'] = 0;
   $handler->display->display_options['allow']['path_override'] = 0;
   $handler->display->display_options['allow']['title_override'] = 'title_override';
   $handler->display->display_options['allow']['exposed_form'] = 0;
@@ -168,6 +171,20 @@ function ug_social_views_default_views() {
   $handler->display->display_options['sorts']['created']['table'] = 'node';
   $handler->display->display_options['sorts']['created']['field'] = 'created';
   $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  /* Contextual filter: Content: Account category (field_social_category) */
+  $handler->display->display_options['arguments']['field_social_category_tid']['id'] = 'field_social_category_tid';
+  $handler->display->display_options['arguments']['field_social_category_tid']['table'] = 'field_data_field_social_category';
+  $handler->display->display_options['arguments']['field_social_category_tid']['field'] = 'field_social_category_tid';
+  $handler->display->display_options['arguments']['field_social_category_tid']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['field_social_category_tid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_social_category_tid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_social_category_tid']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['field_social_category_tid']['specify_validation'] = TRUE;
+  $handler->display->display_options['arguments']['field_social_category_tid']['validate']['type'] = 'taxonomy_term';
+  $handler->display->display_options['arguments']['field_social_category_tid']['validate_options']['vocabularies'] = array(
+    'social_media_category' => 'social_media_category',
+  );
+  $handler->display->display_options['arguments']['field_social_category_tid']['validate_options']['type'] = 'convert';
   /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
@@ -187,14 +204,25 @@ function ug_social_views_default_views() {
   $handler = $view->new_display('panel_pane', 'Content pane', 'panel_pane_1');
   $handler->display->display_options['link_url'] = 'connect';
   $handler->display->display_options['allow']['use_pager'] = 0;
-  $handler->display->display_options['allow']['items_per_page'] = 0;
+  $handler->display->display_options['allow']['items_per_page'] = 'items_per_page';
   $handler->display->display_options['allow']['offset'] = 0;
   $handler->display->display_options['allow']['link_to_view'] = 0;
   $handler->display->display_options['allow']['more_link'] = 0;
+  $handler->display->display_options['allow']['more_text'] = 0;
   $handler->display->display_options['allow']['path_override'] = 0;
   $handler->display->display_options['allow']['title_override'] = 'title_override';
   $handler->display->display_options['allow']['exposed_form'] = 0;
   $handler->display->display_options['allow']['fields_override'] = 0;
+  $handler->display->display_options['argument_input'] = array(
+    'field_social_category_tid' => array(
+      'type' => 'user',
+      'context' => 'entity:file.fid',
+      'context_optional' => 0,
+      'panel' => '0',
+      'fixed' => '',
+      'label' => 'Account category',
+    ),
+  );
   $export['s3'] = $view;
 
   $view = new view();
@@ -279,6 +307,20 @@ function ug_social_views_default_views() {
   $handler->display->display_options['sorts']['created']['table'] = 'node';
   $handler->display->display_options['sorts']['created']['field'] = 'created';
   $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  /* Contextual filter: Content: Account category (field_social_category) */
+  $handler->display->display_options['arguments']['field_social_category_tid']['id'] = 'field_social_category_tid';
+  $handler->display->display_options['arguments']['field_social_category_tid']['table'] = 'field_data_field_social_category';
+  $handler->display->display_options['arguments']['field_social_category_tid']['field'] = 'field_social_category_tid';
+  $handler->display->display_options['arguments']['field_social_category_tid']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['field_social_category_tid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_social_category_tid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_social_category_tid']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['field_social_category_tid']['specify_validation'] = TRUE;
+  $handler->display->display_options['arguments']['field_social_category_tid']['validate']['type'] = 'taxonomy_term';
+  $handler->display->display_options['arguments']['field_social_category_tid']['validate_options']['vocabularies'] = array(
+    'social_media_category' => 'social_media_category',
+  );
+  $handler->display->display_options['arguments']['field_social_category_tid']['validate_options']['type'] = 'convert';
   /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
@@ -298,14 +340,25 @@ function ug_social_views_default_views() {
   $handler = $view->new_display('panel_pane', 'Content pane', 'panel_pane_1');
   $handler->display->display_options['link_url'] = 'connect';
   $handler->display->display_options['allow']['use_pager'] = 0;
-  $handler->display->display_options['allow']['items_per_page'] = 0;
+  $handler->display->display_options['allow']['items_per_page'] = 'items_per_page';
   $handler->display->display_options['allow']['offset'] = 0;
   $handler->display->display_options['allow']['link_to_view'] = 0;
   $handler->display->display_options['allow']['more_link'] = 0;
+  $handler->display->display_options['allow']['more_text'] = 0;
   $handler->display->display_options['allow']['path_override'] = 0;
   $handler->display->display_options['allow']['title_override'] = 'title_override';
   $handler->display->display_options['allow']['exposed_form'] = 0;
   $handler->display->display_options['allow']['fields_override'] = 0;
+  $handler->display->display_options['argument_input'] = array(
+    'field_social_category_tid' => array(
+      'type' => 'user',
+      'context' => 'entity:file.fid',
+      'context_optional' => 0,
+      'panel' => '0',
+      'fixed' => '',
+      'label' => 'Account category',
+    ),
+  );
   $export['s4'] = $view;
 
   $view = new view();
@@ -565,6 +618,20 @@ function ug_social_views_default_views() {
   $handler->display->display_options['sorts']['created']['table'] = 'node';
   $handler->display->display_options['sorts']['created']['field'] = 'created';
   $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  /* Contextual filter: Content: Account category (field_social_category) */
+  $handler->display->display_options['arguments']['field_social_category_tid']['id'] = 'field_social_category_tid';
+  $handler->display->display_options['arguments']['field_social_category_tid']['table'] = 'field_data_field_social_category';
+  $handler->display->display_options['arguments']['field_social_category_tid']['field'] = 'field_social_category_tid';
+  $handler->display->display_options['arguments']['field_social_category_tid']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['field_social_category_tid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_social_category_tid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_social_category_tid']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['field_social_category_tid']['specify_validation'] = TRUE;
+  $handler->display->display_options['arguments']['field_social_category_tid']['validate']['type'] = 'taxonomy_term';
+  $handler->display->display_options['arguments']['field_social_category_tid']['validate_options']['vocabularies'] = array(
+    'social_media_category' => 'social_media_category',
+  );
+  $handler->display->display_options['arguments']['field_social_category_tid']['validate_options']['type'] = 'convert';
   /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
@@ -599,6 +666,16 @@ function ug_social_views_default_views() {
   $handler->display->display_options['allow']['title_override'] = 'title_override';
   $handler->display->display_options['allow']['exposed_form'] = 0;
   $handler->display->display_options['allow']['fields_override'] = 0;
+  $handler->display->display_options['argument_input'] = array(
+    'field_social_category_tid' => array(
+      'type' => 'user',
+      'context' => 'entity:file.fid',
+      'context_optional' => 0,
+      'panel' => '0',
+      'fixed' => '',
+      'label' => 'Account category',
+    ),
+  );
   $export['s6'] = $view;
 
   return $export;
