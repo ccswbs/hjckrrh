@@ -1,0 +1,12 @@
+name = UG Search
+core = 7.x
+package = UG
+dependencies[] = ctools
+dependencies[] = features
+dependencies[] = search
+dependencies[] = strongarm
+features[ctools][] = strongarm:strongarm:1
+features[features_api][] = api:2
+features[user_permission][] = search content
+features[user_permission][] = use advanced search
+features[variable][] = search_active_modules
