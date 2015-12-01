@@ -226,56 +226,90 @@ Live Date: June 23, 2015
 	}
 
 	/*---------------------
-	Local Menu Tabs
+	Local Menu Tabs - 1st Level
 	---------------------**/
 
-		/** Menu Tab - White (Almost) by default) */
+		/** Menu Tab - text colour */
 	    #navbar.navbar-inverse .navbar-nav>li>a { 
-	    	color: #F5F5F5; 
+	    	color: #F5F5F5;
 	    }
 
-		/* Menu Tab - Light Grey on hover focus */
-	    #navbar.navbar-inverse .navbar-nav>li>a:focus,
-	    #navbar.navbar-inverse .navbar-nav>li>a:hover { 
-	    	color: #999999; 
-	    }
-
-		/* Carets - White (Almost) by default */
+		/* Menu Tab - caret colour */
 	    #navbar.navbar-inverse .navbar-nav>li>a .caret,
 	    #navbar.navbar-inverse .navbar-nav>li>a .caret {
 	    	border-top-color: #F5F5F5;
 	    	border-bottom-color: #F5F5F5;
 	    }
 
-	    /* Carets - Light Grey on focus/hover */
-	    #navbar.navbar-inverse .navbar-nav>li>a:focus .caret,
-	    #navbar.navbar-inverse .navbar-nav>li>a:hover .caret {
-	    	border-top-color: #999999;
-	    	border-bottom-color: #999999;
+	    /** Menu Tabs HOVER/FOCUS - background */
+	    #navbar.navbar-inverse .navbar-nav>li.dropdown.open>a,
+	    #navbar.navbar-inverse .navbar-nav>li.dropdown>a:focus,
+	    #navbar.navbar-inverse .navbar-nav>li.dropdown>a:hover,
+	    #navbar.navbar-inverse .navbar-nav>li.leaf>a:focus,
+	    #navbar.navbar-inverse .navbar-nav>li.leaf>a:hover {
+	    	background-color: #242424;
+	    }
+
+		/** Menu Tab ACTIVE - background */
+	    #navbar.navbar-inverse .navbar-nav>li.active>a,
+	    #navbar.navbar-inverse .navbar-nav>li.active>a:focus,
+	    #navbar.navbar-inverse .navbar-nav>li.active>a:hover,
+	    #navbar.navbar-inverse .navbar-nav>li.leaf.active>a,
+	    #navbar.navbar-inverse .navbar-nav>li.leaf.active>a:focus,
+	    #navbar.navbar-inverse .navbar-nav>li.leaf.active>a:hover,
+	    #navbar.navbar-inverse .navbar-nav>li.dropdown.open.active>a,
+		#navbar.navbar-inverse .navbar-nav>li.dropdown.open.active-trail>a,
+		#navbar.navbar-inverse .navbar-nav>li.dropdown.active-trail>a,
+		#navbar.navbar-inverse .navbar-nav>li.dropdown.active-trail>a:focus,
+		#navbar.navbar-inverse .navbar-nav>li.dropdown.active-trail>a:hover {
+	    	background-color: #333333;
+	    }
+
+	    @media all and (min-width: 768px){
+			/** Menu Tab ACTIVE - background */
+		    #navbar.navbar-inverse .navbar-nav>li.active>a,
+		    #navbar.navbar-inverse .navbar-nav>li.active>a:focus,
+		    #navbar.navbar-inverse .navbar-nav>li.active>a:hover,
+		    #navbar.navbar-inverse .navbar-nav>li.leaf.active>a,
+		    #navbar.navbar-inverse .navbar-nav>li.leaf.active>a:focus,
+		    #navbar.navbar-inverse .navbar-nav>li.leaf.active>a:hover,
+		    #navbar.navbar-inverse .navbar-nav>li.dropdown.open.active>a,
+			#navbar.navbar-inverse .navbar-nav>li.dropdown.open.active-trail>a,
+			#navbar.navbar-inverse .navbar-nav>li.dropdown.active-trail>a,
+			#navbar.navbar-inverse .navbar-nav>li.dropdown.active-trail>a:focus,
+			#navbar.navbar-inverse .navbar-nav>li.dropdown.active-trail>a:hover {
+		    	background-color: #242424;
+		    }
 	    }
 
 	/*---------------------
-	Local Dropdown Menu
+	Local Menu Tabs - 2nd Level (Dropdown Menu)
 	---------------------**/
+
 	    /*--- Theming ---*/
 
-		/** Dropdown Menu Items **/
+		/** Dropdown Menu - background **/
+        #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu {
+        	background-color: #181818;
+        }
+
+		/** Dropdown Menu Items - text colour **/
 	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu li a {
 	    	color: #F5F5F5;
 	    }
 
-		/** Dropdown Menu Items - Narrow/Black - HOVER/FOCUS **/
+		/** Dropdown Menu Items HOVER/FOCUS - background **/
 	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>li>a:focus, 
 	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>li>a:hover {
-	    	color: #999999;
-	    }	    
+	    	background: #242424; /*#2E2E2E;*/
+	    }
 
-		/** Active Dropdown Menu Item - Narrow/Black **/
+		/** Dropdown Menu Items ACTIVE - background **/
 	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>.active>a,
 	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>.active>a:focus,
 	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>.active>a:hover {
-	    	background: #181818;
-	    	color: #F5F5F5;
+	    	background: #242424;
+	    	/*color: #F5F5F5;*/
 	    }
 
 		/** Active Dropdown Menu Item - force outline on focus **/
@@ -283,8 +317,12 @@ Live Date: June 23, 2015
 	    	outline: thin dotted;
 	    }
 
-
 		@media all and (min-width: 768px){
+
+			/** Dropdown Menu - background **/
+	        #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu{
+	        	background-color: #FFFFFF;
+	        }
 
 			/** Dropdown Menu - Wide/White **/
 			#navbar.navbar-inverse .navbar-nav>li>.dropdown-menu li a {
