@@ -39,7 +39,7 @@
           <input type="hidden" name="srt" value="rank" id="str">
           <input type="hidden" id="vid" name="vid" value="GUELPH">
           <input type="hidden" id="frbg" name="frbg" value="">
-          <label id="searchtextlabel" for="searchtext" class="sr-only">search</label>
+          <label id="searchtextlabel" for="searchtext" class="sr-only">Search University of Guelph</label>
           <div class="input-group">
             <input class="form-control search1" placeholder="Search U of G" name="q" type="text" size="20" maxlength="256" id="searchtext">
             <span class="input-group-btn">
