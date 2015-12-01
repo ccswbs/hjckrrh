@@ -850,4 +850,11 @@ function ug_theme_bootstrap_search_form_wrapper($variables) {
   $output .= '</div>';
   return $output;
 }
+/**
+ * Modify the placeholder text in the site search box 
+ */
+function ug_theme_form_search_block_form_alter(&$form, &$form_state, $form_id) {      
+      
+    $form['search_block_form']['#attributes']['placeholder'] = t('Search this site');
 
+} 
