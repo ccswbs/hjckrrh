@@ -824,3 +824,30 @@ function ug_theme_file_icon($variables) {
   /* OVERRIDE - Add alternative text */
   return '<img class="file-icon" alt="' . $mime . '" title="' . $mime . '" src="' . $icon_url . '" />';
 }
+
+/**
+ * Override search module to add label 
+ * Source: https://www.drupal.org/node/2540856 
+ */
+function ug_theme_bootstrap_search_form_wrapper($variables) {
+  $output = '<div class="input-group">';
+
+//added
+    $output .= '<label for="edit-search-block-form--2" class="element-invisible">Search My Site</label>';
+
+  $output .= $variables['element']['#children'];
+  $output .= '<span class="input-group-btn">';
+  $output .= '<button type="submit" class="btn btn-default">';
+  // We can be sure that the font icons exist in CDN.
+  if (theme_get_setting('bootstrap_cdn')) {
+    $output .= _bootstrap_icon('search');
+  }
+  else {
+    $output .= t('Search');
+  }
+  $output .= '</button>';
+  $output .= '</span>';
+  $output .= '</div>';
+  return $output;
+}
+
