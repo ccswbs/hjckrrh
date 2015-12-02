@@ -841,8 +841,10 @@ function ug_theme_bootstrap_search_form_wrapper($variables) {
   // We can be sure that the font icons exist in CDN.
   if (theme_get_setting('bootstrap_cdn')) {
     $output .= _bootstrap_icon('search');
-  }
-  else {
+    $output .= '<span class="element-invisible">';
+    $output .= t('Search');
+    $output .= '</span>';
+  } else {
     $output .= t('Search');
   }
   $output .= '</button>';
