@@ -148,6 +148,8 @@ Live Date: June 23, 2015
 	Global - Dropdown Menus (Level 2)
 	---------------------**/
 
+	    /*--- Theming ---*/
+
 		/* Darken background (#45403A) to differentiate between open dropdown menu */
 	    #ug-header #globalnav li.dropdown.open ul.dropdown-menu {
 	    	background: #302C28;
@@ -165,6 +167,16 @@ Live Date: June 23, 2015
 		    	background: #45403A;
 		    }
 		}
+
+	    /*--- Layout ---*/
+
+		@media all and (min-width: 768px){
+		    .navbar-right .dropdown-menu-left{
+		    	left:0;
+		    	right: auto;
+
+		    }
+	    }
 
 	/*---------------------
 	Global - Small Widgets
@@ -223,6 +235,14 @@ Live Date: June 23, 2015
     /*--- Layout ---*/
 	#navbar.navbar-inverse .container .navbar-collapse {
 		margin-right: 15px;
+	}
+
+	@media all and (min-width: 768px){
+		/* Right align last menu dropdown item */
+	    #navbar.navbar-inverse .navbar-nav>li.dropdown.open.last>ul{
+	        right:0;
+	        left:auto;
+	    }
 	}
 
 	/*---------------------
