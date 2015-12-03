@@ -285,23 +285,6 @@ Live Date: June 23, 2015
 	    	background-color: #333333;
 	    }
 
-	    @media all and (min-width: 768px){
-			/** Menu Tab ACTIVE - background */
-		    #navbar.navbar-inverse .navbar-nav>li.active>a,
-		    #navbar.navbar-inverse .navbar-nav>li.active>a:focus,
-		    #navbar.navbar-inverse .navbar-nav>li.active>a:hover,
-		    #navbar.navbar-inverse .navbar-nav>li.leaf.active>a,
-		    #navbar.navbar-inverse .navbar-nav>li.leaf.active>a:focus,
-		    #navbar.navbar-inverse .navbar-nav>li.leaf.active>a:hover,
-		    #navbar.navbar-inverse .navbar-nav>li.dropdown.open.active>a,
-			#navbar.navbar-inverse .navbar-nav>li.dropdown.open.active-trail>a,
-			#navbar.navbar-inverse .navbar-nav>li.dropdown.active-trail>a,
-			#navbar.navbar-inverse .navbar-nav>li.dropdown.active-trail>a:focus,
-			#navbar.navbar-inverse .navbar-nav>li.dropdown.active-trail>a:hover {
-		    	background-color: #242424;
-		    }
-	    }
-
 	/*---------------------
 	Local Menu Tabs - 2nd Level (Dropdown Menu)
 	---------------------**/
