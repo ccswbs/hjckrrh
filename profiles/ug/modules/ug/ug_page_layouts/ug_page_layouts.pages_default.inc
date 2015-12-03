@@ -193,3 +193,144 @@ function ug_page_layouts_default_page_manager_handlers() {
 
   return $export;
 }
+
+/**
+ * Implements hook_default_page_manager_pages().
+ */
+function ug_page_layouts_default_page_manager_pages() {
+  $page = new stdClass();
+  $page->disabled = FALSE; /* Edit this to true to make a default page disabled initially */
+  $page->api_version = 1;
+  $page->name = 'pages';
+  $page->task = 'page';
+  $page->admin_title = 'Pages';
+  $page->admin_description = 'Listing of basic pages';
+  $page->path = 'pages/!tags';
+  $page->access = array();
+  $page->menu = array();
+  $page->arguments = array(
+    'tags' => array(
+      'id' => '',
+      'identifier' => '',
+      'argument' => '',
+      'settings' => array(),
+    ),
+  );
+  $page->conf = array(
+    'admin_paths' => FALSE,
+  );
+  $page->default_handlers = array();
+  $handler = new stdClass();
+  $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
+  $handler->api_version = 1;
+  $handler->name = 'page_pages__panel';
+  $handler->task = 'page';
+  $handler->subtask = 'pages';
+  $handler->handler = 'panel_context';
+  $handler->weight = 0;
+  $handler->conf = array(
+    'title' => 'Pages Listing',
+    'no_blocks' => 0,
+    'pipeline' => 'ipe',
+    'body_classes_to_remove' => '',
+    'body_classes_to_add' => '',
+    'css_id' => '',
+    'css' => '',
+    'contexts' => array(),
+    'relationships' => array(),
+    'name' => 'panel',
+  );
+  $display = new panels_display();
+  $display->layout = 'bootstrap_threecol_stacked';
+  $display->layout_settings = array();
+  $display->panel_settings = array(
+    'style_settings' => array(
+      'top' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '12',
+        'offset_type' => 'col-sm-offset',
+        'offset_size' => '0',
+      ),
+      'left' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '0',
+        'offset_type' => 'col-sm-offset',
+        'offset_size' => '0',
+      ),
+      'middle' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '8',
+        'offset_type' => 'col-sm-offset',
+        'offset_size' => '0',
+      ),
+      'right' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '3',
+        'offset_type' => 'col-sm-offset',
+        'offset_size' => '1',
+      ),
+      'bottom' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '12',
+        'offset_type' => 'col-sm-offset',
+        'offset_size' => '0',
+      ),
+      'default' => NULL,
+    ),
+    'top' => array(
+      'style' => 'bootstrap_region',
+    ),
+    'left' => array(
+      'style' => 'bootstrap_region',
+    ),
+    'middle' => array(
+      'style' => 'bootstrap_region',
+    ),
+    'right' => array(
+      'style' => 'bootstrap_region',
+    ),
+    'bottom' => array(
+      'style' => 'bootstrap_region',
+    ),
+  );
+  $display->cache = array();
+  $display->title = '';
+  $display->uuid = 'fb176c88-59e1-4f7e-a085-c4d526b869eb';
+  $display->content = array();
+  $display->panels = array();
+    $pane = new stdClass();
+    $pane->pid = 'new-7ffb5e79-83f4-47d5-b1e3-e90ba584c2e1';
+    $pane->panel = 'middle';
+    $pane->type = 'views_panes';
+    $pane->subtype = 'pg2-panel_pane_1';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'items_per_page' => '10',
+      'arguments' => array(
+        'field_news_tags_tid' => '',
+      ),
+      'override_title' => 1,
+      'override_title_text' => '',
+      'override_title_heading' => 'h2',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = '7ffb5e79-83f4-47d5-b1e3-e90ba584c2e1';
+    $display->content['new-7ffb5e79-83f4-47d5-b1e3-e90ba584c2e1'] = $pane;
+    $display->panels['middle'][0] = 'new-7ffb5e79-83f4-47d5-b1e3-e90ba584c2e1';
+  $display->hide_title = PANELS_TITLE_PANE;
+  $display->title_pane = 'new-7ffb5e79-83f4-47d5-b1e3-e90ba584c2e1';
+  $handler->conf['display'] = $display;
+  $page->default_handlers[$handler->name] = $handler;
+  $pages['pages'] = $page;
+
+  return $pages;
+
+}
