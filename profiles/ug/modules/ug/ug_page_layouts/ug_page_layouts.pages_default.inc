@@ -206,7 +206,10 @@ function ug_page_layouts_default_page_manager_pages() {
   $page->admin_title = 'Pages';
   $page->admin_description = 'Listing of basic pages';
   $page->path = 'pages/!tags';
-  $page->access = array();
+  $page->access = array(
+    'type' => 'none',
+    'settings' => NULL,
+  );
   $page->menu = array();
   $page->arguments = array(
     'tags' => array(

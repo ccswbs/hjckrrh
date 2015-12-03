@@ -208,8 +208,22 @@ function ug_page_views_default_views() {
   $handler->display->display_options['arguments']['field_tags_tid']['specify_validation'] = TRUE;
   $handler->display->display_options['arguments']['field_tags_tid']['validate']['type'] = 'taxonomy_term';
   $handler->display->display_options['arguments']['field_tags_tid']['validate_options']['vocabularies'] = array(
+    'page_category' => 'page_category',
+  );
+  /* Contextual filter: Content: Category (field_news_tags) */
+  $handler->display->display_options['arguments']['field_news_tags_tid']['id'] = 'field_news_tags_tid';
+  $handler->display->display_options['arguments']['field_news_tags_tid']['table'] = 'field_data_field_news_tags';
+  $handler->display->display_options['arguments']['field_news_tags_tid']['field'] = 'field_news_tags_tid';
+  $handler->display->display_options['arguments']['field_news_tags_tid']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['field_news_tags_tid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_news_tags_tid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_news_tags_tid']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['field_news_tags_tid']['specify_validation'] = TRUE;
+  $handler->display->display_options['arguments']['field_news_tags_tid']['validate']['type'] = 'taxonomy_term';
+  $handler->display->display_options['arguments']['field_news_tags_tid']['validate_options']['vocabularies'] = array(
     'tags' => 'tags',
   );
+  $handler->display->display_options['arguments']['field_news_tags_tid']['validate_options']['type'] = 'convert';
   /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
@@ -228,20 +242,21 @@ function ug_page_views_default_views() {
   /* Display: Content pane */
   $handler = $view->new_display('panel_pane', 'Content pane', 'panel_pane_1');
   $handler->display->display_options['defaults']['arguments'] = FALSE;
-  /* Contextual filter: Content: Category (field_news_tags) */
-  $handler->display->display_options['arguments']['field_news_tags_tid']['id'] = 'field_news_tags_tid';
-  $handler->display->display_options['arguments']['field_news_tags_tid']['table'] = 'field_data_field_news_tags';
-  $handler->display->display_options['arguments']['field_news_tags_tid']['field'] = 'field_news_tags_tid';
-  $handler->display->display_options['arguments']['field_news_tags_tid']['default_argument_type'] = 'fixed';
-  $handler->display->display_options['arguments']['field_news_tags_tid']['summary']['number_of_records'] = '0';
-  $handler->display->display_options['arguments']['field_news_tags_tid']['summary']['format'] = 'default_summary';
-  $handler->display->display_options['arguments']['field_news_tags_tid']['summary_options']['items_per_page'] = '25';
-  $handler->display->display_options['arguments']['field_news_tags_tid']['specify_validation'] = TRUE;
-  $handler->display->display_options['arguments']['field_news_tags_tid']['validate']['type'] = 'taxonomy_term';
-  $handler->display->display_options['arguments']['field_news_tags_tid']['validate_options']['vocabularies'] = array(
-    'page_category' => 'page_category',
+  /* Contextual filter: Content: Keywords (field_tags) */
+  $handler->display->display_options['arguments']['field_tags_tid']['id'] = 'field_tags_tid';
+  $handler->display->display_options['arguments']['field_tags_tid']['table'] = 'field_data_field_tags';
+  $handler->display->display_options['arguments']['field_tags_tid']['field'] = 'field_tags_tid';
+  $handler->display->display_options['arguments']['field_tags_tid']['title_enable'] = TRUE;
+  $handler->display->display_options['arguments']['field_tags_tid']['title'] = 'Pages related to %1';
+  $handler->display->display_options['arguments']['field_tags_tid']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['field_tags_tid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_tags_tid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_tags_tid']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['field_tags_tid']['specify_validation'] = TRUE;
+  $handler->display->display_options['arguments']['field_tags_tid']['validate']['type'] = 'taxonomy_term';
+  $handler->display->display_options['arguments']['field_tags_tid']['validate_options']['vocabularies'] = array(
+    'tags' => 'tags',
   );
-  $handler->display->display_options['arguments']['field_news_tags_tid']['validate_options']['type'] = 'convert';
   $handler->display->display_options['allow']['use_pager'] = 0;
   $handler->display->display_options['allow']['items_per_page'] = 'items_per_page';
   $handler->display->display_options['allow']['offset'] = 0;
@@ -273,6 +288,22 @@ function ug_page_views_default_views() {
 
   /* Display: Category */
   $handler = $view->new_display('panel_pane', 'Category', 'panel_pane_2');
+  $handler->display->display_options['defaults']['arguments'] = FALSE;
+  /* Contextual filter: Content: Page category (field_page_category) */
+  $handler->display->display_options['arguments']['field_page_category_tid']['id'] = 'field_page_category_tid';
+  $handler->display->display_options['arguments']['field_page_category_tid']['table'] = 'field_data_field_page_category';
+  $handler->display->display_options['arguments']['field_page_category_tid']['field'] = 'field_page_category_tid';
+  $handler->display->display_options['arguments']['field_page_category_tid']['title_enable'] = TRUE;
+  $handler->display->display_options['arguments']['field_page_category_tid']['title'] = '%1';
+  $handler->display->display_options['arguments']['field_page_category_tid']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['field_page_category_tid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_page_category_tid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_page_category_tid']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['field_page_category_tid']['specify_validation'] = TRUE;
+  $handler->display->display_options['arguments']['field_page_category_tid']['validate']['type'] = 'taxonomy_term';
+  $handler->display->display_options['arguments']['field_page_category_tid']['validate_options']['vocabularies'] = array(
+    'page_category' => 'page_category',
+  );
   $handler->display->display_options['allow']['use_pager'] = 0;
   $handler->display->display_options['allow']['items_per_page'] = 'items_per_page';
   $handler->display->display_options['allow']['offset'] = 0;
@@ -284,13 +315,13 @@ function ug_page_views_default_views() {
   $handler->display->display_options['allow']['exposed_form'] = 0;
   $handler->display->display_options['allow']['fields_override'] = 0;
   $handler->display->display_options['argument_input'] = array(
-    'field_news_tags_tid' => array(
+    'field_page_category_tid' => array(
       'type' => 'panel',
       'context' => 'entity:file.fid',
       'context_optional' => 0,
       'panel' => '0',
       'fixed' => '',
-      'label' => 'Content: Category (field_news_tags)',
+      'label' => 'Content: Page category (field_page_category)',
     ),
   );
 
@@ -300,7 +331,7 @@ function ug_page_views_default_views() {
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['style_plugin'] = 'rss';
   $handler->display->display_options['row_plugin'] = 'node_rss';
-  $handler->display->display_options['path'] = 'news/%/feed';
+  $handler->display->display_options['path'] = 'pages/%/feed';
   $export['pg2'] = $view;
 
   return $export;
