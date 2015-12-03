@@ -120,10 +120,10 @@ function ug_page_views_default_views() {
 
   $view = new view();
   $view->name = 'pg2';
-  $view->description = 'Provides a full listing of news articles. News items are paged and sorted from newest to oldest.';
+  $view->description = 'Provides a full listing of basic pages. Items are paged and sorted from newest to oldest.';
   $view->tag = 'default';
   $view->base_table = 'node';
-  $view->human_name = 'P2 - Listing page for multiple pages';
+  $view->human_name = 'PG2 - Listing page for multiple pages';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
