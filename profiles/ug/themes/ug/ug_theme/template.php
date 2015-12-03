@@ -140,6 +140,27 @@ function ug_theme_preprocess_views_view_fields__event_week_list(&$vars) {
 }
 
 
+
+/**
+ * PG1 - Listing page for one page.
+ */
+function ug_theme_preprocess_views_view_fields__pg1(&$vars) {
+  $vars['title']        = $vars['fields']['title']->content;
+  $vars['image']        = $vars['fields']['field_page_image']->content;
+  $vars['caption']      = $vars['fields']['field_page_caption']->content;
+  $vars['body']         = $vars['fields']['field_page_body']->content;
+  $vars['attachments']  = $vars['fields']['field_page_attachments']->content;
+}
+
+/**
+ * PG2 - Listing page for multiple basic pages.
+ */
+function ug_theme_preprocess_views_view_fields__pg2(&$vars) {
+  $vars['title']     = $vars['fields']['title']->content;
+  $vars['created']   = $vars['fields']['created']->content;
+  $vars['body']      = $vars['fields']['field_page_body']->content;
+}
+
 /**
  * P1 - Listing page for multiple people profiles.
  */
@@ -154,18 +175,6 @@ function ug_theme_preprocess_views_view_fields__p1(&$vars) {
   $vars['email']     = $vars['fields']['field_profile_email']->content;
   $vars['user_url']  = 'user/'.$vars['uid'];
   $vars['fullname']  = l($vars['name'].' '.$vars['lastname'], 'user/'.$vars['uid']);
-}
-
-
-/**
- * PG1 - Listing page for one page.
- */
-function ug_theme_preprocess_views_view_fields__pg1(&$vars) {
-  $vars['title']        = $vars['fields']['title']->content;
-  $vars['image']        = $vars['fields']['field_page_image']->content;
-  $vars['caption']      = $vars['fields']['field_page_caption']->content;
-  $vars['body']         = $vars['fields']['field_page_body']->content;
-  $vars['attachments']  = $vars['fields']['field_page_attachments']->content;
 }
 
 
