@@ -237,9 +237,9 @@ Live Date: June 23, 2015
 		margin-right: 15px;
 	}
 
-	@media all and (min-width: 768px){
-		/* Right align last menu dropdown item */
-	    #navbar.navbar-inverse .navbar-nav>li.dropdown.open.last>ul{
+	@media all and (min-width: 992px){
+		/* Right align the last two menu dropdown items */
+    	#navbar.navbar-inverse .navbar-nav>li.dropdown:nth-last-child(-n+2)>ul{
 	        right:0;
 	        left:auto;
 	    }
