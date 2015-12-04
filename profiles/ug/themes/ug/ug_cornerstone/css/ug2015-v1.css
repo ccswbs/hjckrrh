@@ -588,3 +588,21 @@ Live Date: June 23, 2015
         .detail-page .main-container .col-sm-8 ul.breadcrumb li{
         	margin-bottom: 0;
         }
+
+    /*---------------------
+    Detail pages - Meta Data
+    ---------------------**/
+
+        /*--- Layout ---*/
+        .detail-page .main-container .middle .media-meta {
+            margin-bottom: 16px;
+        }
+
+        .detail-page .main-container .middle .media-meta p {
+            margin-bottom: 6px;
+        }
+
+        /*--- Theming ---*/
+        .detail-page .main-container .middle .media-meta p {
+            color: #767676;
+        }
