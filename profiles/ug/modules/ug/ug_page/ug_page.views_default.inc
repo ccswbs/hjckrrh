@@ -257,6 +257,7 @@ function ug_page_views_default_views() {
   $handler->display->display_options['arguments']['field_tags_tid']['validate_options']['vocabularies'] = array(
     'tags' => 'tags',
   );
+  $handler->display->display_options['arguments']['field_tags_tid']['validate']['fail'] = 'empty';
   $handler->display->display_options['allow']['use_pager'] = 0;
   $handler->display->display_options['allow']['items_per_page'] = 'items_per_page';
   $handler->display->display_options['allow']['offset'] = 0;
