@@ -288,6 +288,14 @@ function ug_theme_preprocess_views_view_fields__n2(&$vars) {
 }
 
 /** 
+ * N2ab - Post Date / Written by
+ */ 
+function ug_theme_preprocess_views_view_fields__n2ab(&$vars) { 
+  $vars['created']      = $vars['fields']['created']->content;
+  $vars['writer']       = $vars['fields']['field_news_writer']->content;
+} 
+
+/** 
  * N2c - News Image 
  */ 
 function ug_theme_preprocess_views_view_fields__news_image(&$vars) { 
