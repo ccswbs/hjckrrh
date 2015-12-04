@@ -31,8 +31,8 @@ function ug_wysiwyg_filter_default_formats() {
         'settings' => array(
           'valid_elements' => 'a[href|target<_blank|title|name],
 blockquote,br,caption,cite,code,dd,div,dl,dt,em,figcaption,figure[*],h2,h3,h4,h5,h6,hr,li,ol,p,span,strong,sub,sup,ul,
-img[src|alt|title|name|height|width|style],
-table[role|summary],th[scope],tr,td,tbody,thead,tfoot
+img[src|alt|title|name|style|class],
+table[role|summary|class],th[scope],tr,td,tbody,thead,tfoot
 @[class]',
           'allow_comments' => 0,
           'nofollow_policy' => 'disabled',
@@ -104,13 +104,13 @@ table[role|summary],th[scope],tr,td,tbody,thead,tfoot
             'border-left-style' => 0,
           ),
           'style_dimension' => array(
-            'height' => 'height',
-            'width' => 'width',
+            'height' => 0,
             'line-height' => 0,
             'max-height' => 0,
             'max-width' => 0,
             'min-height' => 0,
             'min-width' => 0,
+            'width' => 0,
           ),
           'style_positioning' => array(
             'bottom' => 0,
