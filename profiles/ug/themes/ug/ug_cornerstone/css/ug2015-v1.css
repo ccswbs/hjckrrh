@@ -148,6 +148,8 @@ Live Date: June 23, 2015
 	Global - Dropdown Menus (Level 2)
 	---------------------**/
 
+	    /*--- Theming ---*/
+
 		/* Darken background (#45403A) to differentiate between open dropdown menu */
 	    #ug-header #globalnav li.dropdown.open ul.dropdown-menu {
 	    	background: #302C28;
@@ -165,6 +167,16 @@ Live Date: June 23, 2015
 		    	background: #45403A;
 		    }
 		}
+
+	    /*--- Layout ---*/
+
+		@media all and (min-width: 768px){
+		    .navbar-right .dropdown-menu-left{
+		    	left:0;
+		    	right: auto;
+
+		    }
+	    }
 
 	/*---------------------
 	Global - Small Widgets
@@ -225,6 +237,14 @@ Live Date: June 23, 2015
 		margin-right: 15px;
 	}
 
+	@media all and (min-width: 992px){
+		/* Right align the last two menu dropdown items */
+    	#navbar.navbar-inverse .navbar-nav>li.dropdown:nth-last-child(-n+2)>ul{
+	        right:0;
+	        left:auto;
+	    }
+	}
+
 	/*---------------------
 	Local Menu Tabs - 1st Level
 	---------------------**/
@@ -263,23 +283,6 @@ Live Date: June 23, 2015
 		#navbar.navbar-inverse .navbar-nav>li.dropdown.active-trail>a:focus,
 		#navbar.navbar-inverse .navbar-nav>li.dropdown.active-trail>a:hover {
 	    	background-color: #333333;
-	    }
-
-	    @media all and (min-width: 768px){
-			/** Menu Tab ACTIVE - background */
-		    #navbar.navbar-inverse .navbar-nav>li.active>a,
-		    #navbar.navbar-inverse .navbar-nav>li.active>a:focus,
-		    #navbar.navbar-inverse .navbar-nav>li.active>a:hover,
-		    #navbar.navbar-inverse .navbar-nav>li.leaf.active>a,
-		    #navbar.navbar-inverse .navbar-nav>li.leaf.active>a:focus,
-		    #navbar.navbar-inverse .navbar-nav>li.leaf.active>a:hover,
-		    #navbar.navbar-inverse .navbar-nav>li.dropdown.open.active>a,
-			#navbar.navbar-inverse .navbar-nav>li.dropdown.open.active-trail>a,
-			#navbar.navbar-inverse .navbar-nav>li.dropdown.active-trail>a,
-			#navbar.navbar-inverse .navbar-nav>li.dropdown.active-trail>a:focus,
-			#navbar.navbar-inverse .navbar-nav>li.dropdown.active-trail>a:hover {
-		    	background-color: #242424;
-		    }
 	    }
 
 	/*---------------------
@@ -584,4 +587,22 @@ Live Date: June 23, 2015
         .detail-page .main-container .middle ul.breadcrumb li,
         .detail-page .main-container .col-sm-8 ul.breadcrumb li{
         	margin-bottom: 0;
+        }
+
+    /*---------------------
+    Detail pages - Meta Data
+    ---------------------**/
+
+        /*--- Layout ---*/
+        .detail-page .main-container .middle .media-meta {
+            margin-bottom: 16px;
+        }
+
+        .detail-page .main-container .middle .media-meta p {
+            margin-bottom: 6px;
+        }
+
+        /*--- Theming ---*/
+        .detail-page .main-container .middle .media-meta p {
+            color: #767676;
         }

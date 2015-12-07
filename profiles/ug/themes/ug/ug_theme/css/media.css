@@ -175,6 +175,10 @@ Teaser Lists
             margin-bottom: 16px;
         }
 
+        .detail-page .media-meta p {
+            margin-bottom: 6px;
+        }
+
         /*--- Theming ---*/
         .detail-page .media-meta {
             color: #767676;
