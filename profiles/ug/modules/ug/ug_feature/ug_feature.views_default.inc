@@ -222,7 +222,7 @@ function ug_feature_views_default_views() {
   $handler->display->display_options['arguments']['field_feature_category_tid']['validate_options']['vocabularies'] = array(
     'feature_category' => 'feature_category',
   );
-  $handler->display->display_options['arguments']['field_feature_category_tid']['validate_options']['type'] = 'convert';
+  $handler->display->display_options['arguments']['field_feature_category_tid']['validate']['fail'] = 'empty';
   /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
@@ -293,6 +293,13 @@ function ug_feature_views_default_views() {
   $handler->display->display_options['style_options']['wrapper_class'] = 'teaser-list';
   $handler->display->display_options['row_plugin'] = 'fields';
   $handler->display->display_options['row_options']['default_field_elements'] = FALSE;
+  /* No results behavior: Global: Text area */
+  $handler->display->display_options['empty']['area']['id'] = 'area';
+  $handler->display->display_options['empty']['area']['table'] = 'views';
+  $handler->display->display_options['empty']['area']['field'] = 'area';
+  $handler->display->display_options['empty']['area']['empty'] = TRUE;
+  $handler->display->display_options['empty']['area']['content'] = 'No results found.';
+  $handler->display->display_options['empty']['area']['format'] = 'full_html';
   /* Field: Content: Image */
   $handler->display->display_options['fields']['field_feature_image']['id'] = 'field_feature_image';
   $handler->display->display_options['fields']['field_feature_image']['table'] = 'field_data_field_feature_image';
@@ -356,7 +363,7 @@ function ug_feature_views_default_views() {
   $handler->display->display_options['arguments']['field_feature_category_tid']['validate_options']['vocabularies'] = array(
     'feature_category' => 'feature_category',
   );
-  $handler->display->display_options['arguments']['field_feature_category_tid']['validate_options']['type'] = 'convert';
+  $handler->display->display_options['arguments']['field_feature_category_tid']['validate']['fail'] = 'empty';
   /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
