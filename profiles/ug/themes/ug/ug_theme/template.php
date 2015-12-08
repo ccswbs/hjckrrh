@@ -103,9 +103,9 @@ function ug_theme_preprocess_views_view(&$vars) {
 function ug_theme_preprocess_views_view__ft3(&$vars) {
 
   $view = views_get_current_view();
-  $category_filter = $view->args[0];
 
-  if(!empty($category_filter)) {
+  if(!empty($view->args[0])){
+    $category_filter = $view->args[0];
     $view->display_handler->set_option('link_url', 'features/category/' . $category_filter);
   }
 
