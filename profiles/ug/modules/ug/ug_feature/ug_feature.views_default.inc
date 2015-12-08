@@ -394,6 +394,14 @@ function ug_feature_views_default_views() {
       'label' => 'Category',
     ),
   );
+
+  /* Display: Random */
+  $handler = $view->new_display('panel_pane', 'Random', 'panel_pane_2');
+  $handler->display->display_options['defaults']['sorts'] = FALSE;
+  /* Sort criterion: Global: Random */
+  $handler->display->display_options['sorts']['random']['id'] = 'random';
+  $handler->display->display_options['sorts']['random']['table'] = 'views';
+  $handler->display->display_options['sorts']['random']['field'] = 'random';
   $export['ft3'] = $view;
 
   return $export;
