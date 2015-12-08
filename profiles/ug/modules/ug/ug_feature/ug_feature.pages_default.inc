@@ -252,7 +252,7 @@ function ug_feature_default_page_manager_pages() {
     ),
   );
   $display->cache = array();
-  $display->title = '';
+  $display->title = '%category:name';
   $display->uuid = '22243748-f237-485c-8f47-a391b5f2eb40';
   $display->content = array();
   $display->panels = array();
@@ -280,7 +280,7 @@ function ug_feature_default_page_manager_pages() {
     $pane->uuid = 'c93f9708-e08f-4139-b755-8b7a416209d9';
     $display->content['new-c93f9708-e08f-4139-b755-8b7a416209d9'] = $pane;
     $display->panels['middle'][0] = 'new-c93f9708-e08f-4139-b755-8b7a416209d9';
-  $display->hide_title = PANELS_TITLE_PANE;
+  $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
   $page->default_handlers[$handler->name] = $handler;
