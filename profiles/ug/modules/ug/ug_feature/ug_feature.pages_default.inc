@@ -136,6 +136,159 @@ function ug_feature_default_page_manager_pages() {
   $page->default_handlers[$handler->name] = $handler;
   $pages['features'] = $page;
 
+  $page = new stdClass();
+  $page->disabled = FALSE; /* Edit this to true to make a default page disabled initially */
+  $page->api_version = 1;
+  $page->name = 'features_category';
+  $page->task = 'page';
+  $page->admin_title = 'Features category';
+  $page->admin_description = 'Listing of features filtered by a category';
+  $page->path = 'features/category/%category';
+  $page->access = array();
+  $page->menu = array();
+  $page->arguments = array(
+    'category' => array(
+      'id' => 1,
+      'identifier' => 'Taxonomy term: ID',
+      'name' => 'term',
+      'settings' => array(
+        'input_form' => 'tid',
+        'vids' => array(
+          9 => '9',
+          4 => 0,
+          2 => 0,
+          3 => 0,
+          8 => 0,
+          5 => 0,
+          6 => 0,
+          10 => 0,
+          11 => 0,
+          12 => 0,
+          13 => 0,
+          14 => 0,
+          7 => 0,
+          1 => 0,
+        ),
+        'breadcrumb' => 1,
+        'transform' => 0,
+      ),
+    ),
+  );
+  $page->conf = array(
+    'admin_paths' => FALSE,
+  );
+  $page->default_handlers = array();
+  $handler = new stdClass();
+  $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
+  $handler->api_version = 1;
+  $handler->name = 'page_features_category__panel';
+  $handler->task = 'page';
+  $handler->subtask = 'features_category';
+  $handler->handler = 'panel_context';
+  $handler->weight = 0;
+  $handler->conf = array(
+    'title' => 'Feature category listing',
+    'no_blocks' => 0,
+    'pipeline' => 'standard',
+    'body_classes_to_remove' => '',
+    'body_classes_to_add' => '',
+    'css_id' => '',
+    'css' => '',
+    'contexts' => array(),
+    'relationships' => array(),
+    'name' => 'panel',
+  );
+  $display = new panels_display();
+  $display->layout = 'bootstrap_threecol_stacked';
+  $display->layout_settings = array();
+  $display->panel_settings = array(
+    'style_settings' => array(
+      'top' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '12',
+        'offset_type' => 'col-sm-offset',
+        'offset_size' => '0',
+      ),
+      'left' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '0',
+        'offset_type' => 'col-sm-offset',
+        'offset_size' => '0',
+      ),
+      'middle' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '8',
+        'offset_type' => 'col-sm-offset',
+        'offset_size' => '0',
+      ),
+      'right' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '3',
+        'offset_type' => 'col-sm-offset',
+        'offset_size' => '1',
+      ),
+      'bottom' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '12',
+        'offset_type' => 'col-sm-offset',
+        'offset_size' => '0',
+      ),
+      'default' => NULL,
+    ),
+    'top' => array(
+      'style' => 'bootstrap_region',
+    ),
+    'left' => array(
+      'style' => 'bootstrap_region',
+    ),
+    'middle' => array(
+      'style' => 'bootstrap_region',
+    ),
+    'right' => array(
+      'style' => 'bootstrap_region',
+    ),
+    'bottom' => array(
+      'style' => 'bootstrap_region',
+    ),
+  );
+  $display->cache = array();
+  $display->title = '';
+  $display->uuid = '22243748-f237-485c-8f47-a391b5f2eb40';
+  $display->content = array();
+  $display->panels = array();
+    $pane = new stdClass();
+    $pane->pid = 'new-4941c460-a14d-442d-98e9-d523664b29c6';
+    $pane->panel = 'middle';
+    $pane->type = 'views_panes';
+    $pane->subtype = 'ft2-panel_pane_1';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'items_per_page' => '10',
+      'arguments' => array(
+        'field_feature_category_tid' => '%category',
+      ),
+      'override_title' => 0,
+      'override_title_text' => '',
+      'override_title_heading' => 'h2',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = '4941c460-a14d-442d-98e9-d523664b29c6';
+    $display->content['new-4941c460-a14d-442d-98e9-d523664b29c6'] = $pane;
+    $display->panels['middle'][0] = 'new-4941c460-a14d-442d-98e9-d523664b29c6';
+  $display->hide_title = PANELS_TITLE_PANE;
+  $display->title_pane = 'new-4941c460-a14d-442d-98e9-d523664b29c6';
+  $handler->conf['display'] = $display;
+  $page->default_handlers[$handler->name] = $handler;
+  $pages['features_category'] = $page;
+
   return $pages;
 
 }

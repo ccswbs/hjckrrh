@@ -32,6 +32,7 @@ features[field_instance][] = node-feature-field_tags
 features[linkit_profiles][] = feature
 features[node][] = feature
 features[page_manager_pages][] = features
+features[page_manager_pages][] = features_category
 features[taxonomy][] = feature_category
 features[user_permission][] = create feature content
 features[user_permission][] = delete any feature content
