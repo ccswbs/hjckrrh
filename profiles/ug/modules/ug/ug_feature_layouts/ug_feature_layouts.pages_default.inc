@@ -155,11 +155,11 @@ function ug_feature_layouts_default_page_manager_pages() {
       'settings' => array(
         'input_form' => 'tid',
         'vids' => array(
-          9 => '9',
           4 => 0,
           2 => 0,
           3 => 0,
           8 => 0,
+          9 => 0,
           5 => 0,
           6 => 0,
           10 => 0,
