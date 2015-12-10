@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * ug_feature.pages_default.inc
+ * ug_feature_layouts.pages_default.inc
  */
 
 /**
  * Implements hook_default_page_manager_pages().
  */
-function ug_feature_default_page_manager_pages() {
+function ug_feature_layouts_default_page_manager_pages() {
   $page = new stdClass();
   $page->disabled = FALSE; /* Edit this to true to make a default page disabled initially */
   $page->api_version = 1;
@@ -29,11 +29,11 @@ function ug_feature_default_page_manager_pages() {
   $handler = new stdClass();
   $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
   $handler->api_version = 1;
-  $handler->name = 'page_features__panel_context_9a6dccff-22ef-4d28-8ca0-3b99949d5b6a';
+  $handler->name = 'page_features__panel_context_9a4860c0-8afd-451d-9138-b841b599e6d5';
   $handler->task = 'page';
   $handler->subtask = 'features';
   $handler->handler = 'panel_context';
-  $handler->weight = 1;
+  $handler->weight = 0;
   $handler->conf = array(
     'title' => 'Panel',
     'no_blocks' => 0,
@@ -44,6 +44,7 @@ function ug_feature_default_page_manager_pages() {
     'css' => '',
     'contexts' => array(),
     'relationships' => array(),
+    'name' => '',
   );
   $display = new panels_display();
   $display->layout = 'bootstrap_threecol_stacked';
@@ -181,7 +182,7 @@ function ug_feature_default_page_manager_pages() {
   $handler = new stdClass();
   $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
   $handler->api_version = 1;
-  $handler->name = 'page_features_category__panel';
+  $handler->name = 'page_features_category__panel_context_8f6b7ee9-71f3-467c-b4dd-21c874c12309';
   $handler->task = 'page';
   $handler->subtask = 'features_category';
   $handler->handler = 'panel_context';
@@ -196,7 +197,7 @@ function ug_feature_default_page_manager_pages() {
     'css' => '',
     'contexts' => array(),
     'relationships' => array(),
-    'name' => 'panel',
+    'name' => '',
   );
   $display = new panels_display();
   $display->layout = 'bootstrap_threecol_stacked';
