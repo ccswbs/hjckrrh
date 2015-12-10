@@ -14,7 +14,19 @@ function ug_wysiwyg_ckeditor_profile_defaults() {
       'settings' => array(
         'ss' => 2,
         'toolbar' => '[
-    [\'Format\',\'Bold\',\'Italic\',\'-\',\'NumberedList\',\'BulletedList\',\'-\',\'Link\',\'Unlink\',\'Image\',\'Table\']
+    [\'Source\'],
+    [\'Cut\',\'Copy\',\'PasteText\',\'PasteFromWord\',\'RemoveFormat\'],
+    [\'Undo\',\'Redo\'],
+    [\'Image\',\'Table\',\'HorizontalRule\',\'SpecialChar\'],
+    
+    \'/\',
+    [\'Bold\',\'Italic\',\'-\',\'Subscript\',\'Superscript\'],
+    [\'NumberedList\',\'BulletedList\',\'-\',\'Outdent\',\'Indent\',\'Blockquote\'],
+    [\'JustifyLeft\',\'JustifyCenter\',\'JustifyRight\',\'JustifyBlock\'],
+    [\'Link\',\'Unlink\',\'Anchor\'],
+    \'/\',
+    [\'Format\'],
+    [\'Maximize\',\'ShowBlocks\']
 ]',
         'expand' => 't',
         'default' => 't',
