@@ -1,0 +1,17 @@
+name = UG Event Layouts
+description = Event layouts.
+core = 7.x
+package = UG
+version = 7.x-1.12
+project = ug_event_layouts
+dependencies[] = page_manager
+features[ctools][] = page_manager:pages_default:1
+features[features_api][] = api:2
+features[page_manager_handlers][] = node_view__event
+features[page_manager_pages][] = event_month_list
+features[page_manager_pages][] = event_week_list
+features[page_manager_pages][] = events
+features[page_manager_pages][] = events_archive
+features[page_manager_pages][] = events_month
+features[page_manager_pages][] = events_past
+features[page_manager_pages][] = events_week

@@ -14,9 +14,7 @@ function ug_tags_user_default_permissions() {
   $permissions['delete terms in tags'] = array(
     'name' => 'delete terms in tags',
     'roles' => array(
-      'editor' => 'editor',
-      'moderator' => 'moderator',
-      'publisher' => 'publisher',
+      'site manager' => 'site manager',
     ),
     'module' => 'taxonomy',
   );
@@ -25,9 +23,7 @@ function ug_tags_user_default_permissions() {
   $permissions['edit terms in tags'] = array(
     'name' => 'edit terms in tags',
     'roles' => array(
-      'editor' => 'editor',
-      'moderator' => 'moderator',
-      'publisher' => 'publisher',
+      'site manager' => 'site manager',
     ),
     'module' => 'taxonomy',
   );

@@ -37,9 +37,7 @@ function ug_event_user_default_permissions() {
   $permissions['delete terms in event_category'] = array(
     'name' => 'delete terms in event_category',
     'roles' => array(
-      'editor' => 'editor',
-      'moderator' => 'moderator',
-      'publisher' => 'publisher',
+      'site manager' => 'site manager',
     ),
     'module' => 'taxonomy',
   );
@@ -48,9 +46,7 @@ function ug_event_user_default_permissions() {
   $permissions['delete terms in event_heading'] = array(
     'name' => 'delete terms in event_heading',
     'roles' => array(
-      'editor' => 'editor',
-      'moderator' => 'moderator',
-      'publisher' => 'publisher',
+      'site manager' => 'site manager',
     ),
     'module' => 'taxonomy',
   );
@@ -79,9 +75,7 @@ function ug_event_user_default_permissions() {
   $permissions['edit terms in event_category'] = array(
     'name' => 'edit terms in event_category',
     'roles' => array(
-      'editor' => 'editor',
-      'moderator' => 'moderator',
-      'publisher' => 'publisher',
+      'site manager' => 'site manager',
     ),
     'module' => 'taxonomy',
   );
@@ -90,9 +84,7 @@ function ug_event_user_default_permissions() {
   $permissions['edit terms in event_heading'] = array(
     'name' => 'edit terms in event_heading',
     'roles' => array(
-      'editor' => 'editor',
-      'moderator' => 'moderator',
-      'publisher' => 'publisher',
+      'site manager' => 'site manager',
     ),
     'module' => 'taxonomy',
   );

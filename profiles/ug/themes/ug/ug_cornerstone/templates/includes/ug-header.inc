@@ -10,7 +10,7 @@
         <ul class="nav navbar-nav navbar-right navbar-small">
           <li><a href="https://mail.uoguelph.ca/"><span class="glyphicon glyphicon-envelope fa-fw" aria-hidden="true"></span> GryphMail</a></li>
           <li><a href="https://courselink.uoguelph.ca/"><span class="glyphicon glyphicon-pencil fa-fw" aria-hidden="true"></span> CourseLink</a></li>
-          <li><a href="//www.uoguelph.ca/directory/"><span class="glyphicon glyphicon-user fa-fw" aria-hidden="true"></span> Directory</a></li>
+          <li><a href="//www.uoguelph.ca/directory/"><span class="glyphicon glyphicon-user fa-fw" aria-hidden="true"></span> Directory <span class="sr-only">for University of Guelph</span></a></li>
           <li><a href="//www.lib.uoguelph.ca"><span class="glyphicon glyphicon-book fa-fw" aria-hidden="true"></span> Library</a></li>
           <li><a href="//www.uoguelph.ca/campus/map/"><span class="glyphicon glyphicon-road fa-fw" aria-hidden="true"></span> Maps</a></li>
       <li><a href="//webadvisor.uoguelph.ca/"><span class="glyphicon glyphicon-list-alt fa-fw" aria-hidden="true"></span> WebAdvisor</a></li>
@@ -39,7 +39,7 @@
           <input type="hidden" name="srt" value="rank" id="str">
           <input type="hidden" id="vid" name="vid" value="GUELPH">
           <input type="hidden" id="frbg" name="frbg" value="">
-          <label id="searchtextlabel" for="searchtext" class="sr-only">search</label>
+          <label id="searchtextlabel" for="searchtext" class="sr-only">Search University of Guelph</label>
           <div class="input-group">
             <input class="form-control search1" placeholder="Search U of G" name="q" type="text" size="20" maxlength="256" id="searchtext">
             <span class="input-group-btn">

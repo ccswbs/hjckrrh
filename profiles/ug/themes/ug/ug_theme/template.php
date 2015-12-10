@@ -140,6 +140,27 @@ function ug_theme_preprocess_views_view_fields__event_week_list(&$vars) {
 }
 
 
+
+/**
+ * PG1 - Listing page for one page.
+ */
+function ug_theme_preprocess_views_view_fields__pg1(&$vars) {
+  $vars['title']        = $vars['fields']['title']->content;
+  $vars['image']        = $vars['fields']['field_page_image']->content;
+  $vars['caption']      = $vars['fields']['field_page_caption']->content;
+  $vars['body']         = $vars['fields']['field_page_body']->content;
+  $vars['attachments']  = $vars['fields']['field_page_attachments']->content;
+}
+
+/**
+ * PG2 - Listing page for multiple basic pages.
+ */
+function ug_theme_preprocess_views_view_fields__pg2(&$vars) {
+  $vars['title']     = $vars['fields']['title']->content;
+  $vars['created']   = $vars['fields']['created']->content;
+  $vars['body']      = $vars['fields']['field_page_body']->content;
+}
+
 /**
  * P1 - Listing page for multiple people profiles.
  */
@@ -154,18 +175,6 @@ function ug_theme_preprocess_views_view_fields__p1(&$vars) {
   $vars['email']     = $vars['fields']['field_profile_email']->content;
   $vars['user_url']  = 'user/'.$vars['uid'];
   $vars['fullname']  = l($vars['name'].' '.$vars['lastname'], 'user/'.$vars['uid']);
-}
-
-
-/**
- * PG1 - Listing page for one page.
- */
-function ug_theme_preprocess_views_view_fields__pg1(&$vars) {
-  $vars['title']        = $vars['fields']['title']->content;
-  $vars['image']        = $vars['fields']['field_page_image']->content;
-  $vars['caption']      = $vars['fields']['field_page_caption']->content;
-  $vars['body']         = $vars['fields']['field_page_body']->content;
-  $vars['attachments']  = $vars['fields']['field_page_attachments']->content;
 }
 
 
@@ -824,3 +833,39 @@ function ug_theme_file_icon($variables) {
   /* OVERRIDE - Add alternative text */
   return '<img class="file-icon" alt="' . $mime . '" title="' . $mime . '" src="' . $icon_url . '" />';
 }
+
+/**
+ * Override search module to add label 
+ * Source: https://www.drupal.org/node/2540856 
+ */
+function ug_theme_bootstrap_search_form_wrapper($variables) {
+  $output = '<div class="input-group">';
+
+//added
+    $output .= '<label for="edit-search-block-form--2" class="element-invisible">Search this site</label>';
+
+  $output .= $variables['element']['#children'];
+  $output .= '<span class="input-group-btn">';
+  $output .= '<button type="submit" class="btn btn-default">';
+  // We can be sure that the font icons exist in CDN.
+  if (theme_get_setting('bootstrap_cdn')) {
+    $output .= _bootstrap_icon('search');
+    $output .= '<span class="element-invisible">';
+    $output .= t('Search');
+    $output .= '</span>';
+  } else {
+    $output .= t('Search');
+  }
+  $output .= '</button>';
+  $output .= '</span>';
+  $output .= '</div>';
+  return $output;
+}
+/**
+ * Modify the placeholder text in the site search box 
+ */
+function ug_theme_form_search_block_form_alter(&$form, &$form_state, $form_id) {      
+      
+    $form['search_block_form']['#attributes']['placeholder'] = t('Search this site');
+
+} 
