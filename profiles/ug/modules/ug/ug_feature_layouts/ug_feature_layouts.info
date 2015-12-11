@@ -1,0 +1,10 @@
+name = UG Feature Layouts
+core = 7.x
+package = UG
+dependencies[] = ctools
+dependencies[] = page_manager
+dependencies[] = ug_feature
+features[ctools][] = page_manager:pages_default:1
+features[features_api][] = api:2
+features[page_manager_pages][] = features
+features[page_manager_pages][] = features_category
