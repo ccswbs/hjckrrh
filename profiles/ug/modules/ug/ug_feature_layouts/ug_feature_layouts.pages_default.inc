@@ -20,7 +20,18 @@ function ug_feature_layouts_default_page_manager_pages() {
     'type' => 'none',
     'settings' => NULL,
   );
-  $page->menu = array();
+  $page->menu = array(
+    'type' => 'normal',
+    'title' => 'Features',
+    'name' => 'navigation',
+    'weight' => '0',
+    'parent' => array(
+      'type' => 'none',
+      'title' => '',
+      'name' => 'navigation',
+      'weight' => '0',
+    ),
+  );
   $page->arguments = array();
   $page->conf = array(
     'admin_paths' => FALSE,
@@ -145,7 +156,10 @@ function ug_feature_layouts_default_page_manager_pages() {
   $page->admin_title = 'Features category';
   $page->admin_description = 'Listing of features filtered by a category';
   $page->path = 'features/category/%category';
-  $page->access = array();
+  $page->access = array(
+    'type' => 'none',
+    'settings' => NULL,
+  );
   $page->menu = array();
   $page->arguments = array(
     'category' => array(
