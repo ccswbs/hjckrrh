@@ -405,6 +405,7 @@ function ug_feature_views_default_views() {
 
   /* Display: Random */
   $handler = $view->new_display('panel_pane', 'Random', 'panel_pane_2');
+  $handler->display->display_options['link_url'] = 'features';
   $handler->display->display_options['defaults']['sorts'] = FALSE;
   /* Sort criterion: Global: Random */
   $handler->display->display_options['sorts']['random']['id'] = 'random';
