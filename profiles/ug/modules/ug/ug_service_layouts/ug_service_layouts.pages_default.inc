@@ -314,7 +314,7 @@ function ug_service_layouts_default_page_manager_pages() {
     'parent' => array(
       'type' => 'normal',
       'title' => 'Services',
-      'name' => 'main-menu',
+      'name' => 'navigation',
       'weight' => '0',
     ),
   );
