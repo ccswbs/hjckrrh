@@ -635,7 +635,7 @@ function ug_event_layouts_default_page_manager_pages() {
     'weight' => '-1',
     'parent' => array(
       'type' => 'normal',
-      'title' => 'Events Calendar',
+      'title' => 'Events',
       'name' => 'navigation',
       'weight' => '0',
     ),
