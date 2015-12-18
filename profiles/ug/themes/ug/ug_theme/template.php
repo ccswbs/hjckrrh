@@ -189,6 +189,21 @@ function ug_theme_preprocess_views_view_fields__pg2(&$vars) {
 }
 
 /**
+ * PG3 - Page item teaser list
+ */
+function ug_theme_preprocess_views_view__pg3(&$vars) {
+
+  $view = views_get_current_view();
+  $category_filter = $view->args[0];
+
+  if(!empty($category_filter)) {
+    $view->display_handler->set_option('link_url', 'pages/category/' . $category_filter);
+  }
+
+  $vars['more'] = $view->display_handler->render_more_link();
+}
+
+/**
  * P1 - Listing page for multiple people profiles.
  */
 function ug_theme_preprocess_views_view_fields__p1(&$vars) {
