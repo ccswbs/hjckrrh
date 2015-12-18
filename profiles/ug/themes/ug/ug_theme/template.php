@@ -198,6 +198,10 @@ function ug_theme_preprocess_views_view__pg3_page_item_teaser_list(&$vars) {
   if(!empty($view->args[0])){
     $category_filter = $view->args[0];
     $view->display_handler->set_option('link_url', 'pages/category/' . $category_filter);
+  } else {
+
+    $view->display_handler->set_option('link_url', 'pages');
+   
   }
 
   $vars['more'] = $view->display_handler->render_more_link();
