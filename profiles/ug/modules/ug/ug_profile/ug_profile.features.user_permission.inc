@@ -33,9 +33,27 @@ function ug_profile_user_default_permissions() {
     'module' => 'node',
   );
 
+  // Exported permission: 'delete terms in profile_category'.
+  $permissions['delete terms in profile_category'] = array(
+    'name' => 'delete terms in profile_category',
+    'roles' => array(
+      'site manager' => 'site manager',
+    ),
+    'module' => 'taxonomy',
+  );
+
   // Exported permission: 'delete terms in profile_field_headings'.
   $permissions['delete terms in profile_field_headings'] = array(
     'name' => 'delete terms in profile_field_headings',
+    'roles' => array(
+      'site manager' => 'site manager',
+    ),
+    'module' => 'taxonomy',
+  );
+
+  // Exported permission: 'delete terms in profile_research'.
+  $permissions['delete terms in profile_research'] = array(
+    'name' => 'delete terms in profile_research',
     'roles' => array(
       'site manager' => 'site manager',
     ),
@@ -89,9 +107,27 @@ function ug_profile_user_default_permissions() {
     'module' => 'node',
   );
 
+  // Exported permission: 'edit terms in profile_category'.
+  $permissions['edit terms in profile_category'] = array(
+    'name' => 'edit terms in profile_category',
+    'roles' => array(
+      'site manager' => 'site manager',
+    ),
+    'module' => 'taxonomy',
+  );
+
   // Exported permission: 'edit terms in profile_field_headings'.
   $permissions['edit terms in profile_field_headings'] = array(
     'name' => 'edit terms in profile_field_headings',
+    'roles' => array(
+      'site manager' => 'site manager',
+    ),
+    'module' => 'taxonomy',
+  );
+
+  // Exported permission: 'edit terms in profile_research'.
+  $permissions['edit terms in profile_research'] = array(
+    'name' => 'edit terms in profile_research',
     'roles' => array(
       'site manager' => 'site manager',
     ),

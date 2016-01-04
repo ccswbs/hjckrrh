@@ -9,6 +9,14 @@
  */
 function ug_profile_taxonomy_default_vocabularies() {
   return array(
+    'profile_category' => array(
+      'name' => 'Profile category',
+      'machine_name' => 'profile_category',
+      'description' => '',
+      'hierarchy' => 0,
+      'module' => 'taxonomy',
+      'weight' => 0,
+    ),
     'profile_field_headings' => array(
       'name' => 'Profile field headings',
       'machine_name' => 'profile_field_headings',
