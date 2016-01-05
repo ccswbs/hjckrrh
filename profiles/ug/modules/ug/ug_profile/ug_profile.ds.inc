@@ -67,11 +67,7 @@ function ug_profile_ds_layout_settings_info() {
       'field_profile_telephonenumber' => 'right',
       'field_profile_email' => 'right',
     ),
-    'classes' => array(
-      'layout_class' => array(
-        'media' => 'media',
-      ),
-    ),
+    'classes' => array(),
     'wrappers' => array(
       'left' => 'div',
       'right' => 'div',
