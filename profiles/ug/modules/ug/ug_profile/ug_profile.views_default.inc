@@ -352,6 +352,14 @@ function ug_profile_views_default_views() {
   $handler->display->display_options['sorts']['created']['table'] = 'node';
   $handler->display->display_options['sorts']['created']['field'] = 'created';
   $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  /* Contextual filter: Field: Category (field_profile_category) */
+  $handler->display->display_options['arguments']['field_profile_category_tid']['id'] = 'field_profile_category_tid';
+  $handler->display->display_options['arguments']['field_profile_category_tid']['table'] = 'field_data_field_profile_category';
+  $handler->display->display_options['arguments']['field_profile_category_tid']['field'] = 'field_profile_category_tid';
+  $handler->display->display_options['arguments']['field_profile_category_tid']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['field_profile_category_tid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_profile_category_tid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_profile_category_tid']['summary_options']['items_per_page'] = '25';
   /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
@@ -393,12 +401,22 @@ function ug_profile_views_default_views() {
   $handler->display->display_options['allow']['items_per_page'] = 'items_per_page';
   $handler->display->display_options['allow']['offset'] = 0;
   $handler->display->display_options['allow']['link_to_view'] = 0;
-  $handler->display->display_options['allow']['more_link'] = 0;
-  $handler->display->display_options['allow']['more_text'] = 0;
+  $handler->display->display_options['allow']['more_link'] = 'more_link';
+  $handler->display->display_options['allow']['more_text'] = 'more_text';
   $handler->display->display_options['allow']['path_override'] = 0;
   $handler->display->display_options['allow']['title_override'] = 'title_override';
   $handler->display->display_options['allow']['exposed_form'] = 0;
   $handler->display->display_options['allow']['fields_override'] = 'fields_override';
+  $handler->display->display_options['argument_input'] = array(
+    'field_profile_category_tid' => array(
+      'type' => 'user',
+      'context' => 'entity:file.basename',
+      'context_optional' => 0,
+      'panel' => '0',
+      'fixed' => '',
+      'label' => 'Category',
+    ),
+  );
   $handler->display->display_options['inherit_panels_path'] = '1';
   $export['pp1'] = $view;
 
