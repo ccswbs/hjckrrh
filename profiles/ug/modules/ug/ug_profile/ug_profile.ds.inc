@@ -73,7 +73,7 @@ function ug_profile_ds_layout_settings_info() {
       'right' => 'div',
     ),
     'layout_wrapper' => 'article',
-    'layout_attributes' => '',
+    'layout_attributes' => 'class="media"',
     'layout_attributes_merge' => 1,
     'layout_link_attribute' => '',
     'layout_link_custom' => '',

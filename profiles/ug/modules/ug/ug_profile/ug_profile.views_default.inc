@@ -352,6 +352,10 @@ function ug_profile_views_default_views() {
   $handler->display->display_options['sorts']['created']['table'] = 'node';
   $handler->display->display_options['sorts']['created']['field'] = 'created';
   $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  /* Sort criterion: Field: Last name (field_profile_lastname) */
+  $handler->display->display_options['sorts']['field_profile_lastname_value']['id'] = 'field_profile_lastname_value';
+  $handler->display->display_options['sorts']['field_profile_lastname_value']['table'] = 'field_data_field_profile_lastname';
+  $handler->display->display_options['sorts']['field_profile_lastname_value']['field'] = 'field_profile_lastname_value';
   /* Contextual filter: Field: Category (field_profile_category) */
   $handler->display->display_options['arguments']['field_profile_category_tid']['id'] = 'field_profile_category_tid';
   $handler->display->display_options['arguments']['field_profile_category_tid']['table'] = 'field_data_field_profile_category';
