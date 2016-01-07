@@ -549,4 +549,11 @@ Base Styles
       color: #333333;
   }
 
+  /*----------------------
+  Fields
+  ----------------------**/
+
+  .field {
+    margin-bottom: 4px;
+  }
 
