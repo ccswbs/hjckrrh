@@ -308,4 +308,17 @@ PP - People profiles
 .field-collection-container {
   border: none;
 }
+/*------------------------------------------------
+  Center images on faces grid.
+  ------------------------------------------------*/
+.view-pp1b figure {
+  margin: 8px;
+}
+.view-pp1b figure img {
+  margin: 0 auto;
+}
+.view-pp1b h2 {
+  font-size: 1.2em;
+}
+
 

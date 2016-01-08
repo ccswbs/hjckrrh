@@ -89,6 +89,7 @@ features[field_instance][] = user-user-field_profile_title
 features[field_instance][] = user-user-field_profile_unit
 features[field_instance][] = user-user-field_profile_website
 features[field_instance][] = user-user-field_tags
+features[image][] = profile_thumbnail
 features[node][] = profile
 features[page_manager_handlers][] = node_view__panel_context_1781f4dd-6e91-4633-8784-ede3f3701002
 features[page_manager_pages][] = people

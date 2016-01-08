@@ -437,7 +437,7 @@ function ug_profile_views_default_views() {
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
   $handler->display->display_options['title'] = 'Our People';
-  $handler->display->display_options['css_class'] = '140faces-view row';
+  $handler->display->display_options['css_class'] = '140faces-view';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['access']['type'] = 'none';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -450,7 +450,6 @@ function ug_profile_views_default_views() {
   $handler->display->display_options['pager']['options']['id'] = '0';
   $handler->display->display_options['pager']['options']['quantity'] = '9';
   $handler->display->display_options['style_plugin'] = 'default';
-  $handler->display->display_options['style_options']['row_class'] = 'col-lg-2 col-md-3 col-sm-6';
   $handler->display->display_options['row_plugin'] = 'fields';
   /* Field: Content: Path */
   $handler->display->display_options['fields']['path']['id'] = 'path';
@@ -468,7 +467,7 @@ function ug_profile_views_default_views() {
   $handler->display->display_options['fields']['field_profile_image']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_profile_image']['click_sort_column'] = 'fid';
   $handler->display->display_options['fields']['field_profile_image']['settings'] = array(
-    'image_style' => 'large',
+    'image_style' => 'profile_thumbnail',
     'image_link' => '',
   );
   /* Field: Field: Last name */
@@ -499,7 +498,7 @@ function ug_profile_views_default_views() {
   $handler->display->display_options['fields']['nothing']['table'] = 'views';
   $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
   $handler->display->display_options['fields']['nothing']['label'] = '';
-  $handler->display->display_options['fields']['nothing']['alter']['text'] = '<figure class="face-figure">
+  $handler->display->display_options['fields']['nothing']['alter']['text'] = '<figure class="face-figure pull-left">
 <a href="[path]">
 [field_profile_image]
 <figcaption class="face-caption">
@@ -507,7 +506,8 @@ function ug_profile_views_default_views() {
 <p>[field_profile_role]</p>
 </figcaption>
 </a>
-</figure>';
+</figure>
+';
   $handler->display->display_options['fields']['nothing']['element_label_colon'] = FALSE;
   /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';

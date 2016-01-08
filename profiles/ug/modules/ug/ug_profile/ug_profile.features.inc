@@ -30,6 +30,30 @@ function ug_profile_views_api($module = NULL, $api = NULL) {
 }
 
 /**
+ * Implements hook_image_default_styles().
+ */
+function ug_profile_image_default_styles() {
+  $styles = array();
+
+  // Exported image style: profile_thumbnail.
+  $styles['profile_thumbnail'] = array(
+    'label' => 'Profile thumbnail',
+    'effects' => array(
+      1 => array(
+        'name' => 'image_scale_and_crop',
+        'data' => array(
+          'width' => 150,
+          'height' => 150,
+        ),
+        'weight' => 1,
+      ),
+    ),
+  );
+
+  return $styles;
+}
+
+/**
  * Implements hook_node_info().
  */
 function ug_profile_node_info() {
