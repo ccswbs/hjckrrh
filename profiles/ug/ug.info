@@ -11,7 +11,7 @@ dependencies[] = fontawesome
 dependencies[] = jquery_update
 dependencies[] = list
 dependencies[] = menu
-dependencies[] = menu
+dependencies[] = menu_block
 dependencies[] = module_filter
 dependencies[] = options
 dependencies[] = panels
@@ -38,4 +38,3 @@ dependencies[] = ug_social
 dependencies[] = ug_theme_settings
 dependencies[] = ug_user
 dependencies[] = ug_wysiwyg
-
