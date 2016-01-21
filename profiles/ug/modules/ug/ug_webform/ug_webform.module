@@ -1,0 +1,22 @@
+<?php
+/**
+ * @file
+ * Code for the UG Webform feature.
+ */
+
+include_once 'ug_webform.features.inc';
+
+
+/**
+ * Alter the list of available Webform components.
+ *
+ * @param $components
+ *   A list of existing components as defined by hook_webform_component_info().
+ *
+ * @see hook_webform_component_info()
+ */
+function ug_webform_webform_component_info_alter(&$components) {
+  // Completely remove a component.
+  unset($components['date']);
+}
+
