@@ -95,10 +95,10 @@ function ug_book_layouts_default_page_manager_handlers() {
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-e035fb08-c80f-44ff-a621-9ab610942be1';
+    $pane->pid = 'new-55b65063-7ff5-4cfd-82ed-d6a6652d885d';
     $pane->panel = 'left';
     $pane->type = 'entity_field';
-    $pane->subtype = 'node:field_book_body';
+    $pane->subtype = 'node:body';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
@@ -121,9 +121,9 @@ function ug_book_layouts_default_page_manager_handlers() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $pane->uuid = 'e035fb08-c80f-44ff-a621-9ab610942be1';
-    $display->content['new-e035fb08-c80f-44ff-a621-9ab610942be1'] = $pane;
-    $display->panels['left'][0] = 'new-e035fb08-c80f-44ff-a621-9ab610942be1';
+    $pane->uuid = '55b65063-7ff5-4cfd-82ed-d6a6652d885d';
+    $display->content['new-55b65063-7ff5-4cfd-82ed-d6a6652d885d'] = $pane;
+    $display->panels['left'][0] = 'new-55b65063-7ff5-4cfd-82ed-d6a6652d885d';
     $pane = new stdClass();
     $pane->pid = 'new-1b00cc15-6276-4c8d-b9f3-b5f5528fbfeb';
     $pane->panel = 'left';
