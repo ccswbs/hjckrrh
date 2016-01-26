@@ -20,14 +20,18 @@ function ug_book_user_default_permissions() {
   // Exported permission: 'add content to books'.
   $permissions['add content to books'] = array(
     'name' => 'add content to books',
-    'roles' => array(),
+    'roles' => array(
+      'author' => 'author',
+    ),
     'module' => 'book',
   );
 
   // Exported permission: 'administer book outlines'.
   $permissions['administer book outlines'] = array(
     'name' => 'administer book outlines',
-    'roles' => array(),
+    'roles' => array(
+      'author' => 'author',
+    ),
     'module' => 'book',
   );
 
@@ -43,7 +47,9 @@ function ug_book_user_default_permissions() {
   // Exported permission: 'create new books'.
   $permissions['create new books'] = array(
     'name' => 'create new books',
-    'roles' => array(),
+    'roles' => array(
+      'author' => 'author',
+    ),
     'module' => 'book',
   );
 
