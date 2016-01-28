@@ -900,7 +900,6 @@ function ug_theme_form_search_block_form_alter(&$form, &$form_state, $form_id) {
 
 } 
 
-
 /**
  * Output profile heading as a heading level 2.
  */
@@ -913,4 +912,19 @@ function ug_theme_field__field_profile_heading($variables) {
   }
 
   return $output;
+}
+
+/**
+ * N3 - News teaser list
+ */
+function ug_theme_preprocess_views_view__n3(&$vars) {
+
+  $view = views_get_current_view();
+
+  if(!empty($view->args[0])){
+    $category_filter = $view->args[0];
+    $view->display_handler->set_option('link_url', 'news/category/' . $category_filter);
+  }
+
+  $vars['more'] = $view->display_handler->render_more_link();
 }
