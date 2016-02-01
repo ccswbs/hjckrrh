@@ -46,7 +46,7 @@ function ug_profile_layouts_default_page_manager_handlers() {
     ),
   );
   $display = new panels_display();
-  $display->layout = 'bootstrap_twocol_stacked';
+  $display->layout = 'bootstrap_threecol_stacked';
   $display->layout_settings = array();
   $display->panel_settings = array(
     'style_settings' => array(
@@ -58,13 +58,13 @@ function ug_profile_layouts_default_page_manager_handlers() {
       ),
       'left' => array(
         'column_type' => 'col-sm',
-        'column_size' => '4',
+        'column_size' => '3',
         'offset_type' => 'col-lg-offset',
         'offset_size' => '0',
       ),
       'right' => array(
         'column_type' => 'col-sm',
-        'column_size' => '8',
+        'column_size' => '3',
         'offset_type' => 'col-lg-offset',
         'offset_size' => '0',
       ),
@@ -75,6 +75,12 @@ function ug_profile_layouts_default_page_manager_handlers() {
         'offset_size' => '0',
       ),
       'default' => NULL,
+      'middle' => array(
+        'column_type' => 'col-sm',
+        'column_size' => '3',
+        'offset_type' => 'col-lg-offset',
+        'offset_size' => '0',
+      ),
     ),
     'top' => array(
       'style' => 'bootstrap_region',
@@ -86,6 +92,9 @@ function ug_profile_layouts_default_page_manager_handlers() {
       'style' => 'bootstrap_region',
     ),
     'bottom' => array(
+      'style' => 'bootstrap_region',
+    ),
+    'middle' => array(
       'style' => 'bootstrap_region',
     ),
   );
@@ -256,7 +265,7 @@ function ug_profile_layouts_default_page_manager_handlers() {
     $display->panels['left'][0] = 'new-f8dad7e8-c9b7-4545-9c90-861fc4c517bd';
     $pane = new stdClass();
     $pane->pid = 'new-5aa692d9-516f-45c8-b067-8f338504cdad';
-    $pane->panel = 'right';
+    $pane->panel = 'middle';
     $pane->type = 'node_content';
     $pane->subtype = 'node_content';
     $pane->shown = TRUE;
@@ -283,7 +292,7 @@ function ug_profile_layouts_default_page_manager_handlers() {
     $pane->locks = array();
     $pane->uuid = '5aa692d9-516f-45c8-b067-8f338504cdad';
     $display->content['new-5aa692d9-516f-45c8-b067-8f338504cdad'] = $pane;
-    $display->panels['right'][0] = 'new-5aa692d9-516f-45c8-b067-8f338504cdad';
+    $display->panels['middle'][0] = 'new-5aa692d9-516f-45c8-b067-8f338504cdad';
   $display->hide_title = PANELS_TITLE_PANE;
   $display->title_pane = 'new-5aa692d9-516f-45c8-b067-8f338504cdad';
   $handler->conf['display'] = $display;
@@ -436,7 +445,10 @@ function ug_profile_layouts_default_page_manager_pages() {
   $page->admin_title = '';
   $page->admin_description = '';
   $page->path = 'people/faces';
-  $page->access = array();
+  $page->access = array(
+    'type' => 'none',
+    'settings' => NULL,
+  );
   $page->menu = array();
   $page->arguments = array();
   $page->conf = array(
