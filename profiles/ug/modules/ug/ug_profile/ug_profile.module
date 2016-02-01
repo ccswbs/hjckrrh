@@ -14,7 +14,7 @@ function ug_profile_install() {
   $role = taxonomy_vocabulary_machine_name_load('profile_role');
   if ($role == FALSE) {
     $role = new stdClass();
-    $role->name = 'Role';
+    $role->name = 'Role'; /* Name used here will be overridden by feature. */
     $role->machine_name = 'profile_role';
     taxonomy_vocabulary_save($role);
   }
