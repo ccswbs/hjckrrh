@@ -76,6 +76,20 @@ function ug_feature_views_default_views() {
   $handler->display->display_options['sorts']['random']['id'] = 'random';
   $handler->display->display_options['sorts']['random']['table'] = 'views';
   $handler->display->display_options['sorts']['random']['field'] = 'random';
+  /* Contextual filter: Content: Category (field_feature_category) */
+  $handler->display->display_options['arguments']['field_feature_category_tid']['id'] = 'field_feature_category_tid';
+  $handler->display->display_options['arguments']['field_feature_category_tid']['table'] = 'field_data_field_feature_category';
+  $handler->display->display_options['arguments']['field_feature_category_tid']['field'] = 'field_feature_category_tid';
+  $handler->display->display_options['arguments']['field_feature_category_tid']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['field_feature_category_tid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_feature_category_tid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_feature_category_tid']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['field_feature_category_tid']['specify_validation'] = TRUE;
+  $handler->display->display_options['arguments']['field_feature_category_tid']['validate']['type'] = 'taxonomy_term';
+  $handler->display->display_options['arguments']['field_feature_category_tid']['validate_options']['vocabularies'] = array(
+    'feature_category' => 'feature_category',
+  );
+  $handler->display->display_options['arguments']['field_feature_category_tid']['validate_options']['type'] = 'convert';
   /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
@@ -94,14 +108,25 @@ function ug_feature_views_default_views() {
   /* Display: Content pane */
   $handler = $view->new_display('panel_pane', 'Content pane', 'panel_pane_1');
   $handler->display->display_options['allow']['use_pager'] = 0;
-  $handler->display->display_options['allow']['items_per_page'] = 0;
+  $handler->display->display_options['allow']['items_per_page'] = 'items_per_page';
   $handler->display->display_options['allow']['offset'] = 0;
   $handler->display->display_options['allow']['link_to_view'] = 0;
   $handler->display->display_options['allow']['more_link'] = 0;
+  $handler->display->display_options['allow']['more_text'] = 0;
   $handler->display->display_options['allow']['path_override'] = 0;
   $handler->display->display_options['allow']['title_override'] = 'title_override';
   $handler->display->display_options['allow']['exposed_form'] = 0;
   $handler->display->display_options['allow']['fields_override'] = 0;
+  $handler->display->display_options['argument_input'] = array(
+    'field_feature_category_tid' => array(
+      'type' => 'user',
+      'context' => 'entity:file.fid',
+      'context_optional' => 0,
+      'panel' => '0',
+      'fixed' => '',
+      'label' => 'Category',
+    ),
+  );
   $export['ft1'] = $view;
 
   $view = new view();
@@ -176,7 +201,6 @@ function ug_feature_views_default_views() {
   $handler->display->display_options['fields']['field_feature_text']['field'] = 'field_feature_text';
   $handler->display->display_options['fields']['field_feature_text']['label'] = '';
   $handler->display->display_options['fields']['field_feature_text']['alter']['max_length'] = '255';
-  $handler->display->display_options['fields']['field_feature_text']['alter']['trim'] = TRUE;
   $handler->display->display_options['fields']['field_feature_text']['alter']['html'] = TRUE;
   $handler->display->display_options['fields']['field_feature_text']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_feature_text']['element_default_classes'] = FALSE;
@@ -198,7 +222,7 @@ function ug_feature_views_default_views() {
   $handler->display->display_options['arguments']['field_feature_category_tid']['validate_options']['vocabularies'] = array(
     'feature_category' => 'feature_category',
   );
-  $handler->display->display_options['arguments']['field_feature_category_tid']['validate_options']['type'] = 'convert';
+  $handler->display->display_options['arguments']['field_feature_category_tid']['validate']['fail'] = 'empty';
   /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
@@ -227,7 +251,7 @@ function ug_feature_views_default_views() {
   $handler->display->display_options['allow']['fields_override'] = 0;
   $handler->display->display_options['argument_input'] = array(
     'field_feature_category_tid' => array(
-      'type' => 'user',
+      'type' => 'panel',
       'context' => 'entity:file.fid',
       'context_optional' => 0,
       'panel' => '0',
@@ -269,6 +293,13 @@ function ug_feature_views_default_views() {
   $handler->display->display_options['style_options']['wrapper_class'] = 'teaser-list';
   $handler->display->display_options['row_plugin'] = 'fields';
   $handler->display->display_options['row_options']['default_field_elements'] = FALSE;
+  /* No results behavior: Global: Text area */
+  $handler->display->display_options['empty']['area']['id'] = 'area';
+  $handler->display->display_options['empty']['area']['table'] = 'views';
+  $handler->display->display_options['empty']['area']['field'] = 'area';
+  $handler->display->display_options['empty']['area']['empty'] = TRUE;
+  $handler->display->display_options['empty']['area']['content'] = 'No results found.';
+  $handler->display->display_options['empty']['area']['format'] = 'full_html';
   /* Field: Content: Image */
   $handler->display->display_options['fields']['field_feature_image']['id'] = 'field_feature_image';
   $handler->display->display_options['fields']['field_feature_image']['table'] = 'field_data_field_feature_image';
@@ -310,7 +341,7 @@ function ug_feature_views_default_views() {
   $handler->display->display_options['fields']['field_feature_text']['field'] = 'field_feature_text';
   $handler->display->display_options['fields']['field_feature_text']['label'] = '';
   $handler->display->display_options['fields']['field_feature_text']['alter']['max_length'] = '80';
-  $handler->display->display_options['fields']['field_feature_text']['alter']['trim'] = TRUE;
+  $handler->display->display_options['fields']['field_feature_text']['alter']['ellipsis'] = FALSE;
   $handler->display->display_options['fields']['field_feature_text']['alter']['html'] = TRUE;
   $handler->display->display_options['fields']['field_feature_text']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_feature_text']['element_default_classes'] = FALSE;
@@ -332,7 +363,7 @@ function ug_feature_views_default_views() {
   $handler->display->display_options['arguments']['field_feature_category_tid']['validate_options']['vocabularies'] = array(
     'feature_category' => 'feature_category',
   );
-  $handler->display->display_options['arguments']['field_feature_category_tid']['validate_options']['type'] = 'convert';
+  $handler->display->display_options['arguments']['field_feature_category_tid']['validate']['fail'] = 'empty';
   /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
@@ -355,7 +386,8 @@ function ug_feature_views_default_views() {
   $handler->display->display_options['allow']['items_per_page'] = 'items_per_page';
   $handler->display->display_options['allow']['offset'] = 0;
   $handler->display->display_options['allow']['link_to_view'] = 0;
-  $handler->display->display_options['allow']['more_link'] = 0;
+  $handler->display->display_options['allow']['more_link'] = 'more_link';
+  $handler->display->display_options['allow']['more_text'] = 'more_text';
   $handler->display->display_options['allow']['path_override'] = 0;
   $handler->display->display_options['allow']['title_override'] = 'title_override';
   $handler->display->display_options['allow']['exposed_form'] = 0;

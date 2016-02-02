@@ -46,9 +46,7 @@ function ug_service_user_default_permissions() {
   $permissions['delete terms in service_audience'] = array(
     'name' => 'delete terms in service_audience',
     'roles' => array(
-      'editor' => 'editor',
-      'moderator' => 'moderator',
-      'publisher' => 'publisher',
+      'site manager' => 'site manager',
     ),
     'module' => 'taxonomy',
   );
@@ -57,9 +55,7 @@ function ug_service_user_default_permissions() {
   $permissions['delete terms in service_category'] = array(
     'name' => 'delete terms in service_category',
     'roles' => array(
-      'editor' => 'editor',
-      'moderator' => 'moderator',
-      'publisher' => 'publisher',
+      'site manager' => 'site manager',
     ),
     'module' => 'taxonomy',
   );
@@ -68,9 +64,7 @@ function ug_service_user_default_permissions() {
   $permissions['delete terms in service_keywords'] = array(
     'name' => 'delete terms in service_keywords',
     'roles' => array(
-      'editor' => 'editor',
-      'moderator' => 'moderator',
-      'publisher' => 'publisher',
+      'site manager' => 'site manager',
     ),
     'module' => 'taxonomy',
   );
@@ -79,9 +73,7 @@ function ug_service_user_default_permissions() {
   $permissions['delete terms in service_private_heading'] = array(
     'name' => 'delete terms in service_private_heading',
     'roles' => array(
-      'editor' => 'editor',
-      'moderator' => 'moderator',
-      'publisher' => 'publisher',
+      'site manager' => 'site manager',
     ),
     'module' => 'taxonomy',
   );
@@ -90,9 +82,7 @@ function ug_service_user_default_permissions() {
   $permissions['delete terms in service_public_heading'] = array(
     'name' => 'delete terms in service_public_heading',
     'roles' => array(
-      'editor' => 'editor',
-      'moderator' => 'moderator',
-      'publisher' => 'publisher',
+      'site manager' => 'site manager',
     ),
     'module' => 'taxonomy',
   );
@@ -141,9 +131,7 @@ function ug_service_user_default_permissions() {
   $permissions['edit terms in service_audience'] = array(
     'name' => 'edit terms in service_audience',
     'roles' => array(
-      'editor' => 'editor',
-      'moderator' => 'moderator',
-      'publisher' => 'publisher',
+      'site manager' => 'site manager',
     ),
     'module' => 'taxonomy',
   );
@@ -152,9 +140,7 @@ function ug_service_user_default_permissions() {
   $permissions['edit terms in service_category'] = array(
     'name' => 'edit terms in service_category',
     'roles' => array(
-      'editor' => 'editor',
-      'moderator' => 'moderator',
-      'publisher' => 'publisher',
+      'site manager' => 'site manager',
     ),
     'module' => 'taxonomy',
   );
@@ -163,9 +149,7 @@ function ug_service_user_default_permissions() {
   $permissions['edit terms in service_keywords'] = array(
     'name' => 'edit terms in service_keywords',
     'roles' => array(
-      'editor' => 'editor',
-      'moderator' => 'moderator',
-      'publisher' => 'publisher',
+      'site manager' => 'site manager',
     ),
     'module' => 'taxonomy',
   );
@@ -174,9 +158,7 @@ function ug_service_user_default_permissions() {
   $permissions['edit terms in service_private_heading'] = array(
     'name' => 'edit terms in service_private_heading',
     'roles' => array(
-      'editor' => 'editor',
-      'moderator' => 'moderator',
-      'publisher' => 'publisher',
+      'site manager' => 'site manager',
     ),
     'module' => 'taxonomy',
   );
@@ -185,9 +167,7 @@ function ug_service_user_default_permissions() {
   $permissions['edit terms in service_public_heading'] = array(
     'name' => 'edit terms in service_public_heading',
     'roles' => array(
-      'editor' => 'editor',
-      'moderator' => 'moderator',
-      'publisher' => 'publisher',
+      'site manager' => 'site manager',
     ),
     'module' => 'taxonomy',
   );
