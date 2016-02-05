@@ -39,8 +39,8 @@ function ug_profile_image_default_styles() {
       1 => array(
         'name' => 'image_scale_and_crop',
         'data' => array(
-          'width' => 150,
-          'height' => 150,
+          'width' => 145,
+          'height' => 145,
         ),
         'weight' => 1,
       ),
