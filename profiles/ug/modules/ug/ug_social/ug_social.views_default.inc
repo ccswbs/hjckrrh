@@ -368,19 +368,12 @@ function ug_social_views_default_views() {
   $handler->display->display_options['style_options']['default_row_class'] = FALSE;
   $handler->display->display_options['style_options']['row_class_special'] = FALSE;
   $handler->display->display_options['row_plugin'] = 'fields';
-  /* No results behavior: Global: Text area */
-  $handler->display->display_options['empty']['area']['id'] = 'area';
-  $handler->display->display_options['empty']['area']['table'] = 'views';
-  $handler->display->display_options['empty']['area']['field'] = 'area';
-  $handler->display->display_options['empty']['area']['empty'] = TRUE;
-  $handler->display->display_options['empty']['area']['content'] = 'No results found.';
-  $handler->display->display_options['empty']['area']['format'] = 'full_html';
-  /* Field: Aggregator feed: Title */
+  /* Field: Broken/missing handler */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'aggregator_feed';
   $handler->display->display_options['fields']['title']['field'] = 'title';
   $handler->display->display_options['fields']['title']['label'] = 'See more from this feed';
-  /* Contextual filter: Aggregator feed: Feed ID */
+  /* Contextual filter: Broken/missing handler */
   $handler->display->display_options['arguments']['fid']['id'] = 'fid';
   $handler->display->display_options['arguments']['fid']['table'] = 'aggregator_feed';
   $handler->display->display_options['arguments']['fid']['field'] = 'fid';
@@ -433,19 +426,19 @@ function ug_social_views_default_views() {
   $handler->display->display_options['empty']['area']['empty'] = TRUE;
   $handler->display->display_options['empty']['area']['format'] = 'full_html';
   $handler->display->display_options['defaults']['fields'] = FALSE;
-  /* Field: Aggregator: Title */
+  /* Field: Broken/missing handler */
   $handler->display->display_options['fields']['title_1']['id'] = 'title_1';
   $handler->display->display_options['fields']['title_1']['table'] = 'aggregator_item';
   $handler->display->display_options['fields']['title_1']['field'] = 'title';
   $handler->display->display_options['fields']['title_1']['label'] = '';
   $handler->display->display_options['fields']['title_1']['element_label_colon'] = FALSE;
-  /* Field: Aggregator: Timestamp */
+  /* Field: Broken/missing handler */
   $handler->display->display_options['fields']['timestamp']['id'] = 'timestamp';
   $handler->display->display_options['fields']['timestamp']['table'] = 'aggregator_item';
   $handler->display->display_options['fields']['timestamp']['field'] = 'timestamp';
   $handler->display->display_options['fields']['timestamp']['label'] = 'Posted';
   $handler->display->display_options['fields']['timestamp']['element_label_colon'] = FALSE;
-  /* Field: Aggregator: Body */
+  /* Field: Broken/missing handler */
   $handler->display->display_options['fields']['description']['id'] = 'description';
   $handler->display->display_options['fields']['description']['table'] = 'aggregator_item';
   $handler->display->display_options['fields']['description']['field'] = 'description';
@@ -482,13 +475,6 @@ function ug_social_views_default_views() {
   $handler->display->display_options['style_plugin'] = 'default';
   $handler->display->display_options['row_plugin'] = 'fields';
   $handler->display->display_options['row_options']['default_field_elements'] = FALSE;
-  /* No results behavior: Global: Text area */
-  $handler->display->display_options['empty']['area']['id'] = 'area';
-  $handler->display->display_options['empty']['area']['table'] = 'views';
-  $handler->display->display_options['empty']['area']['field'] = 'area';
-  $handler->display->display_options['empty']['area']['empty'] = TRUE;
-  $handler->display->display_options['empty']['area']['content'] = 'No results found.';
-  $handler->display->display_options['empty']['area']['format'] = 'full_html';
   /* Field: Twitter: Twitter status message ID */
   $handler->display->display_options['fields']['twitter_id']['id'] = 'twitter_id';
   $handler->display->display_options['fields']['twitter_id']['table'] = 'twitter';
@@ -499,7 +485,7 @@ function ug_social_views_default_views() {
   $handler->display->display_options['fields']['created_time']['field'] = 'created_time';
   $handler->display->display_options['fields']['created_time']['date_format'] = 'time ago';
   $handler->display->display_options['fields']['created_time']['second_date_format'] = 'long';
-  /* Field: Twitter Account: Full name */
+  /* Field: Twitter: Full name */
   $handler->display->display_options['fields']['name']['id'] = 'name';
   $handler->display->display_options['fields']['name']['table'] = 'twitter_account';
   $handler->display->display_options['fields']['name']['field'] = 'name';
@@ -511,16 +497,16 @@ function ug_social_views_default_views() {
   $handler->display->display_options['fields']['text']['link_usernames'] = 1;
   $handler->display->display_options['fields']['text']['link_hashtags'] = 0;
   $handler->display->display_options['fields']['text']['link_attributes'] = 1;
-  /* Field: Twitter Account: Profile image */
+  /* Field: Twitter: Profile image */
   $handler->display->display_options['fields']['profile_image_url']['id'] = 'profile_image_url';
   $handler->display->display_options['fields']['profile_image_url']['table'] = 'twitter_account';
   $handler->display->display_options['fields']['profile_image_url']['field'] = 'profile_image_url';
-  /* Field: Twitter Account: URL */
+  /* Field: Twitter: URL */
   $handler->display->display_options['fields']['url']['id'] = 'url';
   $handler->display->display_options['fields']['url']['table'] = 'twitter_account';
   $handler->display->display_options['fields']['url']['field'] = 'url';
   $handler->display->display_options['fields']['url']['display_as_link'] = FALSE;
-  /* Field: Twitter Account: Login name */
+  /* Field: Twitter: Login name */
   $handler->display->display_options['fields']['screen_name']['id'] = 'screen_name';
   $handler->display->display_options['fields']['screen_name']['table'] = 'twitter_account';
   $handler->display->display_options['fields']['screen_name']['field'] = 'screen_name';
@@ -641,14 +627,6 @@ function ug_social_views_default_views() {
 
   /* Display: Content pane */
   $handler = $view->new_display('panel_pane', 'Content pane', 'panel_pane_1');
-  $handler->display->display_options['defaults']['empty'] = FALSE;
-  /* No results behavior: Global: Text area */
-  $handler->display->display_options['empty']['area']['id'] = 'area';
-  $handler->display->display_options['empty']['area']['table'] = 'views';
-  $handler->display->display_options['empty']['area']['field'] = 'area';
-  $handler->display->display_options['empty']['area']['empty'] = TRUE;
-  $handler->display->display_options['empty']['area']['content'] = 'No results found.';
-  $handler->display->display_options['empty']['area']['format'] = 'full_html';
   $handler->display->display_options['allow']['use_pager'] = 0;
   $handler->display->display_options['allow']['items_per_page'] = 0;
   $handler->display->display_options['allow']['offset'] = 0;
