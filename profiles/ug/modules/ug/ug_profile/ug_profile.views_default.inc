@@ -352,15 +352,6 @@ function ug_profile_views_default_views() {
   $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['title']['element_wrapper_type'] = '0';
   $handler->display->display_options['fields']['title']['element_default_classes'] = FALSE;
-  /* Field: Field: Role */
-  $handler->display->display_options['fields']['field_profile_role']['id'] = 'field_profile_role';
-  $handler->display->display_options['fields']['field_profile_role']['table'] = 'field_data_field_profile_role';
-  $handler->display->display_options['fields']['field_profile_role']['field'] = 'field_profile_role';
-  $handler->display->display_options['fields']['field_profile_role']['label'] = '';
-  $handler->display->display_options['fields']['field_profile_role']['element_type'] = '0';
-  $handler->display->display_options['fields']['field_profile_role']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['field_profile_role']['type'] = 'taxonomy_term_reference_plain';
-  $handler->display->display_options['fields']['field_profile_role']['delta_offset'] = '0';
   /* Field: Field: Unit */
   $handler->display->display_options['fields']['field_profile_unit']['id'] = 'field_profile_unit';
   $handler->display->display_options['fields']['field_profile_unit']['table'] = 'field_data_field_profile_unit';
