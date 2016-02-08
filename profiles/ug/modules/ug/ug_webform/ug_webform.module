@@ -19,5 +19,6 @@ function ug_webform_webform_component_info_alter(&$components) {
   // Completely remove a component.
   unset($components['date']);
   unset($components['time']);
+  unset($components['grid']);
 }
 
