@@ -930,6 +930,7 @@ function ug_theme_form_search_block_form_alter(&$form, &$form_state, $form_id) {
 
 } 
 
+<<<<<<< HEAD
 /**
  * N3 - News teaser list
  */
