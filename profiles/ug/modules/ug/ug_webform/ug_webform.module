@@ -22,3 +22,12 @@ function ug_webform_webform_component_info_alter(&$components) {
   unset($components['grid']);
 }
 
+/**
+ * Implementation of hook_form_alter().
+ */
+function ug_webform_form_alter(&$form, $form_state, $form_id) {
+  if (user_is_anonymous() && strrpos($form_id, 'webform_client_form_', -strlen($form_id)) !== false) {
+    $form['captcha'] = array( '#type' => 'captcha' );
+  }
+}
+
