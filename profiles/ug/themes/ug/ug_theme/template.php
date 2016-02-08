@@ -904,3 +904,14 @@ function ug_theme_form_search_block_form_alter(&$form, &$form_state, $form_id) {
     $form['search_block_form']['#attributes']['placeholder'] = t('Search this site');
 
 } 
+
+function ug_theme_form_required_marker($variables) {
+  // This is also used in the installer, pre-database setup.
+  $t = get_t();
+  $attributes = array(
+    'class' => 'form-required',
+    'title' => $t('This field is required.'),
+  );
+  return '<span' . drupal_attributes($attributes) . '>(' . $t('required') . ')</span>';
+}
+
