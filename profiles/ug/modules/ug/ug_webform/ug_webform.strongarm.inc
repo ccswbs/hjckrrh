@@ -103,7 +103,9 @@ function ug_webform_strongarm() {
   $strongarm->api_version = 1;
   $strongarm->name = 'webform_disabled_components';
   $strongarm->value = array(
-    0 => 'markup',
+    0 => 'date',
+    1 => 'grid',
+    2 => 'time',
   );
   $export['webform_disabled_components'] = $strongarm;
 
