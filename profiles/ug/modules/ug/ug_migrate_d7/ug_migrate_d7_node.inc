@@ -10,7 +10,7 @@ class UGEvent7Migration extends DrupalNode7Migration {
 		/* DEFAULT arguments */
 		$event_arguments = array(
 			'source_event_body' => 'body',
-			'source_news_summary' => 'body:summary',
+			'source_event_summary' => 'body:summary',
 			'source_event_format' => 'body:format',
 			'source_event_category' => '',
 			'source_event_keyword' => '',
