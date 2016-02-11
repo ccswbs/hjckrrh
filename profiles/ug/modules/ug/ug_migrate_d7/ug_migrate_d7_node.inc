@@ -57,8 +57,19 @@ class UGEvent7Migration extends DrupalNode7Migration {
 		$this->addFieldMapping('field_event_image', $event_arguments['source_event_image']);
 		$this->addFieldMapping('field_event_multipart', $event_arguments['source_event_multipart']);
 		$this->addFieldMapping('field_event_caption', $event_arguments['source_event_caption']);
-		$this->addFieldMapping('field_event_attachments', $event_arguments['source_event_attachments']);
 		$this->addFieldMapping('field_event_link', $event_arguments['source_event_link']);
+
+		/* Event File Attachments */
+	    $this->addFieldMapping('field_event_attachments', $event_arguments['source_event_attachments'])
+		    ->sourceMigration('UGFile7');
+		$this->addFieldMapping('field_event_attachments:file_class')
+		    ->defaultValue('MigrateFileFid');
+		$this->addFieldMapping('field_event_attachments:preserve_files')
+		    ->defaultValue('TRUE');
+	    $this->addFieldMapping('field_event_attachments:description', $event_arguments['source_event_attachments'] . ':description')
+	        ->defaultValue('');
+	    $this->addFieldMapping('field_event_attachments:language')
+	        ->defaultValue(LANGUAGE_NONE);
 	}
 }
 
@@ -202,7 +213,19 @@ class UGNews7Migration extends DrupalNode7Migration {
 	    $this->addFieldMapping('field_news_link', $news_arguments['source_news_link']);
 	    $this->addFieldMapping('field_news_image', $news_arguments['source_news_image']);
 	    $this->addFieldMapping('field_news_caption', $news_arguments['source_news_caption']);
-	    $this->addFieldMapping('field_news_attachment', $news_arguments['source_news_attachment']);
+	    //$this->addFieldMapping('field_news_attachment', $news_arguments['source_news_attachment']);
+
+		/* News File Attachments */
+	    $this->addFieldMapping('field_news_attachment', $news_arguments['source_news_attachment'])
+		    ->sourceMigration('UGFile7');
+		$this->addFieldMapping('field_news_attachment:file_class')
+		    ->defaultValue('MigrateFileFid');
+		$this->addFieldMapping('field_news_attachment:preserve_files')
+		    ->defaultValue('TRUE');
+	    $this->addFieldMapping('field_news_attachment:description', $news_arguments['source_news_attachment'] . ':description')
+	        ->defaultValue('');
+	    $this->addFieldMapping('field_news_attachment:language')
+	        ->defaultValue(LANGUAGE_NONE);
 
 	}
 }
