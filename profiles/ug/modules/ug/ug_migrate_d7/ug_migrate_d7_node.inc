@@ -1,5 +1,7 @@
 <?php 
 
+/* NODE classes */
+
 class UGEvent7Migration extends DrupalNode7Migration {
 	public function __construct($arguments) {
 
@@ -253,11 +255,20 @@ class UGPage7Migration extends DrupalNode7Migration {
 			->defaultValue('tid');
 
 		/* Page File Attachments */
-	    $this->addFieldMapping('field_page_attachments', $page_arguments['source_page_attachments']);
-
+	    $this->addFieldMapping('field_page_attachments', $page_arguments['source_page_attachments'])
+		    ->sourceMigration('UGFile7');
+		$this->addFieldMapping('field_page_attachments:file_class')
+		    ->defaultValue('MigrateFileFid');
+		$this->addFieldMapping('field_page_attachments:preserve_files')
+		    ->defaultValue('TRUE');
+	    $this->addFieldMapping('field_page_attachments:description', $page_arguments['source_page_attachments'] . ':description')
+	        ->defaultValue('');
+	    $this->addFieldMapping('field_page_attachments:language')
+	        ->defaultValue(LANGUAGE_NONE);
 	}
 }
 
+/* TERM classes */
 
 class UGEventHeading7Migration extends DrupalTerm7Migration {
 	public function __construct($arguments) {
@@ -306,4 +317,11 @@ class UGTerm7Migration extends DrupalTerm7Migration {
     	parent::__construct($arguments);
 
 	}	
+}
+
+/* FILE classes */
+class UGFile7Migration extends DrupalFile7Migration {
+	public function __construct($arguments) {
+    	parent::__construct($arguments);
+	}
 }

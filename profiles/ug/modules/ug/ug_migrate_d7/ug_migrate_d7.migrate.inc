@@ -40,6 +40,12 @@ function ug_migrate_d7_migrate_api() {
 
   $event_multipart_arguments = array();
 
+  /* FILE VARIABLES */
+  $file_arguments = array(
+    'source_directory' => 'public://',
+    'destination_directory' => 'public://',
+  );
+
   /* USER VARIABLES */
   $user_arguments = array(
     'role_mappings' => array(),
@@ -110,6 +116,14 @@ function ug_migrate_d7_migrate_api() {
         'class_name' => 'UGTerm7Migration',
         'source_vocabulary' => $term_arguments['source_term_keyword'], 
         'destination_vocabulary' => 'tags',
+      ),
+
+      /**** FILE migration ****/
+      'UGFile7' => $node_arguments + array(
+        'description' => t('Migration of files from Drupal 7'),
+        'class_name' => 'UGFile7Migration',
+        'source_dir' => $file_arguments['source_directory'],
+        'destination_dir' => $file_arguments['destination_directory'],
       ),
 
       /**** PAGE migration ****/
