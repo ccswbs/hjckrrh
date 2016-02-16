@@ -24,7 +24,6 @@ dependencies[] = redirect
 dependencies[] = search
 dependencies[] = shortcut
 dependencies[] = toolbar
-dependencies[] = ug_breadcrumbs
 dependencies[] = ug_date_format
 dependencies[] = ug_event
 dependencies[] = ug_feature
