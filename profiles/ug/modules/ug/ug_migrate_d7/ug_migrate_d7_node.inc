@@ -25,7 +25,6 @@ class UGEvent7Migration extends DrupalNode7Migration {
 			'source_event_link' => '',
 		);
 
-
 		//Override default values with arguments if they exist
 		foreach ($event_arguments as $key => $value) {
 		    if(isset($this->arguments[$key])){
@@ -51,13 +50,19 @@ class UGEvent7Migration extends DrupalNode7Migration {
 		$this->addFieldMapping('field_tags:source_type')
 			->defaultValue('tid');
 
-		/* Event Fields */
-		$this->addFieldMapping('field_event_date', $event_arguments['source_event_date']);
-		$this->addFieldMapping('field_event_location', $event_arguments['source_event_location']);
-		$this->addFieldMapping('field_event_image', $event_arguments['source_event_image']);
-		$this->addFieldMapping('field_event_multipart', $event_arguments['source_event_multipart']);
-		$this->addFieldMapping('field_event_caption', $event_arguments['source_event_caption']);
-		$this->addFieldMapping('field_event_link', $event_arguments['source_event_link']);
+		/* Event Featured Image */
+	    $this->addFieldMapping('field_event_image', $event_arguments['source_event_image'])
+	    	->sourceMigration('UGFile7');
+		$this->addFieldMapping('field_event_image:file_class')
+		    ->defaultValue('MigrateFileFid');
+		$this->addFieldMapping('field_event_image:preserve_files')
+		    ->defaultValue('TRUE');
+	    $this->addFieldMapping('field_event_image:alt', $event_arguments['source_event_image'] . ':alt')
+	        ->defaultValue('');
+	    $this->addFieldMapping('field_event_image:title', $event_arguments['source_event_image'] . ':title')
+	        ->defaultValue('');
+	    $this->addFieldMapping('field_event_image:language')
+	        ->defaultValue(LANGUAGE_NONE);
 
 		/* Event File Attachments */
 	    $this->addFieldMapping('field_event_attachments', $event_arguments['source_event_attachments'])
@@ -70,7 +75,30 @@ class UGEvent7Migration extends DrupalNode7Migration {
 	        ->defaultValue('');
 	    $this->addFieldMapping('field_event_attachments:language')
 	        ->defaultValue(LANGUAGE_NONE);
+
+		/* Event Date, Location, Multipart Fields, Caption, Link */
+		$this->addFieldMapping('field_event_date', $event_arguments['source_event_date']);
+		$this->addFieldMapping('field_event_location', $event_arguments['source_event_location']);
+		$this->addFieldMapping('field_event_multipart', $event_arguments['source_event_multipart']);
+		$this->addFieldMapping('field_event_caption', $event_arguments['source_event_caption']);
+		$this->addFieldMapping('field_event_link', $event_arguments['source_event_link']);
 	}
+
+
+
+/* Troubleshooting Function -- Uncomment to print out contents of every row */
+
+/*	public function prepareRow($row){
+		if(parent::prepareRow($row)===FALSE){
+			return FALSE;
+		}
+		echo("<<<<<<<");
+		drush_print_r($row);
+		echo(">>>>>>>");
+	}
+*/
+	
+
 }
 
 class UGEventMultifield7Migration extends DrupalMigration {
@@ -208,12 +236,20 @@ class UGNews7Migration extends DrupalNode7Migration {
 		$this->addFieldMapping('field_tags:source_type')
 			->defaultValue('tid');
 
-		/* News Fields */
-	    $this->addFieldMapping('field_news_writer', $news_arguments['source_news_writer']);
-	    $this->addFieldMapping('field_news_link', $news_arguments['source_news_link']);
-	    $this->addFieldMapping('field_news_image', $news_arguments['source_news_image']);
-	    $this->addFieldMapping('field_news_caption', $news_arguments['source_news_caption']);
-	    //$this->addFieldMapping('field_news_attachment', $news_arguments['source_news_attachment']);
+		/* News Featured Image */
+	    $this->addFieldMapping('field_news_image', $news_arguments['source_news_image'])
+	    	->sourceMigration('UGFile7');
+		$this->addFieldMapping('field_news_image:file_class')
+		    ->defaultValue('MigrateFileFid');
+		$this->addFieldMapping('field_news_image:preserve_files')
+		    ->defaultValue('TRUE');
+	    $this->addFieldMapping('field_news_image:alt', $news_arguments['source_news_image'] . ':alt')
+	        ->defaultValue('');
+	    $this->addFieldMapping('field_news_image:title', $news_arguments['source_news_image'] . ':title')
+	        ->defaultValue('');
+	    $this->addFieldMapping('field_news_image:language')
+	        ->defaultValue(LANGUAGE_NONE);
+
 
 		/* News File Attachments */
 	    $this->addFieldMapping('field_news_attachment', $news_arguments['source_news_attachment'])
@@ -226,6 +262,11 @@ class UGNews7Migration extends DrupalNode7Migration {
 	        ->defaultValue('');
 	    $this->addFieldMapping('field_news_attachment:language')
 	        ->defaultValue(LANGUAGE_NONE);
+
+		/* News Writer, Link, Caption */
+	    $this->addFieldMapping('field_news_writer', $news_arguments['source_news_writer']);
+	    $this->addFieldMapping('field_news_link', $news_arguments['source_news_link']);
+	    $this->addFieldMapping('field_news_caption', $news_arguments['source_news_caption']);
 
 	}
 }
