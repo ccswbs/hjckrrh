@@ -139,6 +139,7 @@ function ug_migrate_d7_migrate_api() {
         'class_name' => 'UGPage7Migration',
         'source_type' => $page_arguments['source_page_node_type'], 
         'destination_type' => 'page',
+        'dependencies' => array('UGFile7'),
       ),
 
       /**** NEWS migration ****/
@@ -161,6 +162,7 @@ function ug_migrate_d7_migrate_api() {
         'class_name' => 'UGNews7Migration',
         'source_type' => $news_arguments['source_news_node_type'], 
         'destination_type' => 'news',
+        'dependencies' => array('UGFile7'),
       ),
 
       /**** EVENT migration ****/
@@ -196,6 +198,7 @@ function ug_migrate_d7_migrate_api() {
         'class_name' => 'UGEvent7Migration',
         'source_type' => $event_arguments['source_event_node_type'], 
         'destination_type' => 'event',
+        'dependencies' => array('UGFile7'),
       ),
 
       /**** MENU migration ****/
