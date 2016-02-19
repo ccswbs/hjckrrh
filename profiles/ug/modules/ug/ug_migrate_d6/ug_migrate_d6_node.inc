@@ -16,7 +16,7 @@ class UGEvent6Migration extends DrupalNode6Migration {
 			'source_event_date' => '',
 			'source_event_location' => '',
 			'source_event_multipart' => '',
-			'source_event_image' => '',
+			'source_event_image' => 'fid',
 			'source_event_caption' => '',
 			'source_event_attachments' => '',
 			'source_event_link' => '',
@@ -25,7 +25,9 @@ class UGEvent6Migration extends DrupalNode6Migration {
 		//Override default values with arguments if they exist
 		foreach ($event_arguments as $key => $value) {
 		    if(isset($this->arguments[$key])){
-		    	$event_arguments[$key] = $this->arguments[$key];
+		    	if($this->arguments[$key]!=''){
+			    	$event_arguments[$key] = $this->arguments[$key];
+		    	}
 		    }
 		}
 
@@ -51,7 +53,6 @@ class UGEvent6Migration extends DrupalNode6Migration {
 		$this->addFieldMapping('field_event_date', $event_arguments['source_event_date']);
 		$this->addFieldMapping('field_event_location', $event_arguments['source_event_location']);
 		$this->addFieldMapping('field_event_multipart', $event_arguments['source_event_multipart']);
-		$this->addFieldMapping('field_event_image', $event_arguments['source_event_image']);
 		$this->addFieldMapping('field_event_caption', $event_arguments['source_event_caption']);
 		$this->addFieldMapping('field_event_link', $event_arguments['source_event_link']);
 
@@ -67,8 +68,42 @@ class UGEvent6Migration extends DrupalNode6Migration {
 	    $this->addFieldMapping('field_event_attachments:language')
 	        ->defaultValue(LANGUAGE_NONE);
 
-
+		/* Event Featured Image */
+	    $this->addFieldMapping('field_event_image', $event_arguments['source_event_image']);
+		$this->addFieldMapping('field_event_image:file_class')
+		    ->defaultValue('MigrateFileFid');
+		$this->addFieldMapping('field_event_image:preserve_files')
+		    ->defaultValue('TRUE');
+	    $this->addFieldMapping('field_event_image:alt', $event_arguments['source_event_image'] . ':alt')
+	        ->defaultValue('');
+	    $this->addFieldMapping('field_event_image:title', $event_arguments['source_event_image'] . ':title')
+	        ->defaultValue('');
+	    $this->addFieldMapping('field_event_image:language')
+	        ->defaultValue(LANGUAGE_NONE);
 	}
+
+  
+  /**
+   * Implementation of Migration::prepareRow().
+   */
+  public function prepareRow($row) {
+    if (parent::prepareRow($row) === FALSE) {
+      return FALSE;
+    }
+    // image query
+    $pattern = strval($row->nid) . '.%';
+    $image = Database::getConnection('default', 'default')
+      ->select('file_managed', 'f')
+      ->fields('f', array('fid'))
+      ->condition('filename', $pattern, 'LIKE')
+      ->execute()
+      ->fetchObject();
+
+    if ($image) {
+      $row->fid = array($image->fid);
+	  //drush_print_r($row);
+    }
+  }
 }
 
 
@@ -176,7 +211,7 @@ class UGNews6Migration extends DrupalNode6Migration {
 			'source_news_keyword' => '',
 			'source_news_writer' => '',
 			'source_news_link' => '',
-			'source_news_image' => '',
+			'source_news_image' => 'fid',
 			'source_news_caption' => '',
 			'source_news_attachment' => '',
 		);
@@ -184,7 +219,9 @@ class UGNews6Migration extends DrupalNode6Migration {
 		//Override default values with arguments if they exist
 		foreach ($news_arguments as $key => $value) {
 		    if(isset($this->arguments[$key])){
-		    	$news_arguments[$key] = $this->arguments[$key];
+		    	if($this->arguments[$key]!=''){
+			    	$news_arguments[$key] = $this->arguments[$key];
+			    }
 		    }
 		}
 
@@ -209,7 +246,6 @@ class UGNews6Migration extends DrupalNode6Migration {
 		/* News Fields */
 	    $this->addFieldMapping('field_news_writer', $news_arguments['source_news_writer']);
 	    $this->addFieldMapping('field_news_link', $news_arguments['source_news_link']);
-	    $this->addFieldMapping('field_news_image', $news_arguments['source_news_image']);
 	    $this->addFieldMapping('field_news_caption', $news_arguments['source_news_caption']);
 
 		/* News File Attachments */
@@ -224,8 +260,46 @@ class UGNews6Migration extends DrupalNode6Migration {
 	    $this->addFieldMapping('field_news_attachment:language')
 	        ->defaultValue(LANGUAGE_NONE);
 
+		/* News Featured Image */
+	    $this->addFieldMapping('field_news_image', $news_arguments['source_news_image']);
+		$this->addFieldMapping('field_news_image:file_class')
+		    ->defaultValue('MigrateFileFid');
+		$this->addFieldMapping('field_news_image:preserve_files')
+		    ->defaultValue('TRUE');
+	    $this->addFieldMapping('field_news_image:alt', $news_arguments['source_news_image'] . ':alt')
+	        ->defaultValue('');
+	    $this->addFieldMapping('field_news_image:title', $news_arguments['source_news_image'] . ':title')
+	        ->defaultValue('');
+	    $this->addFieldMapping('field_news_image:language')
+	        ->defaultValue(LANGUAGE_NONE);
+
 	}
+
+  
+  /**
+   * Implementation of Migration::prepareRow().
+   */
+  public function prepareRow($row) {
+    if (parent::prepareRow($row) === FALSE) {
+      return FALSE;
+    }
+    // image query
+    $pattern = strval($row->nid) . '.%';
+    $image = Database::getConnection('default', 'default')
+      ->select('file_managed', 'f')
+      ->fields('f', array('fid'))
+      ->condition('filename', $pattern, 'LIKE')
+      ->execute()
+      ->fetchObject();
+
+    if ($image) {
+      $row->fid = array($image->fid);
+	  //drush_print_r($row);
+    }
+  }
+
 }
+
 
 class UGPage6Migration extends DrupalNode6Migration {
 	public function __construct($arguments) {
@@ -337,4 +411,61 @@ class UGFile6Migration extends DrupalFile6Migration {
 	public function __construct($arguments) {
     	parent::__construct($arguments);
 	}
+
+	public function prepareRow($row) {
+		if (parent::prepareRow($row) === FALSE) {
+		    return FALSE;
+		}
+	    
+	    //drush_print_r($row);
+	}
+}
+
+
+/**
+ * Handling specific to a Drupal 6 source for images.
+ */
+class UGImage6Migration extends DrupalFile6Migration {
+  /**
+   * @param array $arguments
+   */
+  public function __construct(array $arguments) {
+    $this->sourceFields['filename'] = 'converted filename';
+    parent::__construct($arguments);
+
+    $this->addFieldMapping('destination_file', 'filename');
+  }
+  
+  protected function query() {
+    $query = parent::query();
+    
+    $query->innerJoin('image', 'i', 'f.fid=i.fid');
+    $query->condition('image_size', '_original');
+    return $query;
+  }
+  
+  /**
+   * Implementation of Migration::prepareRow().
+   */
+  public function prepareRow($row) {
+    if (parent::prepareRow($row) === FALSE) {
+      return FALSE;
+    }
+    
+    $query = Database::getConnection('default', $this->sourceConnection)
+      ->select('image_attach', 'ia')
+      ->fields('ia', array('nid'));
+    $query->innerJoin('image', 'i', 'ia.iid=i.nid');
+    $query->condition('i.fid', $row->fid);
+    $query->condition('image_size', '_original');
+    $node = $query->execute()->fetchObject();
+    
+    if ($node) {
+      $nid = strval($node->nid);
+      $pathinfo = pathinfo($row->filepath);
+      $filename = $pathinfo['filename'];
+      $extension = $pathinfo['extension'];
+      $row->filename = $nid . '.' . $extension;
+    }
+  }
 }
