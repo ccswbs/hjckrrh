@@ -452,6 +452,7 @@ class UGImage6Migration extends DrupalFile6Migration {
       return FALSE;
     }
     
+    /* Image Attach Query */
     $query = Database::getConnection('default', $this->sourceConnection)
       ->select('image_attach', 'ia')
       ->fields('ia', array('nid'));
@@ -459,7 +460,7 @@ class UGImage6Migration extends DrupalFile6Migration {
     $query->condition('i.fid', $row->fid);
     $query->condition('image_size', '_original');
     $node = $query->execute()->fetchObject();
-    
+
     if ($node) {
       $nid = strval($node->nid);
       $pathinfo = pathinfo($row->filepath);
@@ -467,5 +468,24 @@ class UGImage6Migration extends DrupalFile6Migration {
       $extension = $pathinfo['extension'];
       $row->filename = $nid . '.' . $extension;
     }
+
+	/* Image Assist Query */
+    $query2 = Database::getConnection('default', $this->sourceConnection)
+      ->select('img_assist_map', 'im')
+      ->fields('im', array('nid'));
+    $query2->innerJoin('image', 'i', 'im.iid=i.nid');
+    $query2->condition('i.fid', $row->fid);
+    $query2->condition('image_size', '_original');
+    $node2 = $query2->execute()->fetchObject();
+
+    if ($node2) {
+      $nid = strval($node2->nid);
+      $pathinfo = pathinfo($row->filepath);
+      $filename = $pathinfo['filename'];
+      $extension = $pathinfo['extension'];
+      $row->filename = $nid . '.' . $extension;
+    }
+
+
   }
 }
