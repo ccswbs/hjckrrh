@@ -791,10 +791,9 @@ function ug_news_views_default_views() {
   $handler->display->display_options['arguments']['created_year_month']['default_argument_type'] = 'fixed';
   $handler->display->display_options['arguments']['created_year_month']['summary']['sort_order'] = 'desc';
   $handler->display->display_options['arguments']['created_year_month']['summary']['number_of_records'] = '0';
-  $handler->display->display_options['arguments']['created_year_month']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['created_year_month']['summary']['format'] = 'jump_menu_summary';
   $handler->display->display_options['arguments']['created_year_month']['summary_options']['base_path'] = 'news/archive';
-  $handler->display->display_options['arguments']['created_year_month']['summary_options']['count'] = FALSE;
-  $handler->display->display_options['arguments']['created_year_month']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['created_year_month']['summary_options']['choose'] = 'Select month';
   /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
