@@ -555,6 +555,17 @@ return false;';
       'label' => 'Category',
     ),
   );
+
+  /* Display: Feed */
+  $handler = $view->new_display('feed', 'Feed', 'events_feed');
+  $handler->display->display_options['pager']['type'] = 'some';
+  $handler->display->display_options['style_plugin'] = 'rss';
+  $handler->display->display_options['row_plugin'] = 'node_rss';
+  $handler->display->display_options['path'] = 'upcomingevents/feed';
+  $handler->display->display_options['displays'] = array(
+    'panel_pane_1' => 'panel_pane_1',
+    'default' => 0,
+  );
   $export['e3'] = $view;
 
   $view = new view();
