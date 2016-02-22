@@ -918,6 +918,7 @@ function ug_theme_form_search_block_form_alter(&$form, &$form_state, $form_id) {
 
 } 
 
+
 /**
  * N3 - News teaser list
  */
@@ -934,7 +935,6 @@ function ug_theme_preprocess_views_view__n3(&$vars) {
 }
 
 
-
 /**
  * Output profile heading as a heading level 2.
  */
@@ -947,5 +947,17 @@ function ug_theme_field__field_profile_heading($variables) {
   }
 
   return $output;
+}
+
+
+function ug_theme_form_required_marker($variables) {
+  // This is also used in the installer, pre-database setup.
+  $t = get_t();
+  $attributes = array(
+    'class' => 'form-required',
+    'title' => $t('This field is required.'),
+  );
+  return '<span' . drupal_attributes($attributes) . '>(' . $t('required') . ')</span>';
+
 }
 
