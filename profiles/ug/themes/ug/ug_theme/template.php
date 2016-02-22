@@ -916,3 +916,18 @@ function ug_theme_preprocess_views_view__n3(&$vars) {
 }
 
 
+
+/**
+ * Output profile heading as a heading level 2.
+ */
+function ug_theme_field__field_profile_heading($variables) {
+  $output = '';
+
+  // Render the items.
+  foreach ($variables['items'] as $delta => $item) {
+    $output .= '<h2>' . drupal_render($item) . '</h2>';
+  }
+
+  return $output;
+}
+
