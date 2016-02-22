@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the ug_book feature.
+ */
+
+include_once 'ug_book.features.inc';
