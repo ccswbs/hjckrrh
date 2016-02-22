@@ -13,4 +13,3 @@ sites/all/modules/module_filter/
 sites/*
 !sites/all
 !sites/default
-
