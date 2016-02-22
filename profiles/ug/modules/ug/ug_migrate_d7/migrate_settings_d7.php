@@ -17,6 +17,12 @@
     'role_mappings' => $role_mappings,
   );
 
+  /* FILE SETTINGS */
+  $file_arguments = array(
+    'source_directory' => 'public://',
+    'destination_directory' => 'public://',
+  );
+
   /* TAXONOMY Settings */
   $term_arguments = array(
     'source_term_keyword' => 'tags',
