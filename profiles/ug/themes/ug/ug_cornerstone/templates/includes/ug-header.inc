@@ -6,8 +6,7 @@
         <a class="navbar-brand" href="http://www.uoguelph.ca/"><img alt="University of Guelph" src="//www.uoguelph.ca/img/universityofguelph.gif"></a>
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#ug-navbar" aria-expanded="false" aria-controls="navbar"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
       </div>
-      <div id="ug-navbar" class="navbar-collapse collapse">
-
+      <div id="ug-navbar" class="navbar-collapse collapse" tabindex="-1">
         <ul class="nav navbar-nav navbar-right navbar-small">
           <li><a href="https://mail.uoguelph.ca/"><span class="glyphicon glyphicon-envelope fa-fw" aria-hidden="true"></span> GryphMail</a></li>
           <li><a href="https://courselink.uoguelph.ca/"><span class="glyphicon glyphicon-pencil fa-fw" aria-hidden="true"></span> CourseLink</a></li>
