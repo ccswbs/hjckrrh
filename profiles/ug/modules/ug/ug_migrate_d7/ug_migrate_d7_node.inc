@@ -29,7 +29,9 @@ class UGEvent7Migration extends DrupalNode7Migration {
 		//Override default values with arguments if they exist
 		foreach ($event_arguments as $key => $value) {
 		    if(isset($this->arguments[$key])){
-		    	$event_arguments[$key] = $this->arguments[$key];
+		    	if($this->arguments[$key] != ''){
+			    	$event_arguments[$key] = $this->arguments[$key];
+		    	}
 		    }
 		}
 
