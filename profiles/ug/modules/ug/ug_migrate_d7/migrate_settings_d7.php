@@ -70,6 +70,7 @@
     'source_event_category' => '',
     'source_event_keyword' => '',
     'source_event_date' => '',
+    'source_event_date_timezone' => 'UTC',
     'source_event_location' => '',
     'source_event_multipart' => '',
     'source_event_multipart_heading' => '',
