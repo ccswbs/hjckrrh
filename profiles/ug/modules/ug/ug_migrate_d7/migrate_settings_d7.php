@@ -17,6 +17,12 @@
     'role_mappings' => $role_mappings,
   );
 
+  /* FILE SETTINGS */
+  $file_arguments = array(
+    'source_directory' => 'public://',
+    'destination_directory' => 'public://',
+  );
+
   /* TAXONOMY Settings */
   $term_arguments = array(
     'source_term_keyword' => 'tags',
@@ -64,6 +70,7 @@
     'source_event_category' => '',
     'source_event_keyword' => '',
     'source_event_date' => '',
+    'source_event_date_timezone' => 'America/New_York',
     'source_event_location' => '',
     'source_event_multipart' => '',
     'source_event_multipart_heading' => '',

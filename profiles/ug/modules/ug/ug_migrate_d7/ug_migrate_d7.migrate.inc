@@ -40,6 +40,12 @@ function ug_migrate_d7_migrate_api() {
 
   $event_multipart_arguments = array();
 
+  /* FILE VARIABLES */
+  $file_arguments = array(
+    'source_directory' => 'public://',
+    'destination_directory' => 'public://',
+  );
+
   /* USER VARIABLES */
   $user_arguments = array(
     'role_mappings' => array(),
@@ -112,6 +118,14 @@ function ug_migrate_d7_migrate_api() {
         'destination_vocabulary' => 'tags',
       ),
 
+      /**** FILE migration ****/
+      'UGFile7' => $node_arguments + array(
+        'description' => t('Migration of files from Drupal 7'),
+        'class_name' => 'UGFile7Migration',
+        'source_dir' => $file_arguments['source_directory'],
+        'destination_dir' => $file_arguments['destination_directory'],
+      ),
+
       /**** PAGE migration ****/
       'UGPageCategory7' => $common_arguments + array(
         'description' => t('Migration of page category terms from Drupal 7'),
@@ -125,6 +139,7 @@ function ug_migrate_d7_migrate_api() {
         'class_name' => 'UGPage7Migration',
         'source_type' => $page_arguments['source_page_node_type'], 
         'destination_type' => 'page',
+        'dependencies' => array('UGFile7'),
       ),
 
       /**** NEWS migration ****/
@@ -147,6 +162,7 @@ function ug_migrate_d7_migrate_api() {
         'class_name' => 'UGNews7Migration',
         'source_type' => $news_arguments['source_news_node_type'], 
         'destination_type' => 'news',
+        'dependencies' => array('UGFile7'),
       ),
 
       /**** EVENT migration ****/
@@ -182,6 +198,7 @@ function ug_migrate_d7_migrate_api() {
         'class_name' => 'UGEvent7Migration',
         'source_type' => $event_arguments['source_event_node_type'], 
         'destination_type' => 'event',
+        'dependencies' => array('UGFile7'),
       ),
 
       /**** MENU migration ****/
