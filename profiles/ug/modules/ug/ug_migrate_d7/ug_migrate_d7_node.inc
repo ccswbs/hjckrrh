@@ -162,7 +162,6 @@ class UGEvent7Migration extends DrupalNode7Migration {
 
 /* Troubleshooting Function -- Uncomment to print out contents of every row */
 
-
 	/*public function prepareRow($row){
 		if(parent::prepareRow($row)===FALSE){
 			return FALSE;
