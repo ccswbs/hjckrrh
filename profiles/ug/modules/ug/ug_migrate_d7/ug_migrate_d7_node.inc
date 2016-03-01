@@ -17,6 +17,7 @@ class UGEvent7Migration extends DrupalNode7Migration {
 			'source_event_category' => '',
 			'source_event_keyword' => '',
 			'source_event_date' => '',
+			'source_event_date_timezone' => 'America/New_York',
 			'source_event_location' => '',
 			'source_event_multipart' => '',
 			'source_event_image' => '',
@@ -28,7 +29,9 @@ class UGEvent7Migration extends DrupalNode7Migration {
 		//Override default values with arguments if they exist
 		foreach ($event_arguments as $key => $value) {
 		    if(isset($this->arguments[$key])){
-		    	$event_arguments[$key] = $this->arguments[$key];
+		    	if($this->arguments[$key] != ''){
+			    	$event_arguments[$key] = $this->arguments[$key];
+		    	}
 		    }
 		}
 
@@ -76,8 +79,13 @@ class UGEvent7Migration extends DrupalNode7Migration {
 	    $this->addFieldMapping('field_event_attachments:language')
 	        ->defaultValue(LANGUAGE_NONE);
 
-		/* Event Date, Location, Multipart Fields, Caption, Link */
+		/* Event Date */
 		$this->addFieldMapping('field_event_date', $event_arguments['source_event_date']);
+		$this->addFieldMapping('field_event_date:to', $event_arguments['source_event_date'].":value2");
+		$this->addFieldMapping('field_event_date:timezone')
+			->defaultValue($event_arguments['source_event_date_timezone']);
+
+		/* Event Location, Multipart Fields, Caption, Link */
 		$this->addFieldMapping('field_event_location', $event_arguments['source_event_location']);
 		$this->addFieldMapping('field_event_multipart', $event_arguments['source_event_multipart']);
 		$this->addFieldMapping('field_event_caption', $event_arguments['source_event_caption']);
@@ -88,15 +96,15 @@ class UGEvent7Migration extends DrupalNode7Migration {
 
 /* Troubleshooting Function -- Uncomment to print out contents of every row */
 
-/*	public function prepareRow($row){
+	/*public function prepareRow($row){
 		if(parent::prepareRow($row)===FALSE){
 			return FALSE;
 		}
 		echo("<<<<<<<");
 		drush_print_r($row);
 		echo(">>>>>>>");
-	}
-*/
+	}*/
+
 	
 
 }
