@@ -74,7 +74,7 @@ function ug_migrate_d7_migrate_api() {
   $menu_link_arguments = array(
     'menu_migration' => 'UGMenu7',
     'node_migrations' => array('UGPage7', 'UGNews7', 'UGEvent7','UGFeaturedItem7','UGFAQ7'),
-    'term_migrations' => array('UGTerm7', 'UGPageCategory7', 'UGNewsCategory7', 'UGNewsKeyword7', 'UGEventCategory7', 'UGEventKeyword7', 'UGFeaturedItemCategory7','UGFAQCategory7'),
+    'term_migrations' => array('UGTerm7', 'UGPageCategory7', 'UGNewsCategory7', 'UGNewsKeyword7', 'UGEventCategory7', 'UGEventKeyword7', 'UGFeaturedItemCategory7','UGFAQCategory7','UGFAQKeyword7'),
   );
 
   $menu_arguments = $common_arguments + array(
