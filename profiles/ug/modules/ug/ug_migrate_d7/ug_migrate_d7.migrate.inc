@@ -40,6 +40,12 @@ function ug_migrate_d7_migrate_api() {
 
   $event_multipart_arguments = array();
 
+  $faq_arguments = array(
+    'source_faq_node_type' => '',
+    'source_faq_term_category' => '',
+    'source_faq_term_keyword' => '',
+  );
+
   /* FILE VARIABLES */
   $file_arguments = array(
     'source_directory' => 'public://',
@@ -61,8 +67,8 @@ function ug_migrate_d7_migrate_api() {
 
   $menu_link_arguments = array(
     'menu_migration' => 'UGMenu7',
-    'node_migrations' => array('UGPage7', 'UGNews7', 'UGEvent7'),
-    'term_migrations' => array('UGTerm7', 'UGPageCategory7', 'UGNewsCategory7', 'UGNewsKeyword7', 'UGEventCategory7', 'UGEventKeyword7'),
+    'node_migrations' => array('UGPage7', 'UGNews7', 'UGEvent7', 'UGFAQ7'),
+    'term_migrations' => array('UGTerm7', 'UGPageCategory7', 'UGNewsCategory7', 'UGNewsKeyword7', 'UGEventCategory7', 'UGEventKeyword7','UGFAQCategory7'),
   );
 
   $menu_arguments = $common_arguments + array(
@@ -199,6 +205,29 @@ function ug_migrate_d7_migrate_api() {
         'source_type' => $event_arguments['source_event_node_type'], 
         'destination_type' => 'event',
         'dependencies' => array('UGFile7'),
+      ),
+
+      /**** FAQ migrations ****/
+
+      'UGFAQKeyword7' => $common_arguments + array(
+        'description' => t('Migration of FAQ keyword terms from Drupal 7'),
+        'class_name' => 'UGFAQKeyword7Migration',
+        'source_vocabulary' => $faq_arguments['source_faq_term_keyword'],
+        'destination_vocabulary' => 'tags',
+      ),
+
+      'UGFAQCategory7' => $common_arguments + array(
+        'description' => t('Migration of FAQ category terms from Drupal 7'),
+        'class_name' => 'UGFAQCategory7Migration',
+        'source_vocabulary' => $faq_arguments['source_faq_term_category'],
+        'destination_vocabulary' => 'faq_category',
+      ),
+
+      'UGFAQ7' => $node_arguments + $faq_arguments + array(
+        'description' => t('Migration of FAQ from Drupal 7'),
+        'class_name' => 'UGFAQ7Migration',
+        'source_type' => $faq_arguments['source_faq_node_type'], 
+        'destination_type' => 'faq',
       ),
 
       /**** MENU migration ****/
