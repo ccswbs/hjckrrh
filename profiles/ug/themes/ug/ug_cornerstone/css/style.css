@@ -12,7 +12,7 @@
 }
 #ug-header {
 	color: #FEFEFE;
-	background: url(//www.uoguelph.ca/img/headerbg.jpg) maroon;
+	background: url(//www.uoguelph.ca/img/headerbg.jpg);
 	background-repeat: repeat-x;
 }
 #ug-header .navbar-toggle {
@@ -28,6 +28,12 @@
 #ug-header .navbar-default {
 	background: none;
 }
+
+#ug-header .navbar-default.navbar-static-top{
+  background: url(//www.uoguelph.ca/img/headerbg.jpg) black;
+  background-repeat: repeat-x;
+}
+
 #ug-header .dropdown-menu,
 #ug-header footer.navbar-default,
 #ug-header nav.navbar div.in,
