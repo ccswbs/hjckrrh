@@ -60,6 +60,17 @@
     'source_news_attachment' => 'upload',
   );
 
+  /* FAQ Settings */
+  $faq_arguments = array(
+    'source_faq_node_type' => '',
+    'source_faq_term_category' => '',
+    'source_faq_term_keyword' => '',
+    'source_faq_answer' => 'body',
+    'source_faq_format' => 'body:format',
+    'source_faq_category' => '',
+    'source_faq_keyword' => '',
+  );
+
   /* EVENT Settings */
   $event_arguments = array(
     'source_event_node_type' => '',

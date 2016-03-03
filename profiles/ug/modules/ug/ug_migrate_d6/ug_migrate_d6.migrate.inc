@@ -40,6 +40,12 @@ function ug_migrate_d6_migrate_api() {
 
   $event_multipart_arguments = array();
 
+  $faq_arguments = array(
+    'source_faq_node_type' => '',
+    'source_faq_term_category' => '',
+    'source_faq_term_keyword' => '',
+  );
+
   /* USER VARIABLES */
   $user_arguments = array(
     'role_mappings' => array(),
@@ -63,8 +69,8 @@ function ug_migrate_d6_migrate_api() {
   $menu_names = array('primary-links');
   $menu_link_arguments = array(
     'menu_migration' => 'UGMenu6',
-    'node_migrations' => array('UGPage6', 'UGNews6', 'UGEvent6'),
-    'term_migrations' => array('UGTerm6', 'UGPageCategory6', 'UGNewsCategory6', 'UGNewsKeyword6', 'UGEventCategory6', 'UGEventKeyword6'),
+    'node_migrations' => array('UGPage6', 'UGNews6', 'UGEvent6', 'UGFAQ6'),
+    'term_migrations' => array('UGTerm6', 'UGPageCategory6', 'UGNewsCategory6', 'UGNewsKeyword6', 'UGEventCategory6', 'UGEventKeyword6','UGFAQCategory6', 'UGFAQKeyword6'),
   );
 
   $menu_arguments = $common_arguments + array(
@@ -217,6 +223,28 @@ function ug_migrate_d6_migrate_api() {
         'source_type' => $event_arguments['source_event_node_type'], 
         'destination_type' => 'event',
         'dependencies' => array('UGFile6', 'UGImage6'),
+      ),
+
+      /**** FAQ migration ****/
+      'UGFAQKeyword6' => $common_arguments + array(
+        'description' => t('Migration of FAQ keyword terms from Drupal 6'),
+        'class_name' => 'UGFAQKeyword6Migration',
+        'source_vocabulary' => $faq_arguments['source_faq_term_keyword'],
+        'destination_vocabulary' => 'tags',
+      ),
+
+      'UGFAQCategory6' => $common_arguments + array(
+        'description' => t('Migration of FAQ category terms from Drupal 6'),
+        'class_name' => 'UGFAQCategory6Migration',
+        'source_vocabulary' => $faq_arguments['source_faq_term_category'],
+        'destination_vocabulary' => 'faq_category',
+      ),
+
+      'UGFAQ6' => $node_arguments + $faq_arguments + array(
+        'description' => t('Migration of FAQ from Drupal 6'),
+        'class_name' => 'UGFAQ6Migration',
+        'source_type' => $faq_arguments['source_faq_node_type'], 
+        'destination_type' => 'faq',
       ),
 
       /**** MENU migration ****/
