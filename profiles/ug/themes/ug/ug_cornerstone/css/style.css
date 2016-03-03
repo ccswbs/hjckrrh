@@ -11,7 +11,8 @@
 	display: inline !important;
 }
 #ug-header {
-	background-image: url(//www.uoguelph.ca/img/headerbg.jpg);
+	color: #FEFEFE;
+	background: url(//www.uoguelph.ca/img/headerbg.jpg) maroon;
 	background-repeat: repeat-x;
 }
 #ug-header .navbar-toggle {
@@ -40,7 +41,7 @@
 	background: #000;
 	border: 000;
 }
-#ug-header .navbar-default .navbar-nav>.open>a, 
+#ug-header .navbar-default .navbar-nav>.open>a,
 #ug-header .navbar-default .navbar-nav>.open>a:hover,
 #ug-header .navbar-default .navbar-nav>.open>a:focus {
 	background: #45403a;
@@ -67,10 +68,10 @@
 }
 
 #ug-header .navbar-default .navbar-nav li a:hover,
-#ug-header .navbar-default .navbar-nav>.open>a, 
-#ug-header .navbar-default .navbar-nav>.open>a:hover, 
-#ug-header .navbar-default .navbar-nav>.open>a:focus, 
-#ug-header .navbar-default .navbar-nav .open .dropdown-menu>li>a:hover, 
+#ug-header .navbar-default .navbar-nav>.open>a,
+#ug-header .navbar-default .navbar-nav>.open>a:hover,
+#ug-header .navbar-default .navbar-nav>.open>a:focus,
+#ug-header .navbar-default .navbar-nav .open .dropdown-menu>li>a:hover,
 #ug-header .navbar-default .navbar-nav .open .dropdown-menu>li>a:focus {
 	color: #fff
 }
@@ -117,7 +118,7 @@
 	}
 
 	#ug-header #globalnav li a,
-	#ug-header #globalnav>li>a:hover { 
+	#ug-header #globalnav>li>a:hover {
 		text-shadow: 1px 1px 0 #600, -1px -1px 0 #600, 1px -1px 0 #600, -1px 1px 0 #600, 1px 1px 0 #600 !important;
 	}
 
