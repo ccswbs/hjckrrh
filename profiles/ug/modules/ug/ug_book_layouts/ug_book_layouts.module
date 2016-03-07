@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the ug_book_layouts feature.
+ */
+
+include_once 'ug_book_layouts.features.inc';

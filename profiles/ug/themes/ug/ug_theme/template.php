@@ -377,6 +377,24 @@ function ug_theme_preprocess_views_view_fields__n3(&$vars) {
   $vars['created']   = $vars['fields']['created']->content;
 }
 
+/**
+ * N3 - Recent news teaser list - with summary
+ */
+function ug_theme_preprocess_views_view_fields__n3_summary(&$vars) {
+  $nid = $vars['fields']['nid']->content;
+  $link = $vars['fields']['field_news_link']->content;
+  // $href = empty($link)? 'node/'.$nid: $link;
+  if (!empty($link)) {
+    $vars['link'] = $link;
+  } else {
+    $path = 'node/' . $nid;
+    $vars['link'] = url($path);
+  }
+  // $vars['title']     = l($vars['fields']['title']->content, $href);
+  $vars['title']     = $vars['fields']['title']->content;
+  $vars['body']      = $vars['fields']['field_news_body']->content;
+  $vars['created']   = $vars['fields']['created']->content;
+}
 
 /**
  * F1 - FAQ listing
@@ -865,30 +883,6 @@ function ug_theme_pager($variables) {
 }
 
 /**
- * Override File module to add alternative text
- * Source: modules/file/file.module
- *
- * Returns HTML for an image with an appropriate icon for the given file.
- *
- * @param $variables
- *   An associative array containing:
- *   - file: A file object for which to make an icon.
- *   - icon_directory: (optional) A path to a directory of icons to be used for
- *     files. Defaults to the value of the "file_icon_directory" variable.
- *
- * @ingroup themeable
- */
-function ug_theme_file_icon($variables) {
-  $file = $variables['file'];
-  $icon_directory = $variables['icon_directory'];
-
-  $mime = check_plain($file->filemime);
-  $icon_url = file_icon_url($file, $icon_directory);
-  /* OVERRIDE - Add alternative text */
-  return '<img class="file-icon" alt="' . $mime . '" title="' . $mime . '" src="' . $icon_url . '" />';
-}
-
-/**
  * Override search module to add label 
  * Source: https://www.drupal.org/node/2540856 
  */
@@ -924,6 +918,7 @@ function ug_theme_form_search_block_form_alter(&$form, &$form_state, $form_id) {
 
 } 
 
+
 /**
  * N3 - News teaser list
  */
@@ -939,4 +934,30 @@ function ug_theme_preprocess_views_view__n3(&$vars) {
   $vars['more'] = $view->display_handler->render_more_link();
 }
 
+
+/**
+ * Output profile heading as a heading level 2.
+ */
+function ug_theme_field__field_profile_heading($variables) {
+  $output = '';
+
+  // Render the items.
+  foreach ($variables['items'] as $delta => $item) {
+    $output .= '<h2>' . drupal_render($item) . '</h2>';
+  }
+
+  return $output;
+}
+
+
+function ug_theme_form_required_marker($variables) {
+  // This is also used in the installer, pre-database setup.
+  $t = get_t();
+  $attributes = array(
+    'class' => 'form-required',
+    'title' => $t('This field is required.'),
+  );
+  return '<span' . drupal_attributes($attributes) . '>(' . $t('required') . ')</span>';
+
+}
 
