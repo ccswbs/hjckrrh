@@ -92,8 +92,6 @@ class UGEvent7Migration extends DrupalNode7Migration {
 		$this->addFieldMapping('field_event_link', $event_arguments['source_event_link']);
 	}
 
-
-
 /* Troubleshooting Function -- Uncomment to print out contents of every row */
 
 	/*public function prepareRow($row){
@@ -104,9 +102,6 @@ class UGEvent7Migration extends DrupalNode7Migration {
 		drush_print_r($row);
 		echo(">>>>>>>");
 	}*/
-
-	
-
 }
 
 class UGEventMultifield7Migration extends DrupalMigration {
@@ -340,6 +335,60 @@ class UGPage7Migration extends DrupalNode7Migration {
 	}
 }
 
+class UGFAQ7Migration extends DrupalNode7Migration {
+	public function __construct($arguments) {
+
+    	parent::__construct($arguments);
+
+	    $this->destination = new MigrateDestinationNode('faq');
+
+		/* DEFAULT arguments */
+		$faq_arguments = array(
+			'source_faq_answer' => 'body',
+			'source_faq_format' => 'body:format',
+			'source_faq_category' => '',
+			'source_faq_keyword' => '',
+		);
+
+		//Override default values with arguments if they exist
+		foreach ($faq_arguments as $key => $value) {
+		    if(isset($this->arguments[$key])){
+		    	if($this->arguments[$key] != ''){
+			    	$faq_arguments[$key] = $this->arguments[$key];
+		    	}
+		    }
+		}
+
+	    /* FAQ Answer */
+	    $this->addFieldMapping('field_faq_answer', $faq_arguments['source_faq_answer']);
+	    $this->addFieldMapping( 'field_faq_answer:format', $faq_arguments['source_faq_format'])
+		    ->defaultValue('full_html');
+
+		/* FAQ Category */
+		$this->addFieldMapping('field_faq_category', $faq_arguments['source_faq_category'])
+			->sourceMigration('UGFAQCategory7');
+		$this->addFieldMapping('field_faq_category:source_type')
+			->defaultValue('tid');
+
+		/* FAQ Keyword */
+		$this->addFieldMapping('field_tags', $faq_arguments['source_faq_keyword'])
+			->sourceMigration('UGTerm7');
+		$this->addFieldMapping('field_tags:source_type')
+			->defaultValue('tid');
+	}
+
+/* Troubleshooting Function -- Uncomment to print out contents of every row */
+
+	/*public function prepareRow($row){
+		if(parent::prepareRow($row)===FALSE){
+			return FALSE;
+		}
+		echo("<<<<<<<");
+		drush_print_r($row);
+		echo(">>>>>>>");
+	}*/
+}
+
 /* TERM classes */
 
 class UGEventHeading7Migration extends DrupalTerm7Migration {
@@ -378,6 +427,20 @@ class UGNewsKeyword7Migration extends DrupalTerm7Migration {
 }
 
 class UGPageCategory7Migration extends DrupalTerm7Migration {
+	public function __construct($arguments) {
+    	parent::__construct($arguments);
+
+	}	
+}
+
+class UGFAQCategory7Migration extends DrupalTerm7Migration {
+	public function __construct($arguments) {
+    	parent::__construct($arguments);
+
+	}	
+}
+
+class UGFAQKeyword7Migration extends DrupalTerm7Migration {
 	public function __construct($arguments) {
     	parent::__construct($arguments);
 
