@@ -8,3 +8,8 @@ sites/*/private
 # Ignore local machine configuration
 .DS_Store
 sites/all/modules/module_filter/
+
+# Ignore multisite configurations
+sites/*
+!sites/all
+!sites/default

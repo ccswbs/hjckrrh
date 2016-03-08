@@ -1,5 +1,73 @@
 <?php 
 
+/* NODE classes */
+
+class UGFeaturedItem7Migration extends DrupalNode7Migration {
+	public function __construct($arguments) {
+
+    	parent::__construct($arguments);
+
+	    $this->destination = new MigrateDestinationNode('feature');
+
+		/* DEFAULT arguments */
+		$featureditem_arguments = array(
+			'source_featureditem_body' => 'body',
+			'source_featureditem_summary' => 'body:summary',
+			'source_featureditem_format' => 'body:format',
+			'source_featureditem_link' => '',
+			'source_featureditem_image' => '',
+			'source_featureditem_category' => '',
+			'source_featureditem_keyword' => '',
+		);
+
+		//Override default values with arguments if they exist
+		foreach ($featureditem_arguments as $key => $value) {
+		    if(isset($this->arguments[$key])){
+		    	if($this->arguments[$key] != ''){
+			    	$featureditem_arguments[$key] = $this->arguments[$key];
+			    }
+		    }
+		}
+
+	    /* Featured Item Body */
+	    $this->addFieldMapping('field_feature_text', $featureditem_arguments['source_featureditem_body']);
+	    $this->addFieldMapping('field_feature_text:summary', $featureditem_arguments['source_featureditem_summary']);
+	    $this->addFieldMapping( 'field_feature_text:format', $featureditem_arguments['source_featureditem_format'])
+		    ->defaultValue('full_html');
+
+		/* Featured Item Category */
+		$this->addFieldMapping('field_feature_category', $featureditem_arguments['source_featureditem_category'])
+			->sourceMigration('UGFeaturedItemCategory7');
+		$this->addFieldMapping('field_feature_category:source_type')
+			->defaultValue('tid');
+
+		/* Featured Item Keyword */
+		$this->addFieldMapping('field_tags', $featureditem_arguments['source_featureditem_keyword'])
+			->sourceMigration('UGTerm7');
+		$this->addFieldMapping('field_tags:source_type')
+			->defaultValue('tid');
+
+		/* Featured Item Image */
+	    $this->addFieldMapping('field_feature_image', $featureditem_arguments['source_featureditem_image'])
+	    	->sourceMigration('UGFile7');
+		$this->addFieldMapping('field_feature_image:file_class')
+		    ->defaultValue('MigrateFileFid');
+		$this->addFieldMapping('field_feature_image:preserve_files')
+		    ->defaultValue('TRUE');
+	    $this->addFieldMapping('field_feature_image:alt', $featureditem_arguments['source_featureditem_image'] . ':alt')
+	        ->defaultValue('');
+	    $this->addFieldMapping('field_feature_image:title', $featureditem_arguments['source_featureditem_image'] . ':title')
+	        ->defaultValue('');
+	    $this->addFieldMapping('field_feature_image:language')
+	        ->defaultValue(LANGUAGE_NONE);
+
+		/* Featured Item Link */
+	    $this->addFieldMapping('field_feature_link', $featureditem_arguments['source_featureditem_link']);
+
+	}
+}
+
+
 class UGEvent7Migration extends DrupalNode7Migration {
 	public function __construct($arguments) {
 
@@ -10,11 +78,12 @@ class UGEvent7Migration extends DrupalNode7Migration {
 		/* DEFAULT arguments */
 		$event_arguments = array(
 			'source_event_body' => 'body',
-			'source_news_summary' => 'body:summary',
+			'source_event_summary' => 'body:summary',
 			'source_event_format' => 'body:format',
 			'source_event_category' => '',
 			'source_event_keyword' => '',
 			'source_event_date' => '',
+			'source_event_date_timezone' => 'America/New_York',
 			'source_event_location' => '',
 			'source_event_multipart' => '',
 			'source_event_image' => '',
@@ -23,11 +92,12 @@ class UGEvent7Migration extends DrupalNode7Migration {
 			'source_event_link' => '',
 		);
 
-
 		//Override default values with arguments if they exist
 		foreach ($event_arguments as $key => $value) {
 		    if(isset($this->arguments[$key])){
-		    	$event_arguments[$key] = $this->arguments[$key];
+		    	if($this->arguments[$key] != ''){
+			    	$event_arguments[$key] = $this->arguments[$key];
+		    	}
 		    }
 		}
 
@@ -49,15 +119,55 @@ class UGEvent7Migration extends DrupalNode7Migration {
 		$this->addFieldMapping('field_tags:source_type')
 			->defaultValue('tid');
 
-		/* Event Fields */
+		/* Event Featured Image */
+	    $this->addFieldMapping('field_event_image', $event_arguments['source_event_image'])
+	    	->sourceMigration('UGFile7');
+		$this->addFieldMapping('field_event_image:file_class')
+		    ->defaultValue('MigrateFileFid');
+		$this->addFieldMapping('field_event_image:preserve_files')
+		    ->defaultValue('TRUE');
+	    $this->addFieldMapping('field_event_image:alt', $event_arguments['source_event_image'] . ':alt')
+	        ->defaultValue('');
+	    $this->addFieldMapping('field_event_image:title', $event_arguments['source_event_image'] . ':title')
+	        ->defaultValue('');
+	    $this->addFieldMapping('field_event_image:language')
+	        ->defaultValue(LANGUAGE_NONE);
+
+		/* Event File Attachments */
+	    $this->addFieldMapping('field_event_attachments', $event_arguments['source_event_attachments'])
+		    ->sourceMigration('UGFile7');
+		$this->addFieldMapping('field_event_attachments:file_class')
+		    ->defaultValue('MigrateFileFid');
+		$this->addFieldMapping('field_event_attachments:preserve_files')
+		    ->defaultValue('TRUE');
+	    $this->addFieldMapping('field_event_attachments:description', $event_arguments['source_event_attachments'] . ':description')
+	        ->defaultValue('');
+	    $this->addFieldMapping('field_event_attachments:language')
+	        ->defaultValue(LANGUAGE_NONE);
+
+		/* Event Date */
 		$this->addFieldMapping('field_event_date', $event_arguments['source_event_date']);
+		$this->addFieldMapping('field_event_date:to', $event_arguments['source_event_date'].":value2");
+		$this->addFieldMapping('field_event_date:timezone')
+			->defaultValue($event_arguments['source_event_date_timezone']);
+
+		/* Event Location, Multipart Fields, Caption, Link */
 		$this->addFieldMapping('field_event_location', $event_arguments['source_event_location']);
-		$this->addFieldMapping('field_event_image', $event_arguments['source_event_image']);
 		$this->addFieldMapping('field_event_multipart', $event_arguments['source_event_multipart']);
 		$this->addFieldMapping('field_event_caption', $event_arguments['source_event_caption']);
-		$this->addFieldMapping('field_event_attachments', $event_arguments['source_event_attachments']);
 		$this->addFieldMapping('field_event_link', $event_arguments['source_event_link']);
 	}
+
+/* Troubleshooting Function -- Uncomment to print out contents of every row */
+
+	/*public function prepareRow($row){
+		if(parent::prepareRow($row)===FALSE){
+			return FALSE;
+		}
+		echo("<<<<<<<");
+		drush_print_r($row);
+		echo(">>>>>>>");
+	}*/
 }
 
 class UGEventMultifield7Migration extends DrupalMigration {
@@ -195,12 +305,37 @@ class UGNews7Migration extends DrupalNode7Migration {
 		$this->addFieldMapping('field_tags:source_type')
 			->defaultValue('tid');
 
-		/* News Fields */
+		/* News Featured Image */
+	    $this->addFieldMapping('field_news_image', $news_arguments['source_news_image'])
+	    	->sourceMigration('UGFile7');
+		$this->addFieldMapping('field_news_image:file_class')
+		    ->defaultValue('MigrateFileFid');
+		$this->addFieldMapping('field_news_image:preserve_files')
+		    ->defaultValue('TRUE');
+	    $this->addFieldMapping('field_news_image:alt', $news_arguments['source_news_image'] . ':alt')
+	        ->defaultValue('');
+	    $this->addFieldMapping('field_news_image:title', $news_arguments['source_news_image'] . ':title')
+	        ->defaultValue('');
+	    $this->addFieldMapping('field_news_image:language')
+	        ->defaultValue(LANGUAGE_NONE);
+
+
+		/* News File Attachments */
+	    $this->addFieldMapping('field_news_attachment', $news_arguments['source_news_attachment'])
+		    ->sourceMigration('UGFile7');
+		$this->addFieldMapping('field_news_attachment:file_class')
+		    ->defaultValue('MigrateFileFid');
+		$this->addFieldMapping('field_news_attachment:preserve_files')
+		    ->defaultValue('TRUE');
+	    $this->addFieldMapping('field_news_attachment:description', $news_arguments['source_news_attachment'] . ':description')
+	        ->defaultValue('');
+	    $this->addFieldMapping('field_news_attachment:language')
+	        ->defaultValue(LANGUAGE_NONE);
+
+		/* News Writer, Link, Caption */
 	    $this->addFieldMapping('field_news_writer', $news_arguments['source_news_writer']);
 	    $this->addFieldMapping('field_news_link', $news_arguments['source_news_link']);
-	    $this->addFieldMapping('field_news_image', $news_arguments['source_news_image']);
 	    $this->addFieldMapping('field_news_caption', $news_arguments['source_news_caption']);
-	    $this->addFieldMapping('field_news_attachment', $news_arguments['source_news_attachment']);
 
 	}
 }
@@ -253,11 +388,81 @@ class UGPage7Migration extends DrupalNode7Migration {
 			->defaultValue('tid');
 
 		/* Page File Attachments */
-	    $this->addFieldMapping('field_page_attachments', $page_arguments['source_page_attachments']);
-
+	    $this->addFieldMapping('field_page_attachments', $page_arguments['source_page_attachments'])
+		    ->sourceMigration('UGFile7');
+		$this->addFieldMapping('field_page_attachments:file_class')
+		    ->defaultValue('MigrateFileFid');
+		$this->addFieldMapping('field_page_attachments:preserve_files')
+		    ->defaultValue('TRUE');
+	    $this->addFieldMapping('field_page_attachments:description', $page_arguments['source_page_attachments'] . ':description')
+	        ->defaultValue('');
+	    $this->addFieldMapping('field_page_attachments:language')
+	        ->defaultValue(LANGUAGE_NONE);
 	}
 }
 
+class UGFAQ7Migration extends DrupalNode7Migration {
+	public function __construct($arguments) {
+
+    	parent::__construct($arguments);
+
+	    $this->destination = new MigrateDestinationNode('faq');
+
+		/* DEFAULT arguments */
+		$faq_arguments = array(
+			'source_faq_answer' => 'body',
+			'source_faq_format' => 'body:format',
+			'source_faq_category' => '',
+			'source_faq_keyword' => '',
+		);
+
+		//Override default values with arguments if they exist
+		foreach ($faq_arguments as $key => $value) {
+		    if(isset($this->arguments[$key])){
+		    	if($this->arguments[$key] != ''){
+			    	$faq_arguments[$key] = $this->arguments[$key];
+		    	}
+		    }
+		}
+
+	    /* FAQ Answer */
+	    $this->addFieldMapping('field_faq_answer', $faq_arguments['source_faq_answer']);
+	    $this->addFieldMapping( 'field_faq_answer:format', $faq_arguments['source_faq_format'])
+		    ->defaultValue('full_html');
+
+		/* FAQ Category */
+		$this->addFieldMapping('field_faq_category', $faq_arguments['source_faq_category'])
+			->sourceMigration('UGFAQCategory7');
+		$this->addFieldMapping('field_faq_category:source_type')
+			->defaultValue('tid');
+
+		/* FAQ Keyword */
+		$this->addFieldMapping('field_tags', $faq_arguments['source_faq_keyword'])
+			->sourceMigration('UGTerm7');
+		$this->addFieldMapping('field_tags:source_type')
+			->defaultValue('tid');
+	}
+
+/* Troubleshooting Function -- Uncomment to print out contents of every row */
+
+	/*public function prepareRow($row){
+		if(parent::prepareRow($row)===FALSE){
+			return FALSE;
+		}
+		echo("<<<<<<<");
+		drush_print_r($row);
+		echo(">>>>>>>");
+	}*/
+}
+
+/* TERM classes */
+
+class UGFeaturedItemCategory7Migration extends DrupalTerm7Migration {
+	public function __construct($arguments) {
+    	parent::__construct($arguments);
+
+	}	
+}
 
 class UGEventHeading7Migration extends DrupalTerm7Migration {
 	public function __construct($arguments) {
@@ -301,9 +506,30 @@ class UGPageCategory7Migration extends DrupalTerm7Migration {
 	}	
 }
 
+class UGFAQCategory7Migration extends DrupalTerm7Migration {
+	public function __construct($arguments) {
+    	parent::__construct($arguments);
+
+	}	
+}
+
+class UGFAQKeyword7Migration extends DrupalTerm7Migration {
+	public function __construct($arguments) {
+    	parent::__construct($arguments);
+
+	}	
+}
+
 class UGTerm7Migration extends DrupalTerm7Migration {
 	public function __construct($arguments) {
     	parent::__construct($arguments);
 
 	}	
+}
+
+/* FILE classes */
+class UGFile7Migration extends DrupalFile7Migration {
+	public function __construct($arguments) {
+    	parent::__construct($arguments);
+	}
 }

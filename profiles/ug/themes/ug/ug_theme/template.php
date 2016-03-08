@@ -83,7 +83,34 @@ function ug_theme_preprocess_views_view_unformatted(&$vars) {
      $function($vars);
     }
   }
+}
+
+/**
+ * Allow each views template to specify its own view preprocess function.
+ */
+function ug_theme_preprocess_views_view(&$vars) {
+  if (isset($vars['view']->name)) {
+    $function = 'ug_theme_preprocess_views_view__'.$vars['view']->name; 
+    if (function_exists($function)) {
+     $function($vars);
+    }
+  }
 } 
+
+/**
+ * FT3 - Featured item teaser list
+ */
+function ug_theme_preprocess_views_view__ft3(&$vars) {
+
+  $view = views_get_current_view();
+
+  if(!empty($view->args[0])){
+    $category_filter = $view->args[0];
+    $view->display_handler->set_option('link_url', 'features/category/' . $category_filter);
+  }
+
+  $vars['more'] = $view->display_handler->render_more_link();
+}
 
 
 /**
@@ -159,6 +186,25 @@ function ug_theme_preprocess_views_view_fields__pg2(&$vars) {
   $vars['title']     = $vars['fields']['title']->content;
   $vars['created']   = $vars['fields']['created']->content;
   $vars['body']      = $vars['fields']['field_page_body']->content;
+}
+
+/**
+ * PG3 - Page item teaser list
+ */
+function ug_theme_preprocess_views_view__pg3_page_item_teaser_list(&$vars) {
+
+  $view = views_get_current_view();
+
+  if(!empty($view->args[0])){
+    $category_filter = $view->args[0];
+    $view->display_handler->set_option('link_url', 'pages/category/' . $category_filter);
+  } else {
+
+    $view->display_handler->set_option('link_url', 'pages');
+   
+  }
+
+  $vars['more'] = $view->display_handler->render_more_link();
 }
 
 /**
@@ -877,3 +923,20 @@ function ug_theme_form_search_block_form_alter(&$form, &$form_state, $form_id) {
     $form['search_block_form']['#attributes']['placeholder'] = t('Search this site');
 
 } 
+
+/**
+ * N3 - News teaser list
+ */
+function ug_theme_preprocess_views_view__n3(&$vars) {
+
+  $view = views_get_current_view();
+
+  if(!empty($view->args[0])){
+    $category_filter = $view->args[0];
+    $view->display_handler->set_option('link_url', 'news/category/' . $category_filter);
+  }
+
+  $vars['more'] = $view->display_handler->render_more_link();
+}
+
+

@@ -1,3 +1,4 @@
+
 <?php
 
 /*
@@ -38,7 +39,25 @@ function ug_migrate_d7_migrate_api() {
     'source_event_term_heading' => '',
   );
 
+  $featureditem_arguments = array(
+    'source_featureditem_node_type' => '',
+    'source_featureditem_term_category' => '',
+    'source_featureditem_term_keyword' => '',
+  );
+
   $event_multipart_arguments = array();
+
+  $faq_arguments = array(
+    'source_faq_node_type' => '',
+    'source_faq_term_category' => '',
+    'source_faq_term_keyword' => '',
+  );
+
+  /* FILE VARIABLES */
+  $file_arguments = array(
+    'source_directory' => 'public://',
+    'destination_directory' => 'public://',
+  );
 
   /* USER VARIABLES */
   $user_arguments = array(
@@ -55,8 +74,8 @@ function ug_migrate_d7_migrate_api() {
 
   $menu_link_arguments = array(
     'menu_migration' => 'UGMenu7',
-    'node_migrations' => array('UGPage7', 'UGNews7', 'UGEvent7'),
-    'term_migrations' => array('UGTerm7', 'UGPageCategory7', 'UGNewsCategory7', 'UGNewsKeyword7', 'UGEventCategory7', 'UGEventKeyword7'),
+    'node_migrations' => array('UGPage7', 'UGNews7', 'UGEvent7', 'UGFAQ7','UGFeaturedItem7'),
+    'term_migrations' => array('UGTerm7', 'UGPageCategory7', 'UGNewsCategory7', 'UGNewsKeyword7', 'UGEventCategory7', 'UGEventKeyword7','UGFAQCategory7', 'UGFAQKeyword7','UGFeaturedItemCategory7'),
   );
 
   $menu_arguments = $common_arguments + array(
@@ -112,6 +131,14 @@ function ug_migrate_d7_migrate_api() {
         'destination_vocabulary' => 'tags',
       ),
 
+      /**** FILE migration ****/
+      'UGFile7' => $node_arguments + array(
+        'description' => t('Migration of files from Drupal 7'),
+        'class_name' => 'UGFile7Migration',
+        'source_dir' => $file_arguments['source_directory'],
+        'destination_dir' => $file_arguments['destination_directory'],
+      ),
+
       /**** PAGE migration ****/
       'UGPageCategory7' => $common_arguments + array(
         'description' => t('Migration of page category terms from Drupal 7'),
@@ -125,6 +152,7 @@ function ug_migrate_d7_migrate_api() {
         'class_name' => 'UGPage7Migration',
         'source_type' => $page_arguments['source_page_node_type'], 
         'destination_type' => 'page',
+        'dependencies' => array('UGFile7'),
       ),
 
       /**** NEWS migration ****/
@@ -147,6 +175,7 @@ function ug_migrate_d7_migrate_api() {
         'class_name' => 'UGNews7Migration',
         'source_type' => $news_arguments['source_news_node_type'], 
         'destination_type' => 'news',
+        'dependencies' => array('UGFile7'),
       ),
 
       /**** EVENT migration ****/
@@ -182,6 +211,45 @@ function ug_migrate_d7_migrate_api() {
         'class_name' => 'UGEvent7Migration',
         'source_type' => $event_arguments['source_event_node_type'], 
         'destination_type' => 'event',
+        'dependencies' => array('UGFile7'),
+      ),
+
+      /**** FAQ migrations ****/
+      'UGFAQKeyword7' => $common_arguments + array(
+        'description' => t('Migration of FAQ keyword terms from Drupal 7'),
+        'class_name' => 'UGFAQKeyword7Migration',
+        'source_vocabulary' => $faq_arguments['source_faq_term_keyword'],
+        'destination_vocabulary' => 'tags',
+      ),
+
+      'UGFAQCategory7' => $common_arguments + array(
+        'description' => t('Migration of FAQ category terms from Drupal 7'),
+        'class_name' => 'UGFAQCategory7Migration',
+        'source_vocabulary' => $faq_arguments['source_faq_term_category'],
+        'destination_vocabulary' => 'faq_category',
+      ),
+
+      'UGFAQ7' => $node_arguments + $faq_arguments + array(
+        'description' => t('Migration of FAQ from Drupal 7'),
+        'class_name' => 'UGFAQ7Migration',
+        'source_type' => $faq_arguments['source_faq_node_type'], 
+        'destination_type' => 'faq',
+      ),
+
+      /**** FEATURED ITEM migration ****/
+      'UGFeaturedItemCategory7' => $common_arguments + array(
+        'description' => t('Migration of featured item category terms from Drupal 7'),
+        'class_name' => 'UGFeaturedItemCategory7Migration',
+        'source_vocabulary' => $featureditem_arguments['source_featureditem_term_category'],
+        'destination_vocabulary' => 'feature_category',
+      ),
+
+      'UGFeaturedItem7' => $node_arguments + $featureditem_arguments + array(
+        'description' => t('Migration of featured items from Drupal 7'),
+        'class_name' => 'UGFeaturedItem7Migration',
+        'source_type' => $featureditem_arguments['source_featureditem_node_type'], 
+        'destination_type' => 'feature',
+        'dependencies' => array('UGFile7'),
       ),
 
       /**** MENU migration ****/

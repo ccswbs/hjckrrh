@@ -17,6 +17,12 @@
     'role_mappings' => $role_mappings,
   );
 
+  /* FILE SETTINGS */
+  $file_arguments = array(
+    'source_directory' => 'public://',
+    'destination_directory' => 'public://',
+  );
+
   /* TAXONOMY Settings */
   $term_arguments = array(
     'source_term_keyword' => 'tags',
@@ -52,6 +58,31 @@
     'source_news_attachment' => '',
   );
 
+  /* FAQ Settings */
+  $faq_arguments = array(
+    'source_faq_node_type' => '',
+    'source_faq_term_category' => '',
+    'source_faq_term_keyword' => '',
+    'source_faq_answer' => 'body',
+    'source_faq_format' => 'body:format',
+    'source_faq_category' => '',
+    'source_faq_keyword' => '',
+  );
+
+  /* FEATURED ITEM Settings */
+  $featureditem_arguments = array(
+    'source_featureditem_node_type' => '',
+    'source_featureditem_term_category' => '',
+    'source_featureditem_term_keyword' => '',
+    'source_featureditem_body' => 'body',
+    'source_featureditem_summary' => 'body:summary',
+    'source_featureditem_format' => 'body:format',
+    'source_featureditem_link' => '',
+    'source_featureditem_image' => '',
+    'source_featureditem_category' => '',
+    'source_featureditem_keyword' => '',
+  );
+
   /* EVENT Settings */
   $event_arguments = array(
     'source_event_node_type' => '',
@@ -64,6 +95,7 @@
     'source_event_category' => '',
     'source_event_keyword' => '',
     'source_event_date' => '',
+    'source_event_date_timezone' => 'America/New_York',
     'source_event_location' => '',
     'source_event_multipart' => '',
     'source_event_multipart_heading' => '',
