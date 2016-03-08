@@ -1,5 +1,91 @@
 <?php 
 
+
+class UGFeaturedItem6Migration extends DrupalNode6Migration {
+	public function __construct($arguments) {
+    	parent::__construct($arguments);
+	    $this->destination = new MigrateDestinationNode('feature');
+
+		/* DEFAULT arguments */
+		$featureditem_arguments = array(
+			'source_featureditem_body' => 'body',
+			'source_featureditem_summary' => 'body:summary',
+			'source_featureditem_format' => 'body:format',
+			'source_featureditem_link' => '',
+			'source_featureditem_image' => 'fid',
+			'source_featureditem_category' => '',
+			'source_featureditem_keyword' => '',
+		);
+
+		//Override default values with arguments if they exist
+		foreach ($featureditem_arguments as $key => $value) {
+		    if(isset($this->arguments[$key])){
+		    	if($this->arguments[$key] != ''){
+			    	$featureditem_arguments[$key] = $this->arguments[$key];
+			    }
+		    }
+		}
+
+	    /* Featured Item Body */
+	    $this->addFieldMapping('field_feature_text', $featureditem_arguments['source_featureditem_body']);
+	    $this->addFieldMapping('field_feature_text:summary', $featureditem_arguments['source_featureditem_summary']);
+	    $this->addFieldMapping( 'field_feature_text:format', $featureditem_arguments['source_featureditem_format'])
+		    ->defaultValue('full_html');
+
+		/* Featured Item Category */
+		$this->addFieldMapping('field_feature_category', $featureditem_arguments['source_featureditem_category'])
+			->sourceMigration('UGFeaturedItemCategory6');
+		$this->addFieldMapping('field_feature_category:source_type')
+			->defaultValue('tid');
+
+		/* Featured Item Keyword */
+		$this->addFieldMapping('field_tags', $featureditem_arguments['source_featureditem_keyword'])
+			->sourceMigration('UGTerm6');
+		$this->addFieldMapping('field_tags:source_type')
+			->defaultValue('tid');
+
+		/* Featured Item Image */
+	    $this->addFieldMapping('field_feature_image', $featureditem_arguments['source_featureditem_image']);
+		$this->addFieldMapping('field_feature_image:file_class')
+		    ->defaultValue('MigrateFileFid');
+		$this->addFieldMapping('field_feature_image:preserve_files')
+		    ->defaultValue('TRUE');
+	    $this->addFieldMapping('field_feature_image:alt', $featureditem_arguments['source_featureditem_image'] . ':alt')
+	        ->defaultValue('');
+	    $this->addFieldMapping('field_feature_image:title', $featureditem_arguments['source_featureditem_image'] . ':title')
+	        ->defaultValue('');
+	    $this->addFieldMapping('field_feature_image:language')
+	        ->defaultValue(LANGUAGE_NONE);
+
+		/* Featured Item Link */
+	    $this->addFieldMapping('field_feature_link', $featureditem_arguments['source_featureditem_link']);
+	}
+
+  /**
+   * Implementation of Migration::prepareRow().
+   */
+  public function prepareRow($row) {
+    if (parent::prepareRow($row) === FALSE) {
+      return FALSE;
+    }
+    // image query
+    $pattern = strval($row->nid) . '.%';
+    $image = Database::getConnection('default', 'default')
+      ->select('file_managed', 'f')
+      ->fields('f', array('fid'))
+      ->condition('filename', $pattern, 'LIKE')
+      ->execute()
+      ->fetchObject();
+
+    if ($image) {
+      $row->fid = array($image->fid);
+	  //drush_print_r($row);
+    }
+  }
+
+}
+
+
 class UGEvent6Migration extends DrupalNode6Migration {
 	public function __construct($arguments) {
     	parent::__construct($arguments);
@@ -356,6 +442,20 @@ class UGPage6Migration extends DrupalNode6Migration {
 	}
 }
 
+
+class UGFeaturedItemCategory6Migration extends DrupalTerm6Migration {
+	public function __construct($arguments) {
+    	parent::__construct($arguments);
+
+	}	
+}
+
+class UGFeaturedItemKeyword6Migration extends DrupalTerm6Migration {
+	public function __construct($arguments) {
+    	parent::__construct($arguments);
+
+	}	
+}
 
 class UGEventHeading6Migration extends DrupalTerm6Migration {
 	public function __construct($arguments) {

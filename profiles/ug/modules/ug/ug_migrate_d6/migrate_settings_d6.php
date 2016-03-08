@@ -60,6 +60,20 @@
     'source_news_attachment' => 'upload',
   );
 
+  /* FEATURED ITEM Settings */
+  $featureditem_arguments = array(
+    'source_featureditem_node_type' => '',
+    'source_featureditem_term_category' => '',
+    'source_featureditem_term_keyword' => '',
+    'source_featureditem_body' => 'body',
+    'source_featureditem_summary' => 'body:summary',
+    'source_featureditem_format' => 'body:format',
+    'source_featureditem_link' => '',
+    'source_featureditem_image' => '',
+    'source_featureditem_category' => '',
+    'source_featureditem_keyword' => '',
+  );
+
   /* EVENT Settings */
   $event_arguments = array(
     'source_event_node_type' => '',
