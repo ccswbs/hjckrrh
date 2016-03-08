@@ -19,6 +19,12 @@
     'picture_destination' => 'public://',
   );
 
+  /* FILE SETTINGS */
+  $file_arguments = array(
+    'source_directory' => 'public://',
+    'destination_directory' => 'public://',
+  );
+
   /* TAXONOMY Settings */
   $term_arguments = array(
     'source_term_keyword' => 'tags',
@@ -34,7 +40,7 @@
     'source_page_format' => 'body:format',
     'source_page_category' => '',
     'source_page_keyword' => 'field_tags',
-    'source_page_attachments' => '',
+    'source_page_attachments' => 'upload',
   );
   
   /* NEWS Settings */
@@ -51,7 +57,7 @@
     'source_news_link' => '',
     'source_news_image' => '',
     'source_news_caption' => '',
-    'source_news_attachment' => '',
+    'source_news_attachment' => 'upload',
   );
 
   /* EVENT Settings */
@@ -72,7 +78,7 @@
     'source_event_multipart_content' => '',
     'source_event_image' => '',
     'source_event_caption' => '',
-    'source_event_attachments' => '',
+    'source_event_attachments' => 'upload',
     'source_event_link' => '',
   );
 
