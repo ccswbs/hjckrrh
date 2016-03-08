@@ -1,0 +1,12 @@
+name = UG Profile Layouts
+core = 7.x
+package = UG
+dependencies[] = ctools
+dependencies[] = page_manager
+dependencies[] = ug_profile
+features[ctools][] = page_manager:pages_default:1
+features[features_api][] = api:2
+features[page_manager_handlers][] = node_view__profile
+features[page_manager_pages][] = people
+features[page_manager_pages][] = people_grid
+features[page_manager_pages][] = people_related
