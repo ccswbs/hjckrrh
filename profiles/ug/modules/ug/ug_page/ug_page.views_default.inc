@@ -50,12 +50,6 @@ function ug_page_views_default_views() {
   $handler->display->display_options['fields']['field_page_body']['field'] = 'field_page_body';
   $handler->display->display_options['fields']['field_page_body']['label'] = '';
   $handler->display->display_options['fields']['field_page_body']['element_label_colon'] = FALSE;
-  /* Field: Broken/missing handler */
-  $handler->display->display_options['fields']['field_page_caption']['id'] = 'field_page_caption';
-  $handler->display->display_options['fields']['field_page_caption']['table'] = 'field_data_field_page_caption';
-  $handler->display->display_options['fields']['field_page_caption']['field'] = 'field_page_caption';
-  $handler->display->display_options['fields']['field_page_caption']['label'] = '';
-  $handler->display->display_options['fields']['field_page_caption']['element_label_colon'] = FALSE;
   /* Field: Content: File attachments */
   $handler->display->display_options['fields']['field_page_attachments']['id'] = 'field_page_attachments';
   $handler->display->display_options['fields']['field_page_attachments']['table'] = 'field_data_field_page_attachments';
@@ -65,12 +59,6 @@ function ug_page_views_default_views() {
   $handler->display->display_options['fields']['field_page_attachments']['click_sort_column'] = 'fid';
   $handler->display->display_options['fields']['field_page_attachments']['type'] = 'file_table';
   $handler->display->display_options['fields']['field_page_attachments']['delta_offset'] = '0';
-  /* Field: Broken/missing handler */
-  $handler->display->display_options['fields']['field_page_image']['id'] = 'field_page_image';
-  $handler->display->display_options['fields']['field_page_image']['table'] = 'field_data_field_page_image';
-  $handler->display->display_options['fields']['field_page_image']['field'] = 'field_page_image';
-  $handler->display->display_options['fields']['field_page_image']['label'] = '';
-  $handler->display->display_options['fields']['field_page_image']['element_label_colon'] = FALSE;
   /* Sort criterion: Content: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
@@ -337,6 +325,36 @@ function ug_page_views_default_views() {
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['style_plugin'] = 'rss';
   $handler->display->display_options['row_plugin'] = 'node_rss';
+  $handler->display->display_options['defaults']['arguments'] = FALSE;
+  /* Contextual filter: Content: Keywords (field_tags) */
+  $handler->display->display_options['arguments']['field_tags_tid']['id'] = 'field_tags_tid';
+  $handler->display->display_options['arguments']['field_tags_tid']['table'] = 'field_data_field_tags';
+  $handler->display->display_options['arguments']['field_tags_tid']['field'] = 'field_tags_tid';
+  $handler->display->display_options['arguments']['field_tags_tid']['title_enable'] = TRUE;
+  $handler->display->display_options['arguments']['field_tags_tid']['title'] = 'Pages related to %1';
+  $handler->display->display_options['arguments']['field_tags_tid']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['field_tags_tid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_tags_tid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_tags_tid']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['field_tags_tid']['specify_validation'] = TRUE;
+  $handler->display->display_options['arguments']['field_tags_tid']['validate']['type'] = 'taxonomy_term';
+  $handler->display->display_options['arguments']['field_tags_tid']['validate_options']['vocabularies'] = array(
+    'page_category' => 'page_category',
+  );
+  /* Contextual filter: Content: Page category (field_page_category) */
+  $handler->display->display_options['arguments']['field_page_category_tid']['id'] = 'field_page_category_tid';
+  $handler->display->display_options['arguments']['field_page_category_tid']['table'] = 'field_data_field_page_category';
+  $handler->display->display_options['arguments']['field_page_category_tid']['field'] = 'field_page_category_tid';
+  $handler->display->display_options['arguments']['field_page_category_tid']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['field_page_category_tid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_page_category_tid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_page_category_tid']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['field_page_category_tid']['specify_validation'] = TRUE;
+  $handler->display->display_options['arguments']['field_page_category_tid']['validate']['type'] = 'taxonomy_term';
+  $handler->display->display_options['arguments']['field_page_category_tid']['validate_options']['vocabularies'] = array(
+    'page_category' => 'page_category',
+  );
+  $handler->display->display_options['arguments']['field_page_category_tid']['validate_options']['type'] = 'convert';
   $handler->display->display_options['path'] = 'pages/%/feed';
   $export['pg2'] = $view;
 
@@ -354,7 +372,7 @@ function ug_page_views_default_views() {
   $handler = $view->new_display('default', 'Master', 'default');
   $handler->display->display_options['title'] = 'Pages';
   $handler->display->display_options['use_more'] = TRUE;
-  $handler->display->display_options['use_more_always'] = TRUE;
+  $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'More pages';
   $handler->display->display_options['link_display'] = 'custom_url';
   $handler->display->display_options['link_url'] = 'news';
@@ -417,8 +435,8 @@ function ug_page_views_default_views() {
   );
 
   /* Display: Content pane */
-  $handler = $view->new_display('panel_pane', 'Content pane', 'panel_pane_1');
-  $handler->display->display_options['link_url'] = 'pages';
+  $handler = $view->new_display('panel_pane', 'Content pane', 'panel_pane_page_item');
+  $handler->display->display_options['link_url'] = '/pages';
   $handler->display->display_options['defaults']['empty'] = FALSE;
   /* No results behavior: Global: Text area */
   $handler->display->display_options['empty']['area']['id'] = 'area';
@@ -431,7 +449,8 @@ function ug_page_views_default_views() {
   $handler->display->display_options['allow']['items_per_page'] = 'items_per_page';
   $handler->display->display_options['allow']['offset'] = 0;
   $handler->display->display_options['allow']['link_to_view'] = 0;
-  $handler->display->display_options['allow']['more_link'] = 0;
+  $handler->display->display_options['allow']['more_link'] = 'more_link';
+  $handler->display->display_options['allow']['more_text'] = 'more_text';
   $handler->display->display_options['allow']['path_override'] = 0;
   $handler->display->display_options['allow']['title_override'] = 'title_override';
   $handler->display->display_options['allow']['exposed_form'] = 0;
