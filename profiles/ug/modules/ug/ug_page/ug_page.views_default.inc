@@ -355,7 +355,7 @@ function ug_page_views_default_views() {
     'page_category' => 'page_category',
   );
   $handler->display->display_options['arguments']['field_page_category_tid']['validate_options']['type'] = 'convert';
-  $handler->display->display_options['path'] = 'pages/%/feed';
+  $handler->display->display_options['path'] = 'pages/%/%/feed';
   $export['pg2'] = $view;
 
   $view = new view();
