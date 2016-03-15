@@ -25,6 +25,12 @@ function ug_migrate_d7_migrate_api() {
     'source_page_term_category' => '',
     'source_page_term_keyword' => '',
   );
+  
+  $book_arguments = array(
+    'source_book_node_type' => 'book',
+    'source_book_term_category' => '',
+    'source_book_term_keyword' => '',
+  );
 
   $news_arguments = array(
     'source_news_node_type' => 'article',
@@ -155,6 +161,30 @@ function ug_migrate_d7_migrate_api() {
         'dependencies' => array('UGFile7'),
       ),
 
+      /**** BOOK migration ****/
+      'UGBook7' => $node_arguments + $book_arguments + array(
+        'description' => t('Migration of books from Drupal 7'),
+        'class_name' => 'UGBook7Migration',
+        'source_type' => $book_arguments['source_book_node_type'], 
+        'destination_type' => 'book',
+        'dependencies' => array('UGFile7'),
+      ),
+
+      'UGBookMenuLinks7' => $common_arguments + array(
+        'description' => t('Migration of book menu links from Drupal 7'),
+	'class_name' => 'UGBookMenuLinks7Migration',
+	'node_migrations' => array('UGBook7'),
+	'dependencies' => array('UGBook7'),
+      ),
+
+      'UGBookTable7' => $common_arguments + array(
+        'description' => t('Migration of book table from Drupal 7'),
+	'class_name' => 'UGBookTable7Migration',
+	'node_migrations' => array('UGBook7'),
+	'menu_link_migrations' => array('UGBookMenuLinks7'),
+	'dependencies' => array('UGBook7', 'UGBookMenuLinks7'),
+      ),
+	      
       /**** NEWS migration ****/
       'UGNewsCategory7' => $common_arguments + array(
         'description' => t('Migration of news category terms from Drupal 7'),
