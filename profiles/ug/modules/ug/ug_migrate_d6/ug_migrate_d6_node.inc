@@ -53,8 +53,21 @@ class UGEvent6Migration extends DrupalNode6Migration {
 		$this->addFieldMapping('field_event_multipart', $event_arguments['source_event_multipart']);
 		$this->addFieldMapping('field_event_image', $event_arguments['source_event_image']);
 		$this->addFieldMapping('field_event_caption', $event_arguments['source_event_caption']);
-		$this->addFieldMapping('field_event_attachments', $event_arguments['source_event_attachments']);
 		$this->addFieldMapping('field_event_link', $event_arguments['source_event_link']);
+
+		/* Event File Attachments */
+		$this->addFieldMapping('field_event_attachments', $event_arguments['source_event_attachments'])
+		    ->sourceMigration('UGFile6');
+		$this->addFieldMapping('field_event_attachments:file_class')
+		    ->defaultValue('MigrateFileFid');
+		$this->addFieldMapping('field_event_attachments:preserve_files')
+		    ->defaultValue('TRUE');
+	    $this->addFieldMapping('field_event_attachments:description', $event_arguments['source_event_attachments'] . ':description')
+	        ->defaultValue('');
+	    $this->addFieldMapping('field_event_attachments:language')
+	        ->defaultValue(LANGUAGE_NONE);
+
+
 	}
 }
 
@@ -198,7 +211,18 @@ class UGNews6Migration extends DrupalNode6Migration {
 	    $this->addFieldMapping('field_news_link', $news_arguments['source_news_link']);
 	    $this->addFieldMapping('field_news_image', $news_arguments['source_news_image']);
 	    $this->addFieldMapping('field_news_caption', $news_arguments['source_news_caption']);
-	    $this->addFieldMapping('field_news_attachment', $news_arguments['source_news_attachment']);
+
+		/* News File Attachments */
+	    $this->addFieldMapping('field_news_attachment', $news_arguments['source_news_attachment'])
+		    ->sourceMigration('UGFile6');
+		$this->addFieldMapping('field_news_attachment:file_class')
+		    ->defaultValue('MigrateFileFid');
+		$this->addFieldMapping('field_news_attachment:preserve_files')
+		    ->defaultValue('TRUE');
+	    $this->addFieldMapping('field_news_attachment:description', $news_arguments['source_news_attachment'] . ':description')
+	        ->defaultValue('');
+	    $this->addFieldMapping('field_news_attachment:language')
+	        ->defaultValue(LANGUAGE_NONE);
 
 	}
 }
@@ -244,8 +268,17 @@ class UGPage6Migration extends DrupalNode6Migration {
 		$this->addFieldMapping('field_tags:source_type')
 			->defaultValue('tid');
 
-		/* Page File Attachment */
-	    $this->addFieldMapping('field_page_attachments', $page_arguments['source_page_attachments']);
+		/* Page File Attachments */
+	    $this->addFieldMapping('field_page_attachments', $page_arguments['source_page_attachments'])
+		    ->sourceMigration('UGFile6');
+		$this->addFieldMapping('field_page_attachments:file_class')
+		    ->defaultValue('MigrateFileFid');
+		$this->addFieldMapping('field_page_attachments:preserve_files')
+		    ->defaultValue('TRUE');
+	    $this->addFieldMapping('field_page_attachments:description', $page_arguments['source_page_attachments'] . ':description')
+	        ->defaultValue('');
+	    $this->addFieldMapping('field_page_attachments:language')
+	        ->defaultValue(LANGUAGE_NONE);
 	}
 }
 
@@ -328,21 +361,21 @@ class UGNewsCategory6Migration extends DrupalTerm6Migration {
 	public function __construct($arguments) {
     	parent::__construct($arguments);
 
-	}	
+	}
 }
 
 class UGNewsKeyword6Migration extends DrupalTerm6Migration {
 	public function __construct($arguments) {
     	parent::__construct($arguments);
 
-	}	
+	}
 }
 
 class UGPageCategory6Migration extends DrupalTerm6Migration {
 	public function __construct($arguments) {
     	parent::__construct($arguments);
 
-	}	
+	}
 }
 
 class UGFAQCategory6Migration extends DrupalTerm6Migration {
@@ -360,5 +393,12 @@ class UGTerm6Migration extends DrupalTerm6Migration {
 	public function __construct($arguments) {
     	parent::__construct($arguments);
 
-	}	
+	}
+}
+
+/* FILE classes */
+class UGFile6Migration extends DrupalFile6Migration {
+	public function __construct($arguments) {
+    	parent::__construct($arguments);
+	}
 }
