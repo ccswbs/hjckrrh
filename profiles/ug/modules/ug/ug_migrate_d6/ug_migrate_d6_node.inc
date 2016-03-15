@@ -374,23 +374,23 @@ class UGPage6Migration extends DrupalNode6Migration {
       ->fetchObject();
 
     if ($image) {
-    	$src_url = '';
-    	if(isset($this->arguments['source_page_src_url'])){
-	    	$src_url = $this->arguments['source_page_src_url'];
+    	$image_src_prefix = '';
+    	if(isset($this->arguments['source_page_image_src_prefix'])){
+	    	$image_src_prefix = $this->arguments['source_page_image_src_prefix'];
     	}
 
-      $row->body = $this->replaceImgAssist($row->body, $image, $src_url);
+      $row->body = $this->replaceImgAssist($row->body, $image, $image_src_prefix);
     }
   }
 
 
-  public function replaceImgAssist(&$body, &$image, &$src_url){
+  public function replaceImgAssist(&$body, &$image, &$image_src_prefix){
 
   	$pattern = '/\[img_assist\|(.+?)]/';
   	$pattern_desc = '/(?<=desc=)([\d\s\w\.\?\,]+?)(?=\|)/';
 
 	//$image_src = "/" . conf_path() . "/files/" . file_uri_target($image->uri);
-	$image_src = $src_url . "/" . conf_path() . "/files/" . file_uri_target($image->uri);
+	$image_src = $image_src_prefix . "/" . conf_path() . "/files/" . file_uri_target($image->uri);
 	preg_match($pattern, $body, $matches);
 
   /* @TO DO - allow for multiple images (UGImage6 only brings over a single feature image) */
