@@ -143,6 +143,13 @@ function ug_migrate_d6_migrate_api() {
         'destination_dir' => $file_arguments['destination_directory'],
       ),
 
+      'UGImage6' => $node_arguments + array(
+        'description' => t('Migration of images from Drupal 6'),
+        'class_name' => 'UGImage6Migration',
+        'source_dir' => $file_arguments['source_directory'],
+        'destination_dir' => $file_arguments['destination_directory'],
+      ),
+
       /**** PAGE migration ****/
       'UGPageCategory6' => $common_arguments + array(
         'description' => t('Migration of page category terms from Drupal 6'),
@@ -179,7 +186,7 @@ function ug_migrate_d6_migrate_api() {
         'class_name' => 'UGNews6Migration',
         'source_type' => $news_arguments['source_news_node_type'], 
         'destination_type' => 'news',
-        'dependencies' => array('UGFile6'),
+        'dependencies' => array('UGFile6','UGImage6'),
       ),
 
       /**** EVENT migration ****/
@@ -215,7 +222,7 @@ function ug_migrate_d6_migrate_api() {
         'class_name' => 'UGEvent6Migration',
         'source_type' => $event_arguments['source_event_node_type'], 
         'destination_type' => 'event',
-        'dependencies' => array('UGFile6'),
+        'dependencies' => array('UGFile6', 'UGImage6'),
       ),
 
       /**** FAQ migration ****/
