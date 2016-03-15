@@ -14,7 +14,19 @@ function ug_wysiwyg_ckeditor_profile_defaults() {
       'settings' => array(
         'ss' => 2,
         'toolbar' => '[
-    [\'Format\',\'Bold\',\'Italic\',\'-\',\'NumberedList\',\'BulletedList\',\'-\',\'Link\',\'Unlink\',\'Image\']
+    [\'Source\'],
+    [\'Cut\',\'Copy\',\'PasteText\',\'PasteFromWord\',\'RemoveFormat\'],
+    [\'Undo\',\'Redo\'],
+    [\'Image\',\'Table\',\'HorizontalRule\',\'SpecialChar\'],
+    
+    \'/\',
+    [\'Bold\',\'Italic\',\'-\',\'Subscript\',\'Superscript\'],
+    [\'NumberedList\',\'BulletedList\',\'-\',\'Outdent\',\'Indent\',\'Blockquote\'],
+    [\'JustifyLeft\',\'JustifyCenter\',\'JustifyRight\',\'JustifyBlock\'],
+    [\'Link\',\'Unlink\',\'Anchor\'],
+    \'/\',
+    [\'Format\'],
+    [\'Maximize\',\'ShowBlocks\']
 ]',
         'expand' => 't',
         'default' => 't',
@@ -45,15 +57,15 @@ function ug_wysiwyg_ckeditor_profile_defaults() {
         'css_path' => '',
         'css_style' => 'theme',
         'styles_path' => '',
-        'filebrowser' => 'imce',
-        'filebrowser_image' => '',
+        'filebrowser' => 'none',
+        'filebrowser_image' => 'imce',
         'filebrowser_flash' => '',
         'UserFilesPath' => '%b%f/',
         'UserFilesAbsolutePath' => '%d%b%f/',
         'forcePasteAsPlainText' => 'f',
         'html_entities' => 'f',
         'scayt_autoStartup' => 'f',
-        'theme_config_js' => 'f',
+        'theme_config_js' => 't',
         'js_conf' => '',
         'loadPlugins' => array(
           'drupalbreaks' => array(
