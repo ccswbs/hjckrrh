@@ -41,6 +41,7 @@
     'source_page_category' => '',
     'source_page_keyword' => 'field_tags',
     'source_page_attachments' => 'upload',
+    'source_page_image_src_prefix' => '',
   );
   
   /* NEWS Settings */

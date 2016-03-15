@@ -320,7 +320,9 @@ class UGPage6Migration extends DrupalNode6Migration {
 		//Override default values with arguments if they exist
 		foreach ($page_arguments as $key => $value) {
 		    if(isset($this->arguments[$key])){
-		    	$page_arguments[$key] = $this->arguments[$key];
+		    	if($this->arguments[$key]!=''){
+			    	$page_arguments[$key] = $this->arguments[$key];
+			    }
 		    }
 		}
 
@@ -354,6 +356,60 @@ class UGPage6Migration extends DrupalNode6Migration {
 	    $this->addFieldMapping('field_page_attachments:language')
 	        ->defaultValue(LANGUAGE_NONE);
 	}
+
+  /**
+   * Implementation of Migration::prepareRow().
+   */
+  public function prepareRow($row) {
+    if (parent::prepareRow($row) === FALSE) {
+      return FALSE;
+    }
+    // image query
+    $pattern = strval($row->nid) . '.%';
+    $image = Database::getConnection('default', 'default')
+      ->select('file_managed', 'f')
+      ->fields('f', array('fid','uri'))
+      ->condition('filename', $pattern, 'LIKE')
+      ->execute()
+      ->fetchObject();
+
+    if ($image) {
+    	$image_src_prefix = '';
+    	if(isset($this->arguments['source_page_image_src_prefix'])){
+	    	$image_src_prefix = $this->arguments['source_page_image_src_prefix'];
+    	}
+
+      $row->body = $this->replaceImgAssist($row->body, $image, $image_src_prefix);
+    }
+  }
+
+
+  public function replaceImgAssist(&$body, &$image, &$image_src_prefix){
+
+  	$pattern = '/\[img_assist\|(.+?)]/';
+  	$pattern_desc = '/(?<=desc=)([\d\s\w\.\?\,]+?)(?=\|)/';
+
+	//$image_src = "/" . conf_path() . "/files/" . file_uri_target($image->uri);
+	$image_src = $image_src_prefix . "/" . conf_path() . "/files/" . file_uri_target($image->uri);
+	preg_match($pattern, $body, $matches);
+
+  /* @TO DO - allow for multiple images (UGImage6 only brings over a single feature image) */
+	$m = array_shift($matches);
+	//foreach($matches as $m){
+		if(strpos($m,'[img_assist') !== false){
+			preg_match($pattern_desc, $m, $desc_match);
+			$desc = array_shift($desc_match);
+			$replacement = '<img alt="' . $desc .'" class="img-responsive" src="'. $image_src .'" />';
+	  		$new_body = preg_replace($pattern, $replacement, $body);
+	  	}
+	//}
+
+  	if($new_body){
+	  	return $new_body;
+  	}
+
+  	return $body;
+  }
 }
 
 class UGFAQ6Migration extends DrupalNode6Migration {
