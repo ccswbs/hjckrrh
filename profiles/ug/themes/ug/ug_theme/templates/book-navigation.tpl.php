@@ -35,29 +35,24 @@
 <?php if ($tree || $has_links): ?>
   <div id="book-navigation-<?php print $book_id; ?>" class="book-navigation">
     <?php print $tree; ?>
-
     <?php if ($has_links): ?>
-    <ul class="nav nav-pills page-links clearfix">
-      <?php if ($prev_url): ?>
-        <li><a href="<?php print $prev_url; ?>" class="page-previous">
-          <span class="glyphicon glyphicon-chevron-left"></span>
-          <span class="sr-only"><?php print t('Go to previous page'); ?></span>
-          <?php print $prev_title; ?></a>
-      <?php endif; ?>
+    <ul class="menu nav page-links clearfix">
       <?php if ($parent_url): ?>
-        <li><a href="<?php print $parent_url; ?>" class="page-up">
-          <span class="glyphicon glyphicon-chevron-up"></span>
-          <span class="sr-only"><?php print t('Go to parent page'); ?></span>
+        <li><a href="<?php print $parent_url; ?>" title="<?php print $parent_title; ?>" class="page-up">
+	  <strong><?php print t('Up'); ?>:</strong>
           <?php print $parent_title; ?></a>
       <?php endif; ?>
+      <?php if ($prev_url): ?>
+        <li><a href="<?php print $prev_url; ?>" title="<?php print $prev_title; ?>" class="page-previous">
+          <strong><?php print t('Previous'); ?>:</strong>
+          <?php print $prev_title; ?></a>
+      <?php endif; ?>
       <?php if ($next_url): ?>
-        <li><a href="<?php print $next_url; ?>" class="page-next">
-          <span class="sr-only"><?php print t('Go to next page'); ?>"></span>
-          <?php print $next_title; ?>
-          <span class="glyphicon glyphicon-chevron-right"></span></a>
+        <li><a href="<?php print $next_url; ?>" title="<?php print $next_title; ?>" class="page-next">
+          <strong><?php print t('Next'); ?>:</strong>
+          <?php print $next_title; ?></a>
       <?php endif; ?>
     </ul>
     <?php endif; ?>
-
   </div>
 <?php endif; ?>
