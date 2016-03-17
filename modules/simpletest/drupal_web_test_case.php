@@ -1486,7 +1486,7 @@ class DrupalWebTestCase extends DrupalTestCase {
     $profile_details = install_profile_info($this->profile, 'en');
 
     // Install the modules specified by the testing profile.
-    module_enable($profile_details['dependencies'], FALSE);
+    module_enable($profile_details['dependencies']);
 
     // Install modules needed for this test. This could have been passed in as
     // either a single array argument or a variable number of string arguments.
