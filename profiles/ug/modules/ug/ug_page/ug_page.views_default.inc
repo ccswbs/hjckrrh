@@ -330,6 +330,8 @@ function ug_page_views_default_views() {
   $handler->display->display_options['arguments']['tid']['id'] = 'tid';
   $handler->display->display_options['arguments']['tid']['table'] = 'taxonomy_index';
   $handler->display->display_options['arguments']['tid']['field'] = 'tid';
+  $handler->display->display_options['arguments']['tid']['exception']['title_enable'] = TRUE;
+  $handler->display->display_options['arguments']['tid']['exception']['title'] = 'all';
   $handler->display->display_options['arguments']['tid']['title_enable'] = TRUE;
   $handler->display->display_options['arguments']['tid']['title'] = 'Pages related to %1';
   $handler->display->display_options['arguments']['tid']['default_argument_type'] = 'fixed';
