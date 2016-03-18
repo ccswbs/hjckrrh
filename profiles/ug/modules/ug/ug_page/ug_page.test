@@ -1,0 +1,59 @@
+
+<?php
+
+/**
+ * @file
+ * Tests for ug_page.module.
+ */
+
+/**
+ * Test UG Page feature.
+ */
+//class UGPageTestCase extends DrupalWebTestCase {
+class UGPageTestCase extends TaxonomyWebTestCase {
+
+  public static function getInfo() {
+    return array(
+      'name' => 'UG Page',
+      'description' => 'Test the UG Page feature.',
+      'group' => 'UG',
+    );
+  }
+
+  function setUp() {
+    $this->profile = 'ug';
+    parent::setUp();
+    /* Allow creation of Drupal accounts. */
+    $ldap_conf = variable_get('ldap_authentication_conf');
+    $ldap_conf['authenticationMode'] = 1;
+    variable_set('ldap_authentication_conf', $ldap_conf);
+    $web_user = $this->drupalCreateUser(array('create page content'));
+    $this->drupalLogin($web_user);
+  }
+
+  /**
+   * Test "Page" feeds filter behaviour
+   */
+  function testPageFeeds() {
+    /* Create categories and keywords for pages */
+    $pagecats = $this->createVocabulary();
+    $term1 = $this->createTerm($pagecats);
+    $term2 = $this->createTerm($pagecats);
+
+    /* Create 2 pages */
+    $node1 = $this->drupalCreateNode(array('field_page_category' => $term1->name, 'type' => 'page', 'promote' => 1));
+    $node2 = $this->drupalCreateNode(array('field_page_category' => $term2->name, 'type' => 'page', 'promote' => 1));
+
+    /* Get feed. */
+    $this->drupalGet('pages/all/feed');
+    /* There should be no "More news" button (yet). */
+    $this->assertNoText('More news');
+
+
+    /* Refresh home page. */
+    $this->drupalGet('');
+    /* Should see "More news" button now. */
+    $this->assertText('More news');
+  }
+
+}
