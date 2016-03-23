@@ -1,0 +1,13 @@
+diff --git a/ldap_profile/ldap_profile.module b/ldap_profile/ldap_profile.module
+index 3b62fb7..a54441f 100644
+--- a/ldap_profile/ldap_profile.module
++++ b/ldap_profile/ldap_profile.module
+@@ -100,7 +100,7 @@ function ldap_profile_user_login(&$edit, $account) {
+     }
+   }
+ 
+-  if (!$authuser || !$ldapuser || $dn == "") {
++  if (!$authuser || !$ldapuser || $dn == "" || !$server) {
+     return;
+   }
+ 

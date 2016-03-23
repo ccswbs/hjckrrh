@@ -100,7 +100,7 @@ function ldap_profile_user_login(&$edit, $account) {
     }
   }
 
-  if (!$authuser || !$ldapuser || $dn == "") {
+  if (!$authuser || !$ldapuser || $dn == "" || !$server) {
     return;
   }
 
