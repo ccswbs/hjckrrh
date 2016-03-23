@@ -129,7 +129,7 @@ class UGEvent6Migration extends DrupalNode6Migration {
 		if(strpos($m,'[img_assist') !== false){
 			preg_match($pattern_desc, $m, $desc_match);
 			$desc = array_shift($desc_match);
-			$replacement = '<img alt="' . $desc .'" class="img-responsive" src="'. $image_src .'" />';
+			$replacement = '<figure class="thumbnail"><img alt="' . $desc .'" class="img-responsive" src="'. $image_src .'" /></figure>';
 	  		$new_body = preg_replace($pattern, $replacement, $new_body);
 	  	}
   	}
@@ -356,7 +356,7 @@ class UGNews6Migration extends DrupalNode6Migration {
 		if(strpos($m,'[img_assist') !== false){
 			preg_match($pattern_desc, $m, $desc_match);
 			$desc = array_shift($desc_match);
-			$replacement = '<img alt="' . $desc .'" class="img-responsive" src="'. $image_src .'" />';
+			$replacement = '<figure class="thumbnail"><img alt="' . $desc .'" class="img-responsive" src="'. $image_src .'" /></figure>';
 	  		$new_body = preg_replace($pattern, $replacement, $new_body);
 	  	}
   	}
@@ -471,7 +471,7 @@ class UGPage6Migration extends DrupalNode6Migration {
 		if(strpos($m,'[img_assist') !== false){
 			preg_match($pattern_desc, $m, $desc_match);
 			$desc = array_shift($desc_match);
-			$replacement = '<img alt="' . $desc .'" class="img-responsive" src="'. $image_src .'" />';
+			$replacement = '<figure class="thumbnail"><img alt="' . $desc .'" class="img-responsive" src="'. $image_src .'" /></figure>';
 	  		$new_body = preg_replace($pattern, $replacement, $new_body);
 	  	}
   	}
