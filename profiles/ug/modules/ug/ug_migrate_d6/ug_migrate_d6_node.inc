@@ -83,26 +83,61 @@ class UGEvent6Migration extends DrupalNode6Migration {
 	}
 
   
-  /**
-   * Implementation of Migration::prepareRow().
-   */
   public function prepareRow($row) {
     if (parent::prepareRow($row) === FALSE) {
       return FALSE;
     }
+
     // image query
-    $pattern = strval($row->nid) . '.%';
-    $image = Database::getConnection('default', 'default')
+    $pattern = strval($row->nid) . '_%';
+    $images = Database::getConnection('default', 'default')
       ->select('file_managed', 'f')
-      ->fields('f', array('fid'))
+      ->fields('f', array('fid','uri'))
       ->condition('filename', $pattern, 'LIKE')
       ->execute()
-      ->fetchObject();
+      ->fetchAll();
 
-    if ($image) {
-      $row->fid = array($image->fid);
-	  //drush_print_r($row);
+    if ($images) {
+    	$image_src_prefix = '';
+    	if(isset($this->arguments['source_event_image_src_prefix'])){
+	    	$image_src_prefix = $this->arguments['source_event_image_src_prefix'];
+    	}
+    	$row->body = $this->replaceImgAssist($row->body, $images, $image_src_prefix);
     }
+  }
+
+
+  public function replaceImgAssist(&$body, &$images, &$image_src_prefix){
+
+  	$pattern_desc = '/(?<=desc=)([\d\s\w\.\?\,]+?)(?=\|)/';
+  	$pattern_img = '/(?<=_)([\d\s\w\.\?\,]+?)(?=_)/';
+  	$new_body = $body;
+
+  	foreach($images as $i){
+
+  		/* Retrieve old image nid from filename */
+		preg_match($pattern_img, $i->uri, $match_nid);
+		$image_src = $image_src_prefix . "/" . conf_path() . "/files/" . file_uri_target($i->uri);
+		$image_nid = array_shift($match_nid);
+
+		/* Find img_assist tag in body field */
+		$pattern = '/\[img_assist\|(nid=' . $image_nid . ')(.+?)]/';
+		preg_match($pattern, $new_body, $matches);
+		$m = array_shift($matches);
+
+		/* Replace img_assist tag with img tag */
+		if(strpos($m,'[img_assist') !== false){
+			preg_match($pattern_desc, $m, $desc_match);
+			$desc = array_shift($desc_match);
+			$replacement = '<figure class="thumbnail"><img alt="' . $desc .'" class="img-responsive" src="'. $image_src .'" /></figure>';
+	  		$new_body = preg_replace($pattern, $replacement, $new_body);
+	  	}
+  	}
+
+  	if($new_body){
+	  	return $new_body;
+  	}
+  	return $body;
   }
 }
 
@@ -275,27 +310,61 @@ class UGNews6Migration extends DrupalNode6Migration {
 
 	}
 
-  
-  /**
-   * Implementation of Migration::prepareRow().
-   */
   public function prepareRow($row) {
     if (parent::prepareRow($row) === FALSE) {
       return FALSE;
     }
+
     // image query
-    $pattern = strval($row->nid) . '.%';
-    $image = Database::getConnection('default', 'default')
+    $pattern = strval($row->nid) . '_%';
+    $images = Database::getConnection('default', 'default')
       ->select('file_managed', 'f')
-      ->fields('f', array('fid'))
+      ->fields('f', array('fid','uri'))
       ->condition('filename', $pattern, 'LIKE')
       ->execute()
-      ->fetchObject();
+      ->fetchAll();
 
-    if ($image) {
-      $row->fid = array($image->fid);
-	  //drush_print_r($row);
+    if ($images) {
+    	$image_src_prefix = '';
+    	if(isset($this->arguments['source_news_image_src_prefix'])){
+	    	$image_src_prefix = $this->arguments['source_news_image_src_prefix'];
+    	}
+    	$row->body = $this->replaceImgAssist($row->body, $images, $image_src_prefix);
     }
+  }
+
+
+  public function replaceImgAssist(&$body, &$images, &$image_src_prefix){
+
+  	$pattern_desc = '/(?<=desc=)([\d\s\w\.\?\,]+?)(?=\|)/';
+  	$pattern_img = '/(?<=_)([\d\s\w\.\?\,]+?)(?=_)/';
+  	$new_body = $body;
+
+  	foreach($images as $i){
+
+  		/* Retrieve old image nid from filename */
+		preg_match($pattern_img, $i->uri, $match_nid);
+		$image_src = $image_src_prefix . "/" . conf_path() . "/files/" . file_uri_target($i->uri);
+		$image_nid = array_shift($match_nid);
+
+		/* Find img_assist tag in body field */
+		$pattern = '/\[img_assist\|(nid=' . $image_nid . ')(.+?)]/';
+		preg_match($pattern, $new_body, $matches);
+		$m = array_shift($matches);
+
+		/* Replace img_assist tag with img tag */
+		if(strpos($m,'[img_assist') !== false){
+			preg_match($pattern_desc, $m, $desc_match);
+			$desc = array_shift($desc_match);
+			$replacement = '<figure class="thumbnail"><img alt="' . $desc .'" class="img-responsive" src="'. $image_src .'" /></figure>';
+	  		$new_body = preg_replace($pattern, $replacement, $new_body);
+	  	}
+  	}
+
+  	if($new_body){
+	  	return $new_body;
+  	}
+  	return $body;
   }
 
 }
@@ -357,57 +426,59 @@ class UGPage6Migration extends DrupalNode6Migration {
 	        ->defaultValue(LANGUAGE_NONE);
 	}
 
-  /**
-   * Implementation of Migration::prepareRow().
-   */
   public function prepareRow($row) {
     if (parent::prepareRow($row) === FALSE) {
       return FALSE;
     }
+
     // image query
-    $pattern = strval($row->nid) . '.%';
-    $image = Database::getConnection('default', 'default')
+    $pattern = strval($row->nid) . '_%';
+    $images = Database::getConnection('default', 'default')
       ->select('file_managed', 'f')
       ->fields('f', array('fid','uri'))
       ->condition('filename', $pattern, 'LIKE')
       ->execute()
-      ->fetchObject();
+      ->fetchAll();
 
-    if ($image) {
+    if ($images) {
     	$image_src_prefix = '';
     	if(isset($this->arguments['source_page_image_src_prefix'])){
 	    	$image_src_prefix = $this->arguments['source_page_image_src_prefix'];
     	}
-
-      $row->body = $this->replaceImgAssist($row->body, $image, $image_src_prefix);
+    	$row->body = $this->replaceImgAssist($row->body, $images, $image_src_prefix);
     }
   }
 
+  public function replaceImgAssist(&$body, &$images, &$image_src_prefix){
 
-  public function replaceImgAssist(&$body, &$image, &$image_src_prefix){
-
-  	$pattern = '/\[img_assist\|(.+?)]/';
   	$pattern_desc = '/(?<=desc=)([\d\s\w\.\?\,]+?)(?=\|)/';
+  	$pattern_img = '/(?<=_)([\d\s\w\.\?\,]+?)(?=_)/';
+  	$new_body = $body;
 
-	//$image_src = "/" . conf_path() . "/files/" . file_uri_target($image->uri);
-	$image_src = $image_src_prefix . "/" . conf_path() . "/files/" . file_uri_target($image->uri);
-	preg_match($pattern, $body, $matches);
+  	foreach($images as $i){
 
-  /* @TO DO - allow for multiple images (UGImage6 only brings over a single feature image) */
-	$m = array_shift($matches);
-	//foreach($matches as $m){
+  		/* Retrieve old image nid from filename */
+		preg_match($pattern_img, $i->uri, $match_nid);
+		$image_src = $image_src_prefix . "/" . conf_path() . "/files/" . file_uri_target($i->uri);
+		$image_nid = array_shift($match_nid);
+
+		/* Find img_assist tag in body field */
+		$pattern = '/\[img_assist\|(nid=' . $image_nid . ')(.+?)]/';
+		preg_match($pattern, $new_body, $matches);
+		$m = array_shift($matches);
+
+		/* Replace img_assist tag with img tag */
 		if(strpos($m,'[img_assist') !== false){
 			preg_match($pattern_desc, $m, $desc_match);
 			$desc = array_shift($desc_match);
-			$replacement = '<img alt="' . $desc .'" class="img-responsive" src="'. $image_src .'" />';
-	  		$new_body = preg_replace($pattern, $replacement, $body);
+			$replacement = '<figure class="thumbnail"><img alt="' . $desc .'" class="img-responsive" src="'. $image_src .'" /></figure>';
+	  		$new_body = preg_replace($pattern, $replacement, $new_body);
 	  	}
-	//}
+  	}
 
   	if($new_body){
 	  	return $new_body;
   	}
-
   	return $body;
   }
 }
@@ -605,7 +676,8 @@ class UGImage6Migration extends DrupalFile6Migration {
     if($queryImageAssist == TRUE){
 	    $query2 = Database::getConnection('default', $this->sourceConnection)
 	      ->select('img_assist_map', 'im')
-	      ->fields('im', array('nid'));
+	      ->fields('im', array('nid','iid'));
+
 	    $query2->innerJoin('image', 'i', 'im.iid=i.nid');
 	    $query2->condition('i.fid', $row->fid);
 	    $query2->condition('image_size', '_original');
@@ -613,10 +685,11 @@ class UGImage6Migration extends DrupalFile6Migration {
 
 	    if ($node2) {
 	      $nid = strval($node2->nid);
+	      $iid = strval($node2->iid);
 	      $pathinfo = pathinfo($row->filepath);
 	      $filename = $pathinfo['filename'];
 	      $extension = $pathinfo['extension'];
-	      $row->filename = $nid . '.' . $extension;
+	      $row->filename = $nid . '_' . $iid . '_' . $filename . '.' . $extension;
 	    }
 	}
 
