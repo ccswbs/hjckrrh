@@ -59,6 +59,7 @@
     'source_news_image' => '',
     'source_news_caption' => '',
     'source_news_attachment' => 'upload',
+    'source_news_image_src_prefix' => '',
   );
 
   /* FAQ Settings */
@@ -92,6 +93,7 @@
     'source_event_caption' => '',
     'source_event_attachments' => 'upload',
     'source_event_link' => '',
+    'source_event_image_src_prefix' => '',
   );
 
  /* EVENT Multipart (Field Collection) Settings */
