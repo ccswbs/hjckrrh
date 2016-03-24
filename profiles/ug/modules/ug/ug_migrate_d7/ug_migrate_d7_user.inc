@@ -18,7 +18,8 @@ class UGUser7Migration extends DrupalUser7Migration {
 		echo(">>>>>>>");*/
 
 		if($row->uid == '1'){
-			//Skip User 1
+			//Skip User 1 + preserve this row during rollback
+			$this->rollbackAction = MigrateMap::ROLLBACK_PRESERVE;
 			return FALSE;
 		}
 
