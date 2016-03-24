@@ -59,6 +59,11 @@ function ug_migrate_d7_migrate_api() {
     'source_faq_term_keyword' => '',
   );
 
+  $profile_arguments = array(
+    'source_profile_node_type' => 'profile',
+    'source_profile_term_category' => '',
+  );
+  
   /* FILE VARIABLES */
   $file_arguments = array(
     'source_directory' => 'public://',
@@ -280,6 +285,49 @@ function ug_migrate_d7_migrate_api() {
         'source_type' => $featureditem_arguments['source_featureditem_node_type'], 
         'destination_type' => 'feature',
         'dependencies' => array('UGFile7'),
+      ),
+
+      /**** PROFILE migration ****/
+      'UGProfile7' => $node_arguments + $profile_arguments + array(
+        'description' => t('Migration of profiles from Drupal 7'),
+      	'class_name' => 'UGProfile7Migration',
+      	'source_type' => $profile_arguments['source_profile_node_type'],
+      	'destination_type' => 'profile',
+      ),
+      
+      'UGProfileRole7' => $common_arguments + array(
+        'description' => t('Migration of profile role terms from Drupal 7'),
+        'class_name' => 'UGProfileRole7Migration',
+        'source_vocabulary' => $profile_arguments['source_profile_role_vocabulary'],
+        'destination_vocabulary' => 'profile_role',
+      ),
+
+      'UGProfileUnit7' => $common_arguments + array(
+        'description' => t('Migration of profile unit terms from Drupal 7'),
+        'class_name' => 'UGProfileUnit7Migration',
+        'source_vocabulary' => $profile_arguments['source_profile_unit_vocabulary'],
+        'destination_vocabulary' => 'profile_unit',
+      ),
+
+      'UGProfileCategory7' => $common_arguments + array(
+        'description' => t('Migration of profile category terms from Drupal 7'),
+        'class_name' => 'UGProfileCategory7Migration',
+        'source_vocabulary' => $profile_arguments['source_profile_category_vocabulary'],
+        'destination_vocabulary' => 'profile_category',
+      ),
+
+      'UGProfileSubunit7' => $common_arguments + array(
+        'description' => t('Migration of profile subunit terms from Drupal 7'),
+        'class_name' => 'UGProfileSubunit7Migration',
+        'source_vocabulary' => $profile_arguments['source_profile_subunit_vocabulary'],
+        'destination_vocabulary' => 'profile_subunit',
+      ),
+
+      'UGProfileResearch7' => $common_arguments + array(
+        'description' => t('Migration of profile research terms from Drupal 7'),
+        'class_name' => 'UGProfileResearch7Migration',
+        'source_vocabulary' => $profile_arguments['source_profile_research_vocabulary'],
+        'destination_vocabulary' => 'profile_research',
       ),
 
       /**** MENU migration ****/

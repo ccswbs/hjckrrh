@@ -244,6 +244,19 @@ function ug_theme_preprocess_views_view_fields__p2(&$vars) {
   drupal_set_title($vars['fullname']);
 }
 
+/**
+ * Output profile heading as a heading level 2.
+ */
+function ug_theme_field__field_profile_heading($variables) {
+  $output = '';
+
+  // Render the items.
+  foreach ($variables['items'] as $delta => $item) {
+    $output .= '<h2>' . drupal_render($item) . '</h2>';
+  }
+
+  return $output;
+}
 
 /**
  * B1 - Image slider

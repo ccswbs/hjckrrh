@@ -9,6 +9,14 @@
  */
 function ug_profile_taxonomy_default_vocabularies() {
   return array(
+    'profile_category' => array(
+      'name' => 'Profile category',
+      'machine_name' => 'profile_category',
+      'description' => '',
+      'hierarchy' => 0,
+      'module' => 'taxonomy',
+      'weight' => 0,
+    ),
     'profile_field_headings' => array(
       'name' => 'Profile field headings',
       'machine_name' => 'profile_field_headings',
@@ -26,7 +34,7 @@ function ug_profile_taxonomy_default_vocabularies() {
       'weight' => 0,
     ),
     'profile_role' => array(
-      'name' => 'Role',
+      'name' => 'Profile role',
       'machine_name' => 'profile_role',
       'description' => '',
       'hierarchy' => 0,
@@ -34,7 +42,7 @@ function ug_profile_taxonomy_default_vocabularies() {
       'weight' => 0,
     ),
     'profile_subunit' => array(
-      'name' => 'Sub unit',
+      'name' => 'Profile sub unit',
       'machine_name' => 'profile_subunit',
       'description' => '',
       'hierarchy' => 0,
@@ -42,7 +50,7 @@ function ug_profile_taxonomy_default_vocabularies() {
       'weight' => 0,
     ),
     'profile_unit' => array(
-      'name' => 'Unit',
+      'name' => 'Profile unit',
       'machine_name' => 'profile_unit',
       'description' => '',
       'hierarchy' => 0,
