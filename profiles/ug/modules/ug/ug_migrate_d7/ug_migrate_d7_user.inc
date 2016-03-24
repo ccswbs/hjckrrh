@@ -7,6 +7,23 @@ class UGUser7Migration extends DrupalUser7Migration {
     	parent::__construct($arguments);
 
 	}
+
+	public function prepareRow($row){
+		if(parent::prepareRow($row)===FALSE){
+			return FALSE;
+		}
+
+		/*echo("<<<<<<<");
+		drush_print_r($row);
+		echo(">>>>>>>");*/
+
+		if($row->uid == '1'){
+			//Skip User 1 + preserve this row during rollback
+			$this->rollbackAction = MigrateMap::ROLLBACK_PRESERVE;
+			return FALSE;
+		}
+
+	}
 }
 
 class UGRole7Migration extends DrupalRole7Migration {

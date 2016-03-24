@@ -5,6 +5,19 @@ class UGUser6Migration extends DrupalUser6Migration {
 	public function __construct($arguments) {
     	parent::__construct($arguments);
 	}
+
+	public function prepareRow($row){
+		if(parent::prepareRow($row)===FALSE){
+			return FALSE;
+		}
+
+		if($row->uid == '1'){
+			//Skip User 1 + preserve this row during rollback
+			$this->rollbackAction = MigrateMap::ROLLBACK_PRESERVE;
+			return FALSE;
+		}
+
+	}
 }
 
 class UGRole6Migration extends DrupalRole6Migration {
