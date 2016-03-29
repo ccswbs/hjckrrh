@@ -542,6 +542,29 @@ class UGFile7Migration extends DrupalFile7Migration {
 	public function __construct($arguments) {
     	parent::__construct($arguments);
 	}
+
+	/* Update private folder source directory */
+	public function prepare($entity, stdClass $row) {
+
+		if (preg_match('|^(private:\/\/)|i', $row->uri, $matches)) {
+			if ($wrapper = file_stream_wrapper_get_instance_by_uri('private://')) {
+				$private_path = $wrapper->realpath();
+				$entity->source_dir = $private_path;
+			}
+
+			$entity->destination_dir = $matches[1];
+
+			/*echo("<<<<< DEBUG: UGFile7 >>>>>\n");
+			echo("Private path:" . $private_path . "\n");
+			echo("Entity Source Dir:" . $entity->source_dir . "\n");
+			echo("<<<<< / end of DEBUG: UGFile7 >>>>>\n");*/
+	    }
+	}
+
+	protected function fixUri($uri) {
+	    $result = str_replace(array('public://', 'private://'), '', $uri);
+	    return $result;
+	}
 }
 
 /* PROFILE classes */
