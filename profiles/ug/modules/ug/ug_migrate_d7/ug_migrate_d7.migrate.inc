@@ -25,6 +25,12 @@ function ug_migrate_d7_migrate_api() {
     'source_page_term_category' => '',
     'source_page_term_keyword' => '',
   );
+  
+  $book_arguments = array(
+    'source_book_node_type' => 'book',
+    'source_book_term_category' => '',
+    'source_book_term_keyword' => '',
+  );
 
   $news_arguments = array(
     'source_news_node_type' => 'article',
@@ -53,6 +59,11 @@ function ug_migrate_d7_migrate_api() {
     'source_faq_term_keyword' => '',
   );
 
+  $profile_arguments = array(
+    'source_profile_node_type' => 'profile',
+    'source_profile_term_category' => '',
+  );
+  
   /* FILE VARIABLES */
   $file_arguments = array(
     'source_directory' => 'public://',
@@ -155,6 +166,30 @@ function ug_migrate_d7_migrate_api() {
         'dependencies' => array('UGFile7'),
       ),
 
+      /**** BOOK migration ****/
+      'UGBook7' => $node_arguments + $book_arguments + array(
+        'description' => t('Migration of books from Drupal 7'),
+        'class_name' => 'UGBook7Migration',
+        'source_type' => $book_arguments['source_book_node_type'], 
+        'destination_type' => 'book',
+        'dependencies' => array('UGFile7'),
+      ),
+
+      'UGBookMenuLinks7' => $common_arguments + array(
+        'description' => t('Migration of book menu links from Drupal 7'),
+	'class_name' => 'UGBookMenuLinks7Migration',
+	'node_migrations' => array('UGBook7'),
+	'dependencies' => array('UGBook7'),
+      ),
+
+      'UGBookTable7' => $common_arguments + array(
+        'description' => t('Migration of book table from Drupal 7'),
+	'class_name' => 'UGBookTable7Migration',
+	'node_migrations' => array('UGBook7'),
+	'menu_link_migrations' => array('UGBookMenuLinks7'),
+	'dependencies' => array('UGBook7', 'UGBookMenuLinks7'),
+      ),
+	      
       /**** NEWS migration ****/
       'UGNewsCategory7' => $common_arguments + array(
         'description' => t('Migration of news category terms from Drupal 7'),
@@ -250,6 +285,49 @@ function ug_migrate_d7_migrate_api() {
         'source_type' => $featureditem_arguments['source_featureditem_node_type'], 
         'destination_type' => 'feature',
         'dependencies' => array('UGFile7'),
+      ),
+
+      /**** PROFILE migration ****/
+      'UGProfile7' => $node_arguments + $profile_arguments + array(
+        'description' => t('Migration of profiles from Drupal 7'),
+      	'class_name' => 'UGProfile7Migration',
+      	'source_type' => $profile_arguments['source_profile_node_type'],
+      	'destination_type' => 'profile',
+      ),
+      
+      'UGProfileRole7' => $common_arguments + array(
+        'description' => t('Migration of profile role terms from Drupal 7'),
+        'class_name' => 'UGProfileRole7Migration',
+        'source_vocabulary' => $profile_arguments['source_profile_role_vocabulary'],
+        'destination_vocabulary' => 'profile_role',
+      ),
+
+      'UGProfileUnit7' => $common_arguments + array(
+        'description' => t('Migration of profile unit terms from Drupal 7'),
+        'class_name' => 'UGProfileUnit7Migration',
+        'source_vocabulary' => $profile_arguments['source_profile_unit_vocabulary'],
+        'destination_vocabulary' => 'profile_unit',
+      ),
+
+      'UGProfileCategory7' => $common_arguments + array(
+        'description' => t('Migration of profile category terms from Drupal 7'),
+        'class_name' => 'UGProfileCategory7Migration',
+        'source_vocabulary' => $profile_arguments['source_profile_category_vocabulary'],
+        'destination_vocabulary' => 'profile_category',
+      ),
+
+      'UGProfileSubunit7' => $common_arguments + array(
+        'description' => t('Migration of profile subunit terms from Drupal 7'),
+        'class_name' => 'UGProfileSubunit7Migration',
+        'source_vocabulary' => $profile_arguments['source_profile_subunit_vocabulary'],
+        'destination_vocabulary' => 'profile_subunit',
+      ),
+
+      'UGProfileResearch7' => $common_arguments + array(
+        'description' => t('Migration of profile research terms from Drupal 7'),
+        'class_name' => 'UGProfileResearch7Migration',
+        'source_vocabulary' => $profile_arguments['source_profile_research_vocabulary'],
+        'destination_vocabulary' => 'profile_research',
       ),
 
       /**** MENU migration ****/
