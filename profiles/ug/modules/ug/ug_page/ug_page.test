@@ -46,14 +46,24 @@ class UGPageTestCase extends TaxonomyWebTestCase {
 
     /* Get feed. */
     $this->drupalGet('pages/all/feed');
-    /* There should be no "More news" button (yet). */
-    $this->assertNoText('More news');
+    /* There should be both titles*/
+    $this->assertText($node1->title);
+    $this->assertText($node2->title);
 
+    $this->drupalGet('pages/'. $term1->tid . '/feed');
+    /* There should be one title */
+    $this->assertText($node1->title);
+    $this->assertNoText($node2->title);
+
+    $this->drupalGet('pages/'. $term2->tid . '/feed');
+    /* There should be one title */
+    $this->assertText($node2->title);
+    $this->assertNoText($node1->title);
 
     /* Refresh home page. */
-    $this->drupalGet('');
+    //$this->drupalGet('');
     /* Should see "More news" button now. */
-    $this->assertText('More news');
+    //$this->assertText('More news');
   }
 
 }
