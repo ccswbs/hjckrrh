@@ -5,3 +5,36 @@
  */
 
 include_once 'ug_profile.features.inc';
+
+/** 
+ * Implements hook_install().
+ */
+function ug_profile_install() {
+  /* Create the 'Role' vocabulary (if it does not exist). */
+  $role = taxonomy_vocabulary_machine_name_load('profile_role');
+  if ($role == FALSE) {
+    $role = new stdClass();
+    $role->name = 'Role'; /* Name used here will be overridden by feature. */
+    $role->machine_name = 'profile_role';
+    taxonomy_vocabulary_save($role);
+  }
+  /* Add default roles to vocabulary. */
+  $default_roles = ug_profile_role_defaults();
+  foreach ($default_roles as $name) {
+    $terms = taxonomy_get_term_by_name($name, $role->machine_name);
+    if (count($terms) == 0) {
+      $term = new stdClass();
+      $term->vid = $role->vid;
+      $term->name = $name;
+      taxonomy_term_save($term);
+    }
+  }
+}
+
+/**
+ * Returns an array of default role names.
+ */
+function ug_profile_role_defaults() {
+  return array('Staff', 'Faculty', 'Adjunct Faculty', 'Sessional', 'Grad Student', 'Post Doc', 'Professor Emeritus/Emerita');
+}
+

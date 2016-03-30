@@ -292,3 +292,32 @@ E - Events Grid/List View
         .view .date-nav-wrapper .date-next.col-sm-6 {width: 50%;}
         .view .date-nav-wrapper .pager.col-sm-offset-1 { margin-left: 8.333333333333332%;}
     }
+
+/******************************************
+PP - People profiles
+******************************************/
+
+/*-----------------------------------------------
+  Remove margin and border from field_collections
+  -----------------------------------------------*/
+.field-collection-view {
+  margin: 0;
+  border: none;
+}
+.field-collection-container {
+  border: none;
+}
+/*------------------------------------------------
+  Center images on faces grid.
+  ------------------------------------------------*/
+.view-pp1b figure {
+  margin: 8px;
+}
+.view-pp1b figure img {
+  margin: 0 auto;
+}
+.view-pp1b h2 {
+  font-size: 1.2em;
+}
+
+

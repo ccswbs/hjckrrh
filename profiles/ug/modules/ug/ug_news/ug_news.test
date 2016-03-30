@@ -1,0 +1,57 @@
+<?php
+
+/**
+ * @file
+ * Tests for ug_news.module.
+ */
+
+/**
+ * Test UG News feature.
+ */
+class UGNewsTestCase extends DrupalWebTestCase {
+
+  public static function getInfo() {
+    return array(
+      'name' => 'UG News',
+      'description' => 'Test the UG News feature.',
+      'group' => 'UG',
+    );
+  }
+
+  function setUp() {
+    $this->profile = 'ug';
+    parent::setUp();
+    /* Allow creation of Drupal accounts. */
+    $ldap_conf = variable_get('ldap_authentication_conf');
+    $ldap_conf['authenticationMode'] = 1;
+    variable_set('ldap_authentication_conf', $ldap_conf);
+    $web_user = $this->drupalCreateUser(array('create news content'));
+    $this->drupalLogin($web_user);
+  }
+
+  /**
+   * Test "More news" link behaviour.
+   */
+  function testMoreLink() {
+    /* Create 4 news articles. */
+    $node1 = $this->drupalCreateNode(array('type' => 'news', 'promote' => 1));
+    $node2 = $this->drupalCreateNode(array('type' => 'news', 'promote' => 1));
+    $node3 = $this->drupalCreateNode(array('type' => 'news', 'promote' => 0));
+    $node4 = $this->drupalCreateNode(array('type' => 'news', 'promote' => 0));
+    /* Get home page. */
+    $this->drupalGet('');
+    /* There should be no "More news" button (yet). */
+    $this->assertNoText('More news');
+    /* Create 4 more news articles. */
+    $node5 = $this->drupalCreateNode(array('type' => 'news', 'promote' => 1));
+    $node6 = $this->drupalCreateNode(array('type' => 'news', 'promote' => 1));
+    $node7 = $this->drupalCreateNode(array('type' => 'news', 'promote' => 0));
+    $node8 = $this->drupalCreateNode(array('type' => 'news', 'promote' => 0));
+    /* Refresh home page. */
+    $this->drupalGet('');
+    /* Should see "More news" button now. */
+    $this->assertText('More news');
+  }
+
+}
+

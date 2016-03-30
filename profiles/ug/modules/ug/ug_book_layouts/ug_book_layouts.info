@@ -1,0 +1,8 @@
+name = UG Book Layouts
+core = 7.x
+package = UG
+dependencies[] = page_manager
+dependencies[] = ug_book
+features[ctools][] = page_manager:pages_default:1
+features[features_api][] = api:2
+features[page_manager_handlers][] = node_view__book

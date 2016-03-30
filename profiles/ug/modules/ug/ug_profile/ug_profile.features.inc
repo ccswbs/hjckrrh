@@ -8,10 +8,10 @@
  * Implements hook_ctools_plugin_api().
  */
 function ug_profile_ctools_plugin_api($module = NULL, $api = NULL) {
-  if ($module == "field_group" && $api == "field_group") {
+  if ($module == "ds" && $api == "ds") {
     return array("version" => "1");
   }
-  if ($module == "page_manager" && $api == "pages_default") {
+  if ($module == "field_group" && $api == "field_group") {
     return array("version" => "1");
   }
   if ($module == "strongarm" && $api == "strongarm") {
@@ -27,17 +27,43 @@ function ug_profile_views_api($module = NULL, $api = NULL) {
 }
 
 /**
- * Implements hook_default_profile2_type().
+ * Implements hook_image_default_styles().
  */
-function ug_profile_default_profile2_type() {
-  $items = array();
-  $items['main'] = entity_import('profile2_type', '{
-    "userCategory" : true,
-    "userView" : true,
-    "type" : "main",
-    "label" : "Main profile",
-    "weight" : "0",
-    "data" : { "registration" : 0, "use_page" : 1 }
-  }');
+function ug_profile_image_default_styles() {
+  $styles = array();
+
+  // Exported image style: profile_thumbnail.
+  $styles['profile_thumbnail'] = array(
+    'label' => 'Profile thumbnail',
+    'effects' => array(
+      1 => array(
+        'name' => 'image_scale_and_crop',
+        'data' => array(
+          'width' => 145,
+          'height' => 145,
+        ),
+        'weight' => 1,
+      ),
+    ),
+  );
+
+  return $styles;
+}
+
+/**
+ * Implements hook_node_info().
+ */
+function ug_profile_node_info() {
+  $items = array(
+    'profile' => array(
+      'name' => t('Profile'),
+      'base' => 'node_content',
+      'description' => t('The People Profiles feature allows an authorized user to create and edit an organizational profile.'),
+      'has_title' => '1',
+      'title_label' => t('Display name'),
+      'help' => '',
+    ),
+  );
+  drupal_alter('node_info', $items);
   return $items;
 }

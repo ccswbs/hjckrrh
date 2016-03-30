@@ -64,3 +64,5 @@ features[views_view][] = news_image
 features[views_view][] = posted_on
 features[views_view][] = written_by
 project path = /tmp
+files[] = ug_news.test
+

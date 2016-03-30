@@ -244,6 +244,19 @@ function ug_theme_preprocess_views_view_fields__p2(&$vars) {
   drupal_set_title($vars['fullname']);
 }
 
+/**
+ * Output profile heading as a heading level 2.
+ */
+function ug_theme_field__field_profile_heading($variables) {
+  $output = '';
+
+  // Render the items.
+  foreach ($variables['items'] as $delta => $item) {
+    $output .= '<h2>' . drupal_render($item) . '</h2>';
+  }
+
+  return $output;
+}
 
 /**
  * B1 - Image slider
@@ -862,30 +875,6 @@ function ug_theme_pager($variables) {
     )) . '</nav></div>';
   }
   return $output;
-}
-
-/**
- * Override File module to add alternative text
- * Source: modules/file/file.module
- *
- * Returns HTML for an image with an appropriate icon for the given file.
- *
- * @param $variables
- *   An associative array containing:
- *   - file: A file object for which to make an icon.
- *   - icon_directory: (optional) A path to a directory of icons to be used for
- *     files. Defaults to the value of the "file_icon_directory" variable.
- *
- * @ingroup themeable
- */
-function ug_theme_file_icon($variables) {
-  $file = $variables['file'];
-  $icon_directory = $variables['icon_directory'];
-
-  $mime = check_plain($file->filemime);
-  $icon_url = file_icon_url($file, $icon_directory);
-  /* OVERRIDE - Add alternative text */
-  return '<img class="file-icon" alt="' . $mime . '" title="' . $mime . '" src="' . $icon_url . '" />';
 }
 
 /**
