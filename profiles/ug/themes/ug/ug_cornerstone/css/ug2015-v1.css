@@ -285,6 +285,10 @@ Live Date: June 23, 2015
 	    	background-color: #333333;
 	    }
 
+	    #navbar.navbar-inverse ul.menu.nav.navbar-nav.secondary{
+	    	float: none;
+	    }
+
 	/*---------------------
 	Local Menu Tabs - 2nd Level (Dropdown Menu)
 	---------------------**/
