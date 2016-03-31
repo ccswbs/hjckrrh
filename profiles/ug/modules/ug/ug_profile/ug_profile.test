@@ -1,0 +1,45 @@
+<?php
+
+/**
+ * @file
+ * Tests for ug_profile.module.
+ */
+
+/**
+ * Test UG Profile feature.
+ */
+class UGProfileTestCase extends DrupalWebTestCase {
+
+  public static function getInfo() {
+    return array(
+      'name' => 'UG Profile',
+      'description' => 'Test the UG Profile feature.',
+      'group' => 'UG',
+    );
+  }
+
+  function setUp() {
+    $this->profile = 'ug';
+    parent::setUp();
+  }
+
+  /**
+   * Test uninstall hook behaviour.
+   */
+  function testHookUninstall() {
+    /* Enable ug_profile feature (could go in setUp?) */
+    module_enable(array('ug_profile'));
+    /* Assert content type exists. */
+    $this->assertTrue(node_type_get_type('profile'));
+    /* Assert custom field exists (assume the rest are there). */
+    $this->assertNotNull(field_info_field('field_profile_address'));    
+    /* Disable and uninstall the feature. */
+    module_disable(array('ug_profile'));
+    drupal_uninstall_modules(array('ug_profile'));
+    /* Assert profile type has been removed. */
+    $this->assertFalse(node_type_get_type('profile'));
+    /* Assert custom field has been deleted. */
+    $this->assertNull(field_info_field('field_profile_address'));
+  }
+}
+

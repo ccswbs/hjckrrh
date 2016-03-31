@@ -42,7 +42,6 @@ function ug_profile_uninstall() {
   /* Delete fields created by feature. Disabling the feature will not 
    * do this on its own. */
   field_delete_field('field_profile_address');
-  field_delete_field('field_profile_address');
   field_delete_field('field_profile_attachments');
   field_delete_field('field_profile_caption');
   field_delete_field('field_profile_category');
