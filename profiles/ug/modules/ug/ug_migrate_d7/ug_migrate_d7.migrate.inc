@@ -53,6 +53,11 @@ function ug_migrate_d7_migrate_api() {
     'source_faq_term_keyword' => '',
   );
 
+  $profile_arguments = array(
+    'source_profile_node_type' => 'profile',
+    'source_profile_term_category' => '',
+  );
+  
   /* FILE VARIABLES */
   $file_arguments = array(
     'source_directory' => 'public://',
@@ -74,8 +79,8 @@ function ug_migrate_d7_migrate_api() {
 
   $menu_link_arguments = array(
     'menu_migration' => 'UGMenu7',
-    'node_migrations' => array('UGPage7', 'UGNews7', 'UGEvent7', 'UGFAQ7','UGFeaturedItem7'),
-    'term_migrations' => array('UGTerm7', 'UGPageCategory7', 'UGNewsCategory7', 'UGNewsKeyword7', 'UGEventCategory7', 'UGEventKeyword7','UGFAQCategory7', 'UGFAQKeyword7','UGFeaturedItemCategory7'),
+    'node_migrations' => array('UGPage7', 'UGNews7', 'UGEvent7','UGFeaturedItem7','UGFAQ7'),
+    'term_migrations' => array('UGTerm7', 'UGPageCategory7', 'UGNewsCategory7', 'UGNewsKeyword7', 'UGEventCategory7', 'UGEventKeyword7', 'UGFeaturedItemCategory7','UGFAQCategory7','UGFAQKeyword7'),
   );
 
   $menu_arguments = $common_arguments + array(
@@ -214,7 +219,24 @@ function ug_migrate_d7_migrate_api() {
         'dependencies' => array('UGFile7'),
       ),
 
+      /**** FEATURED ITEM migration ****/
+      'UGFeaturedItemCategory7' => $common_arguments + array(
+        'description' => t('Migration of featured item category terms from Drupal 7'),
+        'class_name' => 'UGFeaturedItemCategory7Migration',
+        'source_vocabulary' => $featureditem_arguments['source_featureditem_term_category'],
+        'destination_vocabulary' => 'feature_category',
+      ),
+
+      'UGFeaturedItem7' => $node_arguments + $featureditem_arguments + array(
+        'description' => t('Migration of featured items from Drupal 7'),
+        'class_name' => 'UGFeaturedItem7Migration',
+        'source_type' => $featureditem_arguments['source_featureditem_node_type'], 
+        'destination_type' => 'feature',
+        'dependencies' => array('UGFile7'),
+      ),
+
       /**** FAQ migrations ****/
+
       'UGFAQKeyword7' => $common_arguments + array(
         'description' => t('Migration of FAQ keyword terms from Drupal 7'),
         'class_name' => 'UGFAQKeyword7Migration',
@@ -236,20 +258,47 @@ function ug_migrate_d7_migrate_api() {
         'destination_type' => 'faq',
       ),
 
-      /**** FEATURED ITEM migration ****/
-      'UGFeaturedItemCategory7' => $common_arguments + array(
-        'description' => t('Migration of featured item category terms from Drupal 7'),
-        'class_name' => 'UGFeaturedItemCategory7Migration',
-        'source_vocabulary' => $featureditem_arguments['source_featureditem_term_category'],
-        'destination_vocabulary' => 'feature_category',
+      /**** PROFILE migration ****/
+      'UGProfile7' => $node_arguments + $profile_arguments + array(
+        'description' => t('Migration of profiles from Drupal 7'),
+	'class_name' => 'UGProfile7Migration',
+	'source_type' => $profile_arguments['source_profile_node_type'],
+	'destination_type' => 'profile',
+      ),
+      
+      'UGProfileRole7' => $common_arguments + array(
+        'description' => t('Migration of profile role terms from Drupal 7'),
+        'class_name' => 'UGProfileRole7Migration',
+        'source_vocabulary' => $profile_arguments['source_profile_role_vocabulary'],
+        'destination_vocabulary' => 'profile_role',
       ),
 
-      'UGFeaturedItem7' => $node_arguments + $featureditem_arguments + array(
-        'description' => t('Migration of featured items from Drupal 7'),
-        'class_name' => 'UGFeaturedItem7Migration',
-        'source_type' => $featureditem_arguments['source_featureditem_node_type'], 
-        'destination_type' => 'feature',
-        'dependencies' => array('UGFile7'),
+      'UGProfileUnit7' => $common_arguments + array(
+        'description' => t('Migration of profile unit terms from Drupal 7'),
+        'class_name' => 'UGProfileUnit7Migration',
+        'source_vocabulary' => $profile_arguments['source_profile_unit_vocabulary'],
+        'destination_vocabulary' => 'profile_unit',
+      ),
+
+      'UGProfileCategory7' => $common_arguments + array(
+        'description' => t('Migration of profile category terms from Drupal 7'),
+        'class_name' => 'UGProfileCategory7Migration',
+        'source_vocabulary' => $profile_arguments['source_profile_category_vocabulary'],
+        'destination_vocabulary' => 'profile_category',
+      ),
+
+      'UGProfileSubunit7' => $common_arguments + array(
+        'description' => t('Migration of profile subunit terms from Drupal 7'),
+        'class_name' => 'UGProfileSubunit7Migration',
+        'source_vocabulary' => $profile_arguments['source_profile_subunit_vocabulary'],
+        'destination_vocabulary' => 'profile_subunit',
+      ),
+
+      'UGProfileResearch7' => $common_arguments + array(
+        'description' => t('Migration of profile research terms from Drupal 7'),
+        'class_name' => 'UGProfileResearch7Migration',
+        'source_vocabulary' => $profile_arguments['source_profile_research_vocabulary'],
+        'destination_vocabulary' => 'profile_research',
       ),
 
       /**** MENU migration ****/
