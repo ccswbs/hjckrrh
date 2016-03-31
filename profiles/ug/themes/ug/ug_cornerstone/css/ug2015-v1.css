@@ -265,8 +265,8 @@ Live Date: June 23, 2015
 	    #navbar.navbar-inverse .navbar-nav>li.dropdown.open>a,
 	    #navbar.navbar-inverse .navbar-nav>li.dropdown>a:focus,
 	    #navbar.navbar-inverse .navbar-nav>li.dropdown>a:hover,
-	    #navbar.navbar-inverse .navbar-nav>li.leaf>a:focus,
-	    #navbar.navbar-inverse .navbar-nav>li.leaf>a:hover {
+	    #navbar.navbar-inverse .navbar-nav>li>a:focus,
+	    #navbar.navbar-inverse .navbar-nav>li>a:hover {
 	    	background-color: #242424;
 	    }
 
