@@ -55,16 +55,16 @@ Live Date: June 23, 2015
 	/* [DISABLED - still buggy] - Fix display issues */
 	/* Issue occurs past 768px width after opening toggle in narrow view */
 	/*@media all and (min-width: 768px){
-		#ug-header .in .navbar-small>li>a, 
+		#ug-header .in .navbar-small>li>a,
 		#ug-header .collapsing .navbar-small>li>a {
 			font-size: .857em;
 			padding: 5px 10px;
 		}
 
-		#ug-header footer.navbar-default, 
-		#ug-header nav.navbar div.in, 
-		#ug-header nav.navbar div.collapsing, 
-		#ug-header nav.navbar div.in form, 
+		#ug-header footer.navbar-default,
+		#ug-header nav.navbar div.in,
+		#ug-header nav.navbar div.collapsing,
+		#ug-header nav.navbar div.in form,
 		#ug-header nav.navbar div.collapsing form {
 			background: inherit;
 		}
@@ -190,7 +190,7 @@ Live Date: June 23, 2015
 	    }
 
 
-		#ug-header .in .navbar-small>li>a, 
+		#ug-header .in .navbar-small>li>a,
 		#ug-header .collapsing .navbar-small>li>a {
 			padding-left: 15px;
 			padding-right: 15px;
@@ -250,7 +250,7 @@ Live Date: June 23, 2015
 	---------------------**/
 
 		/** Menu Tab - text colour */
-	    #navbar.navbar-inverse .navbar-nav>li>a { 
+	    #navbar.navbar-inverse .navbar-nav>li>a {
 	    	color: #F5F5F5;
 	    }
 
@@ -302,7 +302,7 @@ Live Date: June 23, 2015
 	    }
 
 		/** Dropdown Menu Items HOVER/FOCUS - background **/
-	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>li>a:focus, 
+	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>li>a:focus,
 	    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>li>a:hover {
 	    	background: #242424; /*#2E2E2E;*/
 	    }
@@ -333,11 +333,11 @@ Live Date: June 23, 2015
 			}
 
 			/** Dropdown Menu Items - Wide/White - HOVER/FOCUS **/
-		    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>li>a:focus, 
+		    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>li>a:focus,
 		    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>li>a:hover {
 		    	background: #E4E4E4;
 		    	color: inherit;
-		    }	   
+		    }
 
 		    /** Active Dropdown Menu Item - Wide/White **/
 		    #navbar.navbar-inverse .navbar-nav>li>.dropdown-menu>.active>a,
@@ -516,7 +516,7 @@ Live Date: June 23, 2015
 	    .teaser-list .ug-media-heading {
 	    	font-size: 1em; /* 14px */
 		    font-weight: 500;
-	        line-height: 1.5em;	
+	        line-height: 1.5em;
 	    }
 
 	/*---------------------
