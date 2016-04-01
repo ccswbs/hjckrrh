@@ -1,0 +1,5 @@
+(insert release date)
+-----------------------
+- Remove profile type and fields when uninstalling UG Profile feature.
+
+

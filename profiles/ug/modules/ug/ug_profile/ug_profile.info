@@ -4,6 +4,7 @@ core = 7.x
 package = UG
 version = 7.x-1.0
 project = ug_profile
+files[] = ug_profile.test
 dependencies[] = auto_nodetitle
 dependencies[] = ds_bootstrap_layouts
 dependencies[] = field_collection
