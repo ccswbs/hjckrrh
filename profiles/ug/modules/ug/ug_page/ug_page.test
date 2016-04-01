@@ -36,14 +36,20 @@ class UGPageTestCase extends TaxonomyWebTestCase {
    */
   function testPageFeeds() {
     /* Create categories and keywords for pages */
-    $pagecats = $this->createVocabulary();
+    //$pagecats = $this->createVocabulary();
+    $pagecats = taxonomy_vocabulary_machine_name_load('page_category');
     $term1 = $this->createTerm($pagecats);
     $term2 = $this->createTerm($pagecats);
 
     /* Create 2 pages */
-    $node1 = $this->drupalCreateNode(array('field_page_category' => $term1->name, 'type' => 'page', 'promote' => 1));
-    $node2 = $this->drupalCreateNode(array('field_page_category' => $term2->name, 'type' => 'page', 'promote' => 1));
-
+    //$node1 = $this->drupalCreateNode(array('field_page_category' => $term1->name, 'type' => 'page', 'promote' => 1));
+    //$node2 = $this->drupalCreateNode(array('field_page_category' => $term2->name, 'type' => 'page', 'promote' => 1));
+    $settings = array('type' => 'page', 'promote' => 1);
+    $settings['field_page_category'][LANGUAGE_NONE][0]['tid'] = $term1->tid;
+    $node1 = $this->drupalCreateNode($settings);
+    $settings['field_page_category'][LANGUAGE_NONE][0]['tid'] = $term2->tid;
+    $node2 = $this->drupalCreateNode($settings);
+   
     /* Get feed. */
     $this->drupalGet('pages/all/feed');
     /* There should be both titles*/
