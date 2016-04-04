@@ -1,5 +1,5 @@
 (insert release date)
 -----------------------
 - Remove profile type and fields when uninstalling UG Profile feature.
-
+- Add position/title field to profile teaser view.
 
