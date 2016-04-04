@@ -20,26 +20,39 @@ class UGProfileTestCase extends DrupalWebTestCase {
 
   function setUp() {
     $this->profile = 'ug';
-    parent::setUp();
+    parent::setUp('ug_profile', 'ug_profile_layouts');
+  }
+
+  /**
+   * Test PP1 - Listing page for multiple profiles
+   */
+  function testListingPage() {
+    $node = array();
+    $node['type'] = 'profile';
+    $node['field_profile_name'][LANGUAGE_NONE][0]['value'] = $this->randomName(8);
+    $node['field_profile_lastname'][LANGUAGE_NONE][0]['value'] = $this->randomName(8);
+    $node['field_profile_title'][LANGUAGE_NONE][0]['value'] = $this->randomName(16);
+    $this->drupalCreateNode($node);
+    $this->drupalGet('people');
+    $this->assertText($node['field_profile_title'][LANGUAGE_NONE][0]['value']);
   }
 
   /**
    * Test uninstall hook behaviour.
    */
   function testHookUninstall() {
-    /* Enable ug_profile feature (could go in setUp?) */
-    module_enable(array('ug_profile'));
     /* Assert content type exists. */
     $this->assertTrue(node_type_get_type('profile'));
     /* Assert custom field exists (assume the rest are there). */
     $this->assertNotNull(field_info_field('field_profile_address'));    
     /* Disable and uninstall the feature. */
-    module_disable(array('ug_profile'));
-    drupal_uninstall_modules(array('ug_profile'));
+    module_disable(array('ug_profile', 'ug_profile_layouts'));
+    drupal_uninstall_modules(array('ug_profile', 'ug_profile_layouts'));
     /* Assert profile type has been removed. */
     $this->assertFalse(node_type_get_type('profile'));
     /* Assert custom field has been deleted. */
     $this->assertNull(field_info_field('field_profile_address'));
   }
+
 }
 
