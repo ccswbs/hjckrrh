@@ -39,3 +39,4 @@ features[variable][] = node_submitted_page
 features[views_view][] = pg1
 features[views_view][] = pg2
 features[views_view][] = pg3_page_item_teaser_list
+files[]=ug_page.test

@@ -1,0 +1,7 @@
+(insert release date)
+-----------------------
+- Remove profile type and fields when uninstalling UG Profile feature.
+- Add position/title field to profile teaser view.
+- Improve visibility of active menu link.
+- Change list of news archive links to "jump" (select) list.
+
