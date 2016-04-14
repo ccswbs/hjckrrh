@@ -16,3 +16,5 @@ features[variable][] = node_admin_theme
 features[variable][] = theme_default
 features[variable][] = theme_ug_cornerstone_settings
 features[variable][] = theme_ug_theme_settings
+files[] = ug_theme_settings.test
+

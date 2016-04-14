@@ -54,18 +54,19 @@
               <li><a href="//www.uoguelph.ca/admissions/">Undergraduate Admissions</a></li>
               <li><a href="//www.uoguelph.ca/graduatestudies/">Graduate Studies</a></li>
               <li><a href="http://opened.uoguelph.ca/en/Distance-Education.asp">Distance Education</a></li>
-              <li><a href="//www.uoguelph.ca/registrar/calendars/">Academic Calendars</a></li>
+              <li><a href="//www.uoguelph.ca/academiccalendars/">Academic Calendars</a></li>
               <li class="divider"></li>
               <li><a href="//www.uoguelph.ca/arts">College of Arts</a></li>
               <li><a href="//www.uoguelph.ca/cbs/">College of Biological Science</a></li>
               <li><a href="//www.uoguelph.ca/business/">College of Business &amp; Economics</a> </li>
               <li><a href="//www.uoguelph.ca/cpes/">College of Physical &amp; Engineering Science</a></li>
-              <li><a href="//www.uoguelph.ca/csahs/">College of Social &amp; Applied Human Sciences</a></li>
-              <li><a href="//www.uoguelph.ca/oac/">Ontario Agricultural College</a></li>
+              <li><a href="//www.csahs.uoguelph.ca/">College of Social &amp; Applied Human Sciences</a></li>
+              <li><a href="//www.oac.uoguelph.ca/">Ontario Agricultural College</a></li>
               <li><a href="//www.ovc.uoguelph.ca/">Ontario Veterinary College</a></li>
               <li class="divider"></li>
               <li><a href="http://www.ridgetownc.uoguelph.ca/">Ridgetown Campus</a></li>
               <li><a href="http://www.guelphhumber.ca/">University of Guelph-Humber</a></li>
+              <li><a href="http://opened.uoguelph.ca/">Open Learning and Educational Support</a></li>
             </ul>
           </li>
 
@@ -75,39 +76,16 @@
             <ul class="dropdown-menu navbar-default dropdown-menu-left" role="menu">
               <li><a href="//www.uoguelph.ca/about.html">About the University</a></li>
                           <li class="divider"></li>
+              <li><a href="//www.uoguelph.ca/arboretum/">Arboretum</a></li>
+              <li class="divider"></li>
               <li><a href="//www.uoguelph.ca/secretariat/office-services/board-governors">Board of Governors</a></li>
               <li><a href="//www.uoguelph.ca/secretariat/office-services/senate">Senate</a></li>
               <li><a href="//www.uoguelph.ca/info/senioradmin">Senior Administration</a></li>
             </ul>
             </li>
 
-         <!-- <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Info For<span class="caret"></span></a>
-            <ul class="dropdown-menu navbar-default dropdown-menu-left" role="menu">
-        <li><a href="http://www.uoguelph.ca/applying/">Future Students</a></li>
-                <li><a href="http://www.uoguelph.ca/students/">Current Students</a></li>
-                <li><a href="http://www.uoguelph.ca/faculty/">Faculty &amp; Staff</a></li>
-                <li><a href="http://www.alumni.uoguelph.ca/">Alumni &amp; Friends</a></li>
-                <li><a href="http://www.cecs.uoguelph.ca/">Co-op &amp; Employers</a></li>
-                <li><a href="http://www.uoguelph.ca/cpa/media/">Media</a></li>
-            </ul>
-          </li> -->
-
-          <!-- <li><a href="/campus/">Community</a></li> -->
           <li><a href="//www.uoguelph.ca/international/">International</a></li>
           <li><a href="//www.uoguelph.ca/president/">President</a></li>
-
-          <!-- <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Leadership <span class="caret"></span></a>
-            <ul class="dropdown-menu navbar-default" role="menu">
-              <li><a href="http://www.uoguelph.ca/president/">President</a></li>
-              <li><a href="http://www.uoguelph.ca/vpacademic/">Provost and Vice-President (Academic)</a></li>
-              <li><a href="http://www.uoguelph.ca/research/people/vpresearch">Vice-President (Research and External Partnerships)</a></li>
-              <li><a href="http://www.uoguelph.ca/vpfinanceadmin/">Vice-President (Finance, Administration and Risk)</a></li>
-              <li><a href="http://www.uoguelph.ca/secretariat/office-services/board-governors">Board of Governors</a></li>
-              <li><a href="http://www.uoguelph.ca/secretariat/office-services/senate">Senate</a></li>
-              <li class="divider"></li>
-              <li><a href="/info/senioradmin">Senior Administration</a></li>
-            </ul>
-          </li> -->
 
           <li><a href="http://www.uoguelph.ca/research/">Research <span class="sr-only">at University of Guelph</span></a></li>
 
@@ -116,6 +94,7 @@
               <li><a href="http://gryphons.ca/">Athletics</a></li>
               <li><a href="//www.bookstore.uoguelph.ca">Bookstore</a></li>
               <li><a href="//www.uoguelph.ca/police/">Campus Community Police</a></li>
+              <li><a href="//www.uoguelph.ca/community/" role="menuitem">Community Relations</a></li>
               <li><a href="//www.uoguelph.ca/ccs/">Computing & Communications Services</a></li>
               <li><a href="//www.hospitality.uoguelph.ca">Hospitality Services</a></li>
               <li><a href="//www.uoguelph.ca/hr/">Human Resources</a></li>
