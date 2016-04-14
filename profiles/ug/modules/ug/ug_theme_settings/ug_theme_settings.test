@@ -1,0 +1,87 @@
+<?php
+
+/**
+ * @file
+ * Tests for ug_theme_settings.module.
+ */
+
+/**
+ * Test UG Theme settings
+ */
+class UGThemeSettingsTestCase extends DrupalWebTestCase {
+
+  public static function getInfo() {
+    return array(
+      'name' => 'UG Theme Settings',
+      'description' => 'Test the UG Theme Settings feature.',
+      'group' => 'UG',
+    );
+  }
+
+  function setUp() {
+    $this->profile = 'ug';
+    parent::setUp();
+    theme_enable(array('ug_cornerstone'));
+    theme_disable(array('bartik'));
+    variable_set('theme_default', 'ug_cornerstone');
+  }
+
+  function globalNavLinks() {
+    return array(
+      '//www.uoguelph.ca/admissions/',
+      '//www.uoguelph.ca/graduatestudies/',
+      '//opened.uoguelph.ca/en/Distance-Education.asp',
+      '//www.uoguelph.ca/academiccalendars/',
+      '//www.uoguelph.ca/arts',
+      '//www.uoguelph.ca/cbs/',
+      '//www.uoguelph.ca/business/',
+      '//www.uoguelph.ca/cpes/',
+      '//www.csahs.uoguelph.ca/',
+      '//www.oac.uoguelph.ca/',
+      '//www.ovc.uoguelph.ca/',
+      'http://www.ridgetownc.uoguelph.ca/',
+      'http://www.guelphhumber.ca/',
+      'http://opened.uoguelph.ca/',
+      '//www.uoguelph.ca/about.html',
+      '//www.uoguelph.ca/arboretum/',
+      '//www.uoguelph.ca/secretariat/office-services/board-governors',
+      '//www.uoguelph.ca/secretariat/office-services/senate',
+      '//www.uoguelph.ca/info/senioradmin',
+      '//www.uoguelph.ca/international/',
+      '//www.uoguelph.ca/president/',
+      '//www.uoguelph.ca/research/',
+      'http://gryphons.ca/',
+      '//www.bookstore.uoguelph.ca',
+      '//www.uoguelph.ca/police/',
+      '//www.uoguelph.ca/community/',
+      '//www.uoguelph.ca/ccs/',
+      '//www.hospitality.uoguelph.ca',
+      '//www.uoguelph.ca/hr/',
+      '//www.uoguelph.ca/studentaffairs/',
+      '//housing.uoguelph.ca',
+      '//www.uoguelph.ca/services/',
+    );
+  }
+
+  /**
+   * Test global navigation links.
+   */
+  function testGlobalNav() {
+    $this->drupalGet('');
+    foreach ($this->globalNavLinks() as $link) {
+      $this->assertLinkByHref($link);
+    }
+  }
+
+  /**
+   * Test our links against the UG Home page.
+   */
+  function testUGHomePageGlobalNav() {
+    $this->drupalGet('http://www.uoguelph.ca/');
+    foreach ($this->globalNavLinks() as $link) {
+      $this->assertLinkByHref($link);
+    }
+  }
+
+}
+
