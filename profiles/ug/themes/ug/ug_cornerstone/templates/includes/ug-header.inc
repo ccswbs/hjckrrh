@@ -120,7 +120,7 @@
               <li><a href="//www.hospitality.uoguelph.ca">Hospitality Services</a></li>
               <li><a href="//www.uoguelph.ca/hr/">Human Resources</a></li>
               <li><a href="//www.uoguelph.ca/studentaffairs/">Student Affairs</a></li>
-              <li><a href="//www.housing.uoguelph.ca">Student Housing Services</a></li>
+              <li><a href="http://housing.uoguelph.ca">Student Housing Services</a></li>
               <li class="divider"></li>
               <li><a href="//www.uoguelph.ca/services/">More Services</a></li>
             </ul>
