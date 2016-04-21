@@ -1,6 +1,8 @@
 
-DEST ?= /var/www/drupal
+PREFIX ?= /usr/local
 APACHE ?= apache
+SHAREDIR ?= $(PREFIX)/share
+DEST ?= $(SHAREDIR)/drupal-7.x
 
 site:
 	drush -y site-install ug
@@ -25,7 +27,7 @@ test: site
 	drush generate-terms service_audience 10
 	drush generate-content --types=service 50
 
-upgrade:
+install:
 	rsync --recursive --verbose --cvs-exclude ../../ $(DEST)/
 	sudo -u $(APACHE) drush -y -r $(DEST) @sites updatedb
 
