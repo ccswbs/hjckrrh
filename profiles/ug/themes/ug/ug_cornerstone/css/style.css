@@ -134,3 +134,8 @@
 	}
 }
 
+span.form-required {
+  color: #990000;
+  font-size: smaller;
+}
+
