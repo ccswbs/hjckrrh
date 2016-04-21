@@ -29,5 +29,5 @@ test: site
 
 install:
 	rsync --recursive --verbose --cvs-exclude ../../ $(DEST)/
-	sudo -u $(APACHE) drush -y -r $(DEST) @sites updatedb
+
 
