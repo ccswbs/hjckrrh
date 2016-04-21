@@ -128,7 +128,7 @@ function auto_nodetitle_operations_update($nodes) {
   */
 function _auto_nodetitle_patternprocessor($pattern, $node) {
   // Replace tokens.
-  $output = token_replace($pattern, array('node' => $node), array('sanitize' => FALSE));
+  $output = token_replace($pattern, array('node' => $node), array('callback' => '_auto_nodetitle_nohtmlentities', 'sanitize' => FALSE, 'clear' => TRUE));
   // Evalute PHP.
   if (variable_get('ant_php_' . $node->type, 0)) {
     $output = auto_nodetitle_eval($output, $node);
@@ -136,6 +136,15 @@ function _auto_nodetitle_patternprocessor($pattern, $node) {
   // Strip tags.
   $output = preg_replace('/[\t\n\r\0\x0B]/', '', strip_tags($output));
   return $output;
+}
+
+/**
+* Callback function to remove entities.
+*/
+function _auto_nodetitle_nohtmlentities(&$replacements, $data, $options) {
+  foreach ($replacements as $key => $value) {
+    $replacements[$key] = decode_entities($value);
+  }
 }
 
 /**
