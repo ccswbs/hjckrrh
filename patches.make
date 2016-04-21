@@ -4,4 +4,5 @@ projects[ctools][patch][] = patches/views_panes-more_link_text-1000146-22_0.patc
 projects[ldap][version] = "1.0-beta12"
 projects[ldap][patch][] = patches/ldap_profile_sid_fix.patch
 projects[drupal][patch][] = patches/drupal-simpletestprofiledependencies-1093420-27-7.x.patch
+projects[linkchecker][version] = "1.2"
 
