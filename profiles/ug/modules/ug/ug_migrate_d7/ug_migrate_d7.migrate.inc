@@ -87,8 +87,7 @@ function ug_migrate_d7_migrate_api() {
   $menu_link_arguments = array(
     'menu_migration' => 'UGMenu7',
     'node_migrations' => array('UGPage7', 'UGNews7', 'UGEvent7', 'UGFAQ7','UGFeaturedItem7','UGProfile7'),
-    'term_migrations' => array('UGTerm7', 'UGPageCategory7', 'UGNewsCategory7', 'UGNewsKeyword7', 'UGEventCategory7', 'UGEventKeyword7','UGFAQCategory7', 'UGFAQKeyword7','UGFeaturedItemCategory7',
-      'UGProfileCategory7','UGProfileKeyword7'),
+    'term_migrations' => array('UGTerm7', 'UGPageCategory7', 'UGNewsCategory7', 'UGNewsKeyword7', 'UGEventCategory7', 'UGEventKeyword7','UGFAQCategory7', 'UGFAQKeyword7','UGFeaturedItemCategory7','UGFeaturedItemKeyword7','UGProfileCategory7','UGProfileKeyword7'),
   );
 
   $menu_arguments = $common_arguments + array(
@@ -179,17 +178,17 @@ function ug_migrate_d7_migrate_api() {
 
       'UGBookMenuLinks7' => $common_arguments + array(
         'description' => t('Migration of book menu links from Drupal 7'),
-	'class_name' => 'UGBookMenuLinks7Migration',
-	'node_migrations' => array('UGBook7'),
-	'dependencies' => array('UGBook7'),
+      	'class_name' => 'UGBookMenuLinks7Migration',
+      	'node_migrations' => array('UGBook7'),
+      	'dependencies' => array('UGBook7'),
       ),
 
       'UGBookTable7' => $common_arguments + array(
         'description' => t('Migration of book table from Drupal 7'),
-	'class_name' => 'UGBookTable7Migration',
-	'node_migrations' => array('UGBook7'),
-	'menu_link_migrations' => array('UGBookMenuLinks7'),
-	'dependencies' => array('UGBook7', 'UGBookMenuLinks7'),
+      	'class_name' => 'UGBookTable7Migration',
+      	'node_migrations' => array('UGBook7'),
+      	'menu_link_migrations' => array('UGBookMenuLinks7'),
+      	'dependencies' => array('UGBook7', 'UGBookMenuLinks7'),
       ),
 	      
       /**** NEWS migration ****/
@@ -279,6 +278,13 @@ function ug_migrate_d7_migrate_api() {
         'class_name' => 'UGFeaturedItemCategory7Migration',
         'source_vocabulary' => $featureditem_arguments['source_featureditem_term_category'],
         'destination_vocabulary' => 'feature_category',
+      ),
+
+      'UGFeaturedItemKeyword7' => $common_arguments + array(
+        'description' => t('Migration of featured item keyword terms from Drupal 7'),
+        'class_name' => 'UGFeaturedItemKeyword7Migration',
+        'source_vocabulary' => $featureditem_arguments['source_featureditem_term_keyword'],
+        'destination_vocabulary' => 'tags',
       ),
 
       'UGFeaturedItem7' => $node_arguments + $featureditem_arguments + array(
