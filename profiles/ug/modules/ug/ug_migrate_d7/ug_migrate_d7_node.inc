@@ -43,7 +43,7 @@ class UGFeaturedItem7Migration extends DrupalNode7Migration {
 
 		/* Featured Item Keyword */
 		$this->addFieldMapping('field_tags', $featureditem_arguments['source_featureditem_keyword'])
-			->sourceMigration('UGTerm7');
+			->sourceMigration(array('UGTerm7','UGFeaturedItemKeyword7'));
 		$this->addFieldMapping('field_tags:source_type')
 			->defaultValue('tid');
 
@@ -66,7 +66,7 @@ class UGFeaturedItem7Migration extends DrupalNode7Migration {
 
 	}
 	
-/* Troubleshooting Function -- Uncomment to print out contents of every row */
+	/* Troubleshooting Function -- Uncomment to print out contents of every row */
 	/*public function prepareRow($row){
 		if(parent::prepareRow($row)===FALSE){
 			return FALSE;
@@ -468,6 +468,13 @@ class UGFAQ7Migration extends DrupalNode7Migration {
 /* TERM classes */
 
 class UGFeaturedItemCategory7Migration extends DrupalTerm7Migration {
+	public function __construct($arguments) {
+    	parent::__construct($arguments);
+
+	}	
+}
+
+class UGFeaturedItemKeyword7Migration extends DrupalTerm7Migration {
 	public function __construct($arguments) {
     	parent::__construct($arguments);
 
