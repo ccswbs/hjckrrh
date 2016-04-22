@@ -85,8 +85,9 @@ function ug_migrate_d7_migrate_api() {
 
   $menu_link_arguments = array(
     'menu_migration' => 'UGMenu7',
-    'node_migrations' => array('UGPage7', 'UGNews7', 'UGEvent7', 'UGFAQ7','UGFeaturedItem7'),
-    'term_migrations' => array('UGTerm7', 'UGPageCategory7', 'UGNewsCategory7', 'UGNewsKeyword7', 'UGEventCategory7', 'UGEventKeyword7','UGFAQCategory7', 'UGFAQKeyword7','UGFeaturedItemCategory7'),
+    'node_migrations' => array('UGPage7', 'UGNews7', 'UGEvent7', 'UGFAQ7','UGFeaturedItem7','UGProfile7'),
+    'term_migrations' => array('UGTerm7', 'UGPageCategory7', 'UGNewsCategory7', 'UGNewsKeyword7', 'UGEventCategory7', 'UGEventKeyword7','UGFAQCategory7', 'UGFAQKeyword7','UGFeaturedItemCategory7',
+      'UGProfileCategory7','UGProfileKeyword7'),
   );
 
   $menu_arguments = $common_arguments + array(
@@ -314,6 +315,13 @@ function ug_migrate_d7_migrate_api() {
         'class_name' => 'UGProfileCategory7Migration',
         'source_vocabulary' => $profile_arguments['source_profile_category_vocabulary'],
         'destination_vocabulary' => 'profile_category',
+      ),
+
+      'UGProfileKeyword7' => $common_arguments + array(
+        'description' => t('Migration of profile keyword terms from Drupal 7'),
+        'class_name' => 'UGProfileKeyword7Migration',
+        'source_vocabulary' => $profile_arguments['source_profile_tags_vocabulary'],
+        'destination_vocabulary' => 'tags',
       ),
 
       'UGProfileSubunit7' => $common_arguments + array(

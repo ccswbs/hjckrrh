@@ -208,6 +208,10 @@
     'source_profile_lab'                  => 'field_profile_lab',
     'source_profile_website'              => 'field_profile_website',
     'source_tags'                         => 'field_tags',
+    'source_tags_source_type'             => 'tid',
+    'source_tags_ignore_case'             => TRUE,
+    'source_tags_create_term'             => TRUE,
+    'source_tags_vocabulary'              => '',
   );
 
 ?>
