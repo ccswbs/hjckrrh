@@ -62,7 +62,7 @@ function ug_migrate_d7_migrate_api() {
   $profile_arguments = array(
     'source_profile_node_type' => 'profile',
     'source_profile_term_category' => '',
-    'source_profile_tags_vocabulary' => '',
+    'source_tags_vocabulary' => '',
   );
   
   /* FILE VARIABLES */
@@ -321,7 +321,7 @@ function ug_migrate_d7_migrate_api() {
       'UGProfileKeyword7' => $common_arguments + array(
         'description' => t('Migration of profile keyword terms from Drupal 7'),
         'class_name' => 'UGProfileKeyword7Migration',
-        'source_vocabulary' => $profile_arguments['source_profile_tags_vocabulary'],
+        'source_vocabulary' => $profile_arguments['source_tags_vocabulary'],
         'destination_vocabulary' => 'tags',
       ),
 
