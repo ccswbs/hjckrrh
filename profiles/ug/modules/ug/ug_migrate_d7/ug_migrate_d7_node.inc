@@ -125,7 +125,7 @@ class UGEvent7Migration extends DrupalNode7Migration {
 
 		/* Event Keyword */
 		$this->addFieldMapping('field_tags', $event_arguments['source_event_keyword'])
-			->sourceMigration('UGTerm7');
+			->sourceMigration(array('UGTerm7','UGEventKeyword7'));
 		$this->addFieldMapping('field_tags:source_type')
 			->defaultValue('tid');
 
@@ -311,7 +311,7 @@ class UGNews7Migration extends DrupalNode7Migration {
 
 		/* News Keyword */
 		$this->addFieldMapping('field_tags', $news_arguments['source_news_keyword'])
-			->sourceMigration('UGTerm7');
+			->sourceMigration(array('UGTerm7','UGNewsKeyword7'));
 		$this->addFieldMapping('field_tags:source_type')
 			->defaultValue('tid');
 
@@ -448,7 +448,7 @@ class UGFAQ7Migration extends DrupalNode7Migration {
 
 		/* FAQ Keyword */
 		$this->addFieldMapping('field_tags', $faq_arguments['source_faq_keyword'])
-			->sourceMigration('UGTerm7');
+			->sourceMigration(array('UGTerm7','UGFAQKeyword7'));
 		$this->addFieldMapping('field_tags:source_type')
 			->defaultValue('tid');
 	}
