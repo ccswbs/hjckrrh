@@ -393,7 +393,7 @@ class UGPage7Migration extends DrupalNode7Migration {
 
 		/* Page Keyword */
 		$this->addFieldMapping('field_tags', $page_arguments['source_page_keyword'])
-			->sourceMigration('UGTerm7');
+			->sourceMigration(array('UGTerm7','UGPageKeyword7'));
 		$this->addFieldMapping('field_tags:source_type')
 			->defaultValue('tid');
 
@@ -510,6 +510,13 @@ class UGNewsKeyword7Migration extends DrupalTerm7Migration {
 }
 
 class UGPageCategory7Migration extends DrupalTerm7Migration {
+	public function __construct($arguments) {
+    	parent::__construct($arguments);
+
+	}	
+}
+
+class UGPageKeyword7Migration extends DrupalTerm7Migration {
 	public function __construct($arguments) {
     	parent::__construct($arguments);
 

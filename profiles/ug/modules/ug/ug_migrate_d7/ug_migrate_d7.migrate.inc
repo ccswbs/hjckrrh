@@ -86,7 +86,7 @@ function ug_migrate_d7_migrate_api() {
   $menu_link_arguments = array(
     'menu_migration' => 'UGMenu7',
     'node_migrations' => array('UGPage7', 'UGNews7', 'UGEvent7', 'UGFAQ7','UGFeaturedItem7'),
-    'term_migrations' => array('UGTerm7', 'UGPageCategory7', 'UGNewsCategory7', 'UGNewsKeyword7', 'UGEventCategory7', 'UGEventKeyword7','UGFAQCategory7', 'UGFAQKeyword7','UGFeaturedItemCategory7'),
+    'term_migrations' => array('UGTerm7', 'UGPageCategory7', 'UGPageKeyword7', 'UGNewsCategory7', 'UGNewsKeyword7', 'UGEventCategory7', 'UGEventKeyword7','UGFAQCategory7', 'UGFAQKeyword7','UGFeaturedItemCategory7'),
   );
 
   $menu_arguments = $common_arguments + array(
@@ -151,6 +151,13 @@ function ug_migrate_d7_migrate_api() {
       ),
 
       /**** PAGE migration ****/
+      'UGPageKeyword7' => $common_arguments + array(
+        'description' => t('Migration of page keyword terms from Drupal 7'),
+        'class_name' => 'UGPageKeyword7Migration',
+        'source_vocabulary' => $page_arguments['source_page_term_keyword'], 
+        'destination_vocabulary' => 'tags',
+      ),
+
       'UGPageCategory7' => $common_arguments + array(
         'description' => t('Migration of page category terms from Drupal 7'),
         'class_name' => 'UGPageCategory7Migration',
