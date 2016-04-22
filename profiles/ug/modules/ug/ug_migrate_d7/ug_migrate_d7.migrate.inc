@@ -62,6 +62,7 @@ function ug_migrate_d7_migrate_api() {
   $profile_arguments = array(
     'source_profile_node_type' => 'profile',
     'source_profile_term_category' => '',
+    'source_profile_tags_vocabulary' => '',
   );
   
   /* FILE VARIABLES */
