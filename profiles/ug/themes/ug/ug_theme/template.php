@@ -390,6 +390,24 @@ function ug_theme_preprocess_views_view_fields__n3(&$vars) {
   $vars['created']   = $vars['fields']['created']->content;
 }
 
+/**
+ * N3 - Recent news teaser list - with summary
+ */
+function ug_theme_preprocess_views_view_fields__n3_summary(&$vars) {
+  $nid = $vars['fields']['nid']->content;
+  $link = $vars['fields']['field_news_link']->content;
+  // $href = empty($link)? 'node/'.$nid: $link;
+  if (!empty($link)) {
+    $vars['link'] = $link;
+  } else {
+    $path = 'node/' . $nid;
+    $vars['link'] = url($path);
+  }
+  // $vars['title']     = l($vars['fields']['title']->content, $href);
+  $vars['title']     = $vars['fields']['title']->content;
+  $vars['body']      = $vars['fields']['field_news_body']->content;
+  $vars['created']   = $vars['fields']['created']->content;
+}
 
 /**
  * F1 - FAQ listing
@@ -928,4 +946,14 @@ function ug_theme_preprocess_views_view__n3(&$vars) {
   $vars['more'] = $view->display_handler->render_more_link();
 }
 
+
+function ug_theme_form_required_marker($variables) {
+  // This is also used in the installer, pre-database setup.
+  $t = get_t();
+  $attributes = array(
+    'class' => 'form-required',
+    'title' => $t('This field is required.'),
+  );
+  return '<span' . drupal_attributes($attributes) . '>(' . $t('required') . ')</span>';
+}
 
