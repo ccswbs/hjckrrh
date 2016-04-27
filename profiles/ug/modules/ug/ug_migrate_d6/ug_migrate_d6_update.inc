@@ -10,6 +10,7 @@ class UGUpdate6Migration extends DrupalNode6Migration {
 	      return FALSE;
 	    }
 
+	    // update node links
 	    if(isset($this->arguments['update_nodelinks'])) {
 	    	if($this->arguments['update_nodelinks'] == TRUE){
 			    $pattern_nodelinks = array('/node/');
@@ -32,6 +33,23 @@ class UGUpdate6Migration extends DrupalNode6Migration {
 			    }
 		    }
 		}
+
+	    // image query
+	    $pattern = strval($row->nid) . '_%';
+	    $images = Database::getConnection('default', 'default')
+	      ->select('file_managed', 'f')
+	      ->fields('f', array('fid','uri'))
+	      ->condition('filename', $pattern, 'LIKE')
+	      ->execute()
+	      ->fetchAll();
+
+	    if ($images) {
+	    	$image_src_prefix = '';
+	    	if(isset($this->arguments['update_src_prefix'])){
+		    	$image_src_prefix = $this->arguments['update_src_prefix'];
+	    	}
+	    	$row->body = $this->replaceImgAssist($row->body, $images, $image_src_prefix);
+	    }
 	}
 
 	public function replaceLinkUrls(&$body, &$replace_urls, &$new_url){
@@ -115,6 +133,40 @@ class UGUpdate6Migration extends DrupalNode6Migration {
 	  	}
 	  	return $body;
 	}
+
+  //replace Image Assist
+  public function replaceImgAssist(&$body, &$images, &$image_src_prefix){
+
+  	$pattern_desc = '/(?<=desc=)([\d\s\w\.\?\,]+?)(?=\|)/';
+  	$pattern_img = '/(?<=_)([\d\s\w\.\?\,]+?)(?=_)/';
+  	$new_body = $body;
+
+  	foreach($images as $i){
+
+  		/* Retrieve old image nid from filename */
+		preg_match($pattern_img, $i->uri, $match_nid);
+		$image_src = $image_src_prefix . "/" . conf_path() . "/files/" . file_uri_target($i->uri);
+		$image_nid = array_shift($match_nid);
+
+		/* Find img_assist tag in body field */
+		$pattern = '/\[img_assist\|(nid=' . $image_nid . ')(.+?)]/';
+		preg_match($pattern, $new_body, $matches);
+		$m = array_shift($matches);
+
+		/* Replace img_assist tag with img tag */
+		if(strpos($m,'[img_assist') !== false){
+			preg_match($pattern_desc, $m, $desc_match);
+			$desc = array_shift($desc_match);
+			$replacement = '<figure class="thumbnail"><img alt="' . $desc .'" class="img-responsive" src="'. $image_src .'" /></figure>';
+	  		$new_body = preg_replace($pattern, $replacement, $new_body);
+	  	}
+  	}
+
+  	if($new_body){
+	  	return $new_body;
+  	}
+  	return $body;
+  }
 }
 
 class UGUpdatePage6Migration extends UGUpdate6Migration {
@@ -526,6 +578,23 @@ class UGUpdateFAQ6Migration extends UGUpdate6Migration {
 			    }
 		    }
 		}
+
+	    // image query
+	    $pattern = strval($row->nid) . '_%';
+	    $images = Database::getConnection('default', 'default')
+	      ->select('file_managed', 'f')
+	      ->fields('f', array('fid','uri'))
+	      ->condition('filename', $pattern, 'LIKE')
+	      ->execute()
+	      ->fetchAll();
+
+	    if ($images) {
+	    	$image_src_prefix = '';
+	    	if(isset($this->arguments['update_src_prefix'])){
+		    	$image_src_prefix = $this->arguments['update_src_prefix'];
+	    	}
+	    	$row->field_faq_answer = $this->replaceImgAssist($row->field_faq_answer, $images, $image_src_prefix);
+	    }
 	}
 }
 

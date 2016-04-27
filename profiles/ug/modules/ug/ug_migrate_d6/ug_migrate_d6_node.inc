@@ -81,64 +81,6 @@ class UGEvent6Migration extends DrupalNode6Migration {
 	    $this->addFieldMapping('field_event_image:language')
 	        ->defaultValue(LANGUAGE_NONE);
 	}
-
-  
-  public function prepareRow($row) {
-    if (parent::prepareRow($row) === FALSE) {
-      return FALSE;
-    }
-
-    // image query
-    $pattern = strval($row->nid) . '_%';
-    $images = Database::getConnection('default', 'default')
-      ->select('file_managed', 'f')
-      ->fields('f', array('fid','uri'))
-      ->condition('filename', $pattern, 'LIKE')
-      ->execute()
-      ->fetchAll();
-
-    if ($images) {
-    	$image_src_prefix = '';
-    	if(isset($this->arguments['source_event_image_src_prefix'])){
-	    	$image_src_prefix = $this->arguments['source_event_image_src_prefix'];
-    	}
-    	$row->body = $this->replaceImgAssist($row->body, $images, $image_src_prefix);
-    }
-  }
-
-
-  public function replaceImgAssist(&$body, &$images, &$image_src_prefix){
-
-  	$pattern_desc = '/(?<=desc=)([\d\s\w\.\?\,]+?)(?=\|)/';
-  	$pattern_img = '/(?<=_)([\d\s\w\.\?\,]+?)(?=_)/';
-  	$new_body = $body;
-
-  	foreach($images as $i){
-
-  		/* Retrieve old image nid from filename */
-		preg_match($pattern_img, $i->uri, $match_nid);
-		$image_src = $image_src_prefix . "/" . conf_path() . "/files/" . file_uri_target($i->uri);
-		$image_nid = array_shift($match_nid);
-
-		/* Find img_assist tag in body field */
-		$pattern = '/\[img_assist\|(nid=' . $image_nid . ')(.+?)]/';
-		preg_match($pattern, $new_body, $matches);
-		$m = array_shift($matches);
-
-		/* Replace img_assist tag with img tag */
-		if(strpos($m,'[img_assist') !== false){
-			preg_match($pattern_desc, $m, $desc_match);
-			$desc = array_shift($desc_match);
-			$replacement = '<figure class="thumbnail"><img alt="' . $desc .'" class="img-responsive" src="'. $image_src .'" /></figure>';
-	  		$new_body = preg_replace($pattern, $replacement, $new_body);
-	  	}
-  	}
-
-  	if($new_body){
-	  	return $new_body;
-  	}
-  	return $body;
-  }
 }
 
 
@@ -310,63 +252,6 @@ class UGNews6Migration extends DrupalNode6Migration {
 
 	}
 
-  public function prepareRow($row) {
-    if (parent::prepareRow($row) === FALSE) {
-      return FALSE;
-    }
-
-    // image query
-    $pattern = strval($row->nid) . '_%';
-    $images = Database::getConnection('default', 'default')
-      ->select('file_managed', 'f')
-      ->fields('f', array('fid','uri'))
-      ->condition('filename', $pattern, 'LIKE')
-      ->execute()
-      ->fetchAll();
-
-    if ($images) {
-    	$image_src_prefix = '';
-    	if(isset($this->arguments['source_news_image_src_prefix'])){
-	    	$image_src_prefix = $this->arguments['source_news_image_src_prefix'];
-    	}
-    	$row->body = $this->replaceImgAssist($row->body, $images, $image_src_prefix);
-    }
-  }
-
-
-  public function replaceImgAssist(&$body, &$images, &$image_src_prefix){
-
-  	$pattern_desc = '/(?<=desc=)([\d\s\w\.\?\,]+?)(?=\|)/';
-  	$pattern_img = '/(?<=_)([\d\s\w\.\?\,]+?)(?=_)/';
-  	$new_body = $body;
-
-  	foreach($images as $i){
-
-  		/* Retrieve old image nid from filename */
-		preg_match($pattern_img, $i->uri, $match_nid);
-		$image_src = $image_src_prefix . "/" . conf_path() . "/files/" . file_uri_target($i->uri);
-		$image_nid = array_shift($match_nid);
-
-		/* Find img_assist tag in body field */
-		$pattern = '/\[img_assist\|(nid=' . $image_nid . ')(.+?)]/';
-		preg_match($pattern, $new_body, $matches);
-		$m = array_shift($matches);
-
-		/* Replace img_assist tag with img tag */
-		if(strpos($m,'[img_assist') !== false){
-			preg_match($pattern_desc, $m, $desc_match);
-			$desc = array_shift($desc_match);
-			$replacement = '<figure class="thumbnail"><img alt="' . $desc .'" class="img-responsive" src="'. $image_src .'" /></figure>';
-	  		$new_body = preg_replace($pattern, $replacement, $new_body);
-	  	}
-  	}
-
-  	if($new_body){
-	  	return $new_body;
-  	}
-  	return $body;
-  }
-
 }
 
 
@@ -425,62 +310,6 @@ class UGPage6Migration extends DrupalNode6Migration {
 	    $this->addFieldMapping('field_page_attachments:language')
 	        ->defaultValue(LANGUAGE_NONE);
 	}
-
-  public function prepareRow($row) {
-    if (parent::prepareRow($row) === FALSE) {
-      return FALSE;
-    }
-
-    // image query
-    $pattern = strval($row->nid) . '_%';
-    $images = Database::getConnection('default', 'default')
-      ->select('file_managed', 'f')
-      ->fields('f', array('fid','uri'))
-      ->condition('filename', $pattern, 'LIKE')
-      ->execute()
-      ->fetchAll();
-
-    if ($images) {
-    	$image_src_prefix = '';
-    	if(isset($this->arguments['source_page_image_src_prefix'])){
-	    	$image_src_prefix = $this->arguments['source_page_image_src_prefix'];
-    	}
-    	$row->body = $this->replaceImgAssist($row->body, $images, $image_src_prefix);
-    }
-  }
-
-  public function replaceImgAssist(&$body, &$images, &$image_src_prefix){
-
-  	$pattern_desc = '/(?<=desc=)([\d\s\w\.\?\,]+?)(?=\|)/';
-  	$pattern_img = '/(?<=_)([\d\s\w\.\?\,]+?)(?=_)/';
-  	$new_body = $body;
-
-  	foreach($images as $i){
-
-  		/* Retrieve old image nid from filename */
-		preg_match($pattern_img, $i->uri, $match_nid);
-		$image_src = $image_src_prefix . "/" . conf_path() . "/files/" . file_uri_target($i->uri);
-		$image_nid = array_shift($match_nid);
-
-		/* Find img_assist tag in body field */
-		$pattern = '/\[img_assist\|(nid=' . $image_nid . ')(.+?)]/';
-		preg_match($pattern, $new_body, $matches);
-		$m = array_shift($matches);
-
-		/* Replace img_assist tag with img tag */
-		if(strpos($m,'[img_assist') !== false){
-			preg_match($pattern_desc, $m, $desc_match);
-			$desc = array_shift($desc_match);
-			$replacement = '<figure class="thumbnail"><img alt="' . $desc .'" class="img-responsive" src="'. $image_src .'" /></figure>';
-	  		$new_body = preg_replace($pattern, $replacement, $new_body);
-	  	}
-  	}
-
-  	if($new_body){
-	  	return $new_body;
-  	}
-  	return $body;
-  }
 }
 
 class UGFAQ6Migration extends DrupalNode6Migration {
@@ -524,16 +353,6 @@ class UGFAQ6Migration extends DrupalNode6Migration {
 		$this->addFieldMapping('field_tags:source_type')
 			->defaultValue('tid');
 	}
-
-	/* Troubleshooting Function -- Uncomment to print out contents of every row */
-	/*public function prepareRow($row){
-		if(parent::prepareRow($row)===FALSE){
-			return FALSE;
-		}
-		echo("<<<<<<<");
-		drush_print_r($row);
-		echo(">>>>>>>");
-	}*/
 }
 
 

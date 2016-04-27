@@ -21,6 +21,7 @@
     'update_nodelinks_urls' => $update_nodelinks_urls,
     'update_hardlinks_source' => $update_hardlinks_source,
     'update_hardlinks_destination' => '',
+    'update_src_prefix' => '',
   );
 
   /* MENU Settings */
