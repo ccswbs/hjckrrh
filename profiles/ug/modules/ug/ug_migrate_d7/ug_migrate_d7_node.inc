@@ -43,7 +43,7 @@ class UGFeaturedItem7Migration extends DrupalNode7Migration {
 
 		/* Featured Item Keyword */
 		$this->addFieldMapping('field_tags', $featureditem_arguments['source_featureditem_keyword'])
-			->sourceMigration('UGTerm7');
+			->sourceMigration(array('UGTerm7','UGFeaturedItemKeyword7'));
 		$this->addFieldMapping('field_tags:source_type')
 			->defaultValue('tid');
 
@@ -66,7 +66,7 @@ class UGFeaturedItem7Migration extends DrupalNode7Migration {
 
 	}
 	
-/* Troubleshooting Function -- Uncomment to print out contents of every row */
+	/* Troubleshooting Function -- Uncomment to print out contents of every row */
 	/*public function prepareRow($row){
 		if(parent::prepareRow($row)===FALSE){
 			return FALSE;
@@ -125,7 +125,7 @@ class UGEvent7Migration extends DrupalNode7Migration {
 
 		/* Event Keyword */
 		$this->addFieldMapping('field_tags', $event_arguments['source_event_keyword'])
-			->sourceMigration('UGTerm7');
+			->sourceMigration(array('UGTerm7','UGEventKeyword7'));
 		$this->addFieldMapping('field_tags:source_type')
 			->defaultValue('tid');
 
@@ -311,7 +311,7 @@ class UGNews7Migration extends DrupalNode7Migration {
 
 		/* News Keyword */
 		$this->addFieldMapping('field_tags', $news_arguments['source_news_keyword'])
-			->sourceMigration('UGTerm7');
+			->sourceMigration(array('UGTerm7','UGNewsKeyword7'));
 		$this->addFieldMapping('field_tags:source_type')
 			->defaultValue('tid');
 
@@ -393,7 +393,7 @@ class UGPage7Migration extends DrupalNode7Migration {
 
 		/* Page Keyword */
 		$this->addFieldMapping('field_tags', $page_arguments['source_page_keyword'])
-			->sourceMigration('UGTerm7');
+			->sourceMigration(array('UGTerm7','UGPageKeyword7'));
 		$this->addFieldMapping('field_tags:source_type')
 			->defaultValue('tid');
 
@@ -448,7 +448,7 @@ class UGFAQ7Migration extends DrupalNode7Migration {
 
 		/* FAQ Keyword */
 		$this->addFieldMapping('field_tags', $faq_arguments['source_faq_keyword'])
-			->sourceMigration('UGTerm7');
+			->sourceMigration(array('UGTerm7','UGFAQKeyword7'));
 		$this->addFieldMapping('field_tags:source_type')
 			->defaultValue('tid');
 	}
@@ -468,6 +468,13 @@ class UGFAQ7Migration extends DrupalNode7Migration {
 /* TERM classes */
 
 class UGFeaturedItemCategory7Migration extends DrupalTerm7Migration {
+	public function __construct($arguments) {
+    	parent::__construct($arguments);
+
+	}	
+}
+
+class UGFeaturedItemKeyword7Migration extends DrupalTerm7Migration {
 	public function __construct($arguments) {
     	parent::__construct($arguments);
 
@@ -510,6 +517,13 @@ class UGNewsKeyword7Migration extends DrupalTerm7Migration {
 }
 
 class UGPageCategory7Migration extends DrupalTerm7Migration {
+	public function __construct($arguments) {
+    	parent::__construct($arguments);
+
+	}	
+}
+
+class UGPageKeyword7Migration extends DrupalTerm7Migration {
 	public function __construct($arguments) {
     	parent::__construct($arguments);
 
@@ -572,157 +586,158 @@ class UGProfile7Migration extends DrupalNode7Migration {
 	public function __construct($arguments) {
     	parent::__construct($arguments);
 
-	$this->destination = new MigrateDestinationNode('profile');
+		$this->destination = new MigrateDestinationNode('profile');
 
-	/* DEFAULT arguments */
-	$profile_arguments = array(
-	  'source_profile_node_type' => 'profile',
-	  'source_profile_name'      => 'field_profile_name',
-	  'source_profile_lastname'  => 'field_profile_lastname',
-	  'source_profile_role'      => 'field_profile_role',
-	  'source_profile_role_source_type' => 'tid',
-	  'source_profile_role_ignore_case' => TRUE,
-	  'source_profile_role_create_term' => TRUE,
-	  'source_profile_role_vocabulary'  => 'profile_role',
-	  'source_profile_unit'      => 'field_profile_unit',
-  	  'source_profile_unit_source_type' => 'tid',
-	  'source_profile_unit_ignore_case' => TRUE,
-	  'source_profile_unit_create_term' => TRUE,
-	  'source_profile_unit_vocabulary'  => 'profile_unit',
-	  'source_profile_summary'   => 'field_profile_summary',
-	  'source_profile_format'    => 'field_profile_summary:format',
-	  'source_profile_category'  => 'field_profile_category',
-  	  'source_profile_category_source_type' => 'tid',
-	  'source_profile_category_ignore_case' => TRUE,
-	  'source_profile_category_create_term' => TRUE,
- 	  'source_profile_category_vocabulary'  => 'profile_category',
-	  'source_profile_title'     => 'field_profile_title',
-	  'source_profile_subunit'   => 'field_profile_subunit',
-  	  'source_profile_subunit_source_type' => 'tid',
-	  'source_profile_subunit_ignore_case' => TRUE,
-	  'source_profile_subunit_create_term' => TRUE,
-	  'source_profile_subunit_vocabulary'  => 'profile_term_subunit',
-	  'source_profile_research'  => 'field_profile_research',
-  	  'source_profile_research_source_type' => 'tid',
-	  'source_profile_research_ignore_case' => TRUE,
-	  'source_profile_research_create_term' => TRUE,
-	  'source_profile_research_vocabulary'  => 'profile_research',
-	  'source_profile_attachments' => 'field_profile_attachments',
-	  'source_profile_image'     => 'field_profile_image',
-	  'source_profile_caption'   => 'field_profile_caption',
-	  'source_profile_address'   => 'field_profile_address',
-	  'source_profile_email'     => 'field_profile_email',
-	  'source_profile_telephonenumber' => 'field_profile_telephonenumber',
-	  'source_profile_faxnumber' => 'field_profile_faxnumber',
-	  'source_profile_office'    => 'field_profile_office',
-	  'source_profile_lab'       => 'field_profile_lab',
-	  'source_profile_website'   => 'field_profile_website',
-	  'source_tags'              => 'field_tags',
-	  'source_tags_source_type'  => 'tid',
-	  'source_tags_ignore_case'  => TRUE,
-	  'source_tags_create_term'  => TRUE,
-	  'source_tags_vocabulary'   => 'tags',
-	);
+		/* DEFAULT arguments */
+		$profile_arguments = array(
+		  'source_profile_node_type' => 'profile',
+		  'source_profile_name'      => 'field_profile_name',
+		  'source_profile_lastname'  => 'field_profile_lastname',
+		  'source_profile_role'      => 'field_profile_role',
+		  'source_profile_role_source_type' => 'tid',
+		  'source_profile_role_ignore_case' => TRUE,
+		  'source_profile_role_create_term' => TRUE,
+		  'source_profile_role_vocabulary'  => 'profile_role',
+		  'source_profile_unit'      => 'field_profile_unit',
+	  	  'source_profile_unit_source_type' => 'tid',
+		  'source_profile_unit_ignore_case' => TRUE,
+		  'source_profile_unit_create_term' => TRUE,
+		  'source_profile_unit_vocabulary'  => 'profile_unit',
+		  'source_profile_summary'   => 'field_profile_summary',
+		  'source_profile_format'    => 'field_profile_summary:format',
+		  'source_profile_category'  => 'field_profile_category',
+	  	  'source_profile_category_source_type' => 'tid',
+		  'source_profile_category_ignore_case' => TRUE,
+		  'source_profile_category_create_term' => TRUE,
+	 	  'source_profile_category_vocabulary'  => 'profile_category',
+		  'source_profile_title'     => 'field_profile_title',
+		  'source_profile_subunit'   => 'field_profile_subunit',
+	  	  'source_profile_subunit_source_type' => 'tid',
+		  'source_profile_subunit_ignore_case' => TRUE,
+		  'source_profile_subunit_create_term' => TRUE,
+		  'source_profile_subunit_vocabulary'  => 'profile_term_subunit',
+		  'source_profile_research'  => 'field_profile_research',
+	  	  'source_profile_research_source_type' => 'tid',
+		  'source_profile_research_ignore_case' => TRUE,
+		  'source_profile_research_create_term' => TRUE,
+		  'source_profile_research_vocabulary'  => 'profile_research',
+		  'source_profile_attachments' => 'field_profile_attachments',
+		  'source_profile_image'     => 'field_profile_image',
+		  'source_profile_caption'   => 'field_profile_caption',
+		  'source_profile_address'   => 'field_profile_address',
+		  'source_profile_email'     => 'field_profile_email',
+		  'source_profile_telephonenumber' => 'field_profile_telephonenumber',
+		  'source_profile_faxnumber' => 'field_profile_faxnumber',
+		  'source_profile_office'    => 'field_profile_office',
+		  'source_profile_lab'       => 'field_profile_lab',
+		  'source_profile_website'   => 'field_profile_website',
+		  'source_tags'              => 'field_tags',
+		  'source_tags_source_type'  => 'tid',
+		  'source_tags_ignore_case'  => TRUE,
+		  'source_tags_create_term'  => TRUE,
+		  'source_tags_vocabulary'   => 'tags',
+		);
 
-	//Override default values with arguments if they exist
-	foreach ($profile_arguments as $key => $value) {
-	    if(isset($this->arguments[$key])){
-	    	$profile_arguments[$key] = $this->arguments[$key];
-	    }
-	}
+		//Override default values with arguments if they exist
+		foreach ($profile_arguments as $key => $value) {
+		    if(isset($this->arguments[$key])){
+		    	$profile_arguments[$key] = $this->arguments[$key];
+		    }
+		}
 
-	/* Profile First and Last Name */
-	$this->addFieldMapping('field_profile_name', $profile_arguments['source_profile_name']);
-	$this->addFieldMapping('field_profile_lastname', $profile_arguments['source_profile_lastname']);
+		/* Profile First and Last Name */
+		$this->addFieldMapping('field_profile_name', $profile_arguments['source_profile_name']);
+		$this->addFieldMapping('field_profile_lastname', $profile_arguments['source_profile_lastname']);
 
-	/* Profile Role */
-	$this->addFieldMapping('field_profile_role', $profile_arguments['source_profile_role'])
-	     ->sourceMigration('UGProfileRole7');
-	$this->addFieldMapping('field_profile_role:source_type')
-	     ->defaultValue($profile_arguments['source_profile_role_source_type']);
-	$this->addFieldMapping('field_profile_role:ignore_case')
-	     ->defaultValue($profile_arguments['source_profile_role_ignore_case']);
-	$this->addFieldMapping('field_profile_role:create_term')
-	     ->defaultValue($profile_arguments['source_profile_role_create_term']);
-	      
-	/* Profile Unit */
-	$this->addFieldMapping('field_profile_unit', $profile_arguments['source_profile_unit'])
-	     ->sourceMigration('UGProfileUnit7');
-	$this->addFieldMapping('field_profile_unit:source_type')
-	     ->defaultValue($profile_arguments['source_profile_unit_source_type']);
-	$this->addFieldMapping('field_profile_unit:ignore_case')
-	     ->defaultValue($profile_arguments['source_profile_unit_ignore_case']);
-	$this->addFieldMapping('field_profile_unit:create_term')
-	     ->defaultValue($profile_arguments['source_profile_unit_create_term']);
-	
-	/* Profile Summary */
-	$this->addFieldMapping('field_profile_summary', $profile_arguments['source_profile_summary']);
-	$this->addFieldMapping('field_profile_summary:format', $profile_arguments['source_profile_format']);
+		/* Profile Role */
+		$this->addFieldMapping('field_profile_role', $profile_arguments['source_profile_role'])
+		     ->sourceMigration('UGProfileRole7');
+		$this->addFieldMapping('field_profile_role:source_type')
+		     ->defaultValue($profile_arguments['source_profile_role_source_type']);
+		$this->addFieldMapping('field_profile_role:ignore_case')
+		     ->defaultValue($profile_arguments['source_profile_role_ignore_case']);
+		$this->addFieldMapping('field_profile_role:create_term')
+		     ->defaultValue($profile_arguments['source_profile_role_create_term']);
+		      
+		/* Profile Unit */
+		$this->addFieldMapping('field_profile_unit', $profile_arguments['source_profile_unit'])
+		     ->sourceMigration('UGProfileUnit7');
+		$this->addFieldMapping('field_profile_unit:source_type')
+		     ->defaultValue($profile_arguments['source_profile_unit_source_type']);
+		$this->addFieldMapping('field_profile_unit:ignore_case')
+		     ->defaultValue($profile_arguments['source_profile_unit_ignore_case']);
+		$this->addFieldMapping('field_profile_unit:create_term')
+		     ->defaultValue($profile_arguments['source_profile_unit_create_term']);
+		
+		/* Profile Summary */
+		$this->addFieldMapping('field_profile_summary', $profile_arguments['source_profile_summary']);
+		$this->addFieldMapping('field_profile_summary:format', $profile_arguments['source_profile_format']);
 
-	/* Profile Category */
-	$this->addFieldMapping('field_profile_category', $profile_arguments['source_profile_category'])
-	     ->sourceMigration('UGProfileCategory7');
-	$this->addFieldMapping('field_profile_category:source_type')
-	     ->defaultValue($profile_arguments['source_profile_category_source_type']);
-	$this->addFieldMapping('field_profile_category:ignore_case')
-	     ->defaultValue($profile_arguments['source_profile_category_ignore_case']);
-	$this->addFieldMapping('field_profile_category:create_term')
-	     ->defaultValue($profile_arguments['source_profile_category_create_term']);
+		/* Profile Category */
+		$this->addFieldMapping('field_profile_category', $profile_arguments['source_profile_category'])
+		     ->sourceMigration('UGProfileCategory7');
+		$this->addFieldMapping('field_profile_category:source_type')
+		     ->defaultValue($profile_arguments['source_profile_category_source_type']);
+		$this->addFieldMapping('field_profile_category:ignore_case')
+		     ->defaultValue($profile_arguments['source_profile_category_ignore_case']);
+		$this->addFieldMapping('field_profile_category:create_term')
+		     ->defaultValue($profile_arguments['source_profile_category_create_term']);
 
-	/* Profile Title */
-	$this->addFieldMapping('field_profile_title', $profile_arguments['source_profile_title']);
-	
-	/* Profile Subunit */
-	$this->addFieldMapping('field_profile_subunit', $profile_arguments['source_profile_subunit'])
-	     ->sourceMigration('UGProfileSubunit7');
-	$this->addFieldMapping('field_profile_subunit:source_type')
-	     ->defaultValue($profile_arguments['source_profile_subunit_source_type']);
-	$this->addFieldMapping('field_profile_subunit:ignore_case')
-	     ->defaultValue($profile_arguments['source_profile_subunit_ignore_case']);
-	$this->addFieldMapping('field_profile_subunit:create_term')
-	     ->defaultValue($profile_arguments['source_profile_subunit_create_term']);
-	
-	/* Profile Research */
-	$this->addFieldMapping('field_profile_research', $profile_arguments['source_profile_research'])
-	     ->sourceMigration('UGProfileResearch7');
-	$this->addFieldMapping('field_profile_research:source_type')
-	     ->defaultValue($profile_arguments['source_profile_research_source_type']);
-	$this->addFieldMapping('field_profile_research:ignore_case')
-	     ->defaultValue($profile_arguments['source_profile_research_ignore_case']);
-	$this->addFieldMapping('field_profile_research:create_term')
-	     ->defaultValue($profile_arguments['source_profile_research_create_term']);
-	     
+		/* Profile Title */
+		$this->addFieldMapping('field_profile_title', $profile_arguments['source_profile_title']);
+		
+		/* Profile Subunit */
+		$this->addFieldMapping('field_profile_subunit', $profile_arguments['source_profile_subunit'])
+		     ->sourceMigration('UGProfileSubunit7');
+		$this->addFieldMapping('field_profile_subunit:source_type')
+		     ->defaultValue($profile_arguments['source_profile_subunit_source_type']);
+		$this->addFieldMapping('field_profile_subunit:ignore_case')
+		     ->defaultValue($profile_arguments['source_profile_subunit_ignore_case']);
+		$this->addFieldMapping('field_profile_subunit:create_term')
+		     ->defaultValue($profile_arguments['source_profile_subunit_create_term']);
+		
+		/* Profile Research */
+		$this->addFieldMapping('field_profile_research', $profile_arguments['source_profile_research'])
+		     ->sourceMigration('UGProfileResearch7');
+		$this->addFieldMapping('field_profile_research:source_type')
+		     ->defaultValue($profile_arguments['source_profile_research_source_type']);
+		$this->addFieldMapping('field_profile_research:ignore_case')
+		     ->defaultValue($profile_arguments['source_profile_research_ignore_case']);
+		$this->addFieldMapping('field_profile_research:create_term')
+		     ->defaultValue($profile_arguments['source_profile_research_create_term']);
+		     
 
-        /* Profile Image */
-	$this->addFieldMapping('field_profile_image', $profile_arguments['source_profile_image'])
-             ->sourceMigration('UGFile7');
-        $this->addFieldMapping('field_profile_image:file_class')
-             ->defaultValue('MigrateFileFid');
-        $this->addFieldMapping('field_profile_image:preserve_files')
-             ->defaultValue('TRUE');
-        $this->addFieldMapping('field_profile_image:alt', $profile_arguments['source_profile_image'] . ':alt')
-             ->defaultValue('');
-        $this->addFieldMapping('field_profile_image:title', $profile_arguments['source_profile_image'] . ':title')
-             ->defaultValue('');
-        $this->addFieldMapping('field_profile_image:language')
-             ->defaultValue(LANGUAGE_NONE);
+	    /* Profile Image */
+		$this->addFieldMapping('field_profile_image', $profile_arguments['source_profile_image'])
+	         ->sourceMigration('UGFile7');
+	    $this->addFieldMapping('field_profile_image:file_class')
+	         ->defaultValue('MigrateFileFid');
+	    $this->addFieldMapping('field_profile_image:preserve_files')
+	         ->defaultValue('TRUE');
+	    $this->addFieldMapping('field_profile_image:alt', $profile_arguments['source_profile_image'] . ':alt')
+	         ->defaultValue('');
+	    $this->addFieldMapping('field_profile_image:title', $profile_arguments['source_profile_image'] . ':title')
+	         ->defaultValue('');
+	    $this->addFieldMapping('field_profile_image:language')
+	         ->defaultValue(LANGUAGE_NONE);
 
-        /* Other Profile Fields */
-        $this->addFieldMapping('field_profile_attachments', $profile_arguments['source_profile_attachments']);
-        $this->addFieldMapping('field_profile_caption', $profile_arguments['source_profile_caption']);
-        $this->addFieldMapping('field_profile_address', $profile_arguments['source_profile_address']);
-        $this->addFieldMapping('field_profile_email', $profile_arguments['source_profile_email']);
-        $this->addFieldMapping('field_profile_telephonenumber', $profile_arguments['source_profile_telephonenumber']);
-        $this->addFieldMapping('field_profile_faxnumber', $profile_arguments['source_profile_faxnumber']);
-        $this->addFieldMapping('field_profile_office', $profile_arguments['source_profile_office']);
-        $this->addFieldMapping('field_profile_lab', $profile_arguments['source_profile_lab']);
-        $this->addFieldMapping('field_profile_website', $profile_arguments['source_profile_website']);
+	    /* Other Profile Fields */
+	    $this->addFieldMapping('field_profile_attachments', $profile_arguments['source_profile_attachments']);
+	    $this->addFieldMapping('field_profile_caption', $profile_arguments['source_profile_caption']);
+	    $this->addFieldMapping('field_profile_address', $profile_arguments['source_profile_address']);
+	    $this->addFieldMapping('field_profile_email', $profile_arguments['source_profile_email']);
+	    $this->addFieldMapping('field_profile_telephonenumber', $profile_arguments['source_profile_telephonenumber']);
+	    $this->addFieldMapping('field_profile_faxnumber', $profile_arguments['source_profile_faxnumber']);
+	    $this->addFieldMapping('field_profile_office', $profile_arguments['source_profile_office']);
+	    $this->addFieldMapping('field_profile_lab', $profile_arguments['source_profile_lab']);
+	    $this->addFieldMapping('field_profile_website', $profile_arguments['source_profile_website']);
 
-        /* Profile Tags */
-        $this->addFieldMapping('field_tags', $profile_arguments['source_tags'])
-             ->sourceMigration('UGTerm7');
-        $this->addFieldMapping('field_tags:source_type')
-             ->defaultValue('tid');
+	    /* Profile Tags */
+	    $this->addFieldMapping('field_tags', $profile_arguments['source_tags'])
+	         ->sourceMigration(array('UGTerm7','UGProfileKeyword7'));
+	    $this->addFieldMapping('field_tags:source_type')
+	         ->defaultValue('tid');
+         
 	}
 }
 
@@ -741,6 +756,13 @@ class UGProfileUnit7Migration extends DrupalTerm7Migration {
 }
 
 class UGProfileCategory7Migration extends DrupalTerm7Migration {
+	public function __construct($arguments) {
+    	parent::__construct($arguments);
+
+	}	
+}
+
+class UGProfileKeyword7Migration extends DrupalTerm7Migration {
 	public function __construct($arguments) {
     	parent::__construct($arguments);
 
