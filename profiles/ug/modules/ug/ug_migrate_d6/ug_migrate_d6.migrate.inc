@@ -6,6 +6,29 @@
 
 function ug_migrate_d6_migrate_api() {
 
+  $node_migrations = array(
+    'UGPage6', 
+    'UGNews6', 
+    'UGEvent6', 
+    'UGFAQ6',
+  );
+
+  $term_migrations = array(
+    'UGTerm6', 
+    'UGPageCategory6', 
+    'UGNewsCategory6', 
+    'UGNewsKeyword6', 
+    'UGEventCategory6', 
+    'UGEventKeyword6',
+    'UGFAQCategory6', 
+    'UGFAQKeyword6',
+  );
+
+  /* UPDATE VARIABLES */
+  $update_arguments = array(
+    'update_nodelinks' => FALSE,
+  );
+
   /* COMMON VARIABLES */
   $common_arguments = array(
     'source_connection' => 'legacy_d6',
@@ -66,11 +89,14 @@ function ug_migrate_d6_migrate_api() {
   );
 
   /* MENU VARIABLES */
-  $menu_names = array('primary-links');
+  $menu_names = array(
+    'primary-links',
+  );
+
   $menu_link_arguments = array(
     'menu_migration' => 'UGMenu6',
-    'node_migrations' => array('UGPage6', 'UGNews6', 'UGEvent6', 'UGFAQ6'),
-    'term_migrations' => array('UGTerm6', 'UGPageCategory6', 'UGNewsCategory6', 'UGNewsKeyword6', 'UGEventCategory6', 'UGEventKeyword6','UGFAQCategory6', 'UGFAQKeyword6'),
+    'node_migrations' => $node_migrations,
+    'term_migrations' => $term_migrations,
   );
 
   $menu_arguments = $common_arguments + array(
@@ -258,6 +284,39 @@ function ug_migrate_d6_migrate_api() {
         'description' => t('Migration of menu links from Drupal 6'),
         'class_name' => 'UGMenuLinks6Migration',
         'menu_names' => $menu_names,
+      ),
+
+      /**** UPDATE migration ****/
+      'UGUpdatePage6' => $node_arguments + $update_arguments + $page_arguments + array(
+        'description' => t('Update migrated page nodes after initial Drupal 6 to Drupal 7 migration'),
+        'class_name' => 'UGUpdatePage6Migration',
+        'source_type' => $page_arguments['source_page_node_type'], 
+        'destination_type' => 'page',
+        'dependencies' => $node_migrations,
+      ),
+
+      'UGUpdateNews6' => $node_arguments + $update_arguments + $news_arguments + array(
+        'description' => t('Update migrated news nodes after initial Drupal 6 to Drupal 7 migration'),
+        'class_name' => 'UGUpdateNews6Migration',
+        'source_type' => $news_arguments['source_news_node_type'], 
+        'destination_type' => 'news',
+        'dependencies' => $node_migrations,
+      ),
+
+      'UGUpdateEvent6' => $node_arguments + $update_arguments + $event_arguments + array(
+        'description' => t('Update migrated event nodes after initial Drupal 6 to Drupal 7 migration'),
+        'class_name' => 'UGUpdateEvent6Migration',
+        'source_type' => $event_arguments['source_event_node_type'], 
+        'destination_type' => 'event',
+        'dependencies' => $node_migrations,
+      ),
+
+      'UGUpdateFAQ6' => $node_arguments + $update_arguments + $faq_arguments + array(
+        'description' => t('Update migrated faq nodes after initial Drupal 6 to Drupal 7 migration'),
+        'class_name' => 'UGUpdateFAQ6Migration',
+        'source_type' => $faq_arguments['source_faq_node_type'], 
+        'destination_type' => 'faq',
+        'dependencies' => $node_migrations,
       ),
 
     ),
