@@ -1,5 +1,121 @@
 <?php 
 
+class UGUpdate6Migration extends DrupalNode6Migration {
+	public function __construct($arguments) {
+    	parent::__construct($arguments);
+	}
+
+	public function prepareRow($row) {
+	    if (parent::prepareRow($row) === FALSE) {
+	      return FALSE;
+	    }
+
+	    if(isset($this->arguments['update_nodelinks'])) {
+	    	if($this->arguments['update_nodelinks'] == TRUE){
+			    $pattern_nodelinks = array('/node/');
+			    $source_migrations = $this->arguments['dependencies'];
+
+			    // replace linked source nids with destination nids
+			    if(isset($this->arguments['update_nodelinks_urls'])){
+			    	$pattern_nodelinks = $this->arguments['update_nodelinks_urls'];
+			    }
+
+
+			    $row->body = $this->replaceSourceNodes($row->body, $pattern_nodelinks, $source_migrations);
+
+			    // replace linked source URLs with destination urls
+			    if(isset($this->arguments['update_hardlinks_source']) &&
+			    	isset($this->arguments['update_hardlinks_destination'])) {
+				    	$replace_urls = $this->arguments['update_hardlinks_source'];
+				    	$new_url = $this->arguments['update_hardlinks_destination'];
+				    	$row->body = $this->replaceLinkUrls($row->body, $replace_urls, $new_url);
+			    }
+		    }
+		}
+	}
+
+	public function replaceLinkUrls(&$body, &$replace_urls, &$new_url){
+	  	$new_body = $body;
+
+	  	//loop through each source site URL up for replacement
+	  	foreach($replace_urls as $u){
+
+	  		//remove trailing slash
+	  		if(substr($u, -1) == '/'){
+	  			$u = substr($u, 0, -1);
+	  		}
+
+	  		//find matches for source site URL
+		  	$escaped_source = preg_quote($u, "/");
+		  	$pattern_search = '/<a\s[^>]*?href=[\"|\'](' . $escaped_source . ')[\/*?|\'|\"][^>]*?>.*?<\/a>/si';
+		  	$num_matches = preg_match_all($pattern_search, $new_body, $matches);
+
+		  	if($num_matches > 0){
+		  		//update link and replace in body field
+		  		foreach($matches[0] as $key => $m){
+					$search_val = $matches[1][$key];
+					$replace_val = $new_url;
+					$updated_m = str_replace($search_val, $replace_val, $m);
+					$new_body = str_replace($m, $updated_m, $new_body);
+		  		}
+		  	}
+  		}
+
+	  	if(isset($new_body)){
+		  	return $new_body;
+	  	}
+	  	return $body;
+
+	}
+
+	public function replaceSourceNodes(&$body, &$pattern_nodelinks, &$migrations){
+	  	$new_body = $body;
+
+	  	foreach($pattern_nodelinks as $np){
+	  		// Search for links matching pattern
+	  		$np = preg_quote($np,"/");
+	  		$pattern_search = '/<a\s[^>]*?href=[\"|\']' . $np . '(\d+)\/*?[^\"\']*?[\"|\'][^>]*?>.*?<\/a>/si';
+	  		$num_matches = preg_match_all($pattern_search, $new_body, $match_pattern);
+
+	  		if($num_matches > 0){
+		  		foreach($match_pattern[0] as $key => $mp){
+		  			//retrieve source node ID in the pattern
+		  			$search_nid = strval($match_pattern[1][$key]);
+		  			$source_migrations = $migrations; 
+
+		  			// get source migrations instances
+		  			$source_migrations = (array)$source_migrations;
+		  			$source_key = array(array($search_nid));
+		  			foreach ($source_migrations as $key => $source_migration) {
+					    $source_migrations[$key] = Migration::getInstance($source_migration);
+					}
+
+					// look up destination ID using source migrations
+					foreach ($source_migrations as $source_migration) {
+						// Break out of the loop as soon as a destination ID is found.
+						if ($replace_nid = $source_migration->getMap()->lookupDestinationID($source_key)) {
+							if (!empty($replace_nid['destid1'])) {
+								break;
+							}
+						}
+					}
+
+					if(!empty($replace_nid['destid1'])){
+						$search_val = "/node/" . $search_nid;
+						$replace_val = "/node/" . $replace_nid['destid1'];
+						$updated_mp = str_replace($search_val, $replace_val, $mp);
+						$new_body = str_replace($mp, $updated_mp, $new_body);
+					}
+		  		}
+	  		}
+	  	}
+
+	  	if(isset($new_body)){
+		  	return $new_body;
+	  	}
+	  	return $body;
+	}
+}
 
 class UGUpdatePage6Migration extends UGUpdate6Migration {
 	public function __construct($arguments) {
@@ -413,121 +529,6 @@ class UGUpdateFAQ6Migration extends UGUpdate6Migration {
 	}
 }
 
-class UGUpdate6Migration extends DrupalNode6Migration {
-	public function __construct($arguments) {
-    	parent::__construct($arguments);
-	}
 
-	public function prepareRow($row) {
-	    if (parent::prepareRow($row) === FALSE) {
-	      return FALSE;
-	    }
-
-	    if(isset($this->arguments['update_nodelinks'])) {
-	    	if($this->arguments['update_nodelinks'] == TRUE){
-			    $pattern_nodelinks = array('/node/');
-			    $source_migrations = $this->arguments['dependencies'];
-
-			    // replace linked source nids with destination nids
-			    if(isset($this->arguments['update_nodelinks_urls'])){
-			    	$pattern_nodelinks = $this->arguments['update_nodelinks_urls'];
-			    }
-
-
-			    $row->body = $this->replaceSourceNodes($row->body, $pattern_nodelinks, $source_migrations);
-
-			    // replace linked source URLs with destination urls
-			    if(isset($this->arguments['update_hardlinks_source']) &&
-			    	isset($this->arguments['update_hardlinks_destination'])) {
-				    	$replace_urls = $this->arguments['update_hardlinks_source'];
-				    	$new_url = $this->arguments['update_hardlinks_destination'];
-				    	$row->body = $this->replaceLinkUrls($row->body, $replace_urls, $new_url);
-			    }
-		    }
-		}
-	}
-
-	public function replaceLinkUrls(&$body, &$replace_urls, &$new_url){
-	  	$new_body = $body;
-
-	  	//loop through each source site URL up for replacement
-	  	foreach($replace_urls as $u){
-
-	  		//remove trailing slash
-	  		if(substr($u, -1) == '/'){
-	  			$u = substr($u, 0, -1);
-	  		}
-
-	  		//find matches for source site URL
-		  	$escaped_source = preg_quote($u, "/");
-		  	$pattern_search = '/<a\s[^>]*?href=[\"|\'](' . $escaped_source . ')[\/*?|\'|\"][^>]*?>.*?<\/a>/si';
-		  	$num_matches = preg_match_all($pattern_search, $new_body, $matches);
-
-		  	if($num_matches > 0){
-		  		//update link and replace in body field
-		  		foreach($matches[0] as $key => $m){
-					$search_val = $matches[1][$key];
-					$replace_val = $new_url;
-					$updated_m = str_replace($search_val, $replace_val, $m);
-					$new_body = str_replace($m, $updated_m, $new_body);
-		  		}
-		  	}
-  		}
-
-	  	if(isset($new_body)){
-		  	return $new_body;
-	  	}
-	  	return $body;
-
-	}
-
-	public function replaceSourceNodes(&$body, &$pattern_nodelinks, &$migrations){
-	  	$new_body = $body;
-
-	  	foreach($pattern_nodelinks as $np){
-	  		// Search for links matching pattern
-	  		$np = preg_quote($np,"/");
-	  		$pattern_search = '/<a\s[^>]*?href=[\"|\']' . $np . '(\d+)\/*?[^\"\']*?[\"|\'][^>]*?>.*?<\/a>/si';
-	  		$num_matches = preg_match_all($pattern_search, $new_body, $match_pattern);
-
-	  		if($num_matches > 0){
-		  		foreach($match_pattern[0] as $key => $mp){
-		  			//retrieve source node ID in the pattern
-		  			$search_nid = strval($match_pattern[1][$key]);
-		  			$source_migrations = $migrations; 
-
-		  			// get source migrations instances
-		  			$source_migrations = (array)$source_migrations;
-		  			$source_key = array(array($search_nid));
-		  			foreach ($source_migrations as $key => $source_migration) {
-					    $source_migrations[$key] = Migration::getInstance($source_migration);
-					}
-
-					// look up destination ID using source migrations
-					foreach ($source_migrations as $source_migration) {
-						// Break out of the loop as soon as a destination ID is found.
-						if ($replace_nid = $source_migration->getMap()->lookupDestinationID($source_key)) {
-							if (!empty($replace_nid['destid1'])) {
-								break;
-							}
-						}
-					}
-
-					if(!empty($replace_nid['destid1'])){
-						$search_val = "/node/" . $search_nid;
-						$replace_val = "/node/" . $replace_nid['destid1'];
-						$updated_mp = str_replace($search_val, $replace_val, $mp);
-						$new_body = str_replace($mp, $updated_mp, $new_body);
-					}
-		  		}
-	  		}
-	  	}
-
-	  	if(isset($new_body)){
-		  	return $new_body;
-	  	}
-	  	return $body;
-	}
-}
 
 ?>
