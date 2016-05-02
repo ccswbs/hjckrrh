@@ -79,6 +79,15 @@ function ug_role_user_default_permissions() {
     'module' => 'menu',
   );
 
+  // Exported permission: 'administer mini panels'.
+  $permissions['administer mini panels'] = array(
+    'name' => 'administer mini panels',
+    'roles' => array(
+      'site manager' => 'site manager',
+    ),
+    'module' => 'panels_mini',
+  );
+
   // Exported permission: 'administer nodes'.
   $permissions['administer nodes'] = array(
     'name' => 'administer nodes',
@@ -153,6 +162,15 @@ function ug_role_user_default_permissions() {
       'publisher' => 'publisher',
     ),
     'module' => 'node',
+  );
+
+  // Exported permission: 'create mini panels'.
+  $permissions['create mini panels'] = array(
+    'name' => 'create mini panels',
+    'roles' => array(
+      'site manager' => 'site manager',
+    ),
+    'module' => 'panels_mini',
   );
 
   // Exported permission: 'create url aliases'.
