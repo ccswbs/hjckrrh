@@ -49,6 +49,10 @@ class UGPageTestCase extends TaxonomyWebTestCase {
    
     /* Get feed. */
     $this->drupalGet('pages/all/feed');
+
+    /* Test page title. */
+    $this->assertText("Pages related to all");
+
     /* There should be both titles*/
     $this->assertText($node1->title);
     $this->assertText($node2->title);
