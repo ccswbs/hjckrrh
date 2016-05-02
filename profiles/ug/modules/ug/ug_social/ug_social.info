@@ -42,3 +42,5 @@ features[views_view][] = s4
 features[views_view][] = s5
 features[views_view][] = s5twtr
 features[views_view][] = s6
+files[] = ug_social.test
+

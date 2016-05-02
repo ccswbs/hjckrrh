@@ -1,0 +1,61 @@
+<?php
+
+/**
+ * @file
+ * Tests for ug_event.module.
+ */
+
+/**
+ * Test UG Event
+ */
+class UGEventTestCase extends DrupalWebTestCase {
+
+  protected $no_results_text = 'No results found.';
+  protected $more_text = 'More events';
+
+  public static function getInfo() {
+    return array(
+      'name' => 'UG Event',
+      'description' => 'Test the UG Event feature.',
+      'group' => 'UG',
+    );
+  }
+
+  function setUp() {
+    $this->profile = 'ug';
+    parent::setup();
+    theme_enable(array('ug_cornerstone'));
+    theme_disable(array('bartik'));
+    variable_set('theme_default', 'ug_cornerstone');
+  }
+
+  function getListingPages() {
+    return array(
+      'events',
+      'events/week',
+      'events/month',
+      'events/archive',
+/*
+      'faq',
+      'features',
+      'news',
+      'pages',
+      'connect',
+      'tags'
+*/
+    );
+  }
+
+  function testNoResultsBehavior() {
+    /* Assert listing pages show 'no results found.' */
+    foreach ($this->getListingPages() as $path) {
+      $this->drupalGet($path);
+      $this->assertText($this->no_results_text);
+    }
+    /* Assert that 'More events' button is hidden. */
+    $this->drupalGet('');
+    $this->assertNoText($this->more_text);
+  }
+
+}
+

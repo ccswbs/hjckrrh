@@ -124,6 +124,7 @@ function ug_news_views_default_views() {
   $handler->display->display_options['arguments']['field_tags_tid']['validate_options']['vocabularies'] = array(
     'tags' => 'tags',
   );
+  $handler->display->display_options['arguments']['field_tags_tid']['validate']['fail'] = 'empty';
   /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
@@ -188,6 +189,7 @@ function ug_news_views_default_views() {
   $handler->display->display_options['arguments']['field_news_tags_tid']['validate_options']['vocabularies'] = array(
     'news_category' => 'news_category',
   );
+  $handler->display->display_options['arguments']['field_news_tags_tid']['validate']['fail'] = 'empty';
   $handler->display->display_options['allow']['use_pager'] = 0;
   $handler->display->display_options['allow']['items_per_page'] = 0;
   $handler->display->display_options['allow']['offset'] = 0;
@@ -495,7 +497,7 @@ function ug_news_views_default_views() {
   $handler = $view->new_display('default', 'Master', 'default');
   $handler->display->display_options['title'] = 'News';
   $handler->display->display_options['use_more'] = TRUE;
-  $handler->display->display_options['use_more_always'] = TRUE;
+  $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'More news';
   $handler->display->display_options['link_display'] = 'custom_url';
   $handler->display->display_options['link_url'] = 'news';
