@@ -46,6 +46,12 @@ function ug_migrate_d6_migrate_api() {
     'source_faq_term_keyword' => '',
   );
 
+  $featureditem_arguments = array(
+    'source_featureditem_node_type' => '',
+    'source_featureditem_term_category' => '',
+    'source_featureditem_term_keyword' => '',
+  );
+
   /* USER VARIABLES */
   $user_arguments = array(
     'role_mappings' => array(),
@@ -69,8 +75,8 @@ function ug_migrate_d6_migrate_api() {
   $menu_names = array('primary-links');
   $menu_link_arguments = array(
     'menu_migration' => 'UGMenu6',
-    'node_migrations' => array('UGPage6', 'UGNews6', 'UGEvent6', 'UGFAQ6'),
-    'term_migrations' => array('UGTerm6', 'UGPageCategory6', 'UGNewsCategory6', 'UGNewsKeyword6', 'UGEventCategory6', 'UGEventKeyword6','UGFAQCategory6', 'UGFAQKeyword6'),
+    'node_migrations' => array('UGPage6', 'UGNews6', 'UGEvent6', 'UGFAQ6', 'UGFeaturedItem6'),
+    'term_migrations' => array('UGTerm6', 'UGPageCategory6', 'UGNewsCategory6', 'UGNewsKeyword6', 'UGEventCategory6', 'UGEventKeyword6','UGFAQCategory6', 'UGFAQKeyword6', 'UGFeaturedItemCategory6', 'UGFeaturedItemKeyword6'),
   );
 
   $menu_arguments = $common_arguments + array(
@@ -187,6 +193,29 @@ function ug_migrate_d6_migrate_api() {
         'source_type' => $news_arguments['source_news_node_type'], 
         'destination_type' => 'news',
         'dependencies' => array('UGFile6','UGImage6'),
+      ),
+
+      /**** FEATURED ITEM migration ****/
+      'UGFeaturedItemKeyword6' => $common_arguments + array(
+        'description' => t('Migration of featured item keyword terms from Drupal 6'),
+        'class_name' => 'UGFeaturedItemKeyword6Migration',
+        'source_vocabulary' => $featureditem_arguments['source_featureditem_term_keyword'],
+        'destination_vocabulary' => 'tags',
+      ),
+
+      'UGFeaturedItemCategory6' => $common_arguments + array(
+        'description' => t('Migration of featured item category terms from Drupal 6'),
+        'class_name' => 'UGFeaturedItemCategory6Migration',
+        'source_vocabulary' => $featureditem_arguments['source_featureditem_term_category'],
+        'destination_vocabulary' => 'feature_category',
+      ),
+
+      'UGFeaturedItem6' => $node_arguments + $featureditem_arguments + array(
+        'description' => t('Migration of featured items from Drupal 6'),
+        'class_name' => 'UGFeaturedItem6Migration',
+        'source_type' => $featureditem_arguments['source_featureditem_node_type'], 
+        'destination_type' => 'feature',
+        'dependencies' => array('UGFile6', 'UGImage6'),
       ),
 
       /**** EVENT migration ****/
