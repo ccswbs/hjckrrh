@@ -1,4 +1,3 @@
-
 <?php
 
 /**
@@ -9,8 +8,9 @@
 /**
  * Test UG Page feature.
  */
-//class UGPageTestCase extends DrupalWebTestCase {
 class UGPageTestCase extends TaxonomyWebTestCase {
+
+  protected $no_results_text = 'No results found.';
 
   public static function getInfo() {
     return array(
@@ -22,7 +22,11 @@ class UGPageTestCase extends TaxonomyWebTestCase {
 
   function setUp() {
     $this->profile = 'ug';
-    parent::setUp();
+    parent::setup('ug_page', 'ug_page_layouts');
+    /* Enable custom theme. */
+    theme_enable(array('ug_cornerstone'));
+    theme_disable(array('bartik'));
+    variable_set('theme_default', 'ug_cornerstone');
     /* Allow creation of Drupal accounts. */
     $ldap_conf = variable_get('ldap_authentication_conf');
     $ldap_conf['authenticationMode'] = 1;
@@ -36,14 +40,11 @@ class UGPageTestCase extends TaxonomyWebTestCase {
    */
   function testPageFeeds() {
     /* Create categories and keywords for pages */
-    //$pagecats = $this->createVocabulary();
     $pagecats = taxonomy_vocabulary_machine_name_load('page_category');
     $term1 = $this->createTerm($pagecats);
     $term2 = $this->createTerm($pagecats);
 
     /* Create 2 pages */
-    //$node1 = $this->drupalCreateNode(array('field_page_category' => $term1->name, 'type' => 'page', 'promote' => 1));
-    //$node2 = $this->drupalCreateNode(array('field_page_category' => $term2->name, 'type' => 'page', 'promote' => 1));
     $settings = array('type' => 'page', 'promote' => 1);
     $settings['field_page_category'][LANGUAGE_NONE][0]['tid'] = $term1->tid;
     $node1 = $this->drupalCreateNode($settings);
@@ -65,11 +66,21 @@ class UGPageTestCase extends TaxonomyWebTestCase {
     /* There should be one title */
     $this->assertText($node2->title);
     $this->assertNoText($node1->title);
+  }
 
-    /* Refresh home page. */
-    //$this->drupalGet('');
-    /* Should see "More news" button now. */
-    //$this->assertText('More news');
+  function getListingPages() {
+    return array(
+      'pages',
+    );
+  }
+
+  function testNoResultsBehavior() {
+    /* Assert listing pages show 'no results found.' */
+    foreach ($this->getListingPages() as $path) {
+      $this->drupalGet($path);
+      $this->assertText($this->no_results_text);
+    }
   }
 
 }
+

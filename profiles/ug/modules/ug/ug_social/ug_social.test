@@ -1,0 +1,46 @@
+<?php
+
+/**
+ * @file
+ * Tests for ug_social.module.
+ */
+
+/**
+ * Test UG Social
+ */
+class UGSocialTestCase extends DrupalWebTestCase {
+
+  protected $no_results_text = 'No results found.';
+
+  public static function getInfo() {
+    return array(
+      'name' => 'UG Social',
+      'description' => 'Test the UG Social feature.',
+      'group' => 'UG',
+    );
+  }
+
+  function setUp() {
+    $this->profile = 'ug';
+    parent::setup('ug_social');
+    theme_enable(array('ug_cornerstone'));
+    theme_disable(array('bartik'));
+    variable_set('theme_default', 'ug_cornerstone');
+  }
+
+  function getListingSocials() {
+    return array(
+      'connect',
+    );
+  }
+
+  function testNoResultsBehavior() {
+    /* Assert listing socials show 'no results found.' */
+    foreach ($this->getListingSocials() as $path) {
+      $this->drupalGet($path);
+      $this->assertText($this->no_results_text);
+    }
+  }
+
+}
+

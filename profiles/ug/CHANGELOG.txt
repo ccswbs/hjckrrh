@@ -1,7 +1,8 @@
-(insert release date)
------------------------
+Hjckrrh 7.2.0, 2016-05-17
+-------------------------
 - Remove profile type and fields when uninstalling UG Profile feature.
 - Add position/title field to profile teaser view.
 - Improve visibility of active menu link.
 - Change list of news archive links to "jump" (select) list.
+- Ensure that all Views have a fall back for dealing with no content.
 
