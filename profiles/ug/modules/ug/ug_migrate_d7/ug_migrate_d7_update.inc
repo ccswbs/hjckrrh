@@ -28,11 +28,21 @@ class UGUpdate7Migration extends DrupalNode7Migration {
 			    // replace linked source URLs with destination urls
 			    if(isset($this->arguments['update_hardlinks_source']) &&
 			    	isset($this->arguments['update_hardlinks_destination'])) {
-				    	$replace_urls = $this->arguments['update_hardlinks_source'];
+				    	$old_urls = $this->arguments['update_hardlinks_source'];
 				    	$new_url = $this->arguments['update_hardlinks_destination'];
-				    	$row->{$this->arguments['update_source_body']}[0] = $this->replaceLinkUrls($row->{$this->arguments['update_source_body']}[0], $replace_urls, $new_url);
+				    	$row->{$this->arguments['update_source_body']}[0] = $this->replaceLinkUrls($row->{$this->arguments['update_source_body']}[0], $old_urls, $new_url);
 			    }
 		    }
+		}
+
+
+	    // update source prefix for in-line images
+	    if(isset($this->arguments['update_prefix_images'])) {
+	    	if($this->arguments['update_prefix_images'] == TRUE){
+		    	$old_prefixes = $this->arguments['update_prefix_source'];
+		    	$new_prefix = $this->arguments['update_prefix_destination'];
+			    $row->{$this->arguments['update_source_body']}[0] = $this->replaceImgTags($row->{$this->arguments['update_source_body']}[0],$old_prefixes, $new_prefix);
+			}
 		}
 	}
 
@@ -68,6 +78,33 @@ class UGUpdate7Migration extends DrupalNode7Migration {
 	  	}
 	  	return $body;
 
+	}
+
+	public function replaceImgTags(&$body, &$old_prefixes, &$new_prefix){
+	  	$new_body = $body;
+
+	  	foreach($old_prefixes as $op){
+
+		  	$prefix_escaped = preg_quote($op, "/");
+	  		$pattern_search = '/<img\s[^>]*?src=[\"|\'](' . $prefix_escaped . ')\/*?[^\"\']*?[\"|\'][^>]*?>/si';
+	  		$num_matches = preg_match_all($pattern_search, $new_body, $matches);
+
+	  		if($num_matches > 0){
+		  		//update image prefix and replace in body field
+		  		foreach($matches[0] as $key => $m){
+					$search_val = $matches[1][$key];
+					$replace_val = $new_prefix;
+					$updated_m = str_replace($search_val, $replace_val, $m);
+					$new_body = str_replace($m, $updated_m, $new_body);
+		  		}
+
+	  		}
+	  	}
+
+	  	if(isset($new_body)){
+		  	return $new_body;
+	  	}
+	  	return $body;
 	}
 
 	public function replaceSourceNodes(&$body, &$pattern_nodelinks, &$migrations){
@@ -117,40 +154,6 @@ class UGUpdate7Migration extends DrupalNode7Migration {
 	  	}
 	  	return $body;
 	}
-
-  //replace Image Assist
-  public function replaceImgAssist(&$body, &$images, &$image_src_prefix){
-
-  	$pattern_desc = '/(?<=desc=)([\d\s\w\.\?\,]+?)(?=\|)/';
-  	$pattern_img = '/(?<=_)([\d\s\w\.\?\,]+?)(?=_)/';
-  	$new_body = $body;
-
-  	foreach($images as $i){
-
-  		/* Retrieve old image nid from filename */
-		preg_match($pattern_img, $i->uri, $match_nid);
-		$image_src = $image_src_prefix . "/" . conf_path() . "/files/" . file_uri_target($i->uri);
-		$image_nid = array_shift($match_nid);
-
-		/* Find img_assist tag in body field */
-		$pattern = '/\[img_assist\|(nid=' . $image_nid . ')(.+?)]/';
-		preg_match($pattern, $new_body, $matches);
-		$m = array_shift($matches);
-
-		/* Replace img_assist tag with img tag */
-		if(strpos($m,'[img_assist') !== false){
-			preg_match($pattern_desc, $m, $desc_match);
-			$desc = array_shift($desc_match);
-			$replacement = '<figure class="thumbnail"><img alt="' . $desc .'" class="img-responsive" src="'. $image_src .'" /></figure>';
-	  		$new_body = preg_replace($pattern, $replacement, $new_body);
-	  	}
-  	}
-
-  	if($new_body){
-	  	return $new_body;
-  	}
-  	return $body;
-  }
 }
 
 class UGUpdatePage7Migration extends UGUpdate7Migration {

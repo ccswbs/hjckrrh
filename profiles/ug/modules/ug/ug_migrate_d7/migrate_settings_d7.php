@@ -16,13 +16,21 @@
       //'https://www.uoguelph.ca/site-stub',
   );
 
+  $update_prefix_source = array(
+      //'/sitename/sites/default',
+      //'http://www.uoguelph.ca/sitename/sites/default',
+      //'https://www.uoguelph.ca/sitename/sites/default',
+  );
+
   // Usage: define site_stub in specific site config file & set nodelinks to TRUE
   $update_arguments = array(
     'update_nodelinks' => FALSE,
     'update_nodelinks_urls' => $update_nodelinks_urls,
     'update_hardlinks_source' => $update_hardlinks_source,
     'update_hardlinks_destination' => '',
-    'update_src_prefix' => '',
+    'update_prefix_images' => FALSE,
+    'update_prefix_source' => $update_prefix_source,
+    'update_prefix_destination' => '',
   );
 
   /* MENU Settings */
