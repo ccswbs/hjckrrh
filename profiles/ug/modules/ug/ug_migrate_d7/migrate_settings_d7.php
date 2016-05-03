@@ -28,7 +28,7 @@
     'update_nodelinks_urls' => $update_nodelinks_urls,
     'update_hardlinks_source' => $update_hardlinks_source,
     'update_hardlinks_destination' => '',
-    'update_prefix_images' => FALSE,
+    'update_prefix_inline' => FALSE,
     'update_prefix_source' => $update_prefix_source,
     'update_prefix_destination' => '',
   );

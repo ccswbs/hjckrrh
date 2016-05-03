@@ -36,12 +36,13 @@ class UGUpdate7Migration extends DrupalNode7Migration {
 		}
 
 
-	    // update source prefix for in-line images
-	    if(isset($this->arguments['update_prefix_images'])) {
-	    	if($this->arguments['update_prefix_images'] == TRUE){
+	    // update source prefix for in-line images & files
+	    if(isset($this->arguments['update_prefix_inline'])) {
+	    	if($this->arguments['update_prefix_inline'] == TRUE){
 		    	$old_prefixes = $this->arguments['update_prefix_source'];
 		    	$new_prefix = $this->arguments['update_prefix_destination'];
 			    $row->{$this->arguments['update_source_body']}[0] = $this->replaceImgTags($row->{$this->arguments['update_source_body']}[0],$old_prefixes, $new_prefix);
+				$row->{$this->arguments['update_source_body']}[0] = $this->replaceLinkUrls($row->{$this->arguments['update_source_body']}[0], $old_prefixes, $new_prefix);
 			}
 		}
 	}
