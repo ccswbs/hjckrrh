@@ -119,8 +119,8 @@ class UGUpdate6Migration extends DrupalNode6Migration {
 					}
 
 					if(!empty($replace_nid['destid1'])){
-						$search_val = "/node/" . $search_nid;
-						$replace_val = "/node/" . $replace_nid['destid1'];
+						$search_val = "node/" . $search_nid;
+						$replace_val = "node/" . $replace_nid['destid1'];
 						$updated_mp = str_replace($search_val, $replace_val, $mp);
 						$new_body = str_replace($mp, $updated_mp, $new_body);
 					}
