@@ -5,6 +5,26 @@
   (source => destination)
   ******************************/
 
+  $update_nodelinks_urls = array(
+      //'/sitename/node/',
+      //'http://www.uoguelph.ca/site-stub/node/',
+      //'https://www.uoguelph.ca/site-stub/node/',
+  );
+
+  $update_hardlinks_source = array(
+      //'http://www.uoguelph.ca/site-stub',
+      //'https://www.uoguelph.ca/site-stub',
+  );
+
+  // Usage: define site_stub in specific site config file & set nodelinks to TRUE
+  $update_arguments = array(
+    'update_nodelinks' => FALSE,
+    'update_nodelinks_urls' => $update_nodelinks_urls,
+    'update_hardlinks_source' => $update_hardlinks_source,
+    'update_hardlinks_destination' => '',
+    'update_src_prefix' => '',
+  );
+
   /* MENU Settings */
   $menu_names = array('main-menu');
 

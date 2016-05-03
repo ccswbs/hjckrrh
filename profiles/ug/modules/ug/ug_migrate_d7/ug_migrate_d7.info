@@ -7,6 +7,7 @@ dependencies[] = migrate_d2d
 
 files[] = ug_migrate_d7_user.inc
 files[] = ug_migrate_d7_node.inc
+files[] = ug_migrate_d7_update.inc
 files[] = ug_migrate_d7_menu.inc
 files[] = ug_migrate_d7_book.inc
 files[] = ug_migrate_d7.migrate.inc
