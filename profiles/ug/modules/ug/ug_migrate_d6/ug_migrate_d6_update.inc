@@ -95,6 +95,8 @@ class UGUpdate6Migration extends DrupalNode6Migration {
 	  		$pattern_search = '/<a\s[^>]*?href=[\"|\']' . $np . '(\d+)\/*?[^\"\']*?[\"|\'][^>]*?>.*?<\/a>/si';
 	  		$num_matches = preg_match_all($pattern_search, $new_body, $match_pattern);
 
+	  		drush_print_r($match_pattern);
+
 	  		if($num_matches > 0){
 		  		foreach($match_pattern[0] as $key => $mp){
 		  			//retrieve source node ID in the pattern
@@ -119,8 +121,8 @@ class UGUpdate6Migration extends DrupalNode6Migration {
 					}
 
 					if(!empty($replace_nid['destid1'])){
-						$search_val = "/node/" . $search_nid;
-						$replace_val = "/node/" . $replace_nid['destid1'];
+						$search_val = "node/" . $search_nid;
+						$replace_val = "node/" . $replace_nid['destid1'];
 						$updated_mp = str_replace($search_val, $replace_val, $mp);
 						$new_body = str_replace($mp, $updated_mp, $new_body);
 					}
