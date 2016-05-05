@@ -35,14 +35,6 @@ class UGEventTestCase extends DrupalWebTestCase {
       'events/week',
       'events/month',
       'events/archive',
-/*
-      'faq',
-      'features',
-      'news',
-      'pages',
-      'connect',
-      'tags'
-*/
     );
   }
 
@@ -55,6 +47,28 @@ class UGEventTestCase extends DrupalWebTestCase {
     /* Assert that 'More events' button is hidden. */
     $this->drupalGet('');
     $this->assertNoText($this->more_text);
+  }
+
+  /**
+   * Test event summary is used on listing pages.
+   */
+  function testSummary() {
+    /* Generate some random text. */
+    $body_text = $this->randomString();
+    $summary_text = $this->randomString();
+    /* Create a node with body and summary. */
+    $settings = array();
+    $settings['type'] = 'event';
+    $settings['field_event_body'][LANGUAGE_NONE][0]['value'] = $body_text;
+    $settings['field_event_body'][LANGUAGE_NONE][0]['summary'] = $summary_text;
+    $settings['field_event_date'][LANGUAGE_NONE][0]['value'] = '2018-01-10 20:00:45';
+    $settings['field_event_date'][LANGUAGE_NONE][0]['value2'] = '2018-01-10 22:30:45';
+    $node = $this->drupalCreateNode($settings);
+    /* Get events listing page. */
+    $this->drupalGet('events');
+    /* Should show summary, not body. */
+    $this->assertText($summary_text);
+    $this->assertNoText($body_text);
   }
 
 }
