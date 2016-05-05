@@ -73,4 +73,3 @@ features[views_view][] = event_week_list
 features_exclude[dependencies][ctools] = ctools
 features_exclude[field_base][body] = body
 files[] = ug_event.test
-
