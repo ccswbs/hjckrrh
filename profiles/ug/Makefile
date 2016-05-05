@@ -1,8 +1,6 @@
 
 PREFIX ?= /usr/local
-APACHE ?= apache
-SHAREDIR ?= $(PREFIX)/share
-DEST ?= $(SHAREDIR)/drupal-7.x
+DEST ?= $(PREFIX)/drupal-7.x
 
 site:
 	drush -y site-install ug
