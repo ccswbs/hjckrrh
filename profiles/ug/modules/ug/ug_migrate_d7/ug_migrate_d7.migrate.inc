@@ -7,6 +7,47 @@
 
 function ug_migrate_d7_migrate_api() {
 
+  $node_migrations = array(
+    'UGPage7', 
+    'UGNews7', 
+    'UGEvent7', 
+    'UGFAQ7',
+    'UGFeaturedItem7',
+    'UGProfile7',
+  );
+
+  $update_migrations = array(
+    'UGUpdatePage7', 
+    'UGUpdateNews7', 
+    'UGUpdateEvent7', 
+    'UGUpdateFAQ7',
+    'UGUpdateFeaturedItem7',
+    'UGUpdateProfile7',
+  );
+
+  $term_migrations = array(
+    'UGTerm7', 
+    'UGPageCategory7', 
+    'UGPageKeyword7', 
+    'UGNewsCategory7', 
+    'UGNewsKeyword7', 
+    'UGEventCategory7', 
+    'UGEventKeyword7',
+    'UGFAQCategory7', 
+    'UGFAQKeyword7',
+    'UGFeaturedItemCategory7',
+    'UGFeaturedItemKeyword7',
+    'UGProfileCategory7',
+    'UGProfileKeyword7',
+  );
+
+
+  /* UPDATE VARIABLES */
+  $update_arguments = array(
+    'update_nodelinks' => FALSE,
+    'update_source_body' => 'body',
+  );
+
   /* COMMON VARIABLES */
   $common_arguments = array(
     'source_connection' => 'legacy_d7',
@@ -86,8 +127,8 @@ function ug_migrate_d7_migrate_api() {
 
   $menu_link_arguments = array(
     'menu_migration' => 'UGMenu7',
-    'node_migrations' => array('UGPage7', 'UGNews7', 'UGEvent7', 'UGFAQ7','UGFeaturedItem7','UGProfile7'),
-    'term_migrations' => array('UGTerm7', 'UGPageCategory7', 'UGPageKeyword7', 'UGNewsCategory7', 'UGNewsKeyword7', 'UGEventCategory7', 'UGEventKeyword7','UGFAQCategory7', 'UGFAQKeyword7','UGFeaturedItemCategory7','UGFeaturedItemKeyword7','UGProfileCategory7','UGProfileKeyword7'),
+    'node_migrations' => $node_migrations,
+    'term_migrations' => $term_migrations,
   );
 
   $menu_arguments = $common_arguments + array(
@@ -357,12 +398,63 @@ function ug_migrate_d7_migrate_api() {
         'description' => t('Migration of menus from Drupal 7'),
         'class_name' => 'UGMenu7Migration',
         'menu_names' => $menu_names,
+        'dependencies' => $update_migrations,
       ),
 
       'UGMenuLinks7' => $menu_arguments + $menu_link_arguments + array(
         'description' => t('Migration of menu links from Drupal 7'),
         'class_name' => 'UGMenuLinks7Migration',
         'menu_names' => $menu_names,
+        'dependencies' => $update_migrations,
+      ),
+
+      /**** UPDATE migration ****/
+      'UGUpdatePage7' => $node_arguments + $update_arguments + $page_arguments + array(
+        'description' => t('Update migrated page nodes after initial Drupal 7 to Drupal 7 migration'),
+        'class_name' => 'UGUpdatePage7Migration',
+        'source_type' => $page_arguments['source_page_node_type'], 
+        'destination_type' => 'page',
+        'dependencies' => $node_migrations,
+      ),
+
+      'UGUpdateNews7' => $node_arguments + $update_arguments + $news_arguments + array(
+        'description' => t('Update migrated news nodes after initial Drupal 7 to Drupal 7 migration'),
+        'class_name' => 'UGUpdateNews7Migration',
+        'source_type' => $news_arguments['source_news_node_type'], 
+        'destination_type' => 'news',
+        'dependencies' => $node_migrations,
+      ),
+
+      'UGUpdateEvent7' => $node_arguments + $update_arguments + $event_arguments + array(
+        'description' => t('Update migrated event nodes after initial Drupal 7 to Drupal 7 migration'),
+        'class_name' => 'UGUpdateEvent7Migration',
+        'source_type' => $event_arguments['source_event_node_type'], 
+        'destination_type' => 'event',
+        'dependencies' => $node_migrations,
+      ),
+
+      'UGUpdateFAQ7' => $node_arguments + $update_arguments + $faq_arguments + array(
+        'description' => t('Update migrated faq nodes after initial Drupal 7 to Drupal 7 migration'),
+        'class_name' => 'UGUpdateFAQ7Migration',
+        'source_type' => $faq_arguments['source_faq_node_type'], 
+        'destination_type' => 'faq',
+        'dependencies' => $node_migrations,
+      ),
+
+      'UGUpdateFeaturedItem7' => $node_arguments + $update_arguments + $featureditem_arguments + array(
+        'description' => t('Update migrated featured item nodes after initial Drupal 7 to Drupal 7 migration'),
+        'class_name' => 'UGUpdateFeaturedItem7Migration',
+        'source_type' => $featureditem_arguments['source_featureditem_node_type'], 
+        'destination_type' => 'feature',
+        'dependencies' => $node_migrations,
+      ),
+
+      'UGUpdateProfile7' => $node_arguments + $update_arguments + $profile_arguments + array(
+        'description' => t('Update migrated profile nodes after initial Drupal 7 to Drupal 7 migration'),
+        'class_name' => 'UGUpdateProfile7Migration',
+        'source_type' => $profile_arguments['source_profile_node_type'], 
+        'destination_type' => 'profile',
+        'dependencies' => $node_migrations,
       ),
 
     ) ,

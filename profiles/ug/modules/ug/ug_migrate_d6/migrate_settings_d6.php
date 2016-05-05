@@ -2,8 +2,35 @@
 
   /*****************************
   SITE CONFIGURATION VARIABLES
-  (source => destination)
   ******************************/
+
+  $update_nodelinks_urls = array(
+      //'/sitename/node/',
+      //'http://www.uoguelph.ca/site-stub/node/',
+      //'https://www.uoguelph.ca/site-stub/node/',
+  );
+
+  $update_hardlinks_source = array(
+      //'http://www.uoguelph.ca/site-stub',
+      //'https://www.uoguelph.ca/site-stub',
+  );
+
+  $update_prefix_source = array(
+      //'/sitename/sites/default',
+      //'http://www.uoguelph.ca/sitename/sites/default',
+      //'https://www.uoguelph.ca/sitename/sites/default',
+  );
+
+  // Usage: define site_stub in specific site config file & set nodelinks to TRUE
+  $update_arguments = array(
+    'update_nodelinks' => FALSE,
+    'update_nodelinks_urls' => $update_nodelinks_urls,
+    'update_hardlinks_source' => $update_hardlinks_source,
+    'update_hardlinks_destination' => '',
+    'update_prefix_inline' => FALSE,
+    'update_prefix_source' => $update_prefix_source,
+    'update_prefix_destination' => '',
+  );
 
   /* MENU Settings */
   $menu_names = array('primary-links');
@@ -41,7 +68,6 @@
     'source_page_category' => '',
     'source_page_keyword' => 'field_tags',
     'source_page_attachments' => 'upload',
-    'source_page_image_src_prefix' => '',
   );
   
   /* NEWS Settings */
@@ -59,7 +85,6 @@
     'source_news_image' => '',
     'source_news_caption' => '',
     'source_news_attachment' => 'upload',
-    'source_news_image_src_prefix' => '',
   );
 
   /* FAQ Settings */
@@ -107,7 +132,6 @@
     'source_event_caption' => '',
     'source_event_attachments' => 'upload',
     'source_event_link' => '',
-    'source_event_image_src_prefix' => '',
   );
 
  /* EVENT Multipart (Field Collection) Settings */
