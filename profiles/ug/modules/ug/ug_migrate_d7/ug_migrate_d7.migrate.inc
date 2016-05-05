@@ -13,7 +13,16 @@ function ug_migrate_d7_migrate_api() {
     'UGEvent7', 
     'UGFAQ7',
     'UGFeaturedItem7',
-    'UGProfile7'
+    'UGProfile7',
+  );
+
+  $update_migrations = array(
+    'UGUpdatePage7', 
+    'UGUpdateNews7', 
+    'UGUpdateEvent7', 
+    'UGUpdateFAQ7',
+    'UGUpdateFeaturedItem7',
+    'UGUpdateProfile7',
   );
 
   $term_migrations = array(
@@ -389,12 +398,14 @@ function ug_migrate_d7_migrate_api() {
         'description' => t('Migration of menus from Drupal 7'),
         'class_name' => 'UGMenu7Migration',
         'menu_names' => $menu_names,
+        'dependencies' => $update_migrations,
       ),
 
       'UGMenuLinks7' => $menu_arguments + $menu_link_arguments + array(
         'description' => t('Migration of menu links from Drupal 7'),
         'class_name' => 'UGMenuLinks7Migration',
         'menu_names' => $menu_names,
+        'dependencies' => $update_migrations,
       ),
 
       /**** UPDATE migration ****/

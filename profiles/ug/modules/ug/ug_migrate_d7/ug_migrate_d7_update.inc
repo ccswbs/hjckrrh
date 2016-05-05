@@ -161,8 +161,6 @@ class UGUpdatePage7Migration extends UGUpdate7Migration {
 	public function __construct($arguments) {
     	parent::__construct($arguments);
 
-    	//set systemOfRecord to destination to preserve migrated nodes
-	    $this->systemOfRecord = Migration::DESTINATION;
 	    $this->destination = new MigrateDestinationNode('page');
 
 	    /* DEFAULT arguments */
@@ -207,46 +205,6 @@ class UGUpdatePage7Migration extends UGUpdate7Migration {
 	    $this->addFieldMapping('field_page_body:summary', $page_arguments['source_page_summary']);
 	    $this->addFieldMapping( 'field_page_body:format', $page_arguments['source_page_format'])
 		    ->defaultValue('full_html');
-
-	    // Unmapped fields
-	    $suppress_warnings = FALSE;
-	    $issues_group = NULL;
-		$this->addUnmigratedDestinations(array(
-			'body:language',
-			'changed',
-			'comment',
-			'created',
-			'field_page_attachments',
-			'field_page_attachments:description',
-			'field_page_attachments:file_class',
-			'field_page_attachments:language',
-			'field_page_attachments:preserve_files',
-			'field_page_category',
-			'field_page_category:source_type',
-			'field_tags',
-			'field_tags:source_type',
-			'language',
-			'promote',
-			'status',
-			'sticky',
-			'title',
-			'tnid',
-			'translate',
-			'uid',
-			'is_new',
-			'revision',
-			'revision_uid',
-			), $issues_group, $suppress_warnings);
-
-	    if (module_exists('statistics')) {
-	      $this->addUnmigratedDestinations(
-	        array('totalcount', 'daycount', 'timestamp'));
-	    }
-
-	    if (module_exists('statistics')) {
-	      $this->addUnmigratedDestinations(
-	      	array('pathauto'));
-		}
     }
 }
 
@@ -255,8 +213,6 @@ class UGUpdateNews7Migration extends UGUpdate7Migration {
 	public function __construct($arguments) {
     	parent::__construct($arguments);
 
-    	//set systemOfRecord to destination to preserve migrated nodes
-	    $this->systemOfRecord = Migration::DESTINATION;
 	    $this->destination = new MigrateDestinationNode('news');
 
 	    /* DEFAULT arguments */
@@ -302,55 +258,6 @@ class UGUpdateNews7Migration extends UGUpdate7Migration {
 	    $this->addFieldMapping('field_news_body:summary', $news_arguments['source_news_summary']);
 	    $this->addFieldMapping( 'field_news_body:format', $news_arguments['source_news_format'])
 		    ->defaultValue('full_html');
-
-	    // Unmapped fields
-	    $suppress_warnings = FALSE;
-	    $issues_group = NULL;
-		$this->addUnmigratedDestinations(array(
-			'body:language',
-			'changed',
-			'comment',
-			'created',
-			'field_news_attachment',
-			'field_news_attachment:description',
-			'field_news_attachment:file_class',
-			'field_news_attachment:language',
-			'field_news_attachment:preserve_files',
-			'field_news_caption',
-			'field_news_image',
-			'field_news_image:alt',
-			'field_news_image:file_class',
-			'field_news_image:language',
-			'field_news_image:preserve_files',
-			'field_news_image:title',
-			'field_news_link',
-			'field_news_tags',
-			'field_news_tags:source_type',
-			'field_news_writer',
-			'field_tags',
-			'field_tags:source_type',
-			'language',
-			'promote',
-			'status',
-			'sticky',
-			'title',
-			'tnid',
-			'translate',
-			'uid',
-			'is_new',
-			'revision',
-			'revision_uid',
-			), $issues_group, $suppress_warnings);
-
-	    if (module_exists('statistics')) {
-	      $this->addUnmigratedDestinations(
-	        array('totalcount', 'daycount', 'timestamp'));
-	    }
-
-	    if (module_exists('statistics')) {
-	      $this->addUnmigratedDestinations(
-	      	array('pathauto'));
-		}
     }
 }
 
@@ -358,8 +265,6 @@ class UGUpdateEvent7Migration extends UGUpdate7Migration {
 	public function __construct($arguments) {
     	parent::__construct($arguments);
 
-    	//set systemOfRecord to destination to preserve migrated nodes
-	    $this->systemOfRecord = Migration::DESTINATION;
 	    $this->destination = new MigrateDestinationNode('event');
 
 	    /* DEFAULT arguments */
@@ -403,57 +308,6 @@ class UGUpdateEvent7Migration extends UGUpdate7Migration {
 	    $this->addFieldMapping('field_event_body:summary', $event_arguments['source_event_summary']);
 	    $this->addFieldMapping( 'field_event_body:format', $event_arguments['source_event_format'])
 		    ->defaultValue('full_html');
-
-	    // Unmapped fields
-	    $suppress_warnings = FALSE;
-	    $issues_group = NULL;
-		$this->addUnmigratedDestinations(array(
-			'body:language',
-			'changed',
-			'comment',
-			'created',
-			'field_event_attachments',
-			'field_event_attachments:description',
-			'field_event_attachments:file_class',
-			'field_event_attachments:language',
-			'field_event_attachments:preserve_files',
-			'field_event_caption',
-			'field_event_category',
-			'field_event_date',
-			'field_event_link',
-			'field_event_location',
-			'field_event_multipart',
-			'field_event_category:source_type',
-			'field_event_image',
-			'field_event_image:alt',
-			'field_event_image:file_class',
-			'field_event_image:language',
-			'field_event_image:preserve_files',
-			'field_event_image:title',
-			'field_tags',
-			'field_tags:source_type',
-			'language',
-			'promote',
-			'status',
-			'sticky',
-			'title',
-			'tnid',
-			'translate',
-			'uid',
-			'is_new',
-			'revision',
-			'revision_uid',
-			), $issues_group, $suppress_warnings);
-
-	    if (module_exists('statistics')) {
-	      $this->addUnmigratedDestinations(
-	        array('totalcount', 'daycount', 'timestamp'));
-	    }
-
-	    if (module_exists('statistics')) {
-	      $this->addUnmigratedDestinations(
-	      	array('pathauto'));
-		}
     }
 }
 
@@ -462,8 +316,6 @@ class UGUpdateFAQ7Migration extends UGUpdate7Migration {
 	public function __construct($arguments) {
     	parent::__construct($arguments);
 
-    	//set systemOfRecord to destination to preserve migrated nodes
-	    $this->systemOfRecord = Migration::DESTINATION;
 	    $this->destination = new MigrateDestinationNode('faq');
 
 	    // DEFAULT arguments
@@ -506,41 +358,6 @@ class UGUpdateFAQ7Migration extends UGUpdate7Migration {
 	    $this->addFieldMapping( 'field_faq_answer:format', $faq_arguments['source_faq_format'])
 		    ->callbacks(array($this, 'mapFormat'))
 		    ->defaultValue('full_html');
-
-	    // Unmapped fields
-	    $suppress_warnings = FALSE;
-	    $issues_group = NULL;
-		$this->addUnmigratedDestinations(array(
-			'body:language',
-			'changed',
-			'comment',
-			'created',
-			'field_faq_category',
-			'field_faq_category:source_type',
-			'field_tags',
-			'field_tags:source_type',
-			'language',
-			'promote',
-			'status',
-			'sticky',
-			'title',
-			'tnid',
-			'translate',
-			'uid',
-			'is_new',
-			'revision',
-			'revision_uid',
-			), $issues_group, $suppress_warnings);
-
-	    if (module_exists('statistics')) {
-	      $this->addUnmigratedDestinations(
-	        array('totalcount', 'daycount', 'timestamp'));
-	    }
-
-	    if (module_exists('statistics')) {
-	      $this->addUnmigratedDestinations(
-	      	array('pathauto'));
-		}
     }
 }
 
@@ -549,8 +366,6 @@ class UGUpdateFeaturedItem7Migration extends UGUpdate7Migration {
 	public function __construct($arguments) {
     	parent::__construct($arguments);
 
-    	//set systemOfRecord to destination to preserve migrated nodes
-	    $this->systemOfRecord = Migration::DESTINATION;
 	    $this->destination = new MigrateDestinationNode('feature');
 
 	    /* DEFAULT arguments */
@@ -595,48 +410,6 @@ class UGUpdateFeaturedItem7Migration extends UGUpdate7Migration {
 	    $this->addFieldMapping('field_feature_text:summary', $featureditem_arguments['source_featureditem_summary']);
 	    $this->addFieldMapping( 'field_feature_text:format', $featureditem_arguments['source_featureditem_format'])
 		    ->defaultValue('full_html');
-
-	    // Unmapped fields
-	    $suppress_warnings = FALSE;
-	    $issues_group = NULL;
-		$this->addUnmigratedDestinations(array(
-			'body:language',
-			'changed',
-			'comment',
-			'created',
-			'field_feature_category',
-			'field_feature_category:source_type',
-			'field_feature_image',
-			'field_feature_image:alt',
-			'field_feature_image:file_class',
-			'field_feature_image:language',
-			'field_feature_image:preserve_files',
-			'field_feature_image:title',
-			'field_feature_link',
-			'field_tags',
-			'field_tags:source_type',
-			'language',
-			'promote',
-			'status',
-			'sticky',
-			'title',
-			'tnid',
-			'translate',
-			'uid',
-			'is_new',
-			'revision',
-			'revision_uid',
-			), $issues_group, $suppress_warnings);
-
-	    if (module_exists('statistics')) {
-	      $this->addUnmigratedDestinations(
-	        array('totalcount', 'daycount', 'timestamp'));
-	    }
-
-	    if (module_exists('statistics')) {
-	      $this->addUnmigratedDestinations(
-	      	array('pathauto'));
-		}
     }
 
 }
@@ -646,8 +419,6 @@ class UGUpdateProfile7Migration extends UGUpdate7Migration {
 	public function __construct($arguments) {
     	parent::__construct($arguments);
 
-    	//set systemOfRecord to destination to preserve migrated nodes
-	    $this->systemOfRecord = Migration::DESTINATION;
 		$this->destination = new MigrateDestinationNode('profile');
 
 	    /* DEFAULT arguments */
@@ -660,6 +431,9 @@ class UGUpdateProfile7Migration extends UGUpdate7Migration {
 
 		/* DEFAULT arguments */
 		$profile_arguments = array(
+		  'source_profile_title'     => 'field_profile_title',
+		  'source_profile_name'      => 'field_profile_name',
+		  'source_profile_lastname'  => 'field_profile_lastname',
 		  'source_profile_summary'   => 'field_profile_summary',
 		  'source_profile_format'    => 'field_profile_summary:format',
 		);
@@ -676,81 +450,17 @@ class UGUpdateProfile7Migration extends UGUpdate7Migration {
 	    $this->addFieldMapping('nid', 'nid')
 			->sourceMigration($this->arguments['dependencies']);
 
+		/* Profile Title */
+		$this->addFieldMapping('field_profile_title', $profile_arguments['source_profile_title']);
+
+		/* Profile First and Last Name */
+		$this->addFieldMapping('field_profile_name', $profile_arguments['source_profile_name']);
+		$this->addFieldMapping('field_profile_lastname', $profile_arguments['source_profile_lastname']);
+
 	    // Update body field
 		$this->arguments['update_source_body'] = $profile_arguments['source_profile_summary'];
 		$this->addFieldMapping('field_profile_summary', $profile_arguments['source_profile_summary']);
 		$this->addFieldMapping('field_profile_summary:format', $profile_arguments['source_profile_format']);
-
-	    // Unmapped fields
-	    $suppress_warnings = FALSE;
-	    $issues_group = NULL;
-		$this->addUnmigratedDestinations(array(
-			'body:language',
-			'changed',
-			'comment',
-			'created',
-			'field_profile_address',
-			'field_profile_attachments',
-			'field_profile_caption',
-			'field_profile_category',
-			'field_profile_category:create_term',
-			'field_profile_category:ignore_case',
-			'field_profile_category:source_type',
-			'field_profile_email',
-			'field_profile_faxnumber',
-			'field_profile_image',
-			'field_profile_image:alt',
-			'field_profile_image:file_class',
-			'field_profile_image:language',
-			'field_profile_image:preserve_files',
-			'field_profile_image:title',
-			'field_profile_lab',
-			'field_profile_lastname',
-			'field_profile_name',
-			'field_profile_office',
-			'field_profile_research',
-			'field_profile_research:create_term',
-			'field_profile_research:ignore_case',
-			'field_profile_research:source_type',
-			'field_profile_role',
-			'field_profile_role:create_term',
-			'field_profile_role:ignore_case',
-			'field_profile_role:source_type',
-			'field_profile_subunit',
-			'field_profile_subunit:create_term',
-			'field_profile_subunit:ignore_case',
-			'field_profile_subunit:source_type',
-			'field_profile_telephonenumber',
-			'field_profile_title',
-			'field_profile_unit',
-			'field_profile_unit:create_term',
-			'field_profile_unit:ignore_case',
-			'field_profile_unit:source_type',
-			'field_profile_website',
-			'field_tags',
-			'field_tags:source_type',
-			'language',
-			'promote',
-			'status',
-			'sticky',
-			'title',
-			'tnid',
-			'translate',
-			'uid',
-			'is_new',
-			'revision',
-			'revision_uid',
-			), $issues_group, $suppress_warnings);
-
-	    if (module_exists('statistics')) {
-	      $this->addUnmigratedDestinations(
-	        array('totalcount', 'daycount', 'timestamp'));
-	    }
-
-	    if (module_exists('statistics')) {
-	      $this->addUnmigratedDestinations(
-	      	array('pathauto'));
-		}
 	}
 }
 
