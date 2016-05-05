@@ -38,6 +38,22 @@ class UGProfileTestCase extends DrupalWebTestCase {
   }
 
   /**
+   * Test node title
+   */
+  function testNodeTitle() {
+    $name = $this->randomName(8);
+    $last = "O'".$this->randomName(8); // Last name with apostrophe.
+    $title = $name . " " . $last;
+    $settings = array();
+    $settings['type'] = 'profile';
+    $settings['field_profile_name'][LANGUAGE_NONE][0]['value'] = $name;
+    $settings['field_profile_lastname'][LANGUAGE_NONE][0]['value'] = $last;
+    $node = $this->drupalCreateNode($settings);
+    $this->drupalGet('node/'.$node->nid);
+    $this->assertText($title);
+  }
+
+  /**
    * Test uninstall hook behaviour.
    */
   function testHookUninstall() {

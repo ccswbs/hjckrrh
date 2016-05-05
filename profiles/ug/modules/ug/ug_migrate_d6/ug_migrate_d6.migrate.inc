@@ -11,7 +11,14 @@ function ug_migrate_d6_migrate_api() {
     'UGNews6', 
     'UGEvent6', 
     'UGFAQ6',
-    'UGFeaturedItem6'
+    'UGFeaturedItem6',
+  );
+
+  $update_migrations = array(
+    'UGUpdatePage6',
+    'UGUpdateNews6',
+    'UGUpdateEvent6',
+    'UGUpdateFAQ6',
   );
 
   $term_migrations = array(
@@ -30,6 +37,7 @@ function ug_migrate_d6_migrate_api() {
   /* UPDATE VARIABLES */
   $update_arguments = array(
     'update_nodelinks' => FALSE,
+    'update_source_body' => 'body',
   );
 
   /* COMMON VARIABLES */
@@ -310,12 +318,14 @@ function ug_migrate_d6_migrate_api() {
         'description' => t('Migration of menus from Drupal 6'),
         'class_name' => 'UGMenu6Migration',
         'menu_names' => $menu_names,
+        'dependencies' => $update_migrations,
       ),
 
       'UGMenuLinks6' => $menu_arguments + $menu_link_arguments + array(
         'description' => t('Migration of menu links from Drupal 6'),
         'class_name' => 'UGMenuLinks6Migration',
         'menu_names' => $menu_names,
+        'dependencies' => $update_migrations,
       ),
 
       /**** UPDATE migration ****/
