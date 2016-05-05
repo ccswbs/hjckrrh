@@ -7,4 +7,5 @@ Hjckrrh 7.2.0, 2016-05-17
 - Ensure that all Views have a fall back for dealing with no content.
 - Fix title of page feed when filter is "all".
 - Add Featured Item migration from Drupal 6 to Drupal 7.
+- Fix double escaping of special characters in profile names.
 
