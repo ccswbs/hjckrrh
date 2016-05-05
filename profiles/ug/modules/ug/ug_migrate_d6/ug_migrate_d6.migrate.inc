@@ -112,13 +112,8 @@ function ug_migrate_d6_migrate_api() {
 
   $menu_link_arguments = array(
     'menu_migration' => 'UGMenu6',
-<<<<<<< HEAD
-    'node_migrations' => array('UGPage6', 'UGNews6', 'UGEvent6', 'UGFAQ6', 'UGFeaturedItem6'),
-    'term_migrations' => array('UGTerm6', 'UGPageCategory6', 'UGNewsCategory6', 'UGNewsKeyword6', 'UGEventCategory6', 'UGEventKeyword6','UGFAQCategory6', 'UGFAQKeyword6', 'UGFeaturedItemCategory6', 'UGFeaturedItemKeyword6'),
-=======
     'node_migrations' => $node_migrations,
     'term_migrations' => $term_migrations,
->>>>>>> maint
   );
 
   $menu_arguments = $common_arguments + array(
