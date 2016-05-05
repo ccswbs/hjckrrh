@@ -43,7 +43,7 @@ function calendar_views_plugins() {
         'uses row plugin' => TRUE,
         'uses options' => TRUE,
         'type' => 'normal',
-        'even empty' => TRUE,
+        'even empty' => FALSE,
         'base' => $base,
       ),
     ),

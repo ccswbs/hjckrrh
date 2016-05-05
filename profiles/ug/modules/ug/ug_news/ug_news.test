@@ -10,6 +10,9 @@
  */
 class UGNewsTestCase extends DrupalWebTestCase {
 
+  protected $no_results_text = 'No results found.';
+  protected $more_text = 'More news';
+
   public static function getInfo() {
     return array(
       'name' => 'UG News',
@@ -20,7 +23,7 @@ class UGNewsTestCase extends DrupalWebTestCase {
 
   function setUp() {
     $this->profile = 'ug';
-    parent::setUp();
+    parent::setup('ug_news', 'ug_news_layouts');
     /* Allow creation of Drupal accounts. */
     $ldap_conf = variable_get('ldap_authentication_conf');
     $ldap_conf['authenticationMode'] = 1;
@@ -51,6 +54,25 @@ class UGNewsTestCase extends DrupalWebTestCase {
     $this->drupalGet('');
     /* Should see "More news" button now. */
     $this->assertText('More news');
+  }
+
+  function getListingPages() {
+    return array(
+      'news',
+      'news/1',
+      'news/archive/201604',
+    );
+  }
+
+  function testNoResultsBehavior() {
+    /* Assert listing pages show 'no results found.' */
+    foreach ($this->getListingPages() as $path) {
+      $this->drupalGet($path);
+      $this->assertText($this->no_results_text);
+    }
+    /* Assert that 'More features' button is hidden. */
+    $this->drupalGet('');
+    $this->assertNoText($this->more_text);
   }
 
 }

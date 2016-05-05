@@ -46,3 +46,4 @@ features[variable][] = node_submitted_feature
 features[views_view][] = ft1
 features[views_view][] = ft2
 features[views_view][] = ft3
+files[] = ug_feature.test

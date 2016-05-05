@@ -1,4 +1,6 @@
 
+PREFIX ?= /usr/local
+DEST ?= $(PREFIX)/drupal-7.x
 
 site:
 	drush -y site-install ug
@@ -22,4 +24,8 @@ test: site
 	drush generate-terms service_public_heading 10
 	drush generate-terms service_audience 10
 	drush generate-content --types=service 50
+
+install:
+	rsync --recursive --verbose --cvs-exclude ../../ $(DEST)/
+
 
