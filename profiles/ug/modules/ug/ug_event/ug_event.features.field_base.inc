@@ -10,7 +10,7 @@
 function ug_event_field_default_field_bases() {
   $field_bases = array();
 
-  // Exported field_base: 'field_event_attachments'
+  // Exported field_base: 'field_event_attachments'.
   $field_bases['field_event_attachments'] = array(
     'active' => 1,
     'cardinality' => -1,
@@ -33,7 +33,7 @@ function ug_event_field_default_field_bases() {
     'type' => 'file',
   );
 
-  // Exported field_base: 'field_event_body'
+  // Exported field_base: 'field_event_body'.
   $field_bases['field_event_body'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -52,7 +52,7 @@ function ug_event_field_default_field_bases() {
     'type' => 'text_with_summary',
   );
 
-  // Exported field_base: 'field_event_category'
+  // Exported field_base: 'field_event_category'.
   $field_bases['field_event_category'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -79,7 +79,7 @@ function ug_event_field_default_field_bases() {
     'type' => 'taxonomy_term_reference',
   );
 
-  // Exported field_base: 'field_event_content'
+  // Exported field_base: 'field_event_content'.
   $field_bases['field_event_content'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -98,7 +98,7 @@ function ug_event_field_default_field_bases() {
     'type' => 'text_long',
   );
 
-  // Exported field_base: 'field_event_date'
+  // Exported field_base: 'field_event_date'.
   $field_bases['field_event_date'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -128,7 +128,7 @@ function ug_event_field_default_field_bases() {
     'type' => 'datetime',
   );
 
-  // Exported field_base: 'field_event_heading'
+  // Exported field_base: 'field_event_heading'.
   $field_bases['field_event_heading'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -154,7 +154,7 @@ function ug_event_field_default_field_bases() {
     'type' => 'taxonomy_term_reference',
   );
 
-  // Exported field_base: 'field_event_image'
+  // Exported field_base: 'field_event_image'.
   $field_bases['field_event_image'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -177,7 +177,7 @@ function ug_event_field_default_field_bases() {
     'type' => 'image',
   );
 
-  // Exported field_base: 'field_event_image_caption'
+  // Exported field_base: 'field_event_image_caption'.
   $field_bases['field_event_image_caption'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -198,7 +198,7 @@ function ug_event_field_default_field_bases() {
     'type' => 'text',
   );
 
-  // Exported field_base: 'field_event_link'
+  // Exported field_base: 'field_event_link'.
   $field_bases['field_event_link'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -227,7 +227,7 @@ function ug_event_field_default_field_bases() {
     'type' => 'link_field',
   );
 
-  // Exported field_base: 'field_event_location'
+  // Exported field_base: 'field_event_location'.
   $field_bases['field_event_location'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -246,7 +246,7 @@ function ug_event_field_default_field_bases() {
     'type' => 'text_long',
   );
 
-  // Exported field_base: 'field_event_multipart'
+  // Exported field_base: 'field_event_multipart'.
   $field_bases['field_event_multipart'] = array(
     'active' => 1,
     'cardinality' => -1,
