@@ -5,6 +5,34 @@
   (source => destination)
   ******************************/
 
+  $update_nodelinks_urls = array(
+      //'/sitename/node/',
+      //'http://www.uoguelph.ca/site-stub/node/',
+      //'https://www.uoguelph.ca/site-stub/node/',
+  );
+
+  $update_hardlinks_source = array(
+      //'http://www.uoguelph.ca/site-stub',
+      //'https://www.uoguelph.ca/site-stub',
+  );
+
+  $update_prefix_source = array(
+      //'/sitename/sites/default',
+      //'http://www.uoguelph.ca/sitename/sites/default',
+      //'https://www.uoguelph.ca/sitename/sites/default',
+  );
+
+  // Usage: define site_stub in specific site config file & set nodelinks to TRUE
+  $update_arguments = array(
+    'update_nodelinks' => FALSE,
+    'update_nodelinks_urls' => $update_nodelinks_urls,
+    'update_hardlinks_source' => $update_hardlinks_source,
+    'update_hardlinks_destination' => '',
+    'update_prefix_inline' => FALSE,
+    'update_prefix_source' => $update_prefix_source,
+    'update_prefix_destination' => '',
+  );
+
   /* MENU Settings */
   $menu_names = array('main-menu');
 
@@ -208,6 +236,10 @@
     'source_profile_lab'                  => 'field_profile_lab',
     'source_profile_website'              => 'field_profile_website',
     'source_tags'                         => 'field_tags',
+    'source_tags_source_type'             => 'tid',
+    'source_tags_ignore_case'             => TRUE,
+    'source_tags_create_term'             => TRUE,
+    'source_tags_vocabulary'              => '',
   );
 
 ?>
