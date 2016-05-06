@@ -81,9 +81,10 @@ function ug_event_views_default_views() {
   $handler->display->display_options['fields']['field_event_body']['field'] = 'field_event_body';
   $handler->display->display_options['fields']['field_event_body']['label'] = '';
   $handler->display->display_options['fields']['field_event_body']['alter']['max_length'] = '255';
-  $handler->display->display_options['fields']['field_event_body']['alter']['trim'] = TRUE;
+  $handler->display->display_options['fields']['field_event_body']['alter']['strip_tags'] = TRUE;
   $handler->display->display_options['fields']['field_event_body']['alter']['html'] = TRUE;
   $handler->display->display_options['fields']['field_event_body']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_event_body']['type'] = 'text_summary_or_trimmed';
   $handler->display->display_options['fields']['field_event_body']['settings'] = array(
     'trim_length' => '600',
   );
@@ -1147,10 +1148,14 @@ return false;';
   $handler->display->display_options['fields']['field_event_body']['field'] = 'field_event_body';
   $handler->display->display_options['fields']['field_event_body']['label'] = '';
   $handler->display->display_options['fields']['field_event_body']['alter']['max_length'] = '255';
-  $handler->display->display_options['fields']['field_event_body']['alter']['trim'] = TRUE;
+  $handler->display->display_options['fields']['field_event_body']['alter']['strip_tags'] = TRUE;
   $handler->display->display_options['fields']['field_event_body']['alter']['html'] = TRUE;
   $handler->display->display_options['fields']['field_event_body']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_event_body']['element_default_classes'] = FALSE;
+  $handler->display->display_options['fields']['field_event_body']['type'] = 'text_summary_or_trimmed';
+  $handler->display->display_options['fields']['field_event_body']['settings'] = array(
+    'trim_length' => '600',
+  );
   /* Sort criterion: Content: Date -  start date (field_event_date) */
   $handler->display->display_options['sorts']['field_event_date_value']['id'] = 'field_event_date_value';
   $handler->display->display_options['sorts']['field_event_date_value']['table'] = 'field_data_field_event_date';
@@ -1378,10 +1383,14 @@ return false;';
   $handler->display->display_options['fields']['field_event_body']['field'] = 'field_event_body';
   $handler->display->display_options['fields']['field_event_body']['label'] = '';
   $handler->display->display_options['fields']['field_event_body']['alter']['max_length'] = '255';
-  $handler->display->display_options['fields']['field_event_body']['alter']['trim'] = TRUE;
+  $handler->display->display_options['fields']['field_event_body']['alter']['strip_tags'] = TRUE;
   $handler->display->display_options['fields']['field_event_body']['alter']['html'] = TRUE;
   $handler->display->display_options['fields']['field_event_body']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_event_body']['element_default_classes'] = FALSE;
+  $handler->display->display_options['fields']['field_event_body']['type'] = 'text_summary_or_trimmed';
+  $handler->display->display_options['fields']['field_event_body']['settings'] = array(
+    'trim_length' => '600',
+  );
   /* Sort criterion: Content: Date -  start date (field_event_date) */
   $handler->display->display_options['sorts']['field_event_date_value']['id'] = 'field_event_date_value';
   $handler->display->display_options['sorts']['field_event_date_value']['table'] = 'field_data_field_event_date';
