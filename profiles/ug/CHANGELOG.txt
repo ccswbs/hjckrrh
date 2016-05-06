@@ -1,6 +1,7 @@
 (insert release date)
 -----------------------
 - Add linkchecker module.
+- Fix validation errors on profile grid view (#385).
 
 Hjckrrh 7.2.0, 2016-05-17
 -------------------------
