@@ -35,6 +35,10 @@ class UGProfileTestCase extends DrupalWebTestCase {
     $this->drupalCreateNode($node);
     $this->drupalGet('people');
     $this->assertText($node['field_profile_title'][LANGUAGE_NONE][0]['value']);
+
+    $pattern = "//button[@name='']";
+    $elements = $this->xpath($pattern);
+    $this->assertTrue(empty($elements), 'The filter button does not have empty name attribute.');
   }
 
   /**
