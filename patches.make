@@ -6,4 +6,5 @@ projects[ldap][patch][] = patches/ldap_profile_sid_fix.patch
 projects[drupal][patch][] = patches/drupal-simpletestprofiledependencies-1093420-27-7.x.patch
 projects[calendar][patch][] = patches/calendar_no-results.patch
 projects[auto_nodetitle][patch][] = patches/auto_nodetitle-dont_double_escape_titles-565922-39-against-1.0-stable.patch
+projects[linkchecker][version] = "1.2"
 

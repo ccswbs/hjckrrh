@@ -1,0 +1,19 @@
+<?php
+/**
+ * @file
+ * Code for the UG Webform feature.
+ */
+
+include_once 'ug_webform.features.inc';
+
+/**
+ * Implementation of hook_form_alter().
+ *
+ * Add default captcha to webforms for anonymous users.
+ */
+function ug_webform_form_alter(&$form, $form_state, $form_id) {
+  if (user_is_anonymous() && strrpos($form_id, 'webform_client_form_', -strlen($form_id)) !== false) {
+    $form['captcha'] = array( '#type' => 'captcha' );
+  }
+}
+
