@@ -1,0 +1,44 @@
+
+<?php
+
+/**
+ * @file
+ * Tests for ug_role.module.
+ */
+
+/**
+ * Test Site Manager role
+ */
+class UserAdminMiniPanelTestCase extends DrupalWebTestCase {
+
+  public static function getInfo() {
+    return array(
+      'name' => 'UG site manager permissions',
+      'description' => 'Check if the site manager can administer mini panels',
+      'group' => 'UG',
+    );
+  }
+
+  function setUp() {
+    $this->profile = 'ug';
+    parent::setup('ug_user', 'ug_role');
+    /* Allow creation of Drupal accounts. */
+    $ldap_conf = variable_get('ldap_authentication_conf');
+    $ldap_conf['authenticationMode'] = 1;
+    variable_set('ldap_authentication_conf', $ldap_conf);
+    //$web_user = $this->drupalCreateUser(array('site manager'));
+    $web_user = $this->drupalCreateUser();
+    $role = user_role_load_by_name("site manager");
+    user_multiple_role_edit(array($web_user->uid), 'add_role', $role->rid);
+    $this->drupalLogin($web_user);
+  }
+
+  function testMiniPanelsAdmin() {
+
+   
+    $this->drupalGet('admin/structure/mini-panels');
+    $this->assertText('Mini panels');
+    $this->assertText('Add');
+  }
+
+}
