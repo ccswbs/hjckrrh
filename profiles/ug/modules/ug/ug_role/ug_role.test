@@ -13,7 +13,7 @@ class UserAdminMiniPanelTestCase extends DrupalWebTestCase {
 
   public static function getInfo() {
     return array(
-      'name' => 'UG site manager permissions',
+      'name' => 'UG Role',
       'description' => 'Check if the site manager can administer mini panels',
       'group' => 'UG',
     );
@@ -26,7 +26,6 @@ class UserAdminMiniPanelTestCase extends DrupalWebTestCase {
     $ldap_conf = variable_get('ldap_authentication_conf');
     $ldap_conf['authenticationMode'] = 1;
     variable_set('ldap_authentication_conf', $ldap_conf);
-    //$web_user = $this->drupalCreateUser(array('site manager'));
     $web_user = $this->drupalCreateUser();
     $role = user_role_load_by_name("site manager");
     user_multiple_role_edit(array($web_user->uid), 'add_role', $role->rid);
@@ -34,8 +33,6 @@ class UserAdminMiniPanelTestCase extends DrupalWebTestCase {
   }
 
   function testMiniPanelsAdmin() {
-
-   
     $this->drupalGet('admin/structure/mini-panels');
     $this->assertText('Mini panels');
     $this->assertText('Add');
