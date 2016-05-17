@@ -173,8 +173,9 @@ function ug_theme_preprocess_views_view_fields__event_week_list(&$vars) {
  */
 function ug_theme_preprocess_views_view_fields__pg1(&$vars) {
   $vars['title']        = $vars['fields']['title']->content;
-  $vars['image']        = $vars['fields']['field_page_image']->content;
-  $vars['caption']      = $vars['fields']['field_page_caption']->content;
+  // removed since we don't have these fields yet
+  //$vars['image']        = $vars['fields']['field_page_image']->content;
+  //$vars['caption']      = $vars['fields']['field_page_caption']->content;
   $vars['body']         = $vars['fields']['field_page_body']->content;
   $vars['attachments']  = $vars['fields']['field_page_attachments']->content;
 }
