@@ -5,11 +5,22 @@ class UGUpdate7Migration extends DrupalNode7Migration {
     	parent::__construct($arguments);
 
     	$this->arguments['update_source_body'] = 'body';
+    	$this->arguments['update_map_table'] = '';
 	}
 
 	public function prepareRow($row) {
 	    if (parent::prepareRow($row) === FALSE) {
 	      return FALSE;
+	    }
+
+	    //fix updated items missing destination ID
+	    if(!isset($row->migrate_map_destid1)){
+	    	if($this->arguments['update_map_table'] != ''){
+	    		$new_destid = $this->retrieveMapDestID($this->arguments['update_map_table'],$row->nid);
+	    		if(is_numeric($new_destid)){
+			    	$row->migrate_map_destid1 = $new_destid;
+		    	}
+	    	}
 	    }
 
 	    // update node links
@@ -45,6 +56,19 @@ class UGUpdate7Migration extends DrupalNode7Migration {
 				$row->{$this->arguments['update_source_body']}[0] = $this->replaceLinkUrls($row->{$this->arguments['update_source_body']}[0], $old_prefixes, $new_prefix);
 			}
 		}
+	}
+
+	public function retrieveMapDestID(&$map_table, &$nid){
+	    $destID = Database::getConnection('default', 'default')
+	      ->select($map_table, 'm')
+	      ->fields('m', array('destid1'))
+	      ->condition('sourceid1', $nid, 'LIKE')
+	      ->execute()
+	      ->fetchObject();
+
+	    if (isset($destID->destid1)) {
+	    	return $destID->destid1;
+	    }
 	}
 
 	public function replaceLinkUrls(&$body, &$replace_urls, &$new_url){
@@ -199,6 +223,8 @@ class UGUpdatePage7Migration extends UGUpdate7Migration {
 	    $this->addFieldMapping('nid', 'nid')
 			->sourceMigration($this->arguments['dependencies']);
 
+		$this->arguments['update_map_table'] = 'migrate_map_ugpage7';
+
 	    // Update body field
 		$this->arguments['update_source_body'] = $page_arguments['source_page_body'];
 	    $this->addFieldMapping('field_page_body', $page_arguments['source_page_body']);
@@ -251,6 +277,7 @@ class UGUpdateNews7Migration extends UGUpdate7Migration {
 
 	    $this->addFieldMapping('nid', 'nid')
 			->sourceMigration($this->arguments['dependencies']);
+		$this->arguments['update_map_table'] = 'migrate_map_ugnews7';
 
 	    // Update body field
 		$this->arguments['update_source_body'] = $news_arguments['source_news_body'];
@@ -301,6 +328,7 @@ class UGUpdateEvent7Migration extends UGUpdate7Migration {
 
 	    $this->addFieldMapping('nid', 'nid')
 			->sourceMigration($this->arguments['dependencies']);
+		$this->arguments['update_map_table'] = 'migrate_map_ugevent7';
 
 	    // Update body field
 		$this->arguments['update_source_body'] = $event_arguments['source_event_body'];
@@ -351,6 +379,7 @@ class UGUpdateFAQ7Migration extends UGUpdate7Migration {
 
 	    $this->addFieldMapping('nid', 'nid')
 			->sourceMigration($this->arguments['dependencies']);
+		$this->arguments['update_map_table'] = 'migrate_map_ugfaq7';
 
 	    // Update field_faq_answer field
 		$this->arguments['update_source_body'] = $faq_arguments['source_faq_answer'];
@@ -403,6 +432,7 @@ class UGUpdateFeaturedItem7Migration extends UGUpdate7Migration {
 
 	    $this->addFieldMapping('nid', 'nid')
 			->sourceMigration($this->arguments['dependencies']);
+		$this->arguments['update_map_table'] = 'migrate_map_ugfeatureditem7';
 
 	    // Update body field
 		$this->arguments['update_source_body'] = $featureditem_arguments['source_featureditem_body'];
@@ -449,6 +479,7 @@ class UGUpdateProfile7Migration extends UGUpdate7Migration {
 
 	    $this->addFieldMapping('nid', 'nid')
 			->sourceMigration($this->arguments['dependencies']);
+		$this->arguments['update_map_table'] = 'migrate_map_ugprofile7';
 
 		/* Profile Title */
 		$this->addFieldMapping('field_profile_title', $profile_arguments['source_profile_title']);
