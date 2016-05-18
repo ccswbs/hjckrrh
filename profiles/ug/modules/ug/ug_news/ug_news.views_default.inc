@@ -555,6 +555,20 @@ function ug_news_views_default_views() {
   $handler->display->display_options['sorts']['created']['table'] = 'node';
   $handler->display->display_options['sorts']['created']['field'] = 'created';
   $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  /* Contextual filter: Content: Category (field_news_tags) */
+  $handler->display->display_options['arguments']['field_news_tags_tid']['id'] = 'field_news_tags_tid';
+  $handler->display->display_options['arguments']['field_news_tags_tid']['table'] = 'field_data_field_news_tags';
+  $handler->display->display_options['arguments']['field_news_tags_tid']['field'] = 'field_news_tags_tid';
+  $handler->display->display_options['arguments']['field_news_tags_tid']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['field_news_tags_tid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_news_tags_tid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_news_tags_tid']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['field_news_tags_tid']['specify_validation'] = TRUE;
+  $handler->display->display_options['arguments']['field_news_tags_tid']['validate']['type'] = 'taxonomy_term';
+  $handler->display->display_options['arguments']['field_news_tags_tid']['validate_options']['vocabularies'] = array(
+    'news_category' => 'news_category',
+  );
+  $handler->display->display_options['arguments']['field_news_tags_tid']['validate']['fail'] = 'empty';
   /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
@@ -591,6 +605,16 @@ function ug_news_views_default_views() {
   $handler->display->display_options['allow']['title_override'] = 'title_override';
   $handler->display->display_options['allow']['exposed_form'] = 0;
   $handler->display->display_options['allow']['fields_override'] = 0;
+  $handler->display->display_options['argument_input'] = array(
+    'field_news_tags_tid' => array(
+      'type' => 'user',
+      'context' => 'entity:field_collection_item.archived',
+      'context_optional' => 0,
+      'panel' => '0',
+      'fixed' => '',
+      'label' => 'Category',
+    ),
+  );
 
   /* Display: Content with Summary field */
   $handler = $view->new_display('panel_pane', 'Content with Summary field', 'n3_summary');
@@ -659,6 +683,16 @@ function ug_news_views_default_views() {
   $handler->display->display_options['allow']['title_override'] = 'title_override';
   $handler->display->display_options['allow']['exposed_form'] = 0;
   $handler->display->display_options['allow']['fields_override'] = 0;
+  $handler->display->display_options['argument_input'] = array(
+    'field_news_tags_tid' => array(
+      'type' => 'user',
+      'context' => 'entity:field_collection_item.archived',
+      'context_optional' => 0,
+      'panel' => '0',
+      'fixed' => '',
+      'label' => 'Category',
+    ),
+  );
 
   /* Display: Feed */
   $handler = $view->new_display('feed', 'Feed', 'n3_news_feed');
