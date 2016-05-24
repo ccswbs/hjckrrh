@@ -1,6 +1,7 @@
 Hjckrrh 7.3.0, 2016-05-31
 -------------------------
 - Add option to include summary in news teaser (issue #266).
+- Add media-condensed class (issue #451).
 
 Hjckrrh 7.2.0, 2016-05-17
 -------------------------
