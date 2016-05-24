@@ -575,6 +575,13 @@ Live Date: June 23, 2015
             margin: 0 0 1.5em 0;
         }
 
+	/*--- condensed text fix for issue #451 ---*/
+	.detail-page .main-container .middle p.media-condensed,
+        .detail-page .main-container .col-sm-8 p.media-condensed {
+            margin: 0;
+        }
+
+
         .detail-page .main-container .middle p:last-child,
         .detail-page .main-container .col-sm-8 p:last-child {
         	margin-bottom: 0;
