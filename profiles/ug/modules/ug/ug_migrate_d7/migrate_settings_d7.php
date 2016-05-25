@@ -417,4 +417,29 @@ SITE CONFIGURATION VARIABLES
     'source_event_multipart_field_collection_content'=>'',
   );
 
-?>
+  /* COURSE OUTLINE Settings */
+    $courseoutline_arguments = array(
+    'source_course_node_type'      => 'course_outline',
+    'source_course_term_category'  => 'course_outline_category',
+    'source_course_term_keyword'   => 'field_tags',
+    'source_course_title'          => 'field_course_title',
+    'source_course_name'           => 'field_course_name',
+    'source_course_code'           => 'field_course_code',
+    'source_course_section'        => 'field_course_section',
+    'source_course_semester'       => 'field_course_semester',
+    'source_course_year'           => 'field_course_year',
+    'source_course_instructor'     => 'field_course_instructor', 
+    'source_course_instructor_url' => 'field_course_instructor_url',      
+    'source_course_body'           => 'body',
+    'source_course_summary'        => 'body:summary',
+    'source_course_format'         => 'body:format',      
+    'source_course_website'        => 'field_course_website',     
+    'source_course_attachments'    => 'field_course_attachments',
+    'source_course_level'          => 'field_course_level', 
+    'source_course_type'           => 'field_course_type', 
+    'source_course_subject'        => 'field_course_subject',
+    'source_course_department'     => 'field_course_department',    
+    'source_course_category'       => 'field_course_category',      
+    'source_course_keyword'        => 'field_tags',
+  );
+
