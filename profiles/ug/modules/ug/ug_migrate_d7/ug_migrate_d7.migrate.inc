@@ -14,6 +14,7 @@ function ug_migrate_d7_migrate_api() {
     'UGFAQ7',
     'UGFeaturedItem7',
     'UGProfile7',
+    'UGCourseOutline7',
   );
 
   $update_migrations = array(
@@ -39,6 +40,8 @@ function ug_migrate_d7_migrate_api() {
     'UGFeaturedItemKeyword7',
     'UGProfileCategory7',
     'UGProfileKeyword7',
+    'UGCourseOutlineCategory7',
+    'UGCourseOutlineKeyword7',
   );
 
 
@@ -104,6 +107,12 @@ function ug_migrate_d7_migrate_api() {
     'source_profile_node_type' => 'profile',
     'source_profile_term_category' => '',
     'source_tags_vocabulary' => '',
+  );
+
+  $courseoutline_arguments = array(
+    'source_course_node_type' => '',
+    'source_course_term_category' => '',
+    'source_course_term_keyword' => '',
   );
   
   /* FILE VARIABLES */
@@ -369,6 +378,27 @@ function ug_migrate_d7_migrate_api() {
         'destination_vocabulary' => 'profile_research',
       ),
 
+      /**** COURSE OUTLINE migration ****/
+      'UGCourseOutlineCategory7' => $common_arguments + array(
+        'description' => t('Migration of course outline category terms from Drupal 7'),
+        'class_name' => 'UGCourseOutlineCategory7Migration',
+        'source_vocabulary' => $courseoutline_arguments['source_course_term_category'],
+        'destination_vocabulary' => 'course_outline_category',
+      ),
+      'UGCourseOutlineKeyword7' => $common_arguments + array(
+        'description' => t('Migration of course outline keyword terms from Drupal 7'),
+        'class_name' => 'UGCourseOutlineKeyword7Migration',
+        'source_vocabulary' => $courseoutline_arguments['source_course_term_keyword'],
+        'destination_vocabulary' => 'tags',
+      ),
+      'UGCourseOutline7' => $node_arguments + $courseoutline_arguments + array(
+        'description' => t('Migration of course outlines from Drupal 7'),
+        'class_name' => 'UGCourseOutline7Migration',
+        'source_type' => $courseoutline_arguments['source_course_node_type'],
+        'destination_type' => 'course_outline',
+        'dependencies' => array('UGFile7'),
+      ),
+
       /**** MENU migration ****/
       'UGMenu7' => $menu_arguments + array(
         'description' => t('Migration of menus from Drupal 7'),
@@ -433,7 +463,8 @@ function ug_migrate_d7_migrate_api() {
         'dependencies' => $node_migrations,
       ),
 
-    ) ,
+    ),
+
   );
 
   /* Book migration */
