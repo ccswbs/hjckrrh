@@ -48,7 +48,7 @@ function ug_webform_user_default_permissions() {
   $permissions['create webform content'] = array(
     'name' => 'create webform content',
     'roles' => array(
-      'site manager' => 'site manager',
+      'author' => 'author',
     ),
     'module' => 'node',
   );
@@ -98,7 +98,9 @@ function ug_webform_user_default_permissions() {
   $permissions['edit any webform content'] = array(
     'name' => 'edit any webform content',
     'roles' => array(
-      'site manager' => 'site manager',
+      'editor' => 'editor',
+      'moderator' => 'moderator',
+      'publisher' => 'publisher',
     ),
     'module' => 'node',
   );
@@ -107,7 +109,7 @@ function ug_webform_user_default_permissions() {
   $permissions['edit own webform content'] = array(
     'name' => 'edit own webform content',
     'roles' => array(
-      'site manager' => 'site manager',
+      'author' => 'author',
     ),
     'module' => 'node',
   );

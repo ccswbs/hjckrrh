@@ -62,8 +62,10 @@ function ug_webform_strongarm() {
   $strongarm->name = 'webform_disabled_components';
   $strongarm->value = array(
     0 => 'date',
-    1 => 'grid',
-    2 => 'time',
+    1 => 'fieldset',
+    2 => 'grid',
+    3 => 'number',
+    4 => 'time',
   );
   $export['webform_disabled_components'] = $strongarm;
 
@@ -71,7 +73,7 @@ function ug_webform_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'webform_node_webform';
-  $strongarm->value = 1;
+  $strongarm->value = TRUE;
   $export['webform_node_webform'] = $strongarm;
 
   return $export;
