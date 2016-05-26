@@ -4,6 +4,7 @@ Hjckrrh 7.3.0, 2016-05-31
 - Add media-condensed class (issue #451).
 - Add screen reader text to U of G footer links (issue #435).
 - Fix validation errors on profile list view (#386).
+- Fix validation errors on profile grid view (#385).
 
 Hjckrrh 7.2.0, 2016-05-17
 -------------------------

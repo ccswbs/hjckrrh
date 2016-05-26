@@ -10,7 +10,7 @@
 function ug_profile_field_default_field_bases() {
   $field_bases = array();
 
-  // Exported field_base: 'field_profile_address'
+  // Exported field_base: 'field_profile_address'.
   $field_bases['field_profile_address'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -34,7 +34,7 @@ function ug_profile_field_default_field_bases() {
     'type' => 'text_long',
   );
 
-  // Exported field_base: 'field_profile_attachments'
+  // Exported field_base: 'field_profile_attachments'.
   $field_bases['field_profile_attachments'] = array(
     'active' => 1,
     'cardinality' => -1,
@@ -61,7 +61,7 @@ function ug_profile_field_default_field_bases() {
     'type' => 'file',
   );
 
-  // Exported field_base: 'field_profile_caption'
+  // Exported field_base: 'field_profile_caption'.
   $field_bases['field_profile_caption'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -86,7 +86,7 @@ function ug_profile_field_default_field_bases() {
     'type' => 'text',
   );
 
-  // Exported field_base: 'field_profile_category'
+  // Exported field_base: 'field_profile_category'.
   $field_bases['field_profile_category'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -115,7 +115,7 @@ function ug_profile_field_default_field_bases() {
     'type' => 'taxonomy_term_reference',
   );
 
-  // Exported field_base: 'field_profile_content'
+  // Exported field_base: 'field_profile_content'.
   $field_bases['field_profile_content'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -139,7 +139,7 @@ function ug_profile_field_default_field_bases() {
     'type' => 'text_long',
   );
 
-  // Exported field_base: 'field_profile_email'
+  // Exported field_base: 'field_profile_email'.
   $field_bases['field_profile_email'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -164,7 +164,7 @@ function ug_profile_field_default_field_bases() {
     'type' => 'text',
   );
 
-  // Exported field_base: 'field_profile_faxnumber'
+  // Exported field_base: 'field_profile_faxnumber'.
   $field_bases['field_profile_faxnumber'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -189,7 +189,7 @@ function ug_profile_field_default_field_bases() {
     'type' => 'text',
   );
 
-  // Exported field_base: 'field_profile_heading'
+  // Exported field_base: 'field_profile_heading'.
   $field_bases['field_profile_heading'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -219,7 +219,7 @@ function ug_profile_field_default_field_bases() {
     'type' => 'taxonomy_term_reference',
   );
 
-  // Exported field_base: 'field_profile_image'
+  // Exported field_base: 'field_profile_image'.
   $field_bases['field_profile_image'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -245,7 +245,7 @@ function ug_profile_field_default_field_bases() {
     'type' => 'image',
   );
 
-  // Exported field_base: 'field_profile_lab'
+  // Exported field_base: 'field_profile_lab'.
   $field_bases['field_profile_lab'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -270,7 +270,7 @@ function ug_profile_field_default_field_bases() {
     'type' => 'text',
   );
 
-  // Exported field_base: 'field_profile_lastname'
+  // Exported field_base: 'field_profile_lastname'.
   $field_bases['field_profile_lastname'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -295,7 +295,7 @@ function ug_profile_field_default_field_bases() {
     'type' => 'text',
   );
 
-  // Exported field_base: 'field_profile_multipart'
+  // Exported field_base: 'field_profile_multipart'.
   $field_bases['field_profile_multipart'] = array(
     'active' => 1,
     'cardinality' => -1,
@@ -321,7 +321,7 @@ function ug_profile_field_default_field_bases() {
     'type' => 'field_collection',
   );
 
-  // Exported field_base: 'field_profile_name'
+  // Exported field_base: 'field_profile_name'.
   $field_bases['field_profile_name'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -346,7 +346,7 @@ function ug_profile_field_default_field_bases() {
     'type' => 'text',
   );
 
-  // Exported field_base: 'field_profile_office'
+  // Exported field_base: 'field_profile_office'.
   $field_bases['field_profile_office'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -371,7 +371,7 @@ function ug_profile_field_default_field_bases() {
     'type' => 'text',
   );
 
-  // Exported field_base: 'field_profile_research'
+  // Exported field_base: 'field_profile_research'.
   $field_bases['field_profile_research'] = array(
     'active' => 1,
     'cardinality' => -1,
@@ -401,7 +401,7 @@ function ug_profile_field_default_field_bases() {
     'type' => 'taxonomy_term_reference',
   );
 
-  // Exported field_base: 'field_profile_role'
+  // Exported field_base: 'field_profile_role'.
   $field_bases['field_profile_role'] = array(
     'active' => 1,
     'cardinality' => -1,
@@ -431,7 +431,7 @@ function ug_profile_field_default_field_bases() {
     'type' => 'taxonomy_term_reference',
   );
 
-  // Exported field_base: 'field_profile_subunit'
+  // Exported field_base: 'field_profile_subunit'.
   $field_bases['field_profile_subunit'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -461,7 +461,7 @@ function ug_profile_field_default_field_bases() {
     'type' => 'taxonomy_term_reference',
   );
 
-  // Exported field_base: 'field_profile_summary'
+  // Exported field_base: 'field_profile_summary'.
   $field_bases['field_profile_summary'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -485,7 +485,7 @@ function ug_profile_field_default_field_bases() {
     'type' => 'text_long',
   );
 
-  // Exported field_base: 'field_profile_telephonenumber'
+  // Exported field_base: 'field_profile_telephonenumber'.
   $field_bases['field_profile_telephonenumber'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -510,7 +510,7 @@ function ug_profile_field_default_field_bases() {
     'type' => 'text',
   );
 
-  // Exported field_base: 'field_profile_title'
+  // Exported field_base: 'field_profile_title'.
   $field_bases['field_profile_title'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -535,7 +535,7 @@ function ug_profile_field_default_field_bases() {
     'type' => 'text',
   );
 
-  // Exported field_base: 'field_profile_unit'
+  // Exported field_base: 'field_profile_unit'.
   $field_bases['field_profile_unit'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -565,7 +565,7 @@ function ug_profile_field_default_field_bases() {
     'type' => 'taxonomy_term_reference',
   );
 
-  // Exported field_base: 'field_profile_website'
+  // Exported field_base: 'field_profile_website'.
   $field_bases['field_profile_website'] = array(
     'active' => 1,
     'cardinality' => 1,
