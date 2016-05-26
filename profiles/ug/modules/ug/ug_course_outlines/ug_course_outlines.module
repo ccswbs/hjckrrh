@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the UG Course Outlines feature.
+ */
+
+include_once 'ug_course_outlines.features.inc';

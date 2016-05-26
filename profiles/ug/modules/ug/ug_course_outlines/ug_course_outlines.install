@@ -1,0 +1,37 @@
+<?php
+
+/**
+ * Implements hook_install().
+ */
+function ug_course_outlines_install() {
+  $taxonomy = ug_course_outlines_taxonomy();
+  foreach ($taxonomy as $vocabulary_name => $terms) {
+    /* Create vocabulary. */
+    $vocabulary = taxonomy_vocabulary_machine_name_load($vocabulary_name);
+    if ($vocabulary == FALSE) {
+      $vocabulary = new stdClass();
+      $vocabulary->name = $vocabulary_name;
+      $vocabulary->machine_name = $vocabulary_name;
+      taxonomy_vocabulary_save($vocabulary);
+    }
+    /* Add default terms to vocabulary. */
+    foreach ($terms as $term_name) {
+      $term = new stdClass();
+      $term->vid = $vocabulary->vid;
+      $term->name = $term_name;
+      taxonomy_term_save($term);
+    }
+  }
+}
+
+/**
+ * Returns an array of vocabularies and terms.
+ */
+function ug_course_outlines_taxonomy() {
+  $taxonomy = array();
+  $taxonomy['course_outline_term'] = array('Fall', 'Winter', 'Spring');
+  $taxonomy['course_outline_level'] = array('100', '200', '300', '400', '500', '600', '700', '800');
+  $taxonomy['course_outline_academic_level'] = array('Undergraduate', 'Graduate');
+  return $taxonomy;
+}
+
