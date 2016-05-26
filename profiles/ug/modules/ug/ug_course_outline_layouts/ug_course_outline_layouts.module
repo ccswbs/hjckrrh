@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the UG Course Outline Layouts feature.
+ */
+
+include_once 'ug_course_outline_layouts.features.inc';
