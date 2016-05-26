@@ -54,6 +54,15 @@ class UGProfileTestCase extends DrupalWebTestCase {
   }
 
   /**
+   * Test grid view.
+   */
+  function testGridView() {
+    $this->drupalGet('people/faces');
+    $node_list = $this->xpath('span > figure');
+    $this->assertTrue(empty($node_list));
+  }
+
+  /**
    * Test uninstall hook behaviour.
    */
   function testHookUninstall() {
