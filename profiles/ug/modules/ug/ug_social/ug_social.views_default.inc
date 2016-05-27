@@ -346,6 +346,9 @@ function ug_social_views_default_views() {
       'label' => 'Account category',
     ),
   );
+
+  /* Display: Block */
+  $handler = $view->new_display('block', 'Block', 'block_1');
   $export['s4'] = $view;
 
   $view = new view();
