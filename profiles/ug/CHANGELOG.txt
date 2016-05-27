@@ -6,6 +6,7 @@ Hjckrrh 7.3.0, 2016-05-31
 - Fix validation errors on profile list view (#386).
 - Fix validation errors on profile grid view (#385).
 - Add ability to create forms with the webform module.
+- Add "Share this page" block (#376).
 
 Hjckrrh 7.2.0, 2016-05-17
 -------------------------
