@@ -52,7 +52,7 @@ function ug_profile_views_default_views() {
   $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['title']['element_wrapper_type'] = '0';
   $handler->display->display_options['fields']['title']['element_default_classes'] = FALSE;
-  /* Field: Field: Unit */
+  /* Field: Content: Unit */
   $handler->display->display_options['fields']['field_profile_unit']['id'] = 'field_profile_unit';
   $handler->display->display_options['fields']['field_profile_unit']['table'] = 'field_data_field_profile_unit';
   $handler->display->display_options['fields']['field_profile_unit']['field'] = 'field_profile_unit';
@@ -60,23 +60,23 @@ function ug_profile_views_default_views() {
   $handler->display->display_options['fields']['field_profile_unit']['element_type'] = '0';
   $handler->display->display_options['fields']['field_profile_unit']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_profile_unit']['type'] = 'taxonomy_term_reference_plain';
-  /* Field: Field: Phone number */
+  /* Field: Content: Phone number */
   $handler->display->display_options['fields']['field_profile_telephonenumber']['id'] = 'field_profile_telephonenumber';
   $handler->display->display_options['fields']['field_profile_telephonenumber']['table'] = 'field_data_field_profile_telephonenumber';
   $handler->display->display_options['fields']['field_profile_telephonenumber']['field'] = 'field_profile_telephonenumber';
   $handler->display->display_options['fields']['field_profile_telephonenumber']['element_type'] = '0';
   $handler->display->display_options['fields']['field_profile_telephonenumber']['element_label_type'] = 'strong';
-  /* Field: Field: Email */
+  /* Field: Content: Email */
   $handler->display->display_options['fields']['field_profile_email']['id'] = 'field_profile_email';
   $handler->display->display_options['fields']['field_profile_email']['table'] = 'field_data_field_profile_email';
   $handler->display->display_options['fields']['field_profile_email']['field'] = 'field_profile_email';
   $handler->display->display_options['fields']['field_profile_email']['element_type'] = '0';
   $handler->display->display_options['fields']['field_profile_email']['element_label_type'] = 'strong';
-  /* Sort criterion: Field: Last name (field_profile_lastname) */
+  /* Sort criterion: Content: Last name (field_profile_lastname) */
   $handler->display->display_options['sorts']['field_profile_lastname_value']['id'] = 'field_profile_lastname_value';
   $handler->display->display_options['sorts']['field_profile_lastname_value']['table'] = 'field_data_field_profile_lastname';
   $handler->display->display_options['sorts']['field_profile_lastname_value']['field'] = 'field_profile_lastname_value';
-  /* Contextual filter: Field: Keywords (field_tags) */
+  /* Contextual filter: Content: Keywords (field_tags) */
   $handler->display->display_options['arguments']['field_tags_tid']['id'] = 'field_tags_tid';
   $handler->display->display_options['arguments']['field_tags_tid']['table'] = 'field_data_field_tags';
   $handler->display->display_options['arguments']['field_tags_tid']['field'] = 'field_tags_tid';
@@ -113,7 +113,7 @@ function ug_profile_views_default_views() {
   $handler->display->display_options['filters']['type']['value'] = array(
     'profile' => 'profile',
   );
-  /* Filter criterion: Field: Role (field_profile_role) */
+  /* Filter criterion: Content: Role (field_profile_role) */
   $handler->display->display_options['filters']['field_profile_role_tid']['id'] = 'field_profile_role_tid';
   $handler->display->display_options['filters']['field_profile_role_tid']['table'] = 'field_data_field_profile_role';
   $handler->display->display_options['filters']['field_profile_role_tid']['field'] = 'field_profile_role_tid';
@@ -231,7 +231,7 @@ function ug_profile_views_default_views() {
   $handler->display->display_options['fields']['path']['label'] = '';
   $handler->display->display_options['fields']['path']['exclude'] = TRUE;
   $handler->display->display_options['fields']['path']['element_label_colon'] = FALSE;
-  /* Field: Field: Image */
+  /* Field: Content: Image */
   $handler->display->display_options['fields']['field_profile_image']['id'] = 'field_profile_image';
   $handler->display->display_options['fields']['field_profile_image']['table'] = 'field_data_field_profile_image';
   $handler->display->display_options['fields']['field_profile_image']['field'] = 'field_profile_image';
@@ -243,21 +243,21 @@ function ug_profile_views_default_views() {
     'image_style' => 'profile_thumbnail',
     'image_link' => '',
   );
-  /* Field: Field: Last name */
+  /* Field: Content: Last name */
   $handler->display->display_options['fields']['field_profile_lastname']['id'] = 'field_profile_lastname';
   $handler->display->display_options['fields']['field_profile_lastname']['table'] = 'field_data_field_profile_lastname';
   $handler->display->display_options['fields']['field_profile_lastname']['field'] = 'field_profile_lastname';
   $handler->display->display_options['fields']['field_profile_lastname']['label'] = '';
   $handler->display->display_options['fields']['field_profile_lastname']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_profile_lastname']['element_label_colon'] = FALSE;
-  /* Field: Field: Preferred name */
+  /* Field: Content: Preferred name */
   $handler->display->display_options['fields']['field_profile_name']['id'] = 'field_profile_name';
   $handler->display->display_options['fields']['field_profile_name']['table'] = 'field_data_field_profile_name';
   $handler->display->display_options['fields']['field_profile_name']['field'] = 'field_profile_name';
   $handler->display->display_options['fields']['field_profile_name']['label'] = '';
   $handler->display->display_options['fields']['field_profile_name']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_profile_name']['element_label_colon'] = FALSE;
-  /* Field: Field: Role */
+  /* Field: Content: Role */
   $handler->display->display_options['fields']['field_profile_role']['id'] = 'field_profile_role';
   $handler->display->display_options['fields']['field_profile_role']['table'] = 'field_data_field_profile_role';
   $handler->display->display_options['fields']['field_profile_role']['field'] = 'field_profile_role';
@@ -404,6 +404,9 @@ function ug_profile_views_default_views() {
 
   /* Display: Content pane */
   $handler = $view->new_display('panel_pane', 'Content pane', 'panel_pane_1');
+
+  /* Display: Block */
+  $handler = $view->new_display('block', 'Block', 'block_1');
   $export['pp4'] = $view;
 
   $view = new view();
@@ -453,7 +456,7 @@ function ug_profile_views_default_views() {
   $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['title']['element_wrapper_type'] = '0';
   $handler->display->display_options['fields']['title']['element_default_classes'] = FALSE;
-  /* Field: Field: Unit */
+  /* Field: Content: Unit */
   $handler->display->display_options['fields']['field_profile_unit']['id'] = 'field_profile_unit';
   $handler->display->display_options['fields']['field_profile_unit']['table'] = 'field_data_field_profile_unit';
   $handler->display->display_options['fields']['field_profile_unit']['field'] = 'field_profile_unit';
@@ -461,23 +464,23 @@ function ug_profile_views_default_views() {
   $handler->display->display_options['fields']['field_profile_unit']['element_type'] = '0';
   $handler->display->display_options['fields']['field_profile_unit']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_profile_unit']['type'] = 'taxonomy_term_reference_plain';
-  /* Field: Field: Phone number */
+  /* Field: Content: Phone number */
   $handler->display->display_options['fields']['field_profile_telephonenumber']['id'] = 'field_profile_telephonenumber';
   $handler->display->display_options['fields']['field_profile_telephonenumber']['table'] = 'field_data_field_profile_telephonenumber';
   $handler->display->display_options['fields']['field_profile_telephonenumber']['field'] = 'field_profile_telephonenumber';
   $handler->display->display_options['fields']['field_profile_telephonenumber']['element_type'] = '0';
   $handler->display->display_options['fields']['field_profile_telephonenumber']['element_label_type'] = 'strong';
-  /* Field: Field: Email */
+  /* Field: Content: Email */
   $handler->display->display_options['fields']['field_profile_email']['id'] = 'field_profile_email';
   $handler->display->display_options['fields']['field_profile_email']['table'] = 'field_data_field_profile_email';
   $handler->display->display_options['fields']['field_profile_email']['field'] = 'field_profile_email';
   $handler->display->display_options['fields']['field_profile_email']['element_type'] = '0';
   $handler->display->display_options['fields']['field_profile_email']['element_label_type'] = 'strong';
-  /* Sort criterion: Field: Last name (field_profile_lastname) */
+  /* Sort criterion: Content: Last name (field_profile_lastname) */
   $handler->display->display_options['sorts']['field_profile_lastname_value']['id'] = 'field_profile_lastname_value';
   $handler->display->display_options['sorts']['field_profile_lastname_value']['table'] = 'field_data_field_profile_lastname';
   $handler->display->display_options['sorts']['field_profile_lastname_value']['field'] = 'field_profile_lastname_value';
-  /* Contextual filter: Field: Keywords (field_tags) */
+  /* Contextual filter: Content: Keywords (field_tags) */
   $handler->display->display_options['arguments']['field_tags_tid']['id'] = 'field_tags_tid';
   $handler->display->display_options['arguments']['field_tags_tid']['table'] = 'field_data_field_tags';
   $handler->display->display_options['arguments']['field_tags_tid']['field'] = 'field_tags_tid';
