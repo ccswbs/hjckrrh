@@ -6,12 +6,18 @@ class UGUpdate7Migration extends DrupalNode7Migration {
 
     	$this->arguments['update_source_body'] = 'body';
     	$this->arguments['update_map_table'] = '';
+    	$this->arguments['update_insert_fields'] = NULL;
 	}
 
 	public function prepareRow($row) {
 	    if (parent::prepareRow($row) === FALSE) {
 	      return FALSE;
 	    }
+
+		//insert unmappable fields into body field
+		if(isset($this->arguments['update_insert_fields'])){
+		    $row->{$this->arguments['update_source_body']}[0] = $this->insertUnmappableFields($row->{$this->arguments['update_source_body']}[0], $this->arguments['update_insert_fields'], $row->nid);
+		}
 
 	    //fix updated items missing destination ID
 	    if(!isset($row->migrate_map_destid1)){
@@ -57,6 +63,38 @@ class UGUpdate7Migration extends DrupalNode7Migration {
 			}
 		}
 	}
+
+
+	public function insertUnmappableFields(&$body, &$fields, &$nid){
+		$new_body = $body;
+
+		foreach($fields as $field_name => $field_info){
+			$field_query = Database::getConnection('default','legacy_d7')
+				->select($field_info['db_table'],'f')
+				->fields('f',$field_info['db_field_value'])
+				->condition($field_info['db_field_entity_id'],$nid,'LIKE')
+				->execute()
+				->fetchObject();
+
+			$field_value = $field_query->{$field_info['db_field_value'][0]};
+
+			if(isset($field_value)){
+				if($field_value != ''){
+					if($field_info['heading'] != ''){
+						$new_body .= $field_info['heading'];
+					}
+
+					$new_body .= $field_value;
+				}
+			}
+		}
+
+	  	if(isset($new_body)){
+		  	return $new_body;
+	  	}
+	  	return $body;
+	}
+
 
 	public function retrieveMapDestID(&$map_table, &$nid){
 	    $destID = Database::getConnection('default', 'default')
@@ -200,6 +238,7 @@ class UGUpdatePage7Migration extends UGUpdate7Migration {
 			'source_page_body' => 'body',
 			'source_page_summary' => 'body:summary',
 			'source_page_format' => 'body:format',
+			'source_page_insert_fields' => NULL,
 		);
 
 		//Override default values with arguments if they exist
@@ -222,10 +261,10 @@ class UGUpdatePage7Migration extends UGUpdate7Migration {
 
 	    $this->addFieldMapping('nid', 'nid')
 			->sourceMigration($this->arguments['dependencies']);
-
 		$this->arguments['update_map_table'] = 'migrate_map_ugpage7';
 
 	    // Update body field
+		$this->arguments['update_insert_fields'] = $page_arguments['source_page_insert_fields'];
 		$this->arguments['update_source_body'] = $page_arguments['source_page_body'];
 	    $this->addFieldMapping('field_page_body', $page_arguments['source_page_body']);
 	    $this->addFieldMapping('field_page_body:summary', $page_arguments['source_page_summary']);
@@ -255,6 +294,7 @@ class UGUpdateNews7Migration extends UGUpdate7Migration {
 			'source_news_body' => 'body',
 			'source_news_summary' => 'body:summary',
 			'source_news_format' => 'body:format',
+			'source_news_insert_fields' => NULL,
 		);
 
 		//Override default values with arguments if they exist
@@ -280,6 +320,7 @@ class UGUpdateNews7Migration extends UGUpdate7Migration {
 		$this->arguments['update_map_table'] = 'migrate_map_ugnews7';
 
 	    // Update body field
+    	$this->arguments['update_insert_fields'] = $news_arguments['source_news_insert_fields'];
 		$this->arguments['update_source_body'] = $news_arguments['source_news_body'];
 	    $this->addFieldMapping('field_news_body', $news_arguments['source_news_body']);
 	    $this->addFieldMapping('field_news_body:summary', $news_arguments['source_news_summary']);
@@ -306,6 +347,7 @@ class UGUpdateEvent7Migration extends UGUpdate7Migration {
 			'source_event_body' => 'body',
 			'source_event_summary' => 'body:summary',
 			'source_event_format' => 'body:format',
+			'source_event_insert_fields' => NULL,
 		);
 
 		//Override default values with arguments if they exist
@@ -331,6 +373,7 @@ class UGUpdateEvent7Migration extends UGUpdate7Migration {
 		$this->arguments['update_map_table'] = 'migrate_map_ugevent7';
 
 	    // Update body field
+    	$this->arguments['update_insert_fields'] = $event_arguments['source_event_insert_fields'];
 		$this->arguments['update_source_body'] = $event_arguments['source_event_body'];
 	    $this->addFieldMapping('field_event_body', $event_arguments['source_event_body']);
 	    $this->addFieldMapping('field_event_body:summary', $event_arguments['source_event_summary']);
@@ -357,6 +400,7 @@ class UGUpdateFAQ7Migration extends UGUpdate7Migration {
 		$faq_arguments = array(
 			'source_faq_answer' => 'body',
 			'source_faq_format' => 'body:format',
+			'source_faq_insert_fields' => NULL,
 		);
 
 		//Override default values with arguments if they exist
@@ -382,6 +426,7 @@ class UGUpdateFAQ7Migration extends UGUpdate7Migration {
 		$this->arguments['update_map_table'] = 'migrate_map_ugfaq7';
 
 	    // Update field_faq_answer field
+    	$this->arguments['update_insert_fields'] = $faq_arguments['source_faq_insert_fields'];
 		$this->arguments['update_source_body'] = $faq_arguments['source_faq_answer'];
 	    $this->addFieldMapping('field_faq_answer', $faq_arguments['source_faq_answer']);
 	    $this->addFieldMapping( 'field_faq_answer:format', $faq_arguments['source_faq_format'])
@@ -410,6 +455,7 @@ class UGUpdateFeaturedItem7Migration extends UGUpdate7Migration {
 			'source_featureditem_body' => 'body',
 			'source_featureditem_summary' => 'body:summary',
 			'source_featureditem_format' => 'body:format',
+			'source_featureditem_insert_fields' => NULL,
 		);
 
 		//Override default values with arguments if they exist
@@ -435,6 +481,7 @@ class UGUpdateFeaturedItem7Migration extends UGUpdate7Migration {
 		$this->arguments['update_map_table'] = 'migrate_map_ugfeatureditem7';
 
 	    // Update body field
+    	$this->arguments['update_insert_fields'] = $featureditem_arguments['source_featureditem_insert_fields'];
 		$this->arguments['update_source_body'] = $featureditem_arguments['source_featureditem_body'];
 	    $this->addFieldMapping('field_feature_text', $featureditem_arguments['source_featureditem_body']);
 	    $this->addFieldMapping('field_feature_text:summary', $featureditem_arguments['source_featureditem_summary']);
@@ -466,6 +513,7 @@ class UGUpdateProfile7Migration extends UGUpdate7Migration {
 		  'source_profile_lastname'  => 'field_profile_lastname',
 		  'source_profile_summary'   => 'field_profile_summary',
 		  'source_profile_format'    => 'field_profile_summary:format',
+		  'source_profile_insert_fields' => NULL,
 		);
 
 		//Override default values with arguments if they exist
@@ -489,6 +537,7 @@ class UGUpdateProfile7Migration extends UGUpdate7Migration {
 		$this->addFieldMapping('field_profile_lastname', $profile_arguments['source_profile_lastname']);
 
 	    // Update body field
+    	$this->arguments['update_insert_fields'] = $profile_arguments['source_profile_insert_fields'];
 		$this->arguments['update_source_body'] = $profile_arguments['source_profile_summary'];
 		$this->addFieldMapping('field_profile_summary', $profile_arguments['source_profile_summary']);
 		$this->addFieldMapping('field_profile_summary:format', $profile_arguments['source_profile_format']);
