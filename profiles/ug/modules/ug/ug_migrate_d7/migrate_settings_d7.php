@@ -2,8 +2,12 @@
 
   /*****************************
   SITE CONFIGURATION VARIABLES
-  (source => destination)
   ******************************/
+
+
+/**************************
+*  UPDATE NODE Settings
+**************************/
 
   $update_nodelinks_urls = array(
       //'/sitename/node/',
@@ -33,10 +37,17 @@
     'update_prefix_destination' => '',
   );
 
-  /* MENU Settings */
+/**************************
+*  MENU Settings
+**************************/
+
   $menu_names = array('main-menu');
 
-  /* USER SETTINGS */
+/**************************
+*  USER Settings
+**************************/
+
+  // ROLE format: 'source role' => 'destination role'
   $role_mappings = array(
     // e.g. 'source-editor' => 'editor',
   );
@@ -45,18 +56,45 @@
     'role_mappings' => $role_mappings,
   );
 
-  /* FILE SETTINGS */
+/**************************
+*  FILE Settings
+**************************/
+
   $file_arguments = array(
     'source_directory' => 'public://',
     'destination_directory' => 'public://',
   );
 
-  /* TAXONOMY Settings */
+/**************************
+*  TAXONOMY Settings
+**************************/
+
   $term_arguments = array(
     'source_term_keyword' => 'tags',
   );
 
-  /* PAGE Settings */
+/**************************
+*  PAGE Settings
+**************************/
+
+/*****
+*
+*  SAMPLE CODE for mapping Unmappable Text Fields into Body field
+*
+*  $field_info = array(
+*    'heading' => '<h2>Example Heading</h2>',
+*    'db_table' => 'field_data_field_source_table_name',
+*    'db_field_value' => array('field_profile_value_column'),
+*    'db_field_entity_id' => 'field_profile_entityid_column',
+*  );
+*
+*  $page_insert_fields = array(
+*    'field_machine_name' => $field_info,
+*   );
+*
+****/
+
+  $page_insert_fields = NULL;
   $page_arguments = array(
     'source_page_node_type' => 'page',
     'source_page_term_category' => '',
@@ -67,9 +105,32 @@
     'source_page_category' => '',
     'source_page_keyword' => 'field_tags',
     'source_page_attachments' => '',
+    'source_page_insert_fields' => $page_insert_fields,
   );
   
-  /* NEWS Settings */
+
+/**************************
+*  NEWS Settings
+**************************/
+
+/*****
+*
+*  SAMPLE CODE for mapping Unmappable Text Fields into Body field:
+*
+*  $field_info = array(
+*    'heading' => '<h2>Example Heading</h2>',
+*    'db_table' => 'field_data_field_source_table_name',
+*    'db_field_value' => array('field_profile_value_column'),
+*    'db_field_entity_id' => 'field_profile_entityid_column',
+*  );
+*
+*  $news_insert_fields = array(
+*    'field_machine_name' => $field_info,
+*   );
+*
+****/
+
+  $news_insert_fields = NULL;
   $news_arguments = array(
     'source_news_node_type' => 'article',
     'source_news_term_category' => '',
@@ -84,9 +145,32 @@
     'source_news_image' => '',
     'source_news_caption' => '',
     'source_news_attachment' => '',
+    'source_news_insert_fields' => $news_insert_fields,
   );
 
-  /* FAQ Settings */
+/**************************
+*  FAQ Settings
+**************************/
+
+/*****
+*
+*  SAMPLE CODE for mapping Unmappable Text Fields into Body field
+*
+*  $field_info = array(
+*    'heading' => '<h2>Example Heading</h2>',
+*    'db_table' => 'field_data_field_source_table_name',
+*    'db_field_value' => array('field_profile_value_column'),
+*    'db_field_entity_id' => 'field_profile_entityid_column',
+*  );
+*
+*  $faq_insert_fields = array(
+*    'field_machine_name' => $field_info,
+*   );
+*
+****/
+
+  $faq_insert_fields = NULL;
+
   $faq_arguments = array(
     'source_faq_node_type' => '',
     'source_faq_term_category' => '',
@@ -95,9 +179,32 @@
     'source_faq_format' => 'body:format',
     'source_faq_category' => '',
     'source_faq_keyword' => '',
+    'source_faq_insert_fields' => $faq_insert_fields,
   );
 
-  /* FEATURED ITEM Settings */
+/**************************
+*  FEATURED ITEM Settings
+**************************/
+
+/*****
+*
+*  SAMPLE CODE for mapping Unmappable Text Fields into Body field
+*
+*  $field_info = array(
+*    'heading' => '<h2>Example Heading</h2>',
+*    'db_table' => 'field_data_field_source_table_name',
+*    'db_field_value' => array('field_profile_value_column'),
+*    'db_field_entity_id' => 'field_profile_entityid_column',
+*  );
+*
+*  $featureditem_insert_fields = array(
+*    'field_machine_name' => $field_info,
+*   );
+*
+****/
+
+  $featureditem_insert_fields = NULL;
+
   $featureditem_arguments = array(
     'source_featureditem_node_type' => '',
     'source_featureditem_term_category' => '',
@@ -109,9 +216,33 @@
     'source_featureditem_image' => '',
     'source_featureditem_category' => '',
     'source_featureditem_keyword' => '',
+    'source_featureditem_insert_fields' => $featureditem_insert_fields,
   );
 
-  /* EVENT Settings */
+
+/**************************
+*  EVENT Settings
+**************************/
+
+/*****
+*
+*  SAMPLE CODE for mapping Unmappable Text Fields into Body field
+*
+*  $field_info = array(
+*    'heading' => '<h2>Example Heading</h2>',
+*    'db_table' => 'field_data_field_source_table_name',
+*    'db_field_value' => array('field_profile_value_column'),
+*    'db_field_entity_id' => 'field_profile_entityid_column',
+*  );
+*
+*  $event_insert_fields = array(
+*    'field_machine_name' => $field_info,
+*   );
+*
+****/
+
+  $event_insert_fields = NULL;
+
   $event_arguments = array(
     'source_event_node_type' => '',
     'source_event_term_category' => '',
@@ -132,9 +263,86 @@
     'source_event_caption' => '',
     'source_event_attachments' => '',
     'source_event_link' => '',
+    'source_event_insert_fields' => $event_insert_fields,
   );
 
- /* EVENT Multipart (Field Collection) Settings */
+/**************************
+*  PROFILE Settings
+**************************/
+
+/*****
+*
+*  SAMPLE CODE for mapping Unmappable Text Fields into Body field
+*
+*  $field_info = array(
+*    'heading' => '<h2>Example Heading</h2>',
+*    'db_table' => 'field_data_field_source_table_name',
+*    'db_field_value' => array('field_profile_value_column'),
+*    'db_field_entity_id' => 'field_profile_entityid_column',
+*  );
+*
+*  $profile_insert_fields = array(
+*    'field_machine_name' => $field_info,
+*   );
+*
+****/
+
+  $profile_insert_fields = NULL;
+
+  $profile_arguments = array(
+    'source_profile_node_type'            => 'profile',
+    'source_profile_name'                 => 'field_profile_name',
+    'source_profile_lastname'             => 'field_profile_lastname',
+    'source_profile_role'                 => 'field_profile_role',
+    'source_profile_role_source_type'     => 'tid',
+    'source_profile_role_ignore_case'     => TRUE,
+    'source_profile_role_create_term'     => TRUE,
+    'source_profile_role_vocabulary'      => 'profile_role',
+    'source_profile_unit'                 => 'field_profile_unit',
+    'source_profile_unit_source_type'     => 'tid',
+    'source_profile_unit_ignore_case'     => TRUE,
+    'source_profile_unit_create_term'     => TRUE,
+    'source_profile_unit_vocabulary'      => 'profile_unit',
+    'source_profile_summary'              => 'field_profile_summary',
+    'source_profile_format'               => 'field_profile_summary:format',
+    'source_profile_category'             => 'field_profile_category',
+    'source_profile_category_source_type' => 'tid',
+    'source_profile_category_ignore_case' => TRUE,
+    'source_profile_category_create_term' => TRUE,
+    'source_profile_category_vocabulary'  => 'profile_category',
+    'source_profile_title'                => 'field_profile_title',
+    'source_profile_subunit'              => 'field_profile_subunit',
+    'source_profile_subunit_source_type'  => 'tid',
+    'source_profile_subunit_ignore_case'  => TRUE,
+    'source_profile_subunit_create_term'  => TRUE,
+    'source_profile_subunit_vocabulary'   => 'profile_subunit',
+    'source_profile_research'             => 'field_profile_research',
+    'source_profile_research_source_type' => 'tid',
+    'source_profile_research_ignore_case' => TRUE,
+    'source_profile_research_create_term' => TRUE,
+    'source_profile_research_vocabulary'  => 'profile_research',
+    'source_profile_attachments'          => 'field_profile_attachments',
+    'source_profile_image'                => 'field_profile_image',
+    'source_profile_caption'              => 'field_profile_caption',
+    'source_profile_address'              => 'field_profile_address',
+    'source_profile_email'                => 'field_profile_email',
+    'source_profile_telephonenumber'      => 'field_profile_telephonenumber',
+    'source_profile_faxnumber'            => 'field_profile_faxnumber',
+    'source_profile_office'               => 'field_profile_office',
+    'source_profile_lab'                  => 'field_profile_lab',
+    'source_profile_website'              => 'field_profile_website',
+    'source_tags'                         => 'field_tags',
+    'source_tags_source_type'             => 'tid',
+    'source_tags_ignore_case'             => TRUE,
+    'source_tags_create_term'             => TRUE,
+    'source_tags_vocabulary'              => '',
+    'source_profile_insert_fields'        => $profile_insert_fields,
+  );
+
+
+/**************************
+*  EVENT MULTIPART (Field Collection) Settings
+**************************/
 
 /******
 *
@@ -190,56 +398,6 @@
     'source_event_multipart_field_collection_ID'=>'',
     'source_event_multipart_field_collection_heading_termID'=>'',
     'source_event_multipart_field_collection_content'=>'',
-  );
-
-  /* PROFILE Settings */
-  $profile_arguments = array(
-    'source_profile_node_type'            => 'profile',
-    'source_profile_name'                 => 'field_profile_name',
-    'source_profile_lastname'             => 'field_profile_lastname',
-    'source_profile_role'                 => 'field_profile_role',
-    'source_profile_role_source_type'     => 'tid',
-    'source_profile_role_ignore_case'     => TRUE,
-    'source_profile_role_create_term'     => TRUE,
-    'source_profile_role_vocabulary'      => 'profile_role',
-    'source_profile_unit'                 => 'field_profile_unit',
-    'source_profile_unit_source_type'     => 'tid',
-    'source_profile_unit_ignore_case'     => TRUE,
-    'source_profile_unit_create_term'     => TRUE,
-    'source_profile_unit_vocabulary'      => 'profile_unit',
-    'source_profile_summary'              => 'field_profile_summary',
-    'source_profile_format'               => 'field_profile_summary:format',
-    'source_profile_category'             => 'field_profile_category',
-    'source_profile_category_source_type' => 'tid',
-    'source_profile_category_ignore_case' => TRUE,
-    'source_profile_category_create_term' => TRUE,
-    'source_profile_category_vocabulary'  => 'profile_category',
-    'source_profile_title'                => 'field_profile_title',
-    'source_profile_subunit'              => 'field_profile_subunit',
-    'source_profile_subunit_source_type'  => 'tid',
-    'source_profile_subunit_ignore_case'  => TRUE,
-    'source_profile_subunit_create_term'  => TRUE,
-    'source_profile_subunit_vocabulary'   => 'profile_subunit',
-    'source_profile_research'             => 'field_profile_research',
-    'source_profile_research_source_type' => 'tid',
-    'source_profile_research_ignore_case' => TRUE,
-    'source_profile_research_create_term' => TRUE,
-    'source_profile_research_vocabulary'  => 'profile_research',
-    'source_profile_attachments'          => 'field_profile_attachments',
-    'source_profile_image'                => 'field_profile_image',
-    'source_profile_caption'              => 'field_profile_caption',
-    'source_profile_address'              => 'field_profile_address',
-    'source_profile_email'                => 'field_profile_email',
-    'source_profile_telephonenumber'      => 'field_profile_telephonenumber',
-    'source_profile_faxnumber'            => 'field_profile_faxnumber',
-    'source_profile_office'               => 'field_profile_office',
-    'source_profile_lab'                  => 'field_profile_lab',
-    'source_profile_website'              => 'field_profile_website',
-    'source_tags'                         => 'field_tags',
-    'source_tags_source_type'             => 'tid',
-    'source_tags_ignore_case'             => TRUE,
-    'source_tags_create_term'             => TRUE,
-    'source_tags_vocabulary'              => '',
   );
 
 ?>

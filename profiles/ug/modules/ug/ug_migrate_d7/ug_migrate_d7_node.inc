@@ -2,7 +2,57 @@
 
 /* NODE classes */
 
-class UGFeaturedItem7Migration extends DrupalNode7Migration {
+class UGDrupalNode7Migration extends DrupalNode7Migration {
+	public function __construct($arguments) {
+    	parent::__construct($arguments);
+
+		$this->arguments['update_source_body'] = '';
+    	$this->arguments['update_insert_fields'] = NULL;
+    }
+
+	public function prepareRow($row) {
+	    if (parent::prepareRow($row) === FALSE) {
+	      return FALSE;
+	    }
+
+		//insert unmappable fields into body field
+		if(isset($this->arguments['update_insert_fields'])){
+		    $row->{$this->arguments['update_source_body']}[0] = $this->insertUnmappableFields($row->{$this->arguments['update_source_body']}[0], $this->arguments['update_insert_fields'], $row->nid);
+		}
+	}
+
+	public function insertUnmappableFields(&$body, &$fields, &$nid){
+		$new_body = $body;
+
+		foreach($fields as $field_name => $field_info){
+			$field_query = Database::getConnection('default','legacy_d7')
+				->select($field_info['db_table'],'f')
+				->fields('f',$field_info['db_field_value'])
+				->condition($field_info['db_field_entity_id'],$nid,'LIKE')
+				->execute()
+				->fetchObject();
+
+			$field_value = $field_query->{$field_info['db_field_value'][0]};
+
+			if(isset($field_value)){
+				if($field_value != ''){
+					if($field_info['heading'] != ''){
+						$new_body .= $field_info['heading'];
+					}
+
+					$new_body .= $field_value;
+				}
+			}
+		}
+
+	  	if(isset($new_body)){
+		  	return $new_body;
+	  	}
+	  	return $body;
+	}
+}
+
+class UGFeaturedItem7Migration extends UGDrupalNode7Migration {
 	public function __construct($arguments) {
 
     	parent::__construct($arguments);
@@ -18,6 +68,7 @@ class UGFeaturedItem7Migration extends DrupalNode7Migration {
 			'source_featureditem_image' => '',
 			'source_featureditem_category' => '',
 			'source_featureditem_keyword' => '',
+			'source_featureditem_insert_fields' => NULL,
 		);
 
 		//Override default values with arguments if they exist
@@ -28,6 +79,10 @@ class UGFeaturedItem7Migration extends DrupalNode7Migration {
 			    }
 		    }
 		}
+
+		/* INSERT fields into Body variables */
+		$this->arguments['update_source_body'] = $featureditem_arguments['source_featureditem_body'];
+    	$this->arguments['update_insert_fields'] = $featureditem_arguments['source_featureditem_insert_fields'];
 
 	    /* Featured Item Body */
 	    $this->addFieldMapping('field_feature_text', $featureditem_arguments['source_featureditem_body']);
@@ -78,7 +133,7 @@ class UGFeaturedItem7Migration extends DrupalNode7Migration {
 }
 
 
-class UGEvent7Migration extends DrupalNode7Migration {
+class UGEvent7Migration extends UGDrupalNode7Migration {
 	public function __construct($arguments) {
 
     	parent::__construct($arguments);
@@ -100,6 +155,7 @@ class UGEvent7Migration extends DrupalNode7Migration {
 			'source_event_caption' => '',
 			'source_event_attachments' => '',
 			'source_event_link' => '',
+			'source_event_insert_fields' => NULL,
 		);
 
 		//Override default values with arguments if they exist
@@ -110,6 +166,10 @@ class UGEvent7Migration extends DrupalNode7Migration {
 		    	}
 		    }
 		}
+
+		/* INSERT fields into Body variables */
+		$this->arguments['update_source_body'] = $event_arguments['source_event_body'];
+    	$this->arguments['update_insert_fields'] = $event_arguments['source_event_insert_fields'];
 
 	    /* Event Body */
 	    $this->addFieldMapping('field_event_body', $event_arguments['source_event_body']);
@@ -268,7 +328,7 @@ class UGEventMultifield7Migration extends DrupalMigration {
 }
 
 
-class UGNews7Migration extends DrupalNode7Migration {
+class UGNews7Migration extends UGDrupalNode7Migration {
 	public function __construct($arguments) {
 
     	parent::__construct($arguments);
@@ -287,6 +347,7 @@ class UGNews7Migration extends DrupalNode7Migration {
 			'source_news_image' => '',
 			'source_news_caption' => '',
 			'source_news_attachment' => '',
+			'source_news_insert_fields' => NULL,
 		);
 
 
@@ -296,6 +357,10 @@ class UGNews7Migration extends DrupalNode7Migration {
 		    	$news_arguments[$key] = $this->arguments[$key];
 		    }
 		}
+
+		/* INSERT fields into Body variables */
+		$this->arguments['update_source_body'] = $news_arguments['source_news_body'];
+    	$this->arguments['update_insert_fields'] = $news_arguments['source_news_insert_fields'];
 
 	    /* News Body */
 	    $this->addFieldMapping('field_news_body', $news_arguments['source_news_body']);
@@ -351,7 +416,7 @@ class UGNews7Migration extends DrupalNode7Migration {
 }
 
 
-class UGPage7Migration extends DrupalNode7Migration {
+class UGPage7Migration extends UGDrupalNode7Migration {
 	public function __construct($arguments) {
     	parent::__construct($arguments);
 
@@ -365,6 +430,7 @@ class UGPage7Migration extends DrupalNode7Migration {
 			'source_page_category' => '',
 			'source_page_keyword' => '',
 			'source_page_attachments' => '',
+			'source_page_insert_fields' => NULL,
 		);
 
 		//Override default values with arguments if they exist
@@ -373,6 +439,10 @@ class UGPage7Migration extends DrupalNode7Migration {
 		    	$page_arguments[$key] = $this->arguments[$key];
 		    }
 		}
+
+		/* INSERT fields into Body variables */
+		$this->arguments['update_source_body'] = $page_arguments['source_page_body'];
+    	$this->arguments['update_insert_fields'] = $page_arguments['source_page_insert_fields'];
 
 	    /* Page Body */
 	    $this->addFieldMapping('field_page_body', $page_arguments['source_page_body']);
@@ -411,7 +481,7 @@ class UGPage7Migration extends DrupalNode7Migration {
 	}
 }
 
-class UGFAQ7Migration extends DrupalNode7Migration {
+class UGFAQ7Migration extends UGDrupalNode7Migration {
 	public function __construct($arguments) {
 
     	parent::__construct($arguments);
@@ -424,6 +494,7 @@ class UGFAQ7Migration extends DrupalNode7Migration {
 			'source_faq_format' => 'body:format',
 			'source_faq_category' => '',
 			'source_faq_keyword' => '',
+			'source_faq_insert_fields' => NULL,
 		);
 
 		//Override default values with arguments if they exist
@@ -435,9 +506,14 @@ class UGFAQ7Migration extends DrupalNode7Migration {
 		    }
 		}
 
+		/* INSERT fields into Body variables */
+		$this->arguments['update_source_body'] = $faq_arguments['source_faq_answer'];
+    	$this->arguments['update_insert_fields'] = $faq_arguments['source_faq_insert_fields'];
+
 	    /* FAQ Answer */
 	    $this->addFieldMapping('field_faq_answer', $faq_arguments['source_faq_answer']);
 	    $this->addFieldMapping( 'field_faq_answer:format', $faq_arguments['source_faq_format'])
+		    ->callbacks(array($this, 'mapFormat'))
 		    ->defaultValue('full_html');
 
 		/* FAQ Category */
@@ -582,7 +658,7 @@ class UGFile7Migration extends DrupalFile7Migration {
 }
 
 /* PROFILE classes */
-class UGProfile7Migration extends DrupalNode7Migration {
+class UGProfile7Migration extends UGDrupalNode7Migration {
 	public function __construct($arguments) {
     	parent::__construct($arguments);
 
@@ -590,52 +666,53 @@ class UGProfile7Migration extends DrupalNode7Migration {
 
 		/* DEFAULT arguments */
 		$profile_arguments = array(
-		  'source_profile_node_type' => 'profile',
-		  'source_profile_name'      => 'field_profile_name',
-		  'source_profile_lastname'  => 'field_profile_lastname',
-		  'source_profile_role'      => 'field_profile_role',
-		  'source_profile_role_source_type' => 'tid',
-		  'source_profile_role_ignore_case' => TRUE,
-		  'source_profile_role_create_term' => TRUE,
-		  'source_profile_role_vocabulary'  => 'profile_role',
-		  'source_profile_unit'      => 'field_profile_unit',
-	  	  'source_profile_unit_source_type' => 'tid',
-		  'source_profile_unit_ignore_case' => TRUE,
-		  'source_profile_unit_create_term' => TRUE,
-		  'source_profile_unit_vocabulary'  => 'profile_unit',
-		  'source_profile_summary'   => 'field_profile_summary',
-		  'source_profile_format'    => 'field_profile_summary:format',
-		  'source_profile_category'  => 'field_profile_category',
+		  'source_profile_node_type' 			=> 'profile',
+		  'source_profile_name'      			=> 'field_profile_name',
+		  'source_profile_lastname'  			=> 'field_profile_lastname',
+		  'source_profile_role'      			=> 'field_profile_role',
+		  'source_profile_role_source_type' 	=> 'tid',
+		  'source_profile_role_ignore_case' 	=> TRUE,
+		  'source_profile_role_create_term' 	=> TRUE,
+		  'source_profile_role_vocabulary'  	=> 'profile_role',
+		  'source_profile_unit'      			=> 'field_profile_unit',
+	  	  'source_profile_unit_source_type' 	=> 'tid',
+		  'source_profile_unit_ignore_case' 	=> TRUE,
+		  'source_profile_unit_create_term' 	=> TRUE,
+		  'source_profile_unit_vocabulary'  	=> 'profile_unit',
+		  'source_profile_summary'   			=> 'field_profile_summary',
+		  'source_profile_format'    			=> 'field_profile_summary:format',
+		  'source_profile_category'  			=> 'field_profile_category',
 	  	  'source_profile_category_source_type' => 'tid',
 		  'source_profile_category_ignore_case' => TRUE,
 		  'source_profile_category_create_term' => TRUE,
 	 	  'source_profile_category_vocabulary'  => 'profile_category',
-		  'source_profile_title'     => 'field_profile_title',
-		  'source_profile_subunit'   => 'field_profile_subunit',
-	  	  'source_profile_subunit_source_type' => 'tid',
-		  'source_profile_subunit_ignore_case' => TRUE,
-		  'source_profile_subunit_create_term' => TRUE,
-		  'source_profile_subunit_vocabulary'  => 'profile_term_subunit',
-		  'source_profile_research'  => 'field_profile_research',
+		  'source_profile_title'     			=> 'field_profile_title',
+		  'source_profile_subunit'   			=> 'field_profile_subunit',
+	  	  'source_profile_subunit_source_type'  => 'tid',
+		  'source_profile_subunit_ignore_case'  => TRUE,
+		  'source_profile_subunit_create_term'  => TRUE,
+		  'source_profile_subunit_vocabulary'   => 'profile_term_subunit',
+		  'source_profile_research' 			=> 'field_profile_research',
 	  	  'source_profile_research_source_type' => 'tid',
 		  'source_profile_research_ignore_case' => TRUE,
 		  'source_profile_research_create_term' => TRUE,
 		  'source_profile_research_vocabulary'  => 'profile_research',
-		  'source_profile_attachments' => 'field_profile_attachments',
-		  'source_profile_image'     => 'field_profile_image',
-		  'source_profile_caption'   => 'field_profile_caption',
-		  'source_profile_address'   => 'field_profile_address',
-		  'source_profile_email'     => 'field_profile_email',
-		  'source_profile_telephonenumber' => 'field_profile_telephonenumber',
-		  'source_profile_faxnumber' => 'field_profile_faxnumber',
-		  'source_profile_office'    => 'field_profile_office',
-		  'source_profile_lab'       => 'field_profile_lab',
-		  'source_profile_website'   => 'field_profile_website',
-		  'source_tags'              => 'field_tags',
-		  'source_tags_source_type'  => 'tid',
-		  'source_tags_ignore_case'  => TRUE,
-		  'source_tags_create_term'  => TRUE,
-		  'source_tags_vocabulary'   => 'tags',
+		  'source_profile_attachments'			=> 'field_profile_attachments',
+		  'source_profile_image'     			=> 'field_profile_image',
+		  'source_profile_caption'   			=> 'field_profile_caption',
+		  'source_profile_address'   			=> 'field_profile_address',
+		  'source_profile_email'     			=> 'field_profile_email',
+		  'source_profile_telephonenumber' 		=> 'field_profile_telephonenumber',
+		  'source_profile_faxnumber' 			=> 'field_profile_faxnumber',
+		  'source_profile_office'    			=> 'field_profile_office',
+		  'source_profile_lab'       			=> 'field_profile_lab',
+		  'source_profile_website'   			=> 'field_profile_website',
+		  'source_tags'              			=> 'field_tags',
+		  'source_tags_source_type'  			=> 'tid',
+		  'source_tags_ignore_case'  			=> TRUE,
+		  'source_tags_create_term'  			=> TRUE,
+		  'source_tags_vocabulary'   			=> 'tags',
+		  'source_profile_insert_fields' 		=> NULL,
 		);
 
 		//Override default values with arguments if they exist
@@ -644,6 +721,10 @@ class UGProfile7Migration extends DrupalNode7Migration {
 		    	$profile_arguments[$key] = $this->arguments[$key];
 		    }
 		}
+
+		/* INSERT fields into Body variables */
+		$this->arguments['update_source_body'] = $profile_arguments['source_profile_summary'];
+    	$this->arguments['update_insert_fields'] = $profile_arguments['source_profile_insert_fields'];
 
 		/* Profile First and Last Name */
 		$this->addFieldMapping('field_profile_name', $profile_arguments['source_profile_name']);
