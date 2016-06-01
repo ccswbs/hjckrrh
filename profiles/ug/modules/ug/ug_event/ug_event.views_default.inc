@@ -458,10 +458,6 @@ return false;';
   $handler->display->display_options['style_options']['wrapper_class'] = 'teaser-list';
   $handler->display->display_options['row_plugin'] = 'fields';
   $handler->display->display_options['row_options']['default_field_elements'] = FALSE;
-  /* No results behavior: Global: Text area */
-  $handler->display->display_options['empty']['area']['id'] = 'area';
-  $handler->display->display_options['empty']['area']['table'] = 'views';
-  $handler->display->display_options['empty']['area']['field'] = 'area';
   /* Field: Content: Date */
   $handler->display->display_options['fields']['field_event_date']['id'] = 'field_event_date';
   $handler->display->display_options['fields']['field_event_date']['table'] = 'field_data_field_event_date';
@@ -529,14 +525,6 @@ return false;';
   /* Display: Content pane */
   $handler = $view->new_display('panel_pane', 'Content pane', 'panel_pane_1');
   $handler->display->display_options['link_url'] = '/events';
-  $handler->display->display_options['defaults']['empty'] = FALSE;
-  /* No results behavior: Global: Text area */
-  $handler->display->display_options['empty']['area']['id'] = 'area';
-  $handler->display->display_options['empty']['area']['table'] = 'views';
-  $handler->display->display_options['empty']['area']['field'] = 'area';
-  $handler->display->display_options['empty']['area']['empty'] = TRUE;
-  $handler->display->display_options['empty']['area']['content'] = 'No results found.';
-  $handler->display->display_options['empty']['area']['format'] = 'full_html';
   $handler->display->display_options['allow']['use_pager'] = 0;
   $handler->display->display_options['allow']['items_per_page'] = 'items_per_page';
   $handler->display->display_options['allow']['offset'] = 0;
@@ -653,9 +641,6 @@ return false;';
   $handler->display->display_options['allow']['title_override'] = 'title_override';
   $handler->display->display_options['allow']['exposed_form'] = 0;
   $handler->display->display_options['allow']['fields_override'] = 0;
-
-  /* Display: Block */
-  $handler = $view->new_display('block', 'Block', 'block_1');
   $export['e5'] = $view;
 
   $view = new view();
@@ -713,8 +698,8 @@ return false;';
   $handler->display->display_options['arguments']['nid']['table'] = 'node';
   $handler->display->display_options['arguments']['nid']['field'] = 'nid';
   $handler->display->display_options['arguments']['nid']['relationship'] = 'nid';
-  $handler->display->display_options['arguments']['nid']['default_action'] = 'default';
-  $handler->display->display_options['arguments']['nid']['default_argument_type'] = 'node';
+  $handler->display->display_options['arguments']['nid']['default_action'] = 'not found';
+  $handler->display->display_options['arguments']['nid']['default_argument_type'] = 'fixed';
   $handler->display->display_options['arguments']['nid']['summary']['number_of_records'] = '0';
   $handler->display->display_options['arguments']['nid']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['nid']['summary_options']['items_per_page'] = '25';
@@ -747,9 +732,6 @@ return false;';
       'label' => 'Content: Nid',
     ),
   );
-
-  /* Display: Block */
-  $handler = $view->new_display('block', 'Block', 'block_1');
   $export['e6'] = $view;
 
   $view = new view();
@@ -1154,14 +1136,10 @@ return false;';
   $handler->display->display_options['fields']['field_event_body']['field'] = 'field_event_body';
   $handler->display->display_options['fields']['field_event_body']['label'] = '';
   $handler->display->display_options['fields']['field_event_body']['alter']['max_length'] = '255';
-  $handler->display->display_options['fields']['field_event_body']['alter']['strip_tags'] = TRUE;
+  $handler->display->display_options['fields']['field_event_body']['alter']['trim'] = TRUE;
   $handler->display->display_options['fields']['field_event_body']['alter']['html'] = TRUE;
   $handler->display->display_options['fields']['field_event_body']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_event_body']['element_default_classes'] = FALSE;
-  $handler->display->display_options['fields']['field_event_body']['type'] = 'text_summary_or_trimmed';
-  $handler->display->display_options['fields']['field_event_body']['settings'] = array(
-    'trim_length' => '600',
-  );
   /* Sort criterion: Content: Date -  start date (field_event_date) */
   $handler->display->display_options['sorts']['field_event_date_value']['id'] = 'field_event_date_value';
   $handler->display->display_options['sorts']['field_event_date_value']['table'] = 'field_data_field_event_date';
@@ -1389,14 +1367,10 @@ return false;';
   $handler->display->display_options['fields']['field_event_body']['field'] = 'field_event_body';
   $handler->display->display_options['fields']['field_event_body']['label'] = '';
   $handler->display->display_options['fields']['field_event_body']['alter']['max_length'] = '255';
-  $handler->display->display_options['fields']['field_event_body']['alter']['strip_tags'] = TRUE;
+  $handler->display->display_options['fields']['field_event_body']['alter']['trim'] = TRUE;
   $handler->display->display_options['fields']['field_event_body']['alter']['html'] = TRUE;
   $handler->display->display_options['fields']['field_event_body']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_event_body']['element_default_classes'] = FALSE;
-  $handler->display->display_options['fields']['field_event_body']['type'] = 'text_summary_or_trimmed';
-  $handler->display->display_options['fields']['field_event_body']['settings'] = array(
-    'trim_length' => '600',
-  );
   /* Sort criterion: Content: Date -  start date (field_event_date) */
   $handler->display->display_options['sorts']['field_event_date_value']['id'] = 'field_event_date_value';
   $handler->display->display_options['sorts']['field_event_date_value']['table'] = 'field_data_field_event_date';
