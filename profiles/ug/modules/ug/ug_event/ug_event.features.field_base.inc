@@ -105,6 +105,9 @@ function ug_event_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_event_date',
+    'field_permissions' => array(
+      'type' => 0,
+    ),
     'indexes' => array(),
     'locked' => 0,
     'module' => 'date',
@@ -122,7 +125,7 @@ function ug_event_field_default_field_bases() {
       'profile2_private' => FALSE,
       'timezone_db' => 'UTC',
       'todate' => 'optional',
-      'tz_handling' => 'utc',
+      'tz_handling' => 'site',
     ),
     'translatable' => 0,
     'type' => 'datetime',
