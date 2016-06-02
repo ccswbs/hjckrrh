@@ -11,7 +11,7 @@ function ug_profile_field_default_field_instances() {
   $field_instances = array();
 
   // Exported field_instance:
-  // 'field_collection_item-field_profile_multipart-field_profile_content'
+  // 'field_collection_item-field_profile_multipart-field_profile_content'.
   $field_instances['field_collection_item-field_profile_multipart-field_profile_content'] = array(
     'bundle' => 'field_profile_multipart',
     'default_value' => NULL,
@@ -46,7 +46,7 @@ function ug_profile_field_default_field_instances() {
   );
 
   // Exported field_instance:
-  // 'field_collection_item-field_profile_multipart-field_profile_heading'
+  // 'field_collection_item-field_profile_multipart-field_profile_heading'.
   $field_instances['field_collection_item-field_profile_multipart-field_profile_heading'] = array(
     'bundle' => 'field_profile_multipart',
     'default_value' => NULL,
@@ -78,7 +78,7 @@ function ug_profile_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-profile-field_profile_address'
+  // Exported field_instance: 'node-profile-field_profile_address'.
   $field_instances['node-profile-field_profile_address'] = array(
     'bundle' => 'profile',
     'default_value' => NULL,
@@ -122,7 +122,7 @@ function ug_profile_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-profile-field_profile_attachments'
+  // Exported field_instance: 'node-profile-field_profile_attachments'.
   $field_instances['node-profile-field_profile_attachments'] = array(
     'bundle' => 'profile',
     'deleted' => 0,
@@ -163,7 +163,7 @@ function ug_profile_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-profile-field_profile_caption'
+  // Exported field_instance: 'node-profile-field_profile_caption'.
   $field_instances['node-profile-field_profile_caption'] = array(
     'bundle' => 'profile',
     'default_value' => NULL,
@@ -207,7 +207,7 @@ function ug_profile_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-profile-field_profile_category'
+  // Exported field_instance: 'node-profile-field_profile_category'.
   $field_instances['node-profile-field_profile_category'] = array(
     'bundle' => 'profile',
     'default_value' => NULL,
@@ -243,7 +243,7 @@ function ug_profile_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-profile-field_profile_email'
+  // Exported field_instance: 'node-profile-field_profile_email'.
   $field_instances['node-profile-field_profile_email'] = array(
     'bundle' => 'profile',
     'default_value' => NULL,
@@ -289,7 +289,7 @@ function ug_profile_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-profile-field_profile_faxnumber'
+  // Exported field_instance: 'node-profile-field_profile_faxnumber'.
   $field_instances['node-profile-field_profile_faxnumber'] = array(
     'bundle' => 'profile',
     'default_value' => NULL,
@@ -334,7 +334,7 @@ function ug_profile_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-profile-field_profile_image'
+  // Exported field_instance: 'node-profile-field_profile_image'.
   $field_instances['node-profile-field_profile_image'] = array(
     'bundle' => 'profile',
     'deleted' => 0,
@@ -384,7 +384,7 @@ function ug_profile_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-profile-field_profile_lab'
+  // Exported field_instance: 'node-profile-field_profile_lab'.
   $field_instances['node-profile-field_profile_lab'] = array(
     'bundle' => 'profile',
     'default_value' => NULL,
@@ -429,7 +429,7 @@ function ug_profile_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-profile-field_profile_lastname'
+  // Exported field_instance: 'node-profile-field_profile_lastname'.
   $field_instances['node-profile-field_profile_lastname'] = array(
     'bundle' => 'profile',
     'default_value' => NULL,
@@ -473,7 +473,7 @@ function ug_profile_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-profile-field_profile_multipart'
+  // Exported field_instance: 'node-profile-field_profile_multipart'.
   $field_instances['node-profile-field_profile_multipart'] = array(
     'bundle' => 'profile',
     'default_value' => NULL,
@@ -510,7 +510,7 @@ function ug_profile_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-profile-field_profile_name'
+  // Exported field_instance: 'node-profile-field_profile_name'.
   $field_instances['node-profile-field_profile_name'] = array(
     'bundle' => 'profile',
     'default_value' => NULL,
@@ -554,7 +554,7 @@ function ug_profile_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-profile-field_profile_office'
+  // Exported field_instance: 'node-profile-field_profile_office'.
   $field_instances['node-profile-field_profile_office'] = array(
     'bundle' => 'profile',
     'default_value' => NULL,
@@ -599,7 +599,7 @@ function ug_profile_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-profile-field_profile_research'
+  // Exported field_instance: 'node-profile-field_profile_research'.
   $field_instances['node-profile-field_profile_research'] = array(
     'bundle' => 'profile',
     'default_value' => NULL,
@@ -635,7 +635,7 @@ function ug_profile_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-profile-field_profile_role'
+  // Exported field_instance: 'node-profile-field_profile_role'.
   $field_instances['node-profile-field_profile_role'] = array(
     'bundle' => 'profile',
     'default_value' => NULL,
@@ -671,7 +671,7 @@ function ug_profile_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-profile-field_profile_subunit'
+  // Exported field_instance: 'node-profile-field_profile_subunit'.
   $field_instances['node-profile-field_profile_subunit'] = array(
     'bundle' => 'profile',
     'default_value' => NULL,
@@ -711,7 +711,7 @@ function ug_profile_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-profile-field_profile_summary'
+  // Exported field_instance: 'node-profile-field_profile_summary'.
   $field_instances['node-profile-field_profile_summary'] = array(
     'bundle' => 'profile',
     'default_value' => NULL,
@@ -756,7 +756,7 @@ function ug_profile_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-profile-field_profile_telephonenumber'
+  // Exported field_instance: 'node-profile-field_profile_telephonenumber'.
   $field_instances['node-profile-field_profile_telephonenumber'] = array(
     'bundle' => 'profile',
     'default_value' => NULL,
@@ -802,7 +802,7 @@ function ug_profile_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-profile-field_profile_title'
+  // Exported field_instance: 'node-profile-field_profile_title'.
   $field_instances['node-profile-field_profile_title'] = array(
     'bundle' => 'profile',
     'default_value' => NULL,
@@ -848,7 +848,7 @@ function ug_profile_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-profile-field_profile_unit'
+  // Exported field_instance: 'node-profile-field_profile_unit'.
   $field_instances['node-profile-field_profile_unit'] = array(
     'bundle' => 'profile',
     'default_value' => NULL,
@@ -886,7 +886,7 @@ function ug_profile_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-profile-field_profile_website'
+  // Exported field_instance: 'node-profile-field_profile_website'.
   $field_instances['node-profile-field_profile_website'] = array(
     'bundle' => 'profile',
     'default_value' => NULL,
@@ -948,7 +948,7 @@ function ug_profile_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-profile-field_tags'
+  // Exported field_instance: 'node-profile-field_tags'.
   $field_instances['node-profile-field_tags'] = array(
     'bundle' => 'profile',
     'default_value' => NULL,

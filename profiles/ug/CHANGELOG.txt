@@ -1,3 +1,13 @@
+Hjckrrh 7.3.0, 2016-05-31
+-------------------------
+- Add option to include summary in news teaser (issue #266).
+- Add media-condensed class (issue #451).
+- Add screen reader text to U of G footer links (issue #435).
+- Fix validation errors on profile list view (#386).
+- Fix validation errors on profile grid view (#385).
+- Add ability to create forms with the webform module.
+- Add block versions of sidebar content panes (#376).
+
 Hjckrrh 7.2.0, 2016-05-17
 -------------------------
 - Remove profile type and fields when uninstalling UG Profile feature.

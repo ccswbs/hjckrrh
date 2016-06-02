@@ -378,18 +378,35 @@ function ug_theme_preprocess_views_view_fields__news_image(&$vars) {
 function ug_theme_preprocess_views_view_fields__n3(&$vars) {
   $nid = $vars['fields']['nid']->content;
   $link = $vars['fields']['field_news_link']->content;
-  // $href = empty($link)? 'node/'.$nid: $link;
+
   if (!empty($link)) {
     $vars['link'] = $link;
   } else {
     $path = 'node/' . $nid;
     $vars['link'] = url($path);
   }
-  // $vars['title']     = l($vars['fields']['title']->content, $href);
+
   $vars['title']     = $vars['fields']['title']->content;
   $vars['created']   = $vars['fields']['created']->content;
 }
 
+/**
+ * N3 - Recent news teaser list - with summary
+ */
+function ug_theme_preprocess_views_view_fields__n3_summary(&$vars) {
+  $nid = $vars['fields']['nid']->content;
+  $link = $vars['fields']['field_news_link']->content;
+
+  if (!empty($link)) {
+    $vars['link'] = $link;
+  } else {
+    $path = 'node/' . $nid;
+    $vars['link'] = url($path);
+  }
+
+  $vars['title']     = $vars['fields']['title']->content;
+  $vars['created']   = $vars['fields']['created']->content;
+}
 
 /**
  * F1 - FAQ listing
@@ -928,4 +945,50 @@ function ug_theme_preprocess_views_view__n3(&$vars) {
   $vars['more'] = $view->display_handler->render_more_link();
 }
 
+
+function ug_theme_form_required_marker($variables) {
+  // This is also used in the installer, pre-database setup.
+  $t = get_t();
+  $attributes = array(
+    'class' => 'form-required',
+    'title' => $t('This field is required.'),
+  );
+  return '<span' . drupal_attributes($attributes) . '>(' . $t('required') . ')</span>';
+}
+
+
+/**
+ * Overrides theme_button().
+ */
+function ug_theme_button($variables) {
+  $element = $variables['element'];
+  $label = $element['#value'];
+  element_set_attributes($element, array('id', 'name', 'value', 'type'));
+
+  // If a button type class isn't present then add in default.
+  $button_classes = array(
+    'btn-default',
+    'btn-primary',
+    'btn-success',
+    'btn-info',
+    'btn-warning',
+    'btn-danger',
+    'btn-link',
+  );
+  $class_intersection = array_intersect($button_classes, $element['#attributes']['class']);
+  if (empty($class_intersection)) {
+    $element['#attributes']['class'][] = 'btn-default';
+  }
+
+  // Add in the button type class.
+  $element['#attributes']['class'][] = 'form-' . $element['#button_type'];
+
+  // Remove name attribute if empty, for W3C compliance.
+  if (isset($element['#attributes']['name']) && $element['#attributes']['name'] === '') {
+    unset($element['#attributes']['name']);
+  }
+
+  // This line break adds inherent margin between multiple buttons.
+  return '<button' . drupal_attributes($element['#attributes']) . '>' . $label . "</button>\n";
+}
 
