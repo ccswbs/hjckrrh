@@ -260,7 +260,7 @@ class UGUpdatePage7Migration extends UGUpdate7Migration {
 		}
 
 	    $this->addFieldMapping('nid', 'nid')
-			->sourceMigration($this->arguments['dependencies']);
+			->sourceMigration('UGPage7');
 		$this->arguments['update_map_table'] = 'migrate_map_ugpage7';
 
 	    // Update body field
@@ -316,7 +316,7 @@ class UGUpdateNews7Migration extends UGUpdate7Migration {
 		}
 
 	    $this->addFieldMapping('nid', 'nid')
-			->sourceMigration($this->arguments['dependencies']);
+			->sourceMigration('UGNews7');
 		$this->arguments['update_map_table'] = 'migrate_map_ugnews7';
 
 	    // Update body field
@@ -369,7 +369,7 @@ class UGUpdateEvent7Migration extends UGUpdate7Migration {
 		}
 
 	    $this->addFieldMapping('nid', 'nid')
-			->sourceMigration($this->arguments['dependencies']);
+			->sourceMigration('UGEvent7');
 		$this->arguments['update_map_table'] = 'migrate_map_ugevent7';
 
 	    // Update body field
@@ -422,7 +422,7 @@ class UGUpdateFAQ7Migration extends UGUpdate7Migration {
 		}
 
 	    $this->addFieldMapping('nid', 'nid')
-			->sourceMigration($this->arguments['dependencies']);
+			->sourceMigration('UGFAQ7');
 		$this->arguments['update_map_table'] = 'migrate_map_ugfaq7';
 
 	    // Update field_faq_answer field
@@ -477,7 +477,7 @@ class UGUpdateFeaturedItem7Migration extends UGUpdate7Migration {
 		}
 
 	    $this->addFieldMapping('nid', 'nid')
-			->sourceMigration($this->arguments['dependencies']);
+			->sourceMigration('UGFeaturedItem7');
 		$this->arguments['update_map_table'] = 'migrate_map_ugfeatureditem7';
 
 	    // Update body field
@@ -526,7 +526,7 @@ class UGUpdateProfile7Migration extends UGUpdate7Migration {
 		}
 
 	    $this->addFieldMapping('nid', 'nid')
-			->sourceMigration($this->arguments['dependencies']);
+			->sourceMigration('UGProfile7');
 		$this->arguments['update_map_table'] = 'migrate_map_ugprofile7';
 
 		/* Profile Title */
