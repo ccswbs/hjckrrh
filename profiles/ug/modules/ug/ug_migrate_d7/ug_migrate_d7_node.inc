@@ -858,7 +858,9 @@ class UGProfile7Migration extends UGDrupalNode7Migration {
 		
 		/* Profile Summary */
 		$this->addFieldMapping('field_profile_summary', $profile_arguments['source_profile_summary']);
-		$this->addFieldMapping('field_profile_summary:format', $profile_arguments['source_profile_format']);
+		$this->addFieldMapping('field_profile_summary:format', $profile_arguments['source_profile_format'])
+		    ->callbacks(array($this, 'mapFormat'))
+		    ->defaultValue('full_html');
 
 		/* Profile Category */
 		if($profile_arguments['source_profile_category_default_value']!=''){
