@@ -150,20 +150,24 @@ SITE CONFIGURATION VARIABLES
 *  Allows you to add text field content directly into content type body field with a custom heading.
 *
 *  For each field, create an array containing the following key values:
-*     - heading: text heading (HTML heading tags optional)
+*     - content_before: Include any HTML content that needs to occur before the text field (eg. HTML heading)
 *     - db_table: database table to retrieve text field
 *     - db_field_value: database column to retrieve text field value
 *     - db_field_entity_id: database column to retrieve entity_id value (ie. nid for node associated with field)
+*     - placement: can be set to "top" or "bottom". Default is bottom.
+*     - content_after: (optional) Include any HTML content that needs to occur after the text field (eg. separator, heading)
 *
 *  Once all custom fields have an associated array, add the array in the insert_fields array
 *  associated with the content type being migrated, using the machine name of the field as the key.
 *
 *  // Sample Field array
 *  $field_info = array(
-*    'heading' => '<h2>Example Heading</h2>',
+*    'content_before' => '<h2>Example Heading</h2>',
 *    'db_table' => 'field_data_field_source_table_name',
 *    'db_field_value' => array('field_value_column'),
 *    'db_field_entity_id' => 'field_entityid_column',
+*    'placement' => 'top',
+*    'content_after' => '<h2>Details</h2>',
 *  );
 *
 *  // Sample Insert Fields array 
