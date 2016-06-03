@@ -563,7 +563,9 @@ class UGUpdateProfile7Migration extends UGUpdate7Migration {
     	$this->arguments['update_insert_fields'] = $profile_arguments['source_profile_insert_fields'];
 		$this->arguments['update_source_body'] = $profile_arguments['source_profile_summary'];
 		$this->addFieldMapping('field_profile_summary', $profile_arguments['source_profile_summary']);
-		$this->addFieldMapping('field_profile_summary:format', $profile_arguments['source_profile_format']);
+		$this->addFieldMapping('field_profile_summary:format', $profile_arguments['source_profile_format'])
+		    ->callbacks(array($this, 'mapFormat'))
+		    ->defaultValue('full_html');
 	}
 }
 
