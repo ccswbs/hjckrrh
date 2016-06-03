@@ -23,8 +23,11 @@ class UGDrupalNode7Migration extends DrupalNode7Migration {
 
 	public function insertUnmappableFields(&$body, &$fields, &$nid){
 		$new_body = $body;
+		$top_section = '';
+		$bottom_section = '';
 
 		foreach($fields as $field_name => $field_info){
+			$field_insert = '';
 			$field_query = Database::getConnection('default','legacy_d7')
 				->select($field_info['db_table'],'f')
 				->fields('f',$field_info['db_field_value'])
@@ -36,13 +39,33 @@ class UGDrupalNode7Migration extends DrupalNode7Migration {
 
 			if(isset($field_value)){
 				if($field_value != ''){
-					if($field_info['heading'] != ''){
-						$new_body .= $field_info['heading'];
+					if($field_info['content_before'] != ''){
+						$field_insert .= $field_info['content_before'];
 					}
+					$field_insert .= $field_value;
 
-					$new_body .= $field_value;
+					if($field_info['content_after'] != ''){
+						$field_insert .= $field_info['content_after'];
+					}
 				}
 			}
+
+			// place each field in either the top or bottom section
+			if($field_info['placement'] == 'top'){
+				$top_section .= $field_insert;
+			}else{
+				$bottom_section .= $field_insert;
+			}
+		}
+
+		//add top section to top of body
+		if($top_section != ''){
+			$new_body = $top_section . $new_body;
+		}
+
+		//add bottom section to bottom of body
+		if($bottom_section != ''){
+			$new_body .= $bottom_section;
 		}
 
 	  	if(isset($new_body)){
