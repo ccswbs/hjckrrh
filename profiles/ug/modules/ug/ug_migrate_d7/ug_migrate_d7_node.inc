@@ -926,8 +926,19 @@ class UGProfile7Migration extends UGDrupalNode7Migration {
 	    $this->addFieldMapping('field_profile_image:language')
 	         ->defaultValue(LANGUAGE_NONE);
 
+	    /* Profile Attachments */
+	    $this->addFieldMapping('field_profile_attachments', $profile_arguments['source_profile_attachments'])
+	    	->sourceMigration('UGFile7');
+        $this->addFieldMapping('field_profile_attachments:file_class')
+            ->defaultValue('MigrateFileFid');
+        $this->addFieldMapping('field_profile_attachments:preserve_files')
+            ->defaultValue('TRUE');
+        $this->addFieldMapping('field_profile_attachments:description', $profile_arguments['source_profile_attachments'] . ':description')
+            ->defaultValue('');
+        $this->addFieldMapping('field_profile_attachments:language')
+            ->defaultValue(LANGUAGE_NONE);
+
 	    /* Other Profile Fields */
-	    $this->addFieldMapping('field_profile_attachments', $profile_arguments['source_profile_attachments']);
 	    $this->addFieldMapping('field_profile_caption', $profile_arguments['source_profile_caption']);
 	    $this->addFieldMapping('field_profile_address', $profile_arguments['source_profile_address']);
 	    $this->addFieldMapping('field_profile_email', $profile_arguments['source_profile_email']);
