@@ -10,7 +10,7 @@
 function ug_page_field_default_field_bases() {
   $field_bases = array();
 
-  // Exported field_base: 'field_page_attachments'
+  // Exported field_base: 'field_page_attachments'.
   $field_bases['field_page_attachments'] = array(
     'active' => 1,
     'cardinality' => -1,
@@ -34,7 +34,7 @@ function ug_page_field_default_field_bases() {
     'type' => 'file',
   );
 
-  // Exported field_base: 'field_page_body'
+  // Exported field_base: 'field_page_body'.
   $field_bases['field_page_body'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -53,7 +53,7 @@ function ug_page_field_default_field_bases() {
     'type' => 'text_with_summary',
   );
 
-  // Exported field_base: 'field_page_category'
+  // Exported field_base: 'field_page_category'.
   $field_bases['field_page_category'] = array(
     'active' => 1,
     'cardinality' => 1,
