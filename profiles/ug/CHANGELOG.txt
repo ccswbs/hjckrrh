@@ -1,3 +1,7 @@
+Hjckrrh 7.4.0, 2016-06-14
+-------------------------
+- Add field validation module (field_validation).
+
 Hjckrrh 7.3.0, 2016-05-31
 -------------------------
 - Add option to include summary in news teaser (issue #266).
