@@ -1,6 +1,7 @@
 Hjckrrh 7.4.0, 2016-06-14
 -------------------------
 - Add field validation module (field_validation).
+- Add rules module (#452).
 
 Hjckrrh 7.3.0, 2016-05-31
 -------------------------
