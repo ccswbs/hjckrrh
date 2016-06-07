@@ -40,7 +40,7 @@ function ug_page_default_field_validation_rule() {
       'condition_value' => '',
     ),
   );
-  $rule->error_message = 'Please enter a file description';
+  $rule->error_message = '[field-name] description is required.';
   $export['page_attach_desc_not_empty'] = $rule;
 
   return $export;
