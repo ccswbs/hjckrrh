@@ -12,7 +12,6 @@ dependencies[] = text
 dependencies[] = ug_tags
 dependencies[] = views
 dependencies[] = views_content
-features[ctools][] = js_injector:js_injector_rules:1
 features[ctools][] = strongarm:strongarm:1
 features[ctools][] = views:views_default:3.0
 features[features_api][] = api:2
