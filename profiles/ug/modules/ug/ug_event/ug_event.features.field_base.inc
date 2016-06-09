@@ -122,7 +122,7 @@ function ug_event_field_default_field_bases() {
       'profile2_private' => FALSE,
       'timezone_db' => 'UTC',
       'todate' => 'optional',
-      'tz_handling' => 'utc',
+      'tz_handling' => 'site',
     ),
     'translatable' => 0,
     'type' => 'datetime',
