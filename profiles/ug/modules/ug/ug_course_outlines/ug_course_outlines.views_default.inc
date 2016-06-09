@@ -93,6 +93,14 @@ function ug_course_outlines_views_default_views() {
   $handler->display->display_options['empty']['area']['empty'] = TRUE;
   $handler->display->display_options['empty']['area']['content'] = 'No results found.';
   $handler->display->display_options['empty']['area']['format'] = 'filtered_html';
+  /* Field: Nid token */
+  $handler->display->display_options['fields']['nid']['id'] = 'nid';
+  $handler->display->display_options['fields']['nid']['table'] = 'node';
+  $handler->display->display_options['fields']['nid']['field'] = 'nid';
+  $handler->display->display_options['fields']['nid']['ui_name'] = 'Nid token';
+  $handler->display->display_options['fields']['nid']['label'] = '';
+  $handler->display->display_options['fields']['nid']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['nid']['element_label_colon'] = FALSE;
   /* Field: Code token */
   $handler->display->display_options['fields']['field_course_code_1']['id'] = 'field_course_code_1';
   $handler->display->display_options['fields']['field_course_code_1']['table'] = 'field_data_field_course_code';
@@ -159,7 +167,7 @@ function ug_course_outlines_views_default_views() {
   $handler->display->display_options['fields']['field_course_name']['alter']['alter_text'] = TRUE;
   $handler->display->display_options['fields']['field_course_name']['alter']['text'] = '[field_course_name] ([field_course_code_1]*[field_course_section_1] [field_course_semester_1][field_course_year])';
   $handler->display->display_options['fields']['field_course_name']['alter']['make_link'] = TRUE;
-  $handler->display->display_options['fields']['field_course_name']['alter']['path'] = '[path]';
+  $handler->display->display_options['fields']['field_course_name']['alter']['path'] = 'node/[nid]';
   $handler->display->display_options['fields']['field_course_name']['element_label_colon'] = FALSE;
   /* Field: Content: Semester */
   $handler->display->display_options['fields']['field_course_semester']['id'] = 'field_course_semester';
@@ -424,9 +432,9 @@ function ug_course_outlines_views_default_views() {
   $handler->display->display_options['fields']['nothing']['table'] = 'views';
   $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
   $handler->display->display_options['fields']['nothing']['label'] = '';
-  $handler->display->display_options['fields']['nothing']['alter']['text'] = '<p><strong>Code and section:</strong> [field_course_code]*[field_course_section]</p>
-<p><strong>Semester:</strong> [field_course_semester]</p>
-<p><strong>Year offered:</strong> [field_course_year]</p>
+  $handler->display->display_options['fields']['nothing']['alter']['text'] = '<p class="media-condensed"><strong>Code and section:</strong> [field_course_code]*[field_course_section]</p>
+<p class="media-condensed"><strong>Semester:</strong> [field_course_semester]</p>
+<p class="media-condensed"><strong>Year offered:</strong> [field_course_year]</p>
 <p><strong>Instructor:</strong> [field_course_instructor_url]</p>
 ';
   $handler->display->display_options['fields']['nothing']['element_label_colon'] = FALSE;

@@ -10,6 +10,50 @@
 function ug_course_outlines_field_default_field_instances() {
   $field_instances = array();
 
+  // Exported field_instance: 'node-course_outline-body'.
+  $field_instances['node-course_outline-body'] = array(
+    'bundle' => 'course_outline',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 0,
+      ),
+      'teaser' => array(
+        'label' => 'hidden',
+        'module' => 'text',
+        'settings' => array(
+          'trim_length' => 600,
+        ),
+        'type' => 'text_summary_or_trimmed',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'body',
+    'label' => 'Body',
+    'required' => FALSE,
+    'settings' => array(
+      'display_summary' => TRUE,
+      'text_processing' => 1,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 20,
+        'summary_rows' => 5,
+      ),
+      'type' => 'text_textarea_with_summary',
+      'weight' => 3,
+    ),
+  );
+
   // Exported field_instance: 'node-course_outline-field_course_attachments'.
   $field_instances['node-course_outline-field_course_attachments'] = array(
     'bundle' => 'course_outline',
@@ -709,6 +753,7 @@ function ug_course_outlines_field_default_field_instances() {
   t('A link to the instructor\'s profile page or external site');
   t('Academic department');
   t('Attachments');
+  t('Body');
   t('Category');
   t('Course Website');
   t('Course code');
