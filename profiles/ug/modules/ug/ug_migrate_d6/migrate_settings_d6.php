@@ -1,8 +1,82 @@
 <?php
 
-  /*****************************
-  SITE CONFIGURATION VARIABLES
-  ******************************/
+/*****************************
+SITE CONFIGURATION VARIABLES
+******************************/
+
+/* ---- 
+* 
+*  UPDATE NODELINKS
+*
+*  Allows you to replace the source node ID with the destination node ID in body field links.
+*  For example, /sitename/node/12 may become /sitename/node/84 to match the new post-migration node ID.
+*
+*  USAGE: Set update_nodelinks to TRUE in $update_arguments. 
+*  Add list of any internal urls (relative and absolute) referencing /node in $update_nodelinks_urls.
+*
+* 'update_nodelinks' => TRUE,
+*
+*  $update_nodelinks_urls = array(
+*      '/node/'
+*      '/sitename/node/',
+*      'http://www.uoguelph.ca/sitename/node/',
+*      'https://www.uoguelph.ca/sitename/node/',
+*  );
+*
+*/
+
+/* ---- 
+* 
+*  UPDATE HARDLINKS 
+*
+*  Allows you to replace any absolute urls in the body field with relative urls.
+*  For example, https://www.uoguelph.ca/sitename/pagename could become /sitename/pagename
+*
+*  Can also be used when updating the sitename.
+*  For example, /oldsitename can be updated to /newsitename.
+*
+*  USAGE: Set update_nodelinks to TRUE in $update_arguments. 
+*  Set update_hardlinks_destination to new URL in quotes.
+*  Add list of any (old) absolute urls that you want to fix in $update_hardlinks_source.
+*
+* 'update_nodelinks' => TRUE,
+* 'update_hardlinks_destination' => '/sitename',
+*
+*  $update_hardlinks_source = array(
+*      'http://www.uoguelph.ca/sitename',
+*      'https://www.uoguelph.ca/sitename',
+*      'https://www.uoguelph.ca/oldsitename',
+*      'http://www.uoguelph.ca/oldsitename',
+*      '/oldsitename',
+*  );
+*
+*/
+
+/* ---- 
+* 
+*  UPDATE PREFIX SOURCE 
+*
+*  Allows you to update the prefix source for any inline files and images referenced in the body field.
+*  For example, /oldsitename/sites/default could become completely/newname/sites/default
+*
+*  USAGE: Set update_prefix_inline to TRUE in $update_arguments. 
+*  Set update_hardlinks_destination to new URL in quotes.
+*  Add list of any (old) absolute urls that you want to fix in $update_prefix_source.
+*
+* 'update_prefix_inline' => TRUE,
+* 'update_prefix_destination' => '/completely/newname/sites/default',
+*
+*  $update_prefix_source = array(
+*      '/sitename/sites/default',
+*      'http://www.uoguelph.ca/sitename/sites/default',
+*      'https://www.uoguelph.ca/sitename/sites/default',
+*  );
+*
+*/
+
+/**************************
+*  UPDATE NODE Settings
+**************************/
 
   $update_nodelinks_urls = array(
       //'/sitename/node/',
@@ -32,10 +106,16 @@
     'update_prefix_destination' => '',
   );
 
-  /* MENU Settings */
+/**************************
+*  MENU Settings
+**************************/
+
   $menu_names = array('primary-links');
 
-  /* USER SETTINGS */
+/**************************
+*  USER Settings
+**************************/
+
   $role_mappings = array(
     // e.g. 'source-editor' => 'editor',
   );
@@ -46,18 +126,73 @@
     'picture_destination' => 'public://',
   );
 
-  /* FILE SETTINGS */
+/**************************
+*  FILE Settings
+**************************/
+
   $file_arguments = array(
     'source_directory' => 'public://',
     'destination_directory' => 'public://',
   );
 
-  /* TAXONOMY Settings */
+/**************************
+*  TAXONOMY Settings
+**************************/
+
   $term_arguments = array(
     'source_term_keyword' => 'tags',
   );
 
-  /* PAGE Settings */
+
+/* ----
+*
+*  USING DEFAULT VALUES
+*
+*  Use with caution. Setting default value will override the value for all migrated rows.
+*  To set multiple default values in one taxonomy, use an array.
+*
+*  Single value example: 'source_page_category_default_value' => 47,
+*  Multi value example:  'source_page_keyword_default_value' => array(1,2,3),
+* 
+*/
+
+/* ----
+*
+*  MAPPING CUSTOM TEXT FIELDS into Body field
+*  
+*  Allows you to add text field content directly into content type body field with a custom heading.
+*
+*  For each field, create an array containing the following key values:
+*     - content_before: Include any HTML content that needs to occur before the text field (eg. HTML heading)
+*     - db_table: database table to retrieve text field
+*     - db_field_value: database column to retrieve text field value
+*     - db_field_entity_id: database column to retrieve entity_id value (ie. nid for node associated with field)
+*     - placement: can be set to "top" or "bottom". Default is bottom.
+*     - content_after: (optional) Include any HTML content that needs to occur after the text field (eg. separator, heading)
+*
+*  Once all custom fields have an associated array, add the array in the insert_fields array
+*  associated with the content type being migrated, using the machine name of the field as the key.
+*
+*  // Sample Field array
+*  $field_info = array(
+*    'content_before' => '<h2>Example Heading</h2>',
+*    'db_table' => 'field_data_field_source_table_name',
+*    'db_field_value' => array('field_value_column'),
+*    'db_field_entity_id' => 'field_entityid_column',
+*    'placement' => 'top',
+*    'content_after' => '<h2>Details</h2>',
+*  );
+*
+*  // Sample Insert Fields array 
+*  $page_insert_fields = array(
+*    'field_machine_name' => $field_info,
+*   );
+*/
+
+/**************************
+*  PAGE Settings
+**************************/
+
   $page_arguments = array(
     'source_page_node_type' => 'page',
     'source_page_term_category' => '',
@@ -70,7 +205,10 @@
     'source_page_attachments' => 'upload',
   );
   
-  /* NEWS Settings */
+/**************************
+*  NEWS Settings
+**************************/
+
   $news_arguments = array(
     'source_news_node_type' => 'story',
     'source_news_term_category' => '',
@@ -87,7 +225,10 @@
     'source_news_attachment' => 'upload',
   );
 
-  /* FAQ Settings */
+/**************************
+*  FAQ Settings
+**************************/
+
   $faq_arguments = array(
     'source_faq_node_type' => '',
     'source_faq_term_category' => '',
@@ -98,7 +239,10 @@
     'source_faq_keyword' => '',
   );
 
-  /* FEATURED ITEM Settings */
+/**************************
+*  FEATURED ITEM Settings
+**************************/
+
   $featureditem_arguments = array(
     'source_featureditem_node_type' => '',
     'source_featureditem_term_category' => '',
@@ -112,7 +256,10 @@
     'source_featureditem_keyword' => '',
   );
 
-  /* EVENT Settings */
+/**************************
+*  EVENT Settings
+**************************/
+
   $event_arguments = array(
     'source_event_node_type' => '',
     'source_event_term_category' => '',
@@ -134,7 +281,73 @@
     'source_event_link' => '',
   );
 
- /* EVENT Multipart (Field Collection) Settings */
+
+/**************************
+*  PROFILE Settings
+**************************/
+
+  $profile_insert_fields = NULL;
+
+  $profile_arguments = array(
+    'source_profile_node_type'              => '',
+    'source_profile_name'                   => '',
+    'source_profile_lastname'               => '',
+    'source_profile_role'                   => '',
+    'source_profile_role_source_type'       => 'tid',
+    'source_profile_role_ignore_case'       => TRUE,
+    'source_profile_role_create_term'       => TRUE,
+    'source_profile_role_vocabulary'        => '',
+    'source_profile_role_default_value'     => '',
+    'source_profile_unit'                   => '',
+    'source_profile_unit_source_type'       => 'tid',
+    'source_profile_unit_ignore_case'       => TRUE,
+    'source_profile_unit_create_term'       => TRUE,
+    'source_profile_unit_vocabulary'        => '',
+    'source_profile_unit_default_value'     => '',
+    'source_profile_summary'                => 'body',
+    'source_profile_format'                 => 'body:format',
+    'source_profile_category'               => '',
+    'source_profile_category_source_type'   => 'tid',
+    'source_profile_category_ignore_case'   => TRUE,
+    'source_profile_category_create_term'   => TRUE,
+    'source_profile_category_vocabulary'    => '',
+    'source_profile_category_default_value' => '',
+    'source_profile_title'                  => '',
+    'source_profile_subunit'                => '',
+    'source_profile_subunit_source_type'    => 'tid',
+    'source_profile_subunit_ignore_case'    => TRUE,
+    'source_profile_subunit_create_term'    => TRUE,
+    'source_profile_subunit_vocabulary'     => '',
+    'source_profile_subunit_default_value'  => '',
+    'source_profile_research'               => '',
+    'source_profile_research_source_type'   => 'tid',
+    'source_profile_research_ignore_case'   => TRUE,
+    'source_profile_research_create_term'   => TRUE,
+    'source_profile_research_vocabulary'    => '',
+    'source_profile_research_default_value' => '',
+    'source_profile_attachments'            => 'upload',
+    'source_profile_image'                  => '',
+    'source_profile_caption'                => '',
+    'source_profile_address'                => '',
+    'source_profile_email'                  => '',
+    'source_profile_telephonenumber'        => '',
+    'source_profile_faxnumber'              => '',
+    'source_profile_office'                 => '',
+    'source_profile_lab'                    => '',
+    'source_profile_website'                => '',
+    'source_tags'                           => '',
+    'source_tags_source_type'               => 'tid',
+    'source_tags_ignore_case'               => TRUE,
+    'source_tags_create_term'               => TRUE,
+    'source_tags_vocabulary'                => '',
+    'source_tags_default_value'             => '',
+    'source_profile_insert_fields'          => $profile_insert_fields,
+  );
+
+
+/**************************
+*  EVENT MULTIPART (Field Collection) Settings
+**************************/
 
 /******
 *

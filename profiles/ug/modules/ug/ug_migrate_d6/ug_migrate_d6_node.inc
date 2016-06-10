@@ -1,7 +1,22 @@
 <?php 
 
+class UGDrupalNode6Migration extends DrupalNode6Migration {
+	public function __construct($arguments) {
+    	parent::__construct($arguments);
 
-class UGFeaturedItem6Migration extends DrupalNode6Migration {
+		$this->arguments['update_source_body'] = '';
+    	$this->arguments['update_insert_fields'] = NULL;
+    }
+
+	public function prepareRow($row) {
+	    if (parent::prepareRow($row) === FALSE) {
+	      return FALSE;
+	    }
+	}
+}
+
+
+class UGFeaturedItem6Migration extends UGDrupalNode6Migration {
 	public function __construct($arguments) {
     	parent::__construct($arguments);
 	    $this->destination = new MigrateDestinationNode('feature');
@@ -86,7 +101,7 @@ class UGFeaturedItem6Migration extends DrupalNode6Migration {
 }
 
 
-class UGEvent6Migration extends DrupalNode6Migration {
+class UGEvent6Migration extends UGDrupalNode6Migration {
 	public function __construct($arguments) {
     	parent::__construct($arguments);
 
@@ -259,7 +274,7 @@ class UGEventMultifield6Migration extends DrupalMigration {
 }
 
 
-class UGNews6Migration extends DrupalNode6Migration {
+class UGNews6Migration extends UGDrupalNode6Migration {
 	public function __construct($arguments) {
     	parent::__construct($arguments);
 
@@ -341,7 +356,7 @@ class UGNews6Migration extends DrupalNode6Migration {
 }
 
 
-class UGPage6Migration extends DrupalNode6Migration {
+class UGPage6Migration extends UGDrupalNode6Migration {
 	public function __construct($arguments) {
     	parent::__construct($arguments);
 
@@ -398,7 +413,7 @@ class UGPage6Migration extends DrupalNode6Migration {
 	}
 }
 
-class UGFAQ6Migration extends DrupalNode6Migration {
+class UGFAQ6Migration extends UGDrupalNode6Migration {
 	public function __construct($arguments) {
     	parent::__construct($arguments);
 
@@ -603,12 +618,14 @@ class UGImage6Migration extends DrupalFile6Migration {
 	    $node2 = $query2->execute()->fetchObject();
 
 	    if ($node2) {
-	      $nid = strval($node2->nid);
-	      $iid = strval($node2->iid);
-	      $pathinfo = pathinfo($row->filepath);
-	      $filename = $pathinfo['filename'];
-	      $extension = $pathinfo['extension'];
-	      $row->filename = $nid . '_' . $iid . '_' . $filename . '.' . $extension;
+	    	//foreach ($node2 as $n){
+		      $nid = strval($node2->nid);
+		      $iid = strval($node2->iid);
+		      $pathinfo = pathinfo($row->filepath);
+		      $filename = $pathinfo['filename'];
+		      $extension = $pathinfo['extension'];
+		      $row->filename = $nid . '_' . $iid . '_' . $filename . '.' . $extension;
+		    //}
 	    }
 	}
 

@@ -65,12 +65,19 @@ class UGUpdate6Migration extends DrupalNode6Migration {
 	      ->execute()
 	      ->fetchAll();
 
+
+	    //echo("--------NID:" . $row->nid . "\n");
+	    //drush_print_r($images);
+
 	    if ($images) {
 	    	$image_src_prefix = '';
 	    	if(isset($this->arguments['update_hardlinks_destination'])){
 		    	$image_src_prefix = $this->arguments['update_hardlinks_destination'];
 	    	}
-	    	$row->{$this->arguments['update_source_body']} = $this->replaceImgAssist($row->{$this->arguments['update_source_body']}, $images, $image_src_prefix);
+
+	    	if($this->arguments['update_source_body']!=''){
+		    	$row->{$this->arguments['update_source_body']} = $this->replaceImgAssist($row->{$this->arguments['update_source_body']}, $images, $image_src_prefix);
+		    }
 	    }
 	}
 
@@ -442,6 +449,56 @@ class UGUpdateFAQ6Migration extends UGUpdate6Migration {
     }
 }
 
+
+class UGUpdateProfile6Migration extends UGUpdate6Migration {
+	public function __construct($arguments) {
+    	parent::__construct($arguments);
+
+	    $this->destination = new MigrateDestinationNode('profile');
+
+	    /* DEFAULT arguments */
+		$update_arguments = array(
+			'update_nodelinks' => FALSE,
+			'update_nodelinks_urls' => '/node/',
+			'update_hardlinks_source' => '',
+			'update_hardlinks_destination' => '',
+		);
+
+	    /* DEFAULT arguments */
+		$profile_arguments = array(
+			'source_profile_summary' => 'body',
+			'source_profile_format' => 'body:format',
+		);
+
+		//Override default values with arguments if they exist
+		foreach ($profile_arguments as $key => $value) {
+		    if(isset($this->arguments[$key])){
+		    	if($this->arguments[$key]!=''){
+			    	$profile_arguments[$key] = $this->arguments[$key];
+			    }
+		    }
+		}
+
+		//Override default values with arguments if they exist
+		foreach ($update_arguments as $key => $value) {
+		    if(isset($this->arguments[$key])){
+		    	if($this->arguments[$key]!=''){
+			    	$update_arguments[$key] = $this->arguments[$key];
+			    }
+		    }
+		}
+
+	    $this->addFieldMapping('nid', 'nid')
+			->sourceMigration($this->arguments['dependencies']);
+		$this->arguments['update_map_table'] = 'migrate_map_ugprofile6';
+
+	    // Update body field
+		$this->arguments['update_source_body'] = $profile_arguments['source_profile_summary'];
+	    $this->addFieldMapping('field_profile_summary', $profile_arguments['source_profile_summary']);
+	    $this->addFieldMapping( 'field_profile_summary:format', $profile_arguments['source_profile_format'])
+		    ->defaultValue('full_html');
+    }
+}
 
 
 ?>

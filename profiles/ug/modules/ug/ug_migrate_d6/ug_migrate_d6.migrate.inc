@@ -12,6 +12,7 @@ function ug_migrate_d6_migrate_api() {
     'UGEvent6', 
     'UGFAQ6',
     'UGFeaturedItem6',
+    'UGProfile6',
   );
 
   $update_migrations = array(
@@ -19,6 +20,8 @@ function ug_migrate_d6_migrate_api() {
     'UGUpdateNews6',
     'UGUpdateEvent6',
     'UGUpdateFAQ6',
+//    'UGUpdateFeaturedItem6',
+    'UGUpdateProfile6',
   );
 
   $term_migrations = array(
@@ -32,6 +35,12 @@ function ug_migrate_d6_migrate_api() {
     'UGFAQKeyword6',
     'UGFeaturedItemCategory6',
     'UGFeaturedItemKeyword6',
+    'UGProfileCategory6',
+    'UGProfileKeyword6',
+    'UGProfileRole6',
+    'UGProfileUnit6',
+    'UGProfileSubunit6', 
+    'UGProfileResearch6', 
   );
 
   /* UPDATE VARIABLES */
@@ -206,7 +215,7 @@ function ug_migrate_d6_migrate_api() {
         'class_name' => 'UGPage6Migration',
         'source_type' => $page_arguments['source_page_node_type'], 
         'destination_type' => 'page',
-        'dependencies' => array('UGFile6'),
+        'dependencies' => array('UGFile6','UGImage6'),
       ),
 
       /**** NEWS migration ****/
@@ -311,6 +320,59 @@ function ug_migrate_d6_migrate_api() {
         'class_name' => 'UGFAQ6Migration',
         'source_type' => $faq_arguments['source_faq_node_type'], 
         'destination_type' => 'faq',
+        'dependencies' => array('UGFile6', 'UGImage6'),
+      ),
+
+
+      /**** PROFILE migration ****/
+      'UGProfile6' => $node_arguments + $profile_arguments + array(
+        'description' => t('Migration of profiles from Drupal 6'),
+        'class_name' => 'UGProfile6Migration',
+        'source_type' => $profile_arguments['source_profile_node_type'],
+        'destination_type' => 'profile',
+        'dependencies' => array('UGFile6', 'UGImage6'),
+      ),
+      
+      'UGProfileRole6' => $common_arguments + array(
+        'description' => t('Migration of profile role terms from Drupal 6'),
+        'class_name' => 'UGProfileRole6Migration',
+        'source_vocabulary' => $profile_arguments['source_profile_role_vocabulary'],
+        'destination_vocabulary' => 'profile_role',
+      ),
+
+      'UGProfileUnit6' => $common_arguments + array(
+        'description' => t('Migration of profile unit terms from Drupal 6'),
+        'class_name' => 'UGProfileUnit6Migration',
+        'source_vocabulary' => $profile_arguments['source_profile_unit_vocabulary'],
+        'destination_vocabulary' => 'profile_unit',
+      ),
+
+      'UGProfileCategory6' => $common_arguments + array(
+        'description' => t('Migration of profile category terms from Drupal 6'),
+        'class_name' => 'UGProfileCategory6Migration',
+        'source_vocabulary' => $profile_arguments['source_profile_category_vocabulary'],
+        'destination_vocabulary' => 'profile_category',
+      ),
+
+      'UGProfileKeyword6' => $common_arguments + array(
+        'description' => t('Migration of profile keyword terms from Drupal 6'),
+        'class_name' => 'UGProfileKeyword6Migration',
+        'source_vocabulary' => $profile_arguments['source_tags_vocabulary'],
+        'destination_vocabulary' => 'tags',
+      ),
+
+      'UGProfileSubunit6' => $common_arguments + array(
+        'description' => t('Migration of profile subunit terms from Drupal 6'),
+        'class_name' => 'UGProfileSubunit6Migration',
+        'source_vocabulary' => $profile_arguments['source_profile_subunit_vocabulary'],
+        'destination_vocabulary' => 'profile_subunit',
+      ),
+
+      'UGProfileResearch6' => $common_arguments + array(
+        'description' => t('Migration of profile research terms from Drupal 6'),
+        'class_name' => 'UGProfileResearch6Migration',
+        'source_vocabulary' => $profile_arguments['source_profile_research_vocabulary'],
+        'destination_vocabulary' => 'profile_research',
       ),
 
       /**** MENU migration ****/
@@ -358,6 +420,14 @@ function ug_migrate_d6_migrate_api() {
         'class_name' => 'UGUpdateFAQ6Migration',
         'source_type' => $faq_arguments['source_faq_node_type'], 
         'destination_type' => 'faq',
+        'dependencies' => $node_migrations,
+      ),
+
+     'UGUpdateProfile6' => $node_arguments + $update_arguments + $profile_arguments + array(
+        'description' => t('Update migrated profile nodes after initial Drupal 6 to Drupal 7 migration'),
+        'class_name' => 'UGUpdateProfile6Migration',
+        'source_type' => $profile_arguments['source_profile_node_type'], 
+        'destination_type' => 'profile',
         'dependencies' => $node_migrations,
       ),
 
