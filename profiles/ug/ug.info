@@ -8,6 +8,7 @@ dependencies[] = dblog
 dependencies[] = features
 dependencies[] = field_group
 dependencies[] = fontawesome
+dependencies[] = hide_submit
 dependencies[] = jquery_update
 dependencies[] = list
 dependencies[] = menu
