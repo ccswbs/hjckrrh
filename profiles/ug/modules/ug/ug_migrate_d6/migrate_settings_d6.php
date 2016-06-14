@@ -27,7 +27,7 @@ SITE CONFIGURATION VARIABLES
 
 /* ---- 
 * 
-*  UPDATE HARDLINKS 
+*  UPDATE HARD-LINKED URLs in Body Field
 *
 *  Allows you to replace any absolute urls in the body field with relative urls.
 *  For example, https://www.uoguelph.ca/sitename/pagename could become /sitename/pagename
@@ -74,6 +74,8 @@ SITE CONFIGURATION VARIABLES
 *
 */
 
+$destination_sitestub = '';
+
 /**************************
 *  UPDATE NODE Settings
 **************************/
@@ -100,7 +102,7 @@ SITE CONFIGURATION VARIABLES
     'update_nodelinks' => FALSE,
     'update_nodelinks_urls' => $update_nodelinks_urls,
     'update_hardlinks_source' => $update_hardlinks_source,
-    'update_hardlinks_destination' => '',
+    'update_hardlinks_destination' => $destination_sitestub,
     'update_prefix_inline' => FALSE,
     'update_prefix_source' => $update_prefix_source,
     'update_prefix_destination' => '',
@@ -189,6 +191,9 @@ SITE CONFIGURATION VARIABLES
 *   );
 */
 
+
+$image_src_prefix = $destination_sitestub;
+
 /**************************
 *  PAGE Settings
 **************************/
@@ -203,6 +208,7 @@ SITE CONFIGURATION VARIABLES
     'source_page_category' => '',
     'source_page_keyword' => 'field_tags',
     'source_page_attachments' => 'upload',
+    'source_page_image_src_prefix' => $image_src_prefix,
   );
   
 /**************************
@@ -223,6 +229,7 @@ SITE CONFIGURATION VARIABLES
     'source_news_image' => '',
     'source_news_caption' => '',
     'source_news_attachment' => 'upload',
+    'source_news_image_src_prefix' => $image_src_prefix,
   );
 
 /**************************
@@ -237,6 +244,7 @@ SITE CONFIGURATION VARIABLES
     'source_faq_format' => 'body:format',
     'source_faq_category' => '',
     'source_faq_keyword' => '',
+    'source_faq_image_src_prefix' => $image_src_prefix,
   );
 
 /**************************
@@ -254,6 +262,7 @@ SITE CONFIGURATION VARIABLES
     'source_featureditem_image' => '',
     'source_featureditem_category' => '',
     'source_featureditem_keyword' => '',
+    'source_featureditem_image_src_prefix' => $image_src_prefix,
   );
 
 /**************************
@@ -279,6 +288,7 @@ SITE CONFIGURATION VARIABLES
     'source_event_caption' => '',
     'source_event_attachments' => 'upload',
     'source_event_link' => '',
+    'source_event_image_src_prefix' => $image_src_prefix,
   );
 
 
@@ -341,7 +351,8 @@ SITE CONFIGURATION VARIABLES
     'source_tags_create_term'               => TRUE,
     'source_tags_vocabulary'                => '',
     'source_tags_default_value'             => '',
-    'source_profile_insert_fields'          => $profile_insert_fields,
+    'source_profile_image_src_prefix'       => $image_src_prefix,
+    // 'source_profile_insert_fields'          => $profile_insert_fields,
   );
 
 

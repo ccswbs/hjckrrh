@@ -56,29 +56,19 @@ class UGUpdate6Migration extends DrupalNode6Migration {
 			}
 		}
 
-	    // replace img assist with migrated img_assist files
-	    $pattern = strval($row->nid) . '_%';
-	    $images = Database::getConnection('default', 'default')
-	      ->select('file_managed', 'f')
-	      ->fields('f', array('fid','uri'))
-	      ->condition('filename', $pattern, 'LIKE')
-	      ->execute()
-	      ->fetchAll();
+	    // use hardlinks destination site stub as inline prefix for image
+		$image_src_prefix = '';
+    	if(isset($this->arguments['update_hardlinks_destination'])){
+	    	$image_src_prefix = $this->arguments['update_hardlinks_destination'];
+    	}
 
-
-	    //echo("--------NID:" . $row->nid . "\n");
-	    //drush_print_r($images);
-
-	    if ($images) {
-	    	$image_src_prefix = '';
-	    	if(isset($this->arguments['update_hardlinks_destination'])){
-		    	$image_src_prefix = $this->arguments['update_hardlinks_destination'];
-	    	}
-
-	    	if($this->arguments['update_source_body']!=''){
-		    	$row->{$this->arguments['update_source_body']} = $this->replaceImgAssist($row->{$this->arguments['update_source_body']}, $images, $image_src_prefix);
-		    }
+	    // update img assist tags with html img tags
+	    if(strpos($row->{$this->arguments['update_source_body']},'[img_assist') !== false){
+	    	$row->{$this->arguments['update_source_body']} = $this->replaceImgAssist($row->{$this->arguments['update_source_body']}, $image_src_prefix);
 	    }
+
+    	// insert img attach files into body field
+    	$row->{$this->arguments['update_source_body']} = $this->replaceImgAttach($row->{$this->arguments['update_source_body']}, $image_src_prefix, $this->arguments['update_map_table'], $row->nid);
 	}
 
 
@@ -128,7 +118,6 @@ class UGUpdate6Migration extends DrupalNode6Migration {
 	  	return $body;
 
 	}
-
 
 	public function replaceImgTags(&$body, &$old_prefixes, &$new_prefix){
 	  	$new_body = $body;
@@ -206,33 +195,103 @@ class UGUpdate6Migration extends DrupalNode6Migration {
 	  	return $body;
 	}
 
-  //replace Image Assist
-  public function replaceImgAssist(&$body, &$images, &$image_src_prefix){
 
+	// insert Image Attachments into body field
+	public function replaceImgAttach(&$body, &$image_src_prefix, $source_table, $source_nid){
+
+	    //retrieve image attach files from image_attach table
+	    $image_attach_query = Database::getConnection('default','legacy_d6')
+	    	->select('image_attach','ia')
+	    	->fields('ia',array('iid'))
+	    	->condition('ia.nid', $source_nid, '=')
+	    	->orderBy('weight','ASC');
+
+		//retrieve image id and limit to _original size files
+	    $image_attach_query->innerJoin('image','i','i.nid=ia.iid');
+		$image_attach_query->condition('i.image_size','_original','LIKE');
+
+		//retrieve image filename and filepath
+		$image_attach_query->innerJoin('files','f','i.fid=f.fid');
+		$image_attach_query->fields('f', array('fid'));
+
+		//retrieve image description from node table
+		$image_attach_query->innerJoin('node','n','i.nid=n.nid');
+		$image_attach_query->fields('n', array('title'));
+	    $image_attach_results = $image_attach_query->execute()->fetchAll();
+
+	  	foreach($image_attach_results as $ia){
+			//retrieve destination file ID for image attach
+			$image_query = Database::getConnection('default','default')
+				->select('file_managed','f')
+				->fields('f', array('fid','uri'));
+			$image_query->innerJoin('migrate_map_ugfile6','mm','mm.destid1=f.fid');
+			$image_query->condition('mm.sourceid1', $ia->fid ,"=");
+			$image = $image_query->execute()->fetchObject();
+
+			// Insert img attach file at top of body field
+			$image_src = $image_src_prefix . "/" . conf_path() . "/files/" . file_uri_target($image->uri);
+			$desc = $ia->title;
+
+			$replacement = '<figure class="thumbnail"><img alt="' . $desc .'" class="img-responsive" src="'. $image_src .'" /></figure>';
+	  		$new_body = $replacement . $new_body;
+
+		}
+
+	  	if($new_body){
+		  	return $new_body;
+	  	}
+	  	return $body;
+
+	}
+
+
+  //replace Image Assist tags with regular HTML img tags
+  public function replaceImgAssist(&$body, &$image_src_prefix){
   	$pattern_desc = '/(?<=desc=)([\d\s\w\.\?\,]+?)(?=\|)/';
   	$pattern_img = '/(?<=_)([\d\s\w\.\?\,]+?)(?=_)/';
   	$new_body = $body;
 
-  	foreach($images as $i){
+  	//retrieve list of img_assist_tag nids in body field
+	$pattern = '/\[img_assist\|nid=(\d*).+?]/';
+	preg_match_all($pattern, $new_body, $matches);
+	$image_ids = array_pop($matches);
+	$images = array();
 
-  		/* Retrieve old image nid from filename */
-		preg_match($pattern_img, $i->uri, $match_nid);
-		$image_src = $image_src_prefix . "/" . conf_path() . "/files/" . file_uri_target($i->uri);
-		$image_nid = array_shift($match_nid);
+	foreach($image_ids as $id){
 
-		/* Find img_assist tag in body field */
-		$pattern = '/\[img_assist\|(nid=' . $image_nid . ')(.+?)]/';
+		//retrieve source file ID for image assist
+		$source_query = Database::getConnection('default','legacy_d6')
+			->select('files','f')
+			->fields('f', array('fid','filename','filepath'));
+		$source_query->innerJoin('image','i','f.fid=i.fid');
+		$source_query->condition('f.filename','_original','LIKE');
+		$source_query->innerJoin('node','n','n.nid=i.nid');
+		$source_query->condition('n.nid',$id,'=');
+		$source_results = $source_query->execute()->fetchObject();
+
+		//retrieve destination file ID for image assist
+		$dest_query = Database::getConnection('default','default')
+			->select('file_managed','f')
+			->fields('f', array('fid','uri'));
+		$dest_query->innerJoin('migrate_map_ugfile6','mm','mm.destid1=f.fid');
+		$dest_query->condition('mm.sourceid1',$source_results->fid,"=");
+		$dest_results = $dest_query->execute()->fetchObject();
+
+		// Find img_assist tag in body field
+		$pattern = '/\[img_assist\|(nid=' . $id . ')(.+?)]/';
 		preg_match($pattern, $new_body, $matches);
 		$m = array_shift($matches);
 
-		/* Replace img_assist tag with img tag */
+		// Replace img_assist tag with img tag
 		if(strpos($m,'[img_assist') !== false){
+			$image_src = $image_src_prefix . "/" . conf_path() . "/files/" . file_uri_target($dest_results->uri);
 			preg_match($pattern_desc, $m, $desc_match);
 			$desc = array_shift($desc_match);
 			$replacement = '<figure class="thumbnail"><img alt="' . $desc .'" class="img-responsive" src="'. $image_src .'" /></figure>';
 	  		$new_body = preg_replace($pattern, $replacement, $new_body);
 	  	}
-  	}
+
+	}
 
   	if($new_body){
 	  	return $new_body;
