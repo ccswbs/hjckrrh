@@ -10,7 +10,7 @@
 function ug_banner_field_default_field_bases() {
   $field_bases = array();
 
-  // Exported field_base: 'field_banner_alttext'
+  // Exported field_base: 'field_banner_alttext'.
   $field_bases['field_banner_alttext'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -32,7 +32,7 @@ function ug_banner_field_default_field_bases() {
     'type' => 'text',
   );
 
-  // Exported field_base: 'field_banner_category'
+  // Exported field_base: 'field_banner_category'.
   $field_bases['field_banner_category'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -58,7 +58,7 @@ function ug_banner_field_default_field_bases() {
     'type' => 'taxonomy_term_reference',
   );
 
-  // Exported field_base: 'field_banner_headline'
+  // Exported field_base: 'field_banner_headline'.
   $field_bases['field_banner_headline'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -79,7 +79,7 @@ function ug_banner_field_default_field_bases() {
     'type' => 'text',
   );
 
-  // Exported field_base: 'field_banner_image'
+  // Exported field_base: 'field_banner_image'.
   $field_bases['field_banner_image'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -102,7 +102,7 @@ function ug_banner_field_default_field_bases() {
     'type' => 'image',
   );
 
-  // Exported field_base: 'field_banner_link'
+  // Exported field_base: 'field_banner_link'.
   $field_bases['field_banner_link'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -132,7 +132,7 @@ function ug_banner_field_default_field_bases() {
     'type' => 'link_field',
   );
 
-  // Exported field_base: 'field_banner_text'
+  // Exported field_base: 'field_banner_text'.
   $field_bases['field_banner_text'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -154,7 +154,7 @@ function ug_banner_field_default_field_bases() {
     'type' => 'text',
   );
 
-  // Exported field_base: 'field_banner_weight'
+  // Exported field_base: 'field_banner_weight'.
   $field_bases['field_banner_weight'] = array(
     'active' => 1,
     'cardinality' => 1,

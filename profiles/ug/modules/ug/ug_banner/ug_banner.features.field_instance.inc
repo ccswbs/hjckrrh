@@ -10,7 +10,7 @@
 function ug_banner_field_default_field_instances() {
   $field_instances = array();
 
-  // Exported field_instance: 'node-banner-field_banner_alttext'
+  // Exported field_instance: 'node-banner-field_banner_alttext'.
   $field_instances['node-banner-field_banner_alttext'] = array(
     'bundle' => 'banner',
     'default_value' => NULL,
@@ -55,7 +55,7 @@ function ug_banner_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-banner-field_banner_category'
+  // Exported field_instance: 'node-banner-field_banner_category'.
   $field_instances['node-banner-field_banner_category'] = array(
     'bundle' => 'banner',
     'default_value' => NULL,
@@ -92,7 +92,7 @@ function ug_banner_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-banner-field_banner_headline'
+  // Exported field_instance: 'node-banner-field_banner_headline'.
   $field_instances['node-banner-field_banner_headline'] = array(
     'bundle' => 'banner',
     'default_value' => NULL,
@@ -138,7 +138,7 @@ Headlines must be <strong>60</strong> characters or less.',
     ),
   );
 
-  // Exported field_instance: 'node-banner-field_banner_image'
+  // Exported field_instance: 'node-banner-field_banner_image'.
   $field_instances['node-banner-field_banner_image'] = array(
     'bundle' => 'banner',
     'deleted' => 0,
@@ -171,7 +171,7 @@ Headlines must be <strong>60</strong> characters or less.',
       'file_directory' => '',
       'file_extensions' => 'png gif jpg jpeg',
       'max_filesize' => '',
-      'max_resolution' => '1170x320',
+      'max_resolution' => '',
       'min_resolution' => '1140x200',
       'title_field' => 0,
       'user_register_form' => FALSE,
@@ -188,7 +188,7 @@ Headlines must be <strong>60</strong> characters or less.',
     ),
   );
 
-  // Exported field_instance: 'node-banner-field_banner_link'
+  // Exported field_instance: 'node-banner-field_banner_link'.
   $field_instances['node-banner-field_banner_link'] = array(
     'bundle' => 'banner',
     'default_value' => NULL,
@@ -250,7 +250,7 @@ Headlines must be <strong>60</strong> characters or less.',
     ),
   );
 
-  // Exported field_instance: 'node-banner-field_banner_text'
+  // Exported field_instance: 'node-banner-field_banner_text'.
   $field_instances['node-banner-field_banner_text'] = array(
     'bundle' => 'banner',
     'default_value' => NULL,
@@ -295,7 +295,7 @@ Headlines must be <strong>60</strong> characters or less.',
     ),
   );
 
-  // Exported field_instance: 'node-banner-field_banner_weight'
+  // Exported field_instance: 'node-banner-field_banner_weight'.
   $field_instances['node-banner-field_banner_weight'] = array(
     'bundle' => 'banner',
     'default_value' => array(
@@ -336,7 +336,7 @@ Headlines must be <strong>60</strong> characters or less.',
     ),
   );
 
-  // Exported field_instance: 'node-banner-field_tags'
+  // Exported field_instance: 'node-banner-field_tags'.
   $field_instances['node-banner-field_tags'] = array(
     'bundle' => 'banner',
     'default_value' => NULL,
