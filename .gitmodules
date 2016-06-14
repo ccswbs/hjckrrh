@@ -1,0 +1,3 @@
+[submodule "profiles/ug/doc/UoGd7-Training"]
+	path = profiles/ug/doc/UoGd7-Training
+	url = git@github.com:ccswbs/UoGd7-Training.git
