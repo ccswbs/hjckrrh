@@ -215,30 +215,6 @@ function ug_migrate_d7_migrate_api() {
         'dependencies' => array('UGFile7'),
       ),
 
-      /**** BOOK migration ****/
-      'UGBook7' => $node_arguments + $book_arguments + array(
-        'description' => t('Migration of books from Drupal 7'),
-        'class_name' => 'UGBook7Migration',
-        'source_type' => $book_arguments['source_book_node_type'], 
-        'destination_type' => 'book',
-        'dependencies' => array('UGFile7'),
-      ),
-
-      'UGBookMenuLinks7' => $common_arguments + array(
-        'description' => t('Migration of book menu links from Drupal 7'),
-      	'class_name' => 'UGBookMenuLinks7Migration',
-      	'node_migrations' => array('UGBook7'),
-      	'dependencies' => array('UGBook7'),
-      ),
-
-      'UGBookTable7' => $common_arguments + array(
-        'description' => t('Migration of book table from Drupal 7'),
-      	'class_name' => 'UGBookTable7Migration',
-      	'node_migrations' => array('UGBook7'),
-      	'menu_link_migrations' => array('UGBookMenuLinks7'),
-      	'dependencies' => array('UGBook7', 'UGBookMenuLinks7'),
-      ),
-	      
       /**** NEWS migration ****/
       'UGNewsCategory7' => $common_arguments + array(
         'description' => t('Migration of news category terms from Drupal 7'),
@@ -459,6 +435,30 @@ function ug_migrate_d7_migrate_api() {
 
     ) ,
   );
+
+  /* Book migration */
+  if (db_table_exists('book')) {
+    $api['migrations']['UGBook7'] = $node_arguments + $book_arguments + array(
+      'description' => t('Migration of books from Drupal 7'),
+      'class_name' => 'UGBook7Migration',
+      'source_type' => $book_arguments['source_book_node_type'], 
+      'destination_type' => 'book',
+      'dependencies' => array('UGFile7'),
+    );
+    $api['migrations']['UGBookMenuLinks7'] = $common_arguments + array(
+      'description' => t('Migration of book menu links from Drupal 7'),
+      'class_name' => 'UGBookMenuLinks7Migration',
+      'node_migrations' => array('UGBook7'),
+      'dependencies' => array('UGBook7'),
+    );
+    $api['migrations']['UGBookTable7'] = $common_arguments + array(
+      'description' => t('Migration of book table from Drupal 7'),
+      'class_name' => 'UGBookTable7Migration',
+      'node_migrations' => array('UGBook7'),
+      'menu_link_migrations' => array('UGBookMenuLinks7'),
+      'dependencies' => array('UGBook7', 'UGBookMenuLinks7'),
+    );
+  }
 
   return $api;
 }
