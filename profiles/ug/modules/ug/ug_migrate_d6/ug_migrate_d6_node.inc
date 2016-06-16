@@ -146,14 +146,16 @@ class UGFeaturedItem6Migration extends UGDrupalNode6Migration {
 
 		/* DEFAULT arguments */
 		$featureditem_arguments = array(
-			'source_featureditem_body' 				=> 'body',
-			'source_featureditem_summary' 			=> 'body:summary',
-			'source_featureditem_format'			=> 'body:format',
-			'source_featureditem_link' 				=> '',
-			'source_featureditem_image' 			=> 'fid',
-			'source_featureditem_category' 			=> '',
-			'source_featureditem_keyword' 			=> '',
-			'source_featureditem_image_src_prefix' 	=> '',
+			'source_featureditem_body' 					 => 'body',
+			'source_featureditem_summary' 				 => 'body:summary',
+			'source_featureditem_format'				 => 'body:format',
+			'source_featureditem_link' 					 => '',
+			'source_featureditem_image' 				 => 'fid',
+			'source_featureditem_category' 				 => '',
+			'source_featureditem_category_default_value' => '',
+			'source_featureditem_keyword' 				 => '',
+			'source_featureditem_keyword_default_value'  => '',
+			'source_featureditem_image_src_prefix' 		 => '',
 		);
 
 		//Override default values with arguments if they exist
@@ -177,14 +179,24 @@ class UGFeaturedItem6Migration extends UGDrupalNode6Migration {
 		    ->defaultValue('full_html');
 
 		/* Featured Item Category */
-		$this->addFieldMapping('field_feature_category', $featureditem_arguments['source_featureditem_category'])
-			->sourceMigration('UGFeaturedItemCategory6');
+		if($featureditem_arguments['source_featureditem_category_default_value'] != ''){
+			$this->addFieldMapping('field_feature_category')
+				->defaultValue($featureditem_arguments['source_featureditem_category_default_value']);
+		}else{
+			$this->addFieldMapping('field_feature_category', $featureditem_arguments['source_featureditem_category'])
+				->sourceMigration('UGFeaturedItemCategory6');
+		}
 		$this->addFieldMapping('field_feature_category:source_type')
 			->defaultValue('tid');
 
 		/* Featured Item Keyword */
-		$this->addFieldMapping('field_tags', $featureditem_arguments['source_featureditem_keyword'])
-			->sourceMigration('UGTerm6');
+		if($featureditem_arguments['source_featureditem_keyword_default_value'] != ''){
+			$this->addFieldMapping('field_tags')
+				->defaultValue($featureditem_arguments['source_featureditem_keyword_default_value']);
+		}else{
+			$this->addFieldMapping('field_tags', $featureditem_arguments['source_featureditem_keyword'])
+				->sourceMigration('UGTerm6','UGFeaturedItemKeyword6');			
+		}
 		$this->addFieldMapping('field_tags:source_type')
 			->defaultValue('tid');
 
@@ -215,19 +227,21 @@ class UGEvent6Migration extends UGDrupalNode6Migration {
 
 		/* DEFAULT arguments */
 		$event_arguments = array(
-			'source_event_body' => 'body',
-			'source_event_summary' => 'body:summary',
-			'source_event_format' => 'body:format',
-			'source_event_category' => '',
-			'source_event_keyword' => '',
-			'source_event_date' => '',
-			'source_event_location' => '',
-			'source_event_multipart' => '',
-			'source_event_image' => 'fid',
-			'source_event_caption' => '',
-			'source_event_attachments' => '',
-			'source_event_link' => '',
-			'source_event_image_src_prefix' => '',
+			'source_event_body' 				  => 'body',
+			'source_event_summary' 				  => 'body:summary',
+			'source_event_format' 				  => 'body:format',
+			'source_event_category'	 			  => '',
+			'source_event_category_default_value' => '',
+			'source_event_keyword' 				  => '',
+			'source_event_keyword_default_value'  => '',
+			'source_event_date' 				  => '',
+			'source_event_location' 			  => '',
+			'source_event_multipart' 			  => '',
+			'source_event_image' 				  => 'fid',
+			'source_event_caption' 				  => '',
+			'source_event_attachments' 			  => '',
+			'source_event_link'				      => '',
+			'source_event_image_src_prefix' 	  => '',
 		);
 
 		//Override default values with arguments if they exist
@@ -251,14 +265,24 @@ class UGEvent6Migration extends UGDrupalNode6Migration {
 		    ->defaultValue('full_html');
 
 		/* Event Category */
-		$this->addFieldMapping('field_event_category', $event_arguments['source_event_category'])
-			->sourceMigration('UGEventCategory6');
+		if($event_arguments['source_event_category_default_value'] != ''){
+			$this->addFieldMapping('field_event_category')
+				->defaultValue($event_arguments['source_event_category_default_value']);
+		}else{
+			$this->addFieldMapping('field_event_category', $event_arguments['source_event_category'])
+				->sourceMigration('UGEventCategory6');
+		}
 		$this->addFieldMapping('field_event_category:source_type')
 			->defaultValue('tid');
 
 		/* Event Keyword */
-		$this->addFieldMapping('field_tags', $event_arguments['source_event_keyword'])
-			->sourceMigration('UGTerm6');
+		if($event_arguments['source_event_keyword_default_value'] != ''){
+			$this->addFieldMapping('field_tags')
+				->defaultValue($event_arguments['source_event_keyword_default_value']);
+		}else{
+			$this->addFieldMapping('field_tags', $event_arguments['source_event_keyword'])
+				->sourceMigration('UGTerm6','UGEventKeyword6');
+		}
 		$this->addFieldMapping('field_tags:source_type')
 			->defaultValue('tid');
 
@@ -394,17 +418,19 @@ class UGNews6Migration extends UGDrupalNode6Migration {
 
 		/* DEFAULT arguments */
 		$news_arguments = array(
-			'source_news_body' => 'body',
-			'source_news_summary' => 'body:summary',
-			'source_news_format' => 'body:format',
-			'source_news_category' => '',
-			'source_news_keyword' => '',
-			'source_news_writer' => '',
-			'source_news_link' => '',
-			'source_news_image' => 'fid',
-			'source_news_caption' => '',
-			'source_news_attachment' => '',
-			'source_news_image_src_prefix' => '',
+			'source_news_body' 				 	 => 'body',
+			'source_news_summary' 				 => 'body:summary',
+			'source_news_format' 				 => 'body:format',
+			'source_news_category' 				 => '',
+			'source_news_category_default_value' => '',
+			'source_news_keyword' 				 => '',
+			'source_news_keyword_default_value'  => '',
+			'source_news_writer' 				 => '',
+			'source_news_link' 				 	 => '',
+			'source_news_image' 				 => 'fid',
+			'source_news_caption' 				 => '',
+			'source_news_attachment' 			 => '',
+			'source_news_image_src_prefix' 		 => '',
 		);
 
 		//Override default values with arguments if they exist
@@ -428,14 +454,26 @@ class UGNews6Migration extends UGDrupalNode6Migration {
 		    ->defaultValue('full_html');
 
 		/* News Category */
-		$this->addFieldMapping('field_news_tags', $news_arguments['source_news_category'])
-			->sourceMigration('UGNewsCategory6');
+		if($news_arguments['source_news_category_default_value'] != ''){
+			$this->addFieldMapping('field_news_tags')
+				->defaultValue($news_arguments['source_news_category_default_value']);
+		}else{
+			$this->addFieldMapping('field_news_tags', $news_arguments['source_news_category'])
+				->sourceMigration('UGNewsCategory6');
+		}
+
 		$this->addFieldMapping('field_news_tags:source_type')
 			->defaultValue('tid');
 
 		/* News Keyword */
-		$this->addFieldMapping('field_tags', $news_arguments['source_news_keyword'])
-			->sourceMigration('UGTerm6');
+		if($news_arguments['source_news_keyword_default_value'] != ''){
+			$this->addFieldMapping('field_tags')
+				->defaultValue($news_arguments['source_news_keyword_default_value']);
+		}else{
+			$this->addFieldMapping('field_tags', $news_arguments['source_news_keyword'])
+				->sourceMigration('UGTerm6','UGNewsKeyword6');
+		}
+
 		$this->addFieldMapping('field_tags:source_type')
 			->defaultValue('tid');
 
@@ -482,13 +520,15 @@ class UGPage6Migration extends UGDrupalNode6Migration {
 
 	    /* DEFAULT arguments */
 		$page_arguments = array(
-			'source_page_body' => 'body',
-			'source_page_summary' => 'body:summary',
-			'source_page_format' => 'body:format',
-			'source_page_category' => '',
-			'source_page_keyword' => '',
-			'source_page_attachments' => '',
-			'source_page_image_src_prefix' => '',
+			'source_page_body' 				 	 => 'body',
+			'source_page_summary'				 => 'body:summary',
+			'source_page_format' 				 => 'body:format',
+			'source_page_category' 				 => '',
+			'source_page_category_default_value' => '',
+			'source_page_keyword'				 => '',
+			'source_page_keyword_default_value'  => '',
+			'source_page_attachments' 			 => '',
+			'source_page_image_src_prefix'		 => '',
 		);
 
 		//Override default values with arguments if they exist
@@ -512,14 +552,24 @@ class UGPage6Migration extends UGDrupalNode6Migration {
 		    ->defaultValue('full_html');
 
 		/* Page Category */
-		$this->addFieldMapping('field_page_category', $page_arguments['source_page_category'])
-			->sourceMigration('UGPageCategory6');
+		if($page_arguments['source_page_category_default_value'] != ''){
+			$this->addFieldMapping('field_page_category')
+				->defaultValue($page_arguments['source_page_category_default_value']);
+		}else{
+			$this->addFieldMapping('field_page_category', $page_arguments['source_page_category'])
+				->sourceMigration('UGPageCategory6');
+		}
 		$this->addFieldMapping('field_page_category:source_type')
 			->defaultValue('tid');
 
 		/* Page Keyword */
-		$this->addFieldMapping('field_tags', $page_arguments['source_page_keyword'])
-			->sourceMigration('UGTerm6');
+		if($page_arguments['source_page_keyword_default_value'] != ''){
+			$this->addFieldMapping('field_tags')
+				->defaultValue($page_arguments['source_page_keyword_default_value']);
+		}else{
+			$this->addFieldMapping('field_tags', $page_arguments['source_page_keyword'])
+				->sourceMigration('UGTerm6');
+		}
 		$this->addFieldMapping('field_tags:source_type')
 			->defaultValue('tid');
 
@@ -545,11 +595,13 @@ class UGFAQ6Migration extends UGDrupalNode6Migration {
 		
 		/* DEFAULT arguments */
 		$faq_arguments = array(
-			'source_faq_answer' => 'body',
-			'source_faq_format' => 'body:format',
-			'source_faq_category' => '',
-			'source_faq_keyword' => '',
-			'source_faq_image_src_prefix' => '',
+			'source_faq_answer' 				=> 'body',
+			'source_faq_format' 				=> 'body:format',
+			'source_faq_category' 				=> '',
+			'source_faq_category_default_value' => '',
+			'source_faq_keyword' 				=> '',
+			'source_faq_keyword_default_value'  => '',
+			'source_faq_image_src_prefix' 		=> '',
 		);
 
 		//Override default values with arguments if they exist
@@ -573,14 +625,25 @@ class UGFAQ6Migration extends UGDrupalNode6Migration {
 		    ->defaultValue('full_html');
 
 		/* FAQ Category */
-		$this->addFieldMapping('field_faq_category', $faq_arguments['source_faq_category'])
-			->sourceMigration('UGFAQCategory6');
+		if($faq_arguments['source_faq_category_default_value'] != ''){
+			$this->addFieldMapping('field_faq_category')
+				->defaultValue($faq_arguments['source_faq_category_default_value']);
+		}else{
+			$this->addFieldMapping('field_faq_category', $faq_arguments['source_faq_category'])
+				->sourceMigration('UGFAQCategory6');
+		}
 		$this->addFieldMapping('field_faq_category:source_type')
 			->defaultValue('tid');
 
 		/* FAQ Keyword */
-		$this->addFieldMapping('field_tags', $faq_arguments['source_faq_keyword'])
-			->sourceMigration('UGTerm6');
+		if($faq_arguments['source_faq_keyword_default_value'] != ''){
+			$this->addFieldMapping('field_tags')
+				->defaultValue($faq_arguments['source_faq_keyword_default_value']);
+		}else{
+			$this->addFieldMapping('field_tags', $faq_arguments['source_faq_keyword'])
+				->sourceMigration('UGTerm6','UGFAQKeyword6');
+		}
+
 		$this->addFieldMapping('field_tags:source_type')
 			->defaultValue('tid');
 	}
