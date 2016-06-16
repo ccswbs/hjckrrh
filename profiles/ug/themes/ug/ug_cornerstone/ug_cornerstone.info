@@ -1,6 +1,7 @@
 name = UG Cornerstone Theme
 description = A UG Sub-theme.
 core = 7.x
+version = 7.x-4.0
 base theme = ug_theme
 
 

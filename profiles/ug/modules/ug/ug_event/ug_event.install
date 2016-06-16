@@ -1,0 +1,10 @@
+<?php
+
+/**
+ * Convert US/Eastern times to UTC.
+ */
+function ug_event_update_7300(&$sandbox) {
+  db_query("update field_data_field_event_date set field_event_date_value = convert_tz(field_event_date_value,'US/Eastern','UTC')");
+  db_query("update field_data_field_event_date set field_event_date_value2 = convert_tz(field_event_date_value2,'US/Eastern','UTC')");
+}
+

@@ -28,6 +28,14 @@ class UGThemeSettingsTestCase extends DrupalWebTestCase {
 
   function globalNavLinks() {
     return array(
+      'https://mail.uoguelph.ca/',
+      'https://courselink.uoguelph.ca/',
+      '//www.uoguelph.ca/directory/',
+      '//www.lib.uoguelph.ca',
+      '//www.uoguelph.ca/campus/map/',
+      'https://gryphlife.uoguelph.ca',
+      '//webadvisor.uoguelph.ca/',
+      'http://weather.gc.ca/city/pages/on-5_metric_e.html',
       '//www.uoguelph.ca/admissions/',
       '//www.uoguelph.ca/graduatestudies/',
       '//opened.uoguelph.ca/en/Distance-Education.asp',
@@ -46,7 +54,7 @@ class UGThemeSettingsTestCase extends DrupalWebTestCase {
       '//www.uoguelph.ca/arboretum/',
       '//www.uoguelph.ca/secretariat/office-services/board-governors',
       '//www.uoguelph.ca/secretariat/office-services/senate',
-      '//www.uoguelph.ca/info/senioradmin',
+      '//www.uoguelph.ca/president/senior-administration',
       '//www.uoguelph.ca/international/',
       '//www.uoguelph.ca/president/',
       '//www.uoguelph.ca/research/',

@@ -10,7 +10,7 @@
 function ug_page_field_default_field_instances() {
   $field_instances = array();
 
-  // Exported field_instance: 'node-page-field_page_attachments'
+  // Exported field_instance: 'node-page-field_page_attachments'.
   $field_instances['node-page-field_page_attachments'] = array(
     'bundle' => 'page',
     'deleted' => 0,
@@ -37,7 +37,7 @@ function ug_page_field_default_field_instances() {
     'settings' => array(
       'description_field' => 1,
       'file_directory' => '',
-      'file_extensions' => 'txt pdf doc docx rtf png gif jpg jpeg zip xls xlsx ppt pptx csv',
+      'file_extensions' => 'txt pdf doc docx rtf png gif jpg jpeg zip xls xlsx ppt pptx csv dmg',
       'max_filesize' => '',
       'user_register_form' => FALSE,
     ),
@@ -52,7 +52,7 @@ function ug_page_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-page-field_page_body'
+  // Exported field_instance: 'node-page-field_page_body'.
   $field_instances['node-page-field_page_body'] = array(
     'bundle' => 'page',
     'default_value' => NULL,
@@ -94,7 +94,7 @@ function ug_page_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-page-field_page_category'
+  // Exported field_instance: 'node-page-field_page_category'.
   $field_instances['node-page-field_page_category'] = array(
     'bundle' => 'page',
     'default_value' => NULL,
@@ -131,7 +131,7 @@ function ug_page_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-page-field_tags'
+  // Exported field_instance: 'node-page-field_tags'.
   $field_instances['node-page-field_tags'] = array(
     'bundle' => 'page',
     'default_value' => NULL,

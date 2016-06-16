@@ -1,3 +1,22 @@
+Hjckrrh 7.4.0, 2016-06-14
+-------------------------
+- Fix: Add fallback format for profile summary migration (UG Migrate D7)[fixes #472]
+- Fix: Fix profile attachments migration (UG Migrate D7)[fixes #456]
+- New: Allow placement + content before/after on custom field inserts (UG Migrate D7)[refs #448]
+- New: Allow defaultValues to be set in migrate settings / add documentation (UG Migrate D7)[fix #468]
+- Fix: Limit nid source dependency to same content type (UG Migrate D7)
+- New: Add option to migrate text fields into body (UG Migrate D7)[fix #448]
+- Allow dmg file attachments (#453)
+- Remove image and caption fields from page view template (#440)
+- Change event date field to use local time zone (#466)
+- Removed pane-title styling on panel-panel bottom pane (#437)
+- Add linkchecker module.
+- Update global navigation links (#476)
+- Break long lines.
+- Require printable characters in page attachment descriptions.
+- Add rules module (#452).
+- Add field_validation module.
+
 Hjckrrh 7.3.0, 2016-05-31
 -------------------------
 - Add option to include summary in news teaser (issue #266).
@@ -9,7 +28,7 @@ Hjckrrh 7.3.0, 2016-05-31
 - Add block versions of sidebar content panes (#376).
 
 Hjckrrh 7.2.0, 2016-05-17
--------------------------
+-----------------------
 - Remove profile type and fields when uninstalling UG Profile feature.
 - Add position/title field to profile teaser view.
 - Improve visibility of active menu link.

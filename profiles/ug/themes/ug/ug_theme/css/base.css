@@ -549,4 +549,8 @@ Base Styles
       color: #333333;
   }
 
+p
+  {
+    word-wrap: break-word;
+  }
 

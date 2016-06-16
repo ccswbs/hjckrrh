@@ -502,11 +502,7 @@ Live Date: June 23, 2015
 
 	    /*--- Theming ---*/
 
-	    /* [ENABLED] - Make bottom pane titles same font-size as sidebar pane-titles */
-	    .panel-panel.bottom .pane-title {
-	    	font-size: 1.286em; /* 18px */
-	    	font-weight: 400;
-	    }
+	    /* [DELETED] - Make bottom pane titles same font-size as sidebar pane-titles */
 
 
 /******************

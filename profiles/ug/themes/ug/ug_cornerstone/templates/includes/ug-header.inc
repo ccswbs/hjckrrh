@@ -13,6 +13,7 @@
           <li><a href="//www.uoguelph.ca/directory/"><span class="glyphicon glyphicon-user fa-fw" aria-hidden="true"></span> Directory <span class="sr-only">for University of Guelph</span></a></li>
           <li><a href="//www.lib.uoguelph.ca"><span class="glyphicon glyphicon-book fa-fw" aria-hidden="true"></span> Library</a></li>
           <li><a href="//www.uoguelph.ca/campus/map/"><span class="glyphicon glyphicon-road fa-fw" aria-hidden="true"></span> Maps</a></li>
+          <li><a href="https://gryphlife.uoguelph.ca"><span class="fa fa-users fa-fw" aria-hidden="true"></span> Gryphlife</a></li>
       <li><a href="//webadvisor.uoguelph.ca/"><span class="glyphicon glyphicon-list-alt fa-fw" aria-hidden="true"></span> WebAdvisor</a></li>
           <li><a href="http://weather.gc.ca/city/pages/on-5_metric_e.html"><span class="glyphicon glyphicon-cloud fa-fw" aria-hidden="true"></span> <span class="sr-only">Guelph </span>Weather</a></li>
 
@@ -80,7 +81,7 @@
               <li class="divider"></li>
               <li><a href="//www.uoguelph.ca/secretariat/office-services/board-governors">Board of Governors</a></li>
               <li><a href="//www.uoguelph.ca/secretariat/office-services/senate">Senate</a></li>
-              <li><a href="//www.uoguelph.ca/info/senioradmin">Senior Administration</a></li>
+              <li><a href="//www.uoguelph.ca/president/senior-administration">Senior Administration</a></li>
             </ul>
             </li>
 

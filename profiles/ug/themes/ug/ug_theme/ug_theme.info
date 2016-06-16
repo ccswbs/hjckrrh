@@ -1,6 +1,7 @@
 name = UG Theme
 description = A Bootstrap Sub-theme.
 core = 7.x
+version = 7.x-4.0
 base theme = bootstrap
 
 
