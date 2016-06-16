@@ -175,8 +175,15 @@ class UGFeaturedItem6Migration extends UGDrupalNode6Migration {
 	    /* Featured Item Body */
 	    $this->addFieldMapping('field_feature_text', $featureditem_arguments['source_featureditem_body']);
 	    $this->addFieldMapping('field_feature_text:summary', $featureditem_arguments['source_featureditem_summary']);
-	    $this->addFieldMapping( 'field_feature_text:format', $featureditem_arguments['source_featureditem_format'])
-		    ->defaultValue('full_html');
+
+		// Featured Item Body Format
+		if($featureditem_arguments['source_featureditem_body'] == 'body'){
+		    $this->addFieldMapping( 'field_feature_text:format', $featureditem_arguments['source_featureditem_format'])
+			    ->defaultValue('full_html');
+		}else{
+		    $this->addFieldMapping( 'field_feature_text:format', $featureditem_arguments['source_featureditem_format'])
+			    ->callbacks(array($this, 'mapFormat'));
+		}
 
 		/* Featured Item Category */
 		if($featureditem_arguments['source_featureditem_category_default_value'] != ''){
@@ -261,8 +268,15 @@ class UGEvent6Migration extends UGDrupalNode6Migration {
 	    /* Event Body */
 	    $this->addFieldMapping('field_event_body', $event_arguments['source_event_body']);
 	    $this->addFieldMapping( 'field_event_body:summary', $event_arguments['source_event_summary']);
-	    $this->addFieldMapping( 'field_event_body:format', $event_arguments['source_event_format'])
-		    ->defaultValue('full_html');
+
+		// Event Body Format
+		if($event_arguments['source_event_body'] == 'body'){
+		    $this->addFieldMapping( 'field_event_body:format', $event_arguments['source_event_format'])
+			    ->defaultValue('full_html');
+		}else{
+		    $this->addFieldMapping( 'field_event_body:format', $event_arguments['source_event_format'])
+			    ->callbacks(array($this, 'mapFormat'));
+		}
 
 		/* Event Category */
 		if($event_arguments['source_event_category_default_value'] != ''){
@@ -450,8 +464,15 @@ class UGNews6Migration extends UGDrupalNode6Migration {
 	    /* News Body */
 	    $this->addFieldMapping('field_news_body', $news_arguments['source_news_body']);
 	    $this->addFieldMapping( 'field_news_body:summary', $news_arguments['source_news_summary']);
-	    $this->addFieldMapping( 'field_news_body:format', $news_arguments['source_news_format'])
-		    ->defaultValue('full_html');
+
+		// News Body Format
+		if($news_arguments['source_news_body'] == 'body'){
+		    $this->addFieldMapping( 'field_news_body:format', $news_arguments['source_news_format'])
+			    ->defaultValue('full_html');
+		}else{
+		    $this->addFieldMapping( 'field_news_body:format', $news_arguments['source_news_format'])
+			    ->callbacks(array($this, 'mapFormat'));
+		}
 
 		/* News Category */
 		if($news_arguments['source_news_category_default_value'] != ''){
@@ -548,8 +569,15 @@ class UGPage6Migration extends UGDrupalNode6Migration {
 	    /* Page Body */
 	    $this->addFieldMapping('field_page_body', $page_arguments['source_page_body']);
 	    $this->addFieldMapping('field_page_body:summary', $page_arguments['source_page_summary']);
-	    $this->addFieldMapping( 'field_page_body:format', $page_arguments['source_page_format'])
-		    ->defaultValue('full_html');
+
+		// Page Body Format
+		if($page_arguments['source_page_body'] == 'body'){
+		    $this->addFieldMapping( 'field_page_body:format', $page_arguments['source_page_format'])
+			    ->defaultValue('full_html');
+		}else{
+		    $this->addFieldMapping( 'field_page_body:format', $page_arguments['source_page_format'])
+			    ->callbacks(array($this, 'mapFormat'));
+		}
 
 		/* Page Category */
 		if($page_arguments['source_page_category_default_value'] != ''){
@@ -620,9 +648,15 @@ class UGFAQ6Migration extends UGDrupalNode6Migration {
 
 	    /* FAQ Answer */
 	    $this->addFieldMapping('field_faq_answer', $faq_arguments['source_faq_answer']);
-	    $this->addFieldMapping( 'field_faq_answer:format', $faq_arguments['source_faq_format'])
-		    ->callbacks(array($this, 'mapFormat'))
-		    ->defaultValue('full_html');
+
+		// FAQ Answer Format
+		if($faq_arguments['source_faq_answer'] == 'body'){
+			$this->addFieldMapping('field_faq_answer:format', $faq_arguments['source_faq_format'])
+			    ->defaultValue('full_html');
+		}else{
+		    $this->addFieldMapping( 'field_faq_answer:format', $faq_arguments['source_faq_format'])
+			    ->callbacks(array($this, 'mapFormat'));
+		}
 
 		/* FAQ Category */
 		if($faq_arguments['source_faq_category_default_value'] != ''){

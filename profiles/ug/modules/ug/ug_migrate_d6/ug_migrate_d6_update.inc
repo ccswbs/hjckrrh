@@ -340,15 +340,22 @@ class UGUpdatePage6Migration extends UGUpdate6Migration {
 		}
 
 	    $this->addFieldMapping('nid', 'nid')
-			->sourceMigration($this->arguments['dependencies']);
+			->sourceMigration('UGPage6');
 		$this->arguments['update_map_table'] = 'migrate_map_ugpage6';
 
 	    // Update body field
 		$this->arguments['update_source_body'] = $page_arguments['source_page_body'];
 	    $this->addFieldMapping('field_page_body', $page_arguments['source_page_body']);
 	    $this->addFieldMapping('field_page_body:summary', $page_arguments['source_page_summary']);
-	    $this->addFieldMapping( 'field_page_body:format', $page_arguments['source_page_format'])
-		    ->defaultValue('full_html');
+
+		// Page Body Format
+		if($page_arguments['source_page_body'] == 'body'){
+		    $this->addFieldMapping( 'field_page_body:format', $page_arguments['source_page_format'])
+			    ->defaultValue('full_html');
+		}else{
+		    $this->addFieldMapping( 'field_page_body:format', $page_arguments['source_page_format'])
+			    ->callbacks(array($this, 'mapFormat'));
+		}
     }
 }
 
@@ -394,15 +401,22 @@ class UGUpdateNews6Migration extends UGUpdate6Migration {
 		}
 
 	    $this->addFieldMapping('nid', 'nid')
-			->sourceMigration($this->arguments['dependencies']);
+			->sourceMigration('UGNews6');
 		$this->arguments['update_map_table'] = 'migrate_map_ugnews6';
 
 	    // Update body field
 		$this->arguments['update_source_body'] = $news_arguments['source_news_body'];
 	    $this->addFieldMapping('field_news_body', $news_arguments['source_news_body']);
 	    $this->addFieldMapping('field_news_body:summary', $news_arguments['source_news_summary']);
-	    $this->addFieldMapping( 'field_news_body:format', $news_arguments['source_news_format'])
-		    ->defaultValue('full_html');
+
+		// News Body Format
+		if($news_arguments['source_news_body'] == 'body'){
+		    $this->addFieldMapping( 'field_news_body:format', $news_arguments['source_news_format'])
+			    ->defaultValue('full_html');
+		}else{
+		    $this->addFieldMapping( 'field_news_body:format', $news_arguments['source_news_format'])
+			    ->callbacks(array($this, 'mapFormat'));
+		}
     }
 }
 
@@ -445,15 +459,22 @@ class UGUpdateEvent6Migration extends UGUpdate6Migration {
 		}
 
 	    $this->addFieldMapping('nid', 'nid')
-			->sourceMigration($this->arguments['dependencies']);
+			->sourceMigration('UGEvent6');
 		$this->arguments['update_map_table'] = 'migrate_map_ugevent6';
 
 	    // Update body field
 		$this->arguments['update_source_body'] = $event_arguments['source_event_body'];
 	    $this->addFieldMapping('field_event_body', $event_arguments['source_event_body']);
 	    $this->addFieldMapping('field_event_body:summary', $event_arguments['source_event_summary']);
-	    $this->addFieldMapping( 'field_event_body:format', $event_arguments['source_event_format'])
-		    ->defaultValue('full_html');
+
+		// Event Body Format
+		if($event_arguments['source_event_body'] == 'body'){
+		    $this->addFieldMapping( 'field_event_body:format', $event_arguments['source_event_format'])
+			    ->defaultValue('full_html');
+		}else{
+		    $this->addFieldMapping( 'field_event_body:format', $event_arguments['source_event_format'])
+			    ->callbacks(array($this, 'mapFormat'));
+		}
     }
 }
 
@@ -496,15 +517,21 @@ class UGUpdateFAQ6Migration extends UGUpdate6Migration {
 		}
 
 	    $this->addFieldMapping('nid', 'nid')
-			->sourceMigration($this->arguments['dependencies']);
+			->sourceMigration('UGFAQ6');
 		$this->arguments['update_map_table'] = 'migrate_map_ugfaq6';
 
 	    // Update field_faq_answer field
 		$this->arguments['update_source_body'] = $faq_arguments['source_faq_answer'];
 	    $this->addFieldMapping('field_faq_answer', $faq_arguments['source_faq_answer']);
-	    $this->addFieldMapping( 'field_faq_answer:format', $faq_arguments['source_faq_format'])
-		    ->callbacks(array($this, 'mapFormat'))
-		    ->defaultValue('full_html');
+
+		// FAQ Answer Format
+		if($faq_arguments['source_faq_answer'] == 'body'){
+			$this->addFieldMapping('field_faq_answer:format', $faq_arguments['source_faq_format'])
+			    ->defaultValue('full_html');
+		}else{
+		    $this->addFieldMapping( 'field_faq_answer:format', $faq_arguments['source_faq_format'])
+			    ->callbacks(array($this, 'mapFormat'));
+		}
     }
 }
 
@@ -525,8 +552,12 @@ class UGUpdateProfile6Migration extends UGUpdate6Migration {
 
 	    /* DEFAULT arguments */
 		$profile_arguments = array(
-			'source_profile_summary' => 'body',
-			'source_profile_format' => 'body:format',
+		    'source_profile_title'     => 'field_profile_title',
+		    'source_profile_name'      => 'field_profile_name',
+		    'source_profile_lastname'  => 'field_profile_lastname',
+			'source_profile_summary'   => 'field_profile_summary',
+			'source_profile_format'    => 'field_profile_summary:format',
+		    //'source_profile_insert_fields' => NULL,
 		);
 
 		//Override default values with arguments if they exist
@@ -548,14 +579,28 @@ class UGUpdateProfile6Migration extends UGUpdate6Migration {
 		}
 
 	    $this->addFieldMapping('nid', 'nid')
-			->sourceMigration($this->arguments['dependencies']);
+			->sourceMigration('UGProfile6');
 		$this->arguments['update_map_table'] = 'migrate_map_ugprofile6';
+
+		/* Profile Title */
+		$this->addFieldMapping('field_profile_title', $profile_arguments['source_profile_title']);
+
+		/* Profile First and Last Name */
+		$this->addFieldMapping('field_profile_name', $profile_arguments['source_profile_name']);
+		$this->addFieldMapping('field_profile_lastname', $profile_arguments['source_profile_lastname']);
 
 	    // Update body field
 		$this->arguments['update_source_body'] = $profile_arguments['source_profile_summary'];
 	    $this->addFieldMapping('field_profile_summary', $profile_arguments['source_profile_summary']);
-	    $this->addFieldMapping( 'field_profile_summary:format', $profile_arguments['source_profile_format'])
-		    ->defaultValue('full_html');
+
+		// Profile Summary Format
+		if($profile_arguments['source_profile_summary'] == 'body'){
+			$this->addFieldMapping('field_profile_summary:format', $profile_arguments['source_profile_format'])
+			    ->defaultValue('full_html');
+		}else{
+			$this->addFieldMapping('field_profile_summary:format', $profile_arguments['source_profile_format'])
+			    ->callbacks(array($this, 'mapFormat'));
+		}
     }
 }
 
