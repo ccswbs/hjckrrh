@@ -195,13 +195,6 @@ function ug_migrate_d6_migrate_api() {
         'destination_dir' => $file_arguments['destination_directory'],
       ),
 
-      'UGImage6' => $node_arguments + array(
-        'description' => t('Migration of images from Drupal 6'),
-        'class_name' => 'UGImage6Migration',
-        'source_dir' => $file_arguments['source_directory'],
-        'destination_dir' => $file_arguments['destination_directory'],
-      ),
-
       /**** PAGE migration ****/
       'UGPageCategory6' => $common_arguments + array(
         'description' => t('Migration of page category terms from Drupal 6'),
@@ -215,7 +208,7 @@ function ug_migrate_d6_migrate_api() {
         'class_name' => 'UGPage6Migration',
         'source_type' => $page_arguments['source_page_node_type'], 
         'destination_type' => 'page',
-        'dependencies' => array('UGFile6','UGImage6'),
+        'dependencies' => array('UGFile6'),
       ),
 
       /**** NEWS migration ****/
@@ -238,7 +231,7 @@ function ug_migrate_d6_migrate_api() {
         'class_name' => 'UGNews6Migration',
         'source_type' => $news_arguments['source_news_node_type'], 
         'destination_type' => 'news',
-        'dependencies' => array('UGFile6','UGImage6'),
+        'dependencies' => array('UGFile6'),
       ),
 
       /**** FEATURED ITEM migration ****/
@@ -261,7 +254,7 @@ function ug_migrate_d6_migrate_api() {
         'class_name' => 'UGFeaturedItem6Migration',
         'source_type' => $featureditem_arguments['source_featureditem_node_type'], 
         'destination_type' => 'feature',
-        'dependencies' => array('UGFile6', 'UGImage6'),
+        'dependencies' => array('UGFile6'),
       ),
 
       /**** EVENT migration ****/
@@ -297,7 +290,7 @@ function ug_migrate_d6_migrate_api() {
         'class_name' => 'UGEvent6Migration',
         'source_type' => $event_arguments['source_event_node_type'], 
         'destination_type' => 'event',
-        'dependencies' => array('UGFile6', 'UGImage6'),
+        'dependencies' => array('UGFile6'),
       ),
 
       /**** FAQ migration ****/
@@ -320,7 +313,7 @@ function ug_migrate_d6_migrate_api() {
         'class_name' => 'UGFAQ6Migration',
         'source_type' => $faq_arguments['source_faq_node_type'], 
         'destination_type' => 'faq',
-        'dependencies' => array('UGFile6', 'UGImage6'),
+        'dependencies' => array('UGFile6'),
       ),
 
 
@@ -330,7 +323,7 @@ function ug_migrate_d6_migrate_api() {
         'class_name' => 'UGProfile6Migration',
         'source_type' => $profile_arguments['source_profile_node_type'],
         'destination_type' => 'profile',
-        'dependencies' => array('UGFile6', 'UGImage6'),
+        'dependencies' => array('UGFile6'),
       ),
       
       'UGProfileRole6' => $common_arguments + array(
