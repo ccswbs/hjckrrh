@@ -596,7 +596,7 @@ class UGPage6Migration extends UGDrupalNode6Migration {
 				->defaultValue($page_arguments['source_page_keyword_default_value']);
 		}else{
 			$this->addFieldMapping('field_tags', $page_arguments['source_page_keyword'])
-				->sourceMigration('UGTerm6');
+				->sourceMigration('UGTerm6','UGPageKeyword6');
 		}
 		$this->addFieldMapping('field_tags:source_type')
 			->defaultValue('tid');
@@ -734,6 +734,13 @@ class UGNewsKeyword6Migration extends DrupalTerm6Migration {
 }
 
 class UGPageCategory6Migration extends DrupalTerm6Migration {
+	public function __construct($arguments) {
+    	parent::__construct($arguments);
+
+	}
+}
+
+class UGPageKeyword6Migration extends DrupalTerm6Migration {
 	public function __construct($arguments) {
     	parent::__construct($arguments);
 

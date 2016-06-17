@@ -26,7 +26,8 @@ function ug_migrate_d6_migrate_api() {
 
   $term_migrations = array(
     'UGTerm6', 
-    'UGPageCategory6', 
+    'UGPageCategory6',
+    'UGPageKeyword6', 
     'UGNewsCategory6', 
     'UGNewsKeyword6', 
     'UGEventCategory6', 
@@ -202,6 +203,13 @@ function ug_migrate_d6_migrate_api() {
         'source_vocabulary' => $page_arguments['source_page_term_category'], 
         'destination_vocabulary' => 'page_category',
       ),
+
+      'UGPageKeyword6' => $common_arguments + array(
+        'description' => t('Migration of page keyword terms from Drupal 6'),
+        'class_name' => 'UGPageKeyword6Migration',
+        'source_vocabulary' => $page_arguments['source_page_term_keyword'], 
+        'destination_vocabulary' => 'tags',
+      ),  
 
       'UGPage6' => $node_arguments + $page_arguments + array(
         'description' => t('Migration of basic pages from Drupal 6'),
