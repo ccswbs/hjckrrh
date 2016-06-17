@@ -126,6 +126,15 @@ function ug_role_user_default_permissions() {
     'module' => 'taxonomy',
   );
 
+  // Exported permission: 'administer users'.
+  $permissions['administer users'] = array(
+    'name' => 'administer users',
+    'roles' => array(
+      'site manager' => 'site manager',
+    ),
+    'module' => 'user',
+  );
+
   // Exported permission: 'assign author role'.
   $permissions['assign author role'] = array(
     'name' => 'assign author role',
