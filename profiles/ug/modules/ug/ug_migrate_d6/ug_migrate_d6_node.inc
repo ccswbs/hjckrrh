@@ -19,6 +19,11 @@ class UGDrupalNode6Migration extends DrupalNode6Migration {
 	      return FALSE;
 	    }
 
+		//insert unmappable fields into body field
+		if(isset($this->arguments['update_insert_fields'])){
+		    $row->{$this->arguments['update_source_body']} = $this->insertUnmappableFields($row->{$this->arguments['update_source_body']}, $this->arguments['update_insert_fields'], $row->nid);
+		}
+
 	    // retrieve inline prefix of image
 		$image_src_prefix = '';
     	if(isset($this->arguments['update_image_src_prefix'])){
@@ -36,6 +41,7 @@ class UGDrupalNode6Migration extends DrupalNode6Migration {
 
 	// insert Image Attachments into body field
 	public function replaceImgAttach(&$body, &$image_src_prefix, $source_table, $source_nid){
+	  	$new_body = $body;
 
 	    //retrieve image attach files from image_attach table
 	    $image_attach_query = Database::getConnection('default','legacy_d6')
@@ -136,6 +142,78 @@ class UGDrupalNode6Migration extends DrupalNode6Migration {
 	  	return $body;
 	}
 
+	public function insertUnmappableFields(&$body, &$field_inserts, &$nid){
+		$new_body = $body;
+		$top_section = '';
+		$bottom_section = '';
+
+		if($new_body != ''){
+			$new_body = $field_inserts['before_target'] . $new_body;
+			$new_body .= $field_inserts['after_target'];
+		}
+
+		//loop through field groups
+		foreach($field_inserts['field_groups'] as $field_group){
+			$content_count = 0;
+			$field_group_insert = '';
+
+			foreach($field_group['fields'] as $field_name => $field_info){
+
+				//retrieve value for each field
+				$field_query = Database::getConnection('default','legacy_d6')
+					->select($field_info['db_table'],'f')
+					->fields('f',$field_info['db_field_value'])
+					->condition($field_info['db_field_entity_id'],$nid,'LIKE')
+					->execute()
+					->fetchObject();
+				$field_value = $field_query->{$field_info['db_field_value'][0]};
+
+				// if field value exists, add to 
+				if(isset($field_value)){
+					if($field_value != ''){
+						$content_count++;
+
+						if($field_info['content_before'] != ''){
+							$field_group_insert .= $field_info['content_before'];
+						}
+						$field_group_insert .= $field_value;
+
+						if($field_info['content_after'] != ''){
+							$field_group_insert .= $field_info['content_after'];
+						}
+					}
+				}
+			}
+
+			if($content_count > 0){
+
+				$field_group_insert = $field_group['content_before'] . $field_group_insert;
+				$field_group_insert .= $field_group['content_after'];
+
+				if($field_group['placement'] == 'top'){
+					$top_section .= $field_group_insert;
+				}else{
+					$bottom_section .= $field_group_insert;
+				}
+			}
+		}
+
+		//add top section to top of body
+		if($top_section != ''){
+			$new_body = $top_section . $new_body;
+		}
+
+		//add bottom section to bottom of body
+		if($bottom_section != ''){
+			$new_body .= $bottom_section;
+		}
+
+	  	if(isset($new_body)){
+		  	return $new_body;
+	  	}
+	  	return $body;
+	}
+
 }
 
 
@@ -156,6 +234,7 @@ class UGFeaturedItem6Migration extends UGDrupalNode6Migration {
 			'source_featureditem_keyword' 				 => '',
 			'source_featureditem_keyword_default_value'  => '',
 			'source_featureditem_image_src_prefix' 		 => '',
+			'source_featureditem_insert_fields'			 => NULL,
 		);
 
 		//Override default values with arguments if they exist
@@ -170,6 +249,7 @@ class UGFeaturedItem6Migration extends UGDrupalNode6Migration {
 		/* INSERT fields into Body variables */
 		$this->arguments['update_source_body'] = $featureditem_arguments['source_featureditem_body'];
     	$this->arguments['update_image_src_prefix'] = $featureditem_arguments['source_featureditem_image_src_prefix'];
+    	$this->arguments['update_insert_fields'] = $featureditem_arguments['source_featureditem_insert_fields'];
 		$this->arguments['update_map_table'] = 'migrate_map_ugfeatureditem6';
 
 	    /* Featured Item Body */
@@ -250,6 +330,7 @@ class UGEvent6Migration extends UGDrupalNode6Migration {
 			'source_event_attachments' 			  => '',
 			'source_event_link'				      => '',
 			'source_event_image_src_prefix' 	  => '',
+			'source_event_insert_fields'		  => NULL,
 		);
 
 		//Override default values with arguments if they exist
@@ -264,6 +345,7 @@ class UGEvent6Migration extends UGDrupalNode6Migration {
 		/* INSERT fields into Body variables */
 		$this->arguments['update_source_body'] = $event_arguments['source_event_body'];
 		$this->arguments['update_image_src_prefix'] = $event_arguments['source_event_image_src_prefix'];
+    	$this->arguments['update_insert_fields'] = $event_arguments['source_event_insert_fields'];
 		$this->arguments['update_map_table'] = 'migrate_map_ugevent6';
 
 	    /* Event Body */
@@ -447,6 +529,7 @@ class UGNews6Migration extends UGDrupalNode6Migration {
 			'source_news_caption' 				 => '',
 			'source_news_attachment' 			 => '',
 			'source_news_image_src_prefix' 		 => '',
+			'source_news_insert_fields'		  	 => NULL,
 		);
 
 		//Override default values with arguments if they exist
@@ -461,6 +544,7 @@ class UGNews6Migration extends UGDrupalNode6Migration {
 		/* INSERT fields into Body variables */
 		$this->arguments['update_source_body'] = $news_arguments['source_news_body'];
 		$this->arguments['update_image_src_prefix'] = $news_arguments['source_news_image_src_prefix'];
+    	$this->arguments['update_insert_fields'] = $news_arguments['source_news_insert_fields'];
 		$this->arguments['update_map_table'] = 'migrate_map_ugnews6';
 
 	    /* News Body */
@@ -553,6 +637,7 @@ class UGPage6Migration extends UGDrupalNode6Migration {
 			'source_page_keyword_default_value'  => '',
 			'source_page_attachments' 			 => '',
 			'source_page_image_src_prefix'		 => '',
+			'source_page_insert_fields'		  	 => NULL,
 		);
 
 		//Override default values with arguments if they exist
@@ -567,6 +652,7 @@ class UGPage6Migration extends UGDrupalNode6Migration {
 		/* INSERT fields into Body variables */
 		$this->arguments['update_source_body'] = $page_arguments['source_page_body'];
 		$this->arguments['update_image_src_prefix'] = $page_arguments['source_page_image_src_prefix'];
+    	$this->arguments['update_insert_fields'] = $page_arguments['source_page_insert_fields'];
 		$this->arguments['update_map_table'] = 'migrate_map_ugpage6';
 
 	    /* Page Body */
@@ -634,6 +720,7 @@ class UGFAQ6Migration extends UGDrupalNode6Migration {
 			'source_faq_keyword' 				=> '',
 			'source_faq_keyword_default_value'  => '',
 			'source_faq_image_src_prefix' 		=> '',
+			'source_faq_insert_fields'		  	=> NULL,
 		);
 
 		//Override default values with arguments if they exist
@@ -647,7 +734,8 @@ class UGFAQ6Migration extends UGDrupalNode6Migration {
 
 		/* INSERT fields into Body variables */
 		$this->arguments['update_source_body'] = $faq_arguments['source_faq_answer'];
-		$this->arguments['update_image_src_prefix'] = $page_arguments['source_faq_image_src_prefix'];
+		$this->arguments['update_image_src_prefix'] = $faq_arguments['source_faq_image_src_prefix'];
+    	$this->arguments['update_insert_fields'] = $faq_arguments['source_faq_insert_fields'];
 		$this->arguments['update_map_table'] = 'migrate_map_ugfaq6';
 
 	    /* FAQ Answer */

@@ -6,6 +6,8 @@ class UGUpdate6Migration extends DrupalNode6Migration {
 
     	$this->arguments['update_source_body'] = 'body';
     	$this->arguments['update_map_table'] = '';
+    	$this->arguments['update_insert_fields'] = NULL;
+    	$this->arguments['update_image_src_prefix'] = NULL;
 	}
 
 	public function prepareRow($row) {
@@ -22,6 +24,11 @@ class UGUpdate6Migration extends DrupalNode6Migration {
 		    	}
 	    	}
 	    }
+
+		//insert unmappable fields into body field
+		if(isset($this->arguments['update_insert_fields'])){
+		    $row->{$this->arguments['update_source_body']} = $this->insertUnmappableFields($row->{$this->arguments['update_source_body']}, $this->arguments['update_insert_fields'], $row->nid);
+		}
 
 	    // update node links
 	    if(isset($this->arguments['update_nodelinks'])) {
@@ -146,7 +153,6 @@ class UGUpdate6Migration extends DrupalNode6Migration {
 	  	return $body;
 	}
 
-
 	public function replaceSourceNodes(&$body, &$pattern_nodelinks, &$migrations){
 	  	$new_body = $body;
 
@@ -198,6 +204,7 @@ class UGUpdate6Migration extends DrupalNode6Migration {
 
 	// insert Image Attachments into body field
 	public function replaceImgAttach(&$body, &$image_src_prefix, $source_table, $source_nid){
+	  	$new_body = $body;
 
 	    //retrieve image attach files from image_attach table
 	    $image_attach_query = Database::getConnection('default','legacy_d6')
@@ -245,59 +252,132 @@ class UGUpdate6Migration extends DrupalNode6Migration {
 	}
 
 
-  //replace Image Assist tags with regular HTML img tags
-  public function replaceImgAssist(&$body, &$image_src_prefix){
-  	$pattern_desc = '/(?<=desc=)([\d\s\w\.\?\,]+?)(?=\|)/';
-  	$pattern_img = '/(?<=_)([\d\s\w\.\?\,]+?)(?=_)/';
-  	$new_body = $body;
+	//replace Image Assist tags with regular HTML img tags
+	public function replaceImgAssist(&$body, &$image_src_prefix){
+	  	$pattern_desc = '/(?<=desc=)([\d\s\w\.\?\,]+?)(?=\|)/';
+	  	$pattern_img = '/(?<=_)([\d\s\w\.\?\,]+?)(?=_)/';
+	  	$new_body = $body;
 
-  	//retrieve list of img_assist_tag nids in body field
-	$pattern = '/\[img_assist\|nid=(\d*).+?]/';
-	preg_match_all($pattern, $new_body, $matches);
-	$image_ids = array_pop($matches);
-	$images = array();
+	  	//retrieve list of img_assist_tag nids in body field
+		$pattern = '/\[img_assist\|nid=(\d*).+?]/';
+		preg_match_all($pattern, $new_body, $matches);
+		$image_ids = array_pop($matches);
+		$images = array();
 
-	foreach($image_ids as $id){
+		foreach($image_ids as $id){
 
-		//retrieve source file ID for image assist
-		$source_query = Database::getConnection('default','legacy_d6')
-			->select('files','f')
-			->fields('f', array('fid','filename','filepath'));
-		$source_query->innerJoin('image','i','f.fid=i.fid');
-		$source_query->condition('f.filename','_original','LIKE');
-		$source_query->innerJoin('node','n','n.nid=i.nid');
-		$source_query->condition('n.nid',$id,'=');
-		$source_results = $source_query->execute()->fetchObject();
+			//retrieve source file ID for image assist
+			$source_query = Database::getConnection('default','legacy_d6')
+				->select('files','f')
+				->fields('f', array('fid','filename','filepath'));
+			$source_query->innerJoin('image','i','f.fid=i.fid');
+			$source_query->condition('f.filename','_original','LIKE');
+			$source_query->innerJoin('node','n','n.nid=i.nid');
+			$source_query->condition('n.nid',$id,'=');
+			$source_results = $source_query->execute()->fetchObject();
 
-		//retrieve destination file ID for image assist
-		$dest_query = Database::getConnection('default','default')
-			->select('file_managed','f')
-			->fields('f', array('fid','uri'));
-		$dest_query->innerJoin('migrate_map_ugfile6','mm','mm.destid1=f.fid');
-		$dest_query->condition('mm.sourceid1',$source_results->fid,"=");
-		$dest_results = $dest_query->execute()->fetchObject();
+			//retrieve destination file ID for image assist
+			$dest_query = Database::getConnection('default','default')
+				->select('file_managed','f')
+				->fields('f', array('fid','uri'));
+			$dest_query->innerJoin('migrate_map_ugfile6','mm','mm.destid1=f.fid');
+			$dest_query->condition('mm.sourceid1',$source_results->fid,"=");
+			$dest_results = $dest_query->execute()->fetchObject();
 
-		// Find img_assist tag in body field
-		$pattern = '/\[img_assist\|(nid=' . $id . ')(.+?)]/';
-		preg_match($pattern, $new_body, $matches);
-		$m = array_shift($matches);
+			// Find img_assist tag in body field
+			$pattern = '/\[img_assist\|(nid=' . $id . ')(.+?)]/';
+			preg_match($pattern, $new_body, $matches);
+			$m = array_shift($matches);
 
-		// Replace img_assist tag with img tag
-		if(strpos($m,'[img_assist') !== false){
-			$image_src = $image_src_prefix . "/" . conf_path() . "/files/" . file_uri_target($dest_results->uri);
-			preg_match($pattern_desc, $m, $desc_match);
-			$desc = array_shift($desc_match);
-			$replacement = '<figure class="thumbnail"><img alt="' . $desc .'" class="img-responsive" src="'. $image_src .'" /></figure>';
-	  		$new_body = preg_replace($pattern, $replacement, $new_body);
+			// Replace img_assist tag with img tag
+			if(strpos($m,'[img_assist') !== false){
+				$image_src = $image_src_prefix . "/" . conf_path() . "/files/" . file_uri_target($dest_results->uri);
+				preg_match($pattern_desc, $m, $desc_match);
+				$desc = array_shift($desc_match);
+				$replacement = '<figure class="thumbnail"><img alt="' . $desc .'" class="img-responsive" src="'. $image_src .'" /></figure>';
+		  		$new_body = preg_replace($pattern, $replacement, $new_body);
+		  	}
+
+		}
+
+	  	if($new_body){
+		  	return $new_body;
 	  	}
-
+	  	return $body;
 	}
 
-  	if($new_body){
-	  	return $new_body;
-  	}
-  	return $body;
-  }
+
+	public function insertUnmappableFields(&$body, &$field_inserts, &$nid){
+		$new_body = $body;
+		$top_section = '';
+		$bottom_section = '';
+
+		if($new_body != ''){
+			$new_body = $field_inserts['before_target'] . $new_body;
+			$new_body .= $field_inserts['after_target'];
+		}
+
+		//loop through field groups
+		foreach($field_inserts['field_groups'] as $field_group){
+			$content_count = 0;
+			$field_group_insert = '';
+
+			foreach($field_group['fields'] as $field_name => $field_info){
+
+				//retrieve value for each field
+				$field_query = Database::getConnection('default','legacy_d6')
+					->select($field_info['db_table'],'f')
+					->fields('f',$field_info['db_field_value'])
+					->condition($field_info['db_field_entity_id'],$nid,'LIKE')
+					->execute()
+					->fetchObject();
+				$field_value = $field_query->{$field_info['db_field_value'][0]};
+
+				// if field value exists, add to 
+				if(isset($field_value)){
+					if($field_value != ''){
+						$content_count++;
+
+						if($field_info['content_before'] != ''){
+							$field_group_insert .= $field_info['content_before'];
+						}
+						$field_group_insert .= $field_value;
+
+						if($field_info['content_after'] != ''){
+							$field_group_insert .= $field_info['content_after'];
+						}
+					}
+				}
+			}
+
+			if($content_count > 0){
+
+				$field_group_insert = $field_group['content_before'] . $field_group_insert;
+				$field_group_insert .= $field_group['content_after'];
+
+				if($field_group['placement'] == 'top'){
+					$top_section .= $field_group_insert;
+				}else{
+					$bottom_section .= $field_group_insert;
+				}
+			}
+		}
+
+		//add top section to top of body
+		if($top_section != ''){
+			$new_body = $top_section . $new_body;
+		}
+
+		//add bottom section to bottom of body
+		if($bottom_section != ''){
+			$new_body .= $bottom_section;
+		}
+
+	  	if(isset($new_body)){
+		  	return $new_body;
+	  	}
+	  	return $body;
+	}
 }
 
 class UGUpdatePage6Migration extends UGUpdate6Migration {
@@ -319,6 +399,7 @@ class UGUpdatePage6Migration extends UGUpdate6Migration {
 			'source_page_body' => 'body',
 			'source_page_summary' => 'body:summary',
 			'source_page_format' => 'body:format',
+			'source_page_insert_fields' => NULL,
 		);
 
 		//Override default values with arguments if they exist
@@ -342,6 +423,7 @@ class UGUpdatePage6Migration extends UGUpdate6Migration {
 	    $this->addFieldMapping('nid', 'nid')
 			->sourceMigration('UGPage6');
 		$this->arguments['update_map_table'] = 'migrate_map_ugpage6';
+    	$this->arguments['update_insert_fields'] = $page_arguments['source_page_insert_fields'];
 
 	    // Update body field
 		$this->arguments['update_source_body'] = $page_arguments['source_page_body'];
@@ -381,6 +463,7 @@ class UGUpdateNews6Migration extends UGUpdate6Migration {
 			'source_news_body' => 'body',
 			'source_news_summary' => 'body:summary',
 			'source_news_format' => 'body:format',
+			'source_news_insert_fields' => NULL,
 		);
 
 		//Override default values with arguments if they exist
@@ -404,6 +487,7 @@ class UGUpdateNews6Migration extends UGUpdate6Migration {
 	    $this->addFieldMapping('nid', 'nid')
 			->sourceMigration('UGNews6');
 		$this->arguments['update_map_table'] = 'migrate_map_ugnews6';
+    	$this->arguments['update_insert_fields'] = $news_arguments['source_news_insert_fields'];
 
 	    // Update body field
 		$this->arguments['update_source_body'] = $news_arguments['source_news_body'];
@@ -440,6 +524,7 @@ class UGUpdateEvent6Migration extends UGUpdate6Migration {
 			'source_event_body' => 'body',
 			'source_event_summary' => 'body:summary',
 			'source_event_format' => 'body:format',
+			'source_event_insert_fields' => NULL,
 		);
 
 		//Override default values with arguments if they exist
@@ -463,6 +548,7 @@ class UGUpdateEvent6Migration extends UGUpdate6Migration {
 	    $this->addFieldMapping('nid', 'nid')
 			->sourceMigration('UGEvent6');
 		$this->arguments['update_map_table'] = 'migrate_map_ugevent6';
+    	$this->arguments['update_insert_fields'] = $event_arguments['source_event_insert_fields'];
 
 	    // Update body field
 		$this->arguments['update_source_body'] = $event_arguments['source_event_body'];
@@ -499,6 +585,7 @@ class UGUpdateFAQ6Migration extends UGUpdate6Migration {
 		$faq_arguments = array(
 			'source_faq_answer' => 'body',
 			'source_faq_format' => 'body:format',
+			'source_faq_insert_fields' => NULL,
 		);
 
 		//Override default values with arguments if they exist
@@ -522,6 +609,7 @@ class UGUpdateFAQ6Migration extends UGUpdate6Migration {
 	    $this->addFieldMapping('nid', 'nid')
 			->sourceMigration('UGFAQ6');
 		$this->arguments['update_map_table'] = 'migrate_map_ugfaq6';
+    	$this->arguments['update_insert_fields'] = $faq_arguments['source_faq_insert_fields'];
 
 	    // Update field_faq_answer field
 		$this->arguments['update_source_body'] = $faq_arguments['source_faq_answer'];
@@ -561,7 +649,7 @@ class UGUpdateProfile6Migration extends UGUpdate6Migration {
 		    'source_profile_lastname'  => 'field_profile_lastname',
 			'source_profile_summary'   => 'field_profile_summary',
 			'source_profile_format'    => 'field_profile_summary:format',
-		    //'source_profile_insert_fields' => NULL,
+		    'source_profile_insert_fields' => NULL,
 		);
 
 		//Override default values with arguments if they exist
@@ -585,6 +673,7 @@ class UGUpdateProfile6Migration extends UGUpdate6Migration {
 	    $this->addFieldMapping('nid', 'nid')
 			->sourceMigration('UGProfile6');
 		$this->arguments['update_map_table'] = 'migrate_map_ugprofile6';
+    	$this->arguments['update_insert_fields'] = $profile_arguments['source_profile_insert_fields'];
 
 		/* Profile Title */
 		$this->addFieldMapping('field_profile_title', $profile_arguments['source_profile_title']);

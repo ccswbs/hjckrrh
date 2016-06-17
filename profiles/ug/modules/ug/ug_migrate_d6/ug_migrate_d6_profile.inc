@@ -62,7 +62,7 @@ class UGProfile6Migration extends UGDrupalNode6Migration {
 		  'source_tags_vocabulary'   				=> 'tags',
 	 	  'source_tags_default_value'				=> '',
 		  'source_profile_image_src_prefix' 		=> '',
-		  // 'source_profile_insert_fields' 			=> NULL,
+		  'source_profile_insert_fields' 			=> NULL,
 		);
 
 		//Override default values with arguments if they exist
@@ -77,6 +77,7 @@ class UGProfile6Migration extends UGDrupalNode6Migration {
 		/* INSERT fields into Body variables */
 		$this->arguments['update_source_body'] = $profile_arguments['source_profile_summary'];
 		$this->arguments['update_map_table'] = 'migrate_map_ugprofile6';
+    	$this->arguments['update_insert_fields'] = $profile_arguments['source_profile_insert_fields'];
 		$this->arguments['update_image_src_prefix'] = $profile_arguments['source_profile_image_src_prefix'];
 
 		/* Profile First and Last Name */
