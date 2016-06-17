@@ -291,8 +291,16 @@ class UGUpdatePage7Migration extends UGUpdate7Migration {
 		$this->arguments['update_source_body'] = $page_arguments['source_page_body'];
 	    $this->addFieldMapping('field_page_body', $page_arguments['source_page_body']);
 	    $this->addFieldMapping('field_page_body:summary', $page_arguments['source_page_summary']);
-	    $this->addFieldMapping( 'field_page_body:format', $page_arguments['source_page_format'])
-		    ->defaultValue('full_html');
+
+		// Page Body Format
+		if($page_arguments['source_page_body'] == 'body'){
+		    $this->addFieldMapping( 'field_page_body:format', $page_arguments['source_page_format'])
+			    ->defaultValue('full_html');
+		}else{
+		    $this->addFieldMapping( 'field_page_body:format', $page_arguments['source_page_format'])
+			    ->callbacks(array($this, 'mapFormat'))
+			    ->defaultValue('full_html');
+		}
     }
 }
 
@@ -347,8 +355,16 @@ class UGUpdateNews7Migration extends UGUpdate7Migration {
 		$this->arguments['update_source_body'] = $news_arguments['source_news_body'];
 	    $this->addFieldMapping('field_news_body', $news_arguments['source_news_body']);
 	    $this->addFieldMapping('field_news_body:summary', $news_arguments['source_news_summary']);
-	    $this->addFieldMapping( 'field_news_body:format', $news_arguments['source_news_format'])
-		    ->defaultValue('full_html');
+
+		// News Body Format
+		if($news_arguments['source_news_body'] == 'body'){
+		    $this->addFieldMapping( 'field_news_body:format', $news_arguments['source_news_format'])
+			    ->defaultValue('full_html');
+		}else{
+		    $this->addFieldMapping( 'field_news_body:format', $news_arguments['source_news_format'])
+			    ->callbacks(array($this, 'mapFormat'))
+			    ->defaultValue('full_html');
+		}
     }
 }
 
@@ -400,8 +416,16 @@ class UGUpdateEvent7Migration extends UGUpdate7Migration {
 		$this->arguments['update_source_body'] = $event_arguments['source_event_body'];
 	    $this->addFieldMapping('field_event_body', $event_arguments['source_event_body']);
 	    $this->addFieldMapping('field_event_body:summary', $event_arguments['source_event_summary']);
-	    $this->addFieldMapping( 'field_event_body:format', $event_arguments['source_event_format'])
-		    ->defaultValue('full_html');
+
+		// Event Body Format
+		if($event_arguments['source_event_body'] == 'body'){
+		    $this->addFieldMapping( 'field_event_body:format', $event_arguments['source_event_format'])
+			    ->defaultValue('full_html');
+		}else{
+		    $this->addFieldMapping( 'field_event_body:format', $event_arguments['source_event_format'])
+			    ->callbacks(array($this, 'mapFormat'))
+			    ->defaultValue('full_html');
+		}
     }
 }
 
@@ -452,9 +476,16 @@ class UGUpdateFAQ7Migration extends UGUpdate7Migration {
     	$this->arguments['update_insert_fields'] = $faq_arguments['source_faq_insert_fields'];
 		$this->arguments['update_source_body'] = $faq_arguments['source_faq_answer'];
 	    $this->addFieldMapping('field_faq_answer', $faq_arguments['source_faq_answer']);
-	    $this->addFieldMapping( 'field_faq_answer:format', $faq_arguments['source_faq_format'])
-		    ->callbacks(array($this, 'mapFormat'))
-		    ->defaultValue('full_html');
+
+		// FAQ Answer Format
+		if($faq_arguments['source_faq_answer'] == 'body'){
+		    $this->addFieldMapping( 'field_faq_answer:format', $faq_arguments['source_faq_format'])
+			    ->defaultValue('full_html');
+		}else{
+		    $this->addFieldMapping( 'field_faq_answer:format', $faq_arguments['source_faq_format'])
+			    ->callbacks(array($this, 'mapFormat'))
+			    ->defaultValue('full_html');
+		}
     }
 }
 
@@ -508,8 +539,16 @@ class UGUpdateFeaturedItem7Migration extends UGUpdate7Migration {
 		$this->arguments['update_source_body'] = $featureditem_arguments['source_featureditem_body'];
 	    $this->addFieldMapping('field_feature_text', $featureditem_arguments['source_featureditem_body']);
 	    $this->addFieldMapping('field_feature_text:summary', $featureditem_arguments['source_featureditem_summary']);
-	    $this->addFieldMapping( 'field_feature_text:format', $featureditem_arguments['source_featureditem_format'])
-		    ->defaultValue('full_html');
+
+		// Featured Item Body Format
+		if($featureditem_arguments['source_featureditem_body'] == 'body'){
+		    $this->addFieldMapping( 'field_feature_text:format', $featureditem_arguments['source_featureditem_format'])
+			    ->defaultValue('full_html');
+		}else{
+		    $this->addFieldMapping( 'field_feature_text:format', $featureditem_arguments['source_featureditem_format'])
+			    ->callbacks(array($this, 'mapFormat'))
+			    ->defaultValue('full_html');
+		}
     }
 
 }
@@ -548,6 +587,15 @@ class UGUpdateProfile7Migration extends UGUpdate7Migration {
 		    }
 		}
 
+		//Override default values with arguments if they exist
+		foreach ($update_arguments as $key => $value) {
+		    if(isset($this->arguments[$key])){
+		    	if($this->arguments[$key]!=''){
+			    	$update_arguments[$key] = $this->arguments[$key];
+			    }
+		    }
+		}
+
 	    $this->addFieldMapping('nid', 'nid')
 			->sourceMigration('UGProfile7');
 		$this->arguments['update_map_table'] = 'migrate_map_ugprofile7';
@@ -563,9 +611,16 @@ class UGUpdateProfile7Migration extends UGUpdate7Migration {
     	$this->arguments['update_insert_fields'] = $profile_arguments['source_profile_insert_fields'];
 		$this->arguments['update_source_body'] = $profile_arguments['source_profile_summary'];
 		$this->addFieldMapping('field_profile_summary', $profile_arguments['source_profile_summary']);
-		$this->addFieldMapping('field_profile_summary:format', $profile_arguments['source_profile_format'])
-		    ->callbacks(array($this, 'mapFormat'))
-		    ->defaultValue('full_html');
+
+		// Profile Summary Format
+		if($profile_arguments['source_profile_summary'] == 'body'){
+			$this->addFieldMapping('field_profile_summary:format', $profile_arguments['source_profile_format'])
+			    ->defaultValue('full_html');
+		}else{
+			$this->addFieldMapping('field_profile_summary:format', $profile_arguments['source_profile_format'])
+			    ->callbacks(array($this, 'mapFormat'))
+			    ->defaultValue('full_html');
+		}
 	}
 }
 

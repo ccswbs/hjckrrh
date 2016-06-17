@@ -354,7 +354,8 @@ class UGUpdatePage6Migration extends UGUpdate6Migration {
 			    ->defaultValue('full_html');
 		}else{
 		    $this->addFieldMapping( 'field_page_body:format', $page_arguments['source_page_format'])
-			    ->callbacks(array($this, 'mapFormat'));
+			    ->callbacks(array($this, 'mapFormat'))
+			    ->defaultValue('full_html');
 		}
     }
 }
@@ -415,7 +416,8 @@ class UGUpdateNews6Migration extends UGUpdate6Migration {
 			    ->defaultValue('full_html');
 		}else{
 		    $this->addFieldMapping( 'field_news_body:format', $news_arguments['source_news_format'])
-			    ->callbacks(array($this, 'mapFormat'));
+			    ->callbacks(array($this, 'mapFormat'))
+			    ->defaultValue('full_html');
 		}
     }
 }
@@ -473,7 +475,8 @@ class UGUpdateEvent6Migration extends UGUpdate6Migration {
 			    ->defaultValue('full_html');
 		}else{
 		    $this->addFieldMapping( 'field_event_body:format', $event_arguments['source_event_format'])
-			    ->callbacks(array($this, 'mapFormat'));
+			    ->callbacks(array($this, 'mapFormat'))
+			    ->defaultValue('full_html');
 		}
     }
 }
@@ -530,7 +533,8 @@ class UGUpdateFAQ6Migration extends UGUpdate6Migration {
 			    ->defaultValue('full_html');
 		}else{
 		    $this->addFieldMapping( 'field_faq_answer:format', $faq_arguments['source_faq_format'])
-			    ->callbacks(array($this, 'mapFormat'));
+			    ->callbacks(array($this, 'mapFormat'))
+			    ->defaultValue('full_html');
 		}
     }
 }
@@ -599,7 +603,8 @@ class UGUpdateProfile6Migration extends UGUpdate6Migration {
 			    ->defaultValue('full_html');
 		}else{
 			$this->addFieldMapping('field_profile_summary:format', $profile_arguments['source_profile_format'])
-			    ->callbacks(array($this, 'mapFormat'));
+			    ->callbacks(array($this, 'mapFormat'))
+			    ->defaultValue('full_html');
 		}
     }
 }

@@ -124,7 +124,8 @@ class UGProfile6Migration extends UGDrupalNode6Migration {
 			    ->defaultValue('full_html');
 		}else{
 			$this->addFieldMapping('field_profile_summary:format', $profile_arguments['source_profile_format'])
-			    ->callbacks(array($this, 'mapFormat'));
+			    ->callbacks(array($this, 'mapFormat'))
+			    ->defaultValue('full_html');
 		}
 
 		/* Profile Category */

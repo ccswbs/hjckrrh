@@ -182,7 +182,8 @@ class UGFeaturedItem6Migration extends UGDrupalNode6Migration {
 			    ->defaultValue('full_html');
 		}else{
 		    $this->addFieldMapping( 'field_feature_text:format', $featureditem_arguments['source_featureditem_format'])
-			    ->callbacks(array($this, 'mapFormat'));
+			    ->callbacks(array($this, 'mapFormat'))
+			    ->defaultValue('full_html');
 		}
 
 		/* Featured Item Category */
@@ -275,7 +276,8 @@ class UGEvent6Migration extends UGDrupalNode6Migration {
 			    ->defaultValue('full_html');
 		}else{
 		    $this->addFieldMapping( 'field_event_body:format', $event_arguments['source_event_format'])
-			    ->callbacks(array($this, 'mapFormat'));
+			    ->callbacks(array($this, 'mapFormat'))
+			    ->defaultValue('full_html');
 		}
 
 		/* Event Category */
@@ -471,7 +473,8 @@ class UGNews6Migration extends UGDrupalNode6Migration {
 			    ->defaultValue('full_html');
 		}else{
 		    $this->addFieldMapping( 'field_news_body:format', $news_arguments['source_news_format'])
-			    ->callbacks(array($this, 'mapFormat'));
+			    ->callbacks(array($this, 'mapFormat'))
+			    ->defaultValue('full_html');
 		}
 
 		/* News Category */
@@ -576,7 +579,8 @@ class UGPage6Migration extends UGDrupalNode6Migration {
 			    ->defaultValue('full_html');
 		}else{
 		    $this->addFieldMapping( 'field_page_body:format', $page_arguments['source_page_format'])
-			    ->callbacks(array($this, 'mapFormat'));
+			    ->callbacks(array($this, 'mapFormat'))
+			    ->defaultValue('full_html');
 		}
 
 		/* Page Category */
@@ -655,7 +659,8 @@ class UGFAQ6Migration extends UGDrupalNode6Migration {
 			    ->defaultValue('full_html');
 		}else{
 		    $this->addFieldMapping( 'field_faq_answer:format', $faq_arguments['source_faq_format'])
-			    ->callbacks(array($this, 'mapFormat'));
+			    ->callbacks(array($this, 'mapFormat'))
+			    ->defaultValue('full_html');
 		}
 
 		/* FAQ Category */
