@@ -69,13 +69,25 @@ class UGUpdate6Migration extends DrupalNode6Migration {
 	    	$image_src_prefix = $this->arguments['update_hardlinks_destination'];
     	}
 
-	    // update img assist tags with html img tags
-	    if(strpos($row->{$this->arguments['update_source_body']},'[img_assist') !== false){
-	    	$row->{$this->arguments['update_source_body']} = $this->replaceImgAssist($row->{$this->arguments['update_source_body']}, $image_src_prefix);
+	    // IMAGE ASSIST - update img assist tags with html img tags
+    	$queryImageAssist = Database::getConnection('default','legacy_d6')
+    		->schema()
+    		->tableExists('img_assist_map');
+
+    	if($queryImageAssist == TRUE){
+		    if(strpos($row->{$this->arguments['update_source_body']},'[img_assist') !== false){
+		    	$row->{$this->arguments['update_source_body']} = $this->replaceImgAssist($row->{$this->arguments['update_source_body']}, $image_src_prefix);
+		    }
 	    }
 
-    	// insert img attach files into body field
-    	$row->{$this->arguments['update_source_body']} = $this->replaceImgAttach($row->{$this->arguments['update_source_body']}, $image_src_prefix, $this->arguments['update_map_table'], $row->nid);
+    	// IMAGE ATTACH - insert img attach files into body field
+    	$queryImageAttach = Database::getConnection('default','legacy_d6')
+    		->schema()
+    		->tableExists('image_attach');
+
+    	if($queryImageAttach == TRUE){
+	    	$row->{$this->arguments['update_source_body']} = $this->replaceImgAttach($row->{$this->arguments['update_source_body']}, $image_src_prefix, $this->arguments['update_map_table'], $row->nid);
+    	}
 	}
 
 
