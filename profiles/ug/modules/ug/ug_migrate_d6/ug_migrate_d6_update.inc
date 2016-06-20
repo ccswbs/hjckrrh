@@ -644,11 +644,11 @@ class UGUpdateProfile6Migration extends UGUpdate6Migration {
 
 	    /* DEFAULT arguments */
 		$profile_arguments = array(
-		    'source_profile_title'     => 'field_profile_title',
-		    'source_profile_name'      => 'field_profile_name',
-		    'source_profile_lastname'  => 'field_profile_lastname',
-			'source_profile_summary'   => 'field_profile_summary',
-			'source_profile_format'    => 'field_profile_summary:format',
+		    'source_profile_title'         => 'field_profile_title',
+		    'source_profile_name'          => 'field_profile_name',
+		    'source_profile_lastname'      => 'field_profile_lastname',
+			'source_profile_summary'       => 'field_profile_summary',
+			'source_profile_format'        => 'field_profile_summary:format',
 		    'source_profile_insert_fields' => NULL,
 		);
 

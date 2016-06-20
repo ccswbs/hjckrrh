@@ -99,13 +99,13 @@ $destination_sitestub = '';
 
   // Usage: define site_stub in specific site config file & set nodelinks to TRUE
   $update_arguments = array(
-    'update_nodelinks' => FALSE,
-    'update_nodelinks_urls' => $update_nodelinks_urls,
-    'update_hardlinks_source' => $update_hardlinks_source,
+    'update_nodelinks'             => FALSE,
+    'update_nodelinks_urls'        => $update_nodelinks_urls,
+    'update_hardlinks_source'      => $update_hardlinks_source,
     'update_hardlinks_destination' => $destination_sitestub,
-    'update_prefix_inline' => FALSE,
-    'update_prefix_source' => $update_prefix_source,
-    'update_prefix_destination' => '',
+    'update_prefix_inline'         => FALSE,
+    'update_prefix_source'         => $update_prefix_source,
+    'update_prefix_destination'    => '',
   );
 
 /**************************
@@ -123,8 +123,8 @@ $destination_sitestub = '';
   );
 
   $user_arguments = array(
-    'role_mappings' => $role_mappings,
-    'picture_source' => '',
+    'role_mappings'       => $role_mappings,
+    'picture_source'      => '',
     'picture_destination' => 'public://',
   );
 
@@ -133,7 +133,7 @@ $destination_sitestub = '';
 **************************/
 
   $file_arguments = array(
-    'source_directory' => 'public://',
+    'source_directory'      => 'public://',
     'destination_directory' => 'public://',
   );
 

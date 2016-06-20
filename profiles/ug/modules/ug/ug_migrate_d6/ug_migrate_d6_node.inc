@@ -224,17 +224,17 @@ class UGFeaturedItem6Migration extends UGDrupalNode6Migration {
 
 		/* DEFAULT arguments */
 		$featureditem_arguments = array(
-			'source_featureditem_body' 					 => 'body',
-			'source_featureditem_summary' 				 => 'body:summary',
-			'source_featureditem_format'				 => 'body:format',
-			'source_featureditem_link' 					 => '',
-			'source_featureditem_image' 				 => 'fid',
-			'source_featureditem_category' 				 => '',
+			'source_featureditem_body'                   => 'body',
+			'source_featureditem_summary'                => 'body:summary',
+			'source_featureditem_format'                 => 'body:format',
+			'source_featureditem_link'                   => '',
+			'source_featureditem_image'                  => 'fid',
+			'source_featureditem_category' 	             => '',
 			'source_featureditem_category_default_value' => '',
-			'source_featureditem_keyword' 				 => '',
+			'source_featureditem_keyword'                => '',
 			'source_featureditem_keyword_default_value'  => '',
-			'source_featureditem_image_src_prefix' 		 => '',
-			'source_featureditem_insert_fields'			 => NULL,
+			'source_featureditem_image_src_prefix'       => '',
+			'source_featureditem_insert_fields'	         => NULL,
 		);
 
 		//Override default values with arguments if they exist
@@ -315,22 +315,22 @@ class UGEvent6Migration extends UGDrupalNode6Migration {
 
 		/* DEFAULT arguments */
 		$event_arguments = array(
-			'source_event_body' 				  => 'body',
-			'source_event_summary' 				  => 'body:summary',
-			'source_event_format' 				  => 'body:format',
-			'source_event_category'	 			  => '',
+			'source_event_body'                   => 'body',
+			'source_event_summary'                => 'body:summary',
+			'source_event_format'                 => 'body:format',
+			'source_event_category'	              => '',
 			'source_event_category_default_value' => '',
-			'source_event_keyword' 				  => '',
+			'source_event_keyword'                => '',
 			'source_event_keyword_default_value'  => '',
-			'source_event_date' 				  => '',
-			'source_event_location' 			  => '',
-			'source_event_multipart' 			  => '',
-			'source_event_image' 				  => 'fid',
-			'source_event_caption' 				  => '',
-			'source_event_attachments' 			  => '',
-			'source_event_link'				      => '',
-			'source_event_image_src_prefix' 	  => '',
-			'source_event_insert_fields'		  => NULL,
+			'source_event_date'                   => '',
+			'source_event_location'               => '',
+			'source_event_multipart'              => '',
+			'source_event_image'                  => 'fid',
+			'source_event_caption'                => '',
+			'source_event_attachments'            => '',
+			'source_event_link'                   => '',
+			'source_event_image_src_prefix'       => '',
+			'source_event_insert_fields'          => NULL,
 		);
 
 		//Override default values with arguments if they exist
@@ -516,20 +516,20 @@ class UGNews6Migration extends UGDrupalNode6Migration {
 
 		/* DEFAULT arguments */
 		$news_arguments = array(
-			'source_news_body' 				 	 => 'body',
-			'source_news_summary' 				 => 'body:summary',
-			'source_news_format' 				 => 'body:format',
-			'source_news_category' 				 => '',
+			'source_news_body'                   => 'body',
+			'source_news_summary'                => 'body:summary',
+			'source_news_format'                 => 'body:format',
+			'source_news_category'               => '',
 			'source_news_category_default_value' => '',
-			'source_news_keyword' 				 => '',
+			'source_news_keyword'                => '',
 			'source_news_keyword_default_value'  => '',
-			'source_news_writer' 				 => '',
-			'source_news_link' 				 	 => '',
-			'source_news_image' 				 => 'fid',
-			'source_news_caption' 				 => '',
-			'source_news_attachment' 			 => '',
-			'source_news_image_src_prefix' 		 => '',
-			'source_news_insert_fields'		  	 => NULL,
+			'source_news_writer'                 => '',
+			'source_news_link'                   => '',
+			'source_news_image'                  => 'fid',
+			'source_news_caption'                => '',
+			'source_news_attachment'             => '',
+			'source_news_image_src_prefix'       => '',
+			'source_news_insert_fields'          => NULL,
 		);
 
 		//Override default values with arguments if they exist
@@ -628,16 +628,16 @@ class UGPage6Migration extends UGDrupalNode6Migration {
 
 	    /* DEFAULT arguments */
 		$page_arguments = array(
-			'source_page_body' 				 	 => 'body',
-			'source_page_summary'				 => 'body:summary',
-			'source_page_format' 				 => 'body:format',
-			'source_page_category' 				 => '',
+			'source_page_body'                   => 'body',
+			'source_page_summary'                => 'body:summary',
+			'source_page_format'                 => 'body:format',
+			'source_page_category'               => '',
 			'source_page_category_default_value' => '',
-			'source_page_keyword'				 => '',
+			'source_page_keyword'                => '',
 			'source_page_keyword_default_value'  => '',
-			'source_page_attachments' 			 => '',
-			'source_page_image_src_prefix'		 => '',
-			'source_page_insert_fields'		  	 => NULL,
+			'source_page_attachments'            => '',
+			'source_page_image_src_prefix'       => '',
+			'source_page_insert_fields'          => NULL,
 		);
 
 		//Override default values with arguments if they exist
@@ -713,14 +713,14 @@ class UGFAQ6Migration extends UGDrupalNode6Migration {
 		
 		/* DEFAULT arguments */
 		$faq_arguments = array(
-			'source_faq_answer' 				=> 'body',
-			'source_faq_format' 				=> 'body:format',
-			'source_faq_category' 				=> '',
+			'source_faq_answer'                 => 'body',
+			'source_faq_format'                 => 'body:format',
+			'source_faq_category'               => '',
 			'source_faq_category_default_value' => '',
-			'source_faq_keyword' 				=> '',
+			'source_faq_keyword'                => '',
 			'source_faq_keyword_default_value'  => '',
-			'source_faq_image_src_prefix' 		=> '',
-			'source_faq_insert_fields'		  	=> NULL,
+			'source_faq_image_src_prefix'       => '',
+			'source_faq_insert_fields'          => NULL,
 		);
 
 		//Override default values with arguments if they exist
