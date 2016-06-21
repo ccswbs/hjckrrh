@@ -70,7 +70,7 @@ class UGUpdate6Migration extends DrupalNode6Migration {
     	}
 
 	    // IMAGE ASSIST - update img assist tags with html img tags
-    	$queryImageAssist = Database::getConnection('default','legacy_d6')
+    	$queryImageAssist = Database::getConnection('default',$this->sourceConnection)
     		->schema()
     		->tableExists('img_assist_map');
 
@@ -78,16 +78,22 @@ class UGUpdate6Migration extends DrupalNode6Migration {
 		    if(strpos($row->{$this->arguments['update_source_body']},'[img_assist') !== false){
 		    	$row->{$this->arguments['update_source_body']} = $this->replaceImgAssist($row->{$this->arguments['update_source_body']}, $image_src_prefix);
 		    }
+	    }else{
+	    	//reset exception object -- see https://www.drupal.org/node/1706810
+	    	Database::getConnection('default',$this->sourceConnection)->schema()->tableExists('node');
 	    }
 
     	// IMAGE ATTACH - insert img attach files into body field
-    	$queryImageAttach = Database::getConnection('default','legacy_d6')
+    	$queryImageAttach = Database::getConnection('default',$this->sourceConnection)
     		->schema()
     		->tableExists('image_attach');
 
     	if($queryImageAttach == TRUE){
 	    	$row->{$this->arguments['update_source_body']} = $this->replaceImgAttach($row->{$this->arguments['update_source_body']}, $image_src_prefix, $this->arguments['update_map_table'], $row->nid);
-    	}
+    	}else{
+    		//reset exception object -- see https://www.drupal.org/node/1706810
+	    	Database::getConnection('default',$this->sourceConnection)->schema()->tableExists('node');
+	    }
 	}
 
 

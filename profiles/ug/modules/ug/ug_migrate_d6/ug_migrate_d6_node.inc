@@ -37,7 +37,10 @@ class UGDrupalNode6Migration extends DrupalNode6Migration {
 
     	if($queryImageAttach == TRUE){
 	    	$row->{$this->arguments['update_source_body']} = $this->replaceImgAttach($row->{$this->arguments['update_source_body']}, $image_src_prefix, $this->arguments['update_map_table'], $row->nid);
-    	}
+    	}else{
+	    	//reset exception object -- see https://www.drupal.org/node/1706810
+	    	Database::getConnection('default',$this->sourceConnection)->schema()->tableExists('node');
+	    }
 
 	    // IMAGE ASSIST - update img assist tags with html img tags
     	$queryImageAssist = Database::getConnection('default','legacy_d6')
@@ -48,6 +51,9 @@ class UGDrupalNode6Migration extends DrupalNode6Migration {
 		    if(strpos($row->{$this->arguments['update_source_body']},'[img_assist') !== false){
 		    	$row->{$this->arguments['update_source_body']} = $this->replaceImgAssist($row->{$this->arguments['update_source_body']}, $image_src_prefix);
 		    }
+	    }else{
+	    	//reset exception object -- see https://www.drupal.org/node/1706810
+	    	Database::getConnection('default',$this->sourceConnection)->schema()->tableExists('node');
 	    }
 	}
 
