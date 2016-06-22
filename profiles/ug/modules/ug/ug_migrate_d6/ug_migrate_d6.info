@@ -10,5 +10,7 @@ files[] = ug_migrate_d6_user.inc
 files[] = ug_migrate_d6_node.inc
 files[] = ug_migrate_d6_update.inc
 files[] = ug_migrate_d6_menu.inc
+files[] = ug_migrate_d6_profile.inc
+files[] = ug_migrate_d6_banner.inc
 files[] = ug_migrate_d6.migrate.inc
 files[] = ug_migrate_d6.module

@@ -1,20 +1,258 @@
 <?php 
 
+class UGDrupalNode6Migration extends DrupalNode6Migration {
+	public function __construct($arguments) {
+    	parent::__construct($arguments);
 
-class UGFeaturedItem6Migration extends DrupalNode6Migration {
+		$this->arguments['update_source_body'] = '';
+    	$this->arguments['update_map_table'] = '';
+    	$this->arguments['update_insert_fields'] = NULL;
+    	$this->arguments['update_image_src_prefix'] = NULL;
+    }
+
+  /**
+   * Implementation of Migration::prepareRow().
+   */
+
+	public function prepareRow($row) {
+	    if (parent::prepareRow($row) === FALSE) {
+	      return FALSE;
+	    }
+
+		//insert unmappable fields into body field
+		if(isset($this->arguments['update_insert_fields'])){
+		    $row->{$this->arguments['update_source_body']} = $this->insertUnmappableFields($row->{$this->arguments['update_source_body']}, $this->arguments['update_insert_fields'], $row->nid);
+		}
+
+	    // retrieve inline prefix of image
+		$image_src_prefix = '';
+    	if(isset($this->arguments['update_image_src_prefix'])){
+	    	$image_src_prefix = $this->arguments['update_image_src_prefix'];
+    	}
+
+    	// IMAGE ATTACH - insert img attach files into body field
+    	$queryImageAttach = Database::getConnection('default','legacy_d6')
+    		->schema()
+    		->tableExists('image_attach');
+
+    	if($queryImageAttach == TRUE){
+	    	$row->{$this->arguments['update_source_body']} = $this->replaceImgAttach($row->{$this->arguments['update_source_body']}, $image_src_prefix, $this->arguments['update_map_table'], $row->nid);
+    	}else{
+	    	//reset exception object -- see https://www.drupal.org/node/1706810
+	    	Database::getConnection('default',$this->sourceConnection)->schema()->tableExists('node');
+	    }
+
+	    // IMAGE ASSIST - update img assist tags with html img tags
+    	$queryImageAssist = Database::getConnection('default','legacy_d6')
+    		->schema()
+    		->tableExists('img_assist_map');
+
+    	if($queryImageAssist == TRUE){
+		    if(strpos($row->{$this->arguments['update_source_body']},'[img_assist') !== false){
+		    	$row->{$this->arguments['update_source_body']} = $this->replaceImgAssist($row->{$this->arguments['update_source_body']}, $image_src_prefix);
+		    }
+	    }else{
+	    	//reset exception object -- see https://www.drupal.org/node/1706810
+	    	Database::getConnection('default',$this->sourceConnection)->schema()->tableExists('node');
+	    }
+	}
+
+	// insert Image Attachments into body field
+	public function replaceImgAttach(&$body, &$image_src_prefix, $source_table, $source_nid){
+	  	$new_body = $body;
+
+	    //retrieve image attach files from image_attach table
+	    $image_attach_query = Database::getConnection('default','legacy_d6')
+	    	->select('image_attach','ia')
+	    	->fields('ia',array('iid'))
+	    	->condition('ia.nid', $source_nid, '=')
+	    	->orderBy('weight','ASC');
+
+		//retrieve image id and limit to _original size files
+	    $image_attach_query->innerJoin('image','i','i.nid=ia.iid');
+		$image_attach_query->condition('i.image_size','_original','LIKE');
+
+		//retrieve image filename and filepath
+		$image_attach_query->innerJoin('files','f','i.fid=f.fid');
+		$image_attach_query->fields('f', array('fid'));
+
+		//retrieve image description from node table
+		$image_attach_query->innerJoin('node','n','i.nid=n.nid');
+		$image_attach_query->fields('n', array('title'));
+	    $image_attach_results = $image_attach_query->execute()->fetchAll();
+
+	  	foreach($image_attach_results as $ia){
+			//retrieve destination file ID for image attach
+			$image_query = Database::getConnection('default','default')
+				->select('file_managed','f')
+				->fields('f', array('fid','uri'));
+			$image_query->innerJoin('migrate_map_ugfile6','mm','mm.destid1=f.fid');
+			$image_query->condition('mm.sourceid1', $ia->fid ,"=");
+			$image = $image_query->execute()->fetchObject();
+
+			// Insert img attach file at top of body field
+			$image_src = $image_src_prefix . "/" . conf_path() . "/files/" . file_uri_target($image->uri);
+			$desc = $ia->title;
+
+			$replacement = '<figure class="thumbnail"><img alt="' . $desc .'" class="img-responsive" src="'. $image_src .'" /></figure>';
+	  		$new_body = $replacement . $new_body;
+
+		}
+
+	  	if($new_body){
+		  	return $new_body;
+	  	}
+	  	return $body;
+
+	}
+
+	//replace Image Assist tags with regular HTML img tags
+	public function replaceImgAssist(&$body, &$image_src_prefix){
+	  	$pattern_desc = '/(?<=desc=)([\d\s\w\.\?\,]+?)(?=\|)/';
+	  	$pattern_img = '/(?<=_)([\d\s\w\.\?\,]+?)(?=_)/';
+	  	$new_body = $body;
+
+	  	//retrieve list of img_assist_tag nids in body field
+		$pattern = '/\[img_assist\|nid=(\d*).+?]/';
+		preg_match_all($pattern, $new_body, $matches);
+		$image_ids = array_pop($matches);
+		$images = array();
+
+		foreach($image_ids as $id){
+
+			//retrieve source file ID for image assist
+			$source_query = Database::getConnection('default','legacy_d6')
+				->select('files','f')
+				->fields('f', array('fid','filename','filepath'));
+			$source_query->innerJoin('image','i','f.fid=i.fid');
+			$source_query->condition('f.filename','_original','LIKE');
+			$source_query->innerJoin('node','n','n.nid=i.nid');
+			$source_query->condition('n.nid',$id,'=');
+			$source_results = $source_query->execute()->fetchObject();
+
+			//retrieve destination file ID for image assist
+			$dest_query = Database::getConnection('default','default')
+				->select('file_managed','f')
+				->fields('f', array('fid','uri'));
+			$dest_query->innerJoin('migrate_map_ugfile6','mm','mm.destid1=f.fid');
+			$dest_query->condition('mm.sourceid1',$source_results->fid,"=");
+			$dest_results = $dest_query->execute()->fetchObject();
+
+			// Find img_assist tag in body field
+			$pattern = '/\[img_assist\|(nid=' . $id . ')(.+?)]/';
+			preg_match($pattern, $new_body, $matches);
+			$m = array_shift($matches);
+
+			// Replace img_assist tag with img tag
+			if(strpos($m,'[img_assist') !== false){
+				$image_src = $image_src_prefix . "/" . conf_path() . "/files/" . file_uri_target($dest_results->uri);
+				preg_match($pattern_desc, $m, $desc_match);
+				$desc = array_shift($desc_match);
+				$replacement = '<figure class="thumbnail"><img alt="' . $desc .'" class="img-responsive" src="'. $image_src .'" /></figure>';
+		  		$new_body = preg_replace($pattern, $replacement, $new_body);
+		  	}
+
+		}
+
+	  	if($new_body){
+		  	return $new_body;
+	  	}
+	  	return $body;
+	}
+
+	public function insertUnmappableFields(&$body, &$field_inserts, &$nid){
+		$new_body = $body;
+		$top_section = '';
+		$bottom_section = '';
+
+		if($new_body != ''){
+			$new_body = $field_inserts['before_target'] . $new_body;
+			$new_body .= $field_inserts['after_target'];
+		}
+
+		//loop through field groups
+		foreach($field_inserts['field_groups'] as $field_group){
+			$content_count = 0;
+			$field_group_insert = '';
+
+			foreach($field_group['fields'] as $field_name => $field_info){
+
+				//retrieve value for each field
+				$field_query = Database::getConnection('default','legacy_d6')
+					->select($field_info['db_table'],'f')
+					->fields('f',$field_info['db_field_value'])
+					->condition($field_info['db_field_entity_id'],$nid,'LIKE')
+					->execute()
+					->fetchObject();
+				$field_value = $field_query->{$field_info['db_field_value'][0]};
+
+				// if field value exists, add to 
+				if(isset($field_value)){
+					if($field_value != ''){
+						$content_count++;
+
+						if($field_info['content_before'] != ''){
+							$field_group_insert .= $field_info['content_before'];
+						}
+						$field_group_insert .= $field_value;
+
+						if($field_info['content_after'] != ''){
+							$field_group_insert .= $field_info['content_after'];
+						}
+					}
+				}
+			}
+
+			if($content_count > 0){
+
+				$field_group_insert = $field_group['content_before'] . $field_group_insert;
+				$field_group_insert .= $field_group['content_after'];
+
+				if($field_group['placement'] == 'top'){
+					$top_section .= $field_group_insert;
+				}else{
+					$bottom_section .= $field_group_insert;
+				}
+			}
+		}
+
+		//add top section to top of body
+		if($top_section != ''){
+			$new_body = $top_section . $new_body;
+		}
+
+		//add bottom section to bottom of body
+		if($bottom_section != ''){
+			$new_body .= $bottom_section;
+		}
+
+	  	if(isset($new_body)){
+		  	return $new_body;
+	  	}
+	  	return $body;
+	}
+
+}
+
+
+class UGFeaturedItem6Migration extends UGDrupalNode6Migration {
 	public function __construct($arguments) {
     	parent::__construct($arguments);
 	    $this->destination = new MigrateDestinationNode('feature');
 
 		/* DEFAULT arguments */
 		$featureditem_arguments = array(
-			'source_featureditem_body' => 'body',
-			'source_featureditem_summary' => 'body:summary',
-			'source_featureditem_format' => 'body:format',
-			'source_featureditem_link' => '',
-			'source_featureditem_image' => 'fid',
-			'source_featureditem_category' => '',
-			'source_featureditem_keyword' => '',
+			'source_featureditem_body'                   => 'body',
+			'source_featureditem_summary'                => 'body:summary',
+			'source_featureditem_format'                 => 'body:format',
+			'source_featureditem_link'                   => '',
+			'source_featureditem_image'                  => 'fid',
+			'source_featureditem_category' 	             => '',
+			'source_featureditem_category_default_value' => '',
+			'source_featureditem_keyword'                => '',
+			'source_featureditem_keyword_default_value'  => '',
+			'source_featureditem_image_src_prefix'       => '',
+			'source_featureditem_insert_fields'	         => NULL,
 		);
 
 		//Override default values with arguments if they exist
@@ -26,21 +264,45 @@ class UGFeaturedItem6Migration extends DrupalNode6Migration {
 		    }
 		}
 
+		/* INSERT fields into Body variables */
+		$this->arguments['update_source_body'] = $featureditem_arguments['source_featureditem_body'];
+    	$this->arguments['update_image_src_prefix'] = $featureditem_arguments['source_featureditem_image_src_prefix'];
+    	$this->arguments['update_insert_fields'] = $featureditem_arguments['source_featureditem_insert_fields'];
+		$this->arguments['update_map_table'] = 'migrate_map_ugfeatureditem6';
+
 	    /* Featured Item Body */
 	    $this->addFieldMapping('field_feature_text', $featureditem_arguments['source_featureditem_body']);
 	    $this->addFieldMapping('field_feature_text:summary', $featureditem_arguments['source_featureditem_summary']);
-	    $this->addFieldMapping( 'field_feature_text:format', $featureditem_arguments['source_featureditem_format'])
-		    ->defaultValue('full_html');
+
+		// Featured Item Body Format
+		if($featureditem_arguments['source_featureditem_body'] == 'body'){
+		    $this->addFieldMapping( 'field_feature_text:format', $featureditem_arguments['source_featureditem_format'])
+			    ->defaultValue('full_html');
+		}else{
+		    $this->addFieldMapping( 'field_feature_text:format', $featureditem_arguments['source_featureditem_format'])
+			    ->callbacks(array($this, 'mapFormat'))
+			    ->defaultValue('full_html');
+		}
 
 		/* Featured Item Category */
-		$this->addFieldMapping('field_feature_category', $featureditem_arguments['source_featureditem_category'])
-			->sourceMigration('UGFeaturedItemCategory6');
+		if($featureditem_arguments['source_featureditem_category_default_value'] != ''){
+			$this->addFieldMapping('field_feature_category')
+				->defaultValue($featureditem_arguments['source_featureditem_category_default_value']);
+		}else{
+			$this->addFieldMapping('field_feature_category', $featureditem_arguments['source_featureditem_category'])
+				->sourceMigration('UGFeaturedItemCategory6');
+		}
 		$this->addFieldMapping('field_feature_category:source_type')
 			->defaultValue('tid');
 
 		/* Featured Item Keyword */
-		$this->addFieldMapping('field_tags', $featureditem_arguments['source_featureditem_keyword'])
-			->sourceMigration('UGTerm6');
+		if($featureditem_arguments['source_featureditem_keyword_default_value'] != ''){
+			$this->addFieldMapping('field_tags')
+				->defaultValue($featureditem_arguments['source_featureditem_keyword_default_value']);
+		}else{
+			$this->addFieldMapping('field_tags', $featureditem_arguments['source_featureditem_keyword'])
+				->sourceMigration('UGTerm6','UGFeaturedItemKeyword6');			
+		}
 		$this->addFieldMapping('field_tags:source_type')
 			->defaultValue('tid');
 
@@ -60,33 +322,10 @@ class UGFeaturedItem6Migration extends DrupalNode6Migration {
 		/* Featured Item Link */
 	    $this->addFieldMapping('field_feature_link', $featureditem_arguments['source_featureditem_link']);
 	}
-
-  /**
-   * Implementation of Migration::prepareRow().
-   */
-  public function prepareRow($row) {
-    if (parent::prepareRow($row) === FALSE) {
-      return FALSE;
-    }
-    // image query
-    $pattern = strval($row->nid) . '.%';
-    $image = Database::getConnection('default', 'default')
-      ->select('file_managed', 'f')
-      ->fields('f', array('fid'))
-      ->condition('filename', $pattern, 'LIKE')
-      ->execute()
-      ->fetchObject();
-
-    if ($image) {
-      $row->fid = array($image->fid);
-	  //drush_print_r($row);
-    }
-  }
-
 }
 
 
-class UGEvent6Migration extends DrupalNode6Migration {
+class UGEvent6Migration extends UGDrupalNode6Migration {
 	public function __construct($arguments) {
     	parent::__construct($arguments);
 
@@ -94,18 +333,22 @@ class UGEvent6Migration extends DrupalNode6Migration {
 
 		/* DEFAULT arguments */
 		$event_arguments = array(
-			'source_event_body' => 'body',
-			'source_event_summary' => 'body:summary',
-			'source_event_format' => 'body:format',
-			'source_event_category' => '',
-			'source_event_keyword' => '',
-			'source_event_date' => '',
-			'source_event_location' => '',
-			'source_event_multipart' => '',
-			'source_event_image' => 'fid',
-			'source_event_caption' => '',
-			'source_event_attachments' => '',
-			'source_event_link' => '',
+			'source_event_body'                   => 'body',
+			'source_event_summary'                => 'body:summary',
+			'source_event_format'                 => 'body:format',
+			'source_event_category'	              => '',
+			'source_event_category_default_value' => '',
+			'source_event_keyword'                => '',
+			'source_event_keyword_default_value'  => '',
+			'source_event_date'                   => '',
+			'source_event_location'               => '',
+			'source_event_multipart'              => '',
+			'source_event_image'                  => 'fid',
+			'source_event_caption'                => '',
+			'source_event_attachments'            => '',
+			'source_event_link'                   => '',
+			'source_event_image_src_prefix'       => '',
+			'source_event_insert_fields'          => NULL,
 		);
 
 		//Override default values with arguments if they exist
@@ -117,21 +360,45 @@ class UGEvent6Migration extends DrupalNode6Migration {
 		    }
 		}
 
+		/* INSERT fields into Body variables */
+		$this->arguments['update_source_body'] = $event_arguments['source_event_body'];
+		$this->arguments['update_image_src_prefix'] = $event_arguments['source_event_image_src_prefix'];
+    	$this->arguments['update_insert_fields'] = $event_arguments['source_event_insert_fields'];
+		$this->arguments['update_map_table'] = 'migrate_map_ugevent6';
+
 	    /* Event Body */
 	    $this->addFieldMapping('field_event_body', $event_arguments['source_event_body']);
 	    $this->addFieldMapping( 'field_event_body:summary', $event_arguments['source_event_summary']);
-	    $this->addFieldMapping( 'field_event_body:format', $event_arguments['source_event_format'])
-		    ->defaultValue('full_html');
+
+		// Event Body Format
+		if($event_arguments['source_event_body'] == 'body'){
+		    $this->addFieldMapping( 'field_event_body:format', $event_arguments['source_event_format'])
+			    ->defaultValue('full_html');
+		}else{
+		    $this->addFieldMapping( 'field_event_body:format', $event_arguments['source_event_format'])
+			    ->callbacks(array($this, 'mapFormat'))
+			    ->defaultValue('full_html');
+		}
 
 		/* Event Category */
-		$this->addFieldMapping('field_event_category', $event_arguments['source_event_category'])
-			->sourceMigration('UGEventCategory6');
+		if($event_arguments['source_event_category_default_value'] != ''){
+			$this->addFieldMapping('field_event_category')
+				->defaultValue($event_arguments['source_event_category_default_value']);
+		}else{
+			$this->addFieldMapping('field_event_category', $event_arguments['source_event_category'])
+				->sourceMigration('UGEventCategory6');
+		}
 		$this->addFieldMapping('field_event_category:source_type')
 			->defaultValue('tid');
 
 		/* Event Keyword */
-		$this->addFieldMapping('field_tags', $event_arguments['source_event_keyword'])
-			->sourceMigration('UGTerm6');
+		if($event_arguments['source_event_keyword_default_value'] != ''){
+			$this->addFieldMapping('field_tags')
+				->defaultValue($event_arguments['source_event_keyword_default_value']);
+		}else{
+			$this->addFieldMapping('field_tags', $event_arguments['source_event_keyword'])
+				->sourceMigration('UGTerm6','UGEventKeyword6');
+		}
 		$this->addFieldMapping('field_tags:source_type')
 			->defaultValue('tid');
 
@@ -259,7 +526,7 @@ class UGEventMultifield6Migration extends DrupalMigration {
 }
 
 
-class UGNews6Migration extends DrupalNode6Migration {
+class UGNews6Migration extends UGDrupalNode6Migration {
 	public function __construct($arguments) {
     	parent::__construct($arguments);
 
@@ -267,16 +534,20 @@ class UGNews6Migration extends DrupalNode6Migration {
 
 		/* DEFAULT arguments */
 		$news_arguments = array(
-			'source_news_body' => 'body',
-			'source_news_summary' => 'body:summary',
-			'source_news_format' => 'body:format',
-			'source_news_category' => '',
-			'source_news_keyword' => '',
-			'source_news_writer' => '',
-			'source_news_link' => '',
-			'source_news_image' => 'fid',
-			'source_news_caption' => '',
-			'source_news_attachment' => '',
+			'source_news_body'                   => 'body',
+			'source_news_summary'                => 'body:summary',
+			'source_news_format'                 => 'body:format',
+			'source_news_category'               => '',
+			'source_news_category_default_value' => '',
+			'source_news_keyword'                => '',
+			'source_news_keyword_default_value'  => '',
+			'source_news_writer'                 => '',
+			'source_news_link'                   => '',
+			'source_news_image'                  => 'fid',
+			'source_news_caption'                => '',
+			'source_news_attachment'             => '',
+			'source_news_image_src_prefix'       => '',
+			'source_news_insert_fields'          => NULL,
 		);
 
 		//Override default values with arguments if they exist
@@ -288,21 +559,47 @@ class UGNews6Migration extends DrupalNode6Migration {
 		    }
 		}
 
+		/* INSERT fields into Body variables */
+		$this->arguments['update_source_body'] = $news_arguments['source_news_body'];
+		$this->arguments['update_image_src_prefix'] = $news_arguments['source_news_image_src_prefix'];
+    	$this->arguments['update_insert_fields'] = $news_arguments['source_news_insert_fields'];
+		$this->arguments['update_map_table'] = 'migrate_map_ugnews6';
+
 	    /* News Body */
 	    $this->addFieldMapping('field_news_body', $news_arguments['source_news_body']);
 	    $this->addFieldMapping( 'field_news_body:summary', $news_arguments['source_news_summary']);
-	    $this->addFieldMapping( 'field_news_body:format', $news_arguments['source_news_format'])
-		    ->defaultValue('full_html');
+
+		// News Body Format
+		if($news_arguments['source_news_body'] == 'body'){
+		    $this->addFieldMapping( 'field_news_body:format', $news_arguments['source_news_format'])
+			    ->defaultValue('full_html');
+		}else{
+		    $this->addFieldMapping( 'field_news_body:format', $news_arguments['source_news_format'])
+			    ->callbacks(array($this, 'mapFormat'))
+			    ->defaultValue('full_html');
+		}
 
 		/* News Category */
-		$this->addFieldMapping('field_news_tags', $news_arguments['source_news_category'])
-			->sourceMigration('UGNewsCategory6');
+		if($news_arguments['source_news_category_default_value'] != ''){
+			$this->addFieldMapping('field_news_tags')
+				->defaultValue($news_arguments['source_news_category_default_value']);
+		}else{
+			$this->addFieldMapping('field_news_tags', $news_arguments['source_news_category'])
+				->sourceMigration('UGNewsCategory6');
+		}
+
 		$this->addFieldMapping('field_news_tags:source_type')
 			->defaultValue('tid');
 
 		/* News Keyword */
-		$this->addFieldMapping('field_tags', $news_arguments['source_news_keyword'])
-			->sourceMigration('UGTerm6');
+		if($news_arguments['source_news_keyword_default_value'] != ''){
+			$this->addFieldMapping('field_tags')
+				->defaultValue($news_arguments['source_news_keyword_default_value']);
+		}else{
+			$this->addFieldMapping('field_tags', $news_arguments['source_news_keyword'])
+				->sourceMigration('UGTerm6','UGNewsKeyword6');
+		}
+
 		$this->addFieldMapping('field_tags:source_type')
 			->defaultValue('tid');
 
@@ -341,7 +638,7 @@ class UGNews6Migration extends DrupalNode6Migration {
 }
 
 
-class UGPage6Migration extends DrupalNode6Migration {
+class UGPage6Migration extends UGDrupalNode6Migration {
 	public function __construct($arguments) {
     	parent::__construct($arguments);
 
@@ -349,12 +646,16 @@ class UGPage6Migration extends DrupalNode6Migration {
 
 	    /* DEFAULT arguments */
 		$page_arguments = array(
-			'source_page_body' => 'body',
-			'source_page_summary' => 'body:summary',
-			'source_page_format' => 'body:format',
-			'source_page_category' => '',
-			'source_page_keyword' => '',
-			'source_page_attachments' => '',
+			'source_page_body'                   => 'body',
+			'source_page_summary'                => 'body:summary',
+			'source_page_format'                 => 'body:format',
+			'source_page_category'               => '',
+			'source_page_category_default_value' => '',
+			'source_page_keyword'                => '',
+			'source_page_keyword_default_value'  => '',
+			'source_page_attachments'            => '',
+			'source_page_image_src_prefix'       => '',
+			'source_page_insert_fields'          => NULL,
 		);
 
 		//Override default values with arguments if they exist
@@ -366,21 +667,45 @@ class UGPage6Migration extends DrupalNode6Migration {
 		    }
 		}
 
+		/* INSERT fields into Body variables */
+		$this->arguments['update_source_body'] = $page_arguments['source_page_body'];
+		$this->arguments['update_image_src_prefix'] = $page_arguments['source_page_image_src_prefix'];
+    	$this->arguments['update_insert_fields'] = $page_arguments['source_page_insert_fields'];
+		$this->arguments['update_map_table'] = 'migrate_map_ugpage6';
+
 	    /* Page Body */
 	    $this->addFieldMapping('field_page_body', $page_arguments['source_page_body']);
 	    $this->addFieldMapping('field_page_body:summary', $page_arguments['source_page_summary']);
-	    $this->addFieldMapping( 'field_page_body:format', $page_arguments['source_page_format'])
-		    ->defaultValue('full_html');
+
+		// Page Body Format
+		if($page_arguments['source_page_body'] == 'body'){
+		    $this->addFieldMapping( 'field_page_body:format', $page_arguments['source_page_format'])
+			    ->defaultValue('full_html');
+		}else{
+		    $this->addFieldMapping( 'field_page_body:format', $page_arguments['source_page_format'])
+			    ->callbacks(array($this, 'mapFormat'))
+			    ->defaultValue('full_html');
+		}
 
 		/* Page Category */
-		$this->addFieldMapping('field_page_category', $page_arguments['source_page_category'])
-			->sourceMigration('UGPageCategory6');
+		if($page_arguments['source_page_category_default_value'] != ''){
+			$this->addFieldMapping('field_page_category')
+				->defaultValue($page_arguments['source_page_category_default_value']);
+		}else{
+			$this->addFieldMapping('field_page_category', $page_arguments['source_page_category'])
+				->sourceMigration('UGPageCategory6');
+		}
 		$this->addFieldMapping('field_page_category:source_type')
 			->defaultValue('tid');
 
 		/* Page Keyword */
-		$this->addFieldMapping('field_tags', $page_arguments['source_page_keyword'])
-			->sourceMigration('UGTerm6');
+		if($page_arguments['source_page_keyword_default_value'] != ''){
+			$this->addFieldMapping('field_tags')
+				->defaultValue($page_arguments['source_page_keyword_default_value']);
+		}else{
+			$this->addFieldMapping('field_tags', $page_arguments['source_page_keyword'])
+				->sourceMigration('UGTerm6','UGPageKeyword6');
+		}
 		$this->addFieldMapping('field_tags:source_type')
 			->defaultValue('tid');
 
@@ -398,7 +723,7 @@ class UGPage6Migration extends DrupalNode6Migration {
 	}
 }
 
-class UGFAQ6Migration extends DrupalNode6Migration {
+class UGFAQ6Migration extends UGDrupalNode6Migration {
 	public function __construct($arguments) {
     	parent::__construct($arguments);
 
@@ -406,10 +731,14 @@ class UGFAQ6Migration extends DrupalNode6Migration {
 		
 		/* DEFAULT arguments */
 		$faq_arguments = array(
-			'source_faq_answer' => 'body',
-			'source_faq_format' => 'body:format',
-			'source_faq_category' => '',
-			'source_faq_keyword' => '',
+			'source_faq_answer'                 => 'body',
+			'source_faq_format'                 => 'body:format',
+			'source_faq_category'               => '',
+			'source_faq_category_default_value' => '',
+			'source_faq_keyword'                => '',
+			'source_faq_keyword_default_value'  => '',
+			'source_faq_image_src_prefix'       => '',
+			'source_faq_insert_fields'          => NULL,
 		);
 
 		//Override default values with arguments if they exist
@@ -421,21 +750,45 @@ class UGFAQ6Migration extends DrupalNode6Migration {
 		    }
 		}
 
+		/* INSERT fields into Body variables */
+		$this->arguments['update_source_body'] = $faq_arguments['source_faq_answer'];
+		$this->arguments['update_image_src_prefix'] = $faq_arguments['source_faq_image_src_prefix'];
+    	$this->arguments['update_insert_fields'] = $faq_arguments['source_faq_insert_fields'];
+		$this->arguments['update_map_table'] = 'migrate_map_ugfaq6';
+
 	    /* FAQ Answer */
 	    $this->addFieldMapping('field_faq_answer', $faq_arguments['source_faq_answer']);
-	    $this->addFieldMapping( 'field_faq_answer:format', $faq_arguments['source_faq_format'])
-		    ->callbacks(array($this, 'mapFormat'))
-		    ->defaultValue('full_html');
+
+		// FAQ Answer Format
+		if($faq_arguments['source_faq_answer'] == 'body'){
+			$this->addFieldMapping('field_faq_answer:format', $faq_arguments['source_faq_format'])
+			    ->defaultValue('full_html');
+		}else{
+		    $this->addFieldMapping( 'field_faq_answer:format', $faq_arguments['source_faq_format'])
+			    ->callbacks(array($this, 'mapFormat'))
+			    ->defaultValue('full_html');
+		}
 
 		/* FAQ Category */
-		$this->addFieldMapping('field_faq_category', $faq_arguments['source_faq_category'])
-			->sourceMigration('UGFAQCategory6');
+		if($faq_arguments['source_faq_category_default_value'] != ''){
+			$this->addFieldMapping('field_faq_category')
+				->defaultValue($faq_arguments['source_faq_category_default_value']);
+		}else{
+			$this->addFieldMapping('field_faq_category', $faq_arguments['source_faq_category'])
+				->sourceMigration('UGFAQCategory6');
+		}
 		$this->addFieldMapping('field_faq_category:source_type')
 			->defaultValue('tid');
 
 		/* FAQ Keyword */
-		$this->addFieldMapping('field_tags', $faq_arguments['source_faq_keyword'])
-			->sourceMigration('UGTerm6');
+		if($faq_arguments['source_faq_keyword_default_value'] != ''){
+			$this->addFieldMapping('field_tags')
+				->defaultValue($faq_arguments['source_faq_keyword_default_value']);
+		}else{
+			$this->addFieldMapping('field_tags', $faq_arguments['source_faq_keyword'])
+				->sourceMigration('UGTerm6','UGFAQKeyword6');
+		}
+
 		$this->addFieldMapping('field_tags:source_type')
 			->defaultValue('tid');
 	}
@@ -498,6 +851,13 @@ class UGPageCategory6Migration extends DrupalTerm6Migration {
 	}
 }
 
+class UGPageKeyword6Migration extends DrupalTerm6Migration {
+	public function __construct($arguments) {
+    	parent::__construct($arguments);
+
+	}
+}
+
 class UGFAQCategory6Migration extends DrupalTerm6Migration {
 	public function __construct($arguments) {
     	parent::__construct($arguments);
@@ -529,89 +889,4 @@ class UGFile6Migration extends DrupalFile6Migration {
 	    
 	    //drush_print_r($row);
 	}
-}
-
-
-/**
- * Handling specific to a Drupal 6 source for images.
- */
-class UGImage6Migration extends DrupalFile6Migration {
-  /**
-   * @param array $arguments
-   */
-  public function __construct(array $arguments) {
-    $this->sourceFields['filename'] = 'converted filename';
-    parent::__construct($arguments);
-
-    $this->addFieldMapping('destination_file', 'filename');
-  }
-  
-  protected function query() {
-    $query = parent::query();
-    
-    $query->innerJoin('image', 'i', 'f.fid=i.fid');
-    $query->condition('image_size', '_original');
-    return $query;
-  }
-  
-  /**
-   * Implementation of Migration::prepareRow().
-   */
-  public function prepareRow($row) {
-    if (parent::prepareRow($row) === FALSE) {
-      return FALSE;
-    }
-
-    //Check if Image Attach module exists
-    $queryImageAttach = Database::getConnection('default',$this->sourceConnection)
-    	->schema()
-    	->tableExists('image_attach');
-
-	//Check if Image Assist module exists
-    $queryImageAssist = Database::getConnection('default',$this->sourceConnection)
-    	->schema()
-    	->tableExists('img_assist_map');
-
-    /* Image Attach Query */
-    if($queryImageAttach == TRUE){
-	    $query = Database::getConnection('default', $this->sourceConnection)
-	      ->select('image_attach', 'ia')
-	      ->fields('ia', array('nid'));
-	    $query->innerJoin('image', 'i', 'ia.iid=i.nid');
-	    $query->condition('i.fid', $row->fid);
-	    $query->condition('image_size', '_original');
-	    $node = $query->execute()->fetchObject();
-
-	    if ($node) {
-	      $nid = strval($node->nid);
-	      $pathinfo = pathinfo($row->filepath);
-	      $filename = $pathinfo['filename'];
-	      $extension = $pathinfo['extension'];
-	      $row->filename = $nid . '.' . $extension;
-	    }
-    }
-
-	/* Image Assist Query */
-    if($queryImageAssist == TRUE){
-	    $query2 = Database::getConnection('default', $this->sourceConnection)
-	      ->select('img_assist_map', 'im')
-	      ->fields('im', array('nid','iid'));
-
-	    $query2->innerJoin('image', 'i', 'im.iid=i.nid');
-	    $query2->condition('i.fid', $row->fid);
-	    $query2->condition('image_size', '_original');
-	    $node2 = $query2->execute()->fetchObject();
-
-	    if ($node2) {
-	      $nid = strval($node2->nid);
-	      $iid = strval($node2->iid);
-	      $pathinfo = pathinfo($row->filepath);
-	      $filename = $pathinfo['filename'];
-	      $extension = $pathinfo['extension'];
-	      $row->filename = $nid . '_' . $iid . '_' . $filename . '.' . $extension;
-	    }
-	}
-
-
-  }
 }

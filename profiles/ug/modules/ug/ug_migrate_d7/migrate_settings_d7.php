@@ -84,13 +84,13 @@ SITE CONFIGURATION VARIABLES
   $update_prefix_source = array();
 
   $update_arguments = array(
-    'update_nodelinks' => FALSE,
-    'update_nodelinks_urls' => $update_nodelinks_urls,
-    'update_hardlinks_source' => $update_hardlinks_source,
+    'update_nodelinks'             => FALSE,
+    'update_nodelinks_urls'        => $update_nodelinks_urls,
+    'update_hardlinks_source'      => $update_hardlinks_source,
     'update_hardlinks_destination' => '',
-    'update_prefix_inline' => FALSE,
-    'update_prefix_source' => $update_prefix_source,
-    'update_prefix_destination' => '',
+    'update_prefix_inline'         => FALSE,
+    'update_prefix_source'         => $update_prefix_source,
+    'update_prefix_destination'    => '',
   );
 
 /**************************
@@ -117,7 +117,7 @@ SITE CONFIGURATION VARIABLES
 **************************/
 
   $file_arguments = array(
-    'source_directory' => 'public://',
+    'source_directory'      => 'public://',
     'destination_directory' => 'public://',
   );
 
@@ -182,18 +182,18 @@ SITE CONFIGURATION VARIABLES
 
   $page_insert_fields = NULL;
   $page_arguments = array(
-    'source_page_node_type' => 'page',
-    'source_page_term_category' => '',
-    'source_page_term_keyword' => '',
-    'source_page_body' => 'body',
-    'source_page_summary' => 'body:summary',
-    'source_page_format' => 'body:format',
-    'source_page_category' => '',
+    'source_page_node_type'              => 'page',
+    'source_page_term_category'          => '',
+    'source_page_term_keyword'           => '',
+    'source_page_body'                   => 'body',
+    'source_page_summary'                => 'body:summary',
+    'source_page_format'                 => 'body:format',
+    'source_page_category'               => '',
     'source_page_category_default_value' => '',
-    'source_page_keyword' => 'field_tags',
-    'source_page_keyword_default_value' => '',
-    'source_page_attachments' => '',
-    'source_page_insert_fields' => $page_insert_fields,
+    'source_page_keyword'                => 'field_tags',
+    'source_page_keyword_default_value'  => '',
+    'source_page_attachments'            => '',
+    'source_page_insert_fields'          => $page_insert_fields,
   );
   
 
@@ -203,22 +203,22 @@ SITE CONFIGURATION VARIABLES
 
   $news_insert_fields = NULL;
   $news_arguments = array(
-    'source_news_node_type' => 'article',
-    'source_news_term_category' => '',
-    'source_news_term_keyword' => '',
-    'source_news_body' => 'body',
-    'source_news_summary' => 'body:summary',
-    'source_news_format' => 'body:format',
-    'source_news_category' => '',
+    'source_news_node_type'              => 'article',
+    'source_news_term_category'          => '',
+    'source_news_term_keyword'           => '',
+    'source_news_body'                   => 'body',
+    'source_news_summary'                => 'body:summary',
+    'source_news_format'                 => 'body:format',
+    'source_news_category'               => '',
     'source_news_category_default_value' => '',
-    'source_news_keyword' => '',
-    'source_news_keyword_default_value' => '',
-    'source_news_writer' => '',
-    'source_news_link' => '',
-    'source_news_image' => '',
-    'source_news_caption' => '',
-    'source_news_attachment' => '',
-    'source_news_insert_fields' => $news_insert_fields,
+    'source_news_keyword'                => '',
+    'source_news_keyword_default_value'  => '',
+    'source_news_writer'                 => '',
+    'source_news_link'                   => '',
+    'source_news_image'                  => '',
+    'source_news_caption'                => '',
+    'source_news_attachment'             => '',
+    'source_news_insert_fields'          => $news_insert_fields,
   );
 
 /**************************
@@ -228,16 +228,16 @@ SITE CONFIGURATION VARIABLES
   $faq_insert_fields = NULL;
 
   $faq_arguments = array(
-    'source_faq_node_type' => '',
-    'source_faq_term_category' => '',
-    'source_faq_term_keyword' => '',
-    'source_faq_answer' => 'body',
-    'source_faq_format' => 'body:format',
-    'source_faq_category' => '',
+    'source_faq_node_type'              => '',
+    'source_faq_term_category'          => '',
+    'source_faq_term_keyword'           => '',
+    'source_faq_answer'                 => 'body',
+    'source_faq_format'                 => 'body:format',
+    'source_faq_category'               => '',
     'source_faq_category_default_value' => '',
-    'source_faq_keyword' => '',
-    'source_faq_keyword_default_value' => '',
-    'source_faq_insert_fields' => $faq_insert_fields,
+    'source_faq_keyword'                => '',
+    'source_faq_keyword_default_value'  => '',
+    'source_faq_insert_fields'          => $faq_insert_fields,
   );
 
 /**************************
@@ -247,19 +247,19 @@ SITE CONFIGURATION VARIABLES
   $featureditem_insert_fields = NULL;
 
   $featureditem_arguments = array(
-    'source_featureditem_node_type' => '',
-    'source_featureditem_term_category' => '',
-    'source_featureditem_term_keyword' => '',
-    'source_featureditem_body' => 'body',
-    'source_featureditem_summary' => 'body:summary',
-    'source_featureditem_format' => 'body:format',
-    'source_featureditem_link' => '',
-    'source_featureditem_image' => '',
-    'source_featureditem_category' => '',
+    'source_featureditem_node_type'              => '',
+    'source_featureditem_term_category'          => '',
+    'source_featureditem_term_keyword'           => '',
+    'source_featureditem_body'                   => 'body',
+    'source_featureditem_summary'                => 'body:summary',
+    'source_featureditem_format'                 => 'body:format',
+    'source_featureditem_link'                   => '',
+    'source_featureditem_image'                  => '',
+    'source_featureditem_category'               => '',
     'source_featureditem_category_default_value' => '',
-    'source_featureditem_keyword' => '',
-    'source_featureditem_keyword_default_value' => '',
-    'source_featureditem_insert_fields' => $featureditem_insert_fields,
+    'source_featureditem_keyword'                => '',
+    'source_featureditem_keyword_default_value'  => '',
+    'source_featureditem_insert_fields'          => $featureditem_insert_fields,
   );
 
 
@@ -270,28 +270,28 @@ SITE CONFIGURATION VARIABLES
   $event_insert_fields = NULL;
 
   $event_arguments = array(
-    'source_event_node_type' => '',
-    'source_event_term_category' => '',
-    'source_event_term_keyword' => '',
-    'source_event_term_heading' => '',
-    'source_event_body' => 'body',
-    'source_event_summary' => 'body:summary',
-    'source_event_format' => 'body:format',
-    'source_event_category' => '',
+    'source_event_node_type'              => '',
+    'source_event_term_category'          => '',
+    'source_event_term_keyword'           => '',
+    'source_event_term_heading'           => '',
+    'source_event_body'                   => 'body',
+    'source_event_summary'                => 'body:summary',
+    'source_event_format'                 => 'body:format',
+    'source_event_category'               => '',
     'source_event_category_default_value' => '',
-    'source_event_keyword' => '',
-    'source_event_keyword_default_value' => '',
-    'source_event_date' => '',
-    'source_event_date_timezone' => 'America/New_York',
-    'source_event_location' => '',
-    'source_event_multipart' => '',
-    'source_event_multipart_heading' => '',
-    'source_event_multipart_content' => '',
-    'source_event_image' => '',
-    'source_event_caption' => '',
-    'source_event_attachments' => '',
-    'source_event_link' => '',
-    'source_event_insert_fields' => $event_insert_fields,
+    'source_event_keyword'                => '',
+    'source_event_keyword_default_value'  => '',
+    'source_event_date'                   => '',
+    'source_event_date_timezone'          => 'America/New_York',
+    'source_event_location'               => '',
+    'source_event_multipart'              => '',
+    'source_event_multipart_heading'      => '',
+    'source_event_multipart_content'      => '',
+    'source_event_image'                  => '',
+    'source_event_caption'                => '',
+    'source_event_attachments'            => '',
+    'source_event_link'                   => '',
+    'source_event_insert_fields'          => $event_insert_fields,
   );
 
 /**************************
