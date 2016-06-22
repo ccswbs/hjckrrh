@@ -1,6 +1,6 @@
 name = UG News Layouts
 core = 7.x
-version = 7.x-4.1
+version = 7.x-5.0
 package = UG
 dependencies[] = ctools
 dependencies[] = page_manager

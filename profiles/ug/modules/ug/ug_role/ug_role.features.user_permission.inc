@@ -99,6 +99,15 @@ function ug_role_user_default_permissions() {
     'module' => 'node',
   );
 
+  // Exported permission: 'administer panels styles'.
+  $permissions['administer panels styles'] = array(
+    'name' => 'administer panels styles',
+    'roles' => array(
+      'site manager' => 'site manager',
+    ),
+    'module' => 'panels',
+  );
+
   // Exported permission: 'administer redirects'.
   $permissions['administer redirects'] = array(
     'name' => 'administer redirects',
@@ -115,6 +124,15 @@ function ug_role_user_default_permissions() {
       'site manager' => 'site manager',
     ),
     'module' => 'taxonomy',
+  );
+
+  // Exported permission: 'administer users'.
+  $permissions['administer users'] = array(
+    'name' => 'administer users',
+    'roles' => array(
+      'site manager' => 'site manager',
+    ),
+    'module' => 'user',
   );
 
   // Exported permission: 'assign author role'.

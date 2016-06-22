@@ -1,5 +1,14 @@
-Hjckrrh 7.4.1, 2016-06-21
+Hjckrrh 7.5.0, 2016-06-21
 -------------------------
+- Allow site manager to assign roles (#258)
+- Allow site manager to administer panel styles
+- Add hide_submit button (#40)
+- Remove max image resolution from banner image (#69)
+- Only register migration if book module enabled (#391)
+- Add training module
+- Upgrade to Drupal 7.44
+- Upgrade to views-7.x-3.14
+- Add Google Analytics module.
 - Upgrade to drupal-7.44
 - Upgrade to views-7.x-3.14
 
