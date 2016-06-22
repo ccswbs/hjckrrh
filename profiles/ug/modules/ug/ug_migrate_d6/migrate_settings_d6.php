@@ -148,6 +148,23 @@ $destination_sitestub = '';
 
 /* ----
 *
+*  MAPPING TAXONOMIES
+*
+*  For D6 to D7 migrations, map the taxonomy ID to BOTH the field and vocabulary/term source for the taxonomy.
+*
+*  Examples:
+*
+*  'source_page_category'      => '8',
+*  'source_page_term_category' => '8',
+*
+*  'source_profile_category'            => '7',
+*  'source_profile_category_vocabulary' => '7',
+* 
+*/
+
+
+/* ----
+*
 *  USING DEFAULT VALUES
 *
 *  Use with caution. Setting default value will override the value for all migrated rows.
@@ -157,6 +174,7 @@ $destination_sitestub = '';
 *  Multi value example:  'source_page_keyword_default_value' => array(1,2,3),
 * 
 */
+
 
 /* ----
 *
@@ -400,6 +418,38 @@ $image_src_prefix = $destination_sitestub;
     'source_tags_default_value'             => '',
     'source_profile_image_src_prefix'       => $image_src_prefix,
     'source_profile_insert_fields'          => $profile_insert_fields,
+  );
+
+/**************************
+*  BANNER Settings
+**************************/
+
+  $banner_insert_fields = NULL;
+
+  $banner_arguments = array(
+    'source_banner_node_type'                => 'banner',
+    'source_banner_headline'                 => 'field_banner_headline',
+    'source_banner_headline_format'          => 'field_banner_headline:format',
+    'source_banner_text'                     => 'field_banner_text',
+    'source_banner_text_format'              => 'field_banner_text:format',
+    'source_banner_category'                 => 'field_banner_category',
+    'source_banner_category_source_type'     => 'tid',
+    'source_banner_category_ignore_case'     => TRUE,
+    'source_banner_category_create_term'     => TRUE,
+    'source_banner_category_vocabulary'      => 'banner_category',
+    'source_banner_category_default_value'   => '',
+    'source_banner_link'                     => 'field_banner_link',
+    'source_banner_image'                    => 'field_banner_image',
+    'source_banner_alttext'                  => 'field_banner_alttext',
+    'source_banner_keyword'                  => 'field_tags',
+    'source_banner_keyword_source_type'      => 'tid',
+    'source_banner_keyword_ignore_case'      => TRUE,
+    'source_banner_keyword_create_term'      => TRUE,
+    'source_banner_keyword_vocabulary'       => 'tags',
+    'source_banner_keyword_default_value'    => '',
+    'source_banner_weight'                   => 'field_banner_weight',
+    'source_banner_image_src_prefix'         => $image_src_prefix,
+    'source_banner_insert_fields'            => $banner_insert_fields,
   );
 
 

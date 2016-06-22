@@ -13,6 +13,7 @@ function ug_migrate_d6_migrate_api() {
     'UGFAQ6',
     'UGFeaturedItem6',
     'UGProfile6',
+    'UGBanner6',
   );
 
   $update_migrations = array(
@@ -20,8 +21,9 @@ function ug_migrate_d6_migrate_api() {
     'UGUpdateNews6',
     'UGUpdateEvent6',
     'UGUpdateFAQ6',
-//    'UGUpdateFeaturedItem6',
     'UGUpdateProfile6',
+    'UGUpdateBanner6',
+    // 'UGUpdateFeaturedItem6',
   );
 
   $term_migrations = array(
@@ -42,6 +44,8 @@ function ug_migrate_d6_migrate_api() {
     'UGProfileUnit6',
     'UGProfileSubunit6', 
     'UGProfileResearch6', 
+    'UGBannerCategory6',
+    'UGBannerKeyword6',
   );
 
   /* UPDATE VARIABLES */
@@ -94,6 +98,18 @@ function ug_migrate_d6_migrate_api() {
     'source_featureditem_node_type' => '',
     'source_featureditem_term_category' => '',
     'source_featureditem_term_keyword' => '',
+  );
+
+  $profile_arguments = array(
+    'source_profile_node_type' => 'banner',
+    'source_profile_category_vocabulary' => '',
+    'source_tags' => '',
+  );
+
+  $banner_arguments = array(
+    'source_banner_node_type' => 'banner',
+    'source_banner_category_vocabulary' => '',
+    'source_banner_keyword_vocabulary' => '',
   );
 
   /* USER VARIABLES */
@@ -376,6 +392,29 @@ function ug_migrate_d6_migrate_api() {
         'destination_vocabulary' => 'profile_research',
       ),
 
+      /**** BANNER migration ****/
+      'UGBannerKeyword6' => $common_arguments + array(
+        'description' => t('Migration of Banner keyword terms from Drupal 6'),
+        'class_name' => 'UGBannerKeyword6Migration',
+        'source_vocabulary' => $banner_arguments['source_banner_keyword_vocabulary'],
+        'destination_vocabulary' => 'tags',
+      ),
+
+      'UGBannerCategory6' => $common_arguments + array(
+        'description' => t('Migration of Banner category terms from Drupal 6'),
+        'class_name' => 'UGBannerCategory6Migration',
+        'source_vocabulary' => $banner_arguments['source_banner_category_vocabulary'],
+        'destination_vocabulary' => 'banner_category',
+      ),
+
+      'UGBanner6' => $node_arguments + $banner_arguments + array(
+        'description' => t('Migration of Banner from Drupal 6'),
+        'class_name' => 'UGBanner6Migration',
+        'source_type' => $banner_arguments['source_banner_node_type'], 
+        'destination_type' => 'banner',
+        'dependencies' => array('UGFile6'),
+      ),
+
       /**** MENU migration ****/
       'UGMenu6' => $menu_arguments + array(
         'description' => t('Migration of menus from Drupal 6'),
@@ -429,6 +468,14 @@ function ug_migrate_d6_migrate_api() {
         'class_name' => 'UGUpdateProfile6Migration',
         'source_type' => $profile_arguments['source_profile_node_type'], 
         'destination_type' => 'profile',
+        'dependencies' => $node_migrations,
+      ),
+
+     'UGUpdateBanner6' => $node_arguments + $update_arguments + $banner_arguments + array(
+        'description' => t('Update migrated banner nodes after initial Drupal 6 to Drupal 7 migration'),
+        'class_name' => 'UGUpdateBanner6Migration',
+        'source_type' => $banner_arguments['source_banner_node_type'], 
+        'destination_type' => 'banner',
         'dependencies' => $node_migrations,
       ),
 
