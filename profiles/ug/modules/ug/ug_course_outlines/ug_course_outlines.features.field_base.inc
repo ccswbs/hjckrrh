@@ -183,27 +183,22 @@ function ug_course_outlines_field_default_field_bases() {
     'entity_types' => array(),
     'field_name' => 'field_course_level',
     'indexes' => array(
-      'value' => array(
-        0 => 'value',
+      'tid' => array(
+        0 => 'tid',
       ),
     ),
     'locked' => 0,
-    'module' => 'list',
+    'module' => 'taxonomy',
     'settings' => array(
       'allowed_values' => array(
-        1000 => 1000,
-        2000 => 2000,
-        3000 => 3000,
-        4000 => 4000,
-        5000 => 5000,
-        6000 => 6000,
-        7000 => 7000,
-        8000 => 8000,
+        0 => array(
+          'vocabulary' => 'course_outline_level',
+          'parent' => 0,
+        ),
       ),
-      'allowed_values_function' => '',
     ),
     'translatable' => 0,
-    'type' => 'list_text',
+    'type' => 'taxonomy_term_reference',
   );
 
   // Exported field_base: 'field_course_name'.
@@ -256,22 +251,22 @@ function ug_course_outlines_field_default_field_bases() {
     'entity_types' => array(),
     'field_name' => 'field_course_semester',
     'indexes' => array(
-      'value' => array(
-        0 => 'value',
+      'tid' => array(
+        0 => 'tid',
       ),
     ),
     'locked' => 0,
-    'module' => 'list',
+    'module' => 'taxonomy',
     'settings' => array(
       'allowed_values' => array(
-        'F' => 'Fall',
-        'W' => 'Winter',
-        'S' => 'Spring',
+        0 => array(
+          'vocabulary' => 'course_outline_semester',
+          'parent' => 0,
+        ),
       ),
-      'allowed_values_function' => '',
     ),
     'translatable' => 0,
-    'type' => 'list_text',
+    'type' => 'taxonomy_term_reference',
   );
 
   // Exported field_base: 'field_course_subject'.
@@ -308,21 +303,22 @@ function ug_course_outlines_field_default_field_bases() {
     'entity_types' => array(),
     'field_name' => 'field_course_type',
     'indexes' => array(
-      'value' => array(
-        0 => 'value',
+      'tid' => array(
+        0 => 'tid',
       ),
     ),
     'locked' => 0,
-    'module' => 'list',
+    'module' => 'taxonomy',
     'settings' => array(
       'allowed_values' => array(
-        'Graduate' => 'Graduate',
-        'Undergraduate' => 'Undergraduate',
+        0 => array(
+          'vocabulary' => 'course_outline_type',
+          'parent' => 0,
+        ),
       ),
-      'allowed_values_function' => '',
     ),
     'translatable' => 0,
-    'type' => 'list_text',
+    'type' => 'taxonomy_term_reference',
   );
 
   // Exported field_base: 'field_course_website'.
