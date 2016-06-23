@@ -48,6 +48,10 @@ function ug_breadcrumbs_strongarm() {
     'search/node' => 'search/node',
     'news/category' => 'news/category',
     'news/archive' => 'news/archive',
+    'events/category' => 'events/category',
+    'events/archive' => 'events/archive',
+    'faqs/category' => 'faqs/category',
+    'services/category' => 'services/category',
   );
   $export['easy_breadcrumb-excluded_paths'] = $strongarm;
 
