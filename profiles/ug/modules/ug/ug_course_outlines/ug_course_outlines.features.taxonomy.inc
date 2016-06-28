@@ -33,14 +33,6 @@ function ug_course_outlines_taxonomy_default_vocabularies() {
       'module' => 'taxonomy',
       'weight' => 0,
     ),
-    'course_outline_semester' => array(
-      'name' => 'course_outline_semester',
-      'machine_name' => 'course_outline_semester',
-      'description' => NULL,
-      'hierarchy' => 0,
-      'module' => 'taxonomy',
-      'weight' => 0,
-    ),
     'course_outline_subject' => array(
       'name' => 'Course outline subject',
       'machine_name' => 'course_outline_subject',
