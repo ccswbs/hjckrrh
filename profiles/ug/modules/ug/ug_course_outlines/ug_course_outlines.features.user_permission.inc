@@ -13,7 +13,9 @@ function ug_course_outlines_user_default_permissions() {
   // Exported permission: 'create course_outline content'.
   $permissions['create course_outline content'] = array(
     'name' => 'create course_outline content',
-    'roles' => array(),
+    'roles' => array(
+      'author' => 'author',
+    ),
     'module' => 'node',
   );
 
