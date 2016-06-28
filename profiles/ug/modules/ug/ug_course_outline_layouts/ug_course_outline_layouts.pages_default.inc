@@ -149,29 +149,6 @@ function ug_course_outline_layouts_default_page_manager_handlers() {
     $pane->uuid = '94e8fb6f-785f-437c-9cc4-e1050c918f84';
     $display->content['new-94e8fb6f-785f-437c-9cc4-e1050c918f84'] = $pane;
     $display->panels['right'][0] = 'new-94e8fb6f-785f-437c-9cc4-e1050c918f84';
-    $pane = new stdClass();
-    $pane->pid = 'new-46a1cbe2-19e0-4de4-9ede-1418499e1c11';
-    $pane->panel = 'right';
-    $pane->type = 'block';
-    $pane->subtype = 'menu-menu-course-outlines';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'override_title' => 0,
-      'override_title_text' => '',
-      'override_title_heading' => 'h2',
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 1;
-    $pane->locks = array();
-    $pane->uuid = '46a1cbe2-19e0-4de4-9ede-1418499e1c11';
-    $display->content['new-46a1cbe2-19e0-4de4-9ede-1418499e1c11'] = $pane;
-    $display->panels['right'][1] = 'new-46a1cbe2-19e0-4de4-9ede-1418499e1c11';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
@@ -191,10 +168,40 @@ function ug_course_outline_layouts_default_page_manager_pages() {
   $page->task = 'page';
   $page->admin_title = 'Course outlines';
   $page->admin_description = '';
-  $page->path = 'course-outlines';
-  $page->access = array();
+  $page->path = 'course-outlines/!term';
+  $page->access = array(
+    'type' => 'none',
+    'settings' => NULL,
+  );
   $page->menu = array();
-  $page->arguments = array();
+  $page->arguments = array(
+    'term' => array(
+      'id' => 1,
+      'identifier' => 'Taxonomy term: ID',
+      'name' => 'term',
+      'settings' => array(
+        'input_form' => 'tid',
+        'vids' => array(
+          5 => 0,
+          11 => 0,
+          10 => 0,
+          12 => 0,
+          9 => 0,
+          13 => 0,
+          14 => 0,
+          2 => 0,
+          3 => 0,
+          4 => 0,
+          6 => 0,
+          7 => 0,
+          8 => 0,
+          1 => 0,
+        ),
+        'breadcrumb' => 0,
+        'transform' => 0,
+      ),
+    ),
+  );
   $page->conf = array(
     'admin_paths' => FALSE,
   );
@@ -278,8 +285,22 @@ function ug_course_outline_layouts_default_page_manager_pages() {
     $pane->access = array();
     $pane->configuration = array(
       'arguments' => array(
-        'field_course_category_tid' => '',
+        'tid_1' => '',
       ),
+      'use_pager' => 1,
+      'pager_id' => '0',
+      'items_per_page' => '50',
+      'fields_override' => array(
+        'nid' => 0,
+        'field_course_term' => 0,
+        'field_course_code' => 1,
+        'field_course_name' => 1,
+        'field_course_section' => 1,
+        'field_course_instructor' => 1,
+      ),
+      'override_title' => 1,
+      'override_title_text' => '',
+      'override_title_heading' => 'h2',
     );
     $pane->cache = array();
     $pane->style = array(
@@ -292,7 +313,7 @@ function ug_course_outline_layouts_default_page_manager_pages() {
     $pane->uuid = '985d9edb-0308-4c1f-b0d1-688478fc16e5';
     $display->content['new-985d9edb-0308-4c1f-b0d1-688478fc16e5'] = $pane;
     $display->panels['middle'][0] = 'new-985d9edb-0308-4c1f-b0d1-688478fc16e5';
-  $display->hide_title = PANELS_TITLE_FIXED;
+  $display->hide_title = PANELS_TITLE_PANE;
   $display->title_pane = 'new-985d9edb-0308-4c1f-b0d1-688478fc16e5';
   $handler->conf['display'] = $display;
   $page->default_handlers[$handler->name] = $handler;

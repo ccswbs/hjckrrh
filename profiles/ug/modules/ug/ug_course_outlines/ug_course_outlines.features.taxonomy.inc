@@ -49,10 +49,10 @@ function ug_course_outlines_taxonomy_default_vocabularies() {
       'module' => 'taxonomy',
       'weight' => 0,
     ),
-    'course_outline_type' => array(
-      'name' => 'course_outline_type',
-      'machine_name' => 'course_outline_type',
-      'description' => NULL,
+    'course_outline_term' => array(
+      'name' => 'Course outline term',
+      'machine_name' => 'course_outline_term',
+      'description' => '',
       'hierarchy' => 0,
       'module' => 'taxonomy',
       'weight' => 0,

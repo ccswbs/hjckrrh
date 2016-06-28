@@ -183,22 +183,27 @@ function ug_course_outlines_field_default_field_bases() {
     'entity_types' => array(),
     'field_name' => 'field_course_level',
     'indexes' => array(
-      'tid' => array(
-        0 => 'tid',
+      'value' => array(
+        0 => 'value',
       ),
     ),
     'locked' => 0,
-    'module' => 'taxonomy',
+    'module' => 'list',
     'settings' => array(
       'allowed_values' => array(
-        0 => array(
-          'vocabulary' => 'course_outline_level',
-          'parent' => 0,
-        ),
+        1000 => 1000,
+        2000 => 2000,
+        3000 => 3000,
+        4000 => 4000,
+        5000 => 5000,
+        6000 => 6000,
+        7000 => 7000,
+        8000 => 8000,
       ),
+      'allowed_values_function' => '',
     ),
     'translatable' => 0,
-    'type' => 'taxonomy_term_reference',
+    'type' => 'list_text',
   );
 
   // Exported field_base: 'field_course_name'.
@@ -243,32 +248,6 @@ function ug_course_outlines_field_default_field_bases() {
     'type' => 'text',
   );
 
-  // Exported field_base: 'field_course_semester'.
-  $field_bases['field_course_semester'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_course_semester',
-    'indexes' => array(
-      'tid' => array(
-        0 => 'tid',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'taxonomy',
-    'settings' => array(
-      'allowed_values' => array(
-        0 => array(
-          'vocabulary' => 'course_outline_semester',
-          'parent' => 0,
-        ),
-      ),
-    ),
-    'translatable' => 0,
-    'type' => 'taxonomy_term_reference',
-  );
-
   // Exported field_base: 'field_course_subject'.
   $field_bases['field_course_subject'] = array(
     'active' => 1,
@@ -295,13 +274,13 @@ function ug_course_outlines_field_default_field_bases() {
     'type' => 'taxonomy_term_reference',
   );
 
-  // Exported field_base: 'field_course_type'.
-  $field_bases['field_course_type'] = array(
+  // Exported field_base: 'field_course_term'.
+  $field_bases['field_course_term'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_course_type',
+    'field_name' => 'field_course_term',
     'indexes' => array(
       'tid' => array(
         0 => 'tid',
@@ -312,13 +291,38 @@ function ug_course_outlines_field_default_field_bases() {
     'settings' => array(
       'allowed_values' => array(
         0 => array(
-          'vocabulary' => 'course_outline_type',
+          'vocabulary' => 'course_outline_term',
           'parent' => 0,
         ),
       ),
     ),
     'translatable' => 0,
     'type' => 'taxonomy_term_reference',
+  );
+
+  // Exported field_base: 'field_course_type'.
+  $field_bases['field_course_type'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_course_type',
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        'Graduate' => 'Graduate',
+        'Undergraduate' => 'Undergraduate',
+      ),
+      'allowed_values_function' => '',
+    ),
+    'translatable' => 0,
+    'type' => 'list_text',
   );
 
   // Exported field_base: 'field_course_website'.
@@ -348,35 +352,6 @@ function ug_course_outlines_field_default_field_bases() {
     ),
     'translatable' => 0,
     'type' => 'link_field',
-  );
-
-  // Exported field_base: 'field_course_year'.
-  $field_bases['field_course_year'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_course_year',
-    'indexes' => array(),
-    'locked' => 0,
-    'module' => 'date',
-    'settings' => array(
-      'cache_count' => 4,
-      'cache_enabled' => 0,
-      'granularity' => array(
-        'day' => 0,
-        'hour' => 0,
-        'minute' => 0,
-        'month' => 0,
-        'second' => 0,
-        'year' => 'year',
-      ),
-      'timezone_db' => '',
-      'todate' => '',
-      'tz_handling' => 'none',
-    ),
-    'translatable' => 0,
-    'type' => 'datetime',
   );
 
   return $field_bases;

@@ -29,9 +29,7 @@ function ug_course_outlines_install() {
  */
 function ug_course_outlines_taxonomy() {
   $taxonomy = array();
-  $taxonomy['course_outline_level'] = array('1000', '2000', '3000', '4000', '5000', '6000', '7000', '8000');
-  $taxonomy['course_outline_semester'] = array('Fall', 'Winter', 'Spring');
-  $taxonomy['course_outline_type'] = array('Graduate', 'Undergraduate');
+  $taxonomy['course_outline_term'] = array('Fall', 'Winter', 'Spring');
   return $taxonomy;
 }
 

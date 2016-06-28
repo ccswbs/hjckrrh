@@ -127,7 +127,7 @@ function ug_course_outlines_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 15,
+      'weight' => 5,
     ),
   );
 
@@ -433,43 +433,6 @@ function ug_course_outlines_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-course_outline-field_course_semester'.
-  $field_instances['node-course_outline-field_course_semester'] = array(
-    'bundle' => 'course_outline',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'taxonomy',
-        'settings' => array(),
-        'type' => 'taxonomy_term_reference_link',
-        'weight' => 17,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_course_semester',
-    'label' => 'Semester',
-    'required' => 0,
-    'settings' => array(
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'options',
-      'settings' => array(),
-      'type' => 'options_select',
-      'weight' => 4,
-    ),
-  );
-
   // Exported field_instance: 'node-course_outline-field_course_subject'.
   $field_instances['node-course_outline-field_course_subject'] = array(
     'bundle' => 'course_outline',
@@ -504,6 +467,43 @@ function ug_course_outlines_field_default_field_instances() {
       'settings' => array(),
       'type' => 'options_select',
       'weight' => 13,
+    ),
+  );
+
+  // Exported field_instance: 'node-course_outline-field_course_term'.
+  $field_instances['node-course_outline-field_course_term'] = array(
+    'bundle' => 'course_outline',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'taxonomy',
+        'settings' => array(),
+        'type' => 'taxonomy_term_reference_link',
+        'weight' => 17,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_course_term',
+    'label' => 'Course term',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 4,
     ),
   );
 
@@ -602,67 +602,6 @@ function ug_course_outlines_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-course_outline-field_course_year'.
-  $field_instances['node-course_outline-field_course_year'] = array(
-    'bundle' => 'course_outline',
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'inline',
-        'module' => 'date',
-        'settings' => array(
-          'format_type' => 'long',
-          'fromto' => 'both',
-          'multiple_from' => '',
-          'multiple_number' => '',
-          'multiple_to' => '',
-        ),
-        'type' => 'date_default',
-        'weight' => 5,
-      ),
-      'teaser' => array(
-        'label' => 'inline',
-        'module' => 'date',
-        'settings' => array(
-          'format_type' => 'long',
-          'fromto' => 'both',
-          'multiple_from' => '',
-          'multiple_number' => '',
-          'multiple_to' => '',
-        ),
-        'type' => 'date_default',
-        'weight' => 2,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_course_year',
-    'label' => 'Year',
-    'required' => 0,
-    'settings' => array(
-      'default_value' => 'now',
-      'default_value2' => 'same',
-      'default_value_code' => '',
-      'default_value_code2' => '',
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'date',
-      'settings' => array(
-        'display_all_day' => 0,
-        'increment' => 15,
-        'input_format' => 'Y-m-d H:i:s',
-        'input_format_custom' => '',
-        'label_position' => 'above',
-        'text_parts' => array(),
-        'year_range' => '-4:+6',
-      ),
-      'type' => 'date_select',
-      'weight' => 5,
-    ),
-  );
-
   // Exported field_instance: 'node-course_outline-field_tags'.
   $field_instances['node-course_outline-field_tags'] = array(
     'bundle' => 'course_outline',
@@ -699,7 +638,7 @@ function ug_course_outlines_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'taxonomy_autocomplete',
-      'weight' => 16,
+      'weight' => 15,
     ),
   );
 
@@ -715,13 +654,12 @@ function ug_course_outlines_field_default_field_instances() {
   t('Course instructor url');
   t('Course level');
   t('Course name');
+  t('Course term');
   t('Course type');
   t('Details');
   t('Keywords');
   t('Section');
-  t('Semester');
   t('Subject');
-  t('Year');
 
   return $field_instances;
 }
