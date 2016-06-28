@@ -10,9 +10,7 @@ dependencies[] = menu
 dependencies[] = node
 dependencies[] = strongarm
 dependencies[] = ug_tags
-<<<<<<< Updated upstream
 features[taxonomy][] = course_outline_type
->>>>>>> Stashed changes
 features[user_permission][] = create course_outline content
 features[ctools][] = strongarm:strongarm:1
 features[ctools][] = views:views_default:3.0
@@ -50,7 +48,6 @@ features[node][] = course_outline
 features[taxonomy][] = course_outline_category
 features[taxonomy][] = course_outline_department
 features[taxonomy][] = course_outline_level
-features[taxonomy][] = course_outline_semester
 features[taxonomy][] = course_outline_subject
 features[taxonomy][] = course_outline_term
 features[user_permission][] = create course_outline content
