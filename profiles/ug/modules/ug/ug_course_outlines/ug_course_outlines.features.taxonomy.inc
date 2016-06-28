@@ -26,9 +26,9 @@ function ug_course_outlines_taxonomy_default_vocabularies() {
       'weight' => 0,
     ),
     'course_outline_level' => array(
-      'name' => 'course_outline_level',
+      'name' => 'Course outline level',
       'machine_name' => 'course_outline_level',
-      'description' => NULL,
+      'description' => '',
       'hierarchy' => 0,
       'module' => 'taxonomy',
       'weight' => 0,
