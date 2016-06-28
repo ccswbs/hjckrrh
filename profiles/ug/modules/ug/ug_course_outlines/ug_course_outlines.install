@@ -31,7 +31,7 @@ function ug_course_outlines_taxonomy() {
   $taxonomy = array();
   $taxonomy['course_outline_term'] = array('Fall', 'Winter', 'Spring');
   $taxonomy['course_outline_level'] = array('100', '200', '300', '400', '500', '600', '700', '800');
-  $taxonomy['course_outline_acad_level'] = array('Undergraduate', 'Graduate');
+  $taxonomy['course_outline_academic_level'] = array('Undergraduate', 'Graduate');
   return $taxonomy;
 }
 
