@@ -10,6 +10,43 @@
 function ug_course_outlines_field_default_field_instances() {
   $field_instances = array();
 
+  // Exported field_instance: 'node-course_outline-field_course_acad_level'.
+  $field_instances['node-course_outline-field_course_acad_level'] = array(
+    'bundle' => 'course_outline',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'taxonomy',
+        'settings' => array(),
+        'type' => 'taxonomy_term_reference_link',
+        'weight' => 21,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_course_acad_level',
+    'label' => 'Academic level',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 12,
+    ),
+  );
+
   // Exported field_instance: 'node-course_outline-field_course_attachments'.
   $field_instances['node-course_outline-field_course_attachments'] = array(
     'bundle' => 'course_outline',
@@ -209,7 +246,7 @@ function ug_course_outlines_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 14,
+      'weight' => 15,
     ),
   );
 
@@ -466,7 +503,7 @@ function ug_course_outlines_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 13,
+      'weight' => 14,
     ),
   );
 
@@ -504,43 +541,6 @@ function ug_course_outlines_field_default_field_instances() {
       'settings' => array(),
       'type' => 'options_select',
       'weight' => 4,
-    ),
-  );
-
-  // Exported field_instance: 'node-course_outline-field_course_type'.
-  $field_instances['node-course_outline-field_course_type'] = array(
-    'bundle' => 'course_outline',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'taxonomy',
-        'settings' => array(),
-        'type' => 'taxonomy_term_reference_link',
-        'weight' => 19,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_course_type',
-    'label' => 'Course type',
-    'required' => 0,
-    'settings' => array(
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'options',
-      'settings' => array(),
-      'type' => 'options_select',
-      'weight' => 12,
     ),
   );
 
@@ -638,7 +638,7 @@ function ug_course_outlines_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'taxonomy_autocomplete',
-      'weight' => 15,
+      'weight' => 16,
     ),
   );
 
@@ -646,6 +646,7 @@ function ug_course_outlines_field_default_field_instances() {
   // Included for use with string extractors like potx.
   t('A link to the instructor\'s profile page or external site');
   t('Academic department');
+  t('Academic level');
   t('Attachments');
   t('Category');
   t('Course Website');
@@ -655,7 +656,6 @@ function ug_course_outlines_field_default_field_instances() {
   t('Course level');
   t('Course name');
   t('Course term');
-  t('Course type');
   t('Details');
   t('Keywords');
   t('Section');

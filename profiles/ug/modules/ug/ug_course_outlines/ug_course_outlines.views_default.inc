@@ -195,17 +195,17 @@ function ug_course_outlines_views_default_views() {
     'course_outline' => 'course_outline',
   );
   $handler->display->display_options['filters']['type']['group'] = 1;
-  /* Filter criterion: Broken/missing handler */
-  $handler->display->display_options['filters']['field_course_level_value']['id'] = 'field_course_level_value';
-  $handler->display->display_options['filters']['field_course_level_value']['table'] = 'field_data_field_course_level';
-  $handler->display->display_options['filters']['field_course_level_value']['field'] = 'field_course_level_value';
-  $handler->display->display_options['filters']['field_course_level_value']['group'] = 1;
-  $handler->display->display_options['filters']['field_course_level_value']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_course_level_value']['expose']['operator_id'] = 'field_course_level_value_op';
-  $handler->display->display_options['filters']['field_course_level_value']['expose']['label'] = 'Course level';
-  $handler->display->display_options['filters']['field_course_level_value']['expose']['operator'] = 'field_course_level_value_op';
-  $handler->display->display_options['filters']['field_course_level_value']['expose']['identifier'] = 'field_course_level_value';
-  $handler->display->display_options['filters']['field_course_level_value']['expose']['remember_roles'] = array(
+  /* Filter criterion: Content: Course level (field_course_level) */
+  $handler->display->display_options['filters']['field_course_level_tid']['id'] = 'field_course_level_tid';
+  $handler->display->display_options['filters']['field_course_level_tid']['table'] = 'field_data_field_course_level';
+  $handler->display->display_options['filters']['field_course_level_tid']['field'] = 'field_course_level_tid';
+  $handler->display->display_options['filters']['field_course_level_tid']['group'] = 1;
+  $handler->display->display_options['filters']['field_course_level_tid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_course_level_tid']['expose']['operator_id'] = 'field_course_level_tid_op';
+  $handler->display->display_options['filters']['field_course_level_tid']['expose']['label'] = 'Course level';
+  $handler->display->display_options['filters']['field_course_level_tid']['expose']['operator'] = 'field_course_level_tid_op';
+  $handler->display->display_options['filters']['field_course_level_tid']['expose']['identifier'] = 'field_course_level_tid';
+  $handler->display->display_options['filters']['field_course_level_tid']['expose']['remember_roles'] = array(
     2 => '2',
     1 => 0,
     3 => 0,
@@ -214,6 +214,8 @@ function ug_course_outlines_views_default_views() {
     6 => 0,
     7 => 0,
   );
+  $handler->display->display_options['filters']['field_course_level_tid']['type'] = 'select';
+  $handler->display->display_options['filters']['field_course_level_tid']['vocabulary'] = 'course_outline_level';
   /* Filter criterion: Content: Course name (field_course_name) */
   $handler->display->display_options['filters']['field_course_name_value']['id'] = 'field_course_name_value';
   $handler->display->display_options['filters']['field_course_name_value']['table'] = 'field_data_field_course_name';
@@ -234,16 +236,16 @@ function ug_course_outlines_views_default_views() {
     6 => 0,
     7 => 0,
   );
-  /* Filter criterion: Content: Course type (field_course_type) */
-  $handler->display->display_options['filters']['field_course_type_value']['id'] = 'field_course_type_value';
-  $handler->display->display_options['filters']['field_course_type_value']['table'] = 'field_data_field_course_type';
-  $handler->display->display_options['filters']['field_course_type_value']['field'] = 'field_course_type_value';
-  $handler->display->display_options['filters']['field_course_type_value']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_course_type_value']['expose']['operator_id'] = 'field_course_type_value_op';
-  $handler->display->display_options['filters']['field_course_type_value']['expose']['label'] = 'Graduate or Undergraduate';
-  $handler->display->display_options['filters']['field_course_type_value']['expose']['operator'] = 'field_course_type_value_op';
-  $handler->display->display_options['filters']['field_course_type_value']['expose']['identifier'] = 'field_course_type_value';
-  $handler->display->display_options['filters']['field_course_type_value']['expose']['remember_roles'] = array(
+  /* Filter criterion: Content: Academic level (field_course_acad_level) */
+  $handler->display->display_options['filters']['field_course_acad_level_tid']['id'] = 'field_course_acad_level_tid';
+  $handler->display->display_options['filters']['field_course_acad_level_tid']['table'] = 'field_data_field_course_acad_level';
+  $handler->display->display_options['filters']['field_course_acad_level_tid']['field'] = 'field_course_acad_level_tid';
+  $handler->display->display_options['filters']['field_course_acad_level_tid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_course_acad_level_tid']['expose']['operator_id'] = 'field_course_acad_level_tid_op';
+  $handler->display->display_options['filters']['field_course_acad_level_tid']['expose']['label'] = 'Academic level';
+  $handler->display->display_options['filters']['field_course_acad_level_tid']['expose']['operator'] = 'field_course_acad_level_tid_op';
+  $handler->display->display_options['filters']['field_course_acad_level_tid']['expose']['identifier'] = 'field_course_acad_level_tid';
+  $handler->display->display_options['filters']['field_course_acad_level_tid']['expose']['remember_roles'] = array(
     2 => '2',
     1 => 0,
     3 => 0,
@@ -252,6 +254,8 @@ function ug_course_outlines_views_default_views() {
     6 => 0,
     7 => 0,
   );
+  $handler->display->display_options['filters']['field_course_acad_level_tid']['type'] = 'select';
+  $handler->display->display_options['filters']['field_course_acad_level_tid']['vocabulary'] = 'course_outline_academic_level';
 
   /* Display: Content pane */
   $handler = $view->new_display('panel_pane', 'Content pane', 'panel_pane_1');

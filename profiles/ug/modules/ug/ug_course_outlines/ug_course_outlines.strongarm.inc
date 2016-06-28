@@ -93,10 +93,10 @@ function ug_course_outlines_strongarm() {
           'weight' => '0',
         ),
         'redirect' => array(
-          'weight' => '16',
+          'weight' => '17',
         ),
         'path' => array(
-          'weight' => '17',
+          'weight' => '18',
         ),
       ),
       'display' => array(),
