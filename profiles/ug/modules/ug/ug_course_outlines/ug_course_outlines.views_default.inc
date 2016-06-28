@@ -195,7 +195,7 @@ function ug_course_outlines_views_default_views() {
     'course_outline' => 'course_outline',
   );
   $handler->display->display_options['filters']['type']['group'] = 1;
-  /* Filter criterion: Content: Course level (field_course_level) */
+  /* Filter criterion: Broken/missing handler */
   $handler->display->display_options['filters']['field_course_level_value']['id'] = 'field_course_level_value';
   $handler->display->display_options['filters']['field_course_level_value']['table'] = 'field_data_field_course_level';
   $handler->display->display_options['filters']['field_course_level_value']['field'] = 'field_course_level_value';
