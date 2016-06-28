@@ -10,6 +10,15 @@
 function ug_course_outlines_user_default_permissions() {
   $permissions = array();
 
+  // Exported permission: 'create course_outline content'.
+  $permissions['create course_outline content'] = array(
+    'name' => 'create course_outline content',
+    'roles' => array(
+      'author' => 'author',
+    ),
+    'module' => 'node',
+  );
+
   // Exported permission: 'delete any course_outline content'.
   $permissions['delete any course_outline content'] = array(
     'name' => 'delete any course_outline content',

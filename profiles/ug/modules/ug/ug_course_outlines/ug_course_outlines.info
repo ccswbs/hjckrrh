@@ -7,6 +7,7 @@ dependencies[] = file
 dependencies[] = link
 dependencies[] = list
 dependencies[] = menu
+dependencies[] = node
 dependencies[] = strongarm
 dependencies[] = ug_tags
 <<<<<<< Updated upstream
@@ -52,6 +53,7 @@ features[taxonomy][] = course_outline_level
 features[taxonomy][] = course_outline_semester
 features[taxonomy][] = course_outline_subject
 features[taxonomy][] = course_outline_term
+features[user_permission][] = create course_outline content
 features[user_permission][] = delete any course_outline content
 features[user_permission][] = delete own course_outline content
 features[user_permission][] = delete terms in course_outline_category
