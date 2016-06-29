@@ -104,5 +104,33 @@ function ug_breadcrumbs_strongarm() {
   $strongarm->value = 0;
   $export['easy_breadcrumb-title_segment_as_link'] = $strongarm;
 
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'pathauto_node_event_pattern';
+  $strongarm->value = 'events/[node:title]';
+  $export['pathauto_node_event_pattern'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'pathauto_node_faq_pattern';
+  $strongarm->value = 'faqs/[node:title]';
+  $export['pathauto_node_faq_pattern'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'pathauto_node_news_pattern';
+  $strongarm->value = 'news/[node:title]';
+  $export['pathauto_node_news_pattern'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'pathauto_node_service_pattern';
+  $strongarm->value = 'services/[node:title]';
+  $export['pathauto_node_service_pattern'] = $strongarm;
+
   return $export;
 }
