@@ -993,3 +993,46 @@ function ug_theme_button($variables) {
   return '<button' . drupal_attributes($element['#attributes']) . '>' . $label . "</button>\n";
 }
 
+/**
+ * Theme function for overiding easy breadcrumb theme.
+ *
+ * @param Assoc $variables
+ *   arguments
+ *
+ * @return string
+ *   HTML for the themed breadcrumb.
+ */
+function ug_theme_easy_breadcrumb($variables) {
+
+  $breadcrumb = $variables['breadcrumb'];
+  $segments_quantity = $variables['segments_quantity'];
+  $separator = $variables['separator'];
+
+  $html = '';
+
+  if ($segments_quantity > 0) {
+
+    $html .= '<ol class="breadcrumb">';
+
+       for ($i = 0, $s = $segments_quantity - 1; $i < $segments_quantity; ++$i) {
+			$it = $breadcrumb[$i];
+      $content = decode_entities($it['content']);
+			if (isset($it['url'])) {
+//				$html .= l($content, $it['url'], array('attributes' => array('class' => $it['class'])));
+				$html .= '<li>' . l($content, $it['url']) . '</li>';
+			} else {
+        $class = implode(' ', $it['class']);
+	//			$html .= '<li class="' . $class . '">'	. check_plain($content) . '</li>';
+				$html .= '<li>'	. check_plain($content) . '</li>';
+			}
+//			if ($i < $s) {
+//				$html .= '<li class="easy-breadcrumb_segment-separator"> ' . $separator . ' </li>';
+//			}
+    }
+    
+    $html .= '</ol>';
+  }
+
+  return $html;
+}
+
