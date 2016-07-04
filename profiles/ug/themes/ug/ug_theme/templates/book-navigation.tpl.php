@@ -34,23 +34,32 @@
 ?>
 <?php if ($tree || $has_links): ?>
   <div id="book-navigation-<?php print $book_id; ?>" class="book-navigation">
-    <?php print $tree; ?>
+    <?php if ($tree): ?>
+      <h2><?php print t('Contents'); ?></h2>
+      <?php print $tree; ?>
+    <?php endif; ?>
     <?php if ($has_links): ?>
-    <ul class="menu nav page-links clearfix">
-      <?php if ($parent_url): ?>
-        <li><a href="<?php print $parent_url; ?>" title="<?php print $parent_title; ?>" class="page-up">
-	  <strong><?php print t('Up'); ?>:</strong>
-          <?php print $parent_title; ?></a>
-      <?php endif; ?>
+    <ul class="nav nav-pills nav-justified page-links">
       <?php if ($prev_url): ?>
-        <li><a href="<?php print $prev_url; ?>" title="<?php print $prev_title; ?>" class="page-previous">
-          <strong><?php print t('Previous'); ?>:</strong>
+        <li role="presentation">
+          <a href="<?php print $prev_url; ?>" title="<?php print $prev_title; ?>" class="page-previous">
+          <span class="glyphicon glyphicon-chevron-left"></span>
+          <span class="sr-only"><?php print t('Previous'); ?>:</span>
           <?php print $prev_title; ?></a>
       <?php endif; ?>
+      <?php if ($parent_url): ?>
+        <li role="presentation">
+          <a href="<?php print $parent_url; ?>" title="<?php print $parent_title; ?>" class="page-up">
+            <span class="glyphicon glyphicon-chevron-up"></span>
+	    <?php print t('Up'); ?>
+          </a>
+      <?php endif; ?>
       <?php if ($next_url): ?>
-        <li><a href="<?php print $next_url; ?>" title="<?php print $next_title; ?>" class="page-next">
-          <strong><?php print t('Next'); ?>:</strong>
-          <?php print $next_title; ?></a>
+        <li role="presentation">
+          <a href="<?php print $next_url; ?>" title="<?php print $next_title; ?>" class="page-next">
+          <span class="sr-only"><?php print t('Next'); ?>:</span>
+          <?php print $next_title; ?>
+          <span class="glyphicon glyphicon-chevron-right"></span></a>
       <?php endif; ?>
     </ul>
     <?php endif; ?>
