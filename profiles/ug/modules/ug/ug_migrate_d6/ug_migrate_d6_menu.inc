@@ -47,6 +47,12 @@ class UGMenu6Migration extends DrupalMenu6Migration {
 		if (parent::prepareRow($row) === FALSE) {
 			return FALSE;
 		}
+		
+		//Preserve main-menu during rollback
+		if($row->menu_name == 'main-menu'){
+			$this->rollbackAction = MigrateMap::ROLLBACK_PRESERVE;
+			return FALSE;
+		}
 
 		$row->menu_name = self::checkProtectedMenu($row->menu_name);
 	}
