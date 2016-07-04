@@ -179,6 +179,33 @@ function ug_book_layouts_default_page_manager_handlers() {
     $display->content['new-0935e6fd-70e6-453f-9245-c6a823f09241'] = $pane;
     $display->panels['left'][2] = 'new-0935e6fd-70e6-453f-9245-c6a823f09241';
     $pane = new stdClass();
+    $pane->pid = 'new-8237ed8b-ebfd-4ecc-b58b-9b97287e81da';
+    $pane->panel = 'left';
+    $pane->type = 'node_links';
+    $pane->subtype = 'node_links';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 0,
+      'override_title_text' => '',
+      'build_mode' => 'full',
+      'identifier' => '',
+      'link' => 1,
+      'context' => 'argument_entity_id:node_1',
+      'override_title_heading' => 'h2',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 3;
+    $pane->locks = array();
+    $pane->uuid = '8237ed8b-ebfd-4ecc-b58b-9b97287e81da';
+    $display->content['new-8237ed8b-ebfd-4ecc-b58b-9b97287e81da'] = $pane;
+    $display->panels['left'][3] = 'new-8237ed8b-ebfd-4ecc-b58b-9b97287e81da';
+    $pane = new stdClass();
     $pane->pid = 'new-cc24395a-98ee-44fc-8be6-6a3648f51c19';
     $pane->panel = 'right';
     $pane->type = 'menu_tree';

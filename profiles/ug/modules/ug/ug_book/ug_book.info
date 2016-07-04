@@ -1,7 +1,7 @@
 name = UG Book
 core = 7.x
-version = 7.x-5.0
 package = UG
+version = 7.x-5.0
 dependencies[] = book
 dependencies[] = features
 dependencies[] = file

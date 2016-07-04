@@ -10,7 +10,7 @@
 function ug_book_field_default_field_instances() {
   $field_instances = array();
 
-  // Exported field_instance: 'node-book-body'
+  // Exported field_instance: 'node-book-body'.
   $field_instances['node-book-body'] = array(
     'bundle' => 'book',
     'default_value' => NULL,
@@ -22,7 +22,7 @@ function ug_book_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 5,
+        'weight' => 0,
       ),
       'teaser' => array(
         'label' => 'hidden',
@@ -54,7 +54,7 @@ function ug_book_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-book-field_book_attachments'
+  // Exported field_instance: 'node-book-field_book_attachments'.
   $field_instances['node-book-field_book_attachments'] = array(
     'bundle' => 'book',
     'deleted' => 0,
@@ -65,7 +65,7 @@ function ug_book_field_default_field_instances() {
         'module' => 'file',
         'settings' => array(),
         'type' => 'file_default',
-        'weight' => 2,
+        'weight' => 1,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -96,7 +96,7 @@ function ug_book_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-book-field_book_category'
+  // Exported field_instance: 'node-book-field_book_category'.
   $field_instances['node-book-field_book_category'] = array(
     'bundle' => 'book',
     'default_value' => NULL,
@@ -105,9 +105,8 @@ function ug_book_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'taxonomy',
         'settings' => array(),
-        'type' => 'taxonomy_term_reference_link',
+        'type' => 'hidden',
         'weight' => 3,
       ),
       'teaser' => array(
@@ -133,7 +132,7 @@ function ug_book_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-book-field_tags'
+  // Exported field_instance: 'node-book-field_tags'.
   $field_instances['node-book-field_tags'] = array(
     'bundle' => 'book',
     'default_value' => NULL,
@@ -142,10 +141,9 @@ function ug_book_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'taxonomy',
         'settings' => array(),
-        'type' => 'taxonomy_term_reference_link',
-        'weight' => 4,
+        'type' => 'hidden',
+        'weight' => 2,
       ),
       'teaser' => array(
         'label' => 'above',
