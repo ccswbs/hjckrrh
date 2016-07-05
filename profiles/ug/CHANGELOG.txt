@@ -2,6 +2,7 @@ Hjckrrh 7.7.0-dev
 -------------------------
 - Add recaptcha module.
 - Clean up missing modules from system table.
+- Enable all UG features.
 
 Hjckrrh 7.6.1, 2016-07-19
 -------------------------
