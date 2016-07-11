@@ -625,4 +625,79 @@ class UGUpdateProfile7Migration extends UGUpdate7Migration {
 }
 
 
+class UGUpdateCourseOutline7Migration extends UGUpdate7Migration {
+	public function __construct($arguments) {
+    	parent::__construct($arguments);
+
+		$this->destination = new MigrateDestinationNode('course_outline');
+
+	    /* DEFAULT arguments */
+		$update_arguments = array(
+			'update_nodelinks' => FALSE,
+			'update_nodelinks_urls' => '/node/',
+			'update_hardlinks_source' => '',
+			'update_hardlinks_destination' => '',
+		);
+
+		/* DEFAULT arguments */
+		$course_arguments = array(
+		    'source_course_title'           => 'field_course_title',
+		    'source_course_name'            => 'field_course_name',
+		    'source_course_code'            => 'field_course_code',
+		    'source_course_section'         => 'field_course_section',
+		    'source_course_body'            => 'body',
+		    'source_course_summary'         => 'body:summary',
+		    'source_course_format'          => 'body:format',
+			 'source_profile_insert_fields' => NULL,
+		);
+
+		//Override default values with arguments if they exist
+		foreach ($course_arguments as $key => $value) {
+		    if(isset($this->arguments[$key])){
+		    	if($this->arguments[$key] != ''){
+			    	$course_arguments[$key] = $this->arguments[$key];
+			    }
+		    }
+		}
+
+		//Override default values with arguments if they exist
+		foreach ($update_arguments as $key => $value) {
+		    if(isset($this->arguments[$key])){
+		    	if($this->arguments[$key]!=''){
+			    	$update_arguments[$key] = $this->arguments[$key];
+			    }
+		    }
+		}
+
+	    $this->addFieldMapping('nid', 'nid')
+			->sourceMigration('UGCourseOutline7');
+		$this->arguments['update_map_table'] = 'migrate_map_ugcourseoutline7';
+
+		// Course Outline Title 
+		$this->addFieldMapping('field_course_title', $course_arguments['source_course_title']);
+
+		// Course Outline Name, Course, and Section
+		$this->addFieldMapping('field_course_name', $course_arguments['source_course_name']);
+		$this->addFieldMapping('field_course_code', $course_arguments['source_course_code']);
+		$this->addFieldMapping('field_course_section', $course_arguments['source_course_section']);
+
+	    // Update body field
+    	$this->arguments['update_insert_fields'] = $course_arguments['source_profile_insert_fields'];
+		$this->arguments['update_source_body'] = $course_arguments['source_course_body'];
+	    $this->addFieldMapping('field_course_body', $course_arguments['source_course_body']);
+	    $this->addFieldMapping('field_course_body:summary', $course_arguments['source_course_summary']);
+
+		// Course Outline Body Format
+		if($course_arguments['source_course_body'] == 'body'){
+		    $this->addFieldMapping( 'field_course_body:format', $course_arguments['source_course_format'])
+			    ->defaultValue('full_html');
+		}else{
+		    $this->addFieldMapping( 'field_course_body:format', $course_arguments['source_course_format'])
+			    ->callbacks(array($this, 'mapFormat'))
+			    ->defaultValue('full_html');
+		}
+	}
+}
+
+
 ?>

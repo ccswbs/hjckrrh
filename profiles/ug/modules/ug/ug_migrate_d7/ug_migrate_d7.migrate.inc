@@ -24,6 +24,7 @@ function ug_migrate_d7_migrate_api() {
     'UGUpdateFAQ7',
     'UGUpdateFeaturedItem7',
     'UGUpdateProfile7',
+    'UGUpdateCourseOutline7',
   );
 
   $term_migrations = array(
@@ -507,6 +508,14 @@ function ug_migrate_d7_migrate_api() {
         'class_name' => 'UGUpdateProfile7Migration',
         'source_type' => $profile_arguments['source_profile_node_type'], 
         'destination_type' => 'profile',
+        'dependencies' => $node_migrations,
+      ),
+
+      'UGUpdateCourseOutline7' => $node_arguments + $update_arguments + $course_arguments + array(
+        'description' => t('Update migrated course nodes after initial Drupal 7 to Drupal 7 migration'),
+        'class_name' => 'UGUpdateCourseOutline7Migration',
+        'source_type' => $course_arguments['source_course_node_type'], 
+        'destination_type' => 'course_outline',
         'dependencies' => $node_migrations,
       ),
 
