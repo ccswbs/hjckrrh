@@ -42,6 +42,11 @@ function ug_migrate_d7_migrate_api() {
     'UGProfileKeyword7',
     'UGCourseOutlineCategory7',
     'UGCourseOutlineKeyword7',
+    'UGCourseOutlineSemester7',
+    'UGCourseOutlineLevel7',
+    'UGCourseOutlineAcademicLevel7',
+    'UGCourseOutlineSubject7',
+    'UGCourseOutlineDepartment7',
   );
 
 
@@ -105,14 +110,19 @@ function ug_migrate_d7_migrate_api() {
 
   $profile_arguments = array(
     'source_profile_node_type' => 'profile',
-    'source_profile_term_category' => '',
+    'source_profile_category_vocabulary' => '',
     'source_tags_vocabulary' => '',
   );
 
-  $courseoutline_arguments = array(
+  $course_arguments = array(
     'source_course_node_type' => '',
-    'source_course_term_category' => '',
-    'source_course_term_keyword' => '',
+    'source_course_category_vocabulary' => '',
+    'source_course_keyword_vocabulary' => '',
+    'source_course_academic_level_vocabulary' => '',
+    'source_course_level_vocabulary' => '',
+    'source_course_subject_vocabulary' => '',
+    'source_course_semester_vocabulary' => '',
+    'source_course_department_vocabulary' => '',
   );
   
   /* FILE VARIABLES */
@@ -382,19 +392,56 @@ function ug_migrate_d7_migrate_api() {
       'UGCourseOutlineCategory7' => $common_arguments + array(
         'description' => t('Migration of course outline category terms from Drupal 7'),
         'class_name' => 'UGCourseOutlineCategory7Migration',
-        'source_vocabulary' => $courseoutline_arguments['source_course_term_category'],
+        'source_vocabulary' => $course_arguments['source_course_category_vocabulary'],
         'destination_vocabulary' => 'course_outline_category',
       ),
+
       'UGCourseOutlineKeyword7' => $common_arguments + array(
         'description' => t('Migration of course outline keyword terms from Drupal 7'),
         'class_name' => 'UGCourseOutlineKeyword7Migration',
-        'source_vocabulary' => $courseoutline_arguments['source_course_term_keyword'],
+        'source_vocabulary' => $course_arguments['source_course_keyword_vocabulary'],
         'destination_vocabulary' => 'tags',
       ),
-      'UGCourseOutline7' => $node_arguments + $courseoutline_arguments + array(
+
+      'UGCourseOutlineSemester7' => $common_arguments + array(
+        'description' => t('Migration of course outline term (semester) terms from Drupal 7'),
+        'class_name' => 'UGCourseOutlineSemester7Migration',
+        'source_vocabulary' => $course_arguments['source_course_semester_vocabulary'],
+        'destination_vocabulary' => 'course_outline_term',
+      ),
+
+      'UGCourseOutlineLevel7' => $common_arguments + array(
+        'description' => t('Migration of course outline level terms from Drupal 7'),
+        'class_name' => 'UGCourseOutlineLevel7Migration',
+        'source_vocabulary' => $course_arguments['source_course_level_vocabulary'],
+        'destination_vocabulary' => 'course_outline_level',
+      ),
+
+      'UGCourseOutlineAcademicLevel7' => $common_arguments + array(
+        'description' => t('Migration of course outline academic level terms from Drupal 7'),
+        'class_name' => 'UGCourseOutlineAcademicLevel7Migration',
+        'source_vocabulary' => $course_arguments['source_course_academic_level_vocabulary'],
+        'destination_vocabulary' => 'course_outline_academic_level',
+      ),
+
+      'UGCourseOutlineSubject7' => $common_arguments + array(
+        'description' => t('Migration of course outline subject terms from Drupal 7'),
+        'class_name' => 'UGCourseOutlineSubject7Migration',
+        'source_vocabulary' => $course_arguments['source_course_subject_vocabulary'],
+        'destination_vocabulary' => 'course_outline_subject',
+      ),
+
+      'UGCourseOutlineDepartment7' => $common_arguments + array(
+        'description' => t('Migration of course outline department terms from Drupal 7'),
+        'class_name' => 'UGCourseOutlineDepartment7Migration',
+        'source_vocabulary' => $course_arguments['source_course_department_vocabulary'],
+        'destination_vocabulary' => 'course_outline_department',
+      ),
+
+      'UGCourseOutline7' => $node_arguments + $course_arguments + array(
         'description' => t('Migration of course outlines from Drupal 7'),
         'class_name' => 'UGCourseOutline7Migration',
-        'source_type' => $courseoutline_arguments['source_course_node_type'],
+        'source_type' => $course_arguments['source_course_node_type'],
         'destination_type' => 'course_outline',
         'dependencies' => array('UGFile7'),
       ),
