@@ -663,9 +663,9 @@ class UGUpdateCourseOutline7Migration extends UGUpdate7Migration {
 		    'source_course_name'            => 'field_course_name',
 		    'source_course_code'            => 'field_course_code',
 		    'source_course_section'         => 'field_course_section',
-		    'source_course_body'            => 'body',
-		    'source_course_summary'         => 'body:summary',
-		    'source_course_format'          => 'body:format',
+		    'source_course_body'            => 'field_course_body',
+		    'source_course_summary'         => 'field_course_body:summary',
+		    'source_course_format'          => 'field_course_body:format',
 			'source_course_insert_fields'   => NULL,
 		);
 

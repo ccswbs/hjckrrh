@@ -212,7 +212,7 @@
 		        ->defaultValue(LANGUAGE_NONE);
 				
 			/* Other Course Outline fields */
-			$this->addFieldMapping('field_course_title', $course_arguments['source_field_course_title']);
+			$this->addFieldMapping('field_course_title', $course_arguments['source_course_title']);
 			$this->addFieldMapping('field_course_name',	$course_arguments['source_course_name']);
 			$this->addFieldMapping('field_course_code', $course_arguments['source_course_code']);
 			$this->addFieldMapping('field_course_section', $course_arguments['source_course_section']);
