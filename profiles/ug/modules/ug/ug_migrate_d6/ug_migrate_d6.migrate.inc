@@ -25,7 +25,7 @@ function ug_migrate_d6_migrate_api() {
     'UGUpdateProfile6',
     'UGUpdateBanner6',
     'UGUpdateCourseOutline6',
-    // 'UGUpdateFeaturedItem6',
+    'UGUpdateFeaturedItem6',
   );
 
   $term_migrations = array(
@@ -555,6 +555,14 @@ function ug_migrate_d6_migrate_api() {
         'class_name' => 'UGUpdateBanner6Migration',
         'source_type' => $banner_arguments['source_banner_node_type'], 
         'destination_type' => 'banner',
+        'dependencies' => $node_migrations,
+      ),
+
+     'UGUpdateFeaturedItem6' => $node_arguments + $update_arguments + $featureditem_arguments + array(
+        'description' => t('Update migrated featured item nodes after initial Drupal 6 to Drupal 7 migration'),
+        'class_name' => 'UGUpdateFeaturedItem6Migration',
+        'source_type' => $featureditem_arguments['source_featureditem_node_type'], 
+        'destination_type' => 'feature',
         'dependencies' => $node_migrations,
       ),
 

@@ -655,6 +655,68 @@ class UGUpdateFAQ6Migration extends UGUpdate6Migration {
     }
 }
 
+class UGUpdateFeaturedItem6Migration extends UGUpdate6Migration {
+	public function __construct($arguments) {
+    	parent::__construct($arguments);
+
+	    $this->destination = new MigrateDestinationNode('feature');
+
+	    // DEFAULT arguments
+		$update_arguments = array(
+			'update_nodelinks' => FALSE,
+			'update_nodelinks_urls' => '/node/',
+			'update_hardlinks_source' => '',
+			'update_hardlinks_destination' => '',
+		);
+
+		$featureditem_arguments = array(
+			'source_featureditem_body'                   => 'body',
+			'source_featureditem_summary'                => 'body:summary',
+			'source_featureditem_format'                 => 'body:format',
+			'source_featureditem_image_src_prefix'       => '',
+			'source_featureditem_insert_fields'	         => NULL,
+		);
+
+		//Override default values with arguments if they exist
+		foreach ($featureditem_arguments as $key => $value) {
+		    if(isset($this->arguments[$key])){
+		    	if($this->arguments[$key] != ''){
+			    	$faq_arguments[$key] = $this->arguments[$key];
+		    	}
+		    }
+		}
+
+		//Override default values with arguments if they exist
+		foreach ($update_arguments as $key => $value) {
+		    if(isset($this->arguments[$key])){
+		    	if($this->arguments[$key]!=''){
+			    	$update_arguments[$key] = $this->arguments[$key];
+			    }
+		    }
+		}
+
+	    $this->addFieldMapping('nid', 'nid')
+			->sourceMigration('UGFeaturedItem6');
+		$this->arguments['update_map_table'] = 'migrate_map_ugfeatureditem6';
+    	$this->arguments['update_insert_fields'] = $featureditem_arguments['source_featureditem_insert_fields'];
+    	$this->arguments['update_image_src_prefix'] = $featureditem_arguments['source_featureditem_image_src_prefix'];
+		$this->arguments['update_source_body'] = $featureditem_arguments['source_featureditem_body'];
+
+	    // Update featured item body field
+	    $this->addFieldMapping('field_feature_text', $featureditem_arguments['source_featureditem_body']);
+	    $this->addFieldMapping('field_feature_text:summary', $featureditem_arguments['source_featureditem_summary']);
+
+		// Featured Item Body Format
+		if($featureditem_arguments['source_featureditem_body'] == 'body'){
+		    $this->addFieldMapping( 'field_feature_text:format', $featureditem_arguments['source_featureditem_format'])
+			    ->defaultValue('full_html');
+		}else{
+		    $this->addFieldMapping( 'field_feature_text:format', $featureditem_arguments['source_featureditem_format'])
+			    ->callbacks(array($this, 'mapFormat'))
+			    ->defaultValue('full_html');
+		}
+    }
+}
 
 class UGUpdateProfile6Migration extends UGUpdate6Migration {
 	public function __construct($arguments) {
