@@ -839,8 +839,8 @@ class UGUpdateCourseOutline6Migration extends UGUpdate6Migration {
 		}
 
 	    $this->addFieldMapping('nid', 'nid')
-			->sourceMigration('UGCourseOutline7');
-		$this->arguments['update_map_table'] = 'migrate_map_ugcourseoutline7';
+			->sourceMigration('UGCourseOutline6');
+		$this->arguments['update_map_table'] = 'migrate_map_ugcourseoutline6';
 
 		// Course Outline Title 
 		$this->addFieldMapping('field_course_title', $course_arguments['source_course_title']);
