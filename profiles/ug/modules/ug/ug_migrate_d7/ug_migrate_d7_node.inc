@@ -21,40 +21,59 @@ class UGDrupalNode7Migration extends DrupalNode7Migration {
 		}
 	}
 
-	public function insertUnmappableFields(&$body, &$fields, &$nid){
+	public function insertUnmappableFields(&$body, &$field_inserts, &$nid){
 		$new_body = $body;
 		$top_section = '';
 		$bottom_section = '';
 
-		foreach($fields as $field_name => $field_info){
-			$field_insert = '';
-			$field_query = Database::getConnection('default','legacy_d7')
-				->select($field_info['db_table'],'f')
-				->fields('f',$field_info['db_field_value'])
-				->condition($field_info['db_field_entity_id'],$nid,'LIKE')
-				->execute()
-				->fetchObject();
+		if($new_body != ''){
+			$new_body = $field_inserts['before_target'] . $new_body;
+			$new_body .= $field_inserts['after_target'];
+		}
 
-			$field_value = $field_query->{$field_info['db_field_value'][0]};
+		//loop through field groups
+		foreach($field_inserts['field_groups'] as $field_group){
+			$content_count = 0;
+			$field_group_insert = '';
 
-			if(isset($field_value)){
-				if($field_value != ''){
-					if($field_info['content_before'] != ''){
-						$field_insert .= $field_info['content_before'];
-					}
-					$field_insert .= $field_value;
+			foreach($field_group['fields'] as $field_name => $field_info){
 
-					if($field_info['content_after'] != ''){
-						$field_insert .= $field_info['content_after'];
+				//retrieve value for each field
+				$field_query = Database::getConnection('default','legacy_d7')
+					->select($field_info['db_table'],'f')
+					->fields('f',$field_info['db_field_value'])
+					->condition($field_info['db_field_entity_id'],$nid,'LIKE')
+					->execute()
+					->fetchObject();
+				$field_value = $field_query->{$field_info['db_field_value'][0]};
+
+				// if field value exists, add to 
+				if(isset($field_value)){
+					if($field_value != ''){
+						$content_count++;
+
+						if($field_info['content_before'] != ''){
+							$field_group_insert .= $field_info['content_before'];
+						}
+						$field_group_insert .= $field_value;
+
+						if($field_info['content_after'] != ''){
+							$field_group_insert .= $field_info['content_after'];
+						}
 					}
 				}
 			}
 
-			// place each field in either the top or bottom section
-			if($field_info['placement'] == 'top'){
-				$top_section .= $field_insert;
-			}else{
-				$bottom_section .= $field_insert;
+			if($content_count > 0){
+
+				$field_group_insert = $field_group['content_before'] . $field_group_insert;
+				$field_group_insert .= $field_group['content_after'];
+
+				if($field_group['placement'] == 'top'){
+					$top_section .= $field_group_insert;
+				}else{
+					$bottom_section .= $field_group_insert;
+				}
 			}
 		}
 
