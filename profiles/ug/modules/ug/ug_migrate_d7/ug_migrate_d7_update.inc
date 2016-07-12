@@ -666,7 +666,7 @@ class UGUpdateCourseOutline7Migration extends UGUpdate7Migration {
 		    'source_course_body'            => 'body',
 		    'source_course_summary'         => 'body:summary',
 		    'source_course_format'          => 'body:format',
-			 'source_profile_insert_fields' => NULL,
+			'source_course_insert_fields'   => NULL,
 		);
 
 		//Override default values with arguments if they exist
@@ -700,7 +700,7 @@ class UGUpdateCourseOutline7Migration extends UGUpdate7Migration {
 		$this->addFieldMapping('field_course_section', $course_arguments['source_course_section']);
 
 	    // Update body field
-    	$this->arguments['update_insert_fields'] = $course_arguments['source_profile_insert_fields'];
+    	$this->arguments['update_insert_fields'] = $course_arguments['source_course_insert_fields'];
 		$this->arguments['update_source_body'] = $course_arguments['source_course_body'];
 	    $this->addFieldMapping('field_course_body', $course_arguments['source_course_body']);
 	    $this->addFieldMapping('field_course_body:summary', $course_arguments['source_course_summary']);

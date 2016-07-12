@@ -61,6 +61,7 @@
 			    'source_course_keyword_source_type'          => 'tid',
 			    'source_course_keyword_ignore_case'          => TRUE,
 			    'source_course_keyword_create_term'          => TRUE,
+				'source_course_insert_fields'	             => NULL,
 			);
 
 			//Override default values with arguments if they exist
