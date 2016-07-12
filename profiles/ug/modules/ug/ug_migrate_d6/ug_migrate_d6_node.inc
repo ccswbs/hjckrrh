@@ -24,10 +24,12 @@ class UGDrupalNode6Migration extends DrupalNode6Migration {
 		    $row->{$this->arguments['update_source_body']} = $this->insertUnmappableFields($row->{$this->arguments['update_source_body']}, $this->arguments['update_insert_fields'], $row->nid);
 		}
 
-	    // retrieve inline prefix of image
+	    // retrieve inline prefix of image (use hardlinks destination site stub as inline prefix for image
 		$image_src_prefix = '';
-    	if(isset($this->arguments['update_image_src_prefix'])){
+    	if(isset($this->arguments['update_image_src_prefix']) && $this->arguments['update_image_src_prefix']!=''){
 	    	$image_src_prefix = $this->arguments['update_image_src_prefix'];
+    	}else if(isset($this->arguments['update_hardlinks_destination']) && $this->arguments['update_hardlinks_destination']!=''){
+	    	$image_src_prefix = $this->arguments['update_hardlinks_destination'];
     	}
 
     	// IMAGE ATTACH - insert img attach files into body field
