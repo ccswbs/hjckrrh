@@ -1,6 +1,6 @@
 <?php
 
-	class UGCourseOutline7Migration extends UGDrupalNode7Migration {
+	class UGCourseOutline6Migration extends UGDrupalNode6Migration {
 		public function __construct($arguments) {
 	    	parent::__construct($arguments);
 
@@ -61,6 +61,7 @@
 			    'source_course_keyword_source_type'          => 'tid',
 			    'source_course_keyword_ignore_case'          => TRUE,
 			    'source_course_keyword_create_term'          => TRUE,
+				'source_course_image_src_prefix'             => '',
 				'source_course_insert_fields'	             => NULL,
 			);
 
@@ -75,6 +76,7 @@
 
 			/* INSERT fields into Body variables */
 			$this->arguments['update_source_body'] = $course_arguments['source_course_body'];
+			$this->arguments['update_image_src_prefix'] = $course_arguments['source_course_image_src_prefix'];
 	    	$this->arguments['update_insert_fields'] = $course_arguments['source_course_insert_fields'];
 
 		    /* Course Outline Body */
@@ -97,7 +99,7 @@
 					->defaultValue($course_arguments['source_course_category_default_value']);
 			}else{
 				$this->addFieldMapping('field_course_category', $course_arguments['source_course_category'])
-					->sourceMigration('UGCourseOutlineCategory7');
+					->sourceMigration('UGCourseOutlineCategory6');
 			}
 			$this->addFieldMapping('field_course_category:source_type')
 			     ->defaultValue($course_arguments['source_course_category_source_type']);
@@ -112,7 +114,7 @@
 					->defaultValue($course_arguments['source_course_keyword_default_value']);
 			}else{
 				$this->addFieldMapping('field_tags', $course_arguments['source_course_keyword'])
-					->sourceMigration(array('UGTerm7','UGCourseOutlineKeyword7'));
+					->sourceMigration(array('UGTerm6','UGCourseOutlineKeyword6'));
 			}
 			$this->addFieldMapping('field_tags:source_type')
 			     ->defaultValue($course_arguments['source_course_keyword_source_type']);
@@ -127,7 +129,7 @@
 					->defaultValue($course_arguments['source_course_level_default_value']);
 			}else{
 				$this->addFieldMapping('field_course_level', $course_arguments['source_course_level'])
-					->sourceMigration('UGCourseOutlineLevel7');
+					->sourceMigration('UGCourseOutlineLevel6');
 			}
 			$this->addFieldMapping('field_course_level:source_type')
 			     ->defaultValue($course_arguments['source_course_level_source_type']);
@@ -143,7 +145,7 @@
 					->defaultValue($course_arguments['source_course_academic_level_default_value']);
 			}else{
 				$this->addFieldMapping('field_course_acad_level', $course_arguments['source_course_academic_level'])
-					->sourceMigration('UGCourseOutlineAcademicLevel7');
+					->sourceMigration('UGCourseOutlineAcademicLevel6');
 			}
 			$this->addFieldMapping('field_course_acad_level:source_type')
 			     ->defaultValue($course_arguments['source_course_academic_level_source_type']);
@@ -158,7 +160,7 @@
 					->defaultValue($course_arguments['source_course_semester_default_value']);
 			}else{
 				$this->addFieldMapping('field_course_term', $course_arguments['source_course_semester'])
-					->sourceMigration('UGCourseOutlineSemester7');
+					->sourceMigration('UGCourseOutlineSemester6');
 			}
 			$this->addFieldMapping('field_course_term:source_type')
 			     ->defaultValue($course_arguments['source_course_semester_source_type']);
@@ -173,7 +175,7 @@
 					->defaultValue($course_arguments['source_course_subject_default_value']);
 			}else{
 				$this->addFieldMapping('field_course_subject', $course_arguments['source_course_subject'])
-					->sourceMigration('UGCourseOutlineSubject7');
+					->sourceMigration('UGCourseOutlineSubject6');
 			}
 			$this->addFieldMapping('field_course_subject:source_type')
 			     ->defaultValue($course_arguments['source_course_subject_source_type']);
@@ -188,7 +190,7 @@
 					->defaultValue($course_arguments['source_course_department_default_value']);
 			}else{
 				$this->addFieldMapping('field_course_department', $course_arguments['source_course_department'])
-					->sourceMigration('UGCourseOutlineDepartment7');
+					->sourceMigration('UGCourseOutlineDepartment6');
 			}
 			$this->addFieldMapping('field_course_department:source_type')
 			     ->defaultValue($course_arguments['source_course_department_source_type']);
@@ -199,7 +201,7 @@
 
 			/* Course Outline File Attachments */
 		    $this->addFieldMapping('field_course_attachments', $course_arguments['source_course_attachments'])
-			    ->sourceMigration('UGFile7');
+			    ->sourceMigration('UGFile6');
 			$this->addFieldMapping('field_course_attachments:file_class')
 			    ->defaultValue('MigrateFileFid');
 			$this->addFieldMapping('field_course_attachments:preserve_files')
@@ -210,7 +212,7 @@
 		        ->defaultValue(LANGUAGE_NONE);
 				
 			/* Other Course Outline fields */
-			$this->addFieldMapping('field_course_title', $course_arguments['source_field_course_title']);
+			$this->addFieldMapping('field_course_title', $course_arguments['source_course_title']);
 			$this->addFieldMapping('field_course_name',	$course_arguments['source_course_name']);
 			$this->addFieldMapping('field_course_code', $course_arguments['source_course_code']);
 			$this->addFieldMapping('field_course_section', $course_arguments['source_course_section']);
@@ -221,53 +223,53 @@
 		}
 	}
 
-	class UGCourseOutlineCategory7Migration extends DrupalTerm7Migration {
+	class UGCourseOutlineCategory6Migration extends DrupalTerm6Migration {
 		public function __construct($arguments) {
 	    	parent::__construct($arguments);
 
 		}	
 	}
 
-	class UGCourseOutlineKeyword7Migration extends DrupalTerm7Migration {
+	class UGCourseOutlineKeyword6Migration extends DrupalTerm6Migration {
 		public function __construct($arguments) {
 	    	parent::__construct($arguments);
 
 		}	
 	}
 
-	class UGCourseOutlineSemester7Migration extends DrupalTerm7Migration {
+	class UGCourseOutlineSemester6Migration extends DrupalTerm6Migration {
 		public function __construct($arguments) {
 	    	parent::__construct($arguments);
 
 		}	
 	}
 
-	class UGCourseOutlineLevel7Migration extends DrupalTerm7Migration {
+	class UGCourseOutlineLevel6Migration extends DrupalTerm6Migration {
 		public function __construct($arguments) {
 	    	parent::__construct($arguments);
 
 		}	
 	}
 
-	class UGCourseOutlineAcademicLevel7Migration extends DrupalTerm7Migration {
+	class UGCourseOutlineAcademicLevel6Migration extends DrupalTerm6Migration {
 		public function __construct($arguments) {
 	    	parent::__construct($arguments);
 
 		}	
 	}
 
-	class UGCourseOutlineSubject7Migration extends DrupalTerm7Migration {
+	class UGCourseOutlineSubject6Migration extends DrupalTerm6Migration {
 		public function __construct($arguments) {
 	    	parent::__construct($arguments);
 
 		}	
 	}
 
-	class UGCourseOutlineDepartment7Migration extends DrupalTerm7Migration {
+	class UGCourseOutlineDepartment6Migration extends DrupalTerm6Migration {
 		public function __construct($arguments) {
 	    	parent::__construct($arguments);
 
 		}	
 	}
 
-?>
+

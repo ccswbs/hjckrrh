@@ -452,6 +452,73 @@ $image_src_prefix = $destination_sitestub;
     'source_banner_insert_fields'            => $banner_insert_fields,
   );
 
+/**************************
+*  COURSE OUTLINE Settings
+**************************/
+
+  $course_insert_fields = NULL;
+
+  $course_arguments = array(
+    'source_course_node_type'                    => 'course_outline',
+    'source_course_title'                        => 'field_course_title',
+    'source_course_name'                         => 'field_course_name',
+    'source_course_code'                         => 'field_course_code',
+    'source_course_section'                      => 'field_course_section',
+    'source_course_category'                     => 'field_course_category',
+    'source_course_category_vocabulary'          => 'course_outline_category',
+    'source_course_category_default_value'       => '',
+    'source_course_category_source_type'         => 'tid',
+    'source_course_category_ignore_case'         => TRUE,
+    'source_course_category_create_term'         => TRUE,
+    'source_course_semester'                     => 'field_course_term',
+    'source_course_semester_vocabulary'          => 'course_outline_term',
+    'source_course_semester_default_value'       => '',
+    'source_course_semester_source_type'         => 'tid',
+    'source_course_semester_ignore_case'         => TRUE,
+    'source_course_semester_create_term'         => TRUE,
+    'source_course_level'                        => 'field_course_level',
+    'source_course_level_vocabulary'             => 'course_outline_level',
+    'source_course_level_default_value'          => '',
+    'source_course_level_source_type'            => 'tid',
+    'source_course_level_ignore_case'            => TRUE,
+    'source_course_level_create_term'            => TRUE,
+    'source_course_academic_level'               => 'field_course_acad_level', 
+    'source_course_academic_level_vocabulary'    => 'course_outline_academic_level',
+    'source_course_academic_level_default_value' => '',
+    'source_course_academic_level_source_type'   => 'tid',
+    'source_course_academic_level_ignore_case'   => TRUE,
+    'source_course_academic_level_create_term'   => TRUE,
+    'source_course_subject'                      => 'field_course_subject',
+    'source_course_subject_vocabulary'           => 'course_outline_subject',
+    'source_course_subject_default_value'        => '',
+    'source_course_subject_source_type'          => 'tid',
+    'source_course_subject_ignore_case'          => TRUE,
+    'source_course_subject_create_term'          => TRUE,
+    'source_course_department'                   => 'field_course_department',
+    'source_course_department_vocabulary'        => 'course_outline_department',
+    'source_course_department_default_value'     => '',
+    'source_course_department_source_type'       => 'tid',
+    'source_course_department_ignore_case'       => TRUE,
+    'source_course_department_create_term'       => TRUE,
+    'source_course_instructor'                   => 'field_course_instructor', 
+    'source_course_instructor_url'               => 'field_course_instructor_url',
+    'source_course_body'                         => 'field_course_body',
+    'source_course_summary'                      => 'field_course_body:summary',
+    'source_course_format'                       => 'field_course_body:format',
+    'source_course_website'                      => 'field_course_website',
+    'source_course_attachments'                  => 'field_course_attachments',
+    'source_course_keyword'                      => 'field_tags',
+    'source_course_keyword_vocabulary'           => '',
+    'source_course_keyword_default_value'        => '',
+    'source_course_keyword_source_type'          => 'tid',
+    'source_course_keyword_ignore_case'          => TRUE,
+    'source_course_keyword_create_term'          => TRUE,
+    'source_course_image_src_prefix'             => $image_src_prefix,
+    'source_course_insert_fields'                => $course_insert_fields,
+  );
+
+
+
 
 /**************************
 *  EVENT MULTIPART (Field Collection) Settings
