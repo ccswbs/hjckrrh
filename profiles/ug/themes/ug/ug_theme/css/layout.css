@@ -116,9 +116,9 @@
     }
 
     /* Remove margin-top above headings in panels */
-    .panel-panel h1,
-    .panel-panel h2,
-    .panel-panel h3 {
+    .panel-panel h1.pane-title,
+    .panel-panel h2.pane-title,
+    .panel-panel h3.pane-title {
       margin-top: 0;
     }
 
