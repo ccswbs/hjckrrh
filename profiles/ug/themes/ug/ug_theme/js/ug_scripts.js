@@ -35,3 +35,21 @@ Dropdown Menus
 			});
 		}
 	)
+	
+	/*---------------------------------
+	Bootstrap carousel screenreader fix
+	--------------------------------**/
+	
+	jQuery(
+		// Remove "Current slide" text from old active slide and add it to new one
+		function markCurrentSlide() {
+			$(".carousel-indicators li p.sr-only").remove();
+			$(this).before("<p class='sr-only'>Current slide:</p>");
+		}
+	
+		// Add "Current slide" text to active slide on page load, then move it to new active slide on click
+		$(document).ready(function() {
+			$(".carousel-indicators li.active a").before("<p class='sr-only'>Current slide:</p>");
+			$(".carousel-indicators li a").click(markCurrentSlide);
+		});
+	)
