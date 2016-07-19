@@ -53,16 +53,6 @@ class UGUpdate6Migration extends DrupalNode6Migration {
 		    }
 		}
 
-	    // update source prefix for in-line images & files
-	    if(isset($this->arguments['update_prefix_inline'])) {
-	    	if($this->arguments['update_prefix_inline'] == TRUE){
-		    	$old_prefixes = $this->arguments['update_prefix_source'];
-		    	$new_prefix = $this->arguments['update_prefix_destination'];
-			    $row->{$this->arguments['update_source_body']} = $this->replaceImgTags($row->{$this->arguments['update_source_body']},$old_prefixes, $new_prefix);
-				$row->{$this->arguments['update_source_body']} = $this->replaceLinkUrls($row->{$this->arguments['update_source_body']}, $old_prefixes, $new_prefix);
-			}
-		}
-
 	    // retrieve inline prefix of image (use hardlinks destination site stub as inline prefix for image
 		$image_src_prefix = '';
     	if(isset($this->arguments['update_image_src_prefix']) && $this->arguments['update_image_src_prefix']!=''){
@@ -96,6 +86,18 @@ class UGUpdate6Migration extends DrupalNode6Migration {
     		//reset exception object -- see https://www.drupal.org/node/1706810
 	    	Database::getConnection('default',$this->sourceConnection)->schema()->tableExists('node');
 	    }
+
+	    // FIX INLINE SOURCE PREFIX - update source prefix for in-line images & files
+	    if(isset($this->arguments['update_prefix_inline'])) {
+	    	if($this->arguments['update_prefix_inline'] == TRUE){
+		    	$old_prefixes = $this->arguments['update_prefix_source'];
+		    	$new_prefix = $this->arguments['update_prefix_destination'];
+			    $row->{$this->arguments['update_source_body']} = $this->replaceImgTags($row->{$this->arguments['update_source_body']},$old_prefixes, $new_prefix);
+				$row->{$this->arguments['update_source_body']} = $this->replaceLinkUrls($row->{$this->arguments['update_source_body']}, $old_prefixes, $new_prefix);
+			}
+		}
+
+
 	}
 
 
@@ -256,7 +258,14 @@ class UGUpdate6Migration extends DrupalNode6Migration {
 			$image = $image_query->execute()->fetchObject();
 
 			// Insert img attach file at top of body field
-			$image_src = $image_src_prefix . "/" . conf_path() . "/files/" . file_uri_target($image->uri);
+			$file_wrapper = file_stream_wrapper_get_instance_by_uri($image->uri);
+			if($file_wrapper == FALSE){
+				$file_path = conf_path() . '/files';
+			}else{
+				$file_path = $file_wrapper->getDirectoryPath();
+			}
+
+			$image_src = $image_src_prefix . "/" . $file_path . "/" . file_uri_target($image->uri);
 			$desc = $ia->title;
 
 			$replacement = '<figure class="thumbnail"><img alt="' . $desc .'" class="img-responsive" src="'. $image_src .'" /></figure>';
@@ -311,7 +320,16 @@ class UGUpdate6Migration extends DrupalNode6Migration {
 
 			// Replace img_assist tag with img tag
 			if(strpos($m,'[img_assist') !== false){
-				$image_src = $image_src_prefix . "/" . conf_path() . "/files/" . file_uri_target($dest_results->uri);
+
+				$file_wrapper = file_stream_wrapper_get_instance_by_uri($dest_results->uri);
+				if($file_wrapper == FALSE){
+					$file_path = conf_path() . '/files';
+				}else{
+					$file_path = $file_wrapper->getDirectoryPath();
+				}
+
+				$image_src = $image_src_prefix . "/" . $file_path . "/" . file_uri_target($dest_results->uri);
+
 				preg_match($pattern_desc, $m, $desc_match);
 				$desc = array_shift($desc_match);
 				$replacement = '<figure class="thumbnail"><img alt="' . $desc .'" class="img-responsive" src="'. $image_src .'" /></figure>';
