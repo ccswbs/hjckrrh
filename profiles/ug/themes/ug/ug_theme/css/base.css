@@ -553,4 +553,94 @@ p
   {
     word-wrap: break-word;
   }
+  
+/*---------------------
+Carousel Overrides
+---------------------**/
 
+.carousel-indicators {
+    all: initial;
+    display: table-cell;
+    text-align: center;
+}
+
+.carousel-indicators li {
+    all: initial;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+@media (max-width: 768px) {
+    .carousel-indicators li a {
+        font-size: 12px;
+        padding: 5px 10px;
+    }
+}
+
+.carousel-inner > .item > img {
+    margin-top: 0.5em;
+    margin-bottom: 1em;
+}
+
+.carousel-table {
+    display: table;
+    margin: auto;
+}
+
+.carousel-table a.glyphicon {
+    padding: 6px;
+    top: -10px;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+}
+
+.carousel-table a.glyphicon:hover,
+.carousel-table a.glyphicon:focus {
+    background-color: #eee;
+    text-decoration: none;
+}
+
+.carousel-table a.glyphicon-chevron-left {
+    margin-right: 0.75em;
+}
+
+.carousel-table a.glyphicon-chevron-right {
+    margin-left: 0.75em;
+}
+
+/* Hack for IE 11's lack of support for css all:initial */
+
+_:-ms-fullscreen, :root .carousel-indicators { 
+    position: static;
+    width: auto;
+    margin: 0;
+}
+
+_:-ms-fullscreen, :root .carousel-indicators li { 
+    width: auto;
+    height: auto;
+    text-indent: 0;
+    display: table-cell;
+}
+
+_:-ms-fullscreen, :root .carousel-table a.glyphicon {
+    top: -10px;
+}
+
+/* Hack for MS Edge's inadequate support of css all:initial ' */
+
+@supports (-ms-accelerator:true)  {
+    .carousel-indicators { 
+        position: static;
+        width: auto;
+        margin: 0;
+    }
+    .carousel-indicators li { 
+        width: auto;
+        height: auto;
+        text-indent: 0;
+        display: table-cell;
+    }
+    .carousel-table a.glyphicon {
+        top: -10px;
+    }
+}
