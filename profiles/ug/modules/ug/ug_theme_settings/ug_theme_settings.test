@@ -45,7 +45,7 @@ class UGThemeSettingsTestCase extends DrupalWebTestCase {
       '//www.uoguelph.ca/business/',
       '//www.uoguelph.ca/cpes/',
       '//www.csahs.uoguelph.ca/',
-      '//www.oac.uoguelph.ca/',
+      '//www.uoguelph.ca/oac/',
       '//www.ovc.uoguelph.ca/',
       'http://www.ridgetownc.uoguelph.ca/',
       'http://www.guelphhumber.ca/',
