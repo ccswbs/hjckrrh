@@ -53,6 +53,16 @@ class UGUpdate6Migration extends DrupalNode6Migration {
 		    }
 		}
 
+	    // FIX INLINE SOURCE PREFIX - update source prefix for in-line images & files
+	    if(isset($this->arguments['update_prefix_inline'])) {
+	    	if($this->arguments['update_prefix_inline'] == TRUE){
+		    	$old_prefixes = $this->arguments['update_prefix_source'];
+		    	$new_prefix = $this->arguments['update_prefix_destination'];
+			    $row->{$this->arguments['update_source_body']} = $this->replaceImgTags($row->{$this->arguments['update_source_body']},$old_prefixes, $new_prefix);
+				$row->{$this->arguments['update_source_body']} = $this->replaceLinkUrls($row->{$this->arguments['update_source_body']}, $old_prefixes, $new_prefix);
+			}
+		}
+
 	    // retrieve inline prefix of image (use hardlinks destination site stub as inline prefix for image
 		$image_src_prefix = '';
     	if(isset($this->arguments['update_image_src_prefix']) && $this->arguments['update_image_src_prefix']!=''){
@@ -86,17 +96,6 @@ class UGUpdate6Migration extends DrupalNode6Migration {
     		//reset exception object -- see https://www.drupal.org/node/1706810
 	    	Database::getConnection('default',$this->sourceConnection)->schema()->tableExists('node');
 	    }
-
-	    // FIX INLINE SOURCE PREFIX - update source prefix for in-line images & files
-	    if(isset($this->arguments['update_prefix_inline'])) {
-	    	if($this->arguments['update_prefix_inline'] == TRUE){
-		    	$old_prefixes = $this->arguments['update_prefix_source'];
-		    	$new_prefix = $this->arguments['update_prefix_destination'];
-			    $row->{$this->arguments['update_source_body']} = $this->replaceImgTags($row->{$this->arguments['update_source_body']},$old_prefixes, $new_prefix);
-				$row->{$this->arguments['update_source_body']} = $this->replaceLinkUrls($row->{$this->arguments['update_source_body']}, $old_prefixes, $new_prefix);
-			}
-		}
-
 
 	}
 
