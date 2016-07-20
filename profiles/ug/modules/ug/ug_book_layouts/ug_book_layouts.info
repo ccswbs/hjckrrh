@@ -1,7 +1,7 @@
 name = UG Book Layouts
 core = 7.x
 package = UG
-version = 7.x-5.0
+version = 7.x-6.1
 dependencies[] = page_manager
 dependencies[] = ug_book
 features[ctools][] = page_manager:pages_default:1
