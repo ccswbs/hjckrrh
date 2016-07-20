@@ -36,3 +36,24 @@ function ug_install() {
   user_role_grant_permissions(DRUPAL_ANONYMOUS_RID, array('access content'));
   user_role_grant_permissions(DRUPAL_AUTHENTICATED_RID, array('access content'));
 }
+
+/**
+ * Cleanup missing modules from the system table.
+ */
+function ug_update_7700(&$sandbox) {
+  // Code copied from module_missing_message_fixer module.
+  // Grab all the modules in the system table.
+  $query = db_query("SELECT filename, type, name FROM {system}");
+  // Go through the query and check to see if the module exists in the directory.
+  foreach ($query->fetchAll() as $record) {
+    // Grab the checker.
+    $check = drupal_get_filename($record->type, $record->name, $record->filename, FALSE);
+    // If drupal_get_filename returns null = we got problems.
+    if (is_null($check) && $record->name != 'default') {
+      db_delete('system')
+        ->condition('name', array($record->name), 'IN')
+        ->execute();
+    }
+  }
+}
+
