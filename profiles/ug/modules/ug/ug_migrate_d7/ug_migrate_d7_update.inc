@@ -64,41 +64,59 @@ class UGUpdate7Migration extends DrupalNode7Migration {
 		}
 	}
 
-
-	public function insertUnmappableFields(&$body, &$fields, &$nid){
+	public function insertUnmappableFields(&$body, &$field_inserts, &$nid){
 		$new_body = $body;
 		$top_section = '';
 		$bottom_section = '';
 
-		foreach($fields as $field_name => $field_info){
-			$field_insert = '';
-			$field_query = Database::getConnection('default','legacy_d7')
-				->select($field_info['db_table'],'f')
-				->fields('f',$field_info['db_field_value'])
-				->condition($field_info['db_field_entity_id'],$nid,'LIKE')
-				->execute()
-				->fetchObject();
+		if($new_body != ''){
+			$new_body = $field_inserts['before_target'] . $new_body;
+			$new_body .= $field_inserts['after_target'];
+		}
 
-			$field_value = $field_query->{$field_info['db_field_value'][0]};
+		//loop through field groups
+		foreach($field_inserts['field_groups'] as $field_group){
+			$content_count = 0;
+			$field_group_insert = '';
 
-			if(isset($field_value)){
-				if($field_value != ''){
-					if($field_info['content_before'] != ''){
-						$field_insert .= $field_info['content_before'];
-					}
-					$field_insert .= $field_value;
+			foreach($field_group['fields'] as $field_name => $field_info){
 
-					if($field_info['content_after'] != ''){
-						$field_insert .= $field_info['content_after'];
+				//retrieve value for each field
+				$field_query = Database::getConnection('default','legacy_d7')
+					->select($field_info['db_table'],'f')
+					->fields('f',$field_info['db_field_value'])
+					->condition($field_info['db_field_entity_id'],$nid,'LIKE')
+					->execute()
+					->fetchObject();
+				$field_value = $field_query->{$field_info['db_field_value'][0]};
+
+				// if field value exists, add to 
+				if(isset($field_value)){
+					if($field_value != ''){
+						$content_count++;
+
+						if($field_info['content_before'] != ''){
+							$field_group_insert .= $field_info['content_before'];
+						}
+						$field_group_insert .= $field_value;
+
+						if($field_info['content_after'] != ''){
+							$field_group_insert .= $field_info['content_after'];
+						}
 					}
 				}
 			}
 
-			// place each field in either the top or bottom section
-			if($field_info['placement'] == 'top'){
-				$top_section .= $field_insert;
-			}else{
-				$bottom_section .= $field_insert;
+			if($content_count > 0){
+
+				$field_group_insert = $field_group['content_before'] . $field_group_insert;
+				$field_group_insert .= $field_group['content_after'];
+
+				if($field_group['placement'] == 'top'){
+					$top_section .= $field_group_insert;
+				}else{
+					$bottom_section .= $field_group_insert;
+				}
 			}
 		}
 
@@ -618,6 +636,81 @@ class UGUpdateProfile7Migration extends UGUpdate7Migration {
 			    ->defaultValue('full_html');
 		}else{
 			$this->addFieldMapping('field_profile_summary:format', $profile_arguments['source_profile_format'])
+			    ->callbacks(array($this, 'mapFormat'))
+			    ->defaultValue('full_html');
+		}
+	}
+}
+
+
+class UGUpdateCourseOutline7Migration extends UGUpdate7Migration {
+	public function __construct($arguments) {
+    	parent::__construct($arguments);
+
+		$this->destination = new MigrateDestinationNode('course_outline');
+
+	    /* DEFAULT arguments */
+		$update_arguments = array(
+			'update_nodelinks' => FALSE,
+			'update_nodelinks_urls' => '/node/',
+			'update_hardlinks_source' => '',
+			'update_hardlinks_destination' => '',
+		);
+
+		/* DEFAULT arguments */
+		$course_arguments = array(
+		    'source_course_title'           => 'field_course_title',
+		    'source_course_name'            => 'field_course_name',
+		    'source_course_code'            => 'field_course_code',
+		    'source_course_section'         => 'field_course_section',
+		    'source_course_body'            => 'field_course_body',
+		    'source_course_summary'         => 'field_course_body:summary',
+		    'source_course_format'          => 'field_course_body:format',
+			'source_course_insert_fields'   => NULL,
+		);
+
+		//Override default values with arguments if they exist
+		foreach ($course_arguments as $key => $value) {
+		    if(isset($this->arguments[$key])){
+		    	if($this->arguments[$key] != ''){
+			    	$course_arguments[$key] = $this->arguments[$key];
+			    }
+		    }
+		}
+
+		//Override default values with arguments if they exist
+		foreach ($update_arguments as $key => $value) {
+		    if(isset($this->arguments[$key])){
+		    	if($this->arguments[$key]!=''){
+			    	$update_arguments[$key] = $this->arguments[$key];
+			    }
+		    }
+		}
+
+	    $this->addFieldMapping('nid', 'nid')
+			->sourceMigration('UGCourseOutline7');
+		$this->arguments['update_map_table'] = 'migrate_map_ugcourseoutline7';
+
+		// Course Outline Title 
+		$this->addFieldMapping('field_course_title', $course_arguments['source_course_title']);
+
+		// Course Outline Name, Course, and Section
+		$this->addFieldMapping('field_course_name', $course_arguments['source_course_name']);
+		$this->addFieldMapping('field_course_code', $course_arguments['source_course_code']);
+		$this->addFieldMapping('field_course_section', $course_arguments['source_course_section']);
+
+	    // Update body field
+    	$this->arguments['update_insert_fields'] = $course_arguments['source_course_insert_fields'];
+		$this->arguments['update_source_body'] = $course_arguments['source_course_body'];
+	    $this->addFieldMapping('field_course_body', $course_arguments['source_course_body']);
+	    $this->addFieldMapping('field_course_body:summary', $course_arguments['source_course_summary']);
+
+		// Course Outline Body Format
+		if($course_arguments['source_course_body'] == 'body'){
+		    $this->addFieldMapping( 'field_course_body:format', $course_arguments['source_course_format'])
+			    ->defaultValue('full_html');
+		}else{
+		    $this->addFieldMapping( 'field_course_body:format', $course_arguments['source_course_format'])
 			    ->callbacks(array($this, 'mapFormat'))
 			    ->defaultValue('full_html');
 		}

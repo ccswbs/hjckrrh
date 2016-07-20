@@ -53,7 +53,7 @@ class UGUpdate6Migration extends DrupalNode6Migration {
 		    }
 		}
 
-	    // update source prefix for in-line images & files
+	    // FIX INLINE SOURCE PREFIX - update source prefix for in-line images & files
 	    if(isset($this->arguments['update_prefix_inline'])) {
 	    	if($this->arguments['update_prefix_inline'] == TRUE){
 		    	$old_prefixes = $this->arguments['update_prefix_source'];
@@ -63,9 +63,11 @@ class UGUpdate6Migration extends DrupalNode6Migration {
 			}
 		}
 
-	    // use hardlinks destination site stub as inline prefix for image
+	    // retrieve inline prefix of image (use hardlinks destination site stub as inline prefix for image
 		$image_src_prefix = '';
-    	if(isset($this->arguments['update_hardlinks_destination'])){
+    	if(isset($this->arguments['update_image_src_prefix']) && $this->arguments['update_image_src_prefix']!=''){
+	    	$image_src_prefix = $this->arguments['update_image_src_prefix'];
+    	}else if(isset($this->arguments['update_hardlinks_destination']) && $this->arguments['update_hardlinks_destination']!=''){
 	    	$image_src_prefix = $this->arguments['update_hardlinks_destination'];
     	}
 
@@ -94,6 +96,7 @@ class UGUpdate6Migration extends DrupalNode6Migration {
     		//reset exception object -- see https://www.drupal.org/node/1706810
 	    	Database::getConnection('default',$this->sourceConnection)->schema()->tableExists('node');
 	    }
+
 	}
 
 
@@ -254,7 +257,14 @@ class UGUpdate6Migration extends DrupalNode6Migration {
 			$image = $image_query->execute()->fetchObject();
 
 			// Insert img attach file at top of body field
-			$image_src = $image_src_prefix . "/" . conf_path() . "/files/" . file_uri_target($image->uri);
+			$file_wrapper = file_stream_wrapper_get_instance_by_uri($image->uri);
+			if($file_wrapper == FALSE){
+				$file_path = conf_path() . '/files';
+			}else{
+				$file_path = $file_wrapper->getDirectoryPath();
+			}
+
+			$image_src = $image_src_prefix . "/" . $file_path . "/" . file_uri_target($image->uri);
 			$desc = $ia->title;
 
 			$replacement = '<figure class="thumbnail"><img alt="' . $desc .'" class="img-responsive" src="'. $image_src .'" /></figure>';
@@ -309,7 +319,16 @@ class UGUpdate6Migration extends DrupalNode6Migration {
 
 			// Replace img_assist tag with img tag
 			if(strpos($m,'[img_assist') !== false){
-				$image_src = $image_src_prefix . "/" . conf_path() . "/files/" . file_uri_target($dest_results->uri);
+
+				$file_wrapper = file_stream_wrapper_get_instance_by_uri($dest_results->uri);
+				if($file_wrapper == FALSE){
+					$file_path = conf_path() . '/files';
+				}else{
+					$file_path = $file_wrapper->getDirectoryPath();
+				}
+
+				$image_src = $image_src_prefix . "/" . $file_path . "/" . file_uri_target($dest_results->uri);
+
 				preg_match($pattern_desc, $m, $desc_match);
 				$desc = array_shift($desc_match);
 				$replacement = '<figure class="thumbnail"><img alt="' . $desc .'" class="img-responsive" src="'. $image_src .'" /></figure>';
@@ -417,6 +436,7 @@ class UGUpdatePage6Migration extends UGUpdate6Migration {
 			'source_page_body' => 'body',
 			'source_page_summary' => 'body:summary',
 			'source_page_format' => 'body:format',
+			'source_page_image_src_prefix' => '',
 			'source_page_insert_fields' => NULL,
 		);
 
@@ -442,6 +462,7 @@ class UGUpdatePage6Migration extends UGUpdate6Migration {
 			->sourceMigration('UGPage6');
 		$this->arguments['update_map_table'] = 'migrate_map_ugpage6';
     	$this->arguments['update_insert_fields'] = $page_arguments['source_page_insert_fields'];
+    	$this->arguments['update_image_src_prefix'] = $page_arguments['source_page_image_src_prefix'];
 
 	    // Update body field
 		$this->arguments['update_source_body'] = $page_arguments['source_page_body'];
@@ -481,6 +502,7 @@ class UGUpdateNews6Migration extends UGUpdate6Migration {
 			'source_news_body' => 'body',
 			'source_news_summary' => 'body:summary',
 			'source_news_format' => 'body:format',
+			'source_news_image_src_prefix' => '',
 			'source_news_insert_fields' => NULL,
 		);
 
@@ -506,6 +528,7 @@ class UGUpdateNews6Migration extends UGUpdate6Migration {
 			->sourceMigration('UGNews6');
 		$this->arguments['update_map_table'] = 'migrate_map_ugnews6';
     	$this->arguments['update_insert_fields'] = $news_arguments['source_news_insert_fields'];
+    	$this->arguments['update_image_src_prefix'] = $news_arguments['source_news_image_src_prefix'];
 
 	    // Update body field
 		$this->arguments['update_source_body'] = $news_arguments['source_news_body'];
@@ -542,6 +565,7 @@ class UGUpdateEvent6Migration extends UGUpdate6Migration {
 			'source_event_body' => 'body',
 			'source_event_summary' => 'body:summary',
 			'source_event_format' => 'body:format',
+			'source_event_image_src_prefix' => '',
 			'source_event_insert_fields' => NULL,
 		);
 
@@ -567,6 +591,7 @@ class UGUpdateEvent6Migration extends UGUpdate6Migration {
 			->sourceMigration('UGEvent6');
 		$this->arguments['update_map_table'] = 'migrate_map_ugevent6';
     	$this->arguments['update_insert_fields'] = $event_arguments['source_event_insert_fields'];
+    	$this->arguments['update_image_src_prefix'] = $event_arguments['source_event_image_src_prefix'];
 
 	    // Update body field
 		$this->arguments['update_source_body'] = $event_arguments['source_event_body'];
@@ -603,6 +628,7 @@ class UGUpdateFAQ6Migration extends UGUpdate6Migration {
 		$faq_arguments = array(
 			'source_faq_answer' => 'body',
 			'source_faq_format' => 'body:format',
+			'source_faq_image_src_prefix' => '',
 			'source_faq_insert_fields' => NULL,
 		);
 
@@ -628,6 +654,7 @@ class UGUpdateFAQ6Migration extends UGUpdate6Migration {
 			->sourceMigration('UGFAQ6');
 		$this->arguments['update_map_table'] = 'migrate_map_ugfaq6';
     	$this->arguments['update_insert_fields'] = $faq_arguments['source_faq_insert_fields'];
+    	$this->arguments['update_image_src_prefix'] = $faq_arguments['source_faq_image_src_prefix'];
 
 	    // Update field_faq_answer field
 		$this->arguments['update_source_body'] = $faq_arguments['source_faq_answer'];
@@ -645,6 +672,68 @@ class UGUpdateFAQ6Migration extends UGUpdate6Migration {
     }
 }
 
+class UGUpdateFeaturedItem6Migration extends UGUpdate6Migration {
+	public function __construct($arguments) {
+    	parent::__construct($arguments);
+
+	    $this->destination = new MigrateDestinationNode('feature');
+
+	    // DEFAULT arguments
+		$update_arguments = array(
+			'update_nodelinks' => FALSE,
+			'update_nodelinks_urls' => '/node/',
+			'update_hardlinks_source' => '',
+			'update_hardlinks_destination' => '',
+		);
+
+		$featureditem_arguments = array(
+			'source_featureditem_body'                   => 'body',
+			'source_featureditem_summary'                => 'body:summary',
+			'source_featureditem_format'                 => 'body:format',
+			'source_featureditem_image_src_prefix'       => '',
+			'source_featureditem_insert_fields'	         => NULL,
+		);
+
+		//Override default values with arguments if they exist
+		foreach ($featureditem_arguments as $key => $value) {
+		    if(isset($this->arguments[$key])){
+		    	if($this->arguments[$key] != ''){
+			    	$faq_arguments[$key] = $this->arguments[$key];
+		    	}
+		    }
+		}
+
+		//Override default values with arguments if they exist
+		foreach ($update_arguments as $key => $value) {
+		    if(isset($this->arguments[$key])){
+		    	if($this->arguments[$key]!=''){
+			    	$update_arguments[$key] = $this->arguments[$key];
+			    }
+		    }
+		}
+
+	    $this->addFieldMapping('nid', 'nid')
+			->sourceMigration('UGFeaturedItem6');
+		$this->arguments['update_map_table'] = 'migrate_map_ugfeatureditem6';
+    	$this->arguments['update_insert_fields'] = $featureditem_arguments['source_featureditem_insert_fields'];
+    	$this->arguments['update_image_src_prefix'] = $featureditem_arguments['source_featureditem_image_src_prefix'];
+		$this->arguments['update_source_body'] = $featureditem_arguments['source_featureditem_body'];
+
+	    // Update featured item body field
+	    $this->addFieldMapping('field_feature_text', $featureditem_arguments['source_featureditem_body']);
+	    $this->addFieldMapping('field_feature_text:summary', $featureditem_arguments['source_featureditem_summary']);
+
+		// Featured Item Body Format
+		if($featureditem_arguments['source_featureditem_body'] == 'body'){
+		    $this->addFieldMapping( 'field_feature_text:format', $featureditem_arguments['source_featureditem_format'])
+			    ->defaultValue('full_html');
+		}else{
+		    $this->addFieldMapping( 'field_feature_text:format', $featureditem_arguments['source_featureditem_format'])
+			    ->callbacks(array($this, 'mapFormat'))
+			    ->defaultValue('full_html');
+		}
+    }
+}
 
 class UGUpdateProfile6Migration extends UGUpdate6Migration {
 	public function __construct($arguments) {
@@ -667,6 +756,7 @@ class UGUpdateProfile6Migration extends UGUpdate6Migration {
 		    'source_profile_lastname'      => 'field_profile_lastname',
 			'source_profile_summary'       => 'field_profile_summary',
 			'source_profile_format'        => 'field_profile_summary:format',
+			'source_profile_image_src_prefix' => '',
 		    'source_profile_insert_fields' => NULL,
 		);
 
@@ -692,6 +782,7 @@ class UGUpdateProfile6Migration extends UGUpdate6Migration {
 			->sourceMigration('UGProfile6');
 		$this->arguments['update_map_table'] = 'migrate_map_ugprofile6';
     	$this->arguments['update_insert_fields'] = $profile_arguments['source_profile_insert_fields'];
+    	$this->arguments['update_image_src_prefix'] = $profile_arguments['source_profile_image_src_prefix'];
 
 		/* Profile Title */
 		$this->addFieldMapping('field_profile_title', $profile_arguments['source_profile_title']);
@@ -734,6 +825,7 @@ class UGUpdateBanner6Migration extends UGUpdate6Migration {
 		$banner_arguments = array(
 		  'source_banner_text'                     => 'field_banner_text',
 		  'source_banner_text_format'              => 'field_banner_text:format',
+		  'source_banner_image_src_prefix'         => '',
 		  'source_banner_insert_fields'            => NULL,
 		);
 
@@ -759,6 +851,7 @@ class UGUpdateBanner6Migration extends UGUpdate6Migration {
 			->sourceMigration('UGBanner6');
 		$this->arguments['update_map_table'] = 'migrate_map_ugbanner6';
     	$this->arguments['update_insert_fields'] = $banner_arguments['source_banner_insert_fields'];
+    	$this->arguments['update_image_src_prefix'] = $banner_arguments['source_banner_image_src_prefix'];
 
 	    // Update Banner Text field
 		$this->arguments['update_source_body'] = $banner_arguments['source_banner_text'];
@@ -777,6 +870,83 @@ class UGUpdateBanner6Migration extends UGUpdate6Migration {
     }
 }
 
+
+
+class UGUpdateCourseOutline6Migration extends UGUpdate6Migration {
+	public function __construct($arguments) {
+    	parent::__construct($arguments);
+
+		$this->destination = new MigrateDestinationNode('course_outline');
+
+	    /* DEFAULT arguments */
+		$update_arguments = array(
+			'update_nodelinks' => FALSE,
+			'update_nodelinks_urls' => '/node/',
+			'update_hardlinks_source' => '',
+			'update_hardlinks_destination' => '',
+		);
+
+		/* DEFAULT arguments */
+		$course_arguments = array(
+		    'source_course_title'            => 'field_course_title',
+		    'source_course_name'             => 'field_course_name',
+		    'source_course_code'             => 'field_course_code',
+		    'source_course_section'          => 'field_course_section',
+		    'source_course_body'             => 'field_course_body',
+		    'source_course_summary'          => 'field_course_body:summary',
+		    'source_course_format'           => 'field_course_body:format',
+		    'source_course_image_src_prefix' => '',
+			'source_course_insert_fields'    => NULL,
+		);
+
+		//Override default values with arguments if they exist
+		foreach ($course_arguments as $key => $value) {
+		    if(isset($this->arguments[$key])){
+		    	if($this->arguments[$key] != ''){
+			    	$course_arguments[$key] = $this->arguments[$key];
+			    }
+		    }
+		}
+
+		//Override default values with arguments if they exist
+		foreach ($update_arguments as $key => $value) {
+		    if(isset($this->arguments[$key])){
+		    	if($this->arguments[$key]!=''){
+			    	$update_arguments[$key] = $this->arguments[$key];
+			    }
+		    }
+		}
+
+	    $this->addFieldMapping('nid', 'nid')
+			->sourceMigration('UGCourseOutline6');
+		$this->arguments['update_map_table'] = 'migrate_map_ugcourseoutline6';
+
+		// Course Outline Title 
+		$this->addFieldMapping('field_course_title', $course_arguments['source_course_title']);
+
+		// Course Outline Name, Course, and Section
+		$this->addFieldMapping('field_course_name', $course_arguments['source_course_name']);
+		$this->addFieldMapping('field_course_code', $course_arguments['source_course_code']);
+		$this->addFieldMapping('field_course_section', $course_arguments['source_course_section']);
+
+	    // Update body field
+    	$this->arguments['update_insert_fields'] = $course_arguments['source_course_insert_fields'];
+    	$this->arguments['update_image_src_prefix'] = $course_arguments['source_course_image_src_prefix'];
+		$this->arguments['update_source_body'] = $course_arguments['source_course_body'];
+	    $this->addFieldMapping('field_course_body', $course_arguments['source_course_body']);
+	    $this->addFieldMapping('field_course_body:summary', $course_arguments['source_course_summary']);
+
+		// Course Outline Body Format
+		if($course_arguments['source_course_body'] == 'body'){
+		    $this->addFieldMapping( 'field_course_body:format', $course_arguments['source_course_format'])
+			    ->defaultValue('full_html');
+		}else{
+		    $this->addFieldMapping( 'field_course_body:format', $course_arguments['source_course_format'])
+			    ->callbacks(array($this, 'mapFormat'))
+			    ->defaultValue('full_html');
+		}
+	}
+}
 
 
 ?>
