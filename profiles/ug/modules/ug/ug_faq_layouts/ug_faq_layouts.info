@@ -1,6 +1,6 @@
 name = UG FAQ Layouts
 core = 7.x
-version = 7.x-6.1
+version = 7.x-7.x-dev
 package = UG
 dependencies[] = ctools
 dependencies[] = page_manager
