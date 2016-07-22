@@ -33,10 +33,10 @@ function ug_theme_theme_menu_link(array $variables) {
 
   //0VERRIDE - add aria-describedby current page label
   if(in_array('active', $element['#attributes']['class'])){
-    //$element['#localized_options']['attributes']['aria-describedby'] = 'current_submenu';
-    //$element['#title'] .= '<span id="current_submenu" class="hidden"> (current page)</span>';
     $element['#title'] .= '<span class="sr-only"> (current page)</span>';
     $element['#localized_options']['html'] = TRUE;
+    $element['#localized_options']['attributes']['class'][] = 'active-trail';
+    $element['#attributes']['class'][] = 'active-trail';
   }
 
   $output = l($element['#title'], $element['#href'], $element['#localized_options']);
