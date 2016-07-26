@@ -256,6 +256,27 @@ function ug_course_outlines_views_default_views() {
   );
   $handler->display->display_options['filters']['field_course_subject_tid']['type'] = 'select';
   $handler->display->display_options['filters']['field_course_subject_tid']['vocabulary'] = 'course_outline_subject';
+  /* Filter criterion: Content: Course term (field_course_term) */
+  $handler->display->display_options['filters']['field_course_term_tid']['id'] = 'field_course_term_tid';
+  $handler->display->display_options['filters']['field_course_term_tid']['table'] = 'field_data_field_course_term';
+  $handler->display->display_options['filters']['field_course_term_tid']['field'] = 'field_course_term_tid';
+  $handler->display->display_options['filters']['field_course_term_tid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_course_term_tid']['expose']['operator_id'] = 'field_course_term_tid_op';
+  $handler->display->display_options['filters']['field_course_term_tid']['expose']['label'] = 'Term';
+  $handler->display->display_options['filters']['field_course_term_tid']['expose']['operator'] = 'field_course_term_tid_op';
+  $handler->display->display_options['filters']['field_course_term_tid']['expose']['identifier'] = 'field_course_term_tid';
+  $handler->display->display_options['filters']['field_course_term_tid']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    3 => 0,
+    4 => 0,
+    5 => 0,
+    6 => 0,
+    7 => 0,
+  );
+  $handler->display->display_options['filters']['field_course_term_tid']['type'] = 'select';
+  $handler->display->display_options['filters']['field_course_term_tid']['vocabulary'] = 'course_outline_term';
+  $handler->display->display_options['filters']['field_course_term_tid']['error_message'] = FALSE;
 
   /* Display: Content pane */
   $handler = $view->new_display('panel_pane', 'Content pane', 'panel_pane_1');
