@@ -236,26 +236,6 @@ function ug_course_outlines_views_default_views() {
     6 => 0,
     7 => 0,
   );
-  /* Filter criterion: Content: Academic level (field_course_acad_level) */
-  $handler->display->display_options['filters']['field_course_acad_level_tid']['id'] = 'field_course_acad_level_tid';
-  $handler->display->display_options['filters']['field_course_acad_level_tid']['table'] = 'field_data_field_course_acad_level';
-  $handler->display->display_options['filters']['field_course_acad_level_tid']['field'] = 'field_course_acad_level_tid';
-  $handler->display->display_options['filters']['field_course_acad_level_tid']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_course_acad_level_tid']['expose']['operator_id'] = 'field_course_acad_level_tid_op';
-  $handler->display->display_options['filters']['field_course_acad_level_tid']['expose']['label'] = 'Academic level';
-  $handler->display->display_options['filters']['field_course_acad_level_tid']['expose']['operator'] = 'field_course_acad_level_tid_op';
-  $handler->display->display_options['filters']['field_course_acad_level_tid']['expose']['identifier'] = 'field_course_acad_level_tid';
-  $handler->display->display_options['filters']['field_course_acad_level_tid']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    3 => 0,
-    4 => 0,
-    5 => 0,
-    6 => 0,
-    7 => 0,
-  );
-  $handler->display->display_options['filters']['field_course_acad_level_tid']['type'] = 'select';
-  $handler->display->display_options['filters']['field_course_acad_level_tid']['vocabulary'] = 'course_outline_academic_level';
 
   /* Display: Content pane */
   $handler = $view->new_display('panel_pane', 'Content pane', 'panel_pane_1');
