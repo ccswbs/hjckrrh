@@ -116,8 +116,7 @@ function ug_course_outlines_views_default_views() {
   $handler->display->display_options['fields']['field_course_term']['id'] = 'field_course_term';
   $handler->display->display_options['fields']['field_course_term']['table'] = 'field_data_field_course_term';
   $handler->display->display_options['fields']['field_course_term']['field'] = 'field_course_term';
-  $handler->display->display_options['fields']['field_course_term']['label'] = '';
-  $handler->display->display_options['fields']['field_course_term']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_course_term']['label'] = 'Term';
   $handler->display->display_options['fields']['field_course_term']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_course_term']['type'] = 'taxonomy_term_reference_plain';
   /* Field: Content: Course code */
