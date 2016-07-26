@@ -222,7 +222,6 @@ function ug_course_outlines_views_default_views() {
     6 => 0,
     7 => 0,
   );
-<<<<<<< HEAD
   /* Filter criterion: Content: Subject (field_course_subject) */
   $handler->display->display_options['filters']['field_course_subject_tid']['id'] = 'field_course_subject_tid';
   $handler->display->display_options['filters']['field_course_subject_tid']['table'] = 'field_data_field_course_subject';
@@ -264,8 +263,6 @@ function ug_course_outlines_views_default_views() {
   $handler->display->display_options['filters']['field_course_term_tid']['type'] = 'select';
   $handler->display->display_options['filters']['field_course_term_tid']['vocabulary'] = 'course_outline_term';
   $handler->display->display_options['filters']['field_course_term_tid']['error_message'] = FALSE;
-=======
->>>>>>> Remove academic level filter from course outlines view
 
   /* Display: Content pane */
   $handler = $view->new_display('panel_pane', 'Content pane', 'panel_pane_1');
