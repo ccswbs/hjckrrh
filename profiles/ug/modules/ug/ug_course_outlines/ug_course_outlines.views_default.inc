@@ -154,7 +154,6 @@ function ug_course_outlines_views_default_views() {
   $handler->display->display_options['arguments']['tid_1']['id'] = 'tid_1';
   $handler->display->display_options['arguments']['tid_1']['table'] = 'taxonomy_index';
   $handler->display->display_options['arguments']['tid_1']['field'] = 'tid';
-  $handler->display->display_options['arguments']['tid_1']['default_action'] = 'default';
   $handler->display->display_options['arguments']['tid_1']['title_enable'] = TRUE;
   $handler->display->display_options['arguments']['tid_1']['title'] = '%1 Course Outlines';
   $handler->display->display_options['arguments']['tid_1']['default_argument_type'] = 'fixed';
@@ -166,6 +165,7 @@ function ug_course_outlines_views_default_views() {
   $handler->display->display_options['arguments']['tid_1']['validate']['type'] = 'taxonomy_term';
   $handler->display->display_options['arguments']['tid_1']['validate_options']['vocabularies'] = array(
     'course_outline_category' => 'course_outline_category',
+    'tags' => 'tags',
   );
   /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
