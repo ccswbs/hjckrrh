@@ -15,6 +15,7 @@ function ug_migrate_d7_migrate_api() {
     'UGFeaturedItem7',
     'UGProfile7',
     'UGCourseOutline7',
+    'UGBanner7'
   );
 
   $update_migrations = array(
@@ -25,6 +26,7 @@ function ug_migrate_d7_migrate_api() {
     'UGUpdateFeaturedItem7',
     'UGUpdateProfile7',
     'UGUpdateCourseOutline7',
+    'UGUpdateBanner7',
   );
 
   $term_migrations = array(
@@ -48,6 +50,8 @@ function ug_migrate_d7_migrate_api() {
     'UGCourseOutlineAcademicLevel7',
     'UGCourseOutlineSubject7',
     'UGCourseOutlineDepartment7',
+    'UGBannerCategory7',
+    'UGBannerKeyword7',
   );
 
 
@@ -124,6 +128,12 @@ function ug_migrate_d7_migrate_api() {
     'source_course_subject_vocabulary' => '',
     'source_course_semester_vocabulary' => '',
     'source_course_department_vocabulary' => '',
+  );
+
+  $banner_arguments = array(
+    'source_banner_node_type' => 'banner',
+    'source_banner_category_vocabulary' => '',
+    'source_banner_keyword_vocabulary' => '',
   );
   
   /* FILE VARIABLES */
@@ -447,6 +457,29 @@ function ug_migrate_d7_migrate_api() {
         'dependencies' => array('UGFile7'),
       ),
 
+      /**** BANNER migration ****/
+      'UGBannerKeyword7' => $common_arguments + array(
+        'description' => t('Migration of Banner keyword terms from Drupal 7'),
+        'class_name' => 'UGBannerKeyword7Migration',
+        'source_vocabulary' => $banner_arguments['source_banner_keyword_vocabulary'],
+        'destination_vocabulary' => 'tags',
+      ),
+
+      'UGBannerCategory7' => $common_arguments + array(
+        'description' => t('Migration of Banner category terms from Drupal 7'),
+        'class_name' => 'UGBannerCategory7Migration',
+        'source_vocabulary' => $banner_arguments['source_banner_category_vocabulary'],
+        'destination_vocabulary' => 'banner_category',
+      ),
+
+      'UGBanner7' => $node_arguments + $banner_arguments + array(
+        'description' => t('Migration of Banner from Drupal 7'),
+        'class_name' => 'UGBanner7Migration',
+        'source_type' => $banner_arguments['source_banner_node_type'], 
+        'destination_type' => 'banner',
+        'dependencies' => array('UGFile7'),
+      ),
+
       /**** MENU migration ****/
       'UGMenu7' => $menu_arguments + array(
         'description' => t('Migration of menus from Drupal 7'),
@@ -516,6 +549,14 @@ function ug_migrate_d7_migrate_api() {
         'class_name' => 'UGUpdateCourseOutline7Migration',
         'source_type' => $course_arguments['source_course_node_type'], 
         'destination_type' => 'course_outline',
+        'dependencies' => $node_migrations,
+      ),
+
+     'UGUpdateBanner7' => $node_arguments + $update_arguments + $banner_arguments + array(
+        'description' => t('Update migrated banner nodes after initial Drupal 7 to Drupal 7 migration'),
+        'class_name' => 'UGUpdateBanner7Migration',
+        'source_type' => $banner_arguments['source_banner_node_type'], 
+        'destination_type' => 'banner',
         'dependencies' => $node_migrations,
       ),
 

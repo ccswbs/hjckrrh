@@ -643,6 +643,70 @@ class UGUpdateProfile7Migration extends UGUpdate7Migration {
 }
 
 
+class UGUpdateBanner7Migration extends UGUpdate7Migration {
+	public function __construct($arguments) {
+    	parent::__construct($arguments);
+
+	    $this->destination = new MigrateDestinationNode('banner');
+
+	    // DEFAULT arguments
+		$update_arguments = array(
+			'update_nodelinks' => FALSE,
+			'update_nodelinks_urls' => '/node/',
+			'update_hardlinks_source' => '',
+			'update_hardlinks_destination' => '',
+		);
+
+		$banner_arguments = array(
+		  'source_banner_text'                     => 'field_banner_text',
+		  'source_banner_text_format'              => 'field_banner_text:format',
+		  'source_banner_image_src_prefix'         => '',
+		  'source_banner_insert_fields'            => NULL,
+		);
+
+		//Override default values with arguments if they exist
+		foreach ($banner_arguments as $key => $value) {
+		    if(isset($this->arguments[$key])){
+		    	if($this->arguments[$key] != ''){
+			    	$banner_arguments[$key] = $this->arguments[$key];
+		    	}
+		    }
+		}
+
+		//Override default values with arguments if they exist
+		foreach ($update_arguments as $key => $value) {
+		    if(isset($this->arguments[$key])){
+		    	if($this->arguments[$key]!=''){
+			    	$update_arguments[$key] = $this->arguments[$key];
+			    }
+		    }
+		}
+
+	    $this->addFieldMapping('nid', 'nid')
+			->sourceMigration('UGBanner7');
+		$this->arguments['update_map_table'] = 'migrate_map_ugbanner7';
+    	$this->arguments['update_insert_fields'] = $banner_arguments['source_banner_insert_fields'];
+    	$this->arguments['update_image_src_prefix'] = $banner_arguments['source_banner_image_src_prefix'];
+
+	    // Update Banner Text field
+		$this->arguments['update_source_body'] = $banner_arguments['source_banner_text'];
+	    $this->addFieldMapping('field_banner_text', $banner_arguments['source_banner_text']);
+
+		// Banner Text Format
+		if($banner_arguments['source_banner_text'] == 'body'){
+			$this->addFieldMapping('field_banner_text:format', $banner_arguments['source_banner_text_format'])
+			    ->defaultValue('full_html');
+		}else{
+			$this->addFieldMapping('field_banner_text:format', $banner_arguments['source_banner_text_format'])
+			    ->callbacks(array($this, 'mapFormat'))
+			    ->defaultValue('full_html');
+		}
+
+    }
+}
+
+
+
 class UGUpdateCourseOutline7Migration extends UGUpdate7Migration {
 	public function __construct($arguments) {
     	parent::__construct($arguments);
