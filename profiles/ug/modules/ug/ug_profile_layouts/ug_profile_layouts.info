@@ -2,7 +2,6 @@ name = UG Profile Layouts
 core = 7.x
 version = 7.x-7.x-dev
 package = UG
-version = 7.x-5.0
 dependencies[] = ctools
 dependencies[] = page_manager
 dependencies[] = ug_profile
