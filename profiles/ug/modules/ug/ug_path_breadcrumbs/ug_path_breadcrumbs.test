@@ -21,12 +21,6 @@ class UGBreadcrumbsTestCase extends DrupalWebTestCase {
   function setUp() {
     $this->profile = 'ug';
     parent::setup('ug_path_breadcrumbs');
-    /* Allow creation of Drupal accounts. */
-    $ldap_conf = variable_get('ldap_authentication_conf');
-    $ldap_conf['authenticationMode'] = 1;
-    variable_set('ldap_authentication_conf', $ldap_conf);
-    $web_user = $this->drupalCreateUser(array('create news content'));
-    $this->drupalLogin($web_user);
   }
 
   /**
