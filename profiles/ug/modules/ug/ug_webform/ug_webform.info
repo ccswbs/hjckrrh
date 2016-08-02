@@ -1,7 +1,7 @@
 name = UG Webform
 description = Allows site managers to add forms to their site.
 core = 7.x
-version = 7.x-7.x-dev
+version = 7.x-7.0
 package = UG
 dependencies[] = recaptcha
 dependencies[] = ctools
