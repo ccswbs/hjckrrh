@@ -1,0 +1,45 @@
+<?php
+
+/**
+ * @file
+ * Tests for ug_path_breadcrumbs.module.
+ */
+
+/**
+ * Test UG Breadcrumbs feature.
+ */
+class UGBreadcrumbsTestCase extends DrupalWebTestCase {
+
+  public static function getInfo() {
+    return array(
+      'name' => 'UG Breadcrumbs',
+      'description' => 'Test the UG Breadcrumbs feature.',
+      'group' => 'UG',
+    );
+  }
+
+  function setUp() {
+    $this->profile = 'ug';
+    parent::setup('ug_path_breadcrumbs');
+    /* Allow creation of Drupal accounts. */
+    $ldap_conf = variable_get('ldap_authentication_conf');
+    $ldap_conf['authenticationMode'] = 1;
+    variable_set('ldap_authentication_conf', $ldap_conf);
+    $web_user = $this->drupalCreateUser(array('create news content'));
+    $this->drupalLogin($web_user);
+  }
+
+  /**
+   * Test news breadcrumb.
+   */
+  function testNewsBreadcrumb() {
+    /* Create a news article. */
+    $node1 = $this->drupalCreateNode(array('type' => 'news', 'promote' => 1));
+    /* Get the article. */
+    $this->drupalGet('node/' . $node1->nid);
+    /* Check for breadcrumb link. */
+    $this->assertLinkByHref(url('news'));
+  }
+
+}
+
