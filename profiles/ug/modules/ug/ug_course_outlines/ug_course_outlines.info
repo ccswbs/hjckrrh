@@ -84,3 +84,5 @@ features_exclude[dependencies][ctools] = ctools
 features_exclude[dependencies][features] = features
 features_exclude[dependencies][options] = options
 features_exclude[dependencies][taxonomy] = taxonomy
+files[] = ug_course_outlines.test
+

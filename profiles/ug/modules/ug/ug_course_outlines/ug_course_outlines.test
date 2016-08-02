@@ -1,0 +1,91 @@
+<?php
+
+/**
+ * @file
+ * Tests for ug_course_outlines.module.
+ */
+
+/**
+ * Test UG Course Outlines feature.
+ */
+class UGCourseOutlinesTestCase extends TaxonomyWebTestCase {
+
+  protected $no_results_text = 'No results found.';
+
+  public static function getInfo() {
+    return array(
+      'name' => 'UG Course Outlines',
+      'description' => 'Test the UG Course Outlines feature.',
+      'group' => 'UG',
+    );
+  }
+
+  function setUp() {
+    $this->profile = 'ug';
+    parent::setup('ug_course_outlines', 'ug_course_outline_layouts');
+  }
+
+  /**
+   * Test "Course Outlines" listing page.
+   */
+  function testCourseListing() {
+
+    $site_name =  variable_get('site_name', 'Drupal');
+
+    /* Create categories and keywords for pages */
+    $vocabulary = taxonomy_vocabulary_machine_name_load('course_outline_category');
+    $term1 = $this->createTerm($vocabulary);
+    $term2 = $this->createTerm($vocabulary);
+    $term3 = $this->createTerm($vocabulary);
+
+    /* Create 2 course outlines */
+    $settings = array('type' => 'course_outline');
+    $settings['field_course_name'][LANGUAGE_NONE][0]['value'] = $this->randomName();
+    $settings['field_course_code'][LANGUAGE_NONE][0]['value'] = $this->randomName();
+    $settings['field_course_category'][LANGUAGE_NONE][0]['tid'] = $term1->tid;
+    $node1 = $this->drupalCreateNode($settings);
+    $settings['field_course_name'][LANGUAGE_NONE][0]['value'] = $this->randomName();
+    $settings['field_course_code'][LANGUAGE_NONE][0]['value'] = $this->randomName();
+    $settings['field_course_category'][LANGUAGE_NONE][0]['tid'] = $term2->tid;
+    $node2 = $this->drupalCreateNode($settings);
+   
+    /* Get feed. */
+    $this->drupalGet('course-outlines');
+
+    /* Test page title. */
+    $this->assertTitle('Course Outlines | ' . $site_name);
+
+    /* There should be both names/codes */
+    $this->assertText($node1->field_course_name[LANGUAGE_NONE][0]['value']);
+    $this->assertText($node1->field_course_code[LANGUAGE_NONE][0]['value']);
+    $this->assertText($node2->field_course_name[LANGUAGE_NONE][0]['value']);
+    $this->assertText($node2->field_course_code[LANGUAGE_NONE][0]['value']);
+
+    /* Test first term. */
+    $this->drupalGet('course-outlines/' . $term1->tid);
+    $this->assertTitle($term1->name . ' Course Outlines | ' . $site_name);
+    $this->assertText($node1->field_course_name[LANGUAGE_NONE][0]['value']);
+    $this->assertText($node1->field_course_code[LANGUAGE_NONE][0]['value']);
+    $this->assertNoText($node2->field_course_name[LANGUAGE_NONE][0]['value']);
+    $this->assertNoText($node2->field_course_code[LANGUAGE_NONE][0]['value']);
+
+    /* Test second term. */
+    $this->drupalGet('course-outlines/' . $term2->tid);
+    $this->assertTitle($term2->name . ' Course Outlines | ' . $site_name);
+    $this->assertText($node2->field_course_name[LANGUAGE_NONE][0]['value']);
+    $this->assertText($node2->field_course_code[LANGUAGE_NONE][0]['value']);
+    $this->assertNoText($node1->field_course_name[LANGUAGE_NONE][0]['value']);
+    $this->assertNoText($node1->field_course_code[LANGUAGE_NONE][0]['value']);
+
+    /* Test third term. */
+    $this->drupalGet('course-outlines/' . $term3->tid);
+    $this->assertTitle($term3->name . ' Course Outlines | ' . $site_name);
+    $this->assertText('No results found.');
+    $this->assertNoText($node1->field_course_name[LANGUAGE_NONE][0]['value']);
+    $this->assertNoText($node1->field_course_code[LANGUAGE_NONE][0]['value']);
+    $this->assertNoText($node2->field_course_name[LANGUAGE_NONE][0]['value']);
+    $this->assertNoText($node2->field_course_code[LANGUAGE_NONE][0]['value']);
+  }
+
+}
+
