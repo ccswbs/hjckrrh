@@ -26,3 +26,5 @@ features[variable][] = path_breadcrumbs_url_cleaning_method
 features_exclude[dependencies][ctools] = ctools
 features_exclude[dependencies][strongarm] = strongarm
 project path = /tmp
+files[] = ug_path_breadcrumbs.test
+

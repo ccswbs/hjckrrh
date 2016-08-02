@@ -51,6 +51,7 @@ dependencies[] = ug_podcast
 dependencies[] = ug_profile
 dependencies[] = ug_profile_layouts
 dependencies[] = ug_role
+dependencies[] = ug_path_breadcrumb
 dependencies[] = ug_search
 dependencies[] = ug_service
 dependencies[] = ug_service_layouts
