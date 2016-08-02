@@ -6,7 +6,7 @@ Hjckrrh 7.7.0-dev
 - Show active menu item when filtering course outlines by term (#499)
 - Disable paging of course outlines (#501)
 - Remove academic level filter from course outlines view (#496)
-- Show active menu item when filtering course outlines by term (#499)
+- Convert course category to contextual argument
 
 Hjckrrh 7.6.1, 2016-07-19
 -------------------------
