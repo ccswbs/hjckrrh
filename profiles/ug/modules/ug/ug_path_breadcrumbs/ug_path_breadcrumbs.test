@@ -41,5 +41,41 @@ class UGBreadcrumbsTestCase extends DrupalWebTestCase {
     $this->assertLinkByHref(url('news'));
   }
 
+  /**
+   * Test events breadcrumb.
+   */
+  function testEventsBreadcrumb() {
+    /* Create an event. */
+    $node1 = $this->drupalCreateNode(array('type' => 'event'));
+    /* Get the event. */
+    $this->drupalGet('node/' . $node1->nid);
+    /* Check for breadcrumb link. */
+    $this->assertLinkByHref(url('events'));
+  }
+
+  /**
+   * Test FAQ breadcrumb.
+   */
+  function testFaqBreadcrumb() {
+    /* Create an node. */
+    $node1 = $this->drupalCreateNode(array('type' => 'faq'));
+    /* Get the node. */
+    $this->drupalGet('node/' . $node1->nid);
+    /* Check for breadcrumb link. */
+    $this->assertLinkByHref(url('faq'));
+  }
+
+  /**
+   * Test Services breadcrumb.
+   */
+  function testServiceBreadcrumb() {
+    /* Create an node. */
+    $node1 = $this->drupalCreateNode(array('type' => 'service'));
+    /* Get the node. */
+    $this->drupalGet('node/' . $node1->nid);
+    /* Check for breadcrumb link. */
+    $this->assertLinkByHref(url('services'));
+  }
+
 }
 
