@@ -1065,3 +1065,17 @@ function ug_theme_form_element_label(&$variables) {
   return ' <label' . drupal_attributes($attributes) . '>' . $output . "</label>\n";
 }
 
+/** 
+ * Add spacing between webform fields 
+ * https://www.drupal.org/node/2712217 - used the ideas from this patch. 
+ * May need to remove this override at some point.
+ */
+function ug_theme_webform_element(&$variables) {
+
+  $element = &$variables['element'];
+
+  $element['#attributes']['class'][] = 'form-group';
+  //dpm($variables);
+  return bootstrap_form_element($variables);
+}
+
