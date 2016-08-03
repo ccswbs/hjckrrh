@@ -246,6 +246,27 @@ function ug_theme_preprocess_views_view_fields__p2(&$vars) {
 }
 
 /**
+ * PP1 - Test page for multiple people profiles.
+*/
+function ug_theme_preprocess_views_view_fields__pp1(&$vars) {
+  $vars['image']     = $vars['fields']['field_profile_image']->content;
+dpm($vars);
+//  if (empty($vars['image'])) {
+//    $vars['image'] = 'No Image Available';
+//  }
+
+  $vars['name']      = $vars['fields']['field_profile_name']->content;
+  $vars['lastname']  = $vars['fields']['field_profile_lastname']->content;
+  //$vars['uid']       = $vars['fields']['uid']->content;
+  $vars['title']     = $vars['fields']['field_profile_title']->content;
+  $vars['unit']      = $vars['fields']['field_profile_unit']->content;
+  $vars['phone']     = $vars['fields']['field_profile_telephonenumber']->content;
+  $vars['email']     = $vars['fields']['field_profile_email']->content;
+  //$vars['user_url']  = 'user/'.$vars['uid'];
+  //$vars['fullname']  = l($vars['name'].' '.$vars['lastname'], 'user/'.$vars['uid']);
+}
+
+/**
  * Output profile heading as a heading level 2.
  */
 function ug_theme_field__field_profile_heading($variables) {

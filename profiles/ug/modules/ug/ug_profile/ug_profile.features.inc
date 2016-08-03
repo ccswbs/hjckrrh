@@ -36,7 +36,7 @@ function ug_profile_image_default_styles() {
   $styles['profile_thumbnail'] = array(
     'label' => 'Profile thumbnail',
     'effects' => array(
-      1 => array(
+      2 => array(
         'name' => 'image_scale_and_crop',
         'data' => array(
           'width' => 145,
