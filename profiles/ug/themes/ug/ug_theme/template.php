@@ -1051,11 +1051,8 @@ function ug_theme_form_element_label(&$variables) {
  * May need to remove this override at some point.
  */
 function ug_theme_webform_element(&$variables) {
-
   $element = &$variables['element'];
-
   $element['#attributes']['class'][] = 'form-group';
-  //dpm($variables);
   return bootstrap_form_element($variables);
 }
 
