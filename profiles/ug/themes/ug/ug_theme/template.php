@@ -5,6 +5,7 @@
  * template.php
  */
 
+bootstrap_include('bootstrap', 'theme/system/form-element.func.php');
 
 /**
  * Implements hook_menu_link__menu_block.
@@ -1042,5 +1043,16 @@ function ug_theme_form_element_label(&$variables) {
 
   // The leading whitespace helps visually separate fields from inline labels.
   return ' <label' . drupal_attributes($attributes) . '>' . $output . "</label>\n";
+}
+
+/** 
+ * Add spacing between webform fields 
+ * https://www.drupal.org/node/2712217 - used the ideas from this patch. 
+ * May need to remove this override at some point.
+ */
+function ug_theme_webform_element(&$variables) {
+  $element = &$variables['element'];
+  $element['#attributes']['class'][] = 'form-group';
+  return bootstrap_form_element($variables);
 }
 
