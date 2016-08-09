@@ -5,6 +5,7 @@
  * template.php
  */
 
+bootstrap_include('bootstrap', 'theme/system/form-element.func.php');
 
 /**
  * Implements hook_menu_link__menu_block.
