@@ -1,3 +1,7 @@
+Hjckrrh 7.8.0, xxxx-xx-xx
+-------------------------
+- Change default captcha challenge to reCAPTCHA (#493)
+
 Hjckrrh 7.7.0, 2016-08-02
 -------------------------
 - Add recaptcha module.
