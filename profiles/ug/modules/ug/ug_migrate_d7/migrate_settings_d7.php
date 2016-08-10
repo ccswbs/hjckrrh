@@ -143,37 +143,67 @@ SITE CONFIGURATION VARIABLES
 * 
 */
 
+
 /* ----
 *
 *  MAPPING CUSTOM TEXT FIELDS into Body field
 *  
 *  Allows you to add text field content directly into content type body field with a custom heading.
 *
-*  For each field, create an array containing the following key values:
-*     - content_before: Include any HTML content that needs to occur before the text field (eg. HTML heading)
+*  1. For each field, create an array containing the following key values:
 *     - db_table: database table to retrieve text field
 *     - db_field_value: database column to retrieve text field value
 *     - db_field_entity_id: database column to retrieve entity_id value (ie. nid for node associated with field)
-*     - placement: can be set to "top" or "bottom". Default is bottom.
+*     - content_before: Include any HTML content that needs to occur before the text field (eg. HTML heading)
 *     - content_after: (optional) Include any HTML content that needs to occur after the text field (eg. separator, heading)
+*     
+        $field_page_custom_info2 = array(
+          'db_table' => 'field_data_field_source_table_name',
+          'db_field_value' => array('field_value_column2'),
+          'db_field_entity_id' => 'field_entityid_column',
+          'content_before' => '<h3>Custom Field Heading 2</h2>',
+          'content_after' => '',
+        );
 *
-*  Once all custom fields have an associated array, add the array in the insert_fields array
-*  associated with the content type being migrated, using the machine name of the field as the key.
+*  2. Add each field from the previous step into a field grouping array, using the machine name as the key (see $page_intro_fields as example).
+*     Place fields in the order you would like them to display.
+*     
+        $page_intro_fields = array(
+          'field_machine_name1' => $field_page_custom_info1,
+        );
 *
-*  // Sample Field array
-*  $field_info = array(
-*    'content_before' => '<h2>Example Heading</h2>',
-*    'db_table' => 'field_data_field_source_table_name',
-*    'db_field_value' => array('field_value_column'),
-*    'db_field_entity_id' => 'field_entityid_column',
-*    'placement' => 'top',
-*    'content_after' => '<h2>Details</h2>',
-*  );
+*  3. For each field group, create an array containing the following key values:
+*     - fields: Array containing a list of all fields in this group, using machine_name as key (see $page_intro as example)
+*     - content_before: Include any HTML content that needs to occur before the field group (eg. HTML heading)
+*     - content_after: (optional) Include any HTML content that needs to occur after the field group (eg. separator, heading)
+*     - placement: Each field group can be set to "top" (above target) or "bottom" (below target). Default is bottom.
 *
-*  // Sample Insert Fields array 
-*  $page_insert_fields = array(
-*    'field_machine_name' => $field_info,
-*   );
+        $page_intro = array(
+          'fields' => $page_intro_fields,
+          'content_before' => '<h2>Introduction</h2>',
+          'content_after' => '',
+          'placement' => 'top',
+        );
+*
+*  4. Add each field group from the previous step into an array containing all field groups.
+*
+        $page_field_groups = array(
+          $page_intro,
+        );
+*
+*  5. For each content type insert, set the <content-type>_insert_fields array to the following key values:
+*     - target: Specify the target field machine_name to insert fields (Variable unused at this time)
+*     - before_target: Include any HTML content that needs to occur before the target field (eg. HTML heading)
+*     - after_target: (optional) Include any HTML content that needs to occur after the target field
+*     - field_groups: Array containing a list of all field groups
+*  
+        $page_insert_fields = array(
+          'target' => 'body',
+          'before_target' => '<h2>Description</h2>',
+          'after_target' => '',
+          'field_groups' => $page_field_groups,
+        );
+*
 */
 
 /**************************
