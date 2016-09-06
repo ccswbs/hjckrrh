@@ -187,6 +187,7 @@ function ug_profile_views_default_views() {
       'label' => 'Category',
     ),
   );
+  $handler->display->display_options['inherit_panels_path'] = '1';	
 
   /* Display: test profile columns */
   $handler = $view->new_display('panel_pane', 'test profile columns', 'panel_pane_3');
