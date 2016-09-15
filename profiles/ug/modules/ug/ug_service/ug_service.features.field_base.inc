@@ -10,7 +10,7 @@
 function ug_service_field_default_field_bases() {
   $field_bases = array();
 
-  // Exported field_base: 'field_service_audience'
+  // Exported field_base: 'field_service_audience'.
   $field_bases['field_service_audience'] = array(
     'active' => 1,
     'cardinality' => -1,
@@ -36,7 +36,7 @@ function ug_service_field_default_field_bases() {
     'type' => 'taxonomy_term_reference',
   );
 
-  // Exported field_base: 'field_service_category'
+  // Exported field_base: 'field_service_category'.
   $field_bases['field_service_category'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -63,7 +63,7 @@ function ug_service_field_default_field_bases() {
     'type' => 'taxonomy_term_reference',
   );
 
-  // Exported field_base: 'field_service_description'
+  // Exported field_base: 'field_service_description'.
   $field_bases['field_service_description'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -82,7 +82,7 @@ function ug_service_field_default_field_bases() {
     'type' => 'text_with_summary',
   );
 
-  // Exported field_base: 'field_service_icon'
+  // Exported field_base: 'field_service_icon'.
   $field_bases['field_service_icon'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -305,7 +305,7 @@ function ug_service_field_default_field_bases() {
     'type' => 'list_text',
   );
 
-  // Exported field_base: 'field_service_keywords'
+  // Exported field_base: 'field_service_keywords'.
   $field_bases['field_service_keywords'] = array(
     'active' => 1,
     'cardinality' => -1,
@@ -331,7 +331,31 @@ function ug_service_field_default_field_bases() {
     'type' => 'taxonomy_term_reference',
   );
 
-  // Exported field_base: 'field_service_private'
+  // Exported field_base: 'field_service_price'.
+  $field_bases['field_service_price'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_service_price',
+    'field_permissions' => array(
+      'type' => 2,
+    ),
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(
+      'max_length' => 100,
+    ),
+    'translatable' => 0,
+    'type' => 'text',
+  );
+
+  // Exported field_base: 'field_service_private'.
   $field_bases['field_service_private'] = array(
     'active' => 1,
     'cardinality' => -1,
@@ -356,7 +380,7 @@ function ug_service_field_default_field_bases() {
     'type' => 'field_collection',
   );
 
-  // Exported field_base: 'field_service_private_content'
+  // Exported field_base: 'field_service_private_content'.
   $field_bases['field_service_private_content'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -375,7 +399,7 @@ function ug_service_field_default_field_bases() {
     'type' => 'text_long',
   );
 
-  // Exported field_base: 'field_service_private_heading'
+  // Exported field_base: 'field_service_private_heading'.
   $field_bases['field_service_private_heading'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -401,7 +425,7 @@ function ug_service_field_default_field_bases() {
     'type' => 'taxonomy_term_reference',
   );
 
-  // Exported field_base: 'field_service_public'
+  // Exported field_base: 'field_service_public'.
   $field_bases['field_service_public'] = array(
     'active' => 1,
     'cardinality' => -1,
@@ -423,7 +447,7 @@ function ug_service_field_default_field_bases() {
     'type' => 'field_collection',
   );
 
-  // Exported field_base: 'field_service_public_content'
+  // Exported field_base: 'field_service_public_content'.
   $field_bases['field_service_public_content'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -442,7 +466,7 @@ function ug_service_field_default_field_bases() {
     'type' => 'text_long',
   );
 
-  // Exported field_base: 'field_service_public_heading'
+  // Exported field_base: 'field_service_public_heading'.
   $field_bases['field_service_public_heading'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -468,7 +492,7 @@ function ug_service_field_default_field_bases() {
     'type' => 'taxonomy_term_reference',
   );
 
-  // Exported field_base: 'field_service_related'
+  // Exported field_base: 'field_service_related'.
   $field_bases['field_service_related'] = array(
     'active' => 1,
     'cardinality' => -1,
