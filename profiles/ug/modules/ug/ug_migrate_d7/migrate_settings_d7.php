@@ -84,13 +84,13 @@ SITE CONFIGURATION VARIABLES
   $update_prefix_source = array();
 
   $update_arguments = array(
-    'update_nodelinks'             => FALSE,
-    'update_nodelinks_urls'        => $update_nodelinks_urls,
-    'update_hardlinks_source'      => $update_hardlinks_source,
-    'update_hardlinks_destination' => '',
-    'update_prefix_inline'         => FALSE,
-    'update_prefix_source'         => $update_prefix_source,
-    'update_prefix_destination'    => '',
+    'update_nodelinks'                      => FALSE,
+    'update_nodelinks_urls'                 => $update_nodelinks_urls,
+    'update_hardlinks_source'               => $update_hardlinks_source,
+    'update_hardlinks_destination'          => '',
+    'update_prefix_inline'                  => FALSE,
+    'update_prefix_source'                  => $update_prefix_source,
+    'update_prefix_destination'             => '',
   );
 
 /**************************
@@ -247,19 +247,20 @@ SITE CONFIGURATION VARIABLES
   $featureditem_insert_fields = NULL;
 
   $featureditem_arguments = array(
-    'source_featureditem_node_type'              => '',
-    'source_featureditem_term_category'          => '',
-    'source_featureditem_term_keyword'           => '',
-    'source_featureditem_body'                   => 'body',
-    'source_featureditem_summary'                => 'body:summary',
-    'source_featureditem_format'                 => 'body:format',
-    'source_featureditem_link'                   => '',
-    'source_featureditem_image'                  => '',
-    'source_featureditem_category'               => '',
-    'source_featureditem_category_default_value' => '',
-    'source_featureditem_keyword'                => '',
-    'source_featureditem_keyword_default_value'  => '',
-    'source_featureditem_insert_fields'          => $featureditem_insert_fields,
+    'source_featureditem_node_type'                            => '',
+    'source_featureditem_term_category'                        => '',
+    'source_featureditem_term_keyword'                         => '',
+    'source_featureditem_body'                                 => 'body',
+    'source_featureditem_summary'                              => 'body:summary',
+    'source_featureditem_format'                               => 'body:format',
+    'source_featureditem_link'                                 => '',
+    'source_featureditem_image'                                => '',
+    'source_featureditem_category'                             => '',
+    'source_featureditem_category_default_value'               => '',
+    'source_featureditem_keyword'                              => '',
+    'source_featureditem_keyword_default_value'                => '',
+    'source_featureditem_insert_fields'                        => $featureditem_insert_fields,
+    'source_featureditem_update_hardlinks_destination'         => '',
   );
 
 

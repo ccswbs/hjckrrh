@@ -150,6 +150,9 @@ class UGUpdate7Migration extends DrupalNode7Migration {
 	    }
 	}
 
+	/******
+	* @TODO: Make a more generic class that receives the search pattern as a variable
+	************/
 	public function replaceLinkUrls(&$body, &$replace_urls, &$new_url){
 	  	$new_body = $body;
 
@@ -211,6 +214,9 @@ class UGUpdate7Migration extends DrupalNode7Migration {
 	  	return $body;
 	}
 
+	/******
+	* @TODO: Make a more generic class that receives the search pattern as a variable
+	************/
 	public function replaceSourceNodes(&$body, &$pattern_nodelinks, &$migrations){
 	  	$new_body = $body;
 
@@ -527,7 +533,9 @@ class UGUpdateFeaturedItem7Migration extends UGUpdate7Migration {
 			'source_featureditem_body' => 'body',
 			'source_featureditem_summary' => 'body:summary',
 			'source_featureditem_format' => 'body:format',
+			'source_featureditem_link' => '',
 			'source_featureditem_insert_fields' => NULL,
+			'source_featureditem_update_hardlinks_destination' => '',
 		);
 
 		//Override default values with arguments if they exist
@@ -557,6 +565,7 @@ class UGUpdateFeaturedItem7Migration extends UGUpdate7Migration {
 		$this->arguments['update_source_body'] = $featureditem_arguments['source_featureditem_body'];
 	    $this->addFieldMapping('field_feature_text', $featureditem_arguments['source_featureditem_body']);
 	    $this->addFieldMapping('field_feature_text:summary', $featureditem_arguments['source_featureditem_summary']);
+	    $this->addFieldMapping('field_feature_link', $featureditem_arguments['source_featureditem_link']);
 
 		// Featured Item Body Format
 		if($featureditem_arguments['source_featureditem_body'] == 'body'){
@@ -569,6 +578,113 @@ class UGUpdateFeaturedItem7Migration extends UGUpdate7Migration {
 		}
     }
 
+	public function prepareRow($row) {
+	    if (parent::prepareRow($row) === FALSE) {
+	      return FALSE;
+	    }
+
+		/******
+		* @TODO: Once a more generic class for replacing node IDs and absolute URLs (ie. one that allows
+		*    you to pass the search pattern as a variable), update UGUpdateFeaturedItem so it uses 
+		*    those classes instead of rewriting the same code in prepareRow
+		************/
+
+		//update Featured Item Link
+	    if(isset($this->arguments['update_nodelinks'])) {
+	    	if($this->arguments['update_nodelinks'] == TRUE){
+			    $pattern_nodelinks = array('/node/');
+			    $source_migrations = $this->arguments['dependencies'];
+
+			    // replace linked source nids with destination nids
+			    if(isset($this->arguments['update_nodelinks_urls'])){
+			    	$pattern_nodelinks = $this->arguments['update_nodelinks_urls'];
+			    }
+
+				$row->{$this->arguments['source_featureditem_link']}[0] = $this->replaceFeatureLinkSourceNodes(
+					$row->{$this->arguments['source_featureditem_link']}[0], 
+					$this->arguments['update_nodelinks_urls'], 
+					$source_migrations);
+
+
+			    // replace linked source URLs with destination urls
+			    if(isset($this->arguments['update_hardlinks_source']) &&
+			    	isset($this->arguments['source_featureditem_update_hardlinks_destination'])) {
+				    	$old_urls = $this->arguments['update_hardlinks_source'];
+				    	$new_url = $this->arguments['source_featureditem_update_hardlinks_destination'];
+				    	$row->{$this->arguments['source_featureditem_link']}[0] = $this->replaceFeatureLinkUrls($row->{$this->arguments['source_featureditem_link']}[0], $old_urls, $new_url);
+			    }
+
+			}
+		}
+    }
+
+	public function replaceFeatureLinkSourceNodes(&$value, $pattern_nodelinks, $migrations){
+	  	$new_value = $value;
+
+	  	foreach($pattern_nodelinks as $np){
+	  		// Search for links matching pattern
+	  		$np = preg_quote($np,"/");
+	  		$pattern_search = '/^' . $np . '(\d+)\/*?/si';
+	  		$num_matches = preg_match_all($pattern_search, $new_value, $match_pattern);
+
+	  		if($num_matches > 0){
+		  		foreach($match_pattern[0] as $key => $mp){
+		  			//retrieve source node ID in the pattern
+		  			$search_nid = strval($match_pattern[1][$key]);
+		  			$source_migrations = $migrations;
+
+		  			// get source migrations instances
+		  			$source_migrations = (array)$source_migrations;
+		  			$source_key = array(array($search_nid));
+		  			foreach ($source_migrations as $key => $source_migration) {
+					    $source_migrations[$key] = Migration::getInstance($source_migration);
+					}
+
+					// look up destination ID using source migrations
+					foreach ($source_migrations as $source_migration) {
+						// Break out of the loop as soon as a destination ID is found.
+						if ($replace_nid = $source_migration->getMap()->lookupDestinationID($source_key)) {
+							if (!empty($replace_nid['destid1'])) {
+								break;
+							}
+						}
+					}
+
+					if(!empty($replace_nid['destid1'])){
+						$search_val = "node/" . $search_nid;
+						$replace_val = "node/" . $replace_nid['destid1'];
+						$updated_mp = str_replace($search_val, $replace_val, $mp);
+						$new_value = str_replace($mp, $updated_mp, $new_value);
+					}
+		  		}
+	  		}
+	  	}
+
+	  	if(isset($new_value)){
+		  	return $new_value;
+	  	}
+	  	return $value;
+	}
+
+
+	public function replaceFeatureLinkUrls(&$body, &$replace_urls, &$new_url){
+	  	$new_body = $body;
+
+	  	//loop through each source site URL up for replacement
+	  	foreach($replace_urls as $u){
+
+	  		//remove trailing slash
+	  		if(substr($u, -1) == '/'){
+	  			$u = substr($u, 0, -1);
+	  		}
+	  		$new_body = str_replace($u, $new_url, $new_body);
+  		}
+
+	  	if(isset($new_body)){
+		  	return $new_body;
+	  	}
+	  	return $body;
+	}
 }
 
 
