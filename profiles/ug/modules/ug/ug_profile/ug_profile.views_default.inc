@@ -181,6 +181,7 @@ function ug_profile_views_default_views() {
       'label' => 'Category',
     ),
   );
+  $handler->display->display_options['inherit_panels_path'] = '1';
   $export['pp1'] = $view;
 
   $view = new view();
