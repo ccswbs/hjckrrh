@@ -1,0 +1,6 @@
+name = Permit
+description = Controls node access using UNIX style permissions.
+package = Websolutions
+version = 7.x-8.x
+core = 7.x
+files[] = ug_permit.test

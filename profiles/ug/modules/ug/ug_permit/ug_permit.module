@@ -1,0 +1,260 @@
+<?php
+
+define('PERMIT_GID_OTHER', 42);
+define('PERMIT_MASK', 0013);
+
+
+/**
+ * Returns node permissions as an integer mode.
+ */
+function ug_permit_mode($node) {
+	return ((int)(ug_permit_mode_user($node))  |
+		(int)(ug_permit_mode_group($node)) |
+		(int)(ug_permit_mode_other($node)));
+}
+
+
+function ug_permit_mode_user($node) {
+	return isset($node->user_mode) ? $node->user_mode : 0700;
+}
+
+function ug_permit_mode_group($node) {
+	return isset($node->group_mode) ? $node->group_mode : 0060;
+}
+
+function ug_permit_mode_other($node) {
+	return isset($node->other_mode) ? $node->other_mode : 0004;
+}
+
+/** 
+ * Implements hook_permission().
+ */
+function ug_permit_permission() {
+	return array(
+		'ug_permit node access' => array(
+			'title'           => t('Permit node access'),
+			'description'     => t('Change node access permissions'),
+		),
+		'ug_permit any role' => array(
+			'title'           => t('Permit any role'),
+			'description'     => t('Grant node access to any role.'),
+			'restrict access' => TRUE
+		),
+	);
+}
+
+/**
+ * Implements hook_node_grants().
+ *
+ * Tell the node access system what grant IDs the user belongs to for each
+ * realm.
+ */
+function ug_permit_node_grants($account, $op) {
+	// First create a grant for own content.
+	if ($account->uid != 0) {
+		$grants['user'] = array($account->uid);
+	}
+	// Then, get a list of roles for the author.  Create a grant
+	// for each role.
+	$grants['group'] = array();
+	$user = user_load($account->uid);
+	foreach ($user->roles as $rid => $role) {
+		$grants['group'][] = $rid;
+	}
+	// Everyone gets the 'other' grant
+	$grants['other'] = array(PERMIT_GID_OTHER);
+	return $grants;
+}
+
+
+/**
+ * Implements hook_node_access_records().
+ *
+ * All node access modules must implement this hook. If the module is
+ * interested in the privacy of the node passed in, return a list
+ * of node access values for each grant ID we offer.
+ */
+function ug_permit_node_access_records($node) {
+	if ($node->status == NODE_PUBLISHED) {
+		$grants = array();
+		$grants[] = array(
+			'realm' => 'user',
+			'gid' => $node->uid,
+			'grant_view'   => (int)(bool)(ug_permit_mode_user($node) & 0400),
+			'grant_update' => (int)(bool)(ug_permit_mode_user($node) & 0200),
+			'grant_delete' => (int)(bool)(ug_permit_mode_user($node) & 0100),
+			'priority' => 0,
+		);
+		$grants[] = array(
+			'realm' => 'group',
+			'gid' => isset($node->rid) ? $node->rid : 0,
+			'grant_view'   => (int)(bool)(ug_permit_mode_group($node) & 0040),
+			'grant_update' => (int)(bool)(ug_permit_mode_group($node) & 0020),
+			'grant_delete' => (int)(bool)(ug_permit_mode_group($node) & 0010),
+			'priority' => 0,
+		);
+		$grants[] = array(
+			'realm' => 'other',
+			'gid' => PERMIT_GID_OTHER,
+			'grant_view'   => (int)(bool)(ug_permit_mode_other($node) & 0004),
+			'grant_update' => (int)(bool)(ug_permit_mode_other($node) & 0002),
+			'grant_delete' => (int)(bool)(ug_permit_mode_other($node) & 0001),
+			'priority' => 0,
+		);
+		return $grants;
+	}
+}
+
+/**
+ * Implements hook_node_load().
+ *
+ * Sets node permission mode.
+ */
+function ug_permit_node_load($nodes, $types) {
+	$result = db_query('SELECT nid, rid, mode FROM {ug_permit} WHERE
+		nid IN (:nids)', array(':nids' => array_keys($nodes)));
+	foreach ($result as $record) {
+		$mode = $record->mode;
+		$nodes[$record->nid]->rid = $record->rid;
+		$nodes[$record->nid]->user_mode  = (int)($mode & 0700);
+		$nodes[$record->nid]->group_mode = (int)($mode & 0070);
+		$nodes[$record->nid]->other_mode = (int)($mode & 0007);
+	}
+}
+
+/**
+ * Implements hook_node_delete().
+ *
+ * Deletes node from the mode table.
+ */
+function ug_permit_node_delete($node) {
+	db_delete('ug_permit')->condition('nid', $node->nid)->execute();
+}
+
+/**
+ * Implements hook_node_insert().
+ */
+function ug_permit_node_insert($node) {
+	db_insert('ug_permit')->fields(array(
+		'nid' => $node->nid,
+		'uid' => $node->uid,
+		'rid' => isset($node->rid) ? $node->rid : 0,
+		'mode' => ug_permit_mode($node)
+	))->execute();
+}
+
+/**
+ * Implements hook_node_update().
+ */
+function ug_permit_node_update($node) {
+	$exists = db_query('SELECT nid FROM {ug_permit} WHERE nid = :nid',
+		array(':nid' => $node->nid))->fetchField();
+	if ($exists) {
+		db_update('ug_permit')
+		->fields(array(
+			'nid' => $node->nid,
+			'uid' => $node->uid,
+			'rid' => $node->rid,
+			'mode' => ug_permit_mode($node)
+		))
+		->condition('nid', $node->nid)
+		->execute();
+		/* Recursively apply permissions to child nodes. */
+		if (isset($node->ug_permit_recursive) && ($node->ug_permit_recursive == 1)) {
+			$result = db_query('SELECT mlid FROM {menu_links} WHERE link_path = :path',
+				array(':path' => 'node/' . $node->nid))->fetchObject();
+			if ($result != NULL) {
+				$mlid = $result->mlid;
+				$results = db_query('SELECT link_path FROM {menu_links} WHERE plid = :mlid',
+					array(':mlid' => $mlid));
+				foreach ($results as $record) {
+					$child = menu_get_object('node', 1, $record->link_path);
+					if ($child != NULL) {
+						if (node_access('update', $child)) {
+							$child->rid = $node->rid;
+							$child->user_mode = $node->user_mode;
+							$child->group_mode = $node->group_mode;
+							$child->other_mode = $node->other_mode;
+							$child->ug_permit_recursive = TRUE;
+							ug_permit_node_update($child);
+							node_save($child);
+						} else {
+							drupal_set_message(t('Unable to change permissions of <em>:title</em> (permission denied).',
+								array(':title' => $child->title)), 'warning');
+						}
+					}
+				}
+			}
+		}
+	} else {
+		ug_permit_node_insert($node);
+	}
+}
+
+
+function ug_permit_form_alter(&$form, $form_state) {
+	global $user;
+	if (!empty($form['#node_edit_form']) && (user_access('ug_permit node access') ||
+		user_access('ug_permit any role') || $user->uid == 1)) {
+		$form['ug_permit'] = array(
+			'#type' => 'fieldset',
+			'#title' => t('Permissions'),
+			'#collapsible' => TRUE,
+			'#collapsed' => TRUE,
+			'#group' => 'additional_settings',
+			'#weight' => 90
+		);
+		$form['ug_permit']['user_mode'] = array(
+			'#type' => 'select',
+			'#title' => t('Author may'),
+			'#options' => array(
+				0700 => t('view, update, & delete this content'),
+				0600 => t('view, & update this content'),
+				0400 => t('view this content'),
+				0000 => t('not access this content')
+			),
+			'#default_value' => isset($form['#node']->user_mode) ?
+				$form['#node']->user_mode : 0700
+		);
+		$form['ug_permit']['rid'] = array(
+			'#type' => 'select',
+			'#title' => t('Role'),
+			'#options' => array(0 => t('<none>')) + 
+				(($user->uid == 1 || user_access('ug_permit any role')) ?
+				 user_roles() : $user->roles),
+			'#default_value' => isset($form['#node']->rid) ?
+				$form['#node']->rid : 0
+		);
+		$form['ug_permit']['group_mode'] = array(
+			'#type' => 'select',
+			'#title' => t('Role may'),
+			'#options' => array(
+				0070 => t('view, update, & delete this content'),
+				0060 => t('view, & update this content'),
+				0040 => t('view this content'),
+				0000 => t('not access this content')
+			),
+			'#default_value' => isset($form['#node']->group_mode) ?
+				$form['#node']->group_mode : 0060
+		);
+		$form['ug_permit']['other_mode'] = array(
+			'#type' => 'select',
+			'#title' => t('Others may'),
+			'#options' => array(
+				0007 => t('view, update, & delete this content'),
+				0006 => t('view, & update this content'),
+				0004 => t('view this content'),
+				0000 => t('not access this content')
+			),
+			'#default_value' => isset($form['#node']->other_mode) ?
+				$form['#node']->other_mode : 0004
+		);
+		$form['ug_permit']['ug_permit_recursive'] = array(
+			'#type' => 'checkbox',
+			'#title' => t('Recursive'),
+			'#description' => t('Apply these permissions to all pages below this one in the menu.'),
+		);
+	}
+}
+
+
