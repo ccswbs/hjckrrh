@@ -28,6 +28,18 @@ function ug_service_strongarm() {
       'diff_standard' => array(
         'custom_settings' => FALSE,
       ),
+      'search_index' => array(
+        'custom_settings' => FALSE,
+      ),
+      'search_result' => array(
+        'custom_settings' => FALSE,
+      ),
+      'token' => array(
+        'custom_settings' => FALSE,
+      ),
+      'revision' => array(
+        'custom_settings' => FALSE,
+      ),
     ),
     'extra_fields' => array(
       'form' => array(
@@ -35,7 +47,10 @@ function ug_service_strongarm() {
           'weight' => '0',
         ),
         'redirect' => array(
-          'weight' => '8',
+          'weight' => '9',
+        ),
+        'path' => array(
+          'weight' => '10',
         ),
       ),
       'display' => array(),

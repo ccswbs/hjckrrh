@@ -11,7 +11,7 @@ function ug_service_field_default_field_instances() {
   $field_instances = array();
 
   // Exported field_instance:
-  // 'field_collection_item-field_service_private-field_service_private_content'
+  // 'field_collection_item-field_service_private-field_service_private_content'.
   $field_instances['field_collection_item-field_service_private-field_service_private_content'] = array(
     'bundle' => 'field_service_private',
     'default_value' => NULL,
@@ -46,7 +46,7 @@ function ug_service_field_default_field_instances() {
   );
 
   // Exported field_instance:
-  // 'field_collection_item-field_service_private-field_service_private_heading'
+  // 'field_collection_item-field_service_private-field_service_private_heading'.
   $field_instances['field_collection_item-field_service_private-field_service_private_heading'] = array(
     'bundle' => 'field_service_private',
     'default_value' => NULL,
@@ -78,7 +78,7 @@ function ug_service_field_default_field_instances() {
   );
 
   // Exported field_instance:
-  // 'field_collection_item-field_service_public-field_service_public_content'
+  // 'field_collection_item-field_service_public-field_service_public_content'.
   $field_instances['field_collection_item-field_service_public-field_service_public_content'] = array(
     'bundle' => 'field_service_public',
     'default_value' => NULL,
@@ -113,7 +113,7 @@ function ug_service_field_default_field_instances() {
   );
 
   // Exported field_instance:
-  // 'field_collection_item-field_service_public-field_service_public_heading'
+  // 'field_collection_item-field_service_public-field_service_public_heading'.
   $field_instances['field_collection_item-field_service_public-field_service_public_heading'] = array(
     'bundle' => 'field_service_public',
     'default_value' => NULL,
@@ -144,7 +144,7 @@ function ug_service_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-service-field_service_audience'
+  // Exported field_instance: 'node-service-field_service_audience'.
   $field_instances['node-service-field_service_audience'] = array(
     'bundle' => 'service',
     'default_value' => NULL,
@@ -156,7 +156,7 @@ function ug_service_field_default_field_instances() {
         'module' => 'taxonomy',
         'settings' => array(),
         'type' => 'taxonomy_term_reference_link',
-        'weight' => 2,
+        'weight' => 1,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -181,7 +181,7 @@ function ug_service_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-service-field_service_category'
+  // Exported field_instance: 'node-service-field_service_category'.
   $field_instances['node-service-field_service_category'] = array(
     'bundle' => 'service',
     'default_value' => NULL,
@@ -193,7 +193,7 @@ function ug_service_field_default_field_instances() {
         'module' => 'taxonomy',
         'settings' => array(),
         'type' => 'taxonomy_term_reference_link',
-        'weight' => 1,
+        'weight' => 0,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -218,7 +218,7 @@ function ug_service_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-service-field_service_description'
+  // Exported field_instance: 'node-service-field_service_description'.
   $field_instances['node-service-field_service_description'] = array(
     'bundle' => 'service',
     'default_value' => NULL,
@@ -230,7 +230,7 @@ function ug_service_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 16,
+        'weight' => 4,
       ),
       'teaser' => array(
         'label' => 'hidden',
@@ -264,11 +264,11 @@ function ug_service_field_default_field_instances() {
         'summary_rows' => 5,
       ),
       'type' => 'text_textarea_with_summary',
-      'weight' => 3,
+      'weight' => 2,
     ),
   );
 
-  // Exported field_instance: 'node-service-field_service_keywords'
+  // Exported field_instance: 'node-service-field_service_keywords'.
   $field_instances['node-service-field_service_keywords'] = array(
     'bundle' => 'service',
     'default_value' => NULL,
@@ -280,7 +280,7 @@ function ug_service_field_default_field_instances() {
         'module' => 'taxonomy',
         'settings' => array(),
         'type' => 'taxonomy_term_reference_link',
-        'weight' => 11,
+        'weight' => 2,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -304,11 +304,56 @@ function ug_service_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'taxonomy_autocomplete',
-      'weight' => 6,
+      'weight' => 7,
     ),
   );
 
-  // Exported field_instance: 'node-service-field_service_private'
+  // Exported field_instance: 'node-service-field_service_price'.
+  $field_instances['node-service-field_service_price'] = array(
+    'bundle' => 'service',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'This field can only be viewed by authenticated users.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 5,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_service_price',
+    'label' => 'Price',
+    'required' => 0,
+    'settings' => array(
+      'linkit' => array(
+        'button_text' => 'Search',
+        'enable' => 0,
+        'profile' => '',
+      ),
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 10,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 3,
+    ),
+  );
+
+  // Exported field_instance: 'node-service-field_service_private'.
   $field_instances['node-service-field_service_private'] = array(
     'bundle' => 'service',
     'default_value' => NULL,
@@ -326,7 +371,7 @@ function ug_service_field_default_field_instances() {
           'view_mode' => 'full',
         ),
         'type' => 'field_collection_view',
-        'weight' => 17,
+        'weight' => 6,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -347,11 +392,11 @@ function ug_service_field_default_field_instances() {
       'module' => 'field_collection',
       'settings' => array(),
       'type' => 'field_collection_embed',
-      'weight' => 5,
+      'weight' => 6,
     ),
   );
 
-  // Exported field_instance: 'node-service-field_service_public'
+  // Exported field_instance: 'node-service-field_service_public'.
   $field_instances['node-service-field_service_public'] = array(
     'bundle' => 'service',
     'default_value' => NULL,
@@ -369,7 +414,7 @@ function ug_service_field_default_field_instances() {
           'view_mode' => 'full',
         ),
         'type' => 'field_collection_view',
-        'weight' => 18,
+        'weight' => 7,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -394,7 +439,7 @@ function ug_service_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-service-field_service_related'
+  // Exported field_instance: 'node-service-field_service_related'.
   $field_instances['node-service-field_service_related'] = array(
     'bundle' => 'service',
     'default_value' => NULL,
@@ -408,7 +453,7 @@ function ug_service_field_default_field_instances() {
           'link' => 1,
         ),
         'type' => 'entityreference_label',
-        'weight' => 13,
+        'weight' => 3,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -429,12 +474,12 @@ function ug_service_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 7,
+      'weight' => 8,
     ),
   );
 
   // Exported field_instance:
-  // 'taxonomy_term-service_category-field_service_icon'
+  // 'taxonomy_term-service_category-field_service_icon'.
   $field_instances['taxonomy_term-service_category-field_service_icon'] = array(
     'bundle' => 'service_category',
     'default_value' => NULL,
@@ -471,11 +516,13 @@ function ug_service_field_default_field_instances() {
   t('Heading');
   t('Internal notes');
   t('Keywords');
+  t('Price');
   t('Related services');
   t('Service audience');
   t('Service category');
   t('Service details');
   t('Service icon');
+  t('This field can only be viewed by authenticated users.');
 
   return $field_instances;
 }
