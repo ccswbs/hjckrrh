@@ -1,7 +1,7 @@
 name = LDAP Feeds
-description = Included feeds fetcher for a generic ldap query and ldap entry parser to turn fetcher data into feeds compatible parser result. Used to automate content creation based on ldap queries.
+description = VERY MUCH IN ALPHA STATE. Included feeds fetcher for a generic ldap query and ldap entry parser to turn fetcher data into feeds compatible parser result. Used to automate content creation based on ldap queries.
 
-package = Lightweight Directory Access Protocol
+package = "Lightweight Directory Access Protocol"
 
 dependencies[] = feeds
 dependencies[] = ldap_servers
@@ -12,9 +12,9 @@ configure = admin/structure/feeds
 core = 7.x
 php = 5.2
 
-; Information added by Drupal.org packaging script on 2016-08-07
-version = "7.x-2.0-beta11"
+; Information added by Drupal.org packaging script on 2016-08-10
+version = "7.x-1.0-beta14"
 core = "7.x"
 project = "ldap"
-datestamp = "1470608343"
+datestamp = "1470868167"
 

@@ -51,7 +51,7 @@ class ldap_views_handler_filter_attribute extends ldap_views_handler_filter {
     $current_display = $this->view->display[$this->view->current_display];
     $qid             = isset($current_display->display_options['query']['options']['qid']) ? $current_display->display_options['query']['options']['qid']
                                                                                            : $current_display->handler->default_display->display->display_options['query']['options']['qid'];
- */
+*/
     $ldap_data       = new LdapQuery(ldap_views_get_qid($this->view)); //ldap_data_load($qid);
 
     if (empty($ldap_data)) {

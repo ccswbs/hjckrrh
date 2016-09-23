@@ -1,15 +1,18 @@
 <?php
+// $Id: ldap_query.inc,v 1.4.2.1 2011/02/08 06:01:00 johnbarclay Exp $
 
 /**
  * @file
  *
  */
 
+
+
 /**
  * see ldap_query_get_servers()
  */
 function _ldap_query_get_queries($qid, $type, $flatten, $reset) {
-  ldap_servers_module_load_include('php', 'ldap_query', 'LdapQueryAdmin.class');
+  ldap_server_module_load_include('php', 'ldap_query', 'LdapQueryAdmin.class');
   static $queries;
 
   if ($reset) {

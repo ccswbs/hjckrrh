@@ -12,23 +12,20 @@ abstract class LdapTypeAbstract {
   public $name;
   public $typeId;
   public $description;
-
-  // ldap_servers configuration
   public $port = 389;
   public $tls = 0;
   public $encrypted = 0;
   public $user_attr = 'cn';
   public $mail_attr = 'mail';
+
   public $groupObjectClassDefault = NULL;
+
   public $groupDerivationModelDefault = NULL;
+  public $groupDeriveFromAttributeNameDefault = NULL;
+  public $groupDeriveFromAttrDnAttrDefault = NULL;
 
-  // ldap_authorization configuration
-  public $deriveFromDn = FALSE;
-  public $deriveFromAttr = FALSE;
-  public $deriveFromEntry = FALSE;
-  public $groupMembershipsAttr = NULL;
-  public $groupMembershipsAttrMatchingUserAttr = FALSE; // can be removed in 2.0 branch
-
+  public $groupDeriveFromEntryAttrDefault = NULL;
+  public $groupDeriveFromEntryUserIdDefault = NULL;
  /**
    * Constructor Method
    *

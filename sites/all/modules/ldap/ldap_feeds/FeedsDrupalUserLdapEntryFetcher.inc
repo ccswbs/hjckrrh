@@ -39,35 +39,29 @@ class FeedsDrupalUserLdapEntryFetcherResult extends FeedsFetcherResult {
       ->entityCondition('entity_type', 'user')
       ->execute();
     $users = entity_load('user', array_keys($entities['user']));
-    if ($this->filterRoles) {
-      $selectedRoles = array_filter($this->filterRoles);
-      $filterOnRoles = (boolean)(count($selectedRoles));
-    }
-    else {
-      $filterOnRoles = FALSE;
-    }
-
+    $selectedRoles = array_filter($this->filterRoles);
+    $filterOnRoles = (boolean)(count($selectedRoles));
 
     foreach ($users as $uid => $user) {
       if (
         $uid == 0 ||
         $uid == 1 ||
-        ($this->filterLdapAuthenticated && !isset($user->data['ldap_user'])) ||
+        ($this->filterLdapAuthenticated && !isset($user->data['ldap_authentication'])) ||
         ($filterOnRoles && !array_intersect(array_values($selectedRoles), array_keys($user->roles)))
         ) {
         continue;
       }
 
-      if ($ldap_user = ldap_servers_get_user_ldap_data($user)) {
-        unset($ldap_user['mail']);
-        $ldap_user['attr']['count'] = $ldap_user['attr']['count'] + count($this->availableDrupalUserAttributes);
+      if ($ldap_entry = ldap_servers_get_user_ldap_data($user)) {
+        unset($ldap_entry['mail']);
+        $ldap_entry['attr']['count'] = $ldap_entry['attr']['count'] + count($this->availableDrupalUserAttributes);
         foreach ($this->availableDrupalUserAttributes as $attr_name => $attr_conf) {
-          $ldap_user['attr'][] = $attr_conf['token'];
-          $ldap_user['attr'][$attr_conf['token']]['count'] = 1;
-          $ldap_user['attr'][$attr_conf['token']][0] = (string)$user->{$attr_name};
+          $ldap_entry['attr'][] = $attr_conf['token'];
+          $ldap_entry['attr'][$attr_conf['token']]['count'] = 1;
+          $ldap_entry['attr'][$attr_conf['token']][0] = (string)$user->{$attr_name};
         }
 
-        $results[] = $ldap_user;
+        $results[] = $ldap_entry;
       }
     }
     $results['count'] = count($results);

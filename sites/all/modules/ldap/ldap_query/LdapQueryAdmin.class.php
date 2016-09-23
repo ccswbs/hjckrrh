@@ -1,4 +1,5 @@
 <?php
+// $Id: LdapQueryAdmin.class.php,v 1.6 2011/01/12 21:51:37 npiacentine Exp $
 
 /**
  * @file
@@ -40,7 +41,8 @@ class LdapQueryAdmin extends LdapQuery {
           ($sid == 'all' || $query->sid == $sid)
           &&
           (!$type || $type == 'all' || ($query->status = 1 && $type == 'enabled'))
-        ) {
+        )
+      {
         $queries[$result->qid] = $query;
       }
     }
@@ -129,10 +131,6 @@ class LdapQueryAdmin extends LdapQuery {
   public function delete($qid) {
     if ($qid == $this->qid) {
       $this->inDatabase = FALSE;
-      if (module_exists('ctools')) {
-        ctools_include('export');
-        ctools_export_load_object_reset('ldap_query');
-      }
       return db_delete('ldap_query')->condition('qid', $qid)->execute();
     }
     else {
@@ -161,8 +159,7 @@ class LdapQueryAdmin extends LdapQuery {
   }
 
   public function drupalForm($op) {
-    $form['#prefix'] = t('<p>Setup an LDAP query to be used by other modules
-      such as LDAP Feeds.</p>');
+    $form['#prefix'] = t('<p>Setup an LDAP query to be used by other modules such as LDAP Feeds, LDAP Provision, etc.</p>');
 
     $form['basic'] = array(
       '#type' => 'fieldset',
@@ -292,7 +289,7 @@ class LdapQueryAdmin extends LdapQuery {
 
 
   protected function arrayToCsv($array) {
-    return join(",", $array);
+    return join(",",$array);
   }
 
 }

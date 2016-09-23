@@ -1,4 +1,6 @@
 <?php
+// $Id: ldap_servers.theme.inc,v 1.4.2.1 2011/02/08 20:05:41 johnbarclay Exp $
+
 
 /**
  * @file
@@ -70,7 +72,7 @@ function theme_ldap_servers_list($variables) {
 function theme_ldap_servers_server($variables) {
   extract($variables);  // $ldap_server, $actions, $type (see above)
 
-  ldap_servers_module_load_include('php', 'ldap_servers', 'LdapServer.class');
+  ldap_server_module_load_include('php', 'ldap_servers', 'LdapServer.class');
   $properties = array();
   foreach (LdapServer::field_to_properties_map() as $field_name => $property_name) {
     $properties[] = "$field_name = " . print_r($ldap_server->$property_name, TRUE);
@@ -122,7 +124,7 @@ function theme_ldap_server_token_table($variables) {
 }
 
 function theme_ldap_server_ldap_entry_table($variables) {
- // debug($variables);
+
   if (!isset($variables['entry']) || !is_array($variables['entry'])) {
     return '<p>' . t('No Entry Returned.') . t('</p>');
   }
@@ -158,6 +160,6 @@ function theme_ldap_server_ldap_entry_table($variables) {
       }
     }
   }
-  $entry_table = '<div class="content"><h2>' . t('LDAP Entry for %username (dn: %dn)', array('%dn' => $variables['dn'], '%username' => $variables['username'])) . '</h2>' . theme('table', array('colgroups' => NULL, 'caption' => 'ldap entry array', 'header' => $header, 'rows' => $rows, 'sticky' => TRUE, 'attributes' => array(), 'empty' => 'No data')) . '</div>';
+  $entry_table = '<div class="content"><h2>' . t('LDAP Entry for %username', array('%username' => $variables['username'])) . '</h2>' . theme('table', array('colgroups' => NULL, 'caption' => 'ldap entry array', 'header' => $header, 'rows' => $rows, 'sticky' => TRUE, 'attributes' => array(), 'empty' => 'No data')) . '</div>';
   return $entry_table;
 }

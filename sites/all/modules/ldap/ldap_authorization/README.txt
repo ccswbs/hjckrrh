@@ -1,3 +1,4 @@
+// $Id: README.txt,v 1.2 2010/12/29 01:37:46 johnbarclay Exp $
 
 Vocubulary of LDAP Authorization and its Code
 
@@ -54,7 +55,9 @@ username to an ldap user entry.
 LDAP Authorization data storage:
 ---------------------
 
-Authorization data is stored in user->data array
+Authorization data is stored in user->data array.  Ultimately these should be stored in $user entity fields to make integration with other modules better.
+
+$user->data['ldap_authorizations'][<consumerType>][<authorization_id>] => attributes
 
 such as:
 
