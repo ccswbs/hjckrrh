@@ -10,6 +10,22 @@
 function ug_wysiwyg_user_default_permissions() {
   $permissions = array();
 
+  // Exported permission: 'access ckeditor link'.
+  $permissions['access ckeditor link'] = array(
+    'name' => 'access ckeditor link',
+    'roles' => array(
+      'authenticated user' => 'authenticated user',
+    ),
+    'module' => 'ckeditor_link',
+  );
+
+  // Exported permission: 'administer ckeditor link'.
+  $permissions['administer ckeditor link'] = array(
+    'name' => 'administer ckeditor link',
+    'roles' => array(),
+    'module' => 'ckeditor_link',
+  );
+
   // Exported permission: 'use text format filtered_html'.
   $permissions['use text format filtered_html'] = array(
     'name' => 'use text format filtered_html',
