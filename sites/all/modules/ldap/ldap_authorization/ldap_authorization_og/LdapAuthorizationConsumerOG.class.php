@@ -78,7 +78,7 @@ class LdapAuthorizationConsumerOG extends LdapAuthorizationConsumerAbstract {
 			$group_entities = entity_load($entity_type, $group_entity_ids);
 			$ogs[$entity_type] = $group_entities;
 			foreach ($group_entities as $entity_id => $group_entity) {
-				$roles = og_roles($entity_type, $group_entity->type, $entity_id);
+				$roles = og_roles($entity_type, isset($group_entity->type) ? $group_entity->type : NULL, $entity_id);
 				$ogs[$entity_type][$entity_id] = array(
 					'roles' => $roles,
 					'entity' => $group_entity,

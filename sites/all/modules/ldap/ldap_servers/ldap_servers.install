@@ -235,15 +235,32 @@ function ldap_servers_update_7104() {
  */
 function ldap_servers_update_7105() {
   if (!db_field_exists('ldap_servers', 'account_name_attr')) {
-	db_add_field('ldap_servers', 'account_name_attr', array(
-    'description' => 'The attribute to be used as the account name if not the user_attr',
-	  'type' => 'varchar',
-    'length' => 255,
-    'not null' => TRUE,
-	  'default' => '',
-  ));
+    db_add_field('ldap_servers', 'account_name_attr', array(
+      'description' => 'The attribute to be used as the account name if not the user_attr',
+      'type' => 'varchar',
+      'length' => 255,
+      'not null' => FALSE,
+    ));
     $msg = t('"account_name_attr" field added to ldap_servers table');
   }
 
   return ($msg) ? $msg :  t('No database changes made.');
 }
+
+
+
+/**
+ * Change ldap_servers "bind_method" field to small int.
+ */
+function ldap_servers_update_7106() {
+  db_change_field('ldap_servers', 'bind_method', 'bind_method', array(
+    'type' => 'int',
+    'size' => 'small',
+    'not null' => TRUE,
+    'default' => 0,
+    ));
+  $msg = t('ldap_servers "bind_method" field changed to small int');
+
+  return ($msg) ? $msg : t('No database changes made.');
+}
+

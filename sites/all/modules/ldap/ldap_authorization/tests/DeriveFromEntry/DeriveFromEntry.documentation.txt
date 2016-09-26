@@ -1,0 +1,27 @@
+
+Group Entry Examples:
+
+  'dn' = 'cn=it,cn=groups,dc=ad,dc=myuniversity,dc=edu'
+    'objectclass' = 'groupofuniquenames'
+    'uniquemember' =
+      'cn=developers,cn=groups,dc=ad,dc=myuniversity,dc=edu'
+      'cn=sysadmins,cn=groups,dc=ad,dc=myuniversity,dc=edu'
+      'uid=joeprojectmanager,ou=it,dc=ad,dc=myuniversity,dc=edu'
+    ),
+
+  'dn' = 'cn=people,cn=groups,dc=ad,dc=myuniversity,dc=edu'
+    'objectclass' = 'groupofuniquenames'
+    'uniquemember' = 
+       'cn=students,cn=groups,dc=ad,dc=myuniversity,dc=edu'
+       'cn=staff,cn=groups,dc=ad,dc=myuniversity,dc=edu'
+
+
+
+
+User Entry Examples
+
+  'dn' = 'uid=joeprogrammer,ou=it,dc=ad,dc=myuniversity,dc=edu'
+    'cn' = 'joeprogrammer'
+    'uid' = 'joeprogrammer'
+    'mail' = 'joeprogrammer@myuniversity.edu'
+    'uid' = 'joeprogrammer'

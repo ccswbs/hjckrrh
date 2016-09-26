@@ -89,6 +89,9 @@ define('LDAP_INVALID_DN_SYNTAX', 0x22);
 
 define('LDAP_IS_LEAF', 0x23);
 define('LDAP_ALIAS_DEREF_PROBLEM', 0x24);
+if (!defined('LDAP_DEREF_NEVER')) {
+  define('LDAP_DEREF_NEVER', 0x25);
+}
 
 define('LDAP_INAPPROPRIATE_AUTH', 0x30);
 define('LDAP_INVALID_CREDENTIALS', 0x31);
@@ -314,7 +317,7 @@ function ldap_servers_disable_http_check(&$form) {
       'site_mail' =>  variable_get('site_mail', ''),
       );
 
-    $form['#prefix'] = theme('ldap_servers_https_required', $tokens);
+    drupal_set_message(t(theme('ldap_servers_https_required', $tokens)), 'error');
     $form['#disabled'] = TRUE;
   }
 }

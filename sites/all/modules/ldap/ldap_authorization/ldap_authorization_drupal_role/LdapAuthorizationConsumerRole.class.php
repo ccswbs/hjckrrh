@@ -149,7 +149,7 @@ class LdapAuthorizationConsumerDrupalRole extends LdapAuthorizationConsumerAbstr
 
     $account = user_load($user->uid);
     $user = user_save($account, $user_edit);
-    $result = ($user && isset($user->roles[$this->drupalRolesByName[$role_name]]));
+    $result = ($user && isset($user->roles[$this->drupalRolesByName[drupal_strtolower($role_name)]]));
 
     if ($this->detailedWatchdogLog) {
       watchdog('ldap_authorization', 'LdapAuthorizationConsumerDrupalRole.grantSingleAuthorization()
@@ -173,7 +173,7 @@ class LdapAuthorizationConsumerDrupalRole extends LdapAuthorizationConsumerAbstr
     $normalized = $this->normalizeMappings(array($map_to));
     $tokens = array('!map_to' => $map_to);
     $pass = FALSE;
-   
+
     if (is_array($normalized) && isset($normalized[0][1]) && $normalized[0][1] !== FALSE ) {
       $available_authorization_ids = $this->availableConsumerIDs($clear_cache);
       $available_authorization_ids = array_map('drupal_strtolower', $available_authorization_ids);
@@ -203,7 +203,7 @@ class LdapAuthorizationConsumerDrupalRole extends LdapAuthorizationConsumerAbstr
     }
 		return array($message_type, $message_text);
 	}
-  
+
   private function getDrupalRoleByName($role_name) {
   	$role_name_lowercase = drupal_strtolower($role_name);
 

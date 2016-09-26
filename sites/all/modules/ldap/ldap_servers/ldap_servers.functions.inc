@@ -274,6 +274,7 @@ function ldap_server_tokenize_entry($ldap_entry, $token_keys = 'all', $pre = LDA
           continue;
       }
       else {
+        $attr_name = $token_key;
         $value = $ldap_entry[$token_key][0];
       }
       $value = ldap_server_check_plain($value, $token_key);

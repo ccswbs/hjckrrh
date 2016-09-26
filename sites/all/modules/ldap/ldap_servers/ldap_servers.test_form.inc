@@ -217,7 +217,7 @@ function ldap_servers_test_binding_credentials(&$ldap_server, $bindpw) {
   }
 
   if (!$errors) {
-    $bind_result = $ldap_server->bind($ldap_server->binddn, $bindpw);
+    $bind_result = $ldap_server->bind($ldap_server->binddn, $bindpw, FALSE);
     if ($bind_result == LDAP_SUCCESS) {
       $results[] =  t('Successfully bound to server');
     }

@@ -83,27 +83,26 @@ function ldap_profile_user_login(&$edit, $account) {
 
   module_load_include('functions.inc', 'ldap_servers');
 
-  if (!empty($account)) {
-    $ldapuser = ldap_servers_get_user_ldap_data($account);
-    if (!empty($ldapuser) && !empty($ldapuser['dn'])) {
-      $dn = $ldapuser['dn'];
-    }
-  }
-  
-  if (is_array($account->data) && array_key_exists("ldap_authentication", $account->data)) {
-    $authdata = $account->data["ldap_authentication"];
-    if (array_key_exists('init', $authdata)) {
-      $authinit = $authdata['init'];
-      if (isset($servers[$authinit['sid']])) {
-        $server = $servers[$authinit['sid']];
-      }
-    }
-  }
-
-  if (!$authuser || !$ldapuser || $dn == "" || !$server) {
+  if (empty($account) || !$authuser) {
     return;
   }
+  
+  $ldapuser = ldap_servers_get_user_ldap_data($account);
+  if (empty($ldapuser) || empty($ldapuser['dn'])) {
+    return;
+  }
+  
+  $dn = $ldapuser['dn'];
 
+  
+  if (is_array($account->data) && array_key_exists("ldap_authentication", $account->data) && isset($account->data["ldap_authentication"]['init']['sid'])) {
+    $sid = $account->data["ldap_authentication"]['init']['sid'];
+    $server = $servers[$sid];
+  }
+  else {
+    return;
+  }
+  
   $ldapfields = array();
   $dnLookups = array();
   $mapping = ldap_profile_get_mapping();

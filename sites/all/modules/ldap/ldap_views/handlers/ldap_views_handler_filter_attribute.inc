@@ -11,7 +11,7 @@ class ldap_views_handler_filter_attribute extends ldap_views_handler_filter {
    * Determine if a filter can be exposed.
    */
   function can_expose() {
-    return FALSE;
+    return TRUE;
   }
 
   function option_definition() {
@@ -66,14 +66,16 @@ class ldap_views_handler_filter_attribute extends ldap_views_handler_filter {
       $options[$attribute] = $attribute;
     }
 
-    $form['attribute_name'] = array(
-      '#type' => 'select',
-      '#title' => t('Attribute name'),
-      '#description' => t('The attribute name from LDAP response'),
-      '#options' => $options,
-      '#default_value' => $this->options['attribute_name'],
-      '#required' => TRUE,
-    );
+    if (empty($form_state['exposed'])) {
+      $form['attribute_name'] = array(
+        '#type' => 'select',
+        '#title' => t('Attribute name'),
+        '#description' => t('The attribute name from LDAP response'),
+        '#options' => $options,
+        '#default_value' => $this->options['attribute_name'],
+        '#required' => TRUE,
+      );
+    }
 
     parent::value_form($form, $form_state);
   }

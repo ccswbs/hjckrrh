@@ -20,10 +20,8 @@ function _ldap_servers_get_user_ldap_data($drupal_user, $sid) {
     if ($ldap_user = $ldap_server->user_lookup($drupal_username)) {
       return $ldap_user;
     }
-    else {
-      return FALSE;
-    }
   }
+  return FALSE;
 }
 
 /**

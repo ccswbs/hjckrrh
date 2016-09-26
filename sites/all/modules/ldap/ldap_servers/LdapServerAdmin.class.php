@@ -669,7 +669,7 @@ public function drupalFormSubmit($op, $values) {
         ),
         'schema' => array(
           'type' => 'int',
-          'size' => 'tiny',
+          'size' => 'small',
           'not null' => TRUE,
           'default' => 0,
         ),
