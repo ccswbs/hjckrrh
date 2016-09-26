@@ -69,10 +69,6 @@ Base Styles
       text-decoration: underline;
   }
 
-  a:focus { 
-    outline: thin dotted; 
-  }
-
   /*--- Links surrounded by text ---*/
 
   /* default - underline (border-bottom) */
