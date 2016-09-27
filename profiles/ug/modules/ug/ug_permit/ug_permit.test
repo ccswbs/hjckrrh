@@ -1,0 +1,53 @@
+<?php
+
+class NodeAccessPermissionsTestCase extends DrupalWebTestCase {
+
+	public static function getInfo() {
+		return array(
+			'name' => 'Node Access Permissions',
+			'description' => 'Tests node access permissions.',
+			'group' => 'access control',
+		);
+	}
+
+
+	public function setUp() {
+		parent::setUp('node_access_permissions', 'search');
+		node_access_rebuild();
+	}
+
+
+	function testNodeAccessPermissionsBasic() {
+		// Create a role for our group.
+		$gid = $this->drupalCreateRole(array(
+			'access content',
+			'create article content',
+			'edit any article content'
+		));
+		// Create the owner, who is also a group member.
+		$bob = $this->drupalCreateUser(array('create article content'));
+		$bob->roles[$gid] = $gid;
+		// Create another group member.
+		$alice = $this->drupalCreateUser();
+		$alice->roles[$gid] = $gid;
+		// Create another (non-member) user.
+		$joe = $this->drupalCreateUser(array('access content'));
+		// Create an article.
+		$this->drupalLogin($bob);
+		$edit = array(
+			'title' => t('Permissions Test'),
+			'body[und][0][value]' => t('This space intentionally left blank.'),
+			'mode' => 0764
+		);
+		$this->drupalPost('node/add/article', $edit, t('Save'));
+		$nid = db_query('SELECT nid FROM {node} WHERE title = :title',
+			array(':title' => $edit['title']))->fetchField();
+		$mode = db_query('SELECT mode FROM {node_access_permissions} WHERE nid = :nid',
+			array(':nid' => $nid))->fetchField();
+		$this->assertTrue($mode == $edit['mode'], 'Node permission mode saved.');
+	}
+
+}
+
+
+

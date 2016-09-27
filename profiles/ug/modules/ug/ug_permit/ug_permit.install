@@ -1,0 +1,39 @@
+<?php
+
+/**
+ * Implements hook_schema().
+ */
+function ug_permit_schema() {
+	$schema['ug_permit'] = array(
+		'description' => 'Node access permissions table',
+		'fields' => array(
+			'nid' => array(
+				'type' => 'int',
+				'unsigned' => TRUE,
+				'not null' => TRUE,
+				'default' => 0
+			),
+			'uid' => array(
+				'type' => 'int',
+				'unsigned' => TRUE,
+				'not null' => TRUE,
+				'default' => 0
+			),
+			'rid' => array(
+				'type' => 'int',
+				'unsigned' => TRUE,
+				'not null' => TRUE,
+				'default' => 1
+			),
+			'mode' => array(
+				'type' => 'int',
+				'unsigned' => TRUE,
+				'not null' => TRUE,
+				'default' => 0
+			)
+		),
+		'primary key' => array('nid')
+	);
+	return $schema;
+}
+

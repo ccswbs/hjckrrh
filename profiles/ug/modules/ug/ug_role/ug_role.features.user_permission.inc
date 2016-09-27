@@ -210,6 +210,25 @@ function ug_role_user_default_permissions() {
     'module' => 'node',
   );
 
+  // Exported permission: 'ug_permit any role'.
+  $permissions['ug_permit any role'] = array(
+    'name' => 'ug_permit any role',
+    'roles' => array(
+      'site manager' => 'site manager',
+    ),
+    'module' => 'ug_permit',
+  );
+
+  // Exported permission: 'ug_permit node access'.
+  $permissions['ug_permit node access'] = array(
+    'name' => 'ug_permit node access',
+    'roles' => array(
+      'author' => 'author',
+      'editor' => 'editor',
+    ),
+    'module' => 'ug_permit',
+  );
+
   // Exported permission: 'view own unpublished content'.
   $permissions['view own unpublished content'] = array(
     'name' => 'view own unpublished content',
