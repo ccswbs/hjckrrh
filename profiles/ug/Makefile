@@ -7,8 +7,8 @@ site:
 	drush -y site-install ug
 
 test: 
-	drush -y pm-enable simpletest
-	cd ../..; sudo -u apache php scripts/run-tests.sh --url http://localhost/~$(USER) UG
+	if command -v drush; then drush -y pm-enable simpletest; fi
+	cd ../..; sudo -nu apache php scripts/run-tests.sh --url http://localhost/~$(USER) UG
 
 install:
 	rsync --recursive --verbose --cvs-exclude ../../ $(DEST)/
