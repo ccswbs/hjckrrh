@@ -1,7 +1,15 @@
-Hjckrrh 7.8.0, xxxx-xx-xx
+Hjckrrh 7.8.0, 2016-09-27
 -------------------------
 - Change default captcha challenge to reCAPTCHA (#493)
 - Provide spacing between webform elements (#492)
+- ldap-7.x-1.0-beta14 module added
+- Add ug_permit module (#525)
+- Fixed: No Picture Version of PP1 redirects to home when filtered (#523)
+- Update: Fix feature link node ids / absolute URLs during migration (UG Migrate D7)[Fix #519]
+- Add price field to service content type (#531)
+- Upgrade to Panels 7.x-3.7 and Google Analytics 7.x-2.3 (#521)
+- Change course outline view to take node id from panel argument
+- Docs: Add instructions for custom fields mapped into body (UG Migrate D7)
 
 Hjckrrh 7.7.0, 2016-08-02
 -------------------------
