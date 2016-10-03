@@ -1,0 +1,79 @@
+<?php
+
+/**
+ * @file
+ * Tests for ug_wysiwyg.module.
+ */
+
+/**
+ * Test UG Wysiwyg feature.
+ */
+class UGWysiwygTestCase extends DrupalWebTestCase {
+
+  public static function getInfo() {
+    return array(
+      'name' => 'UG Wysiwyg',
+      'description' => 'Test the UG Wysiwyg feature.',
+      'group' => 'UG',
+    );
+  }
+
+  function setUp() {
+    $this->profile = 'ug';
+    parent::setup('ug_wysiwyg');
+  }
+
+  /**
+   * Test filtered HTML.
+   */
+  function testFilteredHTML() {
+    /* Generate data. */
+    $randomTag = 'x-'.strtolower($this->randomName());
+    $randomText = $this->randomString();
+    $body = '<'.$randomTag.'>'.$randomText.'</'.$randomTag.'>';
+
+    /* Create a page. */
+    $settings = array('type' => 'page', 'promote' => 1);
+    $settings['field_page_body'][LANGUAGE_NONE][0]['value'] = $body;
+    $settings['field_page_body'][LANGUAGE_NONE][0]['format'] = filter_default_format();
+    $node = $this->drupalCreateNode($settings);
+    $this->drupalGet('node/'.$node->nid);
+
+    /* Assert tag is filtered out. */
+    $this->assertNoRaw($randomTag);
+  }
+
+  function testImage() {
+    /* Generate data. */
+    $imgid = strtolower($this->randomName());
+    $bodyHTML = "<a href='http://www.uoguelph.ca/' target='_blank'><img alt='University of Guelph' class='img-responsive' dir='ltr' id='$imgid' lang='en' longdesc='http://www.uoguelph.ca/' src='http://www.uoguelph.ca/img/universityofguelph.gif' style='margin: 10px; float: right;' title='Logo' /></a>";
+
+    /* Create a page. */
+    $settings = array('type' => 'page', 'promote' => 1);
+    $settings['field_page_body'][LANGUAGE_NONE][0]['value'] = $bodyHTML;
+    $settings['field_page_body'][LANGUAGE_NONE][0]['format'] = filter_default_format();
+    $node = $this->drupalCreateNode($settings);
+
+    /* Assert image is allowed. */
+    $this->drupalGet('node/'.$node->nid);
+    $this->assertRaw($bodyHTML);
+    //$img = $this->xpath("//img[@id='$imgid']");
+    //$this->assertEqual(count($img), 1, 'Found image on page');
+  }
+
+  function testTable() {
+    /* Generate data. */
+    $body = '<table align="center" class="table table-responsive" dir="ltr" id="asdf" summary="summary"><thead><tr><th scope="row">aa</th><th scope="col">ab</th></tr></thead><caption>caption</caption><tbody><tr><th scope="row">ba</th><td>bb</td></tr><tr><th scope="row">ca</th><td>cb</td></tr></tbody></table>';
+
+    /* Create a page. */
+    $settings = array('type' => 'page', 'promote' => 1);
+    $settings['field_page_body'][LANGUAGE_NONE][0]['value'] = $body;
+    $settings['field_page_body'][LANGUAGE_NONE][0]['format'] = filter_default_format();
+    $node = $this->drupalCreateNode($settings);
+
+    /* Assert table is allowed. */
+    $this->drupalGet('node/'.$node->nid);
+    $this->assertRaw($body);
+  }
+}
+
