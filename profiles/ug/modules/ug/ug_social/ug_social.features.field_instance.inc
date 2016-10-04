@@ -10,7 +10,7 @@
 function ug_social_field_default_field_instances() {
   $field_instances = array();
 
-  // Exported field_instance: 'node-social-field_social_category'
+  // Exported field_instance: 'node-social-field_social_category'.
   $field_instances['node-social-field_social_category'] = array(
     'bundle' => 'social',
     'default_value' => NULL,
@@ -47,7 +47,7 @@ function ug_social_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-social-field_social_link'
+  // Exported field_instance: 'node-social-field_social_link'.
   $field_instances['node-social-field_social_link'] = array(
     'bundle' => 'social',
     'default_value' => NULL,
@@ -104,7 +104,7 @@ function ug_social_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-social-field_social_network'
+  // Exported field_instance: 'node-social-field_social_network'.
   $field_instances['node-social-field_social_network'] = array(
     'bundle' => 'social',
     'default_value' => NULL,
@@ -141,7 +141,7 @@ function ug_social_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-social-field_tags'
+  // Exported field_instance: 'node-social-field_tags'.
   $field_instances['node-social-field_tags'] = array(
     'bundle' => 'social',
     'default_value' => NULL,
