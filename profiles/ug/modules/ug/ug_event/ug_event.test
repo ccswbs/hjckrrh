@@ -8,7 +8,8 @@
 /**
  * Test UG Event
  */
-class UGEventTestCase extends DrupalWebTestCase {
+//class UGEventTestCase extends DrupalWebTestCase {
+class UGEventTestCase extends TaxonomyWebTestCase {
 
   protected $no_results_text = 'No results found.';
   protected $more_text = 'More events';
@@ -92,6 +93,45 @@ class UGEventTestCase extends DrupalWebTestCase {
     $this->drupalGet('events/archive');
     $this->assertText($summary_text);
     $this->assertNoText($body_text);
+  }
+
+   /**
+   * Test "Events" filter behaviour
+   */
+  function testEventsCategory() {
+
+    /* Create categories and keywords for events */
+    $eventcats = taxonomy_vocabulary_machine_name_load('event_category');
+    $term1 = $this->createTerm($eventcats);
+    $term2 = $this->createTerm($eventcats);
+
+    /* Create 2 events */
+    $settings = array('type' => 'event', 'promote' => 1);
+    $settings['field_event_category'][LANGUAGE_NONE][0]['tid'] = $term1->tid;
+    $node1 = $this->drupalCreateNode($settings);
+
+    $settings['field_page_category'][LANGUAGE_NONE][0]['tid'] = $term2->tid;
+    $node2 = $this->drupalCreateNode($settings);
+   
+    /* Get feed. */
+    $this->drupalGet('events');
+
+    /* Test page title. */
+    $this->assertText("Upcoming Events");
+
+    /* There should be both titles*/
+    $this->assertText($node1->title);
+    $this->assertText($node2->title);
+
+    $this->drupalGet('events/'. $term1->tid);
+    /* There should be one title */
+    $this->assertText($node1->title);
+    $this->assertNoText($node2->title);
+
+    $this->drupalGet('events/'. $term2->tid);
+    /* There should be one title */
+    $this->assertText($node2->title);
+    $this->assertNoText($node1->title);
   }
 
 }
