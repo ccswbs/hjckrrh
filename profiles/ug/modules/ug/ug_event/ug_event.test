@@ -8,7 +8,6 @@
 /**
  * Test UG Event
  */
-//class UGEventTestCase extends DrupalWebTestCase {
 class UGEventTestCase extends TaxonomyWebTestCase {
 
   protected $no_results_text = 'No results found.';
@@ -122,7 +121,7 @@ class UGEventTestCase extends TaxonomyWebTestCase {
     $settings['field_event_category'][LANGUAGE_NONE][0]['tid'] = $term1->tid;
     $node1 = $this->drupalCreateNode($settings);
 
-    $settings['field_page_category'][LANGUAGE_NONE][0]['tid'] = $term2->tid;
+    $settings['field_event_category'][LANGUAGE_NONE][0]['tid'] = $term2->tid;
     $node2 = $this->drupalCreateNode($settings);
    
     /* Get feed. */
