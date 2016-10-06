@@ -100,13 +100,25 @@ class UGEventTestCase extends TaxonomyWebTestCase {
    */
   function testEventsCategory() {
 
+    /* Generate some random text. */
+    $later = time() + 36000;
+    $datetime_format = "Y-m-d H:i:s";
+    $date = date($datetime_format, $later);
+    $date2 = date($datetime_format, $later + 7200);
+    $body_text = $this->randomName();
+
     /* Create categories and keywords for events */
     $eventcats = taxonomy_vocabulary_machine_name_load('event_category');
     $term1 = $this->createTerm($eventcats);
     $term2 = $this->createTerm($eventcats);
 
     /* Create 2 events */
-    $settings = array('type' => 'event', 'promote' => 1);
+    $settings = array();
+    $settings['type'] = 'event';
+    $settings['field_event_body'][LANGUAGE_NONE][0]['value'] = $body_text;
+    $settings['field_event_date'][LANGUAGE_NONE][0]['value'] = $date;
+    $settings['field_event_date'][LANGUAGE_NONE][0]['value2'] = $date2;
+
     $settings['field_event_category'][LANGUAGE_NONE][0]['tid'] = $term1->tid;
     $node1 = $this->drupalCreateNode($settings);
 
