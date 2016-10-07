@@ -20,7 +20,6 @@ function ug_wysiwyg_strongarm() {
     'main-menu' => 0,
     'management' => 0,
     'navigation' => 0,
-    'menu-secondary-links' => 0,
     'user-menu' => 0,
   );
   $export['ckeditor_link_autocomplete_menus'] = $strongarm;
@@ -98,7 +97,7 @@ function ug_wysiwyg_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'ckeditor_link_type_selected';
-  $strongarm->value = 0;
+  $strongarm->value = 1;
   $export['ckeditor_link_type_selected'] = $strongarm;
 
   $strongarm = new stdClass();
