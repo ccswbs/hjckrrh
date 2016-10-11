@@ -13,6 +13,96 @@ function ug_wysiwyg_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
+  $strongarm->name = 'ckeditor_link_autocomplete_menus';
+  $strongarm->value = array(
+    '- any -' => 0,
+    'devel' => 0,
+    'main-menu' => 0,
+    'management' => 0,
+    'navigation' => 0,
+    'user-menu' => 0,
+  );
+  $export['ckeditor_link_autocomplete_menus'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'ckeditor_link_autocomplete_node_types';
+  $strongarm->value = array(
+    'course_outline' => 'course_outline',
+    'event' => 'event',
+    'faq' => 'faq',
+    'news' => 'news',
+    'page' => 'page',
+    'profile' => 'profile',
+    'service' => 'service',
+    'webform' => 'webform',
+    '- any -' => 0,
+    'banner' => 0,
+    'feature' => 0,
+    'social' => 0,
+  );
+  $export['ckeditor_link_autocomplete_node_types'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'ckeditor_link_autocomplete_vocabularies';
+  $strongarm->value = array(
+    '- any -' => 0,
+    18 => 0,
+    2 => 0,
+    7 => 0,
+    5 => 0,
+    6 => 0,
+    4 => 0,
+    8 => 0,
+    3 => 0,
+    9 => 0,
+    10 => 0,
+    11 => 0,
+    12 => 0,
+    13 => 0,
+    14 => 0,
+    16 => 0,
+    17 => 0,
+    15 => 0,
+    19 => 0,
+    20 => 0,
+    21 => 0,
+    22 => 0,
+    23 => 0,
+    24 => 0,
+    25 => 0,
+    26 => 0,
+    1 => 0,
+  );
+  $export['ckeditor_link_autocomplete_vocabularies'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'ckeditor_link_limit';
+  $strongarm->value = '10';
+  $export['ckeditor_link_limit'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'ckeditor_link_type_name';
+  $strongarm->value = 'Internal path';
+  $export['ckeditor_link_type_name'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'ckeditor_link_type_selected';
+  $strongarm->value = 1;
+  $export['ckeditor_link_type_selected'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
   $strongarm->name = 'imce_profiles';
   $strongarm->value = array(
     1 => array(

@@ -68,6 +68,12 @@ function ug_wysiwyg_ckeditor_profile_defaults() {
         'theme_config_js' => 't',
         'js_conf' => '',
         'loadPlugins' => array(
+          'ckeditor_link' => array(
+            'name' => 'drupal_path',
+            'desc' => 'CKEditor Link - A plugin to easily create links to Drupal internal paths',
+            'path' => '%base_path%sites/all/modules/ckeditor_link/plugins/link/',
+            'buttons' => FALSE,
+          ),
           'drupalbreaks' => array(
             'name' => 'drupalbreaks',
             'desc' => 'Plugin for inserting Drupal teaser and page breaks.',
@@ -168,6 +174,12 @@ function ug_wysiwyg_ckeditor_profile_defaults() {
         'theme_config_js' => 'f',
         'js_conf' => '',
         'loadPlugins' => array(
+          'ckeditor_link' => array(
+            'name' => 'drupal_path',
+            'desc' => 'CKEditor Link - A plugin to easily create links to Drupal internal paths',
+            'path' => '%base_path%sites/all/modules/ckeditor_link/plugins/link/',
+            'buttons' => FALSE,
+          ),
           'drupalbreaks' => array(
             'name' => 'drupalbreaks',
             'desc' => 'Plugin for inserting Drupal teaser and page breaks.',
