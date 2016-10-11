@@ -10,7 +10,7 @@
 function ug_social_field_default_field_bases() {
   $field_bases = array();
 
-  // Exported field_base: 'field_social_category'
+  // Exported field_base: 'field_social_category'.
   $field_bases['field_social_category'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -36,7 +36,7 @@ function ug_social_field_default_field_bases() {
     'type' => 'taxonomy_term_reference',
   );
 
-  // Exported field_base: 'field_social_link'
+  // Exported field_base: 'field_social_link'.
   $field_bases['field_social_link'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -65,7 +65,7 @@ function ug_social_field_default_field_bases() {
     'type' => 'link_field',
   );
 
-  // Exported field_base: 'field_social_network'
+  // Exported field_base: 'field_social_network'.
   $field_bases['field_social_network'] = array(
     'active' => 1,
     'cardinality' => 1,

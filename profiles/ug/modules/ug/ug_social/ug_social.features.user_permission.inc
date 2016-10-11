@@ -10,6 +10,25 @@
 function ug_social_user_default_permissions() {
   $permissions = array();
 
+  // Exported permission: 'access news feeds'.
+  $permissions['access news feeds'] = array(
+    'name' => 'access news feeds',
+    'roles' => array(
+      'anonymous user' => 'anonymous user',
+      'authenticated user' => 'authenticated user',
+    ),
+    'module' => 'aggregator',
+  );
+
+  // Exported permission: 'administer news feeds'.
+  $permissions['administer news feeds'] = array(
+    'name' => 'administer news feeds',
+    'roles' => array(
+      'site manager' => 'site manager',
+    ),
+    'module' => 'aggregator',
+  );
+
   // Exported permission: 'create social content'.
   $permissions['create social content'] = array(
     'name' => 'create social content',
