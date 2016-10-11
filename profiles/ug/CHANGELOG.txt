@@ -1,3 +1,12 @@
+Hjckrrh 7.9.0, 2016-10-11
+-------------------------
+- Fixed: Allow anonymous users to view feeds (#517)
+- Fixed: Allow site manager to create & update feeds (#512)
+- Fixed: Upcoming Events listing filtered by category (#520)
+- Fixed: No visual indicator when image-based links are in tab focus (#536)
+- Update: Upgrade views_data_export to 7.x-3.1
+- New: CKEditor Link (ckeditor_link) module
+
 Hjckrrh 7.8.0, 2016-09-27
 -------------------------
 - Change default captcha challenge to reCAPTCHA (#493)
