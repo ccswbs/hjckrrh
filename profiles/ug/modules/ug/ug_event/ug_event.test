@@ -8,7 +8,7 @@
 /**
  * Test UG Event
  */
-class UGEventTestCase extends DrupalWebTestCase {
+class UGEventTestCase extends TaxonomyWebTestCase {
 
   protected $no_results_text = 'No results found.';
   protected $more_text = 'More events';
@@ -92,6 +92,57 @@ class UGEventTestCase extends DrupalWebTestCase {
     $this->drupalGet('events/archive');
     $this->assertText($summary_text);
     $this->assertNoText($body_text);
+  }
+
+   /**
+   * Test "Events" filter behaviour
+   */
+  function testEventsCategory() {
+
+    /* Generate some random text. */
+    $later = time() + 36000;
+    $datetime_format = "Y-m-d H:i:s";
+    $date = date($datetime_format, $later);
+    $date2 = date($datetime_format, $later + 7200);
+    $body_text = $this->randomName();
+
+    /* Create categories and keywords for events */
+    $eventcats = taxonomy_vocabulary_machine_name_load('event_category');
+    $term1 = $this->createTerm($eventcats);
+    $term2 = $this->createTerm($eventcats);
+
+    /* Create 2 events */
+    $settings = array();
+    $settings['type'] = 'event';
+    $settings['field_event_body'][LANGUAGE_NONE][0]['value'] = $body_text;
+    $settings['field_event_date'][LANGUAGE_NONE][0]['value'] = $date;
+    $settings['field_event_date'][LANGUAGE_NONE][0]['value2'] = $date2;
+
+    $settings['field_event_category'][LANGUAGE_NONE][0]['tid'] = $term1->tid;
+    $node1 = $this->drupalCreateNode($settings);
+
+    $settings['field_event_category'][LANGUAGE_NONE][0]['tid'] = $term2->tid;
+    $node2 = $this->drupalCreateNode($settings);
+   
+    /* Get feed. */
+    $this->drupalGet('events');
+
+    /* Test page title. */
+    $this->assertText("Upcoming Events");
+
+    /* There should be both titles*/
+    $this->assertText($node1->title);
+    $this->assertText($node2->title);
+
+    $this->drupalGet('events/'. $term1->tid);
+    /* There should be one title */
+    $this->assertText($node1->title);
+    $this->assertNoText($node2->title);
+
+    $this->drupalGet('events/'. $term2->tid);
+    /* There should be one title */
+    $this->assertText($node2->title);
+    $this->assertNoText($node1->title);
   }
 
 }
