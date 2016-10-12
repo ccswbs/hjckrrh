@@ -154,7 +154,7 @@ function ug_permit_node_update($node) {
 		->fields(array(
 			'nid' => $node->nid,
 			'uid' => $node->uid,
-			'rid' => $node->rid,
+			'rid' => isset($node->rid) ? $node->rid : 0,
 			'mode' => ug_permit_mode($node)
 		))
 		->condition('nid', $node->nid)
