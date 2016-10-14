@@ -478,20 +478,20 @@ return false;';
   $handler->display->display_options['sorts']['field_event_date_value']['id'] = 'field_event_date_value';
   $handler->display->display_options['sorts']['field_event_date_value']['table'] = 'field_data_field_event_date';
   $handler->display->display_options['sorts']['field_event_date_value']['field'] = 'field_event_date_value';
-  /* Contextual filter: Content: Category (field_event_category) */
-  $handler->display->display_options['arguments']['field_event_category_tid']['id'] = 'field_event_category_tid';
-  $handler->display->display_options['arguments']['field_event_category_tid']['table'] = 'field_data_field_event_category';
-  $handler->display->display_options['arguments']['field_event_category_tid']['field'] = 'field_event_category_tid';
-  $handler->display->display_options['arguments']['field_event_category_tid']['default_argument_type'] = 'fixed';
-  $handler->display->display_options['arguments']['field_event_category_tid']['summary']['number_of_records'] = '0';
-  $handler->display->display_options['arguments']['field_event_category_tid']['summary']['format'] = 'default_summary';
-  $handler->display->display_options['arguments']['field_event_category_tid']['summary_options']['items_per_page'] = '25';
-  $handler->display->display_options['arguments']['field_event_category_tid']['specify_validation'] = TRUE;
-  $handler->display->display_options['arguments']['field_event_category_tid']['validate']['type'] = 'taxonomy_term';
-  $handler->display->display_options['arguments']['field_event_category_tid']['validate_options']['vocabularies'] = array(
+  /* Contextual filter: Content: Has taxonomy term ID */
+  $handler->display->display_options['arguments']['tid']['id'] = 'tid';
+  $handler->display->display_options['arguments']['tid']['table'] = 'taxonomy_index';
+  $handler->display->display_options['arguments']['tid']['field'] = 'tid';
+  $handler->display->display_options['arguments']['tid']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['tid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['tid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['tid']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['tid']['specify_validation'] = TRUE;
+  $handler->display->display_options['arguments']['tid']['validate']['type'] = 'taxonomy_term';
+  $handler->display->display_options['arguments']['tid']['validate_options']['vocabularies'] = array(
     'event_category' => 'event_category',
+    'tags' => 'tags',
   );
-  $handler->display->display_options['arguments']['field_event_category_tid']['validate_options']['type'] = 'convert';
   /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
@@ -515,7 +515,7 @@ return false;';
 
   /* Display: Content pane */
   $handler = $view->new_display('panel_pane', 'Content pane', 'panel_pane_1');
-  $handler->display->display_options['link_url'] = '/events';
+  $handler->display->display_options['link_url'] = '/events/!1';
   $handler->display->display_options['defaults']['empty'] = FALSE;
   /* No results behavior: Global: Text area */
   $handler->display->display_options['empty']['area']['id'] = 'area';
@@ -535,13 +535,13 @@ return false;';
   $handler->display->display_options['allow']['exposed_form'] = 0;
   $handler->display->display_options['allow']['fields_override'] = 0;
   $handler->display->display_options['argument_input'] = array(
-    'field_event_category_tid' => array(
+    'tid' => array(
       'type' => 'user',
-      'context' => 'entity:file.fid',
+      'context' => 'entity:field_collection_item.archived',
       'context_optional' => 0,
       'panel' => '0',
       'fixed' => '',
-      'label' => 'Category',
+      'label' => 'Content: Has taxonomy term ID',
     ),
   );
 
