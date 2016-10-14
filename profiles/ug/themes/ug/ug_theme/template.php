@@ -145,21 +145,6 @@ function ug_theme_preprocess_views_view_fields__event_image(&$vars) {
   $vars['caption']    = $vars['fields']['field_event_image_caption']->content; 
 } 
 
-/**
- * E3 - upcoming events
- */
-function ug_theme_preprocess_views_view__e3(&$vars) {
-
-  $view = views_get_current_view();
-
-  if(!empty($view->args[0])){
-    $category_filter = $view->args[0];
-    $view->display_handler->set_option('link_url', 'events/' . $category_filter);
-  }
-
-  $vars['more'] = $view->display_handler->render_more_link();
-}
-
 
 /** 
  * Event month list
