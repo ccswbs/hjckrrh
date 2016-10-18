@@ -75,5 +75,18 @@ class UGNewsTestCase extends DrupalWebTestCase {
     $this->assertNoText($this->more_text);
   }
 
+  /**
+   * Test URL aliases.
+   */
+  function testUrlAlias() {
+    /* Create node */
+    $settings = array('type' => 'news');
+    $node = $this->drupalCreateNode($settings);
+    /* Get node. */
+    $this->drupalGet('node/' . $node->nid);
+    /* Test URL path. */
+    $expected_path = 'news/' . date("Y/m", time()) . '/' . strtolower($node->title);
+    $this->assertUrl($expected_path);
+  }
 }
 

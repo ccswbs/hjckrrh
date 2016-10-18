@@ -42,5 +42,19 @@ class UGFAQTestCase extends DrupalWebTestCase {
     }
   }
 
+  /**
+   * Test URL aliases
+   */
+  function testUrlAlias() {
+    /* Create a node */
+    $settings = array('type' => 'faq');
+    $node1 = $this->drupalCreateNode($settings);
+    /* Get node. */
+    $this->drupalGet('node/' . $node1->nid);
+    /* Test URL. */
+    $expected_path = 'faq/' . strtolower($node1->title);
+    $this->assertUrl($expected_path);
+  }
+
 }
 

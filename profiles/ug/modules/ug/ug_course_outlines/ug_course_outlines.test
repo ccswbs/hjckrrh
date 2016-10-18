@@ -87,5 +87,21 @@ class UGCourseOutlinesTestCase extends TaxonomyWebTestCase {
     $this->assertNoText($node2->field_course_code[LANGUAGE_NONE][0]['value']);
   }
 
+  /**
+   * Test URL aliases.
+   */
+  function testUrlAlias() {
+    /* Create a node */
+    $settings = array('type' => 'course_outline');
+    $name = $settings['field_course_name'][LANGUAGE_NONE][0]['value'] = $this->randomName();
+    $code = $settings['field_course_code'][LANGUAGE_NONE][0]['value'] = $this->randomName();
+    $node1 = $this->drupalCreateNode($settings);
+    /* Get node. */
+    $this->drupalGet('node/' . $node1->nid);
+    /* Test URL alias. */
+    $expected_path = 'course-outlines/' . strtolower($name) . '-' . strtolower($code);
+    $this->assertUrl($expected_path);
+  }
+
 }
 
