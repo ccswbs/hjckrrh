@@ -178,8 +178,10 @@ function ug_profile_views_default_views() {
   $handler->display->display_options['fields']['field_profile_title']['id'] = 'field_profile_title';
   $handler->display->display_options['fields']['field_profile_title']['table'] = 'field_data_field_profile_title';
   $handler->display->display_options['fields']['field_profile_title']['field'] = 'field_profile_title';
+  $handler->display->display_options['fields']['field_profile_title']['label'] = '';
   $handler->display->display_options['fields']['field_profile_title']['element_type'] = '0';
   $handler->display->display_options['fields']['field_profile_title']['element_label_type'] = 'strong';
+  $handler->display->display_options['fields']['field_profile_title']['element_label_colon'] = FALSE;
   /* Field: Content: Unit */
   $handler->display->display_options['fields']['field_profile_unit']['id'] = 'field_profile_unit';
   $handler->display->display_options['fields']['field_profile_unit']['table'] = 'field_data_field_profile_unit';
