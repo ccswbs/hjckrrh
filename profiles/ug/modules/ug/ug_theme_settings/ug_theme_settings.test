@@ -38,7 +38,7 @@ class UGThemeSettingsTestCase extends DrupalWebTestCase {
       'http://weather.gc.ca/city/pages/on-5_metric_e.html',
       '//www.uoguelph.ca/admissions/',
       '//www.uoguelph.ca/graduatestudies/',
-      '//opened.uoguelph.ca/en/Distance-Education.asp',
+      '//opened.uoguelph.ca/student-resources/About-Distance-Education',
       '//www.uoguelph.ca/academiccalendars/',
       '//www.uoguelph.ca/arts',
       '//www.uoguelph.ca/cbs/',
