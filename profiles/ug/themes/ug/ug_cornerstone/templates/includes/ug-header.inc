@@ -54,7 +54,7 @@
             <ul class="dropdown-menu navbar-default dropdown-menu-left" role="menu">
               <li><a href="//www.uoguelph.ca/admissions/">Undergraduate Admissions</a></li>
               <li><a href="//www.uoguelph.ca/graduatestudies/">Graduate Studies</a></li>
-              <li><a href="http://opened.uoguelph.ca/en/Distance-Education.asp">Distance Education</a></li>
+              <li><a href="http://opened.uoguelph.ca/student-resources/About-Distance-Education">Distance Education</a></li>
               <li><a href="//www.uoguelph.ca/academiccalendars/">Academic Calendars</a></li>
               <li class="divider"></li>
               <li><a href="//www.uoguelph.ca/arts">College of Arts</a></li>
