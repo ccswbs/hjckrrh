@@ -1,3 +1,16 @@
+Hjckrrh 7.10.0, 2016-10-25
+--------------------------
+- Fixed: Updated Distance Education link
+- Fixed: Include screen-reader-only text for more link on Feeds Aggregator [fixes #467]
+- Fixed: More events link filtered by category (#328)
+- Fixed: added position/title to profiles without pictures display [fixes issue #514]
+- Fixed: Integrity constraint violation in ug_permit (#551)
+- Fixed: changed more link for events and changed filter to use term id [fixes #328]
+- Update: upgrade to panelizer-7.x-3.4
+- New: Map edupersonaffiliation to Drupal roles
+- New: flag module version 7.x-3.9
+
+
 Hjckrrh 7.9.0, 2016-10-11
 -------------------------
 - Fixed: Allow anonymous users to view feeds (#517)
