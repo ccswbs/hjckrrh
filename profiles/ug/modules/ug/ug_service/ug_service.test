@@ -1,0 +1,41 @@
+<?php
+
+/**
+ * @file
+ * Tests for ug_service.module.
+ */
+
+/**
+ * Test UG Service feature.
+ */
+class UGServiceTestCase extends DrupalWebTestCase {
+
+  public static function getInfo() {
+    return array(
+      'name' => 'UG Service',
+      'description' => 'Test the UG Service feature.',
+      'group' => 'UG',
+    );
+  }
+
+  function setUp() {
+    $this->profile = 'ug';
+    parent::setUp('ug_service', 'ug_service_layouts');
+  }
+
+  /**
+   * Test URL aliases
+   */
+  function testUrlAlias() {
+    /* Create a node */
+    $settings = array('type' => 'service');
+    $node1 = $this->drupalCreateNode($settings);
+    /* Get node. */
+    $this->drupalGet('node/' . $node1->nid);
+    /* Test URL. */
+    $expected_path = 'services/' . strtolower($node1->title);
+    $this->assertUrl($expected_path);
+  }
+
+}
+

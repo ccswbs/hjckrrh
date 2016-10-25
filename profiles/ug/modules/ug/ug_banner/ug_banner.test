@@ -1,0 +1,41 @@
+<?php
+
+/**
+ * @file
+ * Tests for ug_banner.module.
+ */
+
+/**
+ * Test UG Banner feature.
+ */
+class UGBannerTestCase extends DrupalWebTestCase {
+
+  public static function getInfo() {
+    return array(
+      'name' => 'UG Banner',
+      'description' => 'Test the UG Banner feature.',
+      'group' => 'UG',
+    );
+  }
+
+  function setUp() {
+    $this->profile = 'ug';
+    parent::setup('ug_banner');
+  }
+
+  /**
+   * Test "Banner" aliases
+   */
+  function testBannerAlias() {
+    /* Create a banner */
+    $settings = array('type' => 'banner');
+    $node1 = $this->drupalCreateNode($settings);
+    /* Get banner. */
+    $this->drupalGet('node/' . $node1->nid);
+    /* Test banner URL. */
+    $expected_path = 'content/banner/' . strtolower($node1->title);
+    $this->assertUrl($expected_path);
+  }
+
+}
+

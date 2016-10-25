@@ -83,5 +83,24 @@ class UGProfileTestCase extends DrupalWebTestCase {
     $this->assertNull(field_info_field('field_profile_address'));
   }
 
+  /**
+   * Test URL aliases
+   */
+  function testUrlAlias() {
+    /* Generate data */
+    $name = $this->randomName();
+    $lastname = $this->randomName();
+    /* Create a node */
+    $settings = array('type' => 'profile');
+    $settings['field_profile_name'][LANGUAGE_NONE][0]['value'] = $name;
+    $settings['field_profile_lastname'][LANGUAGE_NONE][0]['value'] = $lastname;
+    $node1 = $this->drupalCreateNode($settings);
+    /* Get node. */
+    $this->drupalGet('node/' . $node1->nid);
+    /* Test URL. */
+    $expected_path = 'people/' . strtolower($name) . '-' . strtolower($lastname);
+    $this->assertUrl($expected_path);
+  }
+
 }
 

@@ -46,5 +46,19 @@ class UGFeatureTestCase extends DrupalWebTestCase {
     $this->assertNoText($this->more_text);
   }
 
+  /**
+   * Test URL aliases
+   */
+  function testUrlAlias() {
+    /* Create a node */
+    $settings = array('type' => 'feature');
+    $node1 = $this->drupalCreateNode($settings);
+    /* Get node. */
+    $this->drupalGet('node/' . $node1->nid);
+    /* Test URL. */
+    $expected_path = 'content/feature/' . strtolower($node1->title);
+    $this->assertUrl($expected_path);
+  }
+
 }
 

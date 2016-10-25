@@ -98,5 +98,47 @@ function ug_service_strongarm() {
   $strongarm->value = 0;
   $export['node_submitted_service'] = $strongarm;
 
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'pathauto_node_service_pattern';
+  $strongarm->value = 'services/[node:title]';
+  $export['pathauto_node_service_pattern'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'pathauto_taxonomy_term_service_audience_pattern';
+  $strongarm->value = '';
+  $export['pathauto_taxonomy_term_service_audience_pattern'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'pathauto_taxonomy_term_service_category_pattern';
+  $strongarm->value = '';
+  $export['pathauto_taxonomy_term_service_category_pattern'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'pathauto_taxonomy_term_service_keywords_pattern';
+  $strongarm->value = '';
+  $export['pathauto_taxonomy_term_service_keywords_pattern'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'pathauto_taxonomy_term_service_private_heading_pattern';
+  $strongarm->value = '';
+  $export['pathauto_taxonomy_term_service_private_heading_pattern'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'pathauto_taxonomy_term_service_public_heading_pattern';
+  $strongarm->value = '';
+  $export['pathauto_taxonomy_term_service_public_heading_pattern'] = $strongarm;
+
   return $export;
 }

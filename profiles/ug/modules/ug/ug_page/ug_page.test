@@ -99,5 +99,20 @@ class UGPageTestCase extends TaxonomyWebTestCase {
     $this->drupalPost("node/$nid/edit", $edit, t('Save'));
     $this->assertText(t('File attachments description is required.'));
   }
+
+  /**
+   * Test "Page" aliases
+   */
+  function testPageAlias() {
+    /* Create a page */
+    $settings = array('type' => 'page');
+    $node1 = $this->drupalCreateNode($settings);
+    /* Get page. */
+    $this->drupalGet('node/' . $node1->nid);
+    /* Test page URL. */
+    $expected_path = strtolower($node1->title);
+    $this->assertUrl($expected_path);
+  }
+
 }
 
