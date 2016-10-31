@@ -444,6 +444,23 @@ function ug_feature_views_default_views() {
   $handler->display->display_options['pager']['type'] = 'some';
   $handler->display->display_options['style_plugin'] = 'rss';
   $handler->display->display_options['row_plugin'] = 'node_rss';
+  $handler->display->display_options['defaults']['arguments'] = FALSE;
+  /* Contextual filter: Content: Category (field_feature_category) */
+  $handler->display->display_options['arguments']['field_feature_category_tid']['id'] = 'field_feature_category_tid';
+  $handler->display->display_options['arguments']['field_feature_category_tid']['table'] = 'field_data_field_feature_category';
+  $handler->display->display_options['arguments']['field_feature_category_tid']['field'] = 'field_feature_category_tid';
+  $handler->display->display_options['arguments']['field_feature_category_tid']['title_enable'] = TRUE;
+  $handler->display->display_options['arguments']['field_feature_category_tid']['title'] = '%1';
+  $handler->display->display_options['arguments']['field_feature_category_tid']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['field_feature_category_tid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_feature_category_tid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_feature_category_tid']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['field_feature_category_tid']['specify_validation'] = TRUE;
+  $handler->display->display_options['arguments']['field_feature_category_tid']['validate']['type'] = 'taxonomy_term';
+  $handler->display->display_options['arguments']['field_feature_category_tid']['validate_options']['vocabularies'] = array(
+    'feature_category' => 'feature_category',
+  );
+  $handler->display->display_options['arguments']['field_feature_category_tid']['validate']['fail'] = 'empty';
   $handler->display->display_options['path'] = 'featured/%/feed';
   $handler->display->display_options['displays'] = array(
     'panel_pane_1' => 'panel_pane_1',
