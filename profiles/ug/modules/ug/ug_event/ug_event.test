@@ -143,6 +143,13 @@ class UGEventTestCase extends TaxonomyWebTestCase {
     /* There should be one title */
     $this->assertText($node2->title);
     $this->assertNoText($node1->title);
+
+    /* Test feed icon title */
+    $view_content = views_embed_view('e3', 'panel_pane_1', $term1->tid);
+    $this->verbose($view_content);
+    $alttext = "alt=\"Subscribe to $term1->name\"";
+    $status = strpos($view_content, $alttext);
+    $this->assert(!!$status, "$alttext found");
   }
 
   /**

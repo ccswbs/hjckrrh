@@ -8,7 +8,7 @@
 /**
  * Test UG News feature.
  */
-class UGNewsTestCase extends DrupalWebTestCase {
+class UGNewsTestCase extends TaxonomyWebTestCase {
 
   protected $no_results_text = 'No results found.';
   protected $more_text = 'More news';
@@ -87,6 +87,25 @@ class UGNewsTestCase extends DrupalWebTestCase {
     /* Test URL path. */
     $expected_path = 'news/' . date("Y/m", time()) . '/' . strtolower($node->title);
     $this->assertUrl($expected_path);
+  }
+
+  /**
+   * Test alt text on feed link.
+   */
+  function testFeed() {
+    /* Create category term */
+    $category = taxonomy_vocabulary_machine_name_load('news_category');
+    $term = $this->createTerm($category);
+    /* Create node */
+    $settings = array('type' => 'news');
+    $settings['field_news_tags'][LANGUAGE_NONE][0]['tid'] = $term->tid;
+    $node = $this->drupalCreateNode($settings);
+    /* Assert feed icon alt text contains category name */
+    $view_content = views_embed_view('n3', 'panel_pane_1', $term->tid);
+    $this->verbose($view_content);
+    $alttext = "alt=\"Subscribe to $term->name\"";
+    $status = strpos($view_content, $alttext);
+    $this->assert(!!$status, "$alttext found");
   }
 }
 

@@ -8,7 +8,7 @@
 /**
  * Test UG Feature
  */
-class UGFeatureTestCase extends DrupalWebTestCase {
+class UGFeatureTestCase extends TaxonomyWebTestCase {
 
   protected $no_results_text = 'No results found.';
   protected $more_text = 'More features';
@@ -60,5 +60,23 @@ class UGFeatureTestCase extends DrupalWebTestCase {
     $this->assertUrl($expected_path);
   }
 
+  /**
+   * Test alt text on feed link.
+   */
+  function testFeed() {
+    /* Create category term */
+    $category = taxonomy_vocabulary_machine_name_load('feature_category');
+    $term = $this->createTerm($category);
+    /* Create node */
+    $settings = array('type' => 'feature');
+    $settings['field_feature_category'][LANGUAGE_NONE][0]['tid'] = $term->tid;
+    $node = $this->drupalCreateNode($settings);
+    /* Assert feed icon alt text contains category name */
+    $view_content = views_embed_view('ft3', 'panel_pane_1', $term->tid);
+    $this->verbose($view_content);
+    $alttext = "alt=\"Subscribe to $term->name\"";
+    $status = strpos($view_content, $alttext);
+    $this->assert(!!$status, "$alttext found");
+  }
 }
 
