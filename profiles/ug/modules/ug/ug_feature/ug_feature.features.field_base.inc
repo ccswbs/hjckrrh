@@ -10,7 +10,7 @@
 function ug_feature_field_default_field_bases() {
   $field_bases = array();
 
-  // Exported field_base: 'field_feature_category'
+  // Exported field_base: 'field_feature_category'.
   $field_bases['field_feature_category'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -37,7 +37,7 @@ function ug_feature_field_default_field_bases() {
     'type' => 'taxonomy_term_reference',
   );
 
-  // Exported field_base: 'field_feature_image'
+  // Exported field_base: 'field_feature_image'.
   $field_bases['field_feature_image'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -60,7 +60,7 @@ function ug_feature_field_default_field_bases() {
     'type' => 'image',
   );
 
-  // Exported field_base: 'field_feature_link'
+  // Exported field_base: 'field_feature_link'.
   $field_bases['field_feature_link'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -89,7 +89,7 @@ function ug_feature_field_default_field_bases() {
     'type' => 'link_field',
   );
 
-  // Exported field_base: 'field_feature_text'
+  // Exported field_base: 'field_feature_text'.
   $field_bases['field_feature_text'] = array(
     'active' => 1,
     'cardinality' => 1,

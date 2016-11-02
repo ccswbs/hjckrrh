@@ -10,7 +10,7 @@
 function ug_feature_field_default_field_instances() {
   $field_instances = array();
 
-  // Exported field_instance: 'node-feature-field_feature_category'
+  // Exported field_instance: 'node-feature-field_feature_category'.
   $field_instances['node-feature-field_feature_category'] = array(
     'bundle' => 'feature',
     'default_value' => NULL,
@@ -47,7 +47,7 @@ function ug_feature_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-feature-field_feature_image'
+  // Exported field_instance: 'node-feature-field_feature_image'.
   $field_instances['node-feature-field_feature_image'] = array(
     'bundle' => 'feature',
     'deleted' => 0,
@@ -97,7 +97,7 @@ function ug_feature_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-feature-field_feature_link'
+  // Exported field_instance: 'node-feature-field_feature_link'.
   $field_instances['node-feature-field_feature_link'] = array(
     'bundle' => 'feature',
     'default_value' => NULL,
@@ -159,7 +159,7 @@ function ug_feature_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-feature-field_feature_text'
+  // Exported field_instance: 'node-feature-field_feature_text'.
   $field_instances['node-feature-field_feature_text'] = array(
     'bundle' => 'feature',
     'default_value' => NULL,
@@ -204,7 +204,7 @@ function ug_feature_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-feature-field_tags'
+  // Exported field_instance: 'node-feature-field_tags'.
   $field_instances['node-feature-field_tags'] = array(
     'bundle' => 'feature',
     'default_value' => NULL,
