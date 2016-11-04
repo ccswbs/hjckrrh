@@ -32,3 +32,4 @@ features[variable][] = ckeditor_link_type_name
 features[variable][] = ckeditor_link_type_selected
 features[variable][] = imce_profiles
 features[variable][] = imce_roles_profiles
+files[] = ug_wysiwyg.test
