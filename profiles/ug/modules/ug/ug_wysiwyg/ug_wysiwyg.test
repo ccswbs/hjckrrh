@@ -27,53 +27,348 @@ class UGWysiwygTestCase extends DrupalWebTestCase {
    * Test filtered HTML.
    */
   function testFilteredHTML() {
-    /* Generate data. */
-    $randomTag = 'x-'.strtolower($this->randomName());
-    $randomText = $this->randomString();
-    $body = '<'.$randomTag.'>'.$randomText.'</'.$randomTag.'>';
+    $gattr = 'accesskey class contenteditable dir hidden id lang spellcheck style tabindex title translate';
+    $filter = 'filtered_html';
+    $tests = array(
 
-    /* Create a page. */
-    $settings = array('type' => 'page', 'promote' => 1);
-    $settings['field_page_body'][LANGUAGE_NONE][0]['value'] = $body;
-    $settings['field_page_body'][LANGUAGE_NONE][0]['format'] = filter_default_format();
-    $node = $this->drupalCreateNode($settings);
-    $this->drupalGet('node/'.$node->nid);
+      /* Document metadata */
+      '<html />' => array('html' => FALSE),
+      '<title />' => array('title' => FALSE),
+      '<base />' => array('base' => FALSE),
+      '<link />' => array('link' => FALSE),
+      '<meta />' => array('meta' => FALSE),
+      '<style />' => array('style' => FALSE),
 
-    /* Assert tag is filtered out. */
-    $this->assertNoRaw($randomTag);
+      /* Sections */
+      '<body />' => array('body' => FALSE),
+      '<article />' => array('article' => FALSE),
+      '<section />' => array('section' => FALSE),
+      '<nav />' => array('nav' => FALSE),
+      '<aside />' => array('aside' => FALSE),
+      '<h1 />' => array('h1' => FALSE),
+      '<h2 />' => array('h2' => TRUE),
+      '<h3 />' => array('h3' => TRUE),
+      '<h4 />' => array('h4' => TRUE),
+      '<h5 />' => array('h5' => TRUE),
+      '<h6 />' => array('h6' => TRUE),
+      '<header />' => array('header' => FALSE),
+      '<footer />' => array('footer' => FALSE),
+      '<address />' => array('address' => FALSE),
+
+      /* Grouping content */
+      '<p />' => array('p' => TRUE),
+      '<hr />' => array('hr' => TRUE),
+      '<pre />' => array('pre' => FALSE),
+      '<blockquote cite/>' => array(
+        'blockquote' => TRUE,
+        'cite' => FALSE,
+      ),
+      '<ol reversed start type />' => array(
+        'ol' => TRUE,
+        'reversed' => FALSE,
+        'start' => TRUE,
+        'type' => FALSE,
+      ),
+      '<ul />' => array('ul' => TRUE),
+      '<li value />' => array(
+        'li' => TRUE,
+        'value' => FALSE,
+      ),
+      '<dl />' => array('dl' => FALSE),
+      '<dt />' => array('dt' => FALSE),
+      '<dd />' => array('dd' => FALSE),
+      '<figure />' => array('figure' => FALSE),
+      '<figcaption />' => array('figcaption' => FALSE),
+      '<div />' => array('div' => TRUE),
+      '<main />' => array('main' => FALSE),
+
+      /* Text-level semantics */
+      '<a href target download rel hreflang type />' => array(
+        'a' => TRUE,
+        'href' => TRUE,
+        'target' => FALSE,
+        'download' => FALSE,
+        'rel' => TRUE,
+        'hreflang' => FALSE,
+        'type' => TRUE,
+      ),
+      '<em />' => array('em' => TRUE),
+      '<strong />' => array('strong' => TRUE),
+      '<small />' => array('small' => FALSE),
+      '<s />' => array('s' => FALSE),
+      '<cite />' => array('cite' => FALSE),
+      '<q />' => array('q' => FALSE),
+      '<dfn />' => array('dfn' => FALSE),
+      '<abbr />' => array('abbr' => FALSE),
+      '<data />' => array('data' => FALSE),
+      '<time />' => array('time' => FALSE),
+      '<code />' => array('code' => FALSE),
+      '<var />' => array('var' => FALSE),
+      '<samp />' => array('samp' => FALSE),
+      '<kbd />' => array('kbd' => FALSE),
+      '<sub />' => array('sub' => TRUE),
+      '<sup />' => array('sup' => TRUE),
+      '<i />' => array('i' => FALSE),
+      '<b />' => array('b' => FALSE),
+      '<u />' => array('u' => FALSE),
+      '<mark />' => array('mark' => FALSE),
+      '<ruby />' => array('ruby' => FALSE),
+      '<rb />' => array('rb' => FALSE),
+      '<rt />' => array('rt' => FALSE),
+      '<rtc />' => array('rtc' => FALSE),
+      '<rp />' => array('rp' => FALSE),
+      '<bdi />' => array('bdi' => FALSE),
+      '<bdo />' => array('bdo' => FALSE),
+      '<span />' => array('span' => FALSE),
+      '<br />' => array('br' => TRUE),
+      '<wbr />' => array('wbr' => FALSE),
+
+      /* Edits */
+      '<ins />' => array('ins' => FALSE),
+      '<del />' => array('del' => FALSE),
+
+      /* Embedded content */
+      '<img alt src crossorigin usemap ismap width height/>' => array(
+        'img' => TRUE,
+        'alt' => TRUE,
+        'src' => TRUE,
+        'crossorigin' => FALSE,
+        'usemap' => FALSE,
+        'ismap' => FALSE,
+        'width' => FALSE,
+        'height' => FALSE,
+      ),
+      '<iframe />' => array('iframe' => FALSE),
+      '<embed />' => array('embed' => FALSE),
+      '<object />' => array('object' => FALSE),
+      '<param />' => array('param' => FALSE),
+      '<video />' => array('video' => FALSE),
+      '<audio />' => array('audio' => FALSE),
+      '<source />' => array('source' => FALSE),
+      '<track />' => array('track' => FALSE),
+      '<map />' => array('map' => FALSE),
+      '<area />' => array('area' => FALSE),
+
+      /* Tabular data */
+      '<table border sortable/>' => array(
+        'table' => TRUE,
+        'border' => FALSE,
+        'sortable' => FALSE,
+      ),
+      '<caption align />' => array(
+        'caption' => TRUE,
+        'align' => FALSE,
+      ),
+      '<colgroup />' => array('colgroup' => FALSE),
+      '<col />' => array('col' => FALSE),
+      '<tbody />' => array('tbody' => TRUE),
+      '<thead />' => array('thead' => TRUE),
+      '<tfoot />' => array('tfoot' => FALSE),
+      '<tr />' => array('tr' => TRUE),
+      '<td colspan rowspan headers/>' => array(
+        'td' => TRUE,
+        'colspan' => TRUE,
+        'rowspan' => TRUE,
+        'headers' => FALSE,
+      ),
+      '<th colspan rowspan headers scope abbr sorted/>' => array(
+        'th' => TRUE,
+        'colspan' => TRUE,
+        'rowspan' => TRUE,
+        'headers' => FALSE,
+        'scope' => FALSE,
+        'abbr' => FALSE,
+        'sorted' => FALSE,
+      ),
+
+      /* Forms */
+      '<form />' => array('form' => FALSE),
+      '<label />' => array('label' => FALSE),
+      '<input />' => array('input' => FALSE),
+      '<button />' => array('button' => FALSE),
+      '<select />' => array('select' => FALSE),
+      '<datalist />' => array('datalist' => FALSE),
+      '<optgroup />' => array('optgroup' => FALSE),
+      '<option />' => array('option' => FALSE),
+      '<textarea />' => array('textarea' => FALSE),
+      '<keygen />' => array('keygen' => FALSE),
+      '<output />' => array('output' => FALSE),
+      '<progress />' => array('progress' => FALSE),
+      '<meter />' => array('meter' => FALSE),
+      '<fieldset />' => array('fieldset' => FALSE),
+      '<legend />' => array('legend' => FALSE),
+
+      /* Scripting */
+      '<script />' => array('script' => FALSE),
+      '<noscript />' => array('noscript' => FALSE),
+      '<template />' => array('template' => FALSE),
+      '<canvas />' => array('canvas' => FALSE),
+
+      /* Obsolete elements (https://www.w3.org/TR/html5-diff/#obsolete-elements) */
+      '<basefont />' => array('basefont' => FALSE),
+      '<big />' => array('big' => FALSE),
+      '<center />' => array('center' => FALSE),
+      '<font />' => array('font' => FALSE),
+      '<strike />' => array('strike' => FALSE),
+      '<tt />' => array('tt' => FALSE),
+      '<frame />' => array('frame' => FALSE),
+      '<frameset />' => array('frameset' => FALSE),
+      '<noframes />' => array('noframes' => FALSE),
+      '<acronym />' => array('acronym' => FALSE),
+      '<applet />' => array('applet' => FALSE),
+      '<isindex />' => array('isindex' => FALSE),
+      '<dir />' => array('dir' => FALSE),
+
+      /* Obsolete attributes (https://www.w3.org/TR/html5-diff/#obsolete-attributes) */
+      '<a rev charset />' => array('rev' => FALSE, 'charset' => FALSE),
+      '<link rev charset />' => array('rev' => FALSE, 'charset' => FALSE),
+      '<a shape coords />' => array('shape' => FALSE, 'coords' => FALSE),
+      '<iframe longdesc />' => array('longdesc' => FALSE),
+      '<link target />' => array('target' => FALSE),
+      '<area nohref />' => array('nohref' => FALSE),
+      '<head profile />' => array('profile' => FALSE),
+      '<html version />' => array('version' => FALSE),
+      '<img name />' => array('name' => FALSE),
+      '<meta scheme />' => array('scheme' => FALSE),
+      '<object archive classid codebase codetype declare standby />' => array(
+        'archive' => FALSE,
+        'classid' => FALSE,
+        'codebase' => FALSE,
+        'codetype' => FALSE,
+        'declare' => FALSE,
+        'standby' => FALSE,
+      ),
+      '<param valuetype type />' => array(
+        'valuetype' => FALSE,
+        'type' => FALSE,
+      ),
+      '<td axis />' => array('axis' => FALSE),
+      '<td axis />' => array('axis' => FALSE),
+      '<td abbr scope />' => array('abbr' => FALSE, 'scope' => FALSE),
+      '<table summary />' => array('summary' => FALSE),
+      '<form accept />' => array('accept' => FALSE),
+      '<input usemap />' => array('usemap' => FALSE),
+      /* Presentational attributes */
+      '<caption align />' => array('align' => FALSE),
+      '<iframe align />' => array('align' => FALSE),
+      '<img align />' => array('align' => FALSE),
+      '<input align />' => array('align' => FALSE),
+      '<object align />' => array('align' => FALSE),
+      '<legend align />' => array('align' => FALSE),
+      '<table align />' => array('align' => FALSE),
+      '<hr align />' => array('align' => FALSE),
+      '<div align />' => array('align' => FALSE),
+      '<h1 align />' => array('align' => FALSE),
+      '<h2 align />' => array('align' => FALSE),
+      '<h3 align />' => array('align' => FALSE),
+      '<h4 align />' => array('align' => FALSE),
+      '<h5 align />' => array('align' => FALSE),
+      '<h6 align />' => array('align' => FALSE),
+      '<p align />' => array('align' => FALSE),
+      '<col align />' => array('align' => FALSE),
+      '<colgroup align />' => array('align' => FALSE),
+      '<tbody align />' => array('align' => FALSE),
+      '<td align />' => array('align' => FALSE),
+      '<tfoot align />' => array('align' => FALSE),
+      '<th align />' => array('align' => FALSE),
+      '<thead align />' => array('align' => FALSE),
+      '<tr align />' => array('align' => FALSE),
+      '<body alink link text vlink />' => array(
+        'alink' => FALSE,
+        'link' => FALSE,
+        'text' => FALSE,
+        'vlink' => FALSE,
+      ),
+      '<body background />' => array('background' => FALSE),
+      '<table bgcolor />' => array('bgcolor' => FALSE),
+      '<tr bgcolor />' => array('bgcolor' => FALSE),
+      '<td bgcolor />' => array('bgcolor' => FALSE),
+      '<th bgcolor />' => array('bgcolor' => FALSE),
+      '<body bgcolor />' => array('bgcolor' => FALSE),
+      '<object border />' => array('border' => FALSE),
+      '<table cellpadding cellspacing />' => array(
+        'cellpadding' => FALSE,
+        'cellspacing' => FALSE,
+      ),
+      '<col char charoff />' => array('char' => FALSE, 'charoff' => FALSE),
+      '<colgroup char charoff />' => array('char' => FALSE, 'charoff' => FALSE),
+      '<tbody char charoff />' => array('char' => FALSE, 'charoff' => FALSE),
+      '<td char charoff />' => array('char' => FALSE, 'charoff' => FALSE),
+      '<tfoot char charoff />' => array('char' => FALSE, 'charoff' => FALSE),
+      '<th char charoff />' => array('char' => FALSE, 'charoff' => FALSE),
+      '<thead char charoff />' => array('char' => FALSE, 'charoff' => FALSE),
+      '<tr char charoff />' => array('char' => FALSE, 'charoff' => FALSE),
+      '<br clear />' => array('clear' => FALSE),
+      '<dl compact />' => array('compact' => FALSE),
+      '<ol compact />' => array('compact' => FALSE),
+      '<ul compact />' => array('compact' => FALSE),
+      '<table frame />' => array('frame' => FALSE),
+      '<iframe frameborder />' => array('frameborder' => FALSE),
+      '<td height />' => array('height' => FALSE),
+      '<th height />' => array('height' => FALSE),
+      '<img hspace vspace />' => array('hspace' => FALSE, 'vspace' => FALSE),
+      '<object hspace vspace />' => array('hspace' => FALSE, 'vspace' => FALSE),
+      '<iframe marginheight marginwidth />' => array(
+        'marginheight' => FALSE, 'marginwidth' => FALSE
+      ),
+      '<hr noshade />' => array('noshade' => FALSE),
+      '<td nowrap />' => array('nowrap' => FALSE),
+      '<th nowrap />' => array('nowrap' => FALSE),
+      '<table rules />' => array('rules' => FALSE),
+      '<iframe scrolling />' => array('scrolling' => FALSE),
+      '<hr size />' => array('size' => FALSE),
+      '<li type />' => array('type' => FALSE),
+      '<ul type />' => array('type' => FALSE),
+      '<col valign />' => array('valign' => FALSE),
+      '<colgroup valign />' => array('valign' => FALSE),
+      '<tbody valign />' => array('valign' => FALSE),
+      '<td valign />' => array('valign' => FALSE),
+      '<tfoot valign />' => array('valign' => FALSE),
+      '<th valign />' => array('valign' => FALSE),
+      '<thead valign />' => array('valign' => FALSE),
+      '<tr valign />' => array('valign' => FALSE),
+      '<hr width />' => array('width' => FALSE),
+      '<table width />' => array('width' => FALSE),
+      '<td width />' => array('width' => FALSE),
+      '<th width />' => array('width' => FALSE),
+      '<col width />' => array('width' => FALSE),
+      '<colgroup width />' => array('width' => FALSE),
+      '<pre width />' => array('width' => FALSE),
+      '<img border />' => array('border' => FALSE),
+      '<script language />' => array('language' => FALSE),
+      '<a name />' => array('name' => FALSE),
+    );
+    $this->assertFilteredString($filter, $tests);
   }
 
-  function testImage() {
-    /* Generate data. */
-    $imgid = strtolower($this->randomName());
-    $bodyHTML = "<a href='http://www.uoguelph.ca/' target='_blank'><img alt='University of Guelph' class='img-responsive' dir='ltr' id='$imgid' lang='en' longdesc='http://www.uoguelph.ca/' src='http://www.uoguelph.ca/img/universityofguelph.gif' style='margin: 10px; float: right;' title='Logo' /></a>";
-
-    /* Create a page. */
-    $settings = array('type' => 'page', 'promote' => 1);
-    $settings['field_page_body'][LANGUAGE_NONE][0]['value'] = $bodyHTML;
-    $settings['field_page_body'][LANGUAGE_NONE][0]['format'] = filter_default_format();
-    $node = $this->drupalCreateNode($settings);
-
-    /* Assert image is allowed. */
-    $this->drupalGet('node/'.$node->nid);
-    $this->assertRaw($bodyHTML);
-    //$img = $this->xpath("//img[@id='$imgid']");
-    //$this->assertEqual(count($img), 1, 'Found image on page');
+  /** Copied from filter.test */
+  function assertFilteredString($filter, $tests) {
+    foreach ($tests as $source => $tasks) {
+      $result = check_markup($source, $filter);
+      foreach ($tasks as $value => $is_expected) {
+        // Not using assertIdentical, since combination with strpos() is hard to grok.
+        if ($is_expected) {
+          $success = $this->assertTrue(strpos($result, $value) !== FALSE, format_string('@source: @value found.', array(
+            '@source' => var_export($source, TRUE),
+            '@value' => var_export($value, TRUE),
+          )));
+        }
+        else {
+          $success = $this->assertTrue(strpos($result, $value) === FALSE, format_string('@source: @value not found.', array
+(
+            '@source' => var_export($source, TRUE),
+            '@value' => var_export($value, TRUE),
+          )));
+        }
+        if (!$success) {
+          $this->verbose('Source:<pre>' . check_plain(var_export($source, TRUE)) . '</pre>'
+            . '<hr />' . 'Result:<pre>' . check_plain(var_export($result, TRUE)) . '</pre>'
+            . '<hr />' . ($is_expected ? 'Expected:' : 'Not expected:')
+            . '<pre>' . check_plain(var_export($value, TRUE)) . '</pre>'
+          );
+        }
+      }
+    }
   }
 
-  function testTable() {
-    /* Generate data. */
-    $body = '<table align="center" class="table table-responsive" dir="ltr" id="asdf" summary="summary"><thead><tr><th scope="row">aa</th><th scope="col">ab</th></tr></thead><caption>caption</caption><tbody><tr><th scope="row">ba</th><td>bb</td></tr><tr><th scope="row">ca</th><td>cb</td></tr></tbody></table>';
-
-    /* Create a page. */
-    $settings = array('type' => 'page', 'promote' => 1);
-    $settings['field_page_body'][LANGUAGE_NONE][0]['value'] = $body;
-    $settings['field_page_body'][LANGUAGE_NONE][0]['format'] = filter_default_format();
-    $node = $this->drupalCreateNode($settings);
-
-    /* Assert table is allowed. */
-    $this->drupalGet('node/'.$node->nid);
-    $this->assertRaw($body);
-  }
 }
-
