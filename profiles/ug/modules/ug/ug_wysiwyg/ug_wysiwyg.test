@@ -45,7 +45,7 @@ class UGWysiwygTestCase extends DrupalWebTestCase {
       'id=' => FALSE,
       'lang' => TRUE,
       'spellcheck' => TRUE,
-      'style' => FALSE,
+      'style' => TRUE,
       'tabindex' => TRUE,
       'title' => TRUE,
       'translate' => TRUE,
