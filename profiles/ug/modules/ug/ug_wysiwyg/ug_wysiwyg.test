@@ -26,12 +26,12 @@ class UGWysiwygTestCase extends DrupalWebTestCase {
   /**
    * Test filtered HTML.
    *
-   * Valid HTML5 is allowed, except:
+   * Valid HTML5 is allowed, except for:
    *   - document metadata,
    *   - forms,
    *   - scripting,
-   *   - body, iframe, embed, object, param, map, and area elements,
-   *   - id, and style attributes,
+   *   - body, iframe, embed, object, param, map, and area elements, and
+   *   - id attributes.
    * Bootstrap 3.0.2 CSS classes are allowed.
    */
   function testFilteredHTML() {
