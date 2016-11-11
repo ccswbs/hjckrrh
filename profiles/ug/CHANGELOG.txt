@@ -1,3 +1,9 @@
+Hjckrrh 7.11.0, 2016-11-08
+--------------------------
+- Update: Upgrade to Bootstrap version 7.x-3.8
+- Fixed: Teaser List RSS Feeds do not update alternative text when filtered by category (#568)
+- New: Set URL alias patterns (#522)
+
 Hjckrrh 7.10.0, 2016-10-25
 --------------------------
 - Fixed: Updated Distance Education link
