@@ -656,12 +656,14 @@ abstract class DatabaseSchema implements QueryPlaceholderInterface {
    *   If the specified table already exists.
    */
   public function createTable($name, $table) {
-    if ($this->tableExists($name)) {
-      throw new DatabaseSchemaObjectExistsException(t('Table @name already exists.', array('@name' => $name)));
+    if (!$this->tableExists($name)) {
+      $statements = $this->createTableSql($name, $table);
+      foreach ($statements as $statement) {
+        $this->connection->query($statement);
+      }
     }
-    $statements = $this->createTableSql($name, $table);
-    foreach ($statements as $statement) {
-      $this->connection->query($statement);
+    else {
+      drupal_set_message(t('Table %name already exists.', array('%name' => $name)));
     }
   }
 
