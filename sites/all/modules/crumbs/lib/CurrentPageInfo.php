@@ -19,7 +19,7 @@
  * @property bool $showFrontPage
  * @property int $minTrailItems
  * @property string $separator
- * @property string $separatorSpan
+ * @property bool $separatorSpan
  * @property int $minVisibleItems
  * @property array $breadcrumbItems
  * @property string $breadcrumbHtml
@@ -206,12 +206,12 @@ class crumbs_CurrentPageInfo extends crumbs_Container_AbstractLazyData {
   /**
    * Determine separator string, e.g. ' &raquo; ' or ' &gt; '.
    *
-   * @return string
+   * @return bool
    *
    * @see crumbs_CurrentPageInfo::$separatorSpan
    */
   protected function separatorSpan() {
-    return variable_get('crumbs_separator_span', FALSE);
+    return (bool)variable_get('crumbs_separator_span', FALSE);
   }
 
   /**
