@@ -267,7 +267,9 @@ function ug_profile_views_default_views() {
   $handler->display->display_options['fields']['field_profile_image']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_profile_image']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_profile_image']['click_sort_column'] = 'fid';
+  $handler->display->display_options['fields']['field_profile_image']['type'] = 'image_url';
   $handler->display->display_options['fields']['field_profile_image']['settings'] = array(
+    'url_type' => '1',
     'image_style' => 'profile_thumbnail',
     'image_link' => '',
   );
@@ -299,16 +301,15 @@ function ug_profile_views_default_views() {
   $handler->display->display_options['fields']['nothing']['table'] = 'views';
   $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
   $handler->display->display_options['fields']['nothing']['label'] = '';
-  $handler->display->display_options['fields']['nothing']['alter']['text'] = '<a href="[path]">
-<figure class="face-figure pull-left">
-[field_profile_image]
+  $handler->display->display_options['fields']['nothing']['alter']['text'] = '<figure class="face-figure pull-left">
+<a href="[path]">
+<img src=[field_profile_image] />
 <figcaption class="face-caption">
 <h2>[field_profile_name] [field_profile_lastname]</h2> 
 <p>[field_profile_role]</p>
 </figcaption>
-</figure>
 </a>
-';
+</figure>';
   $handler->display->display_options['fields']['nothing']['element_type'] = '0';
   $handler->display->display_options['fields']['nothing']['element_label_colon'] = FALSE;
   /* Contextual filter: Content: Has taxonomy term ID */
