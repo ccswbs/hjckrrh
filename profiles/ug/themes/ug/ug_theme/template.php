@@ -1065,3 +1065,19 @@ function ug_theme_webform_element(&$variables) {
   return bootstrap_form_element($variables);
 }
 
+/**
+ * Pre-processes variables for the "book_navigation" theme hook.
+ *
+ * See template for list of available variables.
+ *
+ * @see book-navigation.tpl.php
+ *
+ * @ingroup theme_preprocess
+ */
+function ug_theme_preprocess_book_navigation(&$variables) {
+  /* https://www.drupal.org/node/1697570#comment-10357129 */
+  drupal_static_reset('_menu_build_tree');
+  /* Call default function from book.module. */
+  template_preprocess_book_navigation ($variables);
+}
+
