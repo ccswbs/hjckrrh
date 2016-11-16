@@ -1,3 +1,7 @@
+Hjckrrh 7.11.1, 2016-11-16
+--------------------------
+- Fix: Book outline menu broken (#580)
+
 Hjckrrh 7.11.0, 2016-11-08
 --------------------------
 - Update: Upgrade to Bootstrap version 7.x-3.8
