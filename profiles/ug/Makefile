@@ -1,7 +1,7 @@
 
 PREFIX ?= /usr/local
 DEST ?= $(PREFIX)/drupal-7.x
-VERSION ?= 7.x-10.0
+VERSION ?= 7.x-11.1
 
 site:
 	drush -y site-install ug

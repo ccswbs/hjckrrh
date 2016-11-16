@@ -1,6 +1,6 @@
 name = University of Guelph
 description = University of Guelph install profile
-version = 7.x-10.0
+version = 7.x-11.1
 core = 7.x
 dependencies[] = ckeditor
 dependencies[] = block
