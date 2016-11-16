@@ -1,6 +1,6 @@
 name = UG Permit
 description = Controls node access using UNIX style permissions.
 package = UG
-version = 7.x-10.0
+version = 7.x-11.1
 core = 7.x
 files[] = ug_permit.test
