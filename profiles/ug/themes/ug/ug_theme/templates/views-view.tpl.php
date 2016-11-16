@@ -52,7 +52,9 @@
   <?php endif; ?>
 
   <?php if ($rows): ?>
-    <?php print $rows; ?>
+    <div class="view-content">
+      <?php print $rows; ?>
+    </div>
   <?php elseif ($empty): ?>
     <div class="view-empty">
       <?php print $empty; ?>
@@ -69,8 +71,11 @@
     </div>
   <?php endif; ?>
 
-  <?php if ($more): ?>
-    <?php print $more; ?>
+  <?php if ($more || $feed_icon): ?>
+    <div class="btn-group btn-group-xs">
+      <?php print $more; ?>
+      <?php print $feed_icon; ?>
+    </div>
   <?php endif; ?>
 
   <?php if ($footer): ?>
@@ -79,10 +84,5 @@
     </div>
   <?php endif; ?>
 
-  <?php if ($feed_icon): ?>
-    <div class="feed-icon">
-      <?php print $feed_icon; ?>
-    </div>
-  <?php endif; ?>
 
 </div><?php /* class view */ ?>
