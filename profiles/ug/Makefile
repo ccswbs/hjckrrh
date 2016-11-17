@@ -1,7 +1,7 @@
 
 PREFIX ?= /usr/local
 DEST ?= $(PREFIX)/drupal-7.x
-VERSION ?= 7.x-11.1
+VERSION ?= 7.x-12.x-dev
 
 site:
 	drush -y site-install ug
@@ -14,5 +14,6 @@ install:
 	rsync --recursive --verbose --cvs-exclude ../../ $(DEST)/
 
 release:
+	ls ../../*.txt
 	find . -name '*.info' -exec sed -i -e 's/^version = .*/version = $(VERSION)/' {} \;
 
