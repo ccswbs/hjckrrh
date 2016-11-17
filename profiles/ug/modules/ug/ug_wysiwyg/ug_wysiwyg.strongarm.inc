@@ -29,6 +29,7 @@ function ug_wysiwyg_strongarm() {
   $strongarm->api_version = 1;
   $strongarm->name = 'ckeditor_link_autocomplete_node_types';
   $strongarm->value = array(
+    'book' => 'book',
     'course_outline' => 'course_outline',
     'event' => 'event',
     'faq' => 'faq',
@@ -52,6 +53,7 @@ function ug_wysiwyg_strongarm() {
     '- any -' => 0,
     18 => 0,
     2 => 0,
+    27 => 0,
     7 => 0,
     5 => 0,
     6 => 0,
