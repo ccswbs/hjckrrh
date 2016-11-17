@@ -510,6 +510,19 @@ th[colspan|rowspan|headers|scope|abbr|sorted],',
         'status' => 1,
         'settings' => array(),
       ),
+      'pathologic' => array(
+        'weight' => 50,
+        'status' => 1,
+        'settings' => array(
+          'settings_source' => 'global',
+          'local_paths' => '',
+          'protocol_style' => 'full',
+          'local_settings' => array(
+            'protocol_style' => 'full',
+            'local_paths' => '',
+          ),
+        ),
+      ),
     ),
   );
 
@@ -520,7 +533,21 @@ th[colspan|rowspan|headers|scope|abbr|sorted],',
     'cache' => 1,
     'status' => 1,
     'weight' => -9,
-    'filters' => array(),
+    'filters' => array(
+      'pathologic' => array(
+        'weight' => 50,
+        'status' => 1,
+        'settings' => array(
+          'settings_source' => 'global',
+          'local_paths' => '',
+          'protocol_style' => 'full',
+          'local_settings' => array(
+            'protocol_style' => 'full',
+            'local_paths' => '',
+          ),
+        ),
+      ),
+    ),
   );
 
   // Exported format: Plain text.

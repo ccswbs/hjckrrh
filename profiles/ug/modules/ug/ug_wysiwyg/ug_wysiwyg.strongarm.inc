@@ -210,5 +210,12 @@ function ug_wysiwyg_strongarm() {
   );
   $export['imce_roles_profiles'] = $strongarm;
 
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'pathologic_protocol_style';
+  $strongarm->value = 'proto-rel';
+  $export['pathologic_protocol_style'] = $strongarm;
+
   return $export;
 }
