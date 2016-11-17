@@ -16,8 +16,11 @@ class crumbs_BreadcrumbBuilder {
   }
 
   /**
-   * @param array $trail
-   * @return array
+   * @param array[] $trail
+   *   Trail items, keyed by system path.
+   *
+   * @return array[]
+   *   Breadcrumb items, keyed numerically.
    */
   function buildBreadcrumb($trail) {
     $breadcrumb = array();

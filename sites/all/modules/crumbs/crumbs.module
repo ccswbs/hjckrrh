@@ -15,7 +15,13 @@ if (!module_exists('xautoload')) {
   spl_autoload_register('_crumbs_autoload');
 }
 
+// Include other files that contain callbacks and hook implementations.
+// See https://www.drupal.org/node/2488208
 require_once dirname(__FILE__) . '/includes/crumbs.callbacks.inc';
+require_once dirname(__FILE__) . '/crumbs.block.inc';
+require_once dirname(__FILE__) . '/crumbs.info.inc';
+require_once dirname(__FILE__) . '/crumbs.help.inc';
+require_once dirname(__FILE__) . '/crumbs.form.inc';
 
 /**
  * Crumbs autoloader.
@@ -35,56 +41,6 @@ function _crumbs_autoload($class) {
     module_load_include('php', 'crumbs', "lib/$path");
   }
 }
-
-
-// Hook management
-// -----------------------------------------------------------------------------
-
-/**
- * Unfortunately, splitting hook_block_view() into another file cannot be
- * handled with hook_module_implements_alter(), because blocks module uses
- * module_invoke(), which does not check hook_module_implements_alter().
- *
- * See @link https://www.drupal.org/node/2328535
- */
-require_once dirname(__FILE__) . '/crumbs.block.inc';
-
-/**
- * Implements hook_module_implements_alter()
- *
- * @param string[] $implementations
- * @param string $hook
- */
-function crumbs_module_implements_alter(&$implementations, $hook) {
-
-  switch ($hook) {
-
-    case 'theme_registry_alter':
-    case 'permission':
-    case 'menu':
-    case 'themekey_properties':
-    case 'theme':
-      // These hook implementations live in crumbs.info.inc
-      $implementations['crumbs'] = 'info';
-      break;
-
-    case 'help':
-      $implementations['crumbs'] = 'help';
-      break;
-
-    case 'element_info':
-      $implementations['crumbs'] = 'form';
-      break;
-
-    default:
-      // Implementation of other hooks is either in the *.module file, or in a
-      // file that is already included, such as crumbs.block.inc.
-      return;
-  }
-
-  require_once dirname(__FILE__) . '/crumbs.' . $implementations['crumbs'] . '.inc';
-}
-
 
 // Page hook implementations
 // -----------------------------------------------------------------------------

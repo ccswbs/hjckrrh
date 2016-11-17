@@ -34,7 +34,7 @@ class crumbs_ParentFinder {
 
   /**
    * @param string $path
-   * @param array &$item
+   * @param array|null &$item
    *
    * @return string
    */
@@ -51,7 +51,7 @@ class crumbs_ParentFinder {
 
   /**
    * @param string $path
-   * @param array &$item
+   * @param array|null &$item
    *
    * @return string|bool
    */

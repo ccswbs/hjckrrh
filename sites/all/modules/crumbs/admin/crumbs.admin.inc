@@ -120,7 +120,7 @@ function crumbs_admin_display_form() {
     '#title' => t('Wrap the separator in !tags tags:', array(
         '!tags' => '<code>&lt;span class="crumbs-separator"&gt;</code>',
       )),
-    '#default_value' => variable_get('crumbs_separator_span', FALSE),
+    '#default_value' => (bool)variable_get('crumbs_separator_span', FALSE),
   );
   $separator_notes = '';
   foreach (array(
@@ -132,7 +132,7 @@ function crumbs_admin_display_form() {
     $separator_notes .= '<li>' . str_replace("\n", '<br/>', t($note)) . '</li>';
   }
   $separator_notes = '<ul>' . $separator_notes . '</ul>';
-  $separator_desc = '<p>' . t('A custom separator symbol, such as " &amp;raquo; " ( &raquo; ) or " &amp;gt; " (&gt).') . '</p>';
+  $separator_desc = '<p>' . t('A custom separator symbol, such as " &amp;raquo; " ( &raquo; ) or " &amp;gt; " ( &gt; ).') . '</p>';
   $form['separator_settings']['crumbs_separator'] = array(
     '#type' => 'textfield',
     '#title' => t('Custom separator HTML'),
