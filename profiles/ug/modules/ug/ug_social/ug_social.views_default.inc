@@ -390,7 +390,7 @@ function ug_social_views_default_views() {
   $handler->display->display_options['fields']['title']['field'] = 'title';
   $handler->display->display_options['fields']['title']['label'] = '';
   $handler->display->display_options['fields']['title']['alter']['alter_text'] = TRUE;
-  $handler->display->display_options['fields']['title']['alter']['text'] = '<span class="btn btn-default">
+  $handler->display->display_options['fields']['title']['alter']['text'] = '<span class="btn btn-default btn-xs">
 More <span class="sr-only">%1</span>
 </span>';
   $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
