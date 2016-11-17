@@ -320,4 +320,72 @@ PP - People profiles
   font-size: 1.2em;
 }
 
+/*-----------------------------------------------
+  140 Faces-style grid view
+  -----------------------------------------------*/
 
+figure.face-figure {
+    position: relative;
+    z-index: 0;
+    float: left !important;
+    margin: 0 !important;
+    overflow: hidden;
+    padding: 0;
+    height: 142px;
+    width: 142px;
+    background-color: #111;
+}
+
+figure.face-figure img {
+    position: relative;
+    z-index: 2;
+    opacity: 1;
+    -webkit-transition: opacity 400ms ease;
+    transition: opacity 400ms ease;
+}
+
+figure.face-figure figcaption.face-caption {
+    position :absolute;
+    z-index: 1;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 142px;
+    color: #fff !important;
+    background-color: transparent;
+    text-align: left !important;
+    margin: 0;
+    -webkit-transition: z-index 400ms;
+    transition: z-index 400ms;
+}
+
+figure.face-figure a:hover img,
+figure.face-figure a:focus img {
+    opacity: 0.33;
+}
+figure.face-figure a:hover figcaption.face-caption,
+figure.face-figure a:focus figcaption.face-caption {
+    z-index: 3;
+}
+
+.views-exposed-widgets {
+    margin-bottom: 2em;
+}
+
+#block-system-main > div figure.face-figure figcaption.face-caption h2 {
+    font-weight: bold;
+    font-size: 18px !important;
+    color: #fff !important;
+    margin: 0;
+    padding: 5px;
+    position: absolute;
+    top: 0;
+}
+
+#block-system-main > div figure.face-figure figcaption.face-caption p {
+    margin: 0;
+    padding: 5px;
+    position: absolute;
+    bottom: 0;
+}
