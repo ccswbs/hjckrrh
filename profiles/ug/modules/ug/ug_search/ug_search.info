@@ -1,6 +1,6 @@
 name = UG Search
 core = 7.x
-version = 7.x-12.x-dev
+version = 7.x-11.2
 package = UG
 dependencies[] = ctools
 dependencies[] = features

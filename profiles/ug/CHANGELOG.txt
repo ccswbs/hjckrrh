@@ -1,6 +1,7 @@
-Hjckrrh 7.12.0
+Hjckrrh 7.11.2, 2016-11-17
 --------------------------
-- Fix: Editor settings - Wysiwyg (#16)
+- Fix: Webform: Radio buttons not rendered
+- Fix: Webform: 500 Internal Server Error
 
 Hjckrrh 7.11.1, 2016-11-16
 --------------------------

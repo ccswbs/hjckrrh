@@ -1,7 +1,7 @@
 name = "UG D7 to D7 migration"
 package = "Migration"
 core = 7.x
-version = 7.x-12.x-dev
+version = 7.x-11.2
 
 dependencies[] = migrate
 dependencies[] = migrate_d2d
