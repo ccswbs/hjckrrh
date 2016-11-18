@@ -485,6 +485,33 @@ SITE CONFIGURATION VARIABLES
     'source_banner_insert_fields'            => $banner_insert_fields,
   );
 
+/**************************
+*  BOOK Settings
+**************************/
+
+  $book_insert_fields = NULL;
+
+  $book_arguments = array(
+    'source_book_node_type'                => 'book',
+    'source_book_title'                    => 'title',
+    'source_book_body'                     => 'body',
+    'source_book_body_summary'             => 'body:summary',
+    'source_book_body_format'              => 'body:format',
+    'source_book_attachments'              => 'field_book_attachments',
+    'source_book_category'                 => 'field_book_category',
+    'source_book_category_source_type'     => 'tid',
+    'source_book_category_ignore_case'     => TRUE,
+    'source_book_category_create_term'     => TRUE,
+    'source_book_category_vocabulary'      => 'book_category',
+    'source_book_category_default_value'   => '',
+    'source_book_keyword'                  => 'field_tags',
+    'source_book_keyword_source_type'      => 'tid',
+    'source_book_keyword_ignore_case'      => TRUE,
+    'source_book_keyword_create_term'      => TRUE,
+    'source_book_keyword_vocabulary'       => 'tags',
+    'source_book_keyword_default_value'    => '',
+    'source_book_insert_fields'            => $book_insert_fields,
+  );
 
 
 /**************************

@@ -6,13 +6,15 @@
  *
  *   Book migration happens in 3 steps.
  *
- *   Step 1: Migrate book pages (nodes)
- *   Step 2: Migrate book menu links (e.g. menu_name = book-toc-???)
- *   Step 3: Migrate the book table.
+ *   Step 1: Migrate book category vocabulary & terms (taxonomy)
+ *   Step 2: Migrate book keyword terms into tags vocabulary (taxonomy)
+ *   Step 3: Migrate book pages (nodes)
+ *   Step 4: Migrate book menu links (e.g. menu_name = book-toc-???)
+ *   Step 5: Migrate the book table.
  */
 
 /**
- * Book migration: Step 1: Migrate book pages
+ * Book migration: Step 3: Migrate book pages
  */
 class UGBook7Migration extends DrupalNode7Migration {
   public function __construct($arguments) {
@@ -30,18 +32,111 @@ class UGBook7Migration extends DrupalNode7Migration {
     else {
       $this->sourceBookBody = 'body';
     }
+
+    /* DEFAULT arguments */
+    $book_arguments = array(
+      'source_book_body'                     => 'body',
+      'source_book_body_summary'             => 'body:summary',
+      'source_book_body_format'              => 'body:format',
+      'source_book_attachments'               => 'field_book_attachments',
+      'source_book_category'                 => 'field_book_category',
+      'source_book_category_source_type'     => 'tid',
+      'source_book_category_ignore_case'     => TRUE,
+      'source_book_category_create_term'     => TRUE,
+      'source_book_category_vocabulary'      => 'book_category',
+      'source_book_category_default_value'   => '',
+      'source_book_keyword'                  => 'field_tags',
+      'source_book_keyword_source_type'      => 'tid',
+      'source_book_keyword_ignore_case'      => TRUE,
+      'source_book_keyword_create_term'      => TRUE,
+      'source_book_keyword_vocabulary'       => 'tags',
+      'source_book_keyword_default_value'    => '',
+      'source_book_insert_fields'            => $book_insert_fields,
+    );
+
+    //Override default values with arguments if they exist
+    foreach ($book_arguments as $key => $value) {
+        if(isset($this->arguments[$key])){
+          if($this->arguments[$key] != ''){
+            $book_arguments[$key] = $this->arguments[$key];
+          }
+        }
+    }
+
     $this->destination = new MigrateDestinationNode('book');
+
+    // INSERT fields into Body variables
+    $this->arguments['update_source_body'] = $book_arguments['source_book_body'];
+    $this->arguments['update_insert_fields'] = $book_arguments['source_book_insert_fields'];
+
     // Remove any previously registered field mappings.
     $this->removeFieldMapping('title');
     $this->removeFieldMapping('body');
-    // Map fields.
+    $this->removeFieldMapping('body:summary');
+    $this->removeFieldMapping('body:format');
+
+    // Map Title and Body fields.
     $this->addFieldMapping('title', $this->sourceBookTitle);
     $this->addFieldMapping('body', $this->sourceBookBody);
+    $this->addFieldMapping('body:summary', $book_arguments['source_book_summary']);
+
+    // Map Body Format
+    if($book_arguments['source_book_body'] == 'body'){
+        $this->addFieldMapping('body:format', $book_arguments['source_book_format'])
+          ->defaultValue('full_html');
+    }else{
+        $this->addFieldMapping('body:format', $book_arguments['source_book_format'])
+          ->callbacks(array($this, 'mapFormat'))
+          ->defaultValue('full_html');
+    }
+
+    // Map Book Category
+    if($book_arguments['source_book_category_default_value']!=''){
+      $this->addFieldMapping('field_book_category')
+           ->defaultValue($book_arguments['source_book_category_default_value']);
+    }else{
+      $this->addFieldMapping('field_book_category', $book_arguments['source_book_category'])
+           ->sourceMigration('UGBookCategory7');
+    }
+    $this->addFieldMapping('field_book_category:source_type')
+         ->defaultValue($book_arguments['source_book_category_source_type']);
+    $this->addFieldMapping('field_book_category:ignore_case')
+         ->defaultValue($book_arguments['source_book_category_ignore_case']);
+    $this->addFieldMapping('field_book_category:create_term')
+         ->defaultValue($book_arguments['source_book_category_create_term']);
+
+    // Map Book Keywords
+    if($book_arguments['source_book_keyword_default_value']!=''){
+      $this->addFieldMapping('field_tags')
+           ->defaultValue($book_arguments['source_book_keyword_default_value']);
+    }else{
+      $this->addFieldMapping('field_tags', $book_arguments['source_book_keyword'])
+           ->sourceMigration(array('UGTerm7','UGBookKeyword7'));
+    }
+    $this->addFieldMapping('field_tags:source_type')
+         ->defaultValue($book_arguments['source_book_keyword_source_type']);
+    $this->addFieldMapping('field_tags:ignore_case')
+         ->defaultValue($book_arguments['source_book_keyword_ignore_case']);
+    $this->addFieldMapping('field_tags:create_term')
+         ->defaultValue($book_arguments['source_book_keyword_create_term']);
+
+    // Map Book Attachments
+    $this->addFieldMapping('field_book_attachments', $book_arguments['source_book_attachments'])
+      ->sourceMigration('UGFile7');
+      $this->addFieldMapping('field_book_attachments:file_class')
+          ->defaultValue('MigrateFileFid');
+      $this->addFieldMapping('field_book_attachments:preserve_files')
+          ->defaultValue('TRUE');
+      $this->addFieldMapping('field_book_attachments:description', $book_arguments['source_book_attachments'] . ':description')
+          ->defaultValue('');
+      $this->addFieldMapping('field_book_attachments:language')
+          ->defaultValue(LANGUAGE_NONE);
+
   }
 }
 
 /*
- * Book migration: Step 2: Migrate book-toc menu links
+ * Book migration: Step 4: Migrate book-toc menu links
  */
 class UGBookMenuLinks7Migration extends DrupalMenuLinks7Migration {
 
@@ -88,7 +183,7 @@ class UGBookMenuLinks7Migration extends DrupalMenuLinks7Migration {
 }
 
 /**
- * Book migration: Step 3: Migrate the book table
+ * Book migration: Step 5: Migrate the book table
  */
 class UGBookTable7Migration extends Migration {
   public function __construct($arguments) {
@@ -107,9 +202,9 @@ class UGBookTable7Migration extends Migration {
     $this->map = new MigrateSQLMap($this->machineName,
       array('mlid' => array(
         'type' => 'int',
-	'unsigned' => TRUE,
-	'not null' => TRUE,
-	'description' => t('Source menu link ID'),
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => t('Source menu link ID'),
       )),
       MigrateDestinationTable::getKeySchema($table_name)
     );
@@ -126,3 +221,23 @@ class UGBookTable7Migration extends Migration {
   }
 }
 
+
+/**
+ * Book migration: Step 1: Migrate book category vocabulary
+ */
+class UGBookCategory7Migration extends DrupalTerm7Migration {
+  public function __construct($arguments) {
+      parent::__construct($arguments);
+
+  } 
+}
+
+/**
+ * Book migration: Step 2: Migrate book keyword terms into tags vocabulary
+ */
+class UGBookKeyword7Migration extends DrupalTerm7Migration {
+  public function __construct($arguments) {
+      parent::__construct($arguments);
+
+  } 
+}
