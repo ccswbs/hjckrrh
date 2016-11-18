@@ -1,7 +1,7 @@
 name = UG Service catalogue
 core = 7.x
 package = UG
-version = 7.x-11.1
+version = 7.x-11.2
 project = ug_service
 dependencies[] = ctools
 dependencies[] = entityreference
