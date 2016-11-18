@@ -241,3 +241,68 @@ class UGBookKeyword7Migration extends DrupalTerm7Migration {
 
   } 
 }
+
+
+class UGUpdateBook7Migration extends UGUpdate7Migration {
+  public function __construct($arguments) {
+      parent::__construct($arguments);
+
+    $this->destination = new MigrateDestinationNode('book');
+
+      /* DEFAULT arguments */
+    $update_arguments = array(
+      'update_nodelinks' => FALSE,
+      'update_nodelinks_urls' => '/node/',
+      'update_hardlinks_source' => '',
+      'update_hardlinks_destination' => '',
+    );
+
+      /* DEFAULT arguments */
+      $book_arguments = array(
+        'source_book_body'                     => 'body',
+        'source_book_body_summary'             => 'body:summary',
+        'source_book_body_format'              => 'body:format',
+        'source_book_insert_fields'            => NULL,
+      );
+
+    //Override default values with arguments if they exist
+    foreach ($book_arguments as $key => $value) {
+        if(isset($this->arguments[$key])){
+          if($this->arguments[$key] != ''){
+            $book_arguments[$key] = $this->arguments[$key];
+          }
+        }
+    }
+
+    //Override default values with arguments if they exist
+    foreach ($update_arguments as $key => $value) {
+        if(isset($this->arguments[$key])){
+          if($this->arguments[$key]!=''){
+            $update_arguments[$key] = $this->arguments[$key];
+          }
+        }
+    }
+
+      $this->addFieldMapping('nid', 'nid')
+      ->sourceMigration('UGBook7');
+    $this->arguments['update_map_table'] = 'migrate_map_ugbook7';
+
+      // Update body field
+      $this->arguments['update_insert_fields'] = $book_arguments['source_course_insert_fields'];
+    $this->arguments['update_source_body'] = $book_arguments['source_book_body'];
+
+
+      $this->addFieldMapping('body', $book_arguments['source_book_body']);
+      $this->addFieldMapping('body:summary', $book_arguments['source_book_summary']);
+
+      // Map Body Format
+      if($book_arguments['source_book_body'] == 'body'){
+          $this->addFieldMapping('body:format', $book_arguments['source_book_format'])
+            ->defaultValue('full_html');
+      }else{
+          $this->addFieldMapping('body:format', $book_arguments['source_book_format'])
+            ->callbacks(array($this, 'mapFormat'))
+            ->defaultValue('full_html');
+      }
+  }
+}

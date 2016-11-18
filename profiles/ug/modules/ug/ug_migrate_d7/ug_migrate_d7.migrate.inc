@@ -28,6 +28,7 @@ function ug_migrate_d7_migrate_api() {
     'UGUpdateProfile7',
     'UGUpdateCourseOutline7',
     'UGUpdateBanner7',
+    'UGUpdateBook7',
   );
 
   $term_migrations = array(
@@ -601,6 +602,13 @@ function ug_migrate_d7_migrate_api() {
       'class_name' => 'UGBookKeyword7Migration',
       'source_vocabulary' => $book_arguments['source_book_keyword_vocabulary'],
       'destination_vocabulary' => 'tags',
+    );
+    $api['migrations']['UGUpdateBook7'] = $node_arguments + $update_arguments + $book_arguments + array(
+      'description' => t('Update migrated book nodes after initial Drupal 7 to Drupal 7 migration'),
+      'class_name' => 'UGUpdateBook7Migration',
+      'source_type' => $book_arguments['source_book_node_type'], 
+      'destination_vocabulary' => 'book',
+      'dependencies' => $node_migrations,
     );
   }
 
