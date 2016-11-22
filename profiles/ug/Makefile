@@ -13,7 +13,10 @@ test:
 install:
 	rsync --recursive --verbose --cvs-exclude ../../ $(DEST)/
 
-release:
-	ls ../../*.txt
+build:
+	cd ../..; drush -y make profiles/ug/build-ug.make || true
+
+release: build
+	cd ../..; rm [A-Z]*.txt
 	find . -name '*.info' -exec sed -i -e 's/^version = .*/version = $(VERSION)/' {} \;
 
