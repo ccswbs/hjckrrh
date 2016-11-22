@@ -1,11 +1,8 @@
 <?php
-
 /**
  * @file
  * Implementation of DrupalMenuMigration for Drupal 6 sources.
  */
-
-/* PATCH SOURCE: https://www.drupal.org/files/issues/migrate_d2d-menu_names_and_cleanup-1489858-11.patch */
 
 /*
  * Class for menu migrations: from {menu_custom} into {menu_custom}.
@@ -15,7 +12,6 @@
 class DrupalMenu6Migration extends DrupalMenuMigration {
 
   protected $menu_names = array();
-
 
   /**
    * @param array $arguments
@@ -72,9 +68,6 @@ class DrupalMenu6Migration extends DrupalMenuMigration {
       else {
         return FALSE;
       }
-
-
     }
   }
-
 }

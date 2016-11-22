@@ -4,15 +4,13 @@
  * Implementation of DrupalMenuLinksMigration for Drupal 6 sources.
  */
 
-/* PATCH SOURCE: https://www.drupal.org/files/issues/migrate_d2d-menu_names_and_cleanup-1489858-11.patch */
-
 /*
  * Class for menu link migrations: from {menu_links} into {menu_links}.
  */
 class DrupalMenuLinks6Migration extends DrupalMenuLinksMigration {
 
   protected $menu_names = array();
- 
+
   /**
    * @param array $arguments
    *     $arguments['menu_migration'] should be defined -- menu links are normally
@@ -78,8 +76,6 @@ class DrupalMenuLinks6Migration extends DrupalMenuLinksMigration {
       return FALSE;
     }
 
-    //if (!($row->menu_name == 'primary-links' ||
-
     // D6 prefixes menus added through the UI with 'menu-'. If 'menu_names'
     // was not specified in $arguments, then limit to these UI-added menus,
     // as well as primary-links and secondary-links.
@@ -105,15 +101,5 @@ class DrupalMenuLinks6Migration extends DrupalMenuLinksMigration {
     if (isset($options['langcode']) && module_exists('i18n_menu')) {
       $menu_link->language = $options['langcode'];
     }
-  }
-
-  /**
-   * Actions to take after a menu has been saved.
-   *
-   * @param $menu
-   * @param $row
-   */
-  public function complete($menu, $row) {
-    // @todo: anything needed here? Keeping complete() as a placeholder for now
   }
 }

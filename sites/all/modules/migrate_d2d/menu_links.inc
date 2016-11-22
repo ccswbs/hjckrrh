@@ -4,8 +4,6 @@
  * Base class for migrating menu links into Drupal.
  */
 
-/* PATCH SOURCE: https://www.drupal.org/files/issues/migrate_d2d-menu_names_and_cleanup-1489858-11.patch */
-
 /*
  * Class for menu link migrations: from {menu_links} into {menu_links}.
  */
@@ -26,8 +24,6 @@ abstract class DrupalMenuLinksMigration extends DrupalMigration {
    *        required in order to update tids in link_path
    *     $arguments['path_migration'] is an optional string defining the path migration,
    *        required in order to update URL aliases in link_path
-   *
-   * @todo: should the arguments be handled here or in d6/menu_links?
    */
   public function __construct(array $arguments) {
     if (!empty($arguments['menu_migration'])) {
@@ -151,5 +147,4 @@ abstract class DrupalMenuLinksMigration extends DrupalMigration {
 
     // @todo: handle url_alias
   }
-
 }
