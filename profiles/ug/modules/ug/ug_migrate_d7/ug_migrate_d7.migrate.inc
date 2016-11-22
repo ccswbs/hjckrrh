@@ -15,7 +15,8 @@ function ug_migrate_d7_migrate_api() {
     'UGFeaturedItem7',
     'UGProfile7',
     'UGCourseOutline7',
-    'UGBanner7'
+    'UGBanner7',
+    'UGBook7',
   );
 
   $update_migrations = array(
@@ -27,6 +28,7 @@ function ug_migrate_d7_migrate_api() {
     'UGUpdateProfile7',
     'UGUpdateCourseOutline7',
     'UGUpdateBanner7',
+    'UGUpdateBook7',
   );
 
   $term_migrations = array(
@@ -52,6 +54,8 @@ function ug_migrate_d7_migrate_api() {
     'UGCourseOutlineDepartment7',
     'UGBannerCategory7',
     'UGBannerKeyword7',
+    'UGBookCategory7',
+    'UGBookKeyword7',
   );
 
 
@@ -78,12 +82,6 @@ function ug_migrate_d7_migrate_api() {
     'source_page_node_type' => 'page',
     'source_page_term_category' => '',
     'source_page_term_keyword' => '',
-  );
-  
-  $book_arguments = array(
-    'source_book_node_type' => 'book',
-    'source_book_term_category' => '',
-    'source_book_term_keyword' => '',
   );
 
   $news_arguments = array(
@@ -134,6 +132,13 @@ function ug_migrate_d7_migrate_api() {
     'source_banner_node_type' => 'banner',
     'source_banner_category_vocabulary' => '',
     'source_banner_keyword_vocabulary' => '',
+  );
+
+ 
+  $book_arguments = array(
+    'source_book_node_type' => 'book',
+    'source_book_category_vocabulary' => '',
+    'source_book_keyword_vocabulary' => '',
   );
   
   /* FILE VARIABLES */
@@ -352,9 +357,9 @@ function ug_migrate_d7_migrate_api() {
       /**** PROFILE migration ****/
       'UGProfile7' => $node_arguments + $profile_arguments + array(
         'description' => t('Migration of profiles from Drupal 7'),
-      	'class_name' => 'UGProfile7Migration',
-      	'source_type' => $profile_arguments['source_profile_node_type'],
-      	'destination_type' => 'profile',
+        'class_name' => 'UGProfile7Migration',
+        'source_type' => $profile_arguments['source_profile_node_type'],
+        'destination_type' => 'profile',
       ),
       
       'UGProfileRole7' => $common_arguments + array(
@@ -585,6 +590,25 @@ function ug_migrate_d7_migrate_api() {
       'node_migrations' => array('UGBook7'),
       'menu_link_migrations' => array('UGBookMenuLinks7'),
       'dependencies' => array('UGBook7', 'UGBookMenuLinks7'),
+    );
+    $api['migrations']['UGBookCategory7'] = $common_arguments + array(
+      'description' => t('Migration of book category vocabulary + terms from Drupal 7'),
+      'class_name' => 'UGBookCategory7Migration',
+      'source_vocabulary' => $book_arguments['source_book_category_vocabulary'],
+      'destination_vocabulary' => 'book_category',
+    );
+    $api['migrations']['UGBookKeyword7'] = $common_arguments + array(
+      'description' => t('Migration of book keyword terms from Drupal 7'),
+      'class_name' => 'UGBookKeyword7Migration',
+      'source_vocabulary' => $book_arguments['source_book_keyword_vocabulary'],
+      'destination_vocabulary' => 'tags',
+    );
+    $api['migrations']['UGUpdateBook7'] = $node_arguments + $update_arguments + $book_arguments + array(
+      'description' => t('Update migrated book nodes after initial Drupal 7 to Drupal 7 migration'),
+      'class_name' => 'UGUpdateBook7Migration',
+      'source_type' => $book_arguments['source_book_node_type'], 
+      'destination_vocabulary' => 'book',
+      'dependencies' => $node_migrations,
     );
   }
 
