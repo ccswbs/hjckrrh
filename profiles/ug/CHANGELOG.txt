@@ -1,7 +1,39 @@
-Hjckrrh 7.11.2, 2016-11-17
+Hjckrrh 7.12.0, 2016-11-22
 --------------------------
-- Fix: Webform: Radio buttons not rendered
-- Fix: Webform: 500 Internal Server Error
+- New: Add UpdateBook class [fix #564](UG Migrate D7)
+- New: Migrate book attachments, keyword, and category [Fix #562](UG Migrate D7)
+- New: Correct URLs with Pathologic
+- New: 140 Faces / Notable Alumni feature (#486)
+- Fix: Style RSS feed icon (#394)
+- Fix: Update CkEditor Link configuration so it can search for Book page node titles (#575)
+- Fix: Book outline menu broken (#580)
+- Fix: Remove Drupal changelog, etc
+- Fix: Editor settings - Wysiwyg (#16)
+- Update: Migrate D2D 7.x-2.1
+- Update: Move patches to UG makefile
+- Update: Drupal 7.52
+- Update: wysiwyg_filter 7.x-1.6-rc3
+- Update: recaptcha 7.x-2.2
+- Update: libraries 7.x-2.3
+- Update: imce 7.x-1.10
+- Update: fontawesome 7.x-2.6
+- Update: field_permissions 7.x-1.0
+- Update: field_collection 7.x-1.0-beta11
+- Update: features 7.x-2.10
+- Update: entityreference 7.x-1.2
+- Update: link 7.x-1.4
+- Update: linkit 7.x-3.5
+- Update: crumbs 7.x-2.5
+- Update: ds 7.x-2.14
+- Update: menu_block 7.x-2.7
+- Update: entity 7.x-1.8
+- Update: ckeditor 7.x-1.17
+- Update: panels 7.x-3.8
+- Update: twitter 7.x-5.11
+- Update: redirect 7.x-1.0-rc3
+- Update: token 7.x-1.6
+- Update: webform 7.x-4.14
+- Update: ctools 7.x-1.11
 
 Hjckrrh 7.11.1, 2016-11-16
 --------------------------
