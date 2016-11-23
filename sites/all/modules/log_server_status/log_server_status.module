@@ -1,0 +1,37 @@
+<?php
+
+/**
+ * Log status report to system log.
+ */
+function log_status_report() {
+  // Load .install files
+  include_once DRUPAL_ROOT . '/includes/install.inc';
+  drupal_load_updates();
+
+  // Check run-time requirements and status information.
+  $requirements = module_invoke_all('requirements', 'runtime');
+  usort($requirements, '_system_sort_requirements');
+  
+  // Map requirements status to watchdog severity level.
+  $severities = array(
+    REQUIREMENT_INFO => WATCHDOG_INFO,
+    REQUIREMENT_OK => WATCHDOG_NOTICE,
+    REQUIREMENT_WARNING => WATCHDOG_WARNING,
+    REQUIREMENT_ERROR => WATCHDOG_ERROR,
+  );
+
+  // Log each requirement.
+  foreach ($requirements as $requirement) {
+    if (empty($requirement['#type'])) {
+      $severity = $severities[isset($requirement['severity']) ? (int) $requirement['severity'] : REQUIREMENT_OK];
+      watchdog('log_server_status', '@title: @value', array('@title' => $requirement['title'], '@value' => $requirement['value']), $severity);
+    }
+  }
+}
+
+/**
+ * Implements hook_cron().
+ */
+function log_server_status_cron() {
+  log_status_report();
+}

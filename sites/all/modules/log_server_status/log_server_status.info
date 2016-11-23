@@ -1,0 +1,4 @@
+name = Log Server Status
+description = Log periodic status summaries.
+core = 7.x
+version = 7.x-1.0
