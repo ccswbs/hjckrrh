@@ -1,0 +1,10 @@
+<?php
+
+/**
+ * Implements hook_cron().
+ */
+function git_pull_cron() {
+  chdir(DRUPAL_ROOT);
+  system("git pull");
+}
+

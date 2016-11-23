@@ -1,0 +1,5 @@
+name = Git Pull
+description = Update code from git.
+core = 7.x
+
+
