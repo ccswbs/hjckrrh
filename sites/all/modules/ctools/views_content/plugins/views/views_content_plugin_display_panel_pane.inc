@@ -30,6 +30,7 @@ class views_content_plugin_display_panel_pane extends views_plugin_display {
         'offset'          => array('default' => FALSE),
         'link_to_view'    => array('default' => FALSE),
         'more_link'       => array('default' => FALSE),
+        'more_text'       => array('default' => FALSE),
         'path_override'   => array('default' => FALSE),
         'title_override'  => array('default' => FALSE),
         'exposed_form'    => array('default' => FALSE),
@@ -168,6 +169,7 @@ class views_content_plugin_display_panel_pane extends views_plugin_display {
           'offset' => t('Pager offset'),
           'link_to_view' => t('Link to view'),
           'more_link' => t('More link'),
+          'more_text' => t('More text'),
           'path_override' => t('Path override'),
           'title_override' => t('Title override'),
           'exposed_form' => t('Use exposed widgets form as pane configuration'),
@@ -509,6 +511,9 @@ class views_content_plugin_display_panel_pane extends views_plugin_display {
       }
       else {
         $this->set_option('use_more', TRUE);
+        if (!empty($conf['more_text']) && $allow['more_text']) {
+          $this->view->display_handler->set_option('use_more_text', ctools_context_keyword_substitute($conf['more_text'], array(), $contexts));
+        }
         // make sure the view runs the count query so we know whether or not the
         // more link applies.
         $this->view->get_total_rows = TRUE;
@@ -565,4 +570,3 @@ class views_content_plugin_display_panel_pane extends views_plugin_display {
   }
 
 }
-
