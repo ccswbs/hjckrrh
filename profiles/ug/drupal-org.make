@@ -35,7 +35,8 @@ projects[entityreference][version] = "1.2"
 
 projects[features][version] = "2.10"
 
-projects[field_collection][version] = "1.0-beta11"
+projects[field_collection][version] = "1.0-beta12"
+projects[field_collection][patch][] = "https://www.drupal.org/files/issues/add_feeds_integration-1063434-184.patch"
 
 projects[field_group][version] = "1.5"
 
