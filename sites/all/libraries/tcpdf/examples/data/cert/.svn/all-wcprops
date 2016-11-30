@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/svn-public/!svn/ver/1432/platform/branches/7.x-8.x/sites/all/libraries/tcpdf/examples/data/cert
+END
+tcpdf.p12
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/svn-public/!svn/ver/1432/platform/branches/7.x-8.x/sites/all/libraries/tcpdf/examples/data/cert/tcpdf.p12
+END
+tcpdf.crt
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/svn-public/!svn/ver/1432/platform/branches/7.x-8.x/sites/all/libraries/tcpdf/examples/data/cert/tcpdf.crt
+END
+tcpdf.fdf
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/svn-public/!svn/ver/1432/platform/branches/7.x-8.x/sites/all/libraries/tcpdf/examples/data/cert/tcpdf.fdf
+END

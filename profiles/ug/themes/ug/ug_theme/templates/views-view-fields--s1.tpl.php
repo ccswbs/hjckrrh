@@ -65,3 +65,15 @@
     </span>
   </a>
 </li>
+
+<!-- Print -->
+<li>
+  <a class="h1" data-toggle="tooltip" data-placement="bottom"
+    href="<?php print url('print/'.$nid); ?>"
+    title="<?php print t('Print this page'); ?>"
+    ><span class="fa fa-print"></span>
+    <span class="element-invisible">
+      <?php print t('Print this page'); ?>
+    </span>
+  </a>
+</li>

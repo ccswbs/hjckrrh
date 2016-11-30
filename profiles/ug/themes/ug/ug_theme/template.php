@@ -282,6 +282,7 @@ function ug_theme_preprocess_views_view_fields__s1(&$vars) {
   global $base_url;
   $vars['title']  = $vars['fields']['title']->content;
   $vars['link']   = $vars['fields']['path']->content;
+  $vars['nid']   = $vars['fields']['nid']->content;
 }
 
 

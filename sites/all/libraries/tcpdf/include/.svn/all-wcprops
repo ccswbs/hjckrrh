@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/svn-public/!svn/ver/1432/platform/branches/7.x-8.x/sites/all/libraries/tcpdf/include
+END
+tcpdf_fonts.php
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/svn-public/!svn/ver/1432/platform/branches/7.x-8.x/sites/all/libraries/tcpdf/include/tcpdf_fonts.php
+END
+tcpdf_font_data.php
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/svn-public/!svn/ver/1432/platform/branches/7.x-8.x/sites/all/libraries/tcpdf/include/tcpdf_font_data.php
+END
+tcpdf_colors.php
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/svn-public/!svn/ver/1432/platform/branches/7.x-8.x/sites/all/libraries/tcpdf/include/tcpdf_colors.php
+END
+sRGB.icc
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/svn-public/!svn/ver/1432/platform/branches/7.x-8.x/sites/all/libraries/tcpdf/include/sRGB.icc
+END
+tcpdf_images.php
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/svn-public/!svn/ver/1432/platform/branches/7.x-8.x/sites/all/libraries/tcpdf/include/tcpdf_images.php
+END
+tcpdf_static.php
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/svn-public/!svn/ver/1432/platform/branches/7.x-8.x/sites/all/libraries/tcpdf/include/tcpdf_static.php
+END
+tcpdf_filters.php
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/svn-public/!svn/ver/1432/platform/branches/7.x-8.x/sites/all/libraries/tcpdf/include/tcpdf_filters.php
+END
