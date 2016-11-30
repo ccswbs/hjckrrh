@@ -489,6 +489,7 @@ class RulesReactionRule extends Rule implements RulesTriggerableInterface {
   }
 
   protected function exportChildren($key = 'ON') {
+    $export = array();
     foreach ($this->events as $event_name) {
       $export[$key][$event_name] = (array) $this->getEventSettings($event_name);
     }
@@ -498,14 +499,16 @@ class RulesReactionRule extends Rule implements RulesTriggerableInterface {
   protected function importChildren($export, $key = 'ON') {
     // Detect and support old-style exports: a numerically indexed array of
     // event names.
-    if (is_string(reset($export[$key])) && is_numeric(key($export[$key]))) {
-      $this->events = $export[$key];
+    if(isset($export[$key])){
+      if (is_string(reset($export[$key])) && is_numeric(key($export[$key]))) {
+        $this->events = $export[$key];
+      }
+      else {
+        $this->events = array_keys($export[$key]);
+        $this->eventSettings = array_filter($export[$key]);
+      }
+      parent::importChildren($export);
     }
-    else {
-      $this->events = array_keys($export[$key]);
-      $this->eventSettings = array_filter($export[$key]);
-    }
-    parent::importChildren($export);
   }
 
   /**
