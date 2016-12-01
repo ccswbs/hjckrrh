@@ -10,6 +10,13 @@
 function ug_social_user_default_permissions() {
   $permissions = array();
 
+  // Exported permission: 'access PDF version'.
+  $permissions['access PDF version'] = array(
+    'name' => 'access PDF version',
+    'roles' => array(),
+    'module' => 'print_pdf',
+  );
+
   // Exported permission: 'access news feeds'.
   $permissions['access news feeds'] = array(
     'name' => 'access news feeds',
@@ -20,6 +27,16 @@ function ug_social_user_default_permissions() {
     'module' => 'aggregator',
   );
 
+  // Exported permission: 'access print'.
+  $permissions['access print'] = array(
+    'name' => 'access print',
+    'roles' => array(
+      'anonymous user' => 'anonymous user',
+      'authenticated user' => 'authenticated user',
+    ),
+    'module' => 'print',
+  );
+
   // Exported permission: 'administer news feeds'.
   $permissions['administer news feeds'] = array(
     'name' => 'administer news feeds',
@@ -27,6 +44,16 @@ function ug_social_user_default_permissions() {
       'site manager' => 'site manager',
     ),
     'module' => 'aggregator',
+  );
+
+  // Exported permission: 'administer print'.
+  $permissions['administer print'] = array(
+    'name' => 'administer print',
+    'roles' => array(
+      'editor' => 'editor',
+      'site manager' => 'site manager',
+    ),
+    'module' => 'print',
   );
 
   // Exported permission: 'create social content'.
@@ -88,6 +115,16 @@ function ug_social_user_default_permissions() {
       'site manager' => 'site manager',
     ),
     'module' => 'taxonomy',
+  );
+
+  // Exported permission: 'node-specific print configuration'.
+  $permissions['node-specific print configuration'] = array(
+    'name' => 'node-specific print configuration',
+    'roles' => array(
+      'editor' => 'editor',
+      'site manager' => 'site manager',
+    ),
+    'module' => 'print_ui',
   );
 
   return $permissions;
