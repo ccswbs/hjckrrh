@@ -1,7 +1,6 @@
 
 PREFIX ?= /usr/local
 DEST ?= $(PREFIX)/drupal-7.x
-VERSION ?= 7.x-12.0
 
 site:
 	drush -y site-install ug
@@ -16,7 +15,6 @@ install:
 build:
 	cd ../..; drush -y make profiles/ug/build-ug.make || true
 
-release: build
-	cd ../..; rm [A-Z]*.txt
-	find . -name '*.info' -exec sed -i -e 's/^version = .*/version = $(VERSION)/' {} \;
+release:
+	scripts/drupal-org-package.sh
 
