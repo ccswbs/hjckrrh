@@ -20,7 +20,7 @@ function ug_user_default_ldap_servers() {
   $ldap_servers_conf->address = 'directory.uoguelph.ca';
   $ldap_servers_conf->port = 389;
   $ldap_servers_conf->tls = TRUE;
-  $ldap_servers_conf->bind_method = TRUE;
+  $ldap_servers_conf->bind_method = 1;
   $ldap_servers_conf->binddn = '';
   $ldap_servers_conf->bindpw = '';
   $ldap_servers_conf->basedn = array(
