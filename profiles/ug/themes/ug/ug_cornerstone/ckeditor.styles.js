@@ -25,6 +25,7 @@ CKEDITOR.on( 'dialogDefinition', function( ev ) {
         infoTab.remove( 'txtHeight' );
         infoTab.remove( 'txtBorder' );
         infoTab.remove( 'ratioLock' );
+	infoTab.remove( 'cmbAlign' );
         var advTab = dialogDefinition.getContents( 'advanced' );
         var classField = advTab.get( 'txtGenClass' );
         classField[ 'default' ] = 'img-responsive';
