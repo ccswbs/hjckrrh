@@ -88,6 +88,8 @@ projects[pathologic][version] = "3.1"
 
 projects[recaptcha][version] = "2.2"
 
+projects[r4032login][version] = "1.8"
+
 projects[redirect][version] = "1.0-rc3"
 
 projects[restrict_password_change][version] = "1.0-beta2"
