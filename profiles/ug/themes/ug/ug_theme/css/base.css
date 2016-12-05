@@ -640,3 +640,18 @@ _:-ms-fullscreen, :root .carousel-table a.glyphicon {
         top: -10px;
     }
 }
+
+/* For CKeditor image alignment */
+
+.pull-center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 90%;
+}
+.pr-padding {
+    padding-left: 1em;
+}
+.pl-padding {
+    padding-right: 1em;
+}

@@ -25,7 +25,7 @@ function ug_wysiwyg_ckeditor_profile_defaults() {
     [\'JustifyLeft\',\'JustifyCenter\',\'JustifyRight\',\'JustifyBlock\'],
     [\'Link\',\'Unlink\',\'Anchor\'],
     \'/\',
-    [\'Format\'],
+    [\'Format\'],[\'Styles\'],
     [\'Maximize\',\'ShowBlocks\']
 ]',
         'expand' => 't',
@@ -72,7 +72,6 @@ function ug_wysiwyg_ckeditor_profile_defaults() {
             'name' => 'drupal_path',
             'desc' => 'CKEditor Link - A plugin to easily create links to Drupal internal paths',
             'path' => '%base_path%sites/all/modules/ckeditor_link/plugins/link/',
-            'buttons' => FALSE,
           ),
           'drupalbreaks' => array(
             'name' => 'drupalbreaks',
@@ -131,7 +130,7 @@ function ug_wysiwyg_ckeditor_profile_defaults() {
     [\'JustifyLeft\',\'JustifyCenter\',\'JustifyRight\',\'JustifyBlock\'],
     [\'Link\',\'Unlink\',\'Anchor\'],
     \'/\',
-    [\'Format\'],
+    [\'Format\'],[\'Styles\'],
     [\'Maximize\',\'ShowBlocks\']
 ]',
         'expand' => 't',
@@ -178,7 +177,6 @@ function ug_wysiwyg_ckeditor_profile_defaults() {
             'name' => 'drupal_path',
             'desc' => 'CKEditor Link - A plugin to easily create links to Drupal internal paths',
             'path' => '%base_path%sites/all/modules/ckeditor_link/plugins/link/',
-            'buttons' => FALSE,
           ),
           'drupalbreaks' => array(
             'name' => 'drupalbreaks',

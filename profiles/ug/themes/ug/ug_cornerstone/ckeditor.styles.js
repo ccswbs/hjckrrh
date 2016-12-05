@@ -26,6 +26,8 @@ CKEDITOR.on( 'dialogDefinition', function( ev ) {
         infoTab.remove( 'txtBorder' );
         infoTab.remove( 'ratioLock' );
 	infoTab.remove( 'cmbAlign' );
+	infoTab.remove( 'txtHSpace' );
+	infoTab.remove( 'txtVSpace' );
         var advTab = dialogDefinition.getContents( 'advanced' );
         var classField = advTab.get( 'txtGenClass' );
         classField[ 'default' ] = 'img-responsive';
@@ -51,7 +53,7 @@ if(typeof(CKEDITOR) !== 'undefined') {
                     element : 'img',
                     attributes :
                     {
-                            'class' : 'pull-left'
+                            'class' : 'pull-left pl-padding'
                     }
             },
 
@@ -60,8 +62,17 @@ if(typeof(CKEDITOR) !== 'undefined') {
                     element : 'img',
                     attributes :
                     {
-                            'class' : 'pull-right'
+                            'class' : 'pull-right pr-padding'
                     }
-            }
+            },
+
+	    {
+		    name : 'Image Centered',
+		    element : 'img',
+		    attributes :
+		    {
+                            'class' : 'pull-center'
+		    }
+	    }
     ]);
 }
