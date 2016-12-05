@@ -86,6 +86,8 @@ projects[pathauto][version] = "1.3"
 
 projects[pathologic][version] = "3.1"
 
+projects[print][version] = "2.0"
+
 projects[recaptcha][version] = "2.2"
 
 projects[redirect][version] = "1.0-rc3"
@@ -113,4 +115,7 @@ projects[wysiwyg_filter][version] = "1.6-rc3"
 
 ; Themes
 projects[bootstrap][version] = "3.8"
+
+libraries[tcpdf][download][type] = "file"
+libraries[tcpdf][download][url] = http://downloads.sourceforge.net/project/tcpdf/tcpdf_6_2_13.zip
 
