@@ -68,7 +68,7 @@ projects[menu_block][version] = "2.7"
 projects[migrate][version] = "2.8"
 
 projects[migrate_d2d][version] = "2.1"
-;projects[migrate_d2d][patch][] = "https://www.drupal.org/files/issues/migrate_d2d-menu_names_and_cleanup-1489858-11.patch"
+projects[migrate_d2d][patch][] = "https://www.drupal.org/files/issues/migrate_d2d-menu_names_and_cleanup-1489858-11.patch"
 
 projects[module_filter][version] = "2.0"
 

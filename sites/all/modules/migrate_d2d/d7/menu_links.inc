@@ -1,11 +1,8 @@
 <?php
-
 /**
  * @file
  * Implementation of DrupalMenuLinksMigration for Drupal 7 sources.
  */
-
-/* PATCH SOURCE: https://www.drupal.org/files/issues/migrate_d2d-menu_names_and_cleanup-1489858-11.patch */
 
 /*
  * Class for menu link migrations: from {menu_links} into {menu_links}.
