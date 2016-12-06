@@ -53,7 +53,7 @@ if(typeof(CKEDITOR) !== 'undefined') {
                     element : 'img',
                     attributes :
                     {
-                            'class' : 'pull-left pl-padding'
+                            'class' : 'pull-left gap-right'
                     }
             },
 
@@ -62,7 +62,7 @@ if(typeof(CKEDITOR) !== 'undefined') {
                     element : 'img',
                     attributes :
                     {
-                            'class' : 'pull-right pr-padding'
+                            'class' : 'pull-right gap-left'
                     }
             },
 
