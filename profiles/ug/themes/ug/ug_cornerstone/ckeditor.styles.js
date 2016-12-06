@@ -71,7 +71,7 @@ if(typeof(CKEDITOR) !== 'undefined') {
 		    element : 'img',
 		    attributes :
 		    {
-                            'class' : 'pull-center'
+                            'class' : 'center-block'
 		    }
 	    }
     ]);
