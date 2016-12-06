@@ -643,9 +643,9 @@ _:-ms-fullscreen, :root .carousel-table a.glyphicon {
 
 /* For CKeditor image alignment */
 
-.pr-padding {
+.gap-left {
     padding-left: 1em;
 }
-.pl-padding {
+.gap-right {
     padding-right: 1em;
 }
