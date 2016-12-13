@@ -112,6 +112,7 @@ projects[views_tree][version] = "2.0"
 projects[webform][version] = "4.14"
 
 projects[wysiwyg_filter][version] = "1.6-rc3"
+projects[wysiwyg_filter][patch][] = "https://www.drupal.org/files/issues/wysiwyg_filter-Bypass-rules-835202-16.D7.patch"
 
 ; Themes
 projects[bootstrap][version] = "3.8"
