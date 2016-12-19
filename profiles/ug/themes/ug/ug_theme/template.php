@@ -314,11 +314,22 @@ function ug_theme_preprocess_views_view_fields__s4(&$vars) {
  * S5 - Feed aggregator block
  */
 function ug_theme_preprocess_views_view_fields__s5_attachment(&$vars) {
+
   $vars['title']  = $vars['fields']['title_1']->content;
   $vars['date']   = $vars['fields']['timestamp']->content;
+
 }
 
-
+/**
+ * S5b - Feed aggregator category block
+ */
+function ug_theme_preprocess_views_view_fields__s5b_attachment(&$vars) {
+ ug_theme_preprocess_views_view_fields__s5_attachment($vars);
+/*
+  $vars['title']  = $vars['fields']['title_1']->content;
+  $vars['date']   = $vars['fields']['timestamp']->content;
+*/
+}
 
 /**
  * S6 - Social media directory
