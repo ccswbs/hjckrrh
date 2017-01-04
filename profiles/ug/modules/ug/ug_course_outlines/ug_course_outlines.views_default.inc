@@ -392,6 +392,8 @@ function ug_course_outlines_views_default_views() {
 <p>[field_course_attachments]</p>';
   $handler->display->display_options['fields']['field_course_attachments']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_course_attachments']['click_sort_column'] = 'fid';
+  $handler->display->display_options['fields']['field_course_attachments']['type'] = 'file_table';
+  $handler->display->display_options['fields']['field_course_attachments']['delta_offset'] = '0';
   /* Field: Content: Course Website */
   $handler->display->display_options['fields']['field_course_website']['id'] = 'field_course_website';
   $handler->display->display_options['fields']['field_course_website']['table'] = 'field_data_field_course_website';
