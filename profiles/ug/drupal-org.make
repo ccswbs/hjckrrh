@@ -32,6 +32,7 @@ projects[ds_bootstrap_layouts][version] = "3.1"
 projects[entity][version] = "1.8"
 
 projects[entityreference][version] = "1.2"
+projects[entityreference][patch][] = "https://www.drupal.org/files/issues/entityreference-use-tokens-2010898-175.patch"
 
 projects[features][version] = "2.10"
 
