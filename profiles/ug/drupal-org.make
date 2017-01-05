@@ -87,6 +87,8 @@ projects[pathauto][version] = "1.3"
 
 projects[pathologic][version] = "3.1"
 
+projects[print][version] = "2.0"
+
 projects[recaptcha][version] = "2.2"
 
 projects[r4032login][version] = "1.8"
@@ -117,4 +119,7 @@ projects[wysiwyg_filter][patch][] = "https://www.drupal.org/files/issues/wysiwyg
 
 ; Themes
 projects[bootstrap][version] = "3.8"
+
+libraries[tcpdf][download][type] = "file"
+libraries[tcpdf][download][url] = http://downloads.sourceforge.net/project/tcpdf/tcpdf_6_2_13.zip
 
