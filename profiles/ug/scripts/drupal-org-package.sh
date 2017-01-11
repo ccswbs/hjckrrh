@@ -17,6 +17,9 @@ cd $PKG
 cp -R $CWD $NAME
 cd $NAME
 find . -name '*.info' -exec sed -i -e "s/VERSION/$VERSION/" {} \;
+# Before building, package basic profile
+tar -C$PKG -czf $TMP/$NAME-$VERSION.tar.gz $NAME
+# Now build and package no-core version
 drush make --drupal-org $CWD/drupal-org.make .
 cd $PKG
 tar -czf $TMP/$NAME-$VERSION-nocore.tar.gz $NAME
