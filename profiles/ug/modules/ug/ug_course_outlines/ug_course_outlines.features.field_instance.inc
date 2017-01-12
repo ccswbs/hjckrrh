@@ -57,7 +57,7 @@ function ug_course_outlines_field_default_field_instances() {
         'label' => 'above',
         'module' => 'file',
         'settings' => array(),
-        'type' => 'file_default',
+        'type' => 'file_table',
         'weight' => 6,
       ),
       'teaser' => array(
