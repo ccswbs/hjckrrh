@@ -35,7 +35,7 @@ function ug_service_field_group_info() {
       ),
     ),
   );
-  $field_groups['group_audience|node|service|form'] = $field_group;
+  $field_groups[''] = $field_group;
 
   // Translatables
   // Included for use with string extractors like potx.
