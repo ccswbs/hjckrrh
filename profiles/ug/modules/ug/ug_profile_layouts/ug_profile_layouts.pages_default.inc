@@ -333,7 +333,7 @@ function ug_profile_layouts_default_page_manager_pages() {
   $page->task = 'page';
   $page->admin_title = 'People';
   $page->admin_description = '';
-  $page->path = 'people';
+  $page->path = 'people/!tag';
   $page->access = array(
     'type' => 'none',
     'settings' => NULL,
@@ -350,7 +350,22 @@ function ug_profile_layouts_default_page_manager_pages() {
       'weight' => '0',
     ),
   );
-  $page->arguments = array();
+  $page->arguments = array(
+    'tag' => array(
+      'id' => 1,
+      'identifier' => 'Taxonomy term: ID',
+      'name' => 'term',
+      'settings' => array(
+        'input_form' => 'tid',
+        'vocabularies' => array(
+          'profile_category' => 'profile_category',
+          'tags' => 'tags',
+        ),
+        'breadcrumb' => 1,
+        'transform' => 0,
+      ),
+    ),
+  );
   $page->conf = array(
     'admin_paths' => FALSE,
   );
@@ -575,7 +590,22 @@ function ug_profile_layouts_default_page_manager_pages() {
   $pane->subtype = 'pp1b-panel_pane_1';
   $pane->shown = TRUE;
   $pane->access = array();
-  $pane->configuration = array();
+  $pane->configuration = array(
+    'use_pager' => 1,
+    'pager_id' => '0',
+    'items_per_page' => '50',
+    'fields_override' => array(
+      'path' => 0,
+      'field_profile_image' => 0,
+      'field_profile_lastname' => 0,
+      'field_profile_name' => 0,
+      'field_profile_role' => 0,
+      'nothing' => 1,
+    ),
+    'override_title' => 1,
+    'override_title_text' => '',
+    'override_title_heading' => 'h1',
+  );
   $pane->cache = array();
   $pane->style = array(
     'settings' => NULL,
@@ -587,7 +617,7 @@ function ug_profile_layouts_default_page_manager_pages() {
   $pane->uuid = '9383541a-4fb0-4c9f-bc5e-83d217484268';
   $display->content['new-9383541a-4fb0-4c9f-bc5e-83d217484268'] = $pane;
   $display->panels['middle'][0] = 'new-9383541a-4fb0-4c9f-bc5e-83d217484268';
-  $display->hide_title = PANELS_TITLE_FIXED;
+  $display->hide_title = PANELS_TITLE_PANE;
   $display->title_pane = 'new-9383541a-4fb0-4c9f-bc5e-83d217484268';
   $handler->conf['display'] = $display;
   $page->default_handlers[$handler->name] = $handler;
