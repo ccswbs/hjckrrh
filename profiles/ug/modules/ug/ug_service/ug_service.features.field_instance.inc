@@ -364,10 +364,10 @@ function ug_service_field_default_field_instances() {
         'label' => 'above',
         'module' => 'field_collection',
         'settings' => array(
-          'add' => 'Add',
-          'delete' => 'Delete',
+          'add' => '',
+          'delete' => '',
           'description' => 1,
-          'edit' => 'Edit',
+          'edit' => '',
           'view_mode' => 'full',
         ),
         'type' => 'field_collection_view',
