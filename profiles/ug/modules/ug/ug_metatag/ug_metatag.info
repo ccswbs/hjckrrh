@@ -4,6 +4,7 @@ core = 7.x
 package = UG
 version = 7.x-12.0
 dependencies[] = metatag
+dependencies[] = metatag_twitter_cards
 features[features_api][] = api:2
 features[metatag][] = global
 features[metatag][] = node

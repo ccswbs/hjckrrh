@@ -219,6 +219,7 @@ function ug_metatag_metatag_export_default() {
   // Exported Metatag config instance: node.
   $config['node'] = array(
     'instance' => 'node',
+    'disabled' => FALSE,
     'config' => array(
       'title' => array(
         'value' => '[node:title] | [current-page:pager][site:name]',
@@ -232,6 +233,7 @@ function ug_metatag_metatag_export_default() {
   // Exported Metatag config instance: node:course_outline.
   $config['node:course_outline'] = array(
     'instance' => 'node:course_outline',
+    'disabled' => FALSE,
     'config' => array(
       'twitter:description' => array(
         'value' => '[node:field_course_body]',
@@ -242,6 +244,7 @@ function ug_metatag_metatag_export_default() {
   // Exported Metatag config instance: node:event.
   $config['node:event'] = array(
     'instance' => 'node:event',
+    'disabled' => FALSE,
     'config' => array(
       'twitter:description' => array(
         'value' => '[node:field_event_body]',
@@ -255,6 +258,7 @@ function ug_metatag_metatag_export_default() {
   // Exported Metatag config instance: node:feature.
   $config['node:feature'] = array(
     'instance' => 'node:feature',
+    'disabled' => FALSE,
     'config' => array(
       'twitter:description' => array(
         'value' => '[node:field_feature_text]',
@@ -268,6 +272,7 @@ function ug_metatag_metatag_export_default() {
   // Exported Metatag config instance: node:news.
   $config['node:news'] = array(
     'instance' => 'node:news',
+    'disabled' => FALSE,
     'config' => array(
       'twitter:description' => array(
         'value' => '[node:field_news_body]',
@@ -281,6 +286,7 @@ function ug_metatag_metatag_export_default() {
   // Exported Metatag config instance: node:page.
   $config['node:page'] = array(
     'instance' => 'node:page',
+    'disabled' => FALSE,
     'config' => array(
       'twitter:description' => array(
         'value' => '[node:field_page_body]',
@@ -291,6 +297,7 @@ function ug_metatag_metatag_export_default() {
   // Exported Metatag config instance: node:profile.
   $config['node:profile'] = array(
     'instance' => 'node:profile',
+    'disabled' => FALSE,
     'config' => array(
       'twitter:description' => array(
         'value' => '[node:field_profile_summary]',
@@ -304,6 +311,7 @@ function ug_metatag_metatag_export_default() {
   // Exported Metatag config instance: node:service.
   $config['node:service'] = array(
     'instance' => 'node:service',
+    'disabled' => FALSE,
     'config' => array(
       'twitter:description' => array(
         'value' => '[node:field_service_description]',
