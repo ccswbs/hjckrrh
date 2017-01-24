@@ -1,0 +1,17 @@
+name = UG Metatag
+description = Configuration for Twitter summary cards through meta tags
+core = 7.x
+package = UG
+version = 7.x-12.0
+dependencies[] = metatag
+features[features_api][] = api:2
+features[metatag][] = global
+features[metatag][] = node
+features[metatag][] = node:course_outline
+features[metatag][] = node:event
+features[metatag][] = node:feature
+features[metatag][] = node:news
+features[metatag][] = node:page
+features[metatag][] = node:profile
+features[metatag][] = node:service
+project path = profiles/ug/modules/ug
