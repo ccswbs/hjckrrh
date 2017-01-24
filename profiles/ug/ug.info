@@ -41,6 +41,7 @@ dependencies[] = ug_front
 dependencies[] = ug_icon
 dependencies[] = ug_image
 dependencies[] = ug_layout
+dependencies[] = ug_metatag
 dependencies[] = ug_migrate_d6
 dependencies[] = ug_migrate_d7
 dependencies[] = ug_news
