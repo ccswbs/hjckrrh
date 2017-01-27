@@ -1,0 +1,22 @@
+<?php
+  function ug_table_filter_info() {
+    $filters['ug_tables'] = array(
+      'title' => t('UG Responsive Tables'),
+      'description' => t('Wraps tables with bootstrap responsive class.'),
+      'process callback' => '_ug_table_process',
+    );
+    return $filters;
+  }
+  
+  function _ug_table_process($text, $filter, $format) {
+    $matches = array();
+    preg_match('/<table class="table.*">/', $text, $matches);
+    
+    foreach($matches as $match) {
+      $text = preg_replace('/<table class="table.*">/', '<div class="table-responsive">'.$match, $text);
+    }
+    
+    $text = preg_replace('/<\/table>/', '</table></div>', $text);
+    
+    return $text;
+  }

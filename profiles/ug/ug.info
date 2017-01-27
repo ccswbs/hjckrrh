@@ -56,6 +56,7 @@ dependencies[] = ug_search
 dependencies[] = ug_service
 dependencies[] = ug_service_layouts
 dependencies[] = ug_social
+dependencies[] = ug_table
 dependencies[] = ug_tags
 dependencies[] = ug_theme_settings
 dependencies[] = ug_user

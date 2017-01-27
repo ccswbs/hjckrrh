@@ -1,0 +1,3 @@
+name = UG Table
+description = Adds filter to wrap tables in div with responsive class.
+core = 7.x
