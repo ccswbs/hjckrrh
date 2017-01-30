@@ -4,7 +4,7 @@ TMP=/tmp
 CORE=7.x
 RELEASE=$(git describe --tags)
 NAME=ug
-VERSION=$CORE-$RELEASE
+VERSION=$RELEASE
 PKG=$TMP/package-$NAME
 CWD=$(pwd)
 
@@ -15,8 +15,10 @@ mkdir $PKG
 # First, build no-core version of profile
 cd $PKG
 cp -R $CWD $NAME
-cd $NAME
 find . -name '*.info' -exec sed -i -e "s/VERSION/$VERSION/" {} \;
+# Before building anything, save the standalone profile.
+tar -czf $TMP/$NAME-$VERSION.tar.gz $NAME
+cd $NAME
 drush make --drupal-org $CWD/drupal-org.make .
 cd $PKG
 tar -czf $TMP/$NAME-$VERSION-nocore.tar.gz $NAME
