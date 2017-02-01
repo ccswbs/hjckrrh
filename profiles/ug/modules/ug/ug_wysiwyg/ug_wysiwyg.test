@@ -127,7 +127,7 @@ class UGWysiwygTestCase extends DrupalWebTestCase {
       "<main $global_attributes />" => array('main' => FALSE),
 
       /* Text-level semantics */
-      "<a $global_attributes href target download rel hreflang type />" => array(
+      "<a $global_attributes href target download rel hreflang type id />" => array(
         'a' => TRUE,
         'href' => TRUE,
         'target' => TRUE,
@@ -135,6 +135,7 @@ class UGWysiwygTestCase extends DrupalWebTestCase {
         'rel' => TRUE,
         'hreflang' => TRUE,
         'type' => TRUE,
+        'id' => TRUE,
       ) + $allowed_global_attributes,
       "<em $global_attributes />" => array('em' => TRUE) + $allowed_global_attributes,
       "<strong $global_attributes />" => array('strong' => TRUE) + $allowed_global_attributes,
