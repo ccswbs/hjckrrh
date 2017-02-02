@@ -121,12 +121,21 @@ class UGProfileTestCase extends TaxonomyWebTestCase {
     
     // Get data
     $count = 25;
-    $data = json_decode(file_get_contents("https://randomuser.me/api/?inc=name&results=$count&nat=gb"), true);
+    $data = json_decode(@file_get_contents("https://randomuser.me/api/?inc=name&results=$count&nat=gb"), true);
+    if($data == NULL) {
+      $data = array("results" => array());
+      for($i = 0; $i < $count; $i++) {
+        $data["results"][] = array("name" => array(
+          "first" => $this->randomName(),
+          "last" => $this->randomName()
+        ));
+      }
+    }
     
     // Create nodes
     $settings = array('type' => 'profile');
     $nodes = array();
-    $processed = 0; // Used to track first and second names to force duplicate
+    $processed = 0; // Used to track first and second profiles to force duplicate
     foreach($data['results'] as $profile) {
       // Choose random role
       $tid = $tids[rand(0, count($tids) - 1)];
@@ -194,7 +203,7 @@ class UGProfileTestCase extends TaxonomyWebTestCase {
         $name = $node['firstname'].' '.$node['lastname'];
         
         // If lastname begins with search term
-        if(strpos($node['lastname'], $search) === 0) {
+        if(strpos(strtolower($node['lastname']), strtolower($search)) === 0) {
           $this->assertText($name, $name.' found with search term \''.$search.'\'.', 'Filter by Partial Last Name');
         } else {
           $this->assertNoText($name, $name.' not found with search term \''.$search.'\'.', 'Filter by Partial Last Name');
