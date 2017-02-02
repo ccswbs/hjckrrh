@@ -21,12 +21,15 @@ class UGProfileTestCase extends DrupalWebTestCase {
   function setUp() {
     $this->profile = 'ug';
     parent::setUp('ug_profile', 'ug_profile_layouts');
+    theme_enable(array('ug_cornerstone'));
+    theme_disable(array('bartik'));
+    variable_set('theme_default', 'ug_cornerstone');
   }
 
   /**
    * Test PP1 - Listing page for multiple profiles
    */
-  function testListingPage() {
+  function _testListingPage() {
     $node = array();
     $node['type'] = 'profile';
     $node['field_profile_name'][LANGUAGE_NONE][0]['value'] = $this->randomName(8);
@@ -44,7 +47,7 @@ class UGProfileTestCase extends DrupalWebTestCase {
   /**
    * Test node title
    */
-  function testNodeTitle() {
+  function _testNodeTitle() {
     $name = $this->randomName(8);
     $last = "O'".$this->randomName(8); // Last name with apostrophe.
     $title = $name . " " . $last;
@@ -60,7 +63,7 @@ class UGProfileTestCase extends DrupalWebTestCase {
   /**
    * Test grid view.
    */
-  function testGridView() {
+  function _testGridView() {
     $this->drupalGet('people/faces');
     $node_list = $this->xpath('span > figure');
     $this->assertTrue(empty($node_list));
@@ -69,7 +72,7 @@ class UGProfileTestCase extends DrupalWebTestCase {
   /**
    * Test uninstall hook behaviour.
    */
-  function testHookUninstall() {
+  function _testHookUninstall() {
     /* Assert content type exists. */
     $this->assertTrue(node_type_get_type('profile'));
     /* Assert custom field exists (assume the rest are there). */
@@ -86,7 +89,7 @@ class UGProfileTestCase extends DrupalWebTestCase {
   /**
    * Test URL aliases
    */
-  function testUrlAlias() {
+  function _testUrlAlias() {
     /* Generate data */
     $name = $this->randomName();
     $lastname = $this->randomName();
@@ -102,5 +105,36 @@ class UGProfileTestCase extends DrupalWebTestCase {
     $this->assertUrl($expected_path);
   }
 
+  /**
+   * Test office label in teaser 
+   */
+  function testOfficeLabel() {
+    // Generate data
+    $name = $this->randomName();
+    $lastname = $this->randomName();
+    $office = $this->randomName();
+    
+    // Create node
+    $settings = array('type' => 'profile');
+    $settings['field_profile_name'][LANGUAGE_NONE][0]['value'] = $name;
+    $settings['field_profile_lastname'][LANGUAGE_NONE][0]['value'] = $lastname;
+    $node = $this->drupalCreateNode($settings);
+    
+    // Get listing page
+    $this->drupalGet('people/');
+    
+    // Test office not present
+    $this->assertNoText("Office:");
+    
+    // Add node
+    $settings['field_profile_office'][LANGUAGE_NONE][0]['value'] = $office;
+    $node2 = $this->drupalCreateNode($settings);
+    
+    // Get listing page
+    $this->drupalGet('people/');
+    
+    // Test office present
+    $this->assertText("Office:");
+  }
 }
 
