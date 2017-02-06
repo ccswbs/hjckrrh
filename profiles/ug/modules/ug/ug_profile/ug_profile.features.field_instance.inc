@@ -11,6 +11,78 @@ function ug_profile_field_default_field_instances() {
   $field_instances = array();
 
   // Exported field_instance:
+  // 'field_collection_item-field_profile_custom-field_profile_custom_content'.
+  $field_instances['field_collection_item-field_profile_custom-field_profile_custom_content'] = array(
+    'bundle' => 'field_profile_custom',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 1,
+      ),
+    ),
+    'entity_type' => 'field_collection_item',
+    'field_name' => 'field_profile_custom_content',
+    'label' => 'Content',
+    'required' => 1,
+    'settings' => array(
+      'linkit' => array(
+        'button_text' => 'Search',
+        'enable' => 0,
+        'profile' => '',
+      ),
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 2,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'field_collection_item-field_profile_custom-field_profile_custom_label'.
+  $field_instances['field_collection_item-field_profile_custom-field_profile_custom_label'] = array(
+    'bundle' => 'field_profile_custom',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'taxonomy',
+        'settings' => array(),
+        'type' => 'taxonomy_term_reference_plain',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'field_collection_item',
+    'field_name' => 'field_profile_custom_label',
+    'label' => 'Label',
+    'required' => 1,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 1,
+    ),
+  );
+
+  // Exported field_instance:
   // 'field_collection_item-field_profile_multipart-field_profile_content'.
   $field_instances['field_collection_item-field_profile_multipart-field_profile_content'] = array(
     'bundle' => 'field_profile_multipart',
@@ -240,6 +312,49 @@ function ug_profile_field_default_field_instances() {
       'settings' => array(),
       'type' => 'options_select',
       'weight' => 7,
+    ),
+  );
+
+  // Exported field_instance: 'node-profile-field_profile_custom'.
+  $field_instances['node-profile-field_profile_custom'] = array(
+    'bundle' => 'profile',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'field_collection',
+        'settings' => array(
+          'add' => '',
+          'delete' => '',
+          'description' => 1,
+          'edit' => '',
+          'view_mode' => 'full',
+        ),
+        'type' => 'field_collection_view',
+        'weight' => 30,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_profile_custom',
+    'label' => 'Profile custom',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'field_collection',
+      'settings' => array(),
+      'type' => 'field_collection_embed',
+      'weight' => 21,
     ),
   );
 
@@ -506,7 +621,7 @@ function ug_profile_field_default_field_instances() {
       'module' => 'field_collection',
       'settings' => array(),
       'type' => 'field_collection_embed',
-      'weight' => 21,
+      'weight' => 22,
     ),
   );
 
@@ -983,7 +1098,7 @@ function ug_profile_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'taxonomy_autocomplete',
-      'weight' => 22,
+      'weight' => 23,
     ),
   );
 
@@ -1000,12 +1115,14 @@ function ug_profile_field_default_field_instances() {
   t('Image caption');
   t('Keywords');
   t('Lab');
+  t('Label');
   t('Last name');
   t('Mailing address');
   t('Office');
   t('Phone number');
   t('Position/title');
   t('Preferred name');
+  t('Profile custom');
   t('Profile sections');
   t('Role');
   t('Sub-unit');

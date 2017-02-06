@@ -25,6 +25,14 @@ function ug_profile_taxonomy_default_vocabularies() {
       'module' => 'taxonomy',
       'weight' => 0,
     ),
+    'profile_field_labels' => array(
+      'name' => 'Profile field labels',
+      'machine_name' => 'profile_field_labels',
+      'description' => '',
+      'hierarchy' => 0,
+      'module' => 'taxonomy',
+      'weight' => 0,
+    ),
     'profile_research' => array(
       'name' => 'Area of research',
       'machine_name' => 'profile_research',

@@ -649,3 +649,16 @@ _:-ms-fullscreen, :root .carousel-table a.glyphicon {
 .gap-right {
     padding-right: 1em;
 }
+
+/* Custom fields overrides */
+.field-collection-container .field-items .field-item {
+  margin-bottom:0;
+}
+
+.field-collection-view {
+  padding:0;
+}
+
+.field-collection-view .field-label {
+  width:auto;
+}
