@@ -18,6 +18,11 @@ function ug_wysiwyg_filter_default_formats() {
     'status' => 1,
     'weight' => -10,
     'filters' => array(
+      'ug_tables' => array(
+        'weight' => 0,
+        'status' => 1,
+        'settings' => array(),
+      ),
       'wysiwyg' => array(
         'weight' => 0,
         'status' => 1,
@@ -502,10 +507,13 @@ th[colspan|rowspan|headers|scope|abbr|sorted],',
             694 => 'hidden-print',
             696 => 'gap-left',
             698 => 'gap-right',
-            699 => 'center-block',
+            700 => 'center-block',
           ),
+          'rule_bypass_valid_classes' => 0,
           'rule_valid_ids' => array(),
+          'rule_bypass_valid_ids' => 0,
           'rule_style_urls' => array(),
+          'rule_bypass_style_urls' => 0,
         ),
       ),
       'filter_htmlcorrector' => array(
