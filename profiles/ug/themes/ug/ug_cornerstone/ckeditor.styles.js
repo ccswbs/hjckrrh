@@ -7,6 +7,12 @@ CKEDITOR.on( 'dialogDefinition', function( ev ) {
         dialogDefinition.removeContents( 'target' );
     }
 
+    if ( dialogName == 'creatediv' ) {
+        var infoTab = dialogDefinition.getContents( 'info' );
+        var infoCssClass = infoTab.get( 'class' );
+        infoCssClass[ 'default' ] = 'table-responsive';
+    }
+
     if ( dialogName == 'table' || dialogName == 'tableProperties' ) {
         var infoTab = dialogDefinition.getContents( 'info' );
         infoTab.remove( 'txtWidth' );
@@ -16,7 +22,7 @@ CKEDITOR.on( 'dialogDefinition', function( ev ) {
         infoTab.remove( 'txtBorder' );
         var advTab = dialogDefinition.getContents( 'advanced' );
         var advCssClasses = advTab.get( 'advCSSClasses' );
-        advCssClasses[ 'default' ] = 'table table-responsive';
+        advCssClasses[ 'default' ] = 'table';
     }
 
     if ( dialogName == 'image' ) {

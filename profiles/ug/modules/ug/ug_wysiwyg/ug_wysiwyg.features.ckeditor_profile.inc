@@ -25,7 +25,7 @@ function ug_wysiwyg_ckeditor_profile_defaults() {
     [\'JustifyLeft\',\'JustifyCenter\',\'JustifyRight\',\'JustifyBlock\'],
     [\'Link\',\'Unlink\',\'Anchor\'],
     \'/\',
-    [\'Format\'],[\'Styles\'],
+    [\'Format\'],[\'Styles\'],[\'CreateDiv\'],
     [\'Maximize\',\'ShowBlocks\']
 ]',
         'expand' => 't',
@@ -66,7 +66,7 @@ function ug_wysiwyg_ckeditor_profile_defaults() {
         'html_entities' => 'f',
         'scayt_autoStartup' => 'f',
         'theme_config_js' => 't',
-        'js_conf' => '',
+        'js_conf' => 'config.div_wrapTable = true;',
         'loadPlugins' => array(
           'ckeditor_link' => array(
             'name' => 'drupal_path',
