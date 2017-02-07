@@ -314,11 +314,18 @@ function ug_theme_preprocess_views_view_fields__s4(&$vars) {
  * S5 - Feed aggregator block
  */
 function ug_theme_preprocess_views_view_fields__s5_attachment(&$vars) {
+
   $vars['title']  = $vars['fields']['title_1']->content;
   $vars['date']   = $vars['fields']['timestamp']->content;
+
 }
 
-
+/**
+ * S5b - Feed aggregator category block
+ */
+function ug_theme_preprocess_views_view_fields__s5b_attachment(&$vars) {
+ ug_theme_preprocess_views_view_fields__s5_attachment($vars);
+}
 
 /**
  * S6 - Social media directory
@@ -1044,3 +1051,15 @@ function ug_theme_feed_icon($variables) {
   return l($image, $variables['url'], array('html' => TRUE, 'attributes' => array('class' => array('feed-icon', 'btn', 'btn-default'), 'title' => $text)));
 }
 
+/**
+* 
+*/
+function ug_theme_form_alter(array &$form, array &$form_state = array(), $form_id = NULL) {
+  bootstrap_form_alter($form, $form_state, $form_id);
+  if($form_id == 'search_form') {
+    unset($form['basic']['submit']);
+  } else if ($form_id == 'search_block_form') {
+    $classes = &$form['actions']['submit']['#attributes']['class'];
+    $form['actions']['#attributes']['class'][] = 'element-hidden';
+  }
+}

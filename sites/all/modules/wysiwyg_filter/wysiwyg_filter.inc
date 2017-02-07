@@ -496,9 +496,12 @@ function wysiwyg_filter_get_filter_options($format_name, $settings) {
     'nofollow_domains' => $settings['nofollow_domains'],
   );
   foreach (wysiwyg_filter_get_advanced_rules() as $rule_key => $rule_info) {
-    $filter_options[$rule_key] = array();
-    foreach ($settings["rule_$rule_key"] as $rule) {
-      $filter_options[$rule_key][] = '`^' . str_replace("\xFF", $rule_info['asterisk_expansion'], preg_quote(str_replace('*', "\xFF", $rule), '`')) . '$`';
+    $filter_options["rule_bypass_$rule_key"] = !empty($settings["rule_bypass_$rule_key"]);
+    if (!$filter_options["rule_bypass_$rule_key"]) {
+      $filter_options[$rule_key] = array();
+      foreach ($settings["rule_$rule_key"] as $rule) {
+        $filter_options[$rule_key][] = '`^' . str_replace("\xFF", $rule_info['asterisk_expansion'], preg_quote(str_replace('*', "\xFF", $rule), '`')) . '$`';
+      }
     }
   }
   return $filter_options;

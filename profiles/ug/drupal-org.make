@@ -32,6 +32,7 @@ projects[ds_bootstrap_layouts][version] = "3.1"
 projects[entity][version] = "1.8"
 
 projects[entityreference][version] = "1.2"
+projects[entityreference][patch][] = "https://www.drupal.org/files/issues/entityreference-use-tokens-2010898-175.patch"
 
 projects[features][version] = "2.10"
 
@@ -64,6 +65,8 @@ projects[link][version] = "1.4"
 projects[linkit][version] = "3.5"
 
 projects[menu_block][version] = "2.7"
+
+projects[metatag][version] = "7.x-1.20"
 
 projects[migrate][version] = "2.8"
 
@@ -112,6 +115,7 @@ projects[views_tree][version] = "2.0"
 projects[webform][version] = "4.14"
 
 projects[wysiwyg_filter][version] = "1.6-rc3"
+projects[wysiwyg_filter][patch][] = "https://www.drupal.org/files/issues/wysiwyg_filter-Bypass-rules-835202-16.D7.patch"
 
 ; Themes
 projects[bootstrap][version] = "3.8"
