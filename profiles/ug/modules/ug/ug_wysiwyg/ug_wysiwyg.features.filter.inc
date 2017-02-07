@@ -545,11 +545,6 @@ th[colspan|rowspan|headers|scope|abbr|sorted],',
     'status' => 1,
     'weight' => -9,
     'filters' => array(
-      'ug_tables' => array(
-        'weight' => 0,
-        'status' => 1,
-        'settings' => array(),
-      ),
       'pathologic' => array(
         'weight' => 50,
         'status' => 1,
@@ -575,11 +570,6 @@ th[colspan|rowspan|headers|scope|abbr|sorted],',
     'weight' => -8,
     'filters' => array(
       'filter_html_escape' => array(
-        'weight' => 0,
-        'status' => 1,
-        'settings' => array(),
-      ),
-      'ug_tables' => array(
         'weight' => 0,
         'status' => 1,
         'settings' => array(),
