@@ -203,6 +203,30 @@ class UGEventTestCase extends TaxonomyWebTestCase {
   }
 
   /**
+
+   * Test E5 - Browse events by date shows as a dropdown
+   */
+  function testBrowseEvents() {
+    /* Create a date in the past */
+    $later = time() - 60 * 60 * 24 * 28 * 2;
+    $datetime_format = "Y-m-d H:i:s";
+    $date = date($datetime_format, $later);
+    $date2 = date($datetime_format, $later - 60 * 60 * 24 * 28 * 8);
+
+    /* Create nodes */
+    for ($i = 0; $i < 100; $i++) {
+      $settings = array('type' => 'event');
+      $settings['field_event_date'][LANGUAGE_NONE][0]['value'] = $date;
+      $settings['field_event_date'][LANGUAGE_NONE][0]['value2'] = $date2;
+      $node = $this->drupalCreateNode($settings);
+    }
+
+    $this->drupalGet('events/');
+    /*$this->assertPattern('|[Ss]elect [Mm]onth|', 'Drop down is on the current page.');*/
+    $this->assertRaw/*('>Go</button>', 'The Events Archive uses a dropdown menu');*/('<select class="ctools-jump-menu-select form-control form-select" id="edit-jump" name="jump">', 'The Events Archive uses a dropdown menu');
+  }
+  
+  /*
    * Test correct header nesting
    */
   function testHeaderNesting() {
