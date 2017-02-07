@@ -66,6 +66,8 @@ projects[linkit][version] = "3.5"
 
 projects[menu_block][version] = "2.7"
 
+projects[metatag][version] = "7.x-1.20"
+
 projects[migrate][version] = "2.8"
 
 projects[migrate_d2d][version] = "2.1"
