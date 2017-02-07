@@ -213,13 +213,13 @@ function ug_profile_views_default_views() {
   $handler->display->display_options['allow']['exposed_form'] = 0;
   $handler->display->display_options['allow']['fields_override'] = 'fields_override';
   $handler->display->display_options['argument_input'] = array(
-    'field_profile_category_tid' => array(
-      'type' => 'user',
-      'context' => 'entity:file.fid',
+    'tid' => array(
+      'type' => 'panel',
+      'context' => 'entity:field_collection_item.archived',
       'context_optional' => 0,
       'panel' => '0',
       'fixed' => '',
-      'label' => 'Category',
+      'label' => 'Content: Has taxonomy term ID',
     ),
   );
   $handler->display->display_options['inherit_panels_path'] = '1';
