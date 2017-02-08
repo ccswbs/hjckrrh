@@ -1,0 +1,230 @@
+<?php
+  class UGWebTestCase extends TaxonomyWebTestCase {
+    protected function randomAlphaString($length = 8) {
+      $chars = array_merge(range('a', 'z'), range('A', 'Z'));
+      $str = '';
+      for($i = 0; $i < $length; $i++) {
+        $str .= $chars[mt_rand(0, count($chars) - 1)];
+      }
+      return $str;
+    }
+  }
+
+  class UGMetaTagTestCase extends TaxonomyWebTestCase {
+  
+    protected $no_results_text = 'No results found.';
+    protected $more_text = 'More events';
+    
+    protected $user;
+  
+    public static function getInfo() {
+      return array(
+        'name' => 'UG MetaTag',
+        'description' => 'Test for the presence of Twitter card meta tags.',
+        'group' => 'UG',
+      );
+    }
+  
+    function setUp() {
+      $this->profile = 'ug';
+      parent::setup('metatag', 'metatag_twitter_cards');
+      
+      $ldap_conf = variable_get('ldap_authentication_conf');
+      $ldap_conf['authenticationMode'] = 1;
+      variable_set('ldap_authentication_conf', $ldap_conf);
+      $this->user = $this->drupalCreateUser(array(
+        'administer taxonomy',
+        'administer menu',
+        'administer nodes',
+      ));
+      $this->drupalLogin($this->user);
+    }
+    
+    function testCourseTags() {
+      // Generate data
+      $title = $this->randomName();
+      $code = $this->randomName();
+      $content = $this->randomName();
+      
+      // Create node
+      $settings = array('type' => 'course_outline', 'title' => $title);
+      $settings['field_course_name'][LANGUAGE_NONE][0]['value'] = $title;
+      $settings['field_course_code'][LANGUAGE_NONE][0]['value'] = $code;
+      $settings['field_course_body'][LANGUAGE_NONE][0]['value'] = $content;
+      $node = $this->drupalCreateNode($settings);
+      
+      // Get node by ID
+      $this->drupalGet('node/'.$node->nid);
+      
+      // Check for meta tags applicable to this content type
+      $card = $this->assertRaw('<meta name="twitter:card"');
+      $url = $this->assertRaw('<meta name="twitter:url"');
+      $title = $this->assertRaw('<meta name="twitter:title" content="'.$title.' ('.$code.')"');
+      $desc = $this->assertRaw('<meta name="twitter:description" content="'.$content.'"');
+      
+      // If all tags are present, print summary message
+      if($card && $url && $title && $desc) {
+        $this->pass("All tags for Course content type present.");
+      }
+    }
+    
+    function testEvent() {
+      // Generate test Event
+      $edit = array(
+        'node_types[event]' => 1,
+        'kill_content' => 1,
+        'num_nodes' => 2,
+        'time_range' => 604800,
+        'title_length' => 4,
+      );
+      $this->drupalPost('admin/config/development/generate/content', $edit, t('Generate'));
+      
+      // Get node by ID
+      $this->drupalGet('node/1');
+      
+      // Check for meta tags applicable to this content type
+      $card = $this->assertRaw('<meta name="twitter:card"');
+      $url = $this->assertRaw('<meta name="twitter:url"');
+      $title = $this->assertRaw('<meta name="twitter:title"');
+      $desc = $this->assertRaw('<meta name="twitter:description"');
+      $image = $this->assertRaw('<meta name="twitter:image"');
+      
+      // If all tags are present, print summary message
+      if($card && $url && $title && $desc && $image) {
+        $this->pass("All tags for Event content type present.");
+      }
+    }
+    
+    function testFeature() {
+      // Generate test Feature
+      $edit = array(
+        'node_types[feature]' => 1,
+        'kill_content' => 1,
+        'num_nodes' => 2,
+        'time_range' => 604800,
+        'title_length' => 4
+      );
+      $this->drupalPost('admin/config/development/generate/content', $edit, t('Generate'));
+      
+      // Get node by ID
+      $this->drupalGet('node/1');
+      
+      // Check for meta tags applicable to this content type
+      $card = $this->assertRaw('<meta name="twitter:card"');
+      $url = $this->assertRaw('<meta name="twitter:url"');
+      $title = $this->assertRaw('<meta name="twitter:title"');
+      $desc = $this->assertRaw('<meta name="twitter:description"');
+      $image = $this->assertRaw('<meta name="twitter:image"');
+      
+      // If all tags are present, print summary message
+      if($card && $url && $title && $desc && $image) {
+        $this->pass("All tags for Feature content type present.");
+      }
+    }
+    
+    function testNewsTags() {
+      // Generate test News
+      $edit = array(
+        'node_types[news]' => 1,
+        'kill_content' => 1,
+        'num_nodes' => 2,
+        'time_range' => 604800,
+        'title_length' => 4,
+      );
+      $this->drupalPost('admin/config/development/generate/content', $edit, t('Generate'));
+      
+      // Get node by ID
+      $this->drupalGet('node/1');
+      
+      // Check for meta tags applicable to this content type
+      $card = $this->assertRaw('<meta name="twitter:card"');
+      $url = $this->assertRaw('<meta name="twitter:url"');
+      $title = $this->assertRaw('<meta name="twitter:title"');
+      $desc = $this->assertRaw('<meta name="twitter:description"');
+      $image = $this->assertRaw('<meta name="twitter:image"');
+      
+      // If all tags are present, print summary message
+      if($card && $url && $title && $desc && $image) {
+        $this->pass("All tags for News content type present.");
+      }
+    }
+    
+    function testPageTags() {
+      // Generate test Page
+      $edit = array(
+        'node_types[page]' => 1,
+        'kill_content' => 1,
+        'num_nodes' => 2,
+        'time_range' => 604800,
+        'title_length' => 4,
+      );
+      $this->drupalPost('admin/config/development/generate/content', $edit, t('Generate'));
+      
+      // Get node by ID
+      $this->drupalGet('node/1');
+      
+      // Check for meta tags applicable to this content type
+      $card = $this->assertRaw('<meta name="twitter:card"');
+      $url = $this->assertRaw('<meta name="twitter:url"');
+      $title = $this->assertRaw('<meta name="twitter:title"');
+      $desc = $this->assertRaw('<meta name="twitter:description"');
+      
+      // If all tags are present, print summary message
+      if($card && $url && $title && $desc) {
+        $this->pass("All tags for Page content type present.");
+      }
+    }
+    
+    function testProfileTags() {
+      // Generate test profile
+      $edit = array(
+        'node_types[profile]' => 1,
+        'kill_content' => 1,
+        'num_nodes' => 2,
+        'time_range' => 604800,
+        'title_length' => 4,
+      );
+      $this->drupalPost('admin/config/development/generate/content', $edit, t('Generate'));
+      
+      // Get node by ID
+      $this->drupalGet('node/1');
+      
+      // Check for meta tags applicable to this content type
+      $card = $this->assertRaw('<meta name="twitter:card"');
+      $url = $this->assertRaw('<meta name="twitter:url"');
+      $title = $this->assertRaw('<meta name="twitter:title"');
+      $desc = $this->assertRaw('<meta name="twitter:description"');
+      $image = $this->assertRaw('<meta name="twitter:image"');
+      
+      // If all tags are present, print summary message
+      if($card && $url && $title && $desc && $image) {
+        $this->pass("All tags for Profile content type present.");
+      }
+    }
+    
+    function testServiceTags() {
+      // Generate test Service
+      $edit = array(
+        'node_types[service]' => 1,
+        'kill_content' => 1,
+        'num_nodes' => 2,
+        'time_range' => 604800,
+        'title_length' => 4,
+      );
+      $this->drupalPost('admin/config/development/generate/content', $edit, t('Generate'));
+      
+      // Get node by ID
+      $this->drupalGet('node/1');
+      
+      // Check for meta tags applicable to this content type
+      $card = $this->assertRaw('<meta name="twitter:card"');
+      $url = $this->assertRaw('<meta name="twitter:url"');
+      $title = $this->assertRaw('<meta name="twitter:title"');
+      $desc = $this->assertRaw('<meta name="twitter:description"');
+      
+      // If all tags are present, print summary message
+      if($card && $url && $title && $desc) {
+        $this->pass("All tags for Service content type present.");
+      }
+    }
+  }

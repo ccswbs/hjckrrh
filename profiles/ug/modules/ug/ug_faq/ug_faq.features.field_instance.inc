@@ -10,7 +10,7 @@
 function ug_faq_field_default_field_instances() {
   $field_instances = array();
 
-  // Exported field_instance: 'node-faq-field_faq_answer'
+  // Exported field_instance: 'node-faq-field_faq_answer'.
   $field_instances['node-faq-field_faq_answer'] = array(
     'bundle' => 'faq',
     'default_value' => NULL,
@@ -18,7 +18,7 @@ function ug_faq_field_default_field_instances() {
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'hidden',
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
@@ -55,7 +55,7 @@ function ug_faq_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-faq-field_faq_category'
+  // Exported field_instance: 'node-faq-field_faq_category'.
   $field_instances['node-faq-field_faq_category'] = array(
     'bundle' => 'faq',
     'default_value' => NULL,
@@ -64,9 +64,8 @@ function ug_faq_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'taxonomy',
         'settings' => array(),
-        'type' => 'taxonomy_term_reference_link',
+        'type' => 'hidden',
         'weight' => 1,
       ),
       'teaser' => array(
@@ -92,7 +91,7 @@ function ug_faq_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-faq-field_tags'
+  // Exported field_instance: 'node-faq-field_tags'.
   $field_instances['node-faq-field_tags'] = array(
     'bundle' => 'faq',
     'default_value' => NULL,
@@ -101,9 +100,8 @@ function ug_faq_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'taxonomy',
         'settings' => array(),
-        'type' => 'taxonomy_term_reference_link',
+        'type' => 'hidden',
         'weight' => 2,
       ),
       'teaser' => array(

@@ -1,3 +1,15 @@
+Hjckrrh 7.13.0, 2017-01-05
+--------------------------
+- New: Allow use of tokens in entityreference filters
+- New: Display multiple (combined) feeds in a single feed category (#573)
+- New: Bypass element id validation (ug_wysiwyg)
+- New: Method for aligning elements without style attribute (#567)
+- Fix: Re-apply missing menu migration patch
+- New: Add and enable r4032login module [ug_role]
+- Update: Convert bind method to small int [ug_user]
+- Update: Enable LDAP Authorization - Drupal Roles [ug_user]
+- New: Build distribution packages in the style of drupal.org
+
 Hjckrrh 7.12.0, 2016-11-22
 --------------------------
 - New: Add UpdateBook class [fix #564](UG Migrate D7)
