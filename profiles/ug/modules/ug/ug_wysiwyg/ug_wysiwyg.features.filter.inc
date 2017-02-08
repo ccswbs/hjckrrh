@@ -18,6 +18,11 @@ function ug_wysiwyg_filter_default_formats() {
     'status' => 1,
     'weight' => -10,
     'filters' => array(
+      'ug_tables' => array(
+        'weight' => 0,
+        'status' => 1,
+        'settings' => array(),
+      ),
       'wysiwyg' => array(
         'weight' => 0,
         'status' => 1,

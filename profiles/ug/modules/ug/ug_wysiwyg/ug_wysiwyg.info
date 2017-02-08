@@ -12,6 +12,7 @@ dependencies[] = filter
 dependencies[] = imce
 dependencies[] = pathologic
 dependencies[] = strongarm
+dependencies[] = ug_filter
 dependencies[] = wysiwyg_filter
 features[ckeditor_profile][] = Advanced
 features[ckeditor_profile][] = CKEditor Global Profile
