@@ -136,7 +136,7 @@ class UGWysiwygTestCase extends DrupalWebTestCase {
         'hreflang' => TRUE,
         'type' => TRUE,
         'id' => TRUE,
-      ) + $allowed_global_attributes,
+      ) + $this->allow_id($allowed_global_attributes),
       "<em $global_attributes />" => array('em' => TRUE) + $allowed_global_attributes,
       "<strong $global_attributes />" => array('strong' => TRUE) + $allowed_global_attributes,
       "<small $global_attributes />" => array('small' => TRUE) + $allowed_global_attributes,
@@ -790,6 +790,14 @@ class UGWysiwygTestCase extends DrupalWebTestCase {
       '<div class="hidden-print" />' => array('hidden-print' => TRUE),
     );
     $this->assertFilteredString($filter, $tests);
+  }
+
+  /*
+   * Modify global array to allow ID in certain circumstances
+   */
+  function allow_id($global_attributes) {
+    $global_attributes['id='] = TRUE;
+    return $global_attributes;
   }
 
   /** Copied from filter.test */
