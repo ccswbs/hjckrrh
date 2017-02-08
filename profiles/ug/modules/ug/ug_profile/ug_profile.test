@@ -29,7 +29,7 @@ class UGProfileTestCase extends DrupalWebTestCase {
   /**
    * Test PP1 - Listing page for multiple profiles
    */
-  function _testListingPage() {
+  function testListingPage() {
     $node = array();
     $node['type'] = 'profile';
     $node['field_profile_name'][LANGUAGE_NONE][0]['value'] = $this->randomName(8);
@@ -47,7 +47,7 @@ class UGProfileTestCase extends DrupalWebTestCase {
   /**
    * Test node title
    */
-  function _testNodeTitle() {
+  function testNodeTitle() {
     $name = $this->randomName(8);
     $last = "O'".$this->randomName(8); // Last name with apostrophe.
     $title = $name . " " . $last;
@@ -63,7 +63,7 @@ class UGProfileTestCase extends DrupalWebTestCase {
   /**
    * Test grid view.
    */
-  function _testGridView() {
+  function testGridView() {
     $this->drupalGet('people/faces');
     $node_list = $this->xpath('span > figure');
     $this->assertTrue(empty($node_list));
@@ -72,7 +72,7 @@ class UGProfileTestCase extends DrupalWebTestCase {
   /**
    * Test uninstall hook behaviour.
    */
-  function _testHookUninstall() {
+  function testHookUninstall() {
     /* Assert content type exists. */
     $this->assertTrue(node_type_get_type('profile'));
     /* Assert custom field exists (assume the rest are there). */
@@ -89,7 +89,7 @@ class UGProfileTestCase extends DrupalWebTestCase {
   /**
    * Test URL aliases
    */
-  function _testUrlAlias() {
+  function testUrlAlias() {
     /* Generate data */
     $name = $this->randomName();
     $lastname = $this->randomName();
