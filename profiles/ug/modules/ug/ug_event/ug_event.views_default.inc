@@ -619,10 +619,11 @@ return false;';
   $handler->display->display_options['arguments']['field_event_date_value']['default_argument_type'] = 'date';
   $handler->display->display_options['arguments']['field_event_date_value']['summary']['sort_order'] = 'desc';
   $handler->display->display_options['arguments']['field_event_date_value']['summary']['number_of_records'] = '0';
-  $handler->display->display_options['arguments']['field_event_date_value']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_event_date_value']['summary']['format'] = 'jump_menu_summary';
   $handler->display->display_options['arguments']['field_event_date_value']['summary_options']['base_path'] = 'events/archive';
-  $handler->display->display_options['arguments']['field_event_date_value']['summary_options']['count'] = FALSE;
-  $handler->display->display_options['arguments']['field_event_date_value']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['field_event_date_value']['summary_options']['label'] = 'Archives';
+  $handler->display->display_options['arguments']['field_event_date_value']['summary_options']['choose'] = 'Select month';
+  $handler->display->display_options['arguments']['field_event_date_value']['granularity_reset'] = 0;
   $handler->display->display_options['arguments']['field_event_date_value']['title_format'] = 'custom';
   $handler->display->display_options['arguments']['field_event_date_value']['title_format_custom'] = 'F Y';
   /* Filter criterion: Content: Published */

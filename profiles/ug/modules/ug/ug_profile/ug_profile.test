@@ -276,5 +276,26 @@ class UGProfileTestCase extends TaxonomyWebTestCase {
       }
     }
   }
+
+  /*
+   * Test tag settings
+   */
+  function testTagSettings() {
+    // Generate terms
+    $vocab = taxonomy_vocabulary_machine_name_load('profile_category');
+    $term = $this->createTerm($vocab);
+
+    // Create a profile
+    $name = $this->randomName();
+    $lastname = $this->randomName();
+    $settings = array('type' => 'profile');
+    $settings['field_profile_name'][LANGUAGE_NONE][0]['value'] = $name;
+    $settings['field_profile_lastname'][LANGUAGE_NONE][0]['value'] = $lastname;
+    $settings['field_profile_category'][LANGUAGE_NONE][0]['tid'] = $term->tid;
+    $node = $this->drupalCreateNode($settings);
+
+    $this->drupalGet('people/'.$term->tid);
+    $this->assertText($name);
+  }
 }
 

@@ -16,7 +16,7 @@ CKEDITOR.on( 'dialogDefinition', function( ev ) {
         infoTab.remove( 'txtBorder' );
         var advTab = dialogDefinition.getContents( 'advanced' );
         var advCssClasses = advTab.get( 'advCSSClasses' );
-        advCssClasses[ 'default' ] = 'table table-responsive';
+        advCssClasses[ 'default' ] = 'table';
     }
 
     if ( dialogName == 'image' ) {
