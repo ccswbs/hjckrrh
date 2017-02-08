@@ -21,6 +21,9 @@ class UGProfileTestCase extends TaxonomyWebTestCase {
   function setUp() {
     $this->profile = 'ug';
     parent::setUp('ug_profile', 'ug_profile_layouts');
+    theme_enable(array('ug_cornerstone'));
+    theme_disable(array('bartik'));
+    variable_set('theme_default', 'ug_cornerstone');
   }
 
   /**
@@ -103,6 +106,178 @@ class UGProfileTestCase extends TaxonomyWebTestCase {
   }
 
   /**
+   * Test Last Name Search
+   */
+  function testLastNameSearch() {
+    // Fetch terms
+    $vocab = taxonomy_vocabulary_machine_name_load('profile_role');
+    $terms = taxonomy_term_load_multiple(array(), array("vid" => $vocab->vid));
+    
+    // Extract Term IDs
+    $tids = array();
+    foreach($terms as $term) {
+      array_push($tids, $term->tid);
+    }
+    
+    // Get data
+    $count = 25;
+    $data = json_decode(@file_get_contents("https://randomuser.me/api/?inc=name&results=$count&nat=gb"), true);
+    if($data == NULL) {
+      $data = array("results" => array());
+      for($i = 0; $i < $count; $i++) {
+        $data["results"][] = array("name" => array(
+          "first" => $this->randomName(),
+          "last" => $this->randomName()
+        ));
+      }
+    }
+    
+    // Create nodes
+    $settings = array('type' => 'profile');
+    $nodes = array();
+    $processed = 0; // Used to track first and second profiles to force duplicate
+    foreach($data['results'] as $profile) {
+      // Choose random role
+      $tid = $tids[rand(0, count($tids) - 1)];
+      
+      // Default to random last name
+      $lastname = ucfirst($profile['name']['last']);
+      // Force at least one duplicate last name for testing purposes
+      if($processed == 0 || $processed == 1) {
+        $lastname = "Smith";
+      }
+      
+      // Create node
+      $settings['field_profile_name'][LANGUAGE_NONE][0]['value'] = ucfirst($profile['name']['first']);
+      $settings['field_profile_lastname'][LANGUAGE_NONE][0]['value'] = $lastname;
+      $settings['field_profile_role'][LANGUAGE_NONE][0]['tid'] = $tid;
+      
+      // Store node object and associted information
+      array_push($nodes,
+        array(
+          'node' => $this->drupalCreateNode($settings),
+          'tid' => $tid,
+          'firstname' => ucfirst($profile['name']['first']),
+          'lastname' => $lastname
+        )
+      );
+      
+      // Increment tracking number
+      $processed++;
+    }
+    
+    // Filter by just last name
+    foreach($nodes as $node) {
+      // Store last name (because $node reference is reused)
+      $lastname = $node['lastname'];
+      
+      // Set GET parameters and navigate to search page
+      $options = array('query' => array('field_profile_role_tid' => 'All', 'field_profile_lastname_value' => $lastname, 'undefined' => 'Apply'));
+      $this->drupalGet('people/', $options);
+      
+      // Check each profile
+      foreach($nodes as $node) {
+        $name = $node['firstname'].' '.$node['lastname'];
+        if($node['lastname'] == $lastname) {
+          $this->assertText($name, $name.' found with search term \''.$lastname.'\'.', 'Filter by Last Name');
+        } else {
+          $this->assertNoText($name, $name.' not found with search term \''.$lastname.'\'.', 'Filter by Last Name');
+        }
+      }
+    }
+    
+    // Filter by just partial last name
+    foreach($nodes as $node) {
+      // Store last name
+      $lastname = $node['lastname'];
+      
+      // Select random fragment from beginning of last name
+      $search = substr($lastname, 0, rand(2, strlen($lastname) - 2));
+      
+      // Set GET parameters and navigate to search page
+      $options = array('query' => array('field_profile_role_tid' => 'All', 'field_profile_lastname_value' => $search, 'undefined' => 'Apply'));
+      $this->drupalGet('people/', $options);
+      
+      // Check each profile
+      foreach($nodes as $node) {
+        $name = $node['firstname'].' '.$node['lastname'];
+        
+        // If lastname begins with search term
+        if(strpos(strtolower($node['lastname']), strtolower($search)) === 0) {
+          $this->assertText($name, $name.' found with search term \''.$search.'\'.', 'Filter by Partial Last Name');
+        } else {
+          $this->assertNoText($name, $name.' not found with search term \''.$search.'\'.', 'Filter by Partial Last Name');
+        }
+      }
+    }
+    
+    // Filter by just role
+    for($i = 0; $i < count($tids); $i++) {
+      // Set GET parameters and navigate to search page
+      $options = array('query' => array('field_profile_role_tid' => $tids[$i], 'field_profile_lastname_value' => '', 'undefined' => 'Apply'));
+      $this->drupalGet('people/', $options);
+      
+      // Check each profile
+      foreach($nodes as $node) {
+        $name = $node['firstname'].' '.$node['lastname'];
+        
+        // If profile has the current term ID
+        if($node['tid'] == $tids[$i]) {
+          $this->assertText($name, $name.' found.', 'Filter by Role');
+        } else {
+          $this->assertNoText($name, $name.' not found.', 'Filter by Role');
+        }
+      }
+    }
+    
+    // Filter by both last name and role
+    // NOTE: Too many operations to loop through every combination of term and last name - select random sample instead
+    $samples = 10;
+    for($i = 0; $i < $samples; $i++) {
+      // Select random node and get last name
+      $node = $nodes[rand(0, count($nodes) - 1)];
+      $lastname = $node['lastname'];
+      $search = substr($lastname, 0, rand(2, strlen($lastname) - 2));
+      // Select random term
+      $tid = $tids[rand(0, count($tids) - 1)];
+      
+      // Set GET parameters and navigate to search page
+      $options = array('query' => array('field_profile_role_tid' => $tid, 'field_profile_lastname_value' => $search, 'undefined' => 'Apply'));
+      $this->drupalGet('people/', $options);
+      
+      // Check every profile
+      foreach($nodes as $node) {
+        $name = $node['firstname'].' '.$node['lastname'];
+        if(strpos($node['lastname'], $search) === 0 && $node['tid'] == $tid) {
+          $this->assertText($name, $name.' found.', 'Filter by Last Name and Role');
+        } else {
+          $this->assertNoText($name, $name.' not found.', 'Filter by Last Name and Role');
+        }
+      }
+    }
+    
+    // Filter by single letter
+    $alphabet = array('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
+    foreach($alphabet as $letter) {
+      // Set GET parameters and navigate to search page
+      $options = array('query' => array('field_profile_role_tid' => 'All', 'field_profile_lastname_value' => $letter, 'undefined' => 'Apply'));
+      $this->drupalGet('people/', $options);
+      
+      // Check each profile
+      foreach($nodes as $node) {
+        $name = $node['firstname'].' '.$node['lastname'];
+        
+        // If lastname begins with the current letter
+        if(strpos(strtolower($node['lastname']), strtolower($letter)) === 0) {
+          $this->assertText($name, $name.' found with search term \''.$letter.'\'.', 'Filter by Single Letter');
+        } else {
+          $this->assertNoText($name, $name.' not found with search term \''.$letter.'\'.', 'Filter by Single Letter');
+        }
+      }
+    }
+  }
+
+  /*
    * Test tag settings
    */
   function testTagSettings() {
