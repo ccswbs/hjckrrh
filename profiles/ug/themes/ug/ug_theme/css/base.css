@@ -654,3 +654,8 @@ _:-ms-fullscreen, :root .carousel-table a.glyphicon {
 .ctools-modal-dialog .modal-body {
   overflow:auto;
 }
+
+/* Fix CTools admin description control */
+.ctools-modal-dialog .modal-body #edit-admin-description-wrapper {
+  height:auto;
+}
