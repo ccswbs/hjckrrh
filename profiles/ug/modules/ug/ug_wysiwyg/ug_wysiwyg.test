@@ -127,7 +127,7 @@ class UGWysiwygTestCase extends DrupalWebTestCase {
       "<main $global_attributes />" => array('main' => FALSE),
 
       /* Text-level semantics */
-      "<a $global_attributes href target download rel hreflang type />" => array(
+      "<a $global_attributes href target download rel hreflang type id />" => array(
         'a' => TRUE,
         'href' => TRUE,
         'target' => TRUE,
@@ -135,7 +135,8 @@ class UGWysiwygTestCase extends DrupalWebTestCase {
         'rel' => TRUE,
         'hreflang' => TRUE,
         'type' => TRUE,
-      ) + $allowed_global_attributes,
+        'id' => TRUE,
+      ) + $this->allow_id($allowed_global_attributes),
       "<em $global_attributes />" => array('em' => TRUE) + $allowed_global_attributes,
       "<strong $global_attributes />" => array('strong' => TRUE) + $allowed_global_attributes,
       "<small $global_attributes />" => array('small' => TRUE) + $allowed_global_attributes,
@@ -436,7 +437,7 @@ class UGWysiwygTestCase extends DrupalWebTestCase {
       '<pre width />' => array('width' => FALSE),
       '<img border />' => array('border' => FALSE),
       '<script language />' => array('language' => FALSE),
-      '<a name />' => array('name' => FALSE),
+      '<a name />' => array('name' => TRUE),
 
       /* Bootstrap 3.0.2 classes */
       '<div class="navbar" />' => array('navbar' => TRUE),
@@ -789,6 +790,14 @@ class UGWysiwygTestCase extends DrupalWebTestCase {
       '<div class="hidden-print" />' => array('hidden-print' => TRUE),
     );
     $this->assertFilteredString($filter, $tests);
+  }
+
+  /*
+   * Modify global array to allow ID in certain circumstances
+   */
+  function allow_id($global_attributes) {
+    $global_attributes['id='] = TRUE;
+    return $global_attributes;
   }
 
   /** Copied from filter.test */

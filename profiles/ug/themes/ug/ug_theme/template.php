@@ -165,6 +165,13 @@ function ug_theme_preprocess_views_view_fields__event_week_list(&$vars) {
   $vars['body']     = $vars['fields']['field_event_body']->content;
 }
 
+/**
+ * Event section headers
+ */
+function ug_theme_field__field_event_heading($vars) {
+  return '<h3>'.drupal_render($vars['items'][0]).'</h3>';
+}
+
 
 
 /**
@@ -266,7 +273,7 @@ function ug_theme_field__field_profile_custom_label($variables) {
 }
 
 function ug_theme_field__field_profile_custom_content($variables) {
-  return '<div class="field-items"><div class="field-item">'.$variables['items'][0]['#markup'].':&nbsp;</div></div>';
+  return '<div class="field-items"><div class="field-item">'.$variables['items'][0]['#markup'].'</div></div>';
 }
 
 /**
@@ -293,6 +300,7 @@ function ug_theme_preprocess_views_view_fields__s1(&$vars) {
   global $base_url;
   $vars['title']  = $vars['fields']['title']->content;
   $vars['link']   = $vars['fields']['path']->content;
+  $vars['nid']    = $vars['fields']['nid']->content;
 }
 
 
@@ -468,6 +476,20 @@ function ug_theme_preprocess_views_view_fields__sr8(&$vars) {
   $vars['icon'] = theme('icon', array('icon' => $vars['fields']['field_service_icon']->content));
   $vars['name'] = $vars['fields']['name']->content;
   $vars['description'] = $vars['fields']['description']->content;
+}
+
+/**
+ * Service detail headers
+ */
+function ug_theme_field__field_service_public_heading($variables) {
+  return '<h3>'.drupal_render($variables['items'][0]).'</h3>';
+}
+
+/**
+ * Internal notes
+ */
+function ug_theme_field__field_service_private_heading($variables) {
+  return '<h3>'.drupal_render($variables['items'][0]).'</h3>';
 }
 
  
@@ -1062,3 +1084,15 @@ function ug_theme_feed_icon($variables) {
   return l($image, $variables['url'], array('html' => TRUE, 'attributes' => array('class' => array('feed-icon', 'btn', 'btn-default'), 'title' => $text)));
 }
 
+/**
+* 
+*/
+function ug_theme_form_alter(array &$form, array &$form_state = array(), $form_id = NULL) {
+  bootstrap_form_alter($form, $form_state, $form_id);
+  if($form_id == 'search_form') {
+    unset($form['basic']['submit']);
+  } else if ($form_id == 'search_block_form') {
+    $classes = &$form['actions']['submit']['#attributes']['class'];
+    $form['actions']['#attributes']['class'][] = 'element-hidden';
+  }
+}

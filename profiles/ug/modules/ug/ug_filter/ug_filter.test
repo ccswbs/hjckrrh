@@ -1,0 +1,133 @@
+<?php
+class UGFilterTestCase extends TaxonomyWebTestCase {
+  public static function getInfo() {
+    return array(
+      'name' => 'UG Filter',
+      'description' => 'Test the UG filter feature.',
+      'group' => 'UG',
+    );
+  }
+
+  function setUp() {
+    $this->profile = 'ug';
+    parent::setup();
+    theme_enable(array('ug_cornerstone'));
+    theme_disable(array('bartik'));
+    variable_set('theme_default', 'ug_cornerstone');
+  }
+  
+  function testResponsiveTagsAdded() {
+    // Generate data
+    $title = $this->randomName();
+    
+    // Create table with random classes and content
+    
+    // Opening Tag:
+    $table = '<table class="table ';
+    $class_count = rand(0, 6);
+    for($i = 0; $i < $class_count; $i++) {
+      $table .= $this->randomName() + " ";
+    }
+    $table .= '">';
+    
+    // Content:
+    $row_count = rand(2, 6);
+    $col_count = rand(5, 12);
+    for($i = 0; $i < $row_count; $i++) {
+      $table .= '<tr>';
+      for($j = 0; $j < $col_count; $j++) {
+        $table .= '<td>'.$this->randomName().'</td>';
+      }
+      $table .= '</tr>';
+    }
+    
+    // Closing Tag:
+    $table .= "</table>";
+    
+    // Create node
+    $settings = array('title' => $title);
+    $settings['field_page_body'][LANGUAGE_NONE][0]['value'] = $table;
+    $settings['field_page_body'][LANGUAGE_NONE][0]['format'] = 'filtered_html';
+    $node = $this->drupalCreateNode($settings);
+    
+    // Get node
+    $this->drupalGet('node/'.$node->nid);
+    
+    // Assert responsive tags
+    $this->assertRaw('<div class="table-responsive">', 'Filter correctly adds responsive wrapper.');
+  }
+  
+  function testNoDuplicateResponsiveTags() {
+    // Generate data
+    $title = $this->randomName();
+    
+    // Create table with random classes and content
+    
+     // Opening Tag:
+    $table = '<div class="table-responsive"><table class="table ';
+    $class_count = rand(0, 6);
+    for($i = 0; $i < $class_count; $i++) {
+      $table .= $this->randomName() + " ";
+    }
+    $table .= '">';
+    
+    // Content:
+    $row_count = rand(2, 6);
+    $col_count = rand(5, 12);
+    for($i = 0; $i < $row_count; $i++) {
+      $table .= '<tr>';
+      for($j = 0; $j < $col_count; $j++) {
+        $table .= '<td>'.$this->randomName().'</td>';
+      }
+      $table .= '</tr>';
+    }
+    
+    // Closing Tag:
+    $table .= "</table></div>";
+    
+     // Create node
+    $settings = array('title' => $title);
+    $settings['field_page_body'][LANGUAGE_NONE][0]['value'] = $table;
+    $settings['field_page_body'][LANGUAGE_NONE][0]['format'] = 'filtered_html';
+    $node = $this->drupalCreateNode($settings);
+    
+    // Get node
+    $this->drupalGet('node/'.$node->nid);
+    
+    // Assert single responsive tags
+    $this->assertNoRaw('<div class="table-responsive"><div class="table-responsive">', 'Duplicate responsive wrappers removed.');
+  }
+}
+
+class UGFilterUnitTestCase extends DrupalUnitTestCase {
+  public static function getInfo() {
+    return array(
+      'name' => 'UG Filter',
+      'description' => 'Unit test for the filter function added in UG Filter',
+      'group' => 'UG Unit Test'
+    );
+  }
+  
+  public function testTableFilter() {
+    // Single Table Test
+    
+    // Generate random table
+    $data = '<table class="table '.$this->randomName().'">';
+    $cols = rand(1, 10);
+    for($i = 0; $i < rand(1, 10); $i++) {
+      $data .= '<tr>';
+      for($j = 0; $j < $cols; $j++) {
+        $data .= '<td>'.$this->randomName().'</td>';
+      }
+      $data .= '</tr>';
+    }
+    $data .= '</table>';
+    $expect = '<div class="table-responsive">'.$data.'</div>';
+    
+    // Run filter
+    $result = _ug_table_process($data, false, false);
+    
+    // Assert filtered data equal to result
+    $this->assertEqual($expect, $result, "Filter properly applies wrapper to table.");
+  }
+}
