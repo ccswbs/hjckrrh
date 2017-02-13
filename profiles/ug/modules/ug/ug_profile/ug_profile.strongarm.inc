@@ -70,6 +70,9 @@ function ug_profile_strongarm() {
         'redirect' => array(
           'weight' => '1',
         ),
+        'path' => array(
+          'weight' => '24',
+        ),
       ),
       'display' => array(),
     ),

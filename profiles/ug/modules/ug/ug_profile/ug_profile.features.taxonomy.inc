@@ -18,8 +18,16 @@ function ug_profile_taxonomy_default_vocabularies() {
       'weight' => 0,
     ),
     'profile_field_headings' => array(
-      'name' => 'Profile field headings',
+      'name' => 'Profile section labels',
       'machine_name' => 'profile_field_headings',
+      'description' => '',
+      'hierarchy' => 0,
+      'module' => 'taxonomy',
+      'weight' => 0,
+    ),
+    'profile_field_labels' => array(
+      'name' => 'Profile field labels',
+      'machine_name' => 'profile_field_labels',
       'description' => '',
       'hierarchy' => 0,
       'module' => 'taxonomy',

@@ -266,6 +266,17 @@ function ug_theme_field__field_profile_heading($variables) {
 }
 
 /**
+ * Add proper classes to custom fields
+ */
+function ug_theme_field__field_profile_custom_label($variables) {
+  return '<div class="field-label-inline"><div class="field-label">'.drupal_render($variables['items'][0]).':&nbsp;</div></div>';
+}
+
+function ug_theme_field__field_profile_custom_content($variables) {
+  return '<div class="field-items"><div class="field-item">'.$variables['items'][0]['#markup'].'</div></div>';
+}
+
+/**
  * B1 - Image slider
  */
 function ug_theme_preprocess_views_view_unformatted__b1(&$vars) {
