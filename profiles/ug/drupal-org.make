@@ -66,6 +66,8 @@ projects[linkit][version] = "3.5"
 
 projects[menu_block][version] = "2.7"
 
+projects[metatag][version] = "7.x-1.20"
+
 projects[migrate][version] = "2.8"
 
 projects[migrate_d2d][version] = "2.1"
@@ -105,6 +107,7 @@ projects[strongarm][version] = "2.0"
 projects[token][version] = "1.6"
 
 projects[twitter][version] = "5.11"
+projects[twitter][patch][] = "https://www.drupal.org/files/issues/twitter-doubleclass-2661088-5.patch"
 
 projects[views][version] = "3.14"
 
