@@ -57,6 +57,7 @@ function ug_profile_ds_layout_settings_info() {
         3 => 'field_profile_unit',
         4 => 'field_profile_telephonenumber',
         5 => 'field_profile_email',
+        6 => 'field_profile_office',
       ),
     ),
     'fields' => array(
@@ -66,6 +67,7 @@ function ug_profile_ds_layout_settings_info() {
       'field_profile_unit' => 'right',
       'field_profile_telephonenumber' => 'right',
       'field_profile_email' => 'right',
+      'field_profile_office' => 'right',
     ),
     'classes' => array(),
     'wrappers' => array(

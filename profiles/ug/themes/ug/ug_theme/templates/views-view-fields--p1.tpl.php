@@ -64,5 +64,11 @@
         <?php print $email; ?>
       </p>
     <?php endif; ?>
+    <?php if ($office): ?>
+      <p>
+        <?php print t("<strong>@label:</strong>", array('@label' => 'Office')); ?>
+        <?php print $office; ?>
+      </p>
+    <?php endif; ?>
   </div>
 </div>

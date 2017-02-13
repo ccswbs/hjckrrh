@@ -106,6 +106,38 @@ class UGProfileTestCase extends TaxonomyWebTestCase {
   }
 
   /**
+   * Test office label in teaser 
+   */
+  function testOfficeLabel() {
+    // Generate data
+    $name = $this->randomName();
+    $lastname = $this->randomName();
+    $office = $this->randomName();
+    
+    // Create node
+    $settings = array('type' => 'profile');
+    $settings['field_profile_name'][LANGUAGE_NONE][0]['value'] = $name;
+    $settings['field_profile_lastname'][LANGUAGE_NONE][0]['value'] = $lastname;
+    $node = $this->drupalCreateNode($settings);
+    
+    // Get listing page
+    $this->drupalGet('people/');
+    
+    // Test office not present
+    $this->assertNoText("Office:");
+    
+    // Add node
+    $settings['field_profile_office'][LANGUAGE_NONE][0]['value'] = $office;
+    $node2 = $this->drupalCreateNode($settings);
+    
+    // Get listing page
+    $this->drupalGet('people/');
+    
+    // Test office present
+    $this->assertText("Office:");
+  }
+  
+  /**
    * Test Last Name Search
    */
   function testLastNameSearch() {
