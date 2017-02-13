@@ -266,7 +266,7 @@ function ug_theme_field__field_profile_custom_label($variables) {
 }
 
 function ug_theme_field__field_profile_custom_content($variables) {
-  return '<div class="field-items"><div class="field-item">'.$variables['items'][0]['#markup'].':&nbsp;</div></div>';
+  return '<div class="field-items"><div class="field-item">'.$variables['items'][0]['#markup'].'</div></div>';
 }
 
 /**
