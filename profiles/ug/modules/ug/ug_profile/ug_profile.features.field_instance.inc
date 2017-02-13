@@ -344,7 +344,7 @@ function ug_profile_field_default_field_instances() {
     ),
     'entity_type' => 'node',
     'field_name' => 'field_profile_custom',
-    'label' => 'Profile custom',
+    'label' => 'Profile fields',
     'required' => 0,
     'settings' => array(
       'user_register_form' => FALSE,
@@ -1122,7 +1122,7 @@ function ug_profile_field_default_field_instances() {
   t('Phone number');
   t('Position/title');
   t('Preferred name');
-  t('Profile custom');
+  t('Profile fields');
   t('Profile sections');
   t('Role');
   t('Sub-unit');
