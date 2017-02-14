@@ -46,7 +46,7 @@ function ug_social_node_info() {
  */
 function ug_social_install() {
   // Array of modules to be enabled
-  $modules = array('print', 'print_ui', 'print_pdf', 'print_tcpdf');
+  $modules = array('print', 'print_ui', 'print_pdf', 'print_pdf_tcpdf');
   // Enable specified modules and their dependencies
   module_enable($modules, TRUE);
 }
@@ -54,9 +54,9 @@ function ug_social_install() {
 /**
  * Implements hook_update().
  */
-function ug_social_update() {
+function ug_social_update_7100() {
   // Array of modules to be enabled
-  $modules = array('print', 'print_ui', 'print_pdf', 'print_tcpdf');
+  $modules = array('print', 'print_ui', 'print_pdf', 'print_pdf_tcpdf');
   // Enable specified modules and their dependencies
   module_enable($modules, TRUE);
 }
