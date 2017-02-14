@@ -661,6 +661,7 @@ _:-ms-fullscreen, :root .carousel-table a.glyphicon {
 
 .field-collection-view .field-label {
   width:auto;
+}
 
 /* Fix CTools inplace editor */
 .ctools-modal-dialog .modal-body {
