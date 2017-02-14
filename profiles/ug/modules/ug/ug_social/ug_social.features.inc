@@ -40,13 +40,3 @@ function ug_social_node_info() {
   drupal_alter('node_info', $items);
   return $items;
 }
-
-/**
- * Implements hook_install()
- */
-function ug_social_install() {
-  // Array of modules to enable
-  $modules = array('print', 'print_ui', 'print_pdf', 'print_pdf_tcpdf');
-  // Enable specified modules and their dependencies
-  module_enable($modules, TRUE);
-}
