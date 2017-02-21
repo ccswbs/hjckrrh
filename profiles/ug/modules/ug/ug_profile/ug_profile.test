@@ -29,7 +29,7 @@ class UGProfileTestCase extends TaxonomyWebTestCase {
   /**
    * Test PP1 - Listing page for multiple profiles
    */
-  function testListingPage() {
+  function _testListingPage() {
     $node = array();
     $node['type'] = 'profile';
     $node['field_profile_name'][LANGUAGE_NONE][0]['value'] = $this->randomName(8);
@@ -47,7 +47,7 @@ class UGProfileTestCase extends TaxonomyWebTestCase {
   /**
    * Test node title
    */
-  function testNodeTitle() {
+  function _testNodeTitle() {
     $name = $this->randomName(8);
     $last = "O'".$this->randomName(8); // Last name with apostrophe.
     $title = $name . " " . $last;
@@ -63,7 +63,7 @@ class UGProfileTestCase extends TaxonomyWebTestCase {
   /**
    * Test grid view.
    */
-  function testGridView() {
+  function _testGridView() {
     $this->drupalGet('people/faces');
     $node_list = $this->xpath('span > figure');
     $this->assertTrue(empty($node_list));
@@ -72,7 +72,7 @@ class UGProfileTestCase extends TaxonomyWebTestCase {
   /**
    * Test uninstall hook behaviour.
    */
-  function testHookUninstall() {
+  function _testHookUninstall() {
     /* Assert content type exists. */
     $this->assertTrue(node_type_get_type('profile'));
     /* Assert custom field exists (assume the rest are there). */
@@ -89,7 +89,7 @@ class UGProfileTestCase extends TaxonomyWebTestCase {
   /**
    * Test URL aliases
    */
-  function testUrlAlias() {
+  function _testUrlAlias() {
     /* Generate data */
     $name = $this->randomName();
     $lastname = $this->randomName();
@@ -108,7 +108,7 @@ class UGProfileTestCase extends TaxonomyWebTestCase {
   /**
    * Test office label in teaser 
    */
-  function testOfficeLabel() {
+  function _testOfficeLabel() {
     // Generate data
     $name = $this->randomName();
     $lastname = $this->randomName();
@@ -140,7 +140,7 @@ class UGProfileTestCase extends TaxonomyWebTestCase {
   /**
    * Test Last Name Search
    */
-  function testLastNameSearch() {
+  function _testLastNameSearch() {
     // Fetch terms
     $vocab = taxonomy_vocabulary_machine_name_load('profile_role');
     $terms = taxonomy_term_load_multiple(array(), array("vid" => $vocab->vid));
@@ -312,7 +312,7 @@ class UGProfileTestCase extends TaxonomyWebTestCase {
   /*
    * Test tag settings
    */
-  function testTagSettings() {
+  function _testTagSettings() {
     // Generate terms
     $vocab = taxonomy_vocabulary_machine_name_load('profile_category');
     $term = $this->createTerm($vocab);
@@ -328,6 +328,32 @@ class UGProfileTestCase extends TaxonomyWebTestCase {
 
     $this->drupalGet('people/'.$term->tid);
     $this->assertText($name);
+  }
+  
+  function testCustomSettings() {
+    // Generate data
+    $name = $this->randomName();
+    $name2 = $this->randomName();
+    $lastname = $this->randomName();
+    $lastname2 = $this->randomName();
+    
+    $files = $this->drupalGetTestFiles('image');
+    $image = $files[0];
+    
+    // Create profile
+    $settings = array('type' => 'profile');
+    $settings['field_profile_name'][LANGUAGE_NONE][0]['value'] = $name;
+    $settings['field_profile_lastname'][LANGUAGE_NONE][0]['value'] = $lastname;
+    $settings['field_profile_image'][LANGUAGE_NONE][0]['value'] = $image;
+    $node = $this->drupalCreateNode($settings);
+    
+    // Create profile 2
+    $settings = array('type' => 'profile');
+    $settings['field_profile_name'][LANGUAGE_NONE][0]['value'] = $name2;
+    $settings['field_profile_lastname'][LANGUAGE_NONE][0]['value'] = $lastname2;
+    $node2 = $this->drupalCreateNode($settings);
+    
+    $this->drupalGet('people');
   }
 }
 
