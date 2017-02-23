@@ -23,7 +23,7 @@ class UGProfileTestCase extends TaxonomyWebTestCase {
     parent::setUp('ug_profile', 'ug_profile_layouts');
     theme_enable(array('ug_cornerstone'));
     theme_disable(array('bartik'));
-    variable_set('theme_default', 'ug_cornerstone');
+    variable_set('theme_default', 'ug_theme');
     
     /* Allow creation of Drupal accounts. */
     $ldap_conf = variable_get('ldap_authentication_conf');
@@ -34,7 +34,7 @@ class UGProfileTestCase extends TaxonomyWebTestCase {
   /**
    * Test PP1 - Listing page for multiple profiles
    */
-  function _testListingPage() {
+  function testListingPage() {
     $node = array();
     $node['type'] = 'profile';
     $node['field_profile_name'][LANGUAGE_NONE][0]['value'] = $this->randomName(8);
@@ -52,7 +52,7 @@ class UGProfileTestCase extends TaxonomyWebTestCase {
   /**
    * Test node title
    */
-  function _testNodeTitle() {
+  function testNodeTitle() {
     $name = $this->randomName(8);
     $last = "O'".$this->randomName(8); // Last name with apostrophe.
     $title = $name . " " . $last;
@@ -68,7 +68,7 @@ class UGProfileTestCase extends TaxonomyWebTestCase {
   /**
    * Test grid view.
    */
-  function _testGridView() {
+  function testGridView() {
     $this->drupalGet('people/faces');
     $node_list = $this->xpath('span > figure');
     $this->assertTrue(empty($node_list));
@@ -77,7 +77,7 @@ class UGProfileTestCase extends TaxonomyWebTestCase {
   /**
    * Test uninstall hook behaviour.
    */
-  function _testHookUninstall() {
+  function testHookUninstall() {
     /* Assert content type exists. */
     $this->assertTrue(node_type_get_type('profile'));
     /* Assert custom field exists (assume the rest are there). */
@@ -94,7 +94,7 @@ class UGProfileTestCase extends TaxonomyWebTestCase {
   /**
    * Test URL aliases
    */
-  function _testUrlAlias() {
+  function testUrlAlias() {
     /* Generate data */
     $name = $this->randomName();
     $lastname = $this->randomName();
@@ -113,7 +113,7 @@ class UGProfileTestCase extends TaxonomyWebTestCase {
   /**
    * Test office label in teaser 
    */
-  function _testOfficeLabel() {
+  function testOfficeLabel() {
     // Generate data
     $name = $this->randomName();
     $lastname = $this->randomName();
@@ -145,7 +145,7 @@ class UGProfileTestCase extends TaxonomyWebTestCase {
   /**
    * Test Last Name Search
    */
-  function _testLastNameSearch() {
+  function testLastNameSearch() {
     // Fetch terms
     $vocab = taxonomy_vocabulary_machine_name_load('profile_role');
     $terms = taxonomy_term_load_multiple(array(), array("vid" => $vocab->vid));
@@ -317,7 +317,7 @@ class UGProfileTestCase extends TaxonomyWebTestCase {
   /*
    * Test tag settings
    */
-  function _testTagSettings() {
+  function testTagSettings() {
     // Generate terms
     $vocab = taxonomy_vocabulary_machine_name_load('profile_category');
     $term = $this->createTerm($vocab);
@@ -333,40 +333,6 @@ class UGProfileTestCase extends TaxonomyWebTestCase {
 
     $this->drupalGet('people/'.$term->tid);
     $this->assertText($name);
-  }
-  
-  function testCustomSettings() {
-    // Create user with devel permissions
-    $user = $this->drupalCreateUser(array(
-      'administer taxonomy',
-      'administer menu',
-      'administer nodes',
-    ));
-    $this->drupalLogin($user);
-    
-    // Generate profiles
-    $edit = array(
-      'node_types[profile]' => 1,
-      'kill_content' => 1,
-      'num_nodes' => 2,
-      'time_range' => 604800,
-      'title_length' => 2
-    );
-    $this->drupalPost('admin/config/development/generate/content', $edit, t('Generate'));
-    
-    // Create profile manually (to ensure no picture)
-    // Generate data
-    $name = $this->randomName();
-    $lastname = $this->randomName();
-    
-    // Create profile
-    $settings = array('type' => 'profile');
-    $settings['field_profile_name'][LANGUAGE_NONE][0]['value'] = $name;
-    $settings['field_profile_lastname'][LANGUAGE_NONE][0]['value'] = $lastname;
-    $node = $this->drupalCreateNode($settings);
-    
-    $view_content = views_embed_view('pp6', 'panel_pane_1');
-    debug($view_content);
   }
 }
 
