@@ -49,6 +49,13 @@ function ug_social_install() {
   $modules = array('print', 'print_ui', 'print_pdf', 'print_pdf_tcpdf');
   // Enable specified modules and their dependencies
   module_enable($modules, TRUE);
+  
+  // Add permissions
+  $permissions = array('access print');
+  foreach(array('anonymous user', 'authenticated user') as $role_name) {
+    $role = user_role_load_by_name($role_name);
+    user_role_grant_permissions($role->rid, $permissions);
+  }
 }
 
 /**
@@ -59,4 +66,11 @@ function ug_social_update_7100() {
   $modules = array('print', 'print_ui', 'print_pdf', 'print_pdf_tcpdf');
   // Enable specified modules and their dependencies
   module_enable($modules, TRUE);
+  
+  // Add permissions
+  $permissions = array('access print');
+  foreach(array('anonymous user', 'authenticated user') as $role_name) {
+    $role = user_role_load_by_name($role_name);
+    user_role_grant_permissions($role->rid, $permissions);
+  }
 }
