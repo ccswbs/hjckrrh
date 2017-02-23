@@ -117,6 +117,7 @@ features[views_view][] = pp1
 features[views_view][] = pp1b
 features[views_view][] = pp4
 features[views_view][] = pp5
+features[views_view][] = pp6
 features_exclude[dependencies][ctools] = ctools
 features_exclude[dependencies][file] = file
 features_exclude[dependencies][image] = image
