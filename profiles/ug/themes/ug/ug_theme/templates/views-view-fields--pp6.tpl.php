@@ -34,44 +34,48 @@
  *
  */
 ?>
-<?php if (isset($large_image)): ?>
-  <div class="col-md-4">
-    <div class="media-thumbnail">
-      <?php print $large_image; ?>
-    </div>
-  </div>
-<?php endif; ?>
-<?php if(isset($small_image)): ?>
-	<div class="col-md-2">
-		<div class="media-thumbnail">
-			<?php print $small_image; ?>
+<article class="media">
+	<div class="row">
+		<?php if (isset($large_image)): ?>
+		  <div class="col-md-4">
+		    <div class="media-thumbnail">
+		      <?php print $large_image; ?>
+		    </div>
+		  </div>
+		<?php endif; ?>
+		<?php if(isset($small_image)): ?>
+			<div class="col-md-2">
+				<div class="media-thumbnail">
+					<?php print $small_image; ?>
+				</div>
+			</div>
+		<?php endif; ?>
+		<div class="<?php print($content_width); if($content_offset != '') print(' '.$content_offset); ?>">
+		  <div class="media-header">
+		    <h2 class="media-heading">
+		      <?php print $fullname; ?>
+		    </h2>
+		  </div>
+		  <div class="media-summary">
+		    <?php if ($phone): ?>
+		      <p>
+		        <?php print t("<strong>@label:</strong>", array('@label' => 'Phone')); ?>
+		        <?php print $phone; ?>
+		      </p>
+		    <?php endif; ?>
+		    <?php if ($email): ?>
+		      <p>
+		        <?php print t("<strong>@label:</strong>", array('@label' => 'Email')); ?>
+		        <?php print $email; ?>
+		      </p>
+		    <?php endif; ?>
+		    <?php if ($office): ?>
+		      <p>
+		        <?php print t("<strong>@label:</strong>", array('@label' => 'Office')); ?>
+		        <?php print $office; ?>
+		      </p>
+		    <?php endif; ?>
+		  </div>
 		</div>
 	</div>
-<?php endif; ?>
-<div class="<?php print($content_width); if($content_offset != '') print(' '.$content_offset); ?>">
-  <div class="media-header">
-    <h2 class="media-heading">
-      <?php print $fullname; ?>
-    </h2>
-  </div>
-  <div class="media-summary">
-    <?php if ($phone): ?>
-      <p>
-        <?php print t("<strong>@label:</strong>", array('@label' => 'Phone')); ?>
-        <?php print $phone; ?>
-      </p>
-    <?php endif; ?>
-    <?php if ($email): ?>
-      <p>
-        <?php print t("<strong>@label:</strong>", array('@label' => 'Email')); ?>
-        <?php print $email; ?>
-      </p>
-    <?php endif; ?>
-    <?php if ($office): ?>
-      <p>
-        <?php print t("<strong>@label:</strong>", array('@label' => 'Office')); ?>
-        <?php print $office; ?>
-      </p>
-    <?php endif; ?>
-  </div>
-</div>
+</article>
