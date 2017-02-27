@@ -601,7 +601,7 @@ function ug_course_outlines_field_default_field_instances() {
     'bundle' => 'course_outline',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => 'Enter a comma separated list of keywords.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -651,6 +651,7 @@ function ug_course_outlines_field_default_field_instances() {
   t('Course name');
   t('Course term');
   t('Details');
+  t('Enter a comma separated list of keywords.');
   t('Keywords');
   t('Section');
   t('Subject');

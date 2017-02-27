@@ -1,13 +1,16 @@
 name = UG Course Outlines
 core = 7.x
 package = UG
+version = 7.x-7.52
 dependencies[] = auto_nodetitle
 dependencies[] = date
 dependencies[] = file
 dependencies[] = link
 dependencies[] = list
 dependencies[] = menu
+dependencies[] = node
 dependencies[] = strongarm
+dependencies[] = text
 dependencies[] = ug_tags
 dependencies[] = views
 dependencies[] = views_content
