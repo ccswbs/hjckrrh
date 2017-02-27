@@ -206,7 +206,7 @@ class UGEventTestCase extends TaxonomyWebTestCase {
 
    * Test E5 - Browse events by date shows as a dropdown
    */
-  function testBrowseEvents() {
+  function _testBrowseEvents() {
     /* Create a date in the past */
     $later = time() - 60 * 60 * 24 * 28 * 2;
     $datetime_format = "Y-m-d H:i:s";
@@ -229,7 +229,7 @@ class UGEventTestCase extends TaxonomyWebTestCase {
   /*
    * Test correct header nesting
    */
-  function testHeaderNesting() {
+  function _testHeaderNesting() {
     // Create categories and terms
     $event_category = taxonomy_vocabulary_machine_name_load('event_category');
     $term = $this->createTerm($event_category);
@@ -254,6 +254,91 @@ class UGEventTestCase extends TaxonomyWebTestCase {
     $this->drupalGet('events/'.$term->tid);
     $this->assertRaw('<h2 class="pane-title">');
     $this->assertRaw('<h3 class="media-heading">');
+  }
+  
+  /*
+   * Test events that straddle current date still appear in the correct locations
+   */
+  function testLongEvents() {
+    $datetime_format = "Y-m-d H:i:s";
+    
+    $nodes = array();
+    $dates = array();
+    
+    $dates[] = array( // Case 1 - Event starts and ends in past
+      date($datetime_format, time() - (2*24*60*60)), // Two days ago
+      date($datetime_format, time() - (24*60*60)) // One day ago
+    );
+    $dates[] = array( // Case 2 - Event starts and ends in future
+      date($datetime_format, time() + (24*60*60)), // One day ahead
+      date($datetime_format, time() + (2*24*60*60)) // Two days ahead
+    );
+    $dates[] = array( // Case 3 - Event starts yesterday and ends tomorrow
+      date($datetime_format, time() - (24*60*60)), // One day ago
+      date($datetime_format, time() + (24*60*60)) // One day ahead
+    );
+    $dates[] = array( // Case 4 - Event starts in -8 days and ends in +8 days
+      date($datetime_format, time() - (8*24*60*60)), // Eight days ago
+      date($datetime_format, time() + (8*24*60*60)) // Eight days ahead
+    );
+    $dates[] = array( // Case 5 - Event starts in past and ends today
+      date($datetime_format, time() - (24*60*60)), // One day ago
+      date($datetime_format, time()) // Today
+    );
+    $dates[] = array( // Case 6 - Event starts today and ends in future
+      date($datetime_format, time()), // Today
+      date($datetime_format, time() + (24*60*60)) // One day ahead
+    );
+    $dates[] = array( // Case 7 - Event starts today and ends today
+      date($datetime_format, time()), // Today
+      date($datetime_format, time()) // Today
+    );
+    $dates[] = array( // Case 8 - Events starts -32 days and ends +32 days
+      date($datetime_format, time() - (32*24*60*60)), // Thirty-two days ago
+      date($datetime_format, time() + (32*24*60*60)) // Thirty-two days ahead
+    );
+    
+    $i = 1;
+    foreach($dates as $date) {
+      $settings = array('type' => 'event', 'title' => 'Case '.$i);
+      $settings['field_event_date'][LANGUAGE_NONE][0]['value'] = $date[0];
+      $settings['field_event_date'][LANGUAGE_NONE][0]['value2'] = $date[1];
+      $nodes[] = $this->drupalCreateNode($settings);
+      $i++;
+    }
+    
+    // Upcoming
+    $this->drupalGet('events');
+    $this->assertTrue("Testing upcoming events.");
+    $upcoming = array();
+    for($i = 2; $i <= 8; $i++) {
+      $upcoming[] = $this->assertText("Case $i");
+    }
+    
+    
+    // This Week
+    $this->drupalGet('events/week');
+    $this->assertTrue("Testing this week's events.");
+    $week = array();
+    for($i = 2; $i <= 8; $i++) {
+      $week[] = $this->assertText("Case $i");
+    }
+    
+    // Monthly Calendar
+    $this->drupalGet('events/month');
+    $this->assertTrue("Testing this month's events.");
+    $month = array();
+    for($i = 2; $i <= 8; $i++) {
+      $month[] = $this->assertText("Case $i");
+    }
+    
+    // Past Events
+    $this->drupalGet('events/archive');
+    $this->assertText("Case 1", "Case 1 passed."); // Case 1
+    
+    for($i = 0; $i < 7; $i++) {
+      if($upcoming[$i] && $week[$i] && $month[$i]) $this->assertTrue("Case ".($i+2)." passed.");
+    }
   }
 }
 
