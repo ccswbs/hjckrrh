@@ -104,7 +104,6 @@ function ug_banner_views_default_views() {
   $handler->display->display_options['arguments']['field_banner_category_tid']['validate_options']['vocabularies'] = array(
     'banner_category' => 'banner_category',
   );
-  $handler->display->display_options['arguments']['field_banner_category_tid']['validate_options']['type'] = 'convert';
   /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
