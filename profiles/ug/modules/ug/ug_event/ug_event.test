@@ -38,7 +38,7 @@ class UGEventTestCase extends TaxonomyWebTestCase {
     );
   }
 
-  function _testNoResultsBehavior() {
+  function testNoResultsBehavior() {
     /* Assert listing pages show 'no results found.' */
     foreach ($this->getListingPages() as $path) {
       $this->drupalGet($path);
@@ -52,7 +52,7 @@ class UGEventTestCase extends TaxonomyWebTestCase {
   /**
    * Test event summary is used on listing pages.
    */
-  function _testSummary() {
+  function testSummary() {
     /* Generate some random text. */
     $later = time() + 3600;
     $datetime_format = "Y-m-d H:i:s";
@@ -97,7 +97,7 @@ class UGEventTestCase extends TaxonomyWebTestCase {
    /**
    * Test "Events" filter behaviour
    */
-  function _testEventsCategory() {
+  function testEventsCategory() {
 
     /* Generate some random text. */
     $later = time() + 36000;
@@ -155,7 +155,7 @@ class UGEventTestCase extends TaxonomyWebTestCase {
   /**
    * Test more link includes category ID.
    */
-  function _testMoreLink() {
+  function testMoreLink() {
     /* Create categories and terms */
     $event_category = taxonomy_vocabulary_machine_name_load('event_category');
     $term = $this->createTerm($event_category);
@@ -184,7 +184,7 @@ class UGEventTestCase extends TaxonomyWebTestCase {
   /**
    * Test URL aliases.
    */
-  function _testUrlAlias() {
+  function testUrlAlias() {
     /* Create a date in the future */
     $later = time() + 3600;
     $datetime_format = "Y-m-d H:i:s";
@@ -206,7 +206,7 @@ class UGEventTestCase extends TaxonomyWebTestCase {
 
    * Test E5 - Browse events by date shows as a dropdown
    */
-  function _testBrowseEvents() {
+  function testBrowseEvents() {
     /* Create a date in the past */
     $later = time() - 60 * 60 * 24 * 28 * 2;
     $datetime_format = "Y-m-d H:i:s";
@@ -229,7 +229,7 @@ class UGEventTestCase extends TaxonomyWebTestCase {
   /*
    * Test correct header nesting
    */
-  function _testHeaderNesting() {
+  function testHeaderNesting() {
     // Create categories and terms
     $event_category = taxonomy_vocabulary_machine_name_load('event_category');
     $term = $this->createTerm($event_category);
