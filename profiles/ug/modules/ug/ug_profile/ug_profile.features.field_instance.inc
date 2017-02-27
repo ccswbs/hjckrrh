@@ -1069,7 +1069,7 @@ function ug_profile_field_default_field_instances() {
     'bundle' => 'profile',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => 'Enter a comma separated list of keywords.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -1110,6 +1110,7 @@ function ug_profile_field_default_field_instances() {
   t('Category');
   t('Content');
   t('Email');
+  t('Enter a comma separated list of keywords.');
   t('Fax');
   t('Heading');
   t('Image');
