@@ -507,7 +507,7 @@ function ug_event_field_default_field_instances() {
     'bundle' => 'event',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => 'Enter a comma separated list of keywords.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -579,6 +579,7 @@ function ug_event_field_default_field_instances() {
   t('Category');
   t('Content');
   t('Date');
+  t('Enter a comma separated list of keywords.');
   t('Feature image');
   t('Feature image caption');
   t('File attachments');
