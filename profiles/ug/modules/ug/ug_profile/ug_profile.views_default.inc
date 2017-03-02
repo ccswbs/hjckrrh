@@ -179,6 +179,7 @@ function ug_profile_views_default_views() {
   $handler->display->display_options['defaults']['style_options'] = FALSE;
   $handler->display->display_options['defaults']['row_plugin'] = FALSE;
   $handler->display->display_options['row_plugin'] = 'fields';
+  $handler->display->display_options['row_options']['hide_empty'] = TRUE;
   $handler->display->display_options['defaults']['row_options'] = FALSE;
   $handler->display->display_options['defaults']['fields'] = FALSE;
   /* Field: Content: Title */
@@ -215,12 +216,14 @@ function ug_profile_views_default_views() {
   $handler->display->display_options['fields']['field_profile_telephonenumber']['field'] = 'field_profile_telephonenumber';
   $handler->display->display_options['fields']['field_profile_telephonenumber']['element_type'] = '0';
   $handler->display->display_options['fields']['field_profile_telephonenumber']['element_label_type'] = 'strong';
+  $handler->display->display_options['fields']['field_profile_telephonenumber']['hide_empty'] = TRUE;
   /* Field: Content: Email */
   $handler->display->display_options['fields']['field_profile_email']['id'] = 'field_profile_email';
   $handler->display->display_options['fields']['field_profile_email']['table'] = 'field_data_field_profile_email';
   $handler->display->display_options['fields']['field_profile_email']['field'] = 'field_profile_email';
   $handler->display->display_options['fields']['field_profile_email']['element_type'] = '0';
   $handler->display->display_options['fields']['field_profile_email']['element_label_type'] = 'strong';
+  $handler->display->display_options['fields']['field_profile_email']['hide_empty'] = TRUE;
   /* Field: Content: Office */
   $handler->display->display_options['fields']['field_profile_office']['id'] = 'field_profile_office';
   $handler->display->display_options['fields']['field_profile_office']['table'] = 'field_data_field_profile_office';
@@ -240,6 +243,8 @@ function ug_profile_views_default_views() {
   $handler->display->display_options['fields']['field_profile_name']['field'] = 'field_profile_name';
   $handler->display->display_options['fields']['field_profile_name']['label'] = '';
   $handler->display->display_options['fields']['field_profile_name']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_profile_office']['element_label_type'] = 'strong';
+  $handler->display->display_options['fields']['field_profile_office']['hide_empty'] = TRUE;
   $handler->display->display_options['allow']['use_pager'] = 'use_pager';
   $handler->display->display_options['allow']['items_per_page'] = 'items_per_page';
   $handler->display->display_options['allow']['offset'] = 0;
