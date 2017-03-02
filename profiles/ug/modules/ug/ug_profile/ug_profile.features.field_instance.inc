@@ -194,6 +194,48 @@ function ug_profile_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-profile-field_profile_align_names'.
+  $field_instances['node-profile-field_profile_align_names'] = array(
+    'bundle' => 'profile',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 31,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_profile_align_names',
+    'label' => 'Align names',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'display_label' => 0,
+      ),
+      'type' => 'options_onoff',
+      'weight' => 41,
+    ),
+  );
+
   // Exported field_instance: 'node-profile-field_profile_attachments'.
   $field_instances['node-profile-field_profile_attachments'] = array(
     'bundle' => 'profile',
@@ -1105,6 +1147,7 @@ function ug_profile_field_default_field_instances() {
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('Align names');
   t('Area of research');
   t('Attachments');
   t('Category');

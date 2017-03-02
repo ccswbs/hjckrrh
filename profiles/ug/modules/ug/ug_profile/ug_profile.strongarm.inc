@@ -61,6 +61,9 @@ function ug_profile_strongarm() {
       'token' => array(
         'custom_settings' => FALSE,
       ),
+      'print' => array(
+        'custom_settings' => FALSE,
+      ),
     ),
     'extra_fields' => array(
       'form' => array(
@@ -72,6 +75,9 @@ function ug_profile_strongarm() {
         ),
         'path' => array(
           'weight' => '24',
+        ),
+        'metatags' => array(
+          'weight' => '40',
         ),
       ),
       'display' => array(),
