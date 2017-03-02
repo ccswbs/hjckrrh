@@ -125,6 +125,27 @@ Base Styles
     text-decoration: none;
     border-bottom: 1px solid;
   }
+  
+  /* Adjust calendar all-day link to have sufficient color contrast */
+  /* E8b */
+  .calendar-calendar .month-view .full td.multi-day .inner div a {
+    color:#000;
+    font-size:11px;
+  }
+  
+  .calendar-calendar .month-view .full td.multi-day div.monthview {
+    color:#000;
+  }
+  
+  /* E9b */
+  .calendar-calendar .week-view .full td.multi-day .inner div a {
+    color:#000;
+    font-size:11px;
+  }
+  
+  .calendar-calendar .week-view .full td.multi-day div.weekview {
+    color:#000;
+  }
 
   /*---------------------
   Lists
