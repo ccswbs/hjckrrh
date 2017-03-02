@@ -53,9 +53,15 @@ Base Styles
   /*---------------------
   Links
   ---------------------**/
-  a{
+  a {
       color: #2F70A9; 
       /* WCAG 2.0 AA on #EEEEEE, #F5F5F5, #FFFFFF */
+  }
+  
+  a.h1, a.h2, a.h3, a.h4, a.h5, a.h6 {
+    color:#2F70A9;
+    cursor:pointer;
+    border-bottom:1px solid;
   }
 
   /* default - no underline */
@@ -94,6 +100,12 @@ Base Styles
   /* hover/focus - links styled as buttons */
   p a.btn:focus, p a.btn:hover {
     border-bottom: 1px solid;
+  }
+  
+  /* hover/focus - links styled as headers */
+  a.h1:hover, a.h2:hover, a.h3:hover, a.h4:hover, a.h5:hover, a.h6:hover {
+    border-bottom:2px solid;
+    text-decoration:none;
   }
 
   nav li a, .navbar a, .menu a, a.active, .nav a, ul.list-inline li a {
