@@ -341,7 +341,7 @@ Headlines must be <strong>60</strong> characters or less.',
     'bundle' => 'banner',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => 'Enter a comma separated list of keywords.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -381,6 +381,7 @@ Headlines must be <strong>60</strong> characters or less.',
   t('Alt text');
   t('Banners are ordered by weight. Lower weighted banners appear first. Banners of equal weight are ordered randomly.');
   t('Category');
+  t('Enter a comma separated list of keywords.');
   t('Enter a headline to display with your banner.<br>
 Headlines must be <strong>60</strong> characters or less.');
   t('Headline');

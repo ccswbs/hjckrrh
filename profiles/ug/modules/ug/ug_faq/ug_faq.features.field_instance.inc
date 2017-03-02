@@ -96,7 +96,7 @@ function ug_faq_field_default_field_instances() {
     'bundle' => 'faq',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => 'Enter a comma separated list of keywords.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -134,6 +134,7 @@ function ug_faq_field_default_field_instances() {
   // Included for use with string extractors like potx.
   t('Answer');
   t('Category');
+  t('Enter a comma separated list of keywords.');
   t('Keywords');
 
   return $field_instances;

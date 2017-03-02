@@ -209,7 +209,7 @@ function ug_feature_field_default_field_instances() {
     'bundle' => 'feature',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => 'Enter a comma separated list of keywords.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -247,6 +247,7 @@ function ug_feature_field_default_field_instances() {
   // Translatables
   // Included for use with string extractors like potx.
   t('Category');
+  t('Enter a comma separated list of keywords.');
   t('Image');
   t('Keywords');
   t('Link');

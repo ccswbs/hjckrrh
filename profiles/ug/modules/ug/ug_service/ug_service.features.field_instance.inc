@@ -271,7 +271,7 @@ function ug_service_field_default_field_instances() {
     'bundle' => 'service',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => 'Enter a comma separated list of keywords.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -511,6 +511,7 @@ function ug_service_field_default_field_instances() {
   // Included for use with string extractors like potx.
   t('Content');
   t('Description');
+  t('Enter a comma separated list of keywords.');
   t('Heading');
   t('Internal notes');
   t('Keywords');
