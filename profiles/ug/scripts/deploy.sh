@@ -19,13 +19,15 @@
 # ---------------------------------------------------------------------
 # Exit immediately on errors.
 
-set -e
+set -euo pipefail
 
 # ---------------------------------------------------------------------
-# Read configuration information from /etc/drupal/deploy.conf or
-# ~/.drupal/deploy.conf
+# Read configuration information from deploy.conf,
+# ~/.drupal/deploy.conf, or /etc/drupal/deploy.conf
 
-if [ -f ~/.drupal/deploy.conf ]; then
+if [ -f ./deploy.conf ]; then
+  . ./deploy.conf
+elif [ -f ~/.drupal/deploy.conf ]; then
   . ~/.drupal/deploy.conf
 elif [ -f /etc/drupal/deploy.conf ]; then
   . /etc/drupal/deploy.conf
@@ -35,10 +37,24 @@ else
 fi
 
 # ---------------------------------------------------------------------
-# Set environment and branch.
+# Process arguments.
 
-ENV="${1}"
-REF="${2:-master}"
+OPTIND=1	# Reset option index.
+ENV=""
+REFENV=""
+
+while getopts "e:r:" opt ; do
+  case "$opt" in
+  e)
+    ENV=$OPTARG
+    ;;
+  r)
+    REFENV=$OPTARG
+    ;;
+  esac
+done
+
+shift $((OPTIND-1))
 
 # ---------------------------------------------------------------------
 # Sanity check.
@@ -48,21 +64,46 @@ if [ -z "${ENV}" ]; then
   exit 1
 fi
 
+if [[ $# -gt 0 ]]; then
+  echo "Too many arguments provided."
+  exit 1
+fi
+
+# ---------------------------------------------------------------------
+# Lookup reference environment.
+
+REF=""
+if [ -n "${REFENV}" ]; then
+  REF=`git tag -l deploy-${REFENV}-* | tail -1`
+  if [ -z "${REF}" ]; then
+    echo "Error: Reference environment ${REFENV} not found." 
+    exit 1
+  fi
+fi
+
+# ---------------------------------------------------------------------
+# Create deploy tag.
+
+STAMP=`date +%Y%m%d%H%M%S`
+TAG="deploy-${ENV}-${STAMP}"
+git tag ${TAG} ${REF}
+
 # ---------------------------------------------------------------------
 # Checkout branch to temporary directory.
 
 PKG=`mktemp -d`
-git --work-tree="${PKG}" checkout -f "${BRANCH[$i]:-$2}"
+git --work-tree="${PKG}" checkout -f --quiet "${TAG}"
 
 # ---------------------------------------------------------------------
 # Deploy code and update db (with a maximum of 50 servers, but you
 # can easily enlarge the server limit by adjusting MAXHOSTS.
 
+RSYNCFLAGS="-r --delete --exclude=sites"
 MAXHOSTS=${MAXHOSTS:-50}
 i=0
 while [ $i -lt $MAXHOSTS ]; do
   if [ "${ENVIRON[$i]}" = "${ENV}" ]; then
-    rsync -r "${PKG}" "${HOSTNAM[$i]}:${DOCROOT[$i]}"
+    rsync $RSYNCFLAGS "${PKG}/" "${HOSTNAM[$i]}:${DOCROOT[$i]}/"
     ssh "${HOSTNAM[$i]}" "drush -y -r ${DOCROOT[$i]} @sites updatedb"
   fi
   i=$(($i+1))
