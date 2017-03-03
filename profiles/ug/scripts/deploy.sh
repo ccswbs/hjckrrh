@@ -4,17 +4,17 @@
 #       deploy.sh - Drupal deployment script
 #
 # SYNOPSIS
-#       deploy.sh ENV [BRANCH]
+#       deploy.sh [-r REF] [ENV ...]
 #
 # DESCRIPTION
-#       Deploys the given code BRANCH to servers in environment ENV,
-#       and runs database updates.
+#       Deploys code to servers in environment ENV, and runs 
+#       database updates.
 #
-#       ENV may be any environment defined below, such as "dev",
-#       "stage", or "prod".
+#       ENV may be any environment such as "dev", "stage", or "prod".
 # 
-#       BRANCH is any git branch in the current repository. Defaults
-#       to "master".
+#       REF is a reference environment. The last tag deployed to
+#       the REF environment will be deployed to ENV. If REF is not
+#       specified, the current branch will be deployed.
 
 # ---------------------------------------------------------------------
 # Exit immediately on errors.
@@ -25,31 +25,37 @@ set -euo pipefail
 # Read configuration information from deploy.conf,
 # ~/.drupal/deploy.conf, or /etc/drupal/deploy.conf
 
-if [ -f ./deploy.conf ]; then
-  . ./deploy.conf
-elif [ -f ~/.drupal/deploy.conf ]; then
-  . ~/.drupal/deploy.conf
-elif [ -f /etc/drupal/deploy.conf ]; then
-  . /etc/drupal/deploy.conf
+LOCALCONF="./deploy.conf"
+USERCONF="~/.drupal/deploy.conf"
+GLOBALCONF="/etc/drupal/deploy.conf"
+
+if [ -f $LOCALCONF ]; then
+  CONF=$LOCALCONF
+elif [ -f $USERCONF ]; then
+  CONF=$USERCONF
+elif [ -f $GLOBALCONF ]; then
+  CONF=$GLOBALCONF
 else
   echo "No configuration file found. Exiting..."
   exit 1
 fi
 
+. $CONF
+
 # ---------------------------------------------------------------------
 # Process arguments.
 
 OPTIND=1	# Reset option index.
-ENV=""
-REFENV=""
+REF=""
 
-while getopts "e:r:" opt ; do
+while getopts "r:" opt ; do
   case "$opt" in
-  e)
-    ENV=$OPTARG
-    ;;
   r)
-    REFENV=$OPTARG
+    REF=`git tag -l deploy-${OPTARG}-* | tail -1`
+    if [ -z "${REF}" ]; then
+      echo "Error: Reference environment ${OPTARG} not found." 
+      exit 1
+    fi
     ;;
   esac
 done
@@ -59,27 +65,31 @@ shift $((OPTIND-1))
 # ---------------------------------------------------------------------
 # Sanity check.
 
-if [ -z "${ENV}" ]; then
-  echo "No environment specified. Exiting..."
-  exit 1
-fi
-
-if [[ $# -gt 0 ]]; then
-  echo "Too many arguments provided."
+if [[ $# -eq 0 ]]; then
+  echo "No environments specified."
   exit 1
 fi
 
 # ---------------------------------------------------------------------
-# Lookup reference environment.
+# Confirm.
 
-REF=""
-if [ -n "${REFENV}" ]; then
-  REF=`git tag -l deploy-${REFENV}-* | tail -1`
-  if [ -z "${REF}" ]; then
-    echo "Error: Reference environment ${REFENV} not found." 
-    exit 1
-  fi
+printf "\nYou are about to deploy:\n\n"
+printf "\t * ${REF:-`git rev-parse --abbrev-ref HEAD`}\n"
+printf "\nto the following environment(s):\n\n"
+for ENV in $@; do
+  printf "\t * $ENV\n"
+done
+printf "\nContinue [y/n] ? "
+read answer
+if [ "${answer}" != "y" ]; then
+  echo "Aborting..."
+  exit 0
 fi
+
+# ---------------------------------------------------------------------
+# Loop over target environments.
+
+for ENV in $@; do
 
 # ---------------------------------------------------------------------
 # Create deploy tag.
@@ -92,22 +102,47 @@ git tag ${TAG} ${REF}
 # Checkout branch to temporary directory.
 
 PKG=`mktemp -d`
-git --work-tree="${PKG}" checkout -f --quiet "${TAG}"
+TOPLEVEL=`git rev-parse --show-toplevel`
+git clone --quiet ${TOPLEVEL} ${PKG}
+cd ${PKG} && git checkout --quiet ${TAG}
 
 # ---------------------------------------------------------------------
 # Deploy code and update db (with a maximum of 50 servers, but you
-# can easily enlarge the server limit by adjusting MAXHOSTS.
+# can easily increase the server limit by adjusting MAXHOSTS.
 
-RSYNCFLAGS="-r --delete --exclude=sites"
+RSYNCFLAGS="-r --delete --cvs-exclude --exclude=sites"
 MAXHOSTS=${MAXHOSTS:-50}
 i=0
 while [ $i -lt $MAXHOSTS ]; do
+  set +u
   if [ "${ENVIRON[$i]}" = "${ENV}" ]; then
-    rsync $RSYNCFLAGS "${PKG}/" "${HOSTNAM[$i]}:${DOCROOT[$i]}/"
+    set -u
+    TARGET="${HOSTNAM[$i]}:${DOCROOT[$i]}"
+    echo "[$TARGET] Deploying code ..."
+    rsync $RSYNCFLAGS "${PKG}/" "${TARGET}/"
+    echo "[$TARGET] Running database updates ..."
     ssh "${HOSTNAM[$i]}" "drush -y -r ${DOCROOT[$i]} @sites updatedb"
   fi
   i=$(($i+1))
 done
+
+# ---------------------------------------------------------------------
+# End of environments loop.
+
+done
+
+# ---------------------------------------------------------------------
+# Check for MAXHOSTS limit.
+
+set +u
+if [ -n "${ENVIRON[$i]}" ]; then
+  echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+  echo "  WARNING:"
+  echo "    You look to have exceeded the MAXHOSTS limit of $MAXHOSTS."
+  echo "    Consider adding MAXHOSTS=$((MAXHOSTS + 10)) to ${CONF}."
+  echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+fi
+set -u
 
 # ---------------------------------------------------------------------
 # Clean up.
