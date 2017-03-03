@@ -19,6 +19,7 @@ find . -name '*.info' -exec sed -i -e "s/^version = .*$/version = $VERSION/" {} 
 # Before building, package basic profile
 tar -C$PKG -czf $TMP/$NAME-$VERSION.tar.gz $NAME
 # Now build and package no-core version
+cd $NAME
 drush make --drupal-org $CWD/drupal-org.make .
 cd $PKG
 tar -czf $TMP/$NAME-$VERSION-nocore.tar.gz $NAME
