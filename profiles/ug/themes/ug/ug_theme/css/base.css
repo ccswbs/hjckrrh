@@ -63,6 +63,11 @@ Base Styles
   a:link{
     text-decoration: none;
   }
+  
+  a.h1, a.h2, a.h3, a.h4, a.h5, a.h6 {
+    color:#017ACD;
+    cursor:pointer;
+  }
 
   /* hover/focus - underline */
   a:focus, a:hover {
