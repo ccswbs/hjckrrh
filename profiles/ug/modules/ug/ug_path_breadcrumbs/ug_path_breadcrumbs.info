@@ -1,6 +1,7 @@
 name = ug_path_breadcrumbs
 core = 7.x
 package = UG
+version = 7.x-7.52
 dependencies[] = path_breadcrumbs
 dependencies[] = path_breadcrumbs_ui
 features[ctools][] = path_breadcrumbs:path_breadcrumbs:1
@@ -25,6 +26,4 @@ features[variable][] = path_breadcrumbs_truncate_title_length
 features[variable][] = path_breadcrumbs_url_cleaning_method
 features_exclude[dependencies][ctools] = ctools
 features_exclude[dependencies][strongarm] = strongarm
-project path = /tmp
 files[] = ug_path_breadcrumbs.test
-
