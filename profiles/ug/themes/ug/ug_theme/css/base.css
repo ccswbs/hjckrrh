@@ -566,8 +566,7 @@ Base Styles
       color: #333333;
   }
 
-p
-  {
+  p {
     word-wrap: break-word;
     color:#2C2C2C;
   }
