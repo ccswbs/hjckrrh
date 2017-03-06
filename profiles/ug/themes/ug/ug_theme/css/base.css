@@ -4,6 +4,7 @@ Base Styles
 
   body {
     font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color:#2C2727;
   }
 
   /*---------------------
@@ -11,7 +12,7 @@ Base Styles
   ---------------------**/
 
   h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-    color: #2C2C2C;
+    color: #2C2727;
     font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
   }
 
@@ -54,7 +55,7 @@ Base Styles
   Links
   ---------------------**/
   a{
-      color: #017ACD; 
+      color: #2174BB; 
       /* WCAG 2.0 AA on #EEEEEE, #F5F5F5, #FFFFFF */
   }
 
@@ -65,8 +66,12 @@ Base Styles
   }
   
   a.h1, a.h2, a.h3, a.h4, a.h5, a.h6 {
-    color:#017ACD;
+    color:#2174BB;
     cursor:pointer;
+  }
+  
+  a.h1 .fa, a.h2 .fa, a.h3 .fa, a.h4 .fa, a.h5 .fa, a.h6 .fa {
+    color:#666666;
   }
 
   /* hover/focus - underline */
@@ -182,7 +187,7 @@ Base Styles
   }
 
   figcaption {
-      color: #2C2C2C;
+      color: #2C2727;
       font-size: 1em; /* 14px */
       /*font-style: italic;*/
       padding: 9px;
