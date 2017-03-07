@@ -4,22 +4,32 @@
 #       deploy.sh - Drupal deployment script
 #
 # SYNOPSIS
-#       deploy.sh [-r REF] [ENV ...]
+#       deploy.sh ENV
 #
 # DESCRIPTION
 #       Deploys code to servers in environment ENV, and runs 
 #       database updates.
 #
-#       ENV may be any environment such as "dev", "stage", or "prod".
+#       ENV may be an environment such as "dev", "test", or "live".
 # 
-#       REF is a reference environment. The last tag deployed to
-#       the REF environment will be deployed to ENV. If REF is not
-#       specified, the current branch will be deployed.
+#       When ENV is the dev environment, the default branch (master)
+#       is deployed. When ENV is test, the most recent dev tag is 
+#       deployed. When ENV is live, the most recent test tag is
+#       deployed.
+#
 
 # ---------------------------------------------------------------------
 # Exit immediately on errors.
 
 set -euo pipefail
+
+# ---------------------------------------------------------------------
+# Environments
+
+DEV="dev"
+TEST="test"
+LIVE="live"
+BRANCH="master"
 
 # ---------------------------------------------------------------------
 # Read configuration information from deploy.conf,
@@ -43,53 +53,37 @@ fi
 . $CONF
 
 # ---------------------------------------------------------------------
-# Process arguments.
-
-OPTIND=1	# Reset option index.
-REF=""
-
-while getopts "r:" opt ; do
-  case "$opt" in
-  r)
-    REF=`git tag -l deploy-${OPTARG}-* | tail -1`
-    if [ -z "${REF}" ]; then
-      echo "Error: Reference environment ${OPTARG} not found." 
-      exit 1
-    fi
-    ;;
-  esac
-done
-
-shift $((OPTIND-1))
-
-# ---------------------------------------------------------------------
 # Sanity check.
 
 if [[ $# -eq 0 ]]; then
-  echo "No environments specified."
+  echo "No environment specified."
   exit 1
 fi
 
 # ---------------------------------------------------------------------
-# Confirm.
+# Set environment and ref.
 
-printf "\nYou are about to deploy:\n\n"
-printf "\t * ${REF:-`git rev-parse --abbrev-ref HEAD`}\n"
-printf "\nto the following environment(s):\n\n"
-for ENV in $@; do
-  printf "\t * $ENV\n"
-done
-printf "\nContinue [y/n] ? "
-read answer
-if [ "${answer}" != "y" ]; then
-  echo "Aborting..."
-  exit 0
-fi
+ENV=${1}
 
-# ---------------------------------------------------------------------
-# Loop over target environments.
+REF=""
+case $ENV in
+  $DEV)
+    REF=$BRANCH
+    ;;
+  $TEST)
+    REF=`git tag -l deploy-$DEV-* | tail -1`
+    ;;
+  $LIVE)
+    REF=`git tag -l deploy-$TEST-* | tail -1`
+    ;;
+  *)
+    echo "$ENV is not a valid environment."
+    echo "Try $DEV, $TEST, or $LIVE instead."
+    exit 1
+    ;;
+esac
 
-for ENV in $@; do
+echo "Deploying $REF to $ENV"
 
 # ---------------------------------------------------------------------
 # Create deploy tag.
@@ -124,11 +118,6 @@ while [ $i -lt $MAXHOSTS ]; do
     ssh "${HOSTNAM[$i]}" "drush -y -r ${DOCROOT[$i]} @sites updatedb"
   fi
   i=$(($i+1))
-done
-
-# ---------------------------------------------------------------------
-# End of environments loop.
-
 done
 
 # ---------------------------------------------------------------------
