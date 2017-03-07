@@ -1,8 +1,0 @@
-name = "SMB migration"
-package = "Migration"
-core = 7.x
-
-dependencies[] = migrate
-dependencies[] = migrate_d2d
-
-files[] = smb_migrate.migrate.inc
