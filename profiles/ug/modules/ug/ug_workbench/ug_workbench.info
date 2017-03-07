@@ -8,6 +8,7 @@ dependencies[] = features
 dependencies[] = menu
 dependencies[] = strongarm
 dependencies[] = ug_breadcrumbs
+dependencies[] = ug_role
 dependencies[] = workbench
 dependencies[] = workbench_moderation
 dependencies[] = workbench_moderation

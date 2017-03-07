@@ -69,6 +69,7 @@ function ug_workbench_user_default_permissions() {
     'name' => 'moderate content from needs_review to published',
     'roles' => array(
       'moderator' => 'moderator',
+      'publisher' => 'publisher',
       'site manager' => 'site manager',
     ),
     'module' => 'workbench_moderation',
@@ -88,6 +89,7 @@ function ug_workbench_user_default_permissions() {
     'name' => 'use workbench_moderation needs review tab',
     'roles' => array(
       'moderator' => 'moderator',
+      'publisher' => 'publisher',
       'site manager' => 'site manager',
     ),
     'module' => 'workbench_moderation',
@@ -107,6 +109,7 @@ function ug_workbench_user_default_permissions() {
     'name' => 'view moderation history',
     'roles' => array(
       'moderator' => 'moderator',
+      'publisher' => 'publisher',
       'site manager' => 'site manager',
     ),
     'module' => 'workbench_moderation',
@@ -117,6 +120,7 @@ function ug_workbench_user_default_permissions() {
     'name' => 'view moderation messages',
     'roles' => array(
       'moderator' => 'moderator',
+      'publisher' => 'publisher',
       'site manager' => 'site manager',
     ),
     'module' => 'workbench_moderation',
