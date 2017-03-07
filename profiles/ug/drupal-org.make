@@ -25,6 +25,8 @@ projects[devel][version] = "1.5"
 
 projects[diff][version] = "3.2"
 
+projects[drafty][version] = "1.0-beta4"
+
 projects[ds][version] = "2.14"
 
 projects[ds_bootstrap_layouts][version] = "3.1"
@@ -114,6 +116,10 @@ projects[views][version] = "3.14"
 projects[views_tree][version] = "2.0"
 
 projects[webform][version] = "4.14"
+
+projects[workbench][version] = "1.2"
+
+projects[workbench_moderation][version] = "3.0"
 
 projects[wysiwyg_filter][version] = "1.6-rc3"
 projects[wysiwyg_filter][patch][] = "https://www.drupal.org/files/issues/wysiwyg_filter-Bypass-rules-835202-16.D7.patch"
