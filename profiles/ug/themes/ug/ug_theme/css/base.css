@@ -70,7 +70,7 @@ Base Styles
     cursor:pointer;
   }
   
-  a.h1 .fa, a.h2 .fa, a.h3 .fa, a.h4 .fa, a.h5 .fa, a.h6 .fa {
+  .main-container .fa, .main-container .glyphicon {
     color:#666666;
   }
 
