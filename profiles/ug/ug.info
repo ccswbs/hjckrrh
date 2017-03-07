@@ -62,7 +62,6 @@ dependencies[] = ug_tags
 dependencies[] = ug_theme_settings
 dependencies[] = ug_user
 dependencies[] = ug_webform
+dependencies[] = ug_workbench
 dependencies[] = ug_wysiwyg
-dependencies[] = workbench
-dependencies[] = workbench_moderation
 
