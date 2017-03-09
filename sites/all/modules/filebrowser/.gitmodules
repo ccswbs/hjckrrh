@@ -1,0 +1,3 @@
+[submodule "sites/all/modules/arnumeral/artefact"]
+	path = sites/all/modules/arnumeral/artefact
+	url = git@arnumeral.fr:artefact

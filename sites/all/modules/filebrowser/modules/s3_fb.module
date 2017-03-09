@@ -1,0 +1,186 @@
+<?php
+
+function validate_s3($path) {
+  $client = awssdk_get_client('s3');
+  $client->registerStreamWrapper();
+
+  if (!file_exists($path)) {
+    //folder (object) does not exist so we wil create it
+    $success = mkdir($path, 0777, TRUE);
+    if (!$success) {
+      form_set_error('file_path', t('The S3 directory %dir is not a valid directory and I\'m unable to help this.', array(
+      '%dir' => $path
+      )));
+    }
+    else {
+      drupal_set_message(t('The directory %dir has been created on S3.', array(
+        '%dir' => $path
+      )));
+    }
+  }
+  else {
+    //Todo: check readability of S3 dir
+    // php function is_readable() is avail in Amazon streamWrapper
+
+    /*if (!is_readable($encoded_path)) {
+      form_set_error('file_path', t('The directory %dir is not readable.', array(
+      '%dir' => $path
+      )));
+    }*/
+  }
+}
+
+/**
+ * implements hook_form_alter
+ * Enter S3 information on dir-listing node-edit form
+ * @param $form
+ * @param $form_state
+ * @param $form_id
+ */
+function s3_fb_form_dir_listing_node_form_alter(&$form, &$form_state, $form_id) {
+  $form['folder_path']['#description'] .= '<br>' . t('S3 Filebrowser module installed. To use Amazon S3 storage enter the full path to your storage location. Use lowercase s. (s3://your_bucket/directory)');
+  $form['folder_rights']['download_archive']['#description'] .= '<br>' . t('S3 Filebrowser module installed.') . '<br><strong>' . t('Folder download is not supported yet by S3 Filebrowser. Please deselect this option.');
+}
+
+/**
+ * @function Creates a .. file since this is not available in a s3 system.
+ * @param $nid integer Node id for which this FileBrowser is created
+ * @param $fs_root string The root for this directory
+ * @return array
+ */
+function s3_create_subdir($nid, $fs_root){
+  return array(
+    'nid' => $nid,
+    'display-name' => '..',
+    'relative-path' => '/',
+    'full-path'  => $fs_root,
+    'status' => MARK_READ,
+    'kind' => 2,
+    'mime-type' => 'folder/parent',
+    'url' => url('node/' . $nid, array('absolute' => TRUE)),
+  );
+}
+
+/**
+ * @function Creates a . file (parent folder) since this is not available in a s3 system.
+ * @param $nid
+ * @param $fs_root
+ * @return array
+ */
+function s3_create_updir(&$file_array, $nid, $fs_root) {
+  $file_array['nid'] = $nid;
+  $file_array['display-name'] = '.';
+  $file_array['full-path'] = $fs_root;
+  $file_array['status'] = MARK_READ;
+  $file_array['kind'] = 1;
+  $file_array['mime-type'] = 'folder';
+}
+
+function s3_set_db_content_updir($nid){
+  $content = (array)db_query("SELECT * FROM {node_dir_listing_content} WHERE nid = :nid and path = :path",  array(':nid' => $nid, ':path' => '/'))-> fetch();
+  if ($content) {
+    $content_arr = &$content;
+  }
+  else {
+    // set an error. This is an sub directory, so the 'up directory' should already exist in the DB
+    drupal_set_message(t('Parent directory reference error.'), 'error');
+  }
+  $content_arr['exists'] = true;
+  $content_arr['display-name'] = '..';
+  return $content_arr;
+}
+
+function s3_delete($target) {
+  $client = awssdk_get_client('s3');
+  $client-> registerStreamWrapper();
+  $type = filetype($target);
+
+  switch ($type) {
+    case "file":
+      $result = unlink($target);
+      if (!$result) {
+        drupal_set_message(t('Unable to delete @file', array('@file' => $target)), 'warning');
+      }
+      break;
+    case "dir":
+      // todo: s3 will not delete an non-empty folder. But wil fail silently.
+      // todo: check why we need an end slash
+      $result = $client-> deleteObject(s3_object_info($target . '/'));
+      if (!$result) {
+        drupal_set_message(t('Unable to delete @file', array('@file' => $target)), 'warning');
+      }
+      break;
+    default:
+        drupal_set_message(t('Switch case default error in function s3_delete().'), 'error');
+  }
+}
+
+/**
+ *  Takes a path to an S3 object and breakes it down to it's bucket and key
+ * @param string $path Path to breakdown
+ * @return array array with value of bucket and key of object
+ */
+function s3_object_info($path){
+  $bucket_key = str_replace('s3://', '', $path);
+  $arr = explode('/', $bucket_key);
+  $bucket = $arr[0];
+  unset($arr[0]);
+  $key = implode('/', $arr);
+  return  array(
+    'Bucket' => $bucket,
+    'Key'    => $key,
+  );
+}
+
+/**
+ * We cannot use regular PHP file functions to create the archive files so we use AWS SDK
+ * @param $target
+ * @param $node
+ * @param $fid
+ * @param $files_fid
+ * @return null|string
+ */
+function s3_create_archive($target, $node, $fid, $files_fid) {
+  //debug($target, 'target');
+  $client = awssdk_get_client('s3');
+  $client-> registerStreamWrapper();
+
+  $zip = new ZipArchive();
+  $target = file_directory_temp() . "/filebrowser_" . _filebrowser_safe_basename($target) . ".zip";
+  //debug($target, 'target');
+  $cleanup = $target;
+  if (!file_exists(_filebrowser_safe_dirname($target))) {
+    mkdir(_filebrowser_safe_dirname($target), 0777, TRUE);
+  }
+  if (file_exists($target)) {
+    unlink($target);
+  }
+  _filebrowser_load_files($node, $fid);
+  if ($zip->open($target, ZIPARCHIVE::CREATE) === TRUE) {
+    //debug($target, 'The zip file');
+    foreach ($node->file_listing as $file_name => $file_data) {
+      if (($file_data['kind'] === 0) && (!$files_fid || in_array($file_data['fid'], $files_fid))) {
+        $fs_filename = _filebrowser_encoding_to_fs($node, _filebrowser_get_node_root($node) . $file_data['relative-path']);
+
+        try {
+          $result = $client-> getObject(s3_object_info($fs_filename));
+          $body = $result-> get('Body');
+          $body->rewind();
+          $content = $body-> read($result['ContentLength']);
+        }
+        catch(Aws\S3\Exception\S3Exception $e) {
+          // todo: wrap in drupal message
+          echo "Request failed.<br />";
+        }
+        $zip-> addFromString($file_name, $content);
+      }
+    }
+    $zip->close();
+  }
+  else {
+    return t("Unable to create temporary zip file '@file'", array(
+    '@file' => $target, ));
+  }
+  return $target;
+}
+
