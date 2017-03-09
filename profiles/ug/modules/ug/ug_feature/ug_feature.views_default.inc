@@ -259,13 +259,13 @@ function ug_feature_views_default_views() {
   $handler->display->display_options['allow']['exposed_form'] = 0;
   $handler->display->display_options['allow']['fields_override'] = 0;
   $handler->display->display_options['argument_input'] = array(
-    'field_feature_category_tid' => array(
+    'tid' => array(
       'type' => 'panel',
-      'context' => 'entity:file.fid',
+      'context' => 'entity:field_collection_item.archived',
       'context_optional' => 0,
       'panel' => '0',
       'fixed' => '',
-      'label' => 'Category',
+      'label' => 'Content: Has taxonomy term ID',
     ),
   );
   $export['ft2'] = $view;
