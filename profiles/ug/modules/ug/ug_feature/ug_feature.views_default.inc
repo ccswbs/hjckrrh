@@ -216,20 +216,22 @@ function ug_feature_views_default_views() {
   $handler->display->display_options['sorts']['created']['table'] = 'node';
   $handler->display->display_options['sorts']['created']['field'] = 'created';
   $handler->display->display_options['sorts']['created']['order'] = 'DESC';
-  /* Contextual filter: Content: Category (field_feature_category) */
-  $handler->display->display_options['arguments']['field_feature_category_tid']['id'] = 'field_feature_category_tid';
-  $handler->display->display_options['arguments']['field_feature_category_tid']['table'] = 'field_data_field_feature_category';
-  $handler->display->display_options['arguments']['field_feature_category_tid']['field'] = 'field_feature_category_tid';
-  $handler->display->display_options['arguments']['field_feature_category_tid']['default_argument_type'] = 'fixed';
-  $handler->display->display_options['arguments']['field_feature_category_tid']['summary']['number_of_records'] = '0';
-  $handler->display->display_options['arguments']['field_feature_category_tid']['summary']['format'] = 'default_summary';
-  $handler->display->display_options['arguments']['field_feature_category_tid']['summary_options']['items_per_page'] = '25';
-  $handler->display->display_options['arguments']['field_feature_category_tid']['specify_validation'] = TRUE;
-  $handler->display->display_options['arguments']['field_feature_category_tid']['validate']['type'] = 'taxonomy_term';
-  $handler->display->display_options['arguments']['field_feature_category_tid']['validate_options']['vocabularies'] = array(
+  /* Contextual filter: Content: Has taxonomy term ID */
+  $handler->display->display_options['arguments']['tid']['id'] = 'tid';
+  $handler->display->display_options['arguments']['tid']['table'] = 'taxonomy_index';
+  $handler->display->display_options['arguments']['tid']['field'] = 'tid';
+  $handler->display->display_options['arguments']['tid']['title_enable'] = TRUE;
+  $handler->display->display_options['arguments']['tid']['title'] = 'Features related to %1';
+  $handler->display->display_options['arguments']['tid']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['tid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['tid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['tid']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['tid']['specify_validation'] = TRUE;
+  $handler->display->display_options['arguments']['tid']['validate']['type'] = 'taxonomy_term';
+  $handler->display->display_options['arguments']['tid']['validate_options']['vocabularies'] = array(
     'feature_category' => 'feature_category',
+    'tags' => 'tags',
   );
-  $handler->display->display_options['arguments']['field_feature_category_tid']['validate']['fail'] = 'empty';
   /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
