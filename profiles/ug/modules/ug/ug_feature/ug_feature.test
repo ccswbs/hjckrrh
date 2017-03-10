@@ -35,7 +35,7 @@ class UGFeatureTestCase extends TaxonomyWebTestCase {
     );
   }
 
-  function _testNoResultsBehavior() {
+  function testNoResultsBehavior() {
     /* Assert listing pages show 'no results found.' */
     foreach ($this->getListingPages() as $path) {
       $this->drupalGet($path);
@@ -49,7 +49,7 @@ class UGFeatureTestCase extends TaxonomyWebTestCase {
   /**
    * Test URL aliases
    */
-  function _testUrlAlias() {
+  function testUrlAlias() {
     /* Create a node */
     $settings = array('type' => 'feature');
     $node1 = $this->drupalCreateNode($settings);
@@ -63,7 +63,7 @@ class UGFeatureTestCase extends TaxonomyWebTestCase {
   /**
    * Test alt text on feed link.
    */
-  function _testFeed() {
+  function testFeed() {
     /* Create category term */
     $category = taxonomy_vocabulary_machine_name_load('feature_category');
     $term = $this->createTerm($category);
@@ -78,7 +78,7 @@ class UGFeatureTestCase extends TaxonomyWebTestCase {
     $status = strpos($view_content, $alttext);
     $this->assert(!!$status, "$alttext found");
   }
-  
+
   /**
    * Testing FT2 view with category argument and keyword argument
    **/
@@ -87,7 +87,7 @@ class UGFeatureTestCase extends TaxonomyWebTestCase {
     $featurescats = taxonomy_vocabulary_machine_name_load('feature_category');
     $term1 = $this->createTerm($featurescats);
     $term2 = $this->createTerm($featurescats);
-    
+
     /* Create keywords for features */
     $tags = taxonomy_vocabulary_machine_name_load('tags');
     $term3 = $this->createTerm($tags);
@@ -96,10 +96,10 @@ class UGFeatureTestCase extends TaxonomyWebTestCase {
     /* Create 2 Features */
     $settings1 = array();
     $settings1['type'] = 'feature';
-    
+
     $settings2 = array();
     $settings2['type'] = 'feature';
-    
+
     $settings1['field_feature_category'][LANGUAGE_NONE][0]['tid'] = $term1->tid;
     $settings1['field_tags'][LANGUAGE_NONE][0]['tid'] = $term3->tid;
     $node1 = $this->drupalCreateNode($settings1);
@@ -107,7 +107,7 @@ class UGFeatureTestCase extends TaxonomyWebTestCase {
     $settings2['field_feature_category'][LANGUAGE_NONE][0]['tid'] = $term2->tid;
     $settings2['field_tags'][LANGUAGE_NONE][0]['tid'] = $term4->tid;
     $node2 = $this->drupalCreateNode($settings2);
-   
+
     /* Get feed. */
     $this->drupalGet('features');
 
@@ -117,7 +117,7 @@ class UGFeatureTestCase extends TaxonomyWebTestCase {
     /* There should be both titles*/
     $this->assertText($node1->title);
     $this->assertText($node2->title);
-    
+
     /*Go to features/term1 */
     $this->drupalGet('features/'. $term1->tid);
     /* There should be one title */
@@ -129,19 +129,19 @@ class UGFeatureTestCase extends TaxonomyWebTestCase {
     /* There should be one title */
     $this->assertText($node2->title);
     $this->assertNoText($node1->title);
-    
+
     /*Go to features/term3 */
     $this->drupalGet('features/'. $term3->tid);
     /* There should be one title */
     $this->assertText($node1->title);
     $this->assertNoText($node2->title);
-    
+
     /*Go to features/term4 */
     $this->drupalGet('features/'. $term4->tid);
     /* There should be one title */
     $this->assertText($node2->title);
     $this->assertNoText($node1->title);
-  }
-  
-}
 
+    }
+
+}
