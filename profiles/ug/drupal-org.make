@@ -31,8 +31,6 @@ projects[ctools][patch][] = "https://www.drupal.org/files/issues/views_panes-mor
 
 projects[date][version] = "2.9"
 
-projects[date_ical][version] = "3.3"
-
 projects[devel][version] = "1.5"
 
 projects[diff][version] = "3.2"
