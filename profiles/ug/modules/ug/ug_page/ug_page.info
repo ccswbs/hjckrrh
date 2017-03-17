@@ -14,7 +14,6 @@ dependencies[] = options
 dependencies[] = strongarm
 dependencies[] = taxonomy
 dependencies[] = text
-dependencies[] = ug_page_layouts
 dependencies[] = ug_tags
 dependencies[] = views
 dependencies[] = views_content
