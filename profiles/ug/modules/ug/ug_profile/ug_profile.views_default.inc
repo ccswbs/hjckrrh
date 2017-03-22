@@ -229,8 +229,9 @@ function ug_profile_views_default_views() {
   $handler->display->display_options['fields']['field_profile_office']['table'] = 'field_data_field_profile_office';
   $handler->display->display_options['fields']['field_profile_office']['field'] = 'field_profile_office';
   $handler->display->display_options['fields']['field_profile_office']['element_type'] = '0';
-  $handler->display->display_options['fields']['field_profile_office']['element_label_type'] = 'div';
+  $handler->display->display_options['fields']['field_profile_office']['element_label_type'] = 'strong';
   $handler->display->display_options['fields']['field_profile_office']['element_label_class'] = 'field-label';
+  $handler->display->display_options['fields']['field_profile_office']['hide_empty'] = TRUE;
   /* Field: Content: Last name */
   $handler->display->display_options['fields']['field_profile_lastname']['id'] = 'field_profile_lastname';
   $handler->display->display_options['fields']['field_profile_lastname']['table'] = 'field_data_field_profile_lastname';
@@ -243,8 +244,6 @@ function ug_profile_views_default_views() {
   $handler->display->display_options['fields']['field_profile_name']['field'] = 'field_profile_name';
   $handler->display->display_options['fields']['field_profile_name']['label'] = '';
   $handler->display->display_options['fields']['field_profile_name']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['field_profile_office']['element_label_type'] = 'strong';
-  $handler->display->display_options['fields']['field_profile_office']['hide_empty'] = TRUE;
   $handler->display->display_options['allow']['use_pager'] = 'use_pager';
   $handler->display->display_options['allow']['items_per_page'] = 'items_per_page';
   $handler->display->display_options['allow']['offset'] = 0;
@@ -757,11 +756,10 @@ function ug_profile_views_default_views() {
   $handler->display->display_options['fields']['field_profile_align_names']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_profile_align_names']['element_type'] = '0';
   $handler->display->display_options['fields']['field_profile_align_names']['element_label_colon'] = FALSE;
-  /* Sort criterion: Content: Post date */
-  $handler->display->display_options['sorts']['created']['id'] = 'created';
-  $handler->display->display_options['sorts']['created']['table'] = 'node';
-  $handler->display->display_options['sorts']['created']['field'] = 'created';
-  $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  /* Sort criterion: Content: Last name (field_profile_lastname) */
+  $handler->display->display_options['sorts']['field_profile_lastname_value']['id'] = 'field_profile_lastname_value';
+  $handler->display->display_options['sorts']['field_profile_lastname_value']['table'] = 'field_data_field_profile_lastname';
+  $handler->display->display_options['sorts']['field_profile_lastname_value']['field'] = 'field_profile_lastname_value';
   /* Contextual filter: Content: Has taxonomy term ID */
   $handler->display->display_options['arguments']['tid']['id'] = 'tid';
   $handler->display->display_options['arguments']['tid']['table'] = 'taxonomy_index';
@@ -837,7 +835,7 @@ function ug_profile_views_default_views() {
   /* Display: Content pane */
   $handler = $view->new_display('panel_pane', 'Content pane', 'panel_pane_1');
   $handler->display->display_options['allow']['use_pager'] = 0;
-  $handler->display->display_options['allow']['items_per_page'] = 0;
+  $handler->display->display_options['allow']['items_per_page'] = 'items_per_page';
   $handler->display->display_options['allow']['offset'] = 0;
   $handler->display->display_options['allow']['link_to_view'] = 0;
   $handler->display->display_options['allow']['more_link'] = 0;
