@@ -1,0 +1,9 @@
+name = Filebrowser
+description = Provides FTP-like browsing capabilities.
+core = 6.x
+package = FileBrowser
+version = 6.x-3.y
+core = "6.x"
+project = "filebrowser"
+
+

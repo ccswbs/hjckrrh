@@ -1,0 +1,401 @@
+<?php
+
+/* This file is part of "filebrowser".
+ *    Copyright 2009, arNuméral
+ *    Author : Yoran Brault
+ *    eMail  : yoran.brault@bad_arnumeral.fr (remove bad_ before sending an email)
+ *    Site   : http://www.arnumeral.fr
+ *
+ * "filebrowser" is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * "filebrowser" is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with "filebrowser"; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
+
+/**
+ * @file
+ * filbrowser installation file.
+ */
+function filebrowser_schema() {
+  $schema = array();
+  $schema['node_dir_listing'] = array(
+    'fields' => array(
+      'nid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE
+      ),
+      'folder_path' => array(
+        'type' => 'varchar',
+        'length' => '255',
+        'not null' => TRUE
+      ),
+
+      'properties' => array(
+        'type' => 'text',
+        'not null' => TRUE,
+        'size' => 'big'
+      )
+    ),
+    'primary key' => array( 'nid' )
+  );
+
+  $schema['node_dir_listing_content'] = array(
+    'fields' => array(
+      'nid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE
+      ),
+      'fid' => array(
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE
+      ),
+      'root' => array(
+        'type' => 'varchar',
+        'length' => '255',
+        'not null' => TRUE
+      ),
+      'path' => array(
+        'type' => 'varchar',
+        'length' => '255',
+        'not null' => TRUE
+      )
+    ),
+    'primary key' => array( 'fid' ),
+    'unique keys' => array(
+      'nid_fid' => array( 'nid', 'fid' ),
+      'fid' => array( 'fid' )
+    )
+  );
+  return $schema;
+}
+
+function filebrowser_install() {
+  $t = get_t();
+  node_types_rebuild();
+  $types = node_type_get_types();
+  // add body field to dir_listing content_type
+  node_add_body_field($types['dir_listing']);
+  // configure the bodyfield the way filebrowser wants it
+  $body_instance = field_info_instance('node', 'body', 'dir_listing');
+  $body_instance['label'] = $t('Description');
+  $body_instance['widget']['settings']['rows'] = 4;
+  field_update_instance($body_instance);
+}
+
+function filebrowser_uninstall() {
+  $sql = 'SELECT nid FROM {node} n WHERE n.type = :type';
+  $result = db_query($sql, array(':type' => 'dir_listing'));
+  $nids = array();
+  foreach ($result as $row) {
+    $nids[] = $row->nid;
+  }
+  // http://api.drupal.org/api/function/node_delete_multiple/7
+  node_delete_multiple($nids);
+  // http://api.drupal.org/api/function/node_type_delete/7
+  node_type_delete('dir_listing');
+}
+
+// Update from 5.x-1.x to 6.x-1.x
+function filebrowser_update_6100() {
+
+  $ret = array();
+
+  // Add the old directory listing into the new database structure given that
+  // this old data exists and users haven't already upgraded manually.
+  global $conf;
+  if (isset($conf['filebrowser_root']) && !db_table_exists('filebrowser')) {
+    db_create_table($ret, 'filebrowser', array(
+      'fields' => array(
+        'path' => array(
+          'type' => 'varchar',
+          'length' => '255',
+          'not NULL' => TRUE
+        ),
+        'location' => array(
+          'type' => 'varchar',
+          'length' => '255',
+          'not NULL' => TRUE
+        ),
+        'can_explore' => array(
+          'type' => 'int',
+          'size' => 'tiny',
+          'not NULL' => TRUE,
+          'disp-width' => '1'
+        )
+      ),
+      'primary key' => array(
+        'path'
+      )
+    ));
+
+    $ret[] = update_sql("INSERT INTO {filebrowser} (path, location, can_explore) VALUES ('filebrowser', '{$conf['filebrowser_root']}', 1)");
+  }
+
+  // Clean up variables from 5.x branch
+  variable_del('filebrowser_icons');
+  variable_del('filebrowser_root');
+  variable_del('filebrowser_hide_description_files');
+
+  return $ret;
+}
+
+// Update from 6.x-1.x to 6.x-2.x
+function filebrowser_update_6200() {
+
+  $ret = array();
+
+  // Add new fields
+  db_add_field($ret, 'filebrowser', 'nid', array(
+    'type' => 'int',
+    'unsigned' => TRUE,
+    'not NULL' => TRUE
+  ));
+  db_add_field($ret, 'filebrowser', 'file_blacklist', array(
+    'type' => 'varchar',
+    'length' => '255',
+    'not NULL' => TRUE
+  ));
+
+  // Change existing fields
+  db_change_field($ret, 'filebrowser', 'location', 'file_path', array(
+    'type' => 'varchar',
+    'length' => '255',
+    'not NULL' => TRUE
+  ));
+  db_drop_primary_key($ret, 'filebrowser');
+  db_change_field($ret, 'filebrowser', 'can_explore', 'explore_subdirs', array(
+    'type' => 'int',
+    'size' => 'tiny',
+    'not NULL' => TRUE,
+    'disp-width' => '1'
+  ));
+
+  // Grab all existing filebrowser data
+  $qry = db_query('SELECT file_path, path, explore_subdirs FROM {filebrowser}');
+  $new_nodes = array();
+  while ($node = db_fetch_object($qry)) {
+    $new_nodes[] = $node;
+  }
+
+  // Clear out the filebrowser data
+  // This is necessary so that we can use node_save() which will automatically
+  // call filebrowser_save() for us.
+  $ret[] = update_sql('TRUNCATE TABLE {filebrowser}');
+
+  // We need to add the primary key after we've truncated the table, otherwise
+  // it'll fail on duplicate keys if multiple directory listings have been
+  // created.
+  db_add_primary_key($ret, 'filebrowser', array(
+    'nid'
+  ));
+
+  // Attach these nodes to the default administrator account
+  $user = user_load(array(
+    'uid' => 1
+  ));
+
+  // Reinsert our directory listing nodes
+  foreach ($new_nodes as $node) {
+    $node->type = 'dir_listing';
+    $node->uid = 1;
+    $node->name = $user->name;
+    $node->file_blacklist = '';
+    node_save($node);
+  }
+
+  // Drop unneeded fields
+  db_drop_field($ret, 'filebrowser', 'path');
+
+  return $ret;
+}
+
+// Update enabling private downloads
+function filebrowser_update_6201() {
+  $ret = array();
+  db_add_field($ret, 'filebrowser', 'private_downloads', array(
+    'type' => 'int',
+    'size' => 'tiny',
+    'unsigned' => TRUE,
+    'not NULL' => TRUE,
+    'default' => 0
+  ));
+  return $ret;
+}
+
+function filebrowser_update_6202() {
+
+  $ret = array();
+
+  // Add new fields
+  db_add_field($ret, 'filebrowser', 'hidden_files', array(
+    'type' => 'varchar',
+    'length' => '255',
+    'not NULL' => TRUE,
+    'default' => ''
+  ));
+  db_add_field($ret, 'filebrowser', 'filtered_files', array(
+    'type' => 'varchar',
+    'length' => '255',
+    'not NULL' => TRUE,
+    'default' => ''
+  ));
+
+  // Grab all existing filebrowser data
+  $cursor = db_query('SELECT nid, file_blacklist FROM {filebrowser}');
+  while ($node = db_fetch_object($cursor)) {
+    $hidden = preg_replace("/\s*,\s*/", "\r\n", $node->file_blacklist);
+    $ret[] = update_sql("update {filebrowser} set hidden_files='" . $hidden . "' where nid=" . $node->nid);
+  }
+
+  // Change existing fields
+  $ret[] = db_drop_field($ret, 'filebrowser', 'file_blacklist');
+
+  return $ret;
+}
+
+function filebrowser_update_6203() {
+
+  $ret = array();
+
+  // Add new fields
+  db_add_field($ret, 'filebrowser', 'allowed_uploaded_files', array(
+    'type' => 'varchar',
+    'length' => '255',
+    'not NULL' => TRUE,
+    'default' => ''
+  ));
+
+  return $ret;
+}
+
+function filebrowser_update_6204() {
+
+  $ret = array();
+
+  // Add new fields
+  db_add_field($ret, 'filebrowser', 'hide_extension', array(
+    'type' => 'int',
+    'size' => 'tiny',
+    'not NULL' => TRUE,
+    'disp-width' => '1',
+    'default' => '0'
+  ));
+
+  return $ret;
+}
+
+function filebrowser_update_6205() {
+  $ret = array();
+  // Add new fields
+  db_add_field($ret, 'filebrowser', 'visible_columns', array(
+    'type' => 'varchar',
+    'length' => '255',
+    'not NULL' => TRUE,
+    'default' => ''
+  ));
+
+  return $ret;
+}
+
+function filebrowser_update_6210() {
+  $ret = array();
+  // Add new fields
+  db_add_field($ret, 'filebrowser', 'allow_files_upload', array(
+    'type' => 'int',
+    'size' => 'tiny',
+    'not NULL' => FALSE,
+    'disp-width' => '1'
+  ));
+
+  return $ret;
+}
+
+function filebrowser_update_6211() {
+  $ret = array();
+  if (db_table_exists("node_dir_listing")) {
+    db_drop_table($ret, "node_dir_listing");
+  }
+  $schema = filebrowser_schema();
+  db_create_table($ret, 'node_dir_listing', $schema['node_dir_listing']);
+  $cursor = db_query("SELECT * FROM {filebrowser}");
+  while ($node = db_fetch_object($cursor)) {
+    $properties = (object)array(
+      'folder_rights' => (object)array(
+        'explore_subdirs' => $node->explore_subdirs ? TRUE : FALSE,
+        'private_downloads' => $node->private_downloads ? TRUE : FALSE,
+        'forbidden_files' => $node->hidden_files ? $node->hidden_files : '',
+        'filtered_files' => $node->filtered_files ? $node->filtered_files : ''
+      ),
+      'folder_uploads' => (object)array(
+        'enabled' => $node->allow_files_upload ? TRUE : FALSE,
+        'accepted_uploaded_files' => $node->allowed_uploaded_files ? $node->allowed_uploaded_files : ''
+      ),
+      'folder_presentation' => (object)array(
+        'hide_extension' => $node->hide_extension ? TRUE : FALSE,
+        'visible_columns' => $node->visible_columns ? unserialize($node->visible_columns) : array(
+          'icon' => TRUE,
+          'display_name' => TRUE
+        )
+      )
+    );
+    $serialised = serialize($properties);
+    $ret[] = filebrowser_update_sql("
+      insert into {node_dir_listing}
+      (nid,folder_path,properties)
+      values(%d,'%s','%s')", $node->nid, $node->file_path, $serialised);
+  }
+
+  return $ret;
+}
+
+function filebrowser_update_sql($query) {
+  $args = func_get_args();
+  $result = call_user_func_array("db_query", $args);
+  return array(
+      'success' => $result !== FALSE,
+      'query' => check_plain($query)
+  );
+}
+
+function filebrowser_update_6212() {
+  $ret = array();
+  if (db_column_exists('node_dir_listing', 'path')) {
+    db_change_field($ret, 'node_dir_listing', 'path', 'folder_path', array(
+        'type' => 'varchar',
+        'length' => '255',
+        'not NULL' => TRUE
+    ));
+  }
+  return $ret;
+}
+
+function filebrowser_update_6213() {
+  $ret = array();
+  $schema = filebrowser_schema();
+  db_create_table($ret, 'node_dir_listing_content', $schema['node_dir_listing_content']);
+  return $ret;
+}
+
+function filebrowser_update_6214() {
+  $ret = array();
+  db_add_field($ret, 'node_dir_listing_content', 'root', array(
+      'type' => 'varchar',
+      'length' => '255',
+      'not NULL' => TRUE
+  ));
+  update_sql("DELETE FROM {node_dir_listing_content}");
+  return $ret;
+}
