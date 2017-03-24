@@ -1,7 +1,7 @@
 name = UG Feature Layouts
 core = 7.x
-version = VERSION
 package = UG
+version = 7.52
 dependencies[] = ctools
 dependencies[] = page_manager
 dependencies[] = ug_feature
