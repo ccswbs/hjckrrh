@@ -18,11 +18,9 @@ function ug_path_breadcrumbs_path_breadcrumbs_settings_info() {
   $path_breadcrumb->data = array(
     'titles' => array(
       0 => 'Events',
-      1 => '%node_title',
     ),
     'paths' => array(
       0 => 'events',
-      1 => '<none>',
     ),
     'home' => 1,
     'translatable' => 0,
@@ -61,11 +59,9 @@ function ug_path_breadcrumbs_path_breadcrumbs_settings_info() {
   $path_breadcrumb->data = array(
     'titles' => array(
       0 => 'FAQs',
-      1 => '%node_title',
     ),
     'paths' => array(
       0 => 'faqs',
-      1 => '<none>',
     ),
     'home' => 1,
     'translatable' => 0,
@@ -104,11 +100,9 @@ function ug_path_breadcrumbs_path_breadcrumbs_settings_info() {
   $path_breadcrumb->data = array(
     'titles' => array(
       0 => 'News',
-      1 => '%node_title',
     ),
     'paths' => array(
       0 => 'news',
-      1 => '<none>',
     ),
     'home' => 1,
     'translatable' => 0,
@@ -147,11 +141,9 @@ function ug_path_breadcrumbs_path_breadcrumbs_settings_info() {
   $path_breadcrumb->data = array(
     'titles' => array(
       0 => 'Services',
-      1 => '%node_title',
     ),
     'paths' => array(
       0 => 'services',
-      1 => '<none>',
     ),
     'home' => 1,
     'translatable' => 0,

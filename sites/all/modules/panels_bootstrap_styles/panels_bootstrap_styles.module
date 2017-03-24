@@ -36,6 +36,17 @@ function panels_bootstrap_styles_theme() {
     'file' => 'theme.inc',
     'template' => 'panels-bootstrap-region',
   );
+
+  $theme['panels_bootstrap_tabs'] = array(
+    'variables' => array(
+      'output' => array(),
+      'panes' => array(),
+      'display' => array()
+    ),
+    'path' => drupal_get_path('module', 'panels_bootstrap_styles') . '/theme',
+    'file' => 'theme.inc',
+    'template' => 'panels-bootstrap-tabs',
+  );
   return $theme;
 }
 
@@ -124,4 +135,14 @@ function panels_bootstrap_styles_panels_bootstrap_substyles() {
     ),
   );
   return $styles;
+}
+
+/**
+ * Implementation of hook_preprocess_panels_pane()
+ */
+function panels_bootstrap_styles_preprocess_panels_pane(&$vars) {
+  // Store pane title in static cache so we can use it at the region level.
+  $pane_id = $vars['pane']->pid;
+  $pane_title = &drupal_static($pane_id . '_title');
+  $pane_title = $vars['title'];
 }

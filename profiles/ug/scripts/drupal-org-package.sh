@@ -15,10 +15,11 @@ mkdir $PKG
 # First, build no-core version of profile
 cd $PKG
 cp -R $CWD $NAME
-find . -name '*.info' -exec sed -i -e "s/VERSION/$VERSION/" {} \;
+find . -name '*.info' -exec sed -i -e "s/^version = .*$/version = $VERSION/" {} \;
 # Before building, package basic profile
 tar -C$PKG -czf $TMP/$NAME-$VERSION.tar.gz $NAME
 # Now build and package no-core version
+cd $NAME
 drush make --drupal-org $CWD/drupal-org.make .
 cd $PKG
 tar -czf $TMP/$NAME-$VERSION-nocore.tar.gz $NAME
