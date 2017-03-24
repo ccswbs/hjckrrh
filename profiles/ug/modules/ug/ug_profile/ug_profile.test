@@ -141,6 +141,43 @@ class UGProfileTestCase extends TaxonomyWebTestCase {
     // Test office present
     $this->assertText("Office:");
   }
+
+  /**
+   * Test multiple website links 
+   */
+  function testMultipleWebsiteLinks() {
+    $websites_label = "Website links";
+    
+    /* Generate data */
+    $name = $this->randomName();
+    $lastname = $this->randomName();
+    $websites = array(
+      array('title' => $this->randomName(), 'url' => '<front>', 'attributes' => ''),
+      array('title' => $this->randomName(), 'url' => 'people/', 'attributes' => ''),
+    );
+
+    /* Create a node with multiple website links */
+    $settings = array('type' => 'profile');
+    $settings['field_profile_name'][LANGUAGE_NONE][0]['value'] = $name;
+    $settings['field_profile_lastname'][LANGUAGE_NONE][0]['value'] = $lastname;
+
+    foreach ($websites as $key => $site) {
+      $settings['field_profile_website'][LANGUAGE_NONE][$key]['title'] = $site['title'];
+      $settings['field_profile_website'][LANGUAGE_NONE][$key]['url'] = $site['url'];
+      $settings['field_profile_website'][LANGUAGE_NONE][$key]['attributes'] = $site['attributes'];
+    }
+
+    $node = $this->drupalCreateNode($settings);
+    $this->drupalGet('node/'.$node->nid);
+
+    /* Assert website links label */
+    $this->assertText($websites_label);
+
+    /* Assert multiple websites */
+    foreach ($websites as $key => $site) {
+      $this->assertLink($site['title']);
+    }
+  }
   
   /**
    * Test Last Name Search
