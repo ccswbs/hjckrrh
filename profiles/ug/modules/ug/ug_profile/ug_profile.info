@@ -5,6 +5,7 @@ package = UG
 version = 7.x-7.52
 project = ug_profile
 dependencies[] = auto_nodetitle
+dependencies[] = ds
 dependencies[] = ds_bootstrap_layouts
 dependencies[] = field_collection
 dependencies[] = field_group
