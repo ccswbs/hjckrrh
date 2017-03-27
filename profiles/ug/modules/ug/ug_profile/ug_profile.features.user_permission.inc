@@ -10,6 +10,13 @@
 function ug_profile_user_default_permissions() {
   $permissions = array();
 
+  // Exported permission: 'create field_profile_align_names'.
+  $permissions['create field_profile_align_names'] = array(
+    'name' => 'create field_profile_align_names',
+    'roles' => array(),
+    'module' => 'field_permissions',
+  );
+
   // Exported permission: 'create profile content'.
   $permissions['create profile content'] = array(
     'name' => 'create profile content',
@@ -98,6 +105,20 @@ function ug_profile_user_default_permissions() {
     'module' => 'node',
   );
 
+  // Exported permission: 'edit field_profile_align_names'.
+  $permissions['edit field_profile_align_names'] = array(
+    'name' => 'edit field_profile_align_names',
+    'roles' => array(),
+    'module' => 'field_permissions',
+  );
+
+  // Exported permission: 'edit own field_profile_align_names'.
+  $permissions['edit own field_profile_align_names'] = array(
+    'name' => 'edit own field_profile_align_names',
+    'roles' => array(),
+    'module' => 'field_permissions',
+  );
+
   // Exported permission: 'edit own profile content'.
   $permissions['edit own profile content'] = array(
     'name' => 'edit own profile content',
@@ -159,6 +180,20 @@ function ug_profile_user_default_permissions() {
       'site manager' => 'site manager',
     ),
     'module' => 'taxonomy',
+  );
+
+  // Exported permission: 'view field_profile_align_names'.
+  $permissions['view field_profile_align_names'] = array(
+    'name' => 'view field_profile_align_names',
+    'roles' => array(),
+    'module' => 'field_permissions',
+  );
+
+  // Exported permission: 'view own field_profile_align_names'.
+  $permissions['view own field_profile_align_names'] = array(
+    'name' => 'view own field_profile_align_names',
+    'roles' => array(),
+    'module' => 'field_permissions',
   );
 
   return $permissions;
