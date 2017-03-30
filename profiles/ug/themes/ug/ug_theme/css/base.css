@@ -522,7 +522,7 @@ Base Styles
     .pagination>.disabled>span, 
     .pagination>.disabled>span:hover, 
     .pagination>.disabled>span:focus {
-      color: #2C2C2C;
+      color: #2C2727;
     }
 
     .pagination>.active>a, .pagination>.active>span, 
@@ -578,7 +578,7 @@ Base Styles
 
   p {
     word-wrap: break-word;
-    color:#2C2C2C;
+    color:#2C2727;
   }
   
 /*---------------------
