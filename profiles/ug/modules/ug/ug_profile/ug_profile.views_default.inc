@@ -426,6 +426,7 @@ function ug_profile_views_default_views() {
       'label' => 'Content: Has taxonomy term ID',
     ),
   );
+  $handler->display->display_options['inherit_panels_path'] = '1';
   $export['pp1b'] = $view;
 
   $view = new view();
