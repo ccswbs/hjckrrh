@@ -506,12 +506,12 @@ return false;';
   $handler->display->display_options['filters']['type']['value'] = array(
     'event' => 'event',
   );
-  /* Filter criterion: Content: Date - end date (field_event_date:value2) */
-  $handler->display->display_options['filters']['field_event_date_value2']['id'] = 'field_event_date_value2';
-  $handler->display->display_options['filters']['field_event_date_value2']['table'] = 'field_data_field_event_date';
-  $handler->display->display_options['filters']['field_event_date_value2']['field'] = 'field_event_date_value2';
-  $handler->display->display_options['filters']['field_event_date_value2']['operator'] = '>=';
-  $handler->display->display_options['filters']['field_event_date_value2']['default_date'] = 'now';
+  /* Filter criterion: Content: Date -  start date (field_event_date) */
+  $handler->display->display_options['filters']['field_event_date_value']['id'] = 'field_event_date_value';
+  $handler->display->display_options['filters']['field_event_date_value']['table'] = 'field_data_field_event_date';
+  $handler->display->display_options['filters']['field_event_date_value']['field'] = 'field_event_date_value';
+  $handler->display->display_options['filters']['field_event_date_value']['operator'] = '>=';
+  $handler->display->display_options['filters']['field_event_date_value']['default_date'] = 'now';
 
   /* Display: Content pane */
   $handler = $view->new_display('panel_pane', 'Content pane', 'panel_pane_1');
