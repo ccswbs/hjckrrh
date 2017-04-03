@@ -41,5 +41,6 @@ before_script:
   - drush runserver 127.0.0.1:8080 &
   - until netstat -an 2>/dev/null | grep '8080.*LISTEN'; do true; done
 
-script: drush test-run 'UG' --uri=http://127.0.0.1:8080
+script: 
+  - php scripts/run-tests.sh --uri http://127.0.0.1:8080 --class UGEventTestCase
 
