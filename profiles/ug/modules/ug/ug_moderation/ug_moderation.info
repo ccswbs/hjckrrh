@@ -1,0 +1,8 @@
+name = UG Moderation
+description = Enables moderation on all content types.
+core = 7.x
+package = UG
+version = 7.x-7.54
+dependencies[] = ug_workbench
+features[features_api][] = api:2
+project path = profiles/ug/modules/ug
