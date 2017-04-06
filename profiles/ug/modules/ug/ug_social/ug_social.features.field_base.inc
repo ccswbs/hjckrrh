@@ -72,6 +72,9 @@ function ug_social_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_social_network',
+    'field_permissions' => array(
+      'type' => 0,
+    ),
     'indexes' => array(
       'value' => array(
         0 => 'value',
@@ -93,6 +96,7 @@ function ug_social_field_default_field_bases() {
         'flickr' => 'Flickr',
         'google-plus' => 'GooglePlus',
         'rss' => 'RSS',
+        'snapchat' => 'Snapchat',
       ),
       'allowed_values_function' => '',
     ),
