@@ -229,8 +229,9 @@ function ug_profile_views_default_views() {
   $handler->display->display_options['fields']['field_profile_office']['table'] = 'field_data_field_profile_office';
   $handler->display->display_options['fields']['field_profile_office']['field'] = 'field_profile_office';
   $handler->display->display_options['fields']['field_profile_office']['element_type'] = '0';
-  $handler->display->display_options['fields']['field_profile_office']['element_label_type'] = 'div';
+  $handler->display->display_options['fields']['field_profile_office']['element_label_type'] = 'strong';
   $handler->display->display_options['fields']['field_profile_office']['element_label_class'] = 'field-label';
+  $handler->display->display_options['fields']['field_profile_office']['hide_empty'] = TRUE;
   /* Field: Content: Last name */
   $handler->display->display_options['fields']['field_profile_lastname']['id'] = 'field_profile_lastname';
   $handler->display->display_options['fields']['field_profile_lastname']['table'] = 'field_data_field_profile_lastname';
@@ -243,8 +244,6 @@ function ug_profile_views_default_views() {
   $handler->display->display_options['fields']['field_profile_name']['field'] = 'field_profile_name';
   $handler->display->display_options['fields']['field_profile_name']['label'] = '';
   $handler->display->display_options['fields']['field_profile_name']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['field_profile_office']['element_label_type'] = 'strong';
-  $handler->display->display_options['fields']['field_profile_office']['hide_empty'] = TRUE;
   $handler->display->display_options['allow']['use_pager'] = 'use_pager';
   $handler->display->display_options['allow']['items_per_page'] = 'items_per_page';
   $handler->display->display_options['allow']['offset'] = 0;

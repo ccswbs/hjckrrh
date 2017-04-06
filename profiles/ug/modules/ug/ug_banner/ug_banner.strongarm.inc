@@ -49,8 +49,9 @@ function ug_banner_strongarm() {
   $strongarm->api_version = 1;
   $strongarm->name = 'node_options_banner';
   $strongarm->value = array(
-    0 => 'status',
-    1 => 'promote',
+    0 => 'promote',
+    1 => 'moderation',
+    2 => 'revision',
   );
   $export['node_options_banner'] = $strongarm;
 

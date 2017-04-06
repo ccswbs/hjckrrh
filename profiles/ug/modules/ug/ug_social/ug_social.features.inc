@@ -40,37 +40,3 @@ function ug_social_node_info() {
   drupal_alter('node_info', $items);
   return $items;
 }
-
-/**
- * Implements hook_install().
- */
-function ug_social_install() {
-  // Array of modules to be enabled
-  $modules = array('print', 'print_ui', 'print_pdf', 'print_pdf_tcpdf');
-  // Enable specified modules and their dependencies
-  module_enable($modules, TRUE);
-  
-  // Add permissions
-  $permissions = array('access print');
-  foreach(array('anonymous user', 'authenticated user') as $role_name) {
-    $role = user_role_load_by_name($role_name);
-    user_role_grant_permissions($role->rid, $permissions);
-  }
-}
-
-/**
- * Implements hook_update().
- */
-function ug_social_update_7100() {
-  // Array of modules to be enabled
-  $modules = array('print', 'print_ui', 'print_pdf', 'print_pdf_tcpdf');
-  // Enable specified modules and their dependencies
-  module_enable($modules, TRUE);
-  
-  // Add permissions
-  $permissions = array('access print');
-  foreach(array('anonymous user', 'authenticated user') as $role_name) {
-    $role = user_role_load_by_name($role_name);
-    user_role_grant_permissions($role->rid, $permissions);
-  }
-}
