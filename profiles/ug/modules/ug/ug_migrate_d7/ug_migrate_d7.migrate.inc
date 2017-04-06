@@ -58,7 +58,6 @@ function ug_migrate_d7_migrate_api() {
     'UGBookKeyword7',
   );
 
-
   /* UPDATE VARIABLES */
   $update_arguments = array(
     'update_nodelinks' => FALSE,
@@ -76,6 +75,8 @@ function ug_migrate_d7_migrate_api() {
   $node_arguments = $common_arguments + array(
     'user_migration' => 'UGUser7',
     'default_uid' => 1,
+    'default_format' => 'full_html',
+    'override_format' => FALSE,
   );
 
   $page_arguments = array(
@@ -183,6 +184,15 @@ function ug_migrate_d7_migrate_api() {
 
   if (file_exists($migrate_settings_override)){
     include $migrate_settings_override;
+  }
+
+  // Configure format settings
+  if(isset($format_arguments['default_format'])){
+    $node_arguments['default_format'] = $format_arguments['default_format'];
+  }
+
+  if(isset($format_arguments['override_format'])){
+    $node_arguments['override_format'] = $format_arguments['override_format'];
   }
 
   $api = array(
