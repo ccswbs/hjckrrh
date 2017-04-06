@@ -183,6 +183,13 @@ projects[views_tree][version] = "2.0"
 
 projects[webform][version] = "4.14"
 
+projects[workbench][version] = "1.2"
+
+projects[workbench_access][version] = "1.5"
+
+projects[workbench_moderation][version] = "3.0"
+projects[workbench_moderation][patch][] = "https://www.drupal.org/files/issues/view_all_unpublished-1492118-88.patch"
+
 projects[wysiwyg_filter][version] = "1.6-rc3"
 projects[wysiwyg_filter][patch][] = "https://www.drupal.org/files/issues/wysiwyg_filter-Bypass-rules-835202-16.D7.patch"
 
