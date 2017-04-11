@@ -534,6 +534,31 @@ function ug_theme_field__field_service_private_heading($variables) {
   return '<h3>'.drupal_render($variables['items'][0]).'</h3>';
 }
 
+/**
+ *	Implements hook_views_pre_render
+ */
+function ug_theme_views_pre_render(&$view) {
+	if($view->name == 'pp1') {
+		$tids = array();
+		foreach($view->result as $result) {
+			$node = node_load($result->nid);
+
+			if(!empty($node->field_profile_role)) {
+				$tid = $node->field_profile_role[LANGUAGE_NONE][0]['tid'];
+				$tids[$tid] = isset($tids[$tid]) ? $tids[$tid]++ : 1;
+			}
+		}
+
+		if(empty($tids)) {
+			$dom = new DOMDocument('1.0', 'utf-8');
+			$dom->loadHTML($view->exposed_widgets);
+			$node = $dom->getElementById('edit-field-profile-role-tid-wrapper');
+			$node->parentNode->removeChild($node);
+			$view->exposed_widgets = $dom->saveHTML();
+		}
+	}
+}
+
  
 /**
  * Returns HTML for a date element formatted as a single date.
