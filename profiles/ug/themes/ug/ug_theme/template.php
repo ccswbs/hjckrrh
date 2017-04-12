@@ -538,7 +538,7 @@ function ug_theme_field__field_service_private_heading($variables) {
  *	Implements hook_views_pre_render
  */
 function ug_theme_views_pre_render(&$view) {
-	if($view->name == 'pp1') {
+	if($view->name == 'pp1' || $view->name == 'pp4' || $view->name == 'pp6') {
 		$tids = array();
 		foreach($view->result as $result) {
 			$node = node_load($result->nid);
@@ -549,7 +549,7 @@ function ug_theme_views_pre_render(&$view) {
 			}
 		}
 
-		if(empty($tids)) {
+		if(empty($tids) && isset($view->exposed_widgets)) {
 			$dom = new DOMDocument('1.0', 'utf-8');
 			$dom->loadHTML($view->exposed_widgets);
 			$node = $dom->getElementById('edit-field-profile-role-tid-wrapper');
