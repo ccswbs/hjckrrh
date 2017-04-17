@@ -96,7 +96,7 @@ projects[login_destination][version] = "1.1"
 
 projects[masquerade][version] = "1.0-rc7"
 
-projects[media][version] = "2.0-rc3"
+projects[media][version] = "2.0"
 
 projects[media_flickr][version] = "1.0-alpha4"
 
