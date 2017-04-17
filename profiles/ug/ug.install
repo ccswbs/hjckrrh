@@ -57,3 +57,9 @@ function ug_update_7700(&$sandbox) {
   }
 }
 
+/**
+ * Disable UG Breadcrumbs and Crumbs modules
+ */
+function ug_update_7701(&$sandbox) {
+  module_disable(array('ug_breadcrumbs', 'crumbs'));
+}
