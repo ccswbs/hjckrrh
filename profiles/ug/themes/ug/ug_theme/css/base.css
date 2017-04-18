@@ -168,6 +168,11 @@ Base Styles
     border-bottom: 1px solid #EFEFEF;
   }
 
+  ol.search-results {
+    padding:0;
+    list-style:none;
+  }
+
   /*---------------------
   Images
   ---------------------**/
