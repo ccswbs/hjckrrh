@@ -42,6 +42,7 @@ features[variable][] = pathauto_taxonomy_term_faq_category_pattern
 features[views_view][] = f1
 features[views_view][] = f2
 features[views_view][] = f3
+features[views_view][] = f4
 features[views_view][] = faq_filter_keyword
 features_exclude[dependencies][ctools] = ctools
 features_exclude[dependencies][options] = options
