@@ -329,50 +329,54 @@ function ug_course_outlines_views_default_views() {
   $handler->display->display_options['fields']['field_course_code']['label'] = '';
   $handler->display->display_options['fields']['field_course_code']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_course_code']['element_label_colon'] = FALSE;
-  /* Field: Content: Course term */
-  $handler->display->display_options['fields']['field_course_term']['id'] = 'field_course_term';
-  $handler->display->display_options['fields']['field_course_term']['table'] = 'field_data_field_course_term';
-  $handler->display->display_options['fields']['field_course_term']['field'] = 'field_course_term';
-  $handler->display->display_options['fields']['field_course_term']['label'] = '';
-  $handler->display->display_options['fields']['field_course_term']['exclude'] = TRUE;
-  $handler->display->display_options['fields']['field_course_term']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['field_course_term']['type'] = 'taxonomy_term_reference_plain';
   /* Field: Content: Section */
   $handler->display->display_options['fields']['field_course_section']['id'] = 'field_course_section';
   $handler->display->display_options['fields']['field_course_section']['table'] = 'field_data_field_course_section';
   $handler->display->display_options['fields']['field_course_section']['field'] = 'field_course_section';
   $handler->display->display_options['fields']['field_course_section']['label'] = '';
-  $handler->display->display_options['fields']['field_course_section']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_course_section']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['field_course_section']['alter']['text'] = '<p class="media-condensed"><strong>Code and section:</strong> [field_course_code]*[field_course_section]</p>';
   $handler->display->display_options['fields']['field_course_section']['element_label_colon'] = FALSE;
+  /* Field: Content: Course term */
+  $handler->display->display_options['fields']['field_course_term']['id'] = 'field_course_term';
+  $handler->display->display_options['fields']['field_course_term']['table'] = 'field_data_field_course_term';
+  $handler->display->display_options['fields']['field_course_term']['field'] = 'field_course_term';
+  $handler->display->display_options['fields']['field_course_term']['label'] = '';
+  $handler->display->display_options['fields']['field_course_term']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['field_course_term']['alter']['text'] = '<p class="media-condensed"><strong>Term:</strong> [field_course_term]</p>';
+  $handler->display->display_options['fields']['field_course_term']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_course_term']['type'] = 'taxonomy_term_reference_plain';
   /* Field: Content: Course instructor */
   $handler->display->display_options['fields']['field_course_instructor']['id'] = 'field_course_instructor';
   $handler->display->display_options['fields']['field_course_instructor']['table'] = 'field_data_field_course_instructor';
   $handler->display->display_options['fields']['field_course_instructor']['field'] = 'field_course_instructor';
   $handler->display->display_options['fields']['field_course_instructor']['label'] = '';
   $handler->display->display_options['fields']['field_course_instructor']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_course_instructor']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['field_course_instructor']['alter']['text'] = '<p><strong>Instructor:</strong> [field_course_instructor]</p>';
   $handler->display->display_options['fields']['field_course_instructor']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_course_instructor']['type'] = 'text_plain';
+  /* Field: Content: Course instructor name only */
+  $handler->display->display_options['fields']['field_course_instructor_1']['id'] = 'field_course_instructor_1';
+  $handler->display->display_options['fields']['field_course_instructor_1']['table'] = 'field_data_field_course_instructor';
+  $handler->display->display_options['fields']['field_course_instructor_1']['field'] = 'field_course_instructor';
+  $handler->display->display_options['fields']['field_course_instructor_1']['ui_name'] = 'Content: Course instructor name only';
+  $handler->display->display_options['fields']['field_course_instructor_1']['label'] = '';
+  $handler->display->display_options['fields']['field_course_instructor_1']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_course_instructor_1']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_course_instructor_1']['type'] = 'text_plain';
   /* Field: Content: Course instructor url */
   $handler->display->display_options['fields']['field_course_instructor_url']['id'] = 'field_course_instructor_url';
   $handler->display->display_options['fields']['field_course_instructor_url']['table'] = 'field_data_field_course_instructor_url';
   $handler->display->display_options['fields']['field_course_instructor_url']['field'] = 'field_course_instructor_url';
   $handler->display->display_options['fields']['field_course_instructor_url']['label'] = '';
-  $handler->display->display_options['fields']['field_course_instructor_url']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_course_instructor_url']['alter']['alter_text'] = TRUE;
-  $handler->display->display_options['fields']['field_course_instructor_url']['alter']['text'] = '<a href="[field_course_instructor_url-url]">[field_course_instructor]</a>';
+  $handler->display->display_options['fields']['field_course_instructor_url']['alter']['text'] = '<p><strong>Instructor:</strong> <a href="[field_course_instructor_url-url]">[field_course_instructor_1]</a></p>';
   $handler->display->display_options['fields']['field_course_instructor_url']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_course_instructor_url']['empty'] = '[field_course_instructor]';
+  $handler->display->display_options['fields']['field_course_instructor_url']['hide_empty'] = TRUE;
   $handler->display->display_options['fields']['field_course_instructor_url']['click_sort_column'] = 'url';
   $handler->display->display_options['fields']['field_course_instructor_url']['type'] = 'link_plain';
-  /* Field: Global: Custom text */
-  $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
-  $handler->display->display_options['fields']['nothing']['table'] = 'views';
-  $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
-  $handler->display->display_options['fields']['nothing']['label'] = '';
-  $handler->display->display_options['fields']['nothing']['alter']['text'] = '<p class="media-condensed"><strong>Code and section:</strong> [field_course_code]*[field_course_section]</p>
-<p class="media-condensed"><strong>Term:</strong> [field_course_term]</p>
-<p><strong>Instructor:</strong> [field_course_instructor_url]</p>
-';
-  $handler->display->display_options['fields']['nothing']['element_label_colon'] = FALSE;
   /* Field: Content: Details */
   $handler->display->display_options['fields']['field_course_body']['id'] = 'field_course_body';
   $handler->display->display_options['fields']['field_course_body']['table'] = 'field_data_field_course_body';

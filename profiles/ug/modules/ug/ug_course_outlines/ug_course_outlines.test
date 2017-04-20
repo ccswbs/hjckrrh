@@ -28,7 +28,7 @@ class UGCourseOutlinesTestCase extends TaxonomyWebTestCase {
   /**
    * Test "Course Outlines" listing page.
    */
-  function testCourseListing() {
+  function _testCourseListing() {
 
     $site_name =  variable_get('site_name', 'Drupal');
 
@@ -90,7 +90,7 @@ class UGCourseOutlinesTestCase extends TaxonomyWebTestCase {
   /**
    * Test URL aliases.
    */
-  function testUrlAlias() {
+  function _testUrlAlias() {
     /* Create a node */
     $settings = array('type' => 'course_outline');
     $name = $settings['field_course_name'][LANGUAGE_NONE][0]['value'] = $this->randomName();
@@ -103,5 +103,19 @@ class UGCourseOutlinesTestCase extends TaxonomyWebTestCase {
     $this->assertUrl($expected_path);
   }
 
-}
 
+  /**
+  * Tests if the labels 'term' & 'instructor' are hidden when blank
+  */
+  function testHiddenLabels() {
+    $settings = array('type' => 'course_outline');
+    $name = $settings['field_course_name'][LANGUAGE_NONE][0]['value'] = $this->randomName();
+    $code = $settings['field_course_code'][LANGUAGE_NONE][0]['value'] = $this->randomName();
+    $node1 = $this->drupalCreateNode($settings);
+    $this->drupalGet('node/' . $node1->nid);
+  
+    $this->assertNoText(t('Term:'), 'The \'Term:\' text does not appear when field is blank');
+    $this->assertNoText(t('Instructor:'), 'The \'Instructor:\' text does not appear when field is blank');
+  }
+
+}
