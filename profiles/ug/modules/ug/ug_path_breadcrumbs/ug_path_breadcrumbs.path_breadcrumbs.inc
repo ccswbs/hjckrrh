@@ -80,7 +80,7 @@ function ug_path_breadcrumbs_path_breadcrumbs_settings_info() {
           'name' => 'path_visibility',
           'settings' => array(
             'visibility_setting' => '1',
-            'paths' => 'faqs/*',
+            'paths' => 'faq/*',
           ),
           'context' => 'empty',
           'not' => FALSE,
