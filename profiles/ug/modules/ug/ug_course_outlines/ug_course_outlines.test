@@ -28,7 +28,7 @@ class UGCourseOutlinesTestCase extends TaxonomyWebTestCase {
   /**
    * Test "Course Outlines" listing page.
    */
-  function _testCourseListing() {
+  function testCourseListing() {
 
     $site_name =  variable_get('site_name', 'Drupal');
 
@@ -90,7 +90,7 @@ class UGCourseOutlinesTestCase extends TaxonomyWebTestCase {
   /**
    * Test URL aliases.
    */
-  function _testUrlAlias() {
+  function testUrlAlias() {
     /* Create a node */
     $settings = array('type' => 'course_outline');
     $name = $settings['field_course_name'][LANGUAGE_NONE][0]['value'] = $this->randomName();
