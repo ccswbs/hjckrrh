@@ -18,6 +18,11 @@ function ug_wysiwyg_filter_default_formats() {
     'status' => 1,
     'weight' => -10,
     'filters' => array(
+      'ug_images' => array(
+        'weight' => 0,
+        'status' => 1,
+        'settings' => array(),
+      ),
       'ug_tables' => array(
         'weight' => 0,
         'status' => 1,
@@ -545,6 +550,11 @@ th[colspan|rowspan|headers|scope|abbr|sorted],',
     'status' => 1,
     'weight' => -9,
     'filters' => array(
+      'ug_images' => array(
+        'weight' => 0,
+        'status' => 1,
+        'settings' => array(),
+      ),
       'pathologic' => array(
         'weight' => 50,
         'status' => 1,
