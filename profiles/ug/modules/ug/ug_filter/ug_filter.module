@@ -5,6 +5,11 @@
       'description' => t('Wraps tables with bootstrap responsive class.'),
       'process callback' => '_ug_table_process',
     );
+    $filters['ug_images'] = array(
+      'title' => t('UG Responsive Images'),
+      'description' => t('Adds img-responsive class to image tags.'),
+      'process callback' => '_ug_image_process',
+    );
     return $filters;
   }
   
@@ -15,5 +20,15 @@
     // Collapse duplicate responsive wrappers
     $text = preg_replace("/(<div class=\"table-responsive\">\s*){2,}(<table.*?>.*?<\/div>\s*?<\/div>)/s", "<div class=\"table-responsive\">$2", $text);
     
+    return $text;
+  }
+
+  function _ug_image_process($text, $filter, $format) {
+    // Add .img-responsive to img tags that completely lack the class attribute
+    $text = preg_replace("/(<img )(?!.*class=\".*\".*)(.*?>)/s", "$1 class=\"img-responsive\" $2", $text);
+
+    // Add .img-responsive to img tags that have exising, non-relevant classes
+    $text = preg_replace("/(<img.*?class=\"(?>(?!img-responsive).)*?)(\".*?>)/s", "$1 img-responsive$2", $text);
+
     return $text;
   }
