@@ -616,6 +616,7 @@ function ug_profile_views_default_views() {
   $handler->display->display_options['filters']['field_profile_lastname_value_1']['id'] = 'field_profile_lastname_value_1';
   $handler->display->display_options['filters']['field_profile_lastname_value_1']['table'] = 'field_data_field_profile_lastname';
   $handler->display->display_options['filters']['field_profile_lastname_value_1']['field'] = 'field_profile_lastname_value';
+  $handler->display->display_options['filters']['field_profile_lastname_value_1']['operator'] = 'starts';
   $handler->display->display_options['filters']['field_profile_lastname_value_1']['exposed'] = TRUE;
   $handler->display->display_options['filters']['field_profile_lastname_value_1']['expose']['operator_id'] = 'field_profile_lastname_value_1_op';
   $handler->display->display_options['filters']['field_profile_lastname_value_1']['expose']['label'] = 'Search for people by last name';
