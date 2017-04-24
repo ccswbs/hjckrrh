@@ -11,7 +11,7 @@ Base Styles
   ---------------------**/
 
   h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-    color: #666666;
+    color: #2C2C2C;
     font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
   }
 
@@ -54,7 +54,7 @@ Base Styles
   Links
   ---------------------**/
   a{
-      color: #2F70A9; 
+      color: #017ACD; 
       /* WCAG 2.0 AA on #EEEEEE, #F5F5F5, #FFFFFF */
   }
 
@@ -62,6 +62,11 @@ Base Styles
 
   a:link{
     text-decoration: none;
+  }
+  
+  a.h1, a.h2, a.h3, a.h4, a.h5, a.h6 {
+    color:#017ACD;
+    cursor:pointer;
   }
 
   /* hover/focus - underline */
@@ -177,7 +182,7 @@ Base Styles
   }
 
   figcaption {
-      color: #666666;
+      color: #2C2C2C;
       font-size: 1em; /* 14px */
       /*font-style: italic;*/
       padding: 9px;
@@ -512,7 +517,7 @@ Base Styles
     .pagination>.disabled>span, 
     .pagination>.disabled>span:hover, 
     .pagination>.disabled>span:focus {
-      color: #666666;
+      color: #2C2C2C;
     }
 
     .pagination>.active>a, .pagination>.active>span, 
@@ -566,9 +571,9 @@ Base Styles
       color: #333333;
   }
 
-p
-  {
+  p {
     word-wrap: break-word;
+    color:#2C2C2C;
   }
   
 /*---------------------
