@@ -94,6 +94,8 @@ projects[linkit][version] = "3.5"
 
 projects[login_destination][version] = "1.1"
 
+projects[mailsystem][version] = "2.34"
+
 projects[masquerade][version] = "1.0-rc7"
 
 projects[media][version] = "2.0-rc3"
@@ -110,6 +112,8 @@ projects[migrate][version] = "2.8"
 
 projects[migrate_d2d][version] = "2.1"
 projects[migrate_d2d][patch][] = "https://www.drupal.org/files/issues/migrate_d2d-menu_names_and_cleanup-1489858-11.patch"
+
+projects[mimemail][version] = "1.0-beta4"
 
 projects[module_filter][version] = "2.0"
 
