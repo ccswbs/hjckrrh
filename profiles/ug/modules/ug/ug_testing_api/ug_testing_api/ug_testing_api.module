@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the UG Testing API feature.
+ */
+
+include_once 'ug_testing_api.features.inc';
