@@ -155,7 +155,7 @@ projects[recaptcha][version] = "2.2"
 
 projects[redirect][version] = "1.0-rc3"
 
-projects[references][version] = "2.1"
+projects[references][version] = "2.2"
 
 projects[restrict_password_change][version] = "1.0-beta2"
 
