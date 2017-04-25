@@ -36,9 +36,38 @@ function ug_testing_api_default_services_endpoint() {
     ),
   );
   $endpoint->resources = array(
+    'file' => array(
+      'operations' => array(
+        'create' => array(
+          'enabled' => '1',
+        ),
+        'retrieve' => array(
+          'enabled' => '1',
+        ),
+        'delete' => array(
+          'enabled' => '1',
+        ),
+      ),
+    ),
     'node' => array(
       'operations' => array(
         'create' => array(
+          'enabled' => '1',
+        ),
+        'update' => array(
+          'enabled' => '1',
+        ),
+        'delete' => array(
+          'enabled' => '1',
+        ),
+      ),
+    ),
+    'taxonomy_term' => array(
+      'operations' => array(
+        'create' => array(
+          'enabled' => '1',
+        ),
+        'delete' => array(
           'enabled' => '1',
         ),
       ),
@@ -46,6 +75,14 @@ function ug_testing_api_default_services_endpoint() {
     'user' => array(
       'actions' => array(
         'login' => array(
+          'enabled' => '1',
+          'settings' => array(
+            'services' => array(
+              'resource_api_version' => '1.0',
+            ),
+          ),
+        ),
+        'logout' => array(
           'enabled' => '1',
           'settings' => array(
             'services' => array(
