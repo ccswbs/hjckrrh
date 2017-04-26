@@ -1,7 +1,7 @@
 name = UG Testing API
 description = Provides RESTful access to Drupal methods
 core = 7.x
-package = UG
+package = UG Testing
 version = 7.x-7.54
 dependencies[] = ctools
 dependencies[] = features
