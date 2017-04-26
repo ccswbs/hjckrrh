@@ -52,6 +52,10 @@ projects[features][version] = "2.10"
 
 projects[feeds][version] = "2.0-beta3"
 
+projects[feeds_tamper][version] = "1.1"
+
+projects[feeds_xpathparser][version] = "1.1"
+
 projects[field_collection][version] = "1.0-beta11"
 
 projects[field_group][version] = "1.5"
@@ -77,6 +81,8 @@ projects[image_url_formatter][version] = "1.4"
 projects[imce][version] = "1.10"
 
 projects[import_html][version] = "1.0"
+
+projects[job_scheduler][version] = "2.0-alpha3"
 
 projects[jquery_update][version] = "2.7"
 
