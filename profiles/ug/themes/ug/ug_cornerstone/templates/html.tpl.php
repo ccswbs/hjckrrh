@@ -56,6 +56,11 @@
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
   <?php print $scripts; ?>
+  <noscript>
+    <style> 
+      .collapse { display: block; } 
+    </style> 
+  </noscript>
 </head>
 <body class="<?php print $classes; ?>" <?php print $attributes;?>>
   <div id="skip-link">
