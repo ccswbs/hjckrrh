@@ -37,11 +37,7 @@
 <?php endif; ?>
 <div class="col-md-<?php print empty($image)?12:8; ?>">
   <header class="media-header">
-    <?php if(count($view->args) > 0): ?>
-      <h3 class="media-heading"><?php print $title; ?></h3>
-    <?php else: ?>
-      <h2 class="media-heading"><?php print $title; ?></h2>
-    <?php endif; ?>
+    <h2 class="media-heading"><?php print $title; ?></h2>
     <div class="media-meta"><?php print $date; ?></div>
   </header>
   <div class="media-summary"><?php print $body; ?></div>
