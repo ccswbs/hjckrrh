@@ -229,8 +229,9 @@ function ug_profile_views_default_views() {
   $handler->display->display_options['fields']['field_profile_office']['table'] = 'field_data_field_profile_office';
   $handler->display->display_options['fields']['field_profile_office']['field'] = 'field_profile_office';
   $handler->display->display_options['fields']['field_profile_office']['element_type'] = '0';
-  $handler->display->display_options['fields']['field_profile_office']['element_label_type'] = 'div';
+  $handler->display->display_options['fields']['field_profile_office']['element_label_type'] = 'strong';
   $handler->display->display_options['fields']['field_profile_office']['element_label_class'] = 'field-label';
+  $handler->display->display_options['fields']['field_profile_office']['hide_empty'] = TRUE;
   /* Field: Content: Last name */
   $handler->display->display_options['fields']['field_profile_lastname']['id'] = 'field_profile_lastname';
   $handler->display->display_options['fields']['field_profile_lastname']['table'] = 'field_data_field_profile_lastname';
@@ -243,8 +244,6 @@ function ug_profile_views_default_views() {
   $handler->display->display_options['fields']['field_profile_name']['field'] = 'field_profile_name';
   $handler->display->display_options['fields']['field_profile_name']['label'] = '';
   $handler->display->display_options['fields']['field_profile_name']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['field_profile_office']['element_label_type'] = 'strong';
-  $handler->display->display_options['fields']['field_profile_office']['hide_empty'] = TRUE;
   $handler->display->display_options['allow']['use_pager'] = 'use_pager';
   $handler->display->display_options['allow']['items_per_page'] = 'items_per_page';
   $handler->display->display_options['allow']['offset'] = 0;
@@ -287,7 +286,6 @@ function ug_profile_views_default_views() {
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['exposed_form']['type'] = 'basic';
-  $handler->display->display_options['exposed_form']['options']['reset_button'] = TRUE;
   $handler->display->display_options['pager']['type'] = 'full';
   $handler->display->display_options['pager']['options']['items_per_page'] = '50';
   $handler->display->display_options['pager']['options']['offset'] = '0';
@@ -295,6 +293,13 @@ function ug_profile_views_default_views() {
   $handler->display->display_options['pager']['options']['quantity'] = '9';
   $handler->display->display_options['style_plugin'] = 'default';
   $handler->display->display_options['row_plugin'] = 'fields';
+  /* No results behavior: Global: Text area */
+  $handler->display->display_options['empty']['area']['id'] = 'area';
+  $handler->display->display_options['empty']['area']['table'] = 'views';
+  $handler->display->display_options['empty']['area']['field'] = 'area';
+  $handler->display->display_options['empty']['area']['empty'] = TRUE;
+  $handler->display->display_options['empty']['area']['content'] = 'No results found.';
+  $handler->display->display_options['empty']['area']['format'] = 'filtered_html';
   /* Field: Content: Path */
   $handler->display->display_options['fields']['path']['id'] = 'path';
   $handler->display->display_options['fields']['path']['table'] = 'node';
@@ -386,6 +391,25 @@ function ug_profile_views_default_views() {
   $handler->display->display_options['filters']['type']['value'] = array(
     'profile' => 'profile',
   );
+  /* Filter criterion: Content: Last name (field_profile_lastname) */
+  $handler->display->display_options['filters']['field_profile_lastname_value']['id'] = 'field_profile_lastname_value';
+  $handler->display->display_options['filters']['field_profile_lastname_value']['table'] = 'field_data_field_profile_lastname';
+  $handler->display->display_options['filters']['field_profile_lastname_value']['field'] = 'field_profile_lastname_value';
+  $handler->display->display_options['filters']['field_profile_lastname_value']['operator'] = 'starts';
+  $handler->display->display_options['filters']['field_profile_lastname_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_profile_lastname_value']['expose']['operator_id'] = 'field_profile_lastname_value_op';
+  $handler->display->display_options['filters']['field_profile_lastname_value']['expose']['label'] = 'Search for people by last name';
+  $handler->display->display_options['filters']['field_profile_lastname_value']['expose']['operator'] = 'field_profile_lastname_value_op';
+  $handler->display->display_options['filters']['field_profile_lastname_value']['expose']['identifier'] = 'field_profile_lastname_value';
+  $handler->display->display_options['filters']['field_profile_lastname_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    3 => 0,
+    4 => 0,
+    5 => 0,
+    6 => 0,
+    7 => 0,
+  );
 
   /* Display: Content pane */
   $handler = $view->new_display('panel_pane', 'Content pane', 'panel_pane_1');
@@ -409,6 +433,7 @@ function ug_profile_views_default_views() {
       'label' => 'Content: Has taxonomy term ID',
     ),
   );
+  $handler->display->display_options['inherit_panels_path'] = '1';
   $export['pp1b'] = $view;
 
   $view = new view();
@@ -587,6 +612,25 @@ function ug_profile_views_default_views() {
   $handler->display->display_options['filters']['type']['value'] = array(
     'profile' => 'profile',
   );
+  /* Filter criterion: Content: Last name (field_profile_lastname) */
+  $handler->display->display_options['filters']['field_profile_lastname_value_1']['id'] = 'field_profile_lastname_value_1';
+  $handler->display->display_options['filters']['field_profile_lastname_value_1']['table'] = 'field_data_field_profile_lastname';
+  $handler->display->display_options['filters']['field_profile_lastname_value_1']['field'] = 'field_profile_lastname_value';
+  $handler->display->display_options['filters']['field_profile_lastname_value_1']['operator'] = 'starts';
+  $handler->display->display_options['filters']['field_profile_lastname_value_1']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_profile_lastname_value_1']['expose']['operator_id'] = 'field_profile_lastname_value_1_op';
+  $handler->display->display_options['filters']['field_profile_lastname_value_1']['expose']['label'] = 'Search for people by last name';
+  $handler->display->display_options['filters']['field_profile_lastname_value_1']['expose']['operator'] = 'field_profile_lastname_value_1_op';
+  $handler->display->display_options['filters']['field_profile_lastname_value_1']['expose']['identifier'] = 'field_profile_lastname_value_1';
+  $handler->display->display_options['filters']['field_profile_lastname_value_1']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    3 => 0,
+    4 => 0,
+    5 => 0,
+    6 => 0,
+    7 => 0,
+  );
 
   /* Display: Content pane */
   $handler = $view->new_display('panel_pane', 'Content pane', 'panel_pane_1');
@@ -641,6 +685,7 @@ function ug_profile_views_default_views() {
       'label' => 'Category',
     ),
   );
+  $handler->display->display_options['inherit_panels_path'] = '1';
   $export['pp5'] = $view;
 
   $view = new view();
