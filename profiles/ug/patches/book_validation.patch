@@ -1,0 +1,13 @@
+diff --git a/modules/book/book.module b/modules/book/book.module
+index 7afed9a..ed5840d 100644
+--- a/modules/book/book.module
++++ b/modules/book/book.module
+@@ -1111,7 +1111,7 @@ function template_preprocess_book_navigation(&$variables) {
+ 
+     if ($book_link['plid'] && $parent = book_link_load($book_link['plid'])) {
+       $parent_href = url($parent['href']);
+-      drupal_add_html_head_link(array('rel' => 'up', 'href' => $parent_href));
++      //drupal_add_html_head_link(array('rel' => 'up', 'href' => $parent_href));
+       $variables['parent_url'] = $parent_href;
+       $variables['parent_title'] = check_plain($parent['title']);
+     }
