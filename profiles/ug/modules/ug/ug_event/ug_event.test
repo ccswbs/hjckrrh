@@ -227,36 +227,6 @@ class UGEventTestCase extends TaxonomyWebTestCase {
   }
   
   /*
-   * Test correct header nesting
-   */
-  function testHeaderNesting() {
-    // Create categories and terms
-    $event_category = taxonomy_vocabulary_machine_name_load('event_category');
-    $term = $this->createTerm($event_category);
-
-    /* Create a date in the future */
-    $later = time() + 3600;
-    $datetime_format = "Y-m-d H:i:s";
-    $date = date($datetime_format, $later);
-    $date2 = date($datetime_format, $later + 7200);
-
-    // Create node
-    $settings = array('type' => 'event', 'title' => 'Test Event');
-    $settings['field_event_category'][LANGUAGE_NONE][0]['tid'] = $term->tid;
-    $settings['field_event_date'][LANGUAGE_NONE][0]['value'] = $date;
-    $settings['field_event_date'][LANGUAGE_NONE][0]['value2'] = $date2;
-    $node = $this->drupalCreateNode($settings);
-
-    $this->drupalGet('events/');
-    $this->assertNoRaw('<h2 class="pane-title">');
-    $this->assertRaw('<h2 class="media-heading">');
-
-    $this->drupalGet('events/'.$term->tid);
-    $this->assertRaw('<h2 class="pane-title">');
-    $this->assertRaw('<h3 class="media-heading">');
-  }
-  
-  /*
    * Test events that straddle current date still appear in the correct locations
    */
   function testLongEvents() {
