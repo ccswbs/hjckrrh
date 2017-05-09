@@ -38,7 +38,7 @@ stylesheets[all][] = css/features.css
 ;;;;;;;;;;;;;;;;;;;;;
 
 scripts[] = 'dist/js/bootstrap.min.js'
-; scripts[] = 'js/ug_scripts.js'
+scripts[] = 'js/ug_scripts.js'
 
 ;;;;;;;;;;;;;;;;;;;;;
 ;; Bootstrap CDN
