@@ -1,0 +1,225 @@
+<?php
+
+/**
+ * @file
+ * Find node paths on menu item creation via autocomplete.
+ */
+
+/**
+ * Implement hook_menu().
+ *
+ * @return An array of menu items.
+ */
+function mpac_menu() {
+  $items = array();
+
+  $items['mpac/autocomplete'] = array(
+    'title' => 'Multi path autocomplete',
+    'description' => 'Autocomplete callback for Multi path autocomplete',
+    'page callback' => 'mpac_autocomplete',
+    'access callback' => 'user_access',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+
+  $items['admin/config/search/mpac'] = array(
+    'title' => 'Multi path autocomplete',
+    'description' => 'Administer settings for Multi path autocomplete',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('mpac_settings_form'),
+    'access callback' => 'user_access',
+    'access arguments' => array('administer site configuration'),
+    'file' => 'mpac.admin.inc',
+  );
+
+  return $items;
+}
+
+/**
+ * Find nodes, shortcuts and URL aliases based on title.
+ *
+ * @return
+ *   List of elements with path as key.
+ */
+function mpac_autocomplete() {
+  $args = arg();
+  // Strip off the first 2 arguments ("mpac" and "autocomplete").
+  $args = array_slice($args, 2);
+  // Get the type of autocomplete we would like to display results for.
+  $type = array_shift($args);
+  // Validate type.
+  if (!in_array($type, array('alias', 'menu', 'shortcut'))) {
+    // The given type is not supported.
+    return;
+  }
+  if (count($args) == 0) {
+    // No more arguments so there is nothing to do for MPAC.
+    return;
+  }
+  // Prepare the search query (if an argument contains a forward slash it has
+  // been splitted into two arguments so join it once again).
+  $query = implode('/', $args);
+
+  $matches = array();
+  $title = filter_xss_admin($query);
+  // Get a list of all nodes where the title matches the given string.
+  $matches = _mpac_get_matches_for_nodes($title);
+
+  if (($type == 'menu') && module_exists('path')) {
+    // Get a list of all URL aliases where the destination matches the given
+    // string.
+    $matches = array_merge($matches, _mpac_get_matches_for_aliases($title));
+  }
+  if (($type == 'shortcut') && module_exists('shortcut')) {
+    // Get a list of menu items containing the given string in their title.
+    $matches = array_merge($matches, _mpac_get_matches_for_shortcuts($title));
+    if (module_exists('path')) {
+      // Get matching url aliases.
+      $matches = array_merge($matches, _mpac_get_matches_for_aliases($title));
+    }
+  }
+  // Sort result list.
+  natsort($matches);
+
+  // Allow other modules to add paths.
+  drupal_alter('mpac_autocomplete_paths', $matches, $title);
+
+  // Reduce results to maximum number of items.
+  $matches = array_slice($matches, 0, variable_get('mpac_max_items', 20));
+  // Print results.
+  drupal_json_output($matches);
+}
+
+/**
+ * Implement hook_form_FORM_ID_alter().
+ *
+ * Change path field to autocomplete field.
+ */
+function mpac_form_menu_edit_item_alter(&$form, &$form_state) {
+  if ($form['link_path']['#type'] == 'textfield') {
+    $form['link_path']['#autocomplete_path'] = 'mpac/autocomplete/menu';
+    $form['link_path']['#description'] .= '<br />' . t("You may enter the title of the node you'd like to link to to get a list of all possible matches.");
+    if (module_exists('path')) {
+      $form['link_path']['#description'] .= ' ' . t('Matches marked with %marker are URL aliases.', array('%marker' => t('*')));
+    }
+  }
+}
+
+/**
+ * Implement hook_form_FORM_ID_alter().
+ *
+ * Change path field for URL aliases to autocomplete field.
+ */
+function mpac_form_path_admin_form_alter(&$form, &$form_state) {
+  if ($form['source']['#type'] == 'textfield') {
+    $form['source']['#autocomplete_path'] = 'mpac/autocomplete/alias';
+    $form['source']['#description'] .= '<br />' . t("You may enter the title of the node you'd like to link to to get a list of all possible matches.");
+  }
+}
+
+/**
+ * Implement hook_form_FORM_ID_alter().
+ *
+ * Change path field for new shortcuts to autocomplete field.
+ */
+function mpac_form_shortcut_link_add_alter(&$form, &$form_state) {
+  if ($form['shortcut_link']['link_path']['#type'] == 'textfield') {
+    $form['shortcut_link']['link_path']['#autocomplete_path'] = 'mpac/autocomplete/shortcut';
+    $form['shortcut_link']['link_path']['#description'] .= '<br />' . t("You may enter the title of a node or a page you'd like to link to to get a list of all possible matches.");
+    if (module_exists('path')) {
+      $form['shortcut_link']['link_path']['#description'] .= ' ' . t('Matches marked with %marker are URL aliases.', array('%marker' => t('*')));
+    }
+  }
+}
+
+/**
+ * Implement hook_form_FORM_ID_alter().
+ *
+ * Change path field for existing shortcuts to autocomplete field.
+ */
+function mpac_form_shortcut_link_edit_alter(&$form, &$form_state) {
+  if ($form['shortcut_link']['link_path']['#type'] == 'textfield') {
+    $form['shortcut_link']['link_path']['#autocomplete_path'] = 'mpac/autocomplete/shortcut';
+    $form['shortcut_link']['link_path']['#description'] .= '<br />' . t("You may enter the title of a node or a page you'd like to link to to get a list of all possible matches.");
+    if (module_exists('path')) {
+      $form['shortcut_link']['link_path']['#description'] .= ' ' . t('Matches marked with %marker are URL aliases.', array('%marker' => t('*')));
+    }
+  }
+}
+
+/**
+ * Helper function to find all nodes containing the given title.
+ *
+ * @param $title
+ *   The title to search for.
+ */
+function _mpac_get_matches_for_nodes($title = '') {
+  $matches = array();
+  if ($title == '') {
+    return $matches;
+  }
+
+  $query = db_select('node', 'n')->extend('PagerDefault');
+  $query->condition('title', '%' . $title . '%', 'LIKE');
+  $result = $query
+          ->fields('n')
+          ->limit(variable_get('mpac_max_items', 20))
+          ->execute();
+  foreach ($result as $node) {
+    // Add node path and title to list.
+    if (node_access('view', $node) && $node->status) {
+      $matches['node/' . $node->nid] = check_plain($node->title);
+    }
+  }
+  return $matches;
+}
+
+/**
+ * Helper function to find all url aliases containing the given title in their
+ * destination string.
+ *
+ * @param $title
+ *   The title to search for.
+ */
+function _mpac_get_matches_for_aliases($title = '') {
+  $matches = array();
+  if ($title == '') {
+    return $matches;
+  }
+  $query = db_select('url_alias')->extend('PagerDefault');
+  $query->condition('alias', '%' . $title . '%', 'LIKE');
+  $result = $query
+          ->fields('url_alias')
+          ->limit(variable_get('mpac_max_items', 20))
+          ->execute();
+  foreach ($result as $alias) {
+    $matches[$alias->source] = check_plain($alias->alias) . t('*');
+  }
+  return $matches;
+}
+
+/**
+ * Helper function to find all menu items containing the given string in their
+ * title.
+ *
+ * @param $title
+ *   The title to search for.
+ */
+function _mpac_get_matches_for_shortcuts($title = '') {
+  $matches = array();
+  if ($title == '') {
+    return $matches;
+  }
+  $query = db_select('menu_router')->extend('PagerDefault');
+  $query->condition('title', '%' . $title . '%', 'LIKE');
+  $query->where('path NOT LIKE :percent', array(':percent' => '%\%%'));
+  $result = $query
+          ->fields('menu_router')
+          ->limit(variable_get('mpac_max_items', 20))
+          ->execute();
+  foreach ($result as $menu_item) {
+    $matches[$menu_item->path] = check_plain($menu_item->title);
+  }
+  return $matches;
+}
+
