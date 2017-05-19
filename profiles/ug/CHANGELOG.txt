@@ -1,3 +1,44 @@
+Hjckrrh 7.x-15.0, 2017-05-09
+----------------------------
+68c5194 Remove menu_links.inc and fix feature location
+544c5e4 Enable a few more services for testcafe
+f24fc69 Add Mimemail and Mail System modules
+6091f81 Update config for services module
+0e56246 Add services module files
+e5489e7 Add UG feature for enabling and configuring the test api access.
+6d0c307 Fixes pp5 no images
+1aa76c4 Upgrade media module to 2.0
+5eaca45 Turn on use panel path for PP5 no images
+0f9f155 Change E3 filter from start date to end date
+7b94b00 Revert "Change E3 filter from start date to end date"
+ce86ba8 Change E3 filter from start date to end date
+8fd5b35 Added no results behaviour
+4c6328f Change #2C2C2C to #2C2727 text colour [fixes #642]
+c7a08f5 Use panel path fixes search functionality
+a6202bc Added exposed last name search on PP1B, exposed exsisting filter on PP5
+a6400fc Updates PP6 view so title matches keyword input
+d84a10c Changes from sort by creation date to sort by last name, adds ability to change number of items per page
+6d5a8ca Add workaround for buggy feature
+4230851 Fix testLongEvents test
+f37198a Fix bug with test case 2
+199732e Revert d2a2c8b
+d2a2c8b Fix bug with Case 2
+a0dec58 Update modules to match make
+909968d Remove date_ical
+f62b1ad Downgrade diff module to 3.2
+66eea31 Revert d99da26
+d99da26 Downgrade diff module to 3.2 from 3.3
+82295e8 Add/update modules to match RPM build
+dacbce8 Upgrade to Drupal 7.54
+5730d6c Update makefiles to match RPM build
+9b44a82 Change font-awesome and glyphicon colors back to grey
+16df145 Change to new color and fix icons
+dd5e51d Remove node:title from breadcrumb
+17620ca Change color of links styled as headers
+2dd54aa Fix spacing
+9f797e2 Fix profile text color.
+b41c418 Change link and text color
+
 Hjckrrh 7.13.0, 2017-01-05
 --------------------------
 - New: Allow use of tokens in entityreference filters

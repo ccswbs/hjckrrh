@@ -98,7 +98,7 @@ projects[mailsystem][version] = "2.34"
 
 projects[masquerade][version] = "1.0-rc7"
 
-projects[media][version] = "2.0"
+projects[media][version] = "2.1"
 
 projects[media_flickr][version] = "1.0-alpha4"
 
