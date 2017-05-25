@@ -708,3 +708,12 @@ _:-ms-fullscreen, :root .carousel-table a.glyphicon {
 .ctools-modal-dialog .modal-body #edit-admin-description-wrapper {
   height:auto;
 }
+
+/* Fix slider contrast issue */
+.slidesjs-slide-text {
+  color:#fff;
+}
+
+.slidesjs-slide-text a {
+  color:#428BCA;
+}
