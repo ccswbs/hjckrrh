@@ -190,7 +190,7 @@ function ug_profile_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 14,
+      'weight' => 15,
     ),
   );
 
@@ -232,7 +232,7 @@ function ug_profile_field_default_field_instances() {
         'display_label' => 0,
       ),
       'type' => 'options_onoff',
-      'weight' => 41,
+      'weight' => 27,
     ),
   );
 
@@ -273,7 +273,7 @@ function ug_profile_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'file_generic',
-      'weight' => 11,
+      'weight' => 12,
     ),
   );
 
@@ -317,7 +317,7 @@ function ug_profile_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 13,
+      'weight' => 14,
     ),
   );
 
@@ -353,7 +353,7 @@ function ug_profile_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 7,
+      'weight' => 8,
     ),
   );
 
@@ -396,7 +396,7 @@ function ug_profile_field_default_field_instances() {
       'module' => 'field_collection',
       'settings' => array(),
       'type' => 'field_collection_embed',
-      'weight' => 21,
+      'weight' => 22,
     ),
   );
 
@@ -442,7 +442,7 @@ function ug_profile_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 15,
+      'weight' => 16,
     ),
   );
 
@@ -487,7 +487,7 @@ function ug_profile_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 17,
+      'weight' => 18,
     ),
   );
 
@@ -537,7 +537,7 @@ function ug_profile_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'image_image',
-      'weight' => 12,
+      'weight' => 13,
     ),
   );
 
@@ -582,7 +582,7 @@ function ug_profile_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 19,
+      'weight' => 20,
     ),
   );
 
@@ -663,7 +663,7 @@ function ug_profile_field_default_field_instances() {
       'module' => 'field_collection',
       'settings' => array(),
       'type' => 'field_collection_embed',
-      'weight' => 22,
+      'weight' => 23,
     ),
   );
 
@@ -753,7 +753,7 @@ function ug_profile_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 18,
+      'weight' => 19,
     ),
   );
 
@@ -789,7 +789,7 @@ function ug_profile_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 10,
+      'weight' => 11,
     ),
   );
 
@@ -865,7 +865,7 @@ function ug_profile_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 9,
+      'weight' => 10,
     ),
   );
 
@@ -892,6 +892,51 @@ function ug_profile_field_default_field_instances() {
     'entity_type' => 'node',
     'fences_wrapper' => 'section',
     'field_name' => 'field_profile_summary',
+    'label' => 'Body',
+    'required' => 0,
+    'settings' => array(
+      'linkit' => array(
+        'button_text' => 'Search',
+        'enable' => 0,
+        'profile' => '',
+      ),
+      'text_processing' => 1,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 5,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 7,
+    ),
+  );
+
+  // Exported field_instance: 'node-profile-field_profile_teaser'.
+  $field_instances['node-profile-field_profile_teaser'] = array(
+    'bundle' => 'profile',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 32,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_profile_teaser',
     'label' => 'Summary',
     'required' => 0,
     'settings' => array(
@@ -956,7 +1001,7 @@ function ug_profile_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 16,
+      'weight' => 17,
     ),
   );
 
@@ -1002,7 +1047,7 @@ function ug_profile_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 8,
+      'weight' => 9,
     ),
   );
 
@@ -1102,7 +1147,7 @@ function ug_profile_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 20,
+      'weight' => 21,
     ),
   );
 
@@ -1141,7 +1186,7 @@ function ug_profile_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'taxonomy_autocomplete',
-      'weight' => 23,
+      'weight' => 24,
     ),
   );
 
@@ -1150,6 +1195,7 @@ function ug_profile_field_default_field_instances() {
   t('Align names');
   t('Area of research');
   t('Attachments');
+  t('Body');
   t('Category');
   t('Content');
   t('Email');
