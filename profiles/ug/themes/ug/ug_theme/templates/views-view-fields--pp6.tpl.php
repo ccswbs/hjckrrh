@@ -55,6 +55,11 @@
 		    <h2 class="media-heading">
 		      <?php print $fullname; ?>
 		    </h2>
+		    <?php if ($teaser): ?>
+		  	  <div class="media-teaser">
+                <?php print $teaser; ?>
+		  	  </div>
+		  	<?php endif; ?> 
 		  </div>
 		  <div class="media-summary">
 		    <?php if ($phone): ?>

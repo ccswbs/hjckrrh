@@ -94,6 +94,15 @@
             font-size: 1.143em; /* 16px */
         }
 
+   /*---------------------
+   Teaser
+   ---------------------**/
+
+       /*--- Layout ---*/
+       .media-listing-page .media .media-teaser {
+           margin-bottom: 10px;
+       }
+
     /*---------------------
     Text
     ---------------------**/

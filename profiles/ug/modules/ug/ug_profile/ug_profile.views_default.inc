@@ -730,6 +730,13 @@ function ug_profile_views_default_views() {
   $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['title']['element_wrapper_type'] = '0';
   $handler->display->display_options['fields']['title']['element_default_classes'] = FALSE;
+  /* Field: Content: Summary */
+  $handler->display->display_options['fields']['field_profile_teaser']['id'] = 'field_profile_teaser';
+  $handler->display->display_options['fields']['field_profile_teaser']['table'] = 'field_data_field_profile_teaser';
+  $handler->display->display_options['fields']['field_profile_teaser']['field'] = 'field_profile_teaser';
+  $handler->display->display_options['fields']['field_profile_teaser']['label'] = '';
+  $handler->display->display_options['fields']['field_profile_teaser']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_profile_teaser']['element_default_classes'] = FALSE;
   /* Field: Content: Email */
   $handler->display->display_options['fields']['field_profile_email']['id'] = 'field_profile_email';
   $handler->display->display_options['fields']['field_profile_email']['table'] = 'field_data_field_profile_email';

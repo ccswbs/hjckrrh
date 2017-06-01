@@ -258,6 +258,7 @@ function ug_theme_preprocess_views_view_fields__pp6(&$vars) {
   $vars['name']           = $vars['fields']['field_profile_name']->content;
   $vars['lastname']       = $vars['fields']['field_profile_lastname']->content;
   $vars['nid']            = $vars['fields']['nid']->content;
+  $vars['teaser']         = $vars['fields']['field_profile_teaser']->content;
   $vars['phone']          = $vars['fields']['field_profile_telephonenumber']->content;
   $vars['email']          = $vars['fields']['field_profile_email']->content;
   $vars['user_url']       = 'user/'.$vars['nid'];
