@@ -903,5 +903,129 @@ function ug_profile_views_default_views() {
   $handler->display->display_options['inherit_panels_path'] = '1';
   $export['pp6'] = $view;
 
+  $view = new view();
+  $view->name = 'pp7';
+  $view->description = '';
+  $view->tag = 'default';
+  $view->base_table = 'node';
+  $view->human_name = 'PP7 - People profile teaser list';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['title'] = 'Our People';
+  $handler->display->display_options['use_more'] = TRUE;
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['use_more_text'] = 'More profiles';
+  $handler->display->display_options['link_display'] = 'custom_url';
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['pager']['type'] = 'some';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '3';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['style_plugin'] = 'list';
+  $handler->display->display_options['style_options']['row_class'] = 'row media';
+  $handler->display->display_options['style_options']['default_row_class'] = FALSE;
+  $handler->display->display_options['style_options']['row_class_special'] = FALSE;
+  $handler->display->display_options['style_options']['class'] = 'media-list';
+  $handler->display->display_options['style_options']['wrapper_class'] = 'teaser-list';
+  $handler->display->display_options['row_plugin'] = 'fields';
+  /* No results behavior: Global: Text area */
+  $handler->display->display_options['empty']['area']['id'] = 'area';
+  $handler->display->display_options['empty']['area']['table'] = 'views';
+  $handler->display->display_options['empty']['area']['field'] = 'area';
+  $handler->display->display_options['empty']['area']['empty'] = TRUE;
+  $handler->display->display_options['empty']['area']['content'] = 'No results found.';
+  $handler->display->display_options['empty']['area']['format'] = 'filtered_html';
+  /* Field: Content: Title */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'node';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['label'] = '';
+  $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
+  $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+  $handler->display->display_options['fields']['title']['element_type'] = 'h3';
+  $handler->display->display_options['fields']['title']['element_class'] = 'media-heading ug-media-heading';
+  $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
+  /* Field: Content: Summary */
+  $handler->display->display_options['fields']['field_profile_teaser']['id'] = 'field_profile_teaser';
+  $handler->display->display_options['fields']['field_profile_teaser']['table'] = 'field_data_field_profile_teaser';
+  $handler->display->display_options['fields']['field_profile_teaser']['field'] = 'field_profile_teaser';
+  $handler->display->display_options['fields']['field_profile_teaser']['label'] = '';
+  $handler->display->display_options['fields']['field_profile_teaser']['element_label_colon'] = FALSE;
+  /* Field: Content: Image */
+  $handler->display->display_options['fields']['field_profile_image']['id'] = 'field_profile_image';
+  $handler->display->display_options['fields']['field_profile_image']['table'] = 'field_data_field_profile_image';
+  $handler->display->display_options['fields']['field_profile_image']['field'] = 'field_profile_image';
+  $handler->display->display_options['fields']['field_profile_image']['label'] = '';
+  $handler->display->display_options['fields']['field_profile_image']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_profile_image']['click_sort_column'] = 'fid';
+  $handler->display->display_options['fields']['field_profile_image']['settings'] = array(
+    'image_style' => 'medium',
+    'image_link' => '',
+  );
+  /* Sort criterion: Content: Post date */
+  $handler->display->display_options['sorts']['created']['id'] = 'created';
+  $handler->display->display_options['sorts']['created']['table'] = 'node';
+  $handler->display->display_options['sorts']['created']['field'] = 'created';
+  $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  /* Contextual filter: Content: Has taxonomy term ID */
+  $handler->display->display_options['arguments']['tid']['id'] = 'tid';
+  $handler->display->display_options['arguments']['tid']['table'] = 'taxonomy_index';
+  $handler->display->display_options['arguments']['tid']['field'] = 'tid';
+  $handler->display->display_options['arguments']['tid']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['tid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['tid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['tid']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['tid']['specify_validation'] = TRUE;
+  $handler->display->display_options['arguments']['tid']['validate']['type'] = 'taxonomy_term';
+  $handler->display->display_options['arguments']['tid']['validate_options']['vocabularies'] = array(
+    'profile_category' => 'profile_category',
+    'tags' => 'tags',
+  );
+  /* Filter criterion: Content: Published */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'node';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = 1;
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filter criterion: Content: Type */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'node';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['value'] = array(
+    'profile' => 'profile',
+  );
+
+  /* Display: Content pane */
+  $handler = $view->new_display('panel_pane', 'Content pane', 'panel_pane_1');
+  $handler->display->display_options['link_url'] = '/people';
+  $handler->display->display_options['allow']['use_pager'] = 0;
+  $handler->display->display_options['allow']['items_per_page'] = 'items_per_page';
+  $handler->display->display_options['allow']['offset'] = 0;
+  $handler->display->display_options['allow']['link_to_view'] = 0;
+  $handler->display->display_options['allow']['more_link'] = 'more_link';
+  $handler->display->display_options['allow']['more_text'] = 'more_text';
+  $handler->display->display_options['allow']['path_override'] = 0;
+  $handler->display->display_options['allow']['title_override'] = 'title_override';
+  $handler->display->display_options['allow']['exposed_form'] = 0;
+  $handler->display->display_options['allow']['fields_override'] = 0;
+  $handler->display->display_options['argument_input'] = array(
+    'tid' => array(
+      'type' => 'user',
+      'context' => 'entity:field_collection_item.archived',
+      'context_optional' => 0,
+      'panel' => '0',
+      'fixed' => '',
+      'label' => 'Category or Keyword Tag ID',
+    ),
+  );
+  $export['pp7'] = $view;
+
   return $export;
 }
