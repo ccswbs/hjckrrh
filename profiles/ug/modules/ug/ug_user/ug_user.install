@@ -1,0 +1,9 @@
+<?php
+
+/**
+ * Set group member attribute for LDAP 7.x-2.x.
+ */
+function ug_user_update_7200(&$sandbox) {
+  db_query("update {ldap_servers} set grp_user_memb_attr_exists=1, grp_user_memb_attr='edupersonaffiliation' where sid='ug'");
+}
+
