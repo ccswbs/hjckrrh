@@ -119,6 +119,8 @@ projects[module_filter][version] = "2.0"
 
 projects[module_missing_message_fixer][version] = "1.2"
 
+projects[mpac][version] = "1.2"
+
 projects[node_clone][version] = "1.0-rc2"
 
 projects[oauth][version] = "3.3"

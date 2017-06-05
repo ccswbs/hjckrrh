@@ -1,0 +1,15 @@
+name = Multi path autocomplete
+description = "Find paths on menu item creation, shortcut creation or url alias creation via autocomplete."
+core = 7.x
+
+; Files to load.
+files[] = mpac.module
+files[] = mpac.admin.inc
+configure = admin/config/search/mpac
+
+; Information added by drupal.org packaging script on 2013-01-30
+version = "7.x-1.2"
+core = "7.x"
+project = "mpac"
+datestamp = "1359567543"
+
