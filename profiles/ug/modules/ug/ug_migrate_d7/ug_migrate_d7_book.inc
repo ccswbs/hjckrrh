@@ -81,13 +81,18 @@ class UGBook7Migration extends DrupalNode7Migration {
     $this->addFieldMapping('body:summary', $book_arguments['source_book_summary']);
 
     // Map Body Format
-    if($book_arguments['source_book_body'] == 'body'){
-        $this->addFieldMapping('body:format', $book_arguments['source_book_format'])
-          ->defaultValue('full_html');
+    if($this->arguments['override_format'] == TRUE){
+      $this->addFieldMapping('body:format')
+        ->defaultValue($this->arguments['default_format']);
     }else{
-        $this->addFieldMapping('body:format', $book_arguments['source_book_format'])
-          ->callbacks(array($this, 'mapFormat'))
-          ->defaultValue('full_html');
+      if($book_arguments['source_book_body'] == 'body'){
+          $this->addFieldMapping('body:format', $book_arguments['source_book_format'])
+            ->defaultValue($this->arguments['default_format']);
+      }else{
+          $this->addFieldMapping('body:format', $book_arguments['source_book_format'])
+            ->callbacks(array($this, 'mapFormat'))
+            ->defaultValue($this->arguments['default_format']);
+      }
     }
 
     // Map Book Category
@@ -296,13 +301,18 @@ class UGUpdateBook7Migration extends UGUpdate7Migration {
       $this->addFieldMapping('body:summary', $book_arguments['source_book_summary']);
 
       // Map Body Format
-      if($book_arguments['source_book_body'] == 'body'){
-          $this->addFieldMapping('body:format', $book_arguments['source_book_format'])
-            ->defaultValue('full_html');
+      if($this->arguments['override_format'] == TRUE){
+        $this->addFieldMapping('body:format')
+          ->defaultValue($this->arguments['default_format']);
       }else{
-          $this->addFieldMapping('body:format', $book_arguments['source_book_format'])
-            ->callbacks(array($this, 'mapFormat'))
-            ->defaultValue('full_html');
+        if($book_arguments['source_book_body'] == 'body'){
+            $this->addFieldMapping('body:format', $book_arguments['source_book_format'])
+              ->defaultValue($this->arguments['default_format']);
+        }else{
+            $this->addFieldMapping('body:format', $book_arguments['source_book_format'])
+              ->callbacks(array($this, 'mapFormat'))
+              ->defaultValue($this->arguments['default_format']);
+        }
       }
   }
 }

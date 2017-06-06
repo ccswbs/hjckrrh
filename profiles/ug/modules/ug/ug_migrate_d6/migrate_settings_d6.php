@@ -145,6 +145,19 @@ $destination_sitestub = '';
     'source_term_keyword' => 'tags',
   );
 
+/**************************
+*  FORMAT Settings
+*
+*  Usage: Set override_format to TRUE to override all available textfield formats with default_format
+*    If override_format is set to FALSE, default_format is the fallback format for any textfields
+*    without a mapped source format
+**************************/
+
+  $format_arguments = array(
+    'default_format' => 'full_html',
+    'override_format' => FALSE,
+  );
+
 
 /* ----
 *

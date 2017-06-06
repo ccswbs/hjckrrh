@@ -82,13 +82,18 @@
 		    $this->addFieldMapping('field_course_body:summary', $course_arguments['source_course_summary']);
 
 			// Course Outline Body Format
-			if($course_arguments['source_course_body'] == 'body'){
-			    $this->addFieldMapping( 'field_course_body:format', $course_arguments['source_course_format'])
-				    ->defaultValue('full_html');
+			if($this->arguments['override_format'] == TRUE){
+				$this->addFieldMapping('field_course_body:format')
+					->defaultValue($this->arguments['default_format']);
 			}else{
-			    $this->addFieldMapping( 'field_course_body:format', $course_arguments['source_course_format'])
-				    ->callbacks(array($this, 'mapFormat'))
-				    ->defaultValue('full_html');
+				if($course_arguments['source_course_body'] == 'body'){
+				    $this->addFieldMapping( 'field_course_body:format', $course_arguments['source_course_format'])
+					    ->defaultValue($this->arguments['default_format']);
+				}else{
+				    $this->addFieldMapping( 'field_course_body:format', $course_arguments['source_course_format'])
+					    ->callbacks(array($this, 'mapFormat'))
+					    ->defaultValue($this->arguments['default_format']);
+				}
 			}
 
 			// Course Outline CATEGORY 

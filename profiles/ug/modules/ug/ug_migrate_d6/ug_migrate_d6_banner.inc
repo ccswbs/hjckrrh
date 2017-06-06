@@ -54,25 +54,35 @@ class UGBanner6Migration extends UGDrupalNode6Migration {
 		$this->addFieldMapping('field_banner_headline', $banner_arguments['source_banner_headline']);			
 
 		// Banner Headline Format
-		if($banner_arguments['source_banner_headline'] == 'body'){
-			$this->addFieldMapping('field_banner_headline:format', $banner_arguments['source_banner_headline_format'])
-			    ->defaultValue('full_html');
+		if($this->arguments['override_format'] == TRUE){
+			$this->addFieldMapping('field_banner_headline:format')
+				->defaultValue($this->arguments['default_format']);
 		}else{
-			$this->addFieldMapping('field_banner_headline:format', $banner_arguments['source_banner_headline_format'])
-			    ->callbacks(array($this, 'mapFormat'))
-			    ->defaultValue('full_html');
+			if($banner_arguments['source_banner_headline'] == 'body'){
+				$this->addFieldMapping('field_banner_headline:format', $banner_arguments['source_banner_headline_format'])
+				    ->defaultValue($this->arguments['default_format']);
+			}else{
+				$this->addFieldMapping('field_banner_headline:format', $banner_arguments['source_banner_headline_format'])
+				    ->callbacks(array($this, 'mapFormat'))
+				    ->defaultValue($this->arguments['default_format']);
+			}
 		}
 
 		// Banner Text
 		$this->addFieldMapping('field_banner_text', $banner_arguments['source_banner_text']);
 		// Banner Text Format
-		if($banner_arguments['source_banner_text'] == 'body'){
-			$this->addFieldMapping('field_banner_text:format', $banner_arguments['source_banner_text_format'])
-			    ->defaultValue('full_html');
+		if($this->arguments['override_format'] == TRUE){
+			$this->addFieldMapping('field_banner_text:format')
+				->defaultValue($this->arguments['default_format']);
 		}else{
-			$this->addFieldMapping('field_banner_text:format', $banner_arguments['source_banner_text_format'])
-			    ->callbacks(array($this, 'mapFormat'))
-			    ->defaultValue('full_html');
+			if($banner_arguments['source_banner_text'] == 'body'){
+				$this->addFieldMapping('field_banner_text:format', $banner_arguments['source_banner_text_format'])
+				    ->defaultValue($this->arguments['default_format']);
+			}else{
+				$this->addFieldMapping('field_banner_text:format', $banner_arguments['source_banner_text_format'])
+				    ->callbacks(array($this, 'mapFormat'))
+				    ->defaultValue($this->arguments['default_format']);
+			}
 		}
 
 		// Banner Category
