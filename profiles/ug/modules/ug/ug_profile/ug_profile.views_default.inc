@@ -1007,6 +1007,11 @@ function ug_profile_views_default_views() {
   $handler->display->display_options['filters']['type']['value'] = array(
     'profile' => 'profile',
   );
+  /* Filter criterion: Content: Image (field_profile_image:fid) */
+  $handler->display->display_options['filters']['field_profile_image_fid']['id'] = 'field_profile_image_fid';
+  $handler->display->display_options['filters']['field_profile_image_fid']['table'] = 'field_data_field_profile_image';
+  $handler->display->display_options['filters']['field_profile_image_fid']['field'] = 'field_profile_image_fid';
+  $handler->display->display_options['filters']['field_profile_image_fid']['operator'] = 'not empty';
 
   /* Display: Content pane */
   $handler = $view->new_display('panel_pane', 'Content pane', 'panel_pane_1');
