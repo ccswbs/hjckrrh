@@ -1,3 +1,28 @@
+Hjckrrh 7.x-16.0, 2017-06-06
+----------------------------
+bba2971 Remove <p> color rather than overriding in specific cases.
+05cebbc Another update to automate more attributes
+696c50c Update javascript-enabled attributes
+05ac4b7 Add mpac module files
+1550275 Add mpac to makefile
+98b05c3 Update CHANGELOG
+889e79b Update to media-7.x-2.1
+ffe3afe Remove old (unused) scripts and add fix for collapsibles
+123ad43 Enable UG scripts
+a404173 Update html.tpl.php
+f28a81d Fix test file
+5dd4525 Hides instructor and term label when no value is given, tests this feature
+eccf08d Add styles to remove list numbers and padding in search results
+29dbf8b configure and add clone of view f4
+e9f7e41 configure settings for view e6
+a824285 add template files
+fd2eb18 Allow format to be overridden (UG Migrate D6)[fixes #539]
+ddb7d81 Allow format to be overridden (UG Migrate D7)[fixes #539]
+d26365e Hide checkbox using field permissions
+a1da95c Add test for multiple profile websites (UG Profile)[fixes #628]
+1f676ab Allow multiple profile website links (UG Profile)[fixes #628]
+59113a8 Removed dependancy on UG Page Layout from UG Page
+
 Hjckrrh 7.x-15.0, 2017-05-09
 ----------------------------
 68c5194 Remove menu_links.inc and fix feature location
