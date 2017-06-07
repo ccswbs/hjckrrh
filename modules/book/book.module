@@ -1109,13 +1109,6 @@ function template_preprocess_book_navigation(&$variables) {
       $variables['prev_title'] = check_plain($prev['title']);
     }
 
-    if ($book_link['plid'] && $parent = book_link_load($book_link['plid'])) {
-      $parent_href = url($parent['href']);
-      drupal_add_html_head_link(array('rel' => 'up', 'href' => $parent_href));
-      $variables['parent_url'] = $parent_href;
-      $variables['parent_title'] = check_plain($parent['title']);
-    }
-
     if ($next = book_next($book_link)) {
       $next_href = url($next['href']);
       drupal_add_html_head_link(array('rel' => 'next', 'href' => $next_href));
