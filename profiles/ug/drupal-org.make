@@ -82,7 +82,7 @@ projects[jquery_update][version] = "2.7"
 
 projects[js_injector][version] = "2.1"
 
-projects[ldap][version] = "1.0-beta14"
+projects[ldap][version] = "2.2"
 
 projects[libraries][version] = "2.3"
 

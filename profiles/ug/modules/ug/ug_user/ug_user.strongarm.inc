@@ -19,8 +19,6 @@ function ug_user_strongarm() {
       'ug' => 'ug',
     ),
     'authenticationMode' => 2,
-    'loginConflictResolve' => 2,
-    'acctCreation' => 4,
     'loginUIUsernameTxt' => 'Please enter your U of G central login ID.',
     'loginUIPasswordTxt' => 'Please enter your U of G central login password.',
     'ldapUserHelpLinkUrl' => 'http://www.uoguelph.ca/ccs/service/central-login-id-and-password',
