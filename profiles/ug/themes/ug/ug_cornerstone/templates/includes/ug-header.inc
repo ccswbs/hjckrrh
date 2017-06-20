@@ -60,7 +60,7 @@
               <li><a href="//www.uoguelph.ca/arts">College of Arts</a></li>
               <li><a href="//www.uoguelph.ca/cbs/">College of Biological Science</a></li>
               <li><a href="//www.uoguelph.ca/business/">College of Business &amp; Economics</a> </li>
-              <li><a href="//www.uoguelph.ca/cpes/">College of Physical &amp; Engineering Science</a></li>
+              <li><a href="//www.uoguelph.ca/ceps/">College of Engineering &amp; Physical Sciences</a></li>
               <li><a href="//www.csahs.uoguelph.ca/">College of Social &amp; Applied Human Sciences</a></li>
               <li><a href="//www.uoguelph.ca/oac/">Ontario Agricultural College</a></li>
               <li><a href="//www.ovc.uoguelph.ca/">Ontario Veterinary College</a></li>
