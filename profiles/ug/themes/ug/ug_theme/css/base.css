@@ -70,10 +70,6 @@ Base Styles
     cursor:pointer;
   }
   
-  .main-container .fa, .main-container .glyphicon {
-    color:#666666;
-  }
-
   /* hover/focus - underline */
   a:focus, a:hover {
       text-decoration: underline;
