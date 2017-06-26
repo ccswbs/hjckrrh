@@ -1,3 +1,14 @@
+Hjckrrh 7.x-17.0, 2017-06-26
+----------------------------
+2e526a5 Fix issue #766 (Glyphicons have wrong colour)
+4bf2272 Upgrade to Drupal 7.56
+770ca3c Change CPES to CEPS in global nav
+c84a62c Upgrade core to Drupal 7.55
+3a81957 Update LDAP module to the latest supported version
+d6dc293 Merge pull request #693 from ccswbs/iss528-snapchat
+22c1e3e Update LDAP module to 7.x-2.x.
+68b045c Add snapchat (UG Social)[fixes #528]
+
 Hjckrrh 7.x-16.0, 2017-06-06
 ----------------------------
 bba2971 Remove <p> color rather than overriding in specific cases.
