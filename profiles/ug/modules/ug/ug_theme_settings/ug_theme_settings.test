@@ -43,7 +43,7 @@ class UGThemeSettingsTestCase extends DrupalWebTestCase {
       '//www.uoguelph.ca/arts',
       '//www.uoguelph.ca/cbs/',
       '//www.uoguelph.ca/business/',
-      '//www.uoguelph.ca/cpes/',
+      '//www.uoguelph.ca/ceps/',
       '//www.csahs.uoguelph.ca/',
       '//www.uoguelph.ca/oac/',
       '//www.ovc.uoguelph.ca/',
@@ -85,7 +85,7 @@ class UGThemeSettingsTestCase extends DrupalWebTestCase {
    * Test our links against the UG Home page.
    */
   function testUGHomePageGlobalNav() {
-    $this->drupalGet('http://www.uoguelph.ca/');
+    $this->drupalGet('https://www.uoguelph.ca/');
     foreach ($this->globalNavLinks() as $link) {
       $this->assertLinkByHref($link);
     }

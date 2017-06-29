@@ -82,7 +82,7 @@ projects[jquery_update][version] = "2.7"
 
 projects[js_injector][version] = "2.1"
 
-projects[ldap][version] = "1.0-beta14"
+projects[ldap][version] = "2.2"
 
 projects[libraries][version] = "2.3"
 
@@ -118,6 +118,8 @@ projects[mimemail][version] = "1.0-beta4"
 projects[module_filter][version] = "2.0"
 
 projects[module_missing_message_fixer][version] = "1.2"
+
+projects[mpac][version] = "1.2"
 
 projects[node_clone][version] = "1.0-rc2"
 
@@ -165,6 +167,8 @@ projects[rules][version] = "2.9"
 projects[rules][patch][] = "https://www.drupal.org/files/issues/rules-fix-fatal-error-features-revert-2186363-2.patch"
 
 projects[scanner][version] = "1.0-beta1"
+
+projects[services][version] = "3.20"
 
 projects[strongarm][version] = "2.0"
 

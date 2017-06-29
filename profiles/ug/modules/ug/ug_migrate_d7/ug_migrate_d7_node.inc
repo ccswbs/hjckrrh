@@ -133,13 +133,18 @@ class UGFeaturedItem7Migration extends UGDrupalNode7Migration {
 	    $this->addFieldMapping('field_feature_text:summary', $featureditem_arguments['source_featureditem_summary']);
 
 		// Featured Item Body Format
-		if($featureditem_arguments['source_featureditem_body'] == 'body'){
-		    $this->addFieldMapping( 'field_feature_text:format', $featureditem_arguments['source_featureditem_format'])
-			    ->defaultValue('full_html');
+		if($this->arguments['override_format'] == TRUE){
+			$this->addFieldMapping('field_feature_text:format')
+				->defaultValue($this->arguments['default_format']);
 		}else{
-		    $this->addFieldMapping( 'field_feature_text:format', $featureditem_arguments['source_featureditem_format'])
-			    ->callbacks(array($this, 'mapFormat'))
-			    ->defaultValue('full_html');
+			if($featureditem_arguments['source_featureditem_body'] == 'body'){
+			    $this->addFieldMapping( 'field_feature_text:format', $featureditem_arguments['source_featureditem_format'])
+				    ->defaultValue($this->arguments['default_format']);
+			}else{
+			    $this->addFieldMapping( 'field_feature_text:format', $featureditem_arguments['source_featureditem_format'])
+				    ->callbacks(array($this, 'mapFormat'))
+				    ->defaultValue($this->arguments['default_format']);
+			}
 		}
 
 		/* Featured Item Category */
@@ -244,13 +249,18 @@ class UGEvent7Migration extends UGDrupalNode7Migration {
 	    $this->addFieldMapping('field_event_body:summary', $event_arguments['source_event_summary']);
 
 		// Event Body Format
-		if($event_arguments['source_event_body'] == 'body'){
-		    $this->addFieldMapping( 'field_event_body:format', $event_arguments['source_event_format'])
-			    ->defaultValue('full_html');
+		if($this->arguments['override_format'] == TRUE){
+			$this->addFieldMapping('field_event_body:format')
+				->defaultValue($this->arguments['default_format']);
 		}else{
-		    $this->addFieldMapping( 'field_event_body:format', $event_arguments['source_event_format'])
-			    ->callbacks(array($this, 'mapFormat'))
-			    ->defaultValue('full_html');
+			if($event_arguments['source_event_body'] == 'body'){
+			    $this->addFieldMapping( 'field_event_body:format', $event_arguments['source_event_format'])
+				    ->defaultValue($this->arguments['default_format']);
+			}else{
+			    $this->addFieldMapping( 'field_event_body:format', $event_arguments['source_event_format'])
+				    ->callbacks(array($this, 'mapFormat'))
+				    ->defaultValue($this->arguments['default_format']);
+			}
 		}
 
 		/* Event Category */
@@ -457,13 +467,18 @@ class UGNews7Migration extends UGDrupalNode7Migration {
 	    $this->addFieldMapping('field_news_body:summary', $news_arguments['source_news_summary']);
 
 		// News Body Format
-		if($news_arguments['source_news_body'] == 'body'){
-		    $this->addFieldMapping( 'field_news_body:format', $news_arguments['source_news_format'])
-			    ->defaultValue('full_html');
+		if($this->arguments['override_format'] == TRUE){
+			$this->addFieldMapping('field_news_body:format')
+				->defaultValue($this->arguments['default_format']);
 		}else{
-		    $this->addFieldMapping( 'field_news_body:format', $news_arguments['source_news_format'])
-			    ->callbacks(array($this, 'mapFormat'))
-			    ->defaultValue('full_html');
+			if($news_arguments['source_news_body'] == 'body'){
+			    $this->addFieldMapping( 'field_news_body:format', $news_arguments['source_news_format'])
+				    ->defaultValue($this->arguments['default_format']);
+			}else{
+			    $this->addFieldMapping( 'field_news_body:format', $news_arguments['source_news_format'])
+				    ->callbacks(array($this, 'mapFormat'))
+				    ->defaultValue($this->arguments['default_format']);
+			}
 		}
 
 		/* News Category */
@@ -561,13 +576,18 @@ class UGPage7Migration extends UGDrupalNode7Migration {
 	    $this->addFieldMapping('field_page_body:summary', $page_arguments['source_page_summary']);
 
 		// Page Body Format
-		if($page_arguments['source_page_body'] == 'body'){
-		    $this->addFieldMapping( 'field_page_body:format', $page_arguments['source_page_format'])
-			    ->defaultValue('full_html');
+		if($this->arguments['override_format'] == TRUE){
+			$this->addFieldMapping('field_page_body:format')
+				->defaultValue($this->arguments['default_format']);
 		}else{
-		    $this->addFieldMapping( 'field_page_body:format', $page_arguments['source_page_format'])
-			    ->callbacks(array($this, 'mapFormat'))
-			    ->defaultValue('full_html');
+			if($page_arguments['source_page_body'] == 'body'){
+			    $this->addFieldMapping( 'field_page_body:format', $page_arguments['source_page_format'])
+				    ->defaultValue($this->arguments['default_format']);
+			}else{
+			    $this->addFieldMapping( 'field_page_body:format', $page_arguments['source_page_format'])
+				    ->callbacks(array($this, 'mapFormat'))
+				    ->defaultValue($this->arguments['default_format']);
+			}
 		}
 
 		/* Page Category */
@@ -641,13 +661,18 @@ class UGFAQ7Migration extends UGDrupalNode7Migration {
 	    $this->addFieldMapping('field_faq_answer', $faq_arguments['source_faq_answer']);
 
 		// FAQ Answer Format
-		if($faq_arguments['source_faq_answer'] == 'body'){
-		    $this->addFieldMapping( 'field_faq_answer:format', $faq_arguments['source_faq_format'])
-			    ->defaultValue('full_html');
+		if($this->arguments['override_format'] == TRUE){
+			$this->addFieldMapping('field_faq_answer:format')
+				->defaultValue($this->arguments['default_format']);
 		}else{
-		    $this->addFieldMapping( 'field_faq_answer:format', $faq_arguments['source_faq_format'])
-			    ->callbacks(array($this, 'mapFormat'))
-			    ->defaultValue('full_html');
+			if($faq_arguments['source_faq_answer'] == 'body'){
+			    $this->addFieldMapping( 'field_faq_answer:format', $faq_arguments['source_faq_format'])
+				    ->defaultValue($this->arguments['default_format']);
+			}else{
+			    $this->addFieldMapping( 'field_faq_answer:format', $faq_arguments['source_faq_format'])
+				    ->callbacks(array($this, 'mapFormat'))
+				    ->defaultValue($this->arguments['default_format']);
+			}
 		}
 
 		/* FAQ Category */
@@ -917,13 +942,18 @@ class UGProfile7Migration extends UGDrupalNode7Migration {
 		$this->addFieldMapping('field_profile_summary', $profile_arguments['source_profile_summary']);
 
 		// Profile Summary Format
-		if($profile_arguments['source_profile_summary'] == 'body'){
-			$this->addFieldMapping('field_profile_summary:format', $profile_arguments['source_profile_format'])
-			    ->defaultValue('full_html');
+		if($this->arguments['override_format'] == TRUE){
+			$this->addFieldMapping('field_profile_summary:format')
+				->defaultValue($this->arguments['default_format']);
 		}else{
-			$this->addFieldMapping('field_profile_summary:format', $profile_arguments['source_profile_format'])
-			    ->callbacks(array($this, 'mapFormat'))
-			    ->defaultValue('full_html');
+			if($profile_arguments['source_profile_summary'] == 'body'){
+				$this->addFieldMapping('field_profile_summary:format', $profile_arguments['source_profile_format'])
+				    ->defaultValue($this->arguments['default_format']);
+			}else{
+				$this->addFieldMapping('field_profile_summary:format', $profile_arguments['source_profile_format'])
+				    ->callbacks(array($this, 'mapFormat'))
+				    ->defaultValue($this->arguments['default_format']);
+			}
 		}
 
 		/* Profile Category */

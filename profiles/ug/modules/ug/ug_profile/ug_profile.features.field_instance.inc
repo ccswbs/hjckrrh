@@ -1112,7 +1112,7 @@ function ug_profile_field_default_field_instances() {
     ),
     'entity_type' => 'node',
     'field_name' => 'field_profile_website',
-    'label' => 'Website link',
+    'label' => 'Website links',
     'required' => 0,
     'settings' => array(
       'absolute_url' => 1,
@@ -1219,7 +1219,7 @@ function ug_profile_field_default_field_instances() {
   t('Sub-unit');
   t('Summary');
   t('Unit');
-  t('Website link');
+  t('Website links');
 
   return $field_instances;
 }
