@@ -261,7 +261,7 @@ function ug_theme_preprocess_views_view_fields__pp6(&$vars) {
   $vars['phone']          = $vars['fields']['field_profile_telephonenumber']->content;
   $vars['email']          = $vars['fields']['field_profile_email']->content;
   $vars['user_url']       = 'user/'.$vars['nid'];
-  $vars['fullname']       = l($vars['name'].' '.$vars['lastname'], 'node/'.$vars['nid']);
+  $vars['fullname']       = t('<a href="@url">'.$vars['name'].' '.$vars['lastname'].'</a>', array('@url' => url('node/'.$vars['nid'])));
   $vars['office']         = $vars['fields']['field_profile_office']->content;
   $vars['content_width']  = 'col-md-12';
   $vars['content_offset'] = '';
