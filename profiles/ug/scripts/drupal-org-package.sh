@@ -7,6 +7,8 @@ NAME=ug
 VERSION=$RELEASE
 PKG=$TMP/package-$NAME
 CWD=$(pwd)
+DRUSH=drush
+DRUSHMAKEFLAGS=--drupal-org-allowed-patch-url=/\\.patch$/
 
 # Clean and recreate package directory
 rm -rf $PKG
@@ -20,13 +22,13 @@ find . -name '*.info' -exec sed -i -e "s/^version = .*$/version = $VERSION/" {} 
 tar -C$PKG -czf $TMP/$NAME-$VERSION.tar.gz $NAME
 # Now build and package no-core version
 cd $NAME
-drush make --drupal-org $CWD/drupal-org.make .
+$DRUSH make $DRUSHMAKEFLAGS --drupal-org $CWD/drupal-org.make .
 cd $PKG
 tar -czf $TMP/$NAME-$VERSION-nocore.tar.gz $NAME
 
 # Build full release
 cd $PKG
-drush make --drupal-org=core $CWD/drupal-org-core.make $NAME-$VERSION
+$DRUSH make $DRUSHMAKEFLAGS --drupal-org=core $CWD/drupal-org-core.make $NAME-$VERSION
 cd $NAME-$VERSION
 cp -R $PKG/$NAME profiles/$NAME
 cd $PKG
