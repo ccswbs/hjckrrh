@@ -258,6 +258,7 @@ function ug_theme_preprocess_views_view_fields__pp6(&$vars) {
   $vars['name']           = $vars['fields']['field_profile_name']->content;
   $vars['lastname']       = $vars['fields']['field_profile_lastname']->content;
   $vars['nid']            = $vars['fields']['nid']->content;
+  $vars['teaser']         = $vars['fields']['field_profile_teaser']->content;
   $vars['phone']          = $vars['fields']['field_profile_telephonenumber']->content;
   $vars['email']          = $vars['fields']['field_profile_email']->content;
   $vars['user_url']       = 'user/'.$vars['nid'];
@@ -292,6 +293,15 @@ function ug_theme_preprocess_views_view_fields__pp6(&$vars) {
     }
   }
 }
+
+ /**
+  * PP7 - People Profile teaser list
+  */
+ function ug_theme_preprocess_views_view_fields__pp7(&$vars) {
+   $vars['title']  = $vars['fields']['title']->content;
+   $vars['teaser'] = $vars['fields']['field_profile_teaser']->content;
+   $vars['image']  = $vars['fields']['field_profile_image']->content;
+ }
 
 /**
  * Output profile heading as a heading level 2.
@@ -1031,6 +1041,21 @@ function ug_theme_preprocess_views_view__n3(&$vars) {
   if(!empty($view->args[0])){
     $category_filter = $view->args[0];
     $view->display_handler->set_option('link_url', 'news/category/' . $category_filter);
+  }
+
+  $vars['more'] = $view->display_handler->render_more_link();
+}
+
+/**
+ * PP7 - People profiles teaser list
+ */
+function ug_theme_preprocess_views_view__pp7(&$vars) {
+
+  $view = views_get_current_view();
+
+  if(!empty($view->args[0])){
+    $keyword_filter = $view->args[0];
+    $view->display_handler->set_option('link_url', 'people/' . $keyword_filter);
   }
 
   $vars['more'] = $view->display_handler->render_more_link();

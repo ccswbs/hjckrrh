@@ -74,10 +74,10 @@ function ug_profile_strongarm() {
           'weight' => '1',
         ),
         'path' => array(
-          'weight' => '24',
+          'weight' => '25',
         ),
         'metatags' => array(
-          'weight' => '40',
+          'weight' => '26',
         ),
       ),
       'display' => array(),
