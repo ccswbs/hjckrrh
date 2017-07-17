@@ -169,6 +169,7 @@ projects[rules][patch][] = "https://www.drupal.org/files/issues/rules-fix-fatal-
 projects[scanner][version] = "1.0-beta1"
 
 projects[services][version] = "3.20"
+projects[services][patch][] = "patches/services.patch"
 
 projects[strongarm][version] = "2.0"
 
