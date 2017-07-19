@@ -4,6 +4,7 @@ core = 7.x
 package = UG
 version = 7.x-7.52
 project = ug_banner
+dependencies[] = image
 dependencies[] = image_url_formatter
 dependencies[] = link
 dependencies[] = list
