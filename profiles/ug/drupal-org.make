@@ -2,6 +2,8 @@
 core = 7.x
 api = 2
 
+projects[advagg][version] = "2.23"
+
 projects[auto_nodetitle][version] = "1.0"
 projects[auto_nodetitle][patch][] = "https://www.drupal.org/files/issues/auto_nodetitle-dont_double_escape_titles-565922-39-against-1.0-stable.patch"
 
@@ -71,6 +73,8 @@ projects[fontawesome][version] = "2.6"
 projects[google_analytics][version] = "2.3"
 
 projects[hide_submit][version] = "2.4"
+
+projects[imagemagick][version] = "1.0"
 
 projects[image_url_formatter][version] = "1.4"
 
