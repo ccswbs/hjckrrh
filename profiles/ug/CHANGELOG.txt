@@ -1,3 +1,17 @@
+Hjckrrh 7.x-18.0, 2017-07-18
+----------------------------
+19f5dcd Allow local patches
+99a6fcd Update PATCHES.txt for services module.
+d57c6ad Add Services module's patched files
+84eaec8 Patch v3.20 of services module to return TID rather than success status
+e17f0dd Update PATCHES.txt files
+70e5fe1 Update services module to 7.x-3.20
+b024429 Only show profiles with images on PP7 (UG Profile)[#739]
+8fe9489 Randomize PP7 teaser view (UG Profile)[#739]
+b844adf Add teaser field to PP6 (UG Profile)[#739]
+043fbff Add PP7 Teaser list view (UG Profile)[#739]
+3d43bde Add teaser summary + update body (UG Profile)[#739]
+
 Hjckrrh 7.x-17.0, 2017-06-26
 ----------------------------
 2e526a5 Fix issue #766 (Glyphicons have wrong colour)
