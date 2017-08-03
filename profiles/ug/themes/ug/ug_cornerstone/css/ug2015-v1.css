@@ -237,6 +237,17 @@ Live Date: June 23, 2015
 		margin-right: 15px;
 	}
 
+	#ug-front-h1 {
+		margin-top:0;
+		margin-bottom:0;
+		font-size:1em;
+		font-weight:normal;
+	}
+
+	#ug-front-h1 a:hover {
+		border-bottom:0 !important;
+	}
+
 	@media all and (min-width: 992px){
 		/* Right align the last two menu dropdown items */
     	#navbar.navbar-inverse .navbar-nav>li.dropdown:nth-last-child(-n+2)>ul{
