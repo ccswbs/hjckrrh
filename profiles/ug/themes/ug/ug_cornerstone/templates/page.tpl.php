@@ -142,16 +142,16 @@
   <div class="row">
 
     <?php if (empty($variables['page']['sidebar_first']) && empty($variables['page']['sidebar_second'])): ?>
-      <section class="col-sm-12">
+      <div class="col-sm-12">
     <?php endif; ?>
     <?php if (empty($variables['page']['sidebar_first']) && !empty($variables['page']['sidebar_second'])): ?>
-      <section class="col-sm-9">
+      <div class="col-sm-9">
     <?php endif; ?>
     <?php if (!empty($variables['page']['sidebar_first']) && empty($variables['page']['sidebar_second'])): ?>
-      <section class="col-sm-9 col-sm-push-3">
+      <div class="col-sm-9 col-sm-push-3">
     <?php endif; ?>
     <?php if (!empty($variables['page']['sidebar_first']) && !empty($variables['page']['sidebar_second'])): ?>
-      <section class="col-sm-6 col-sm-push-3">
+      <div class="col-sm-6 col-sm-push-3">
     <?php endif; ?>
 
       <?php if (!empty($page['highlighted'])): ?>
@@ -175,7 +175,7 @@
         <ul class="action-links"><?php print render($action_links); ?></ul>
       <?php endif; ?>
       <?php print render($page['content']); ?>
-    </section>
+    </div>
 
     <?php if (!empty($page['sidebar_first'])): ?>
       <?php if (!empty($page['sidebar_second'])): ?>
