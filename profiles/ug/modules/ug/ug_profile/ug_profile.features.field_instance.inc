@@ -260,7 +260,7 @@ function ug_profile_field_default_field_instances() {
     'label' => 'Attachments',
     'required' => 0,
     'settings' => array(
-      'description_field' => 0,
+      'description_field' => 1,
       'file_directory' => '',
       'file_extensions' => 'txt pdf doc docs odt ppt pps docx dotx ppsx pptx xlsx xltx mp3',
       'max_filesize' => '',
