@@ -111,9 +111,11 @@ Live Date: June 23, 2015
 	    }
 
 	    /* Provide spacing between search bar and top of page */
-	    #ug-navbar {
-	    	padding-top:30px;
-	    }
+	    @media (min-width: 765px) {
+			#toptoolbuttons {
+			    visibility: hidden;
+			}
+		}
 
 		@media all and (min-width: 768px){
 
