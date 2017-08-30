@@ -17,6 +17,8 @@ jQuery(function($) {
 			// Set aria-controls on controlling element
 			controller.attr("aria-controls", $(elem).attr("id"));
 			controller.attr("data-toggle", "collapse");
+
+			controller.removeAttr('href');
 		});
 	});
 });
