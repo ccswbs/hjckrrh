@@ -110,6 +110,13 @@ Live Date: June 23, 2015
 	        border-top-color: #FFFFFF;
 	    }
 
+	    /* Provide spacing between search bar and top of page */
+	    @media (min-width: 765px) {
+			#toptoolbuttons {
+			    visibility: hidden;
+			}
+		}
+
 		@media all and (min-width: 768px){
 
 			/* Menu Tabs CLOSED - FOCUS/HOVER styling (Wide) */
