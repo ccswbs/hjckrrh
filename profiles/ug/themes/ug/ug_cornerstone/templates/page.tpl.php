@@ -85,7 +85,9 @@
         <?php endif; ?>
 
         <?php if (!empty($site_name)): ?>
-        <a class="name navbar-brand" href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>"><?php print $site_name; ?></a>
+          <?php if($is_front): ?><h1 id="ug-front-h1"><?php endif; ?>
+            <a class="name navbar-brand" href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>"><?php print $site_name; ?></a>
+          <?php if($is_front): ?></h1><?php endif; ?>
         <?php endif; ?>
         <?php if (!empty($site_slogan)): ?>
         <p class="lead"><?php print $site_slogan; ?></p>
