@@ -703,3 +703,18 @@ _:-ms-fullscreen, :root .carousel-table a.glyphicon {
 .ctools-modal-dialog .modal-body #edit-admin-description-wrapper {
   height:auto;
 }
+
+/* For the plus/minus icons on expandible/collapsible content */
+
+a[data-toggle="collapse"]:before {
+    /* symbol for "opening" panels */
+    font-family: 'Glyphicons Halflings';  /* essential for enabling glyphicon */
+    font-size: 0.7em;
+    content: "\2212";    /* adjust as needed, taken from bootstrap.css */
+    color: inherit;         /* adjust as needed */
+    padding-right: 0.3em;
+}
+a[data-toggle="collapse"].collapsed:before {
+    /* symbol for "collapsed" panels */
+    content: "\2b";    /* adjust as needed, taken from bootstrap.css */
+}
