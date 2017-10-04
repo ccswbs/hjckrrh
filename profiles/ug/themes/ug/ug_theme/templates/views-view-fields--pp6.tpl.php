@@ -59,9 +59,12 @@
 		  	  <div class="media-teaser">
                 <?php print $teaser; ?>
 		  	  </div>
-		  	<?php endif; ?> 
+		  	<?php endif; ?>
 		  </div>
 		  <div class="media-summary">
+		  	<?php if ($title): ?>
+				<p><?php print $title; ?></p>
+		  	<?php endif; ?>
 		    <?php if ($phone): ?>
 		      <p>
 		        <?php print t("<strong>@label:</strong>", array('@label' => 'Phone')); ?>

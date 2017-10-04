@@ -254,38 +254,39 @@ function ug_theme_preprocess_views_view_fields__p2(&$vars) {
  * PP6 - Listing page for multiple customizable people profiles.
  */
 function ug_theme_preprocess_views_view_fields__pp6(&$vars) {
-  //$vars['image']        = $vars['fields']['field_profile_image']->content;
-  $vars['name']           = $vars['fields']['field_profile_name']->content;
-  $vars['lastname']       = $vars['fields']['field_profile_lastname']->content;
   $vars['nid']            = $vars['fields']['nid']->content;
+  $vars['firstname']      = $vars['fields']['field_profile_name']->content;
+  $vars['lastname']       = $vars['fields']['field_profile_lastname']->content;
+  $vars['fullname']       = t('<a href="@url">'.$vars['firstname'].' '.$vars['lastname'].'</a>', array('@url' => url('node/'.$vars['nid'])));
   $vars['teaser']         = $vars['fields']['field_profile_teaser']->content;
   $vars['phone']          = $vars['fields']['field_profile_telephonenumber']->content;
   $vars['email']          = $vars['fields']['field_profile_email']->content;
-  $vars['user_url']       = 'user/'.$vars['nid'];
-  $vars['fullname']       = t('<a href="@url">'.$vars['name'].' '.$vars['lastname'].'</a>', array('@url' => url('node/'.$vars['nid'])));
   $vars['office']         = $vars['fields']['field_profile_office']->content;
+  $vars['title']          = $vars['fields']['field_profile_title']->content;
   $vars['content_width']  = 'col-md-12';
   $vars['content_offset'] = '';
-  
+
   if(isset($vars['fields']['field_profile_align_names'])) {
     $vars['align'] = $vars['fields']['field_profile_align_names']->content;
   }
-  
+
+  // Small image
   if(isset($vars['fields']['field_profile_image'])) {
     $vars['content_width'] = 'col-md-10';
     $vars['small_image'] = $vars['fields']['field_profile_image']->content;
-    
+
     if(isset($vars['align'])) {
       if(!isset($vars['small_image'])) $vars['content_offset'] = 'col-md-offset-2';
     } else {
       if(!isset($vars['small_image'])) $vars['content_width'] = 'col-md-12';
     }
   }
-  
+
+  // Large image
   if(isset($vars['fields']['field_profile_image_1'])) {
     $vars['content_width'] = 'col-md-8';
     $vars['large_image']  = $vars['fields']['field_profile_image_1']->content;
-    
+
     if(isset($vars['align'])) {
       if($vars['large_image'] == '') $vars['content_offset'] = 'col-md-offset-4';
     } else {
