@@ -718,3 +718,52 @@ a[data-toggle="collapse"].collapsed:before {
     /* symbol for "collapsed" panels */
     content: "\2b";    /* adjust as needed, taken from bootstrap.css */
 }
+
+/* For flexible, responsive boxes of equal height */
+
+.row-flex, .row-flex > div[class*='col-'] {  
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  flex: 1 1 auto;
+}
+
+.row-flex-wrap {
+  -webkit-flex-flow: row wrap;
+  align-content: flex-start;
+  flex:0;
+}
+
+.row-flex > div[class*='col-'], .container-flex > div[class*='col-'] {
+  margin:-.2px; /* hack adjust for wrapping */
+}
+
+.container-flex > div[class*='col-'] div,.row-flex > div[class*='col-'] div {
+  width:100%;
+}
+
+.flex-col {
+  display: flex;
+  display: -webkit-flex;
+  flex: 1 100%;
+  flex-flow: column nowrap;
+}
+.flex-col-center {
+  align-items: center;
+}
+
+.flex-grow {
+    flex-grow: 1;
+}
+
+/* For giving lists on basic pages smaller, tighter text */
+
+ul.list-narrow {
+    padding-left: 1.5em !important;
+}
+ul.list-narrow li {
+    font-size: 14px !important;
+    line-height: 1 !important;
+}
