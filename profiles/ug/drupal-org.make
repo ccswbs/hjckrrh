@@ -5,7 +5,7 @@ api = 2
 projects[auto_nodetitle][version] = "1.0"
 projects[auto_nodetitle][patch][] = "https://www.drupal.org/files/issues/auto_nodetitle-dont_double_escape_titles-565922-39-against-1.0-stable.patch"
 
-projects[autologout][version] = "4.4"
+projects[autologout][version] = "4.5"
 
 projects[backup_migrate][version] = "3.1"
 
@@ -169,7 +169,7 @@ projects[rules][patch][] = "https://www.drupal.org/files/issues/rules-fix-fatal-
 projects[scanner][version] = "1.0-beta1"
 
 projects[services][version] = "3.20"
-projects[services][patch][] = "patches/services.patch"
+projects[services][patch][] = "profiles/ug/patches/services.patch"
 
 projects[strongarm][version] = "2.0"
 
