@@ -393,12 +393,7 @@ function _taxonomy_term_resource_create($term) {
   $term = _services_arg_value($term, 'term');
 
   $term = (object)$term;
-
-  if (taxonomy_term_save($term) == 1) {
-    return array("tid" => $term->tid);
-  } else {
-    return services_error(t('Unable to create new taxonomy term. Please contact administrator'), 404);
-  }
+  return taxonomy_term_save($term);
 }
 
 /**
