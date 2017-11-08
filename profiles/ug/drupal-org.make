@@ -14,7 +14,7 @@ projects[bootstrap_fieldgroup][version] = "1.2"
 projects[calendar][version] = "3.5"
 projects[calendar][patch][] = "https://www.drupal.org/files/issues/calendar-no_results-2489146-1-D7.patch"
 
-projects[captcha][version] = "1.3"
+projects[captcha][version] = "1.5"
 
 projects[cck][version] = "3.0-alpha3"
 
@@ -43,8 +43,7 @@ projects[email][version] = "1.3"
 
 projects[entity][version] = "1.8"
 
-projects[entityreference][version] = "1.2"
-projects[entityreference][patch][] = "https://www.drupal.org/files/issues/entityreference-use-tokens-2010898-175.patch"
+projects[entityreference][version] = "1.5"
 
 projects[faq][version] = "1.1"
 
@@ -179,7 +178,7 @@ projects[token][version] = "1.6"
 projects[twitter][version] = "5.11"
 projects[twitter][patch][] = "https://www.drupal.org/files/issues/twitter-doubleclass-2661088-5.patch"
 
-projects[views][version] = "3.15"
+projects[views][version] = "3.17"
 
 projects[views_bulk_operations][version] = "3.3"
 
