@@ -813,6 +813,7 @@ function ug_profile_views_default_views() {
   $handler->display->display_options['fields']['field_profile_title']['table'] = 'field_data_field_profile_title';
   $handler->display->display_options['fields']['field_profile_title']['field'] = 'field_profile_title';
   $handler->display->display_options['fields']['field_profile_title']['label'] = '';
+  $handler->display->display_options['fields']['field_profile_title']['element_type'] = '0';
   $handler->display->display_options['fields']['field_profile_title']['element_label_colon'] = FALSE;
   /* Sort criterion: Content: Last name (field_profile_lastname) */
   $handler->display->display_options['sorts']['field_profile_lastname_value']['id'] = 'field_profile_lastname_value';
