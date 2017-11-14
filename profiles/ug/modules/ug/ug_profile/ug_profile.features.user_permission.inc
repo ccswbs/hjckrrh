@@ -185,7 +185,10 @@ function ug_profile_user_default_permissions() {
   // Exported permission: 'view field_profile_align_names'.
   $permissions['view field_profile_align_names'] = array(
     'name' => 'view field_profile_align_names',
-    'roles' => array(),
+    'roles' => array(
+      'anonymous user' => 'anonymous user',
+      'authenticated user' => 'authenticated user',
+    ),
     'module' => 'field_permissions',
   );
 
