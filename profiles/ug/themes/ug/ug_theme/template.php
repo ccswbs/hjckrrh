@@ -254,6 +254,7 @@ function ug_theme_preprocess_views_view_fields__p2(&$vars) {
  * PP6 - Listing page for multiple customizable people profiles.
  */
 function ug_theme_preprocess_views_view_fields__pp6(&$vars) {
+  kpr($vars['fields']);
   $vars['nid']            = $vars['fields']['nid']->content;
   $vars['firstname']      = $vars['fields']['field_profile_name']->content;
   $vars['lastname']       = $vars['fields']['field_profile_lastname']->content;
@@ -263,6 +264,7 @@ function ug_theme_preprocess_views_view_fields__pp6(&$vars) {
   $vars['email']          = $vars['fields']['field_profile_email']->content;
   $vars['office']         = $vars['fields']['field_profile_office']->content;
   $vars['title']          = $vars['fields']['field_profile_title']->content;
+  $vars['unit']           = $vars['fields']['field_profile_unit']->content;
   $vars['content_width']  = 'col-md-12';
   $vars['content_offset'] = '';
 
