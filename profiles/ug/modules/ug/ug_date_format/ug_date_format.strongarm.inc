@@ -27,6 +27,13 @@ function ug_date_format_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
+  $strongarm->name = 'date_format_rss_feed_date';
+  $strongarm->value = 'D, d M Y H:i:s T';
+  $export['date_format_rss_feed_date'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
   $strongarm->name = 'date_format_short';
   $strongarm->value = 'M jS, Y';
   $export['date_format_short'] = $strongarm;
