@@ -61,7 +61,7 @@
               <li><a href="//www.uoguelph.ca/cbs/">College of Biological Science</a></li>
               <li><a href="//www.uoguelph.ca/business/">College of Business &amp; Economics</a> </li>
               <li><a href="//www.uoguelph.ca/ceps/">College of Engineering &amp; Physical Sciences</a></li>
-              <li><a href="//www.csahs.uoguelph.ca/">College of Social &amp; Applied Human Sciences</a></li>
+              <li><a href="//www.uoguelph.ca/csahs/">College of Social &amp; Applied Human Sciences</a></li>
               <li><a href="//www.uoguelph.ca/oac/">Ontario Agricultural College</a></li>
               <li><a href="//www.ovc.uoguelph.ca/">Ontario Veterinary College</a></li>
               <li class="divider"></li>
@@ -95,8 +95,9 @@
               <li><a href="http://gryphons.ca/">Athletics</a></li>
               <li><a href="//www.bookstore.uoguelph.ca">Bookstore</a></li>
               <li><a href="//www.uoguelph.ca/police/">Campus Community Police</a></li>
+              <li><a href="//www.uoguelph.ca/cpa/">Communications &amp; Public Affairs</a></li>
               <li><a href="//www.uoguelph.ca/community/" role="menuitem">Community Relations</a></li>
-              <li><a href="//www.uoguelph.ca/ccs/">Computing & Communications Services</a></li>
+              <li><a href="//www.uoguelph.ca/ccs/">Computing &amp; Communications Services</a></li>
               <li><a href="//www.hospitality.uoguelph.ca">Hospitality Services</a></li>
               <li><a href="//www.uoguelph.ca/hr/">Human Resources</a></li>
               <li><a href="//www.uoguelph.ca/studentaffairs/">Student Affairs</a></li>
