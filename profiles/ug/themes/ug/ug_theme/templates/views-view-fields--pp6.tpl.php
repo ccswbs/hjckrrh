@@ -65,6 +65,9 @@
 		  	<?php if ($title): ?>
 				<p><?php print $title; ?></p>
 		  	<?php endif; ?>
+		  	<?php if ($unit): ?>
+				<p><?php print $unit; ?></p>
+		  	<?php endif; ?>
 		    <?php if ($phone): ?>
 		      <p>
 		        <?php print t("<strong>@label:</strong>", array('@label' => 'Phone')); ?>
