@@ -29,6 +29,8 @@ projects[css_injector][version] = "1.10"
 projects[ctools][version] = "1.12"
 projects[ctools][patch][] = "https://www.drupal.org/files/issues/views_panes-more_link_text-1000146-25.patch"
 
+projects[datalayer][version] = "1.x-dev"
+
 projects[date][version] = "2.9"
 
 projects[devel][version] = "1.5"
