@@ -45,6 +45,8 @@ projects[entity][version] = "1.8"
 
 projects[entityreference][version] = "1.5"
 
+projects[facebook_pixel][version] = "1.1"
+
 projects[faq][version] = "1.1"
 
 projects[features][version] = "2.10"
@@ -68,6 +70,9 @@ projects[flood_control][version] = "1.0"
 projects[fontawesome][version] = "2.6"
 
 projects[google_analytics][version] = "2.3"
+
+projects[google_tag][version] = "1.3"
+projects[google_tag][patch][] = "https://www.drupal.org/files/issues/2911657_variable_php_error.patch"
 
 projects[hide_submit][version] = "2.4"
 
