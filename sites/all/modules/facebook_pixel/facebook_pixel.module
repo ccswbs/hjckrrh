@@ -1,0 +1,250 @@
+<?php
+
+/**
+ * @file
+ * Drupal Module: Facebook Pixel.
+ */
+
+/**
+ * Implements hook_permission().
+ */
+function facebook_pixel_permission() {
+  return array(
+    'administer facebook pixel' => array(
+      'title' => t('Administer Facebook Pixel'),
+      'description' => t('Perform maintenance tasks for Facebook Pixel.'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_menu().
+ */
+function facebook_pixel_menu() {
+  $items = array();
+
+  $items['admin/config/system/facebook_pixel'] = array(
+    'title' => 'Facebook Pixel',
+    'description' => 'Configure Facebook Pixel tracking behavior.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('facebook_pixel_admin_settings_form'),
+    'access arguments' => array('administer facebook pixel'),
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'facebook_pixel.admin.inc',
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_user_insert().
+ */
+function facebook_pixel_user_insert(&$edit, $account, $category) {
+  facebook_pixel_add_event('CompleteRegistration:' . $account->uid);
+}
+
+/**
+ * Implements hook_node_view().
+ *
+ * Tracks key page views (ex: product page, landing page, article).
+ */
+function facebook_pixel_node_view($node, $view_mode, $langcode) {
+  if ($view_mode == 'full' && node_is_page($node)) {
+    facebook_pixel_add_event('ViewContent:' . $node->nid);
+  }
+}
+
+/**
+ * Implements hook_ctools_render_alter().
+ *
+ * Tracks key page views (ex: product page, landing page, article),
+ * when configured to display from within Panels.
+ */
+function facebook_pixel_ctools_render_alter(&$info, &$page, &$context) {
+  if ($page && !empty($context['handler']->task) && $context['handler']->task == 'node_view') {
+    $nid = reset($context['args']);
+    facebook_pixel_add_event('ViewContent:' . $nid);
+  }
+}
+
+/**
+ * Implements hook_commerce_cart_product_add().
+ *
+ * Tracks when items are added to a shopping cart
+ * (ex: click, landing page on Add to Cart button).
+ */
+function facebook_pixel_commerce_cart_product_add($order, $product, $quantity, $line_item) {
+  facebook_pixel_add_event('AddToCart:' . $order->order_id);
+}
+
+/**
+ * Implements hook_commerce_checkout_router().
+ *
+ * Tracks when people enter the checkout flow
+ * (ex: click, landing page on checkout button).
+ */
+function facebook_pixel_commerce_checkout_router($order, $checkout_page) {
+  if ($checkout_page['page_id'] == 'checkout') {
+    facebook_pixel_add_event('InitiateCheckout:' . $order->order_id);
+  }
+}
+
+/**
+ * Implements hook_commerce_checkout_complete().
+ *
+ * Tracks purchases or checkout flow completions
+ * (ex: Landing on "Thank You" or confirmation page).
+ */
+function facebook_pixel_commerce_checkout_complete($order) {
+  facebook_pixel_add_event('Purchase:' . $order->order_id);
+}
+
+/**
+ * Adds Facebook Pixel event to the user session to be added to the page code.
+ *
+ * @param string $event
+ *   A Facebook Pixel event to be added to the page code.
+ *
+ * @see facebook_pixel_page_alter()
+ */
+function facebook_pixel_add_event($event) {
+  // Add variable to session only if module is configured.
+  if (variable_get('facebook_pixel_id')) {
+    if (!isset($_SESSION['facebook_pixel'])) {
+      $_SESSION['facebook_pixel'] = array();
+    }
+    // Use event name for array key as well, so that we don't send
+    // the same event multiple times.
+    $_SESSION['facebook_pixel'][$event] = $event;
+  }
+}
+
+/**
+ * Implements hook_preprocess_page().
+ *
+ * @see facebook_pixel_add_event()
+ */
+function facebook_pixel_preprocess_page(&$variables) {
+  global $user;
+
+  if (
+    variable_get('facebook_pixel_exclude_admin_paths', 1) && path_is_admin(current_path())
+    || !facebook_pixel_user_visibility($user)
+  ) {
+    return;
+  }
+
+  if ($pixel_id = variable_get('facebook_pixel_id')) {
+    $script = "
+<!-- Facebook Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','//connect.facebook.net/en_US/fbevents.js');
+
+fbq('init', '$pixel_id');
+fbq('track', 'PageView');
+";
+
+    if (isset($_SESSION['facebook_pixel']) && is_array($_SESSION['facebook_pixel'])) {
+      foreach ($_SESSION['facebook_pixel'] as $event) {
+
+        if (strpos($event, ':') !== FALSE) {
+          list($event, $entity_id) = explode(':', $event);
+        }
+
+        if (!empty($entity_id) && function_exists('facebook_pixel_data_' . $event)) {
+          $data = call_user_func('facebook_pixel_data_' . $event, $entity_id);
+          // Allow to alter data.
+          drupal_alter('facebook_pixel_data_' . $event, $data, $entity_id);
+          $script .= "fbq('track', '$event', " . drupal_json_encode($data) . ");\n";
+        }
+        else {
+          $script .= "fbq('track', '$event');\n";
+        }
+      }
+      unset($_SESSION['facebook_pixel']);
+    }
+
+    $script .= "</script>
+<noscript><img height='1' width='1' style='display:none' src='https://www.facebook.com/tr?id=$pixel_id&ev=PageView&noscript=1' /></noscript>
+<!-- End Facebook Pixel Code -->
+";
+
+    $element = array(
+      '#type' => 'markup',
+      '#markup' => $script,
+      '#weight' => 1000,
+    );
+    drupal_add_html_head($element, 'facebook_pixel');
+  }
+}
+
+/**
+ * Provides additional details for the Facebook Pixel Purchase tag.
+ *
+ * @param int $order_id
+ *   ID of the order to return additional Purchase tag details for.
+ *
+ * @return string
+ *   JSON string containing additional Purchase tag details.
+ *
+ * @see facebook_pixel_commerce_checkout_complete()
+ */
+function facebook_pixel_data_Purchase($order_id) {
+  $order_wrapper = entity_metadata_wrapper('commerce_order', $order_id);
+  $order_total = $order_wrapper->commerce_order_total->value();
+
+  $data = array(
+    'value' => number_format(commerce_currency_amount_to_decimal($order_total['amount'], $order_total['currency_code']), 2, '.', ''),
+    'currency' => $order_total['currency_code'],
+  );
+  return $data;
+}
+
+/**
+ * Provides additional details for the Facebook Pixel ViewContent tag.
+ *
+ * @param int $nid
+ *   ID of the viewed Node.
+ *
+ * @return string
+ *   JSON string containing additional ViewContent tag details.
+ *
+ * @see facebook_pixel_node_view()
+ * @see facebook_pixel_ctools_render_alter()
+ */
+function facebook_pixel_data_ViewContent($nid) {
+  $data = array(
+    'content_type' => 'product',
+    'content_ids' => $nid,
+  );
+  return $data;
+}
+
+/**
+ * Utility function to perform tracking visibility check for a user.
+ *
+ * @param object $user
+ *   a user object containing an array of roles to check.
+ * @return boolean
+ *   whether or not the current user should be served the pixel.
+ */
+function facebook_pixel_user_visibility($user) {
+  $visible = TRUE;
+  $roles = variable_get('facebook_pixel_roles', array());
+  if (array_sum($roles) > 0) {
+    // One or more roles are selected for tracking.
+    foreach (array_keys($user->roles) as $rid) {
+      // Is the current user a member of a role selected in settings?
+      if (isset($roles[$rid]) && $rid == $roles[$rid]) {
+        // Current user is a member of a role that is selected in settings.
+        $visible = FALSE;
+        break;
+      }
+    }
+  }
+  return $visible;
+}

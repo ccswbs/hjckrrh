@@ -29,6 +29,8 @@ projects[css_injector][version] = "1.10"
 projects[ctools][version] = "1.12"
 projects[ctools][patch][] = "https://www.drupal.org/files/issues/views_panes-more_link_text-1000146-25.patch"
 
+projects[datalayer][version] = "1.x-dev"
+
 projects[date][version] = "2.9"
 
 projects[devel][version] = "1.5"
@@ -44,6 +46,8 @@ projects[email][version] = "1.3"
 projects[entity][version] = "1.8"
 
 projects[entityreference][version] = "1.5"
+
+projects[facebook_pixel][version] = "1.1"
 
 projects[faq][version] = "1.1"
 
@@ -68,6 +72,9 @@ projects[flood_control][version] = "1.0"
 projects[fontawesome][version] = "2.6"
 
 projects[google_analytics][version] = "2.3"
+
+projects[google_tag][version] = "1.3"
+projects[google_tag][patch][] = "https://www.drupal.org/files/issues/2911657_variable_php_error.patch"
 
 projects[hide_submit][version] = "2.4"
 
