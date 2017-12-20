@@ -11,7 +11,7 @@
  * - $title: the person's title.
  * - $unit: the person's unit.
  * - $phone: the person's telephone number.
- * - $email: the person's email address. 
+ * - $email: the person's email address.
  * - $user_url: URL of the user's full profile.
  *
  * Other variables:
@@ -86,6 +86,9 @@
 		        <?php print $office; ?>
 		      </p>
 		    <?php endif; ?>
+        <?php if($custom_fields): ?>
+          <?php print $custom_fields; ?>
+        <?php endif; ?>
 		  </div>
 		</div>
 	</div>

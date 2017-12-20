@@ -77,7 +77,7 @@ function ug_theme_icon($variables) {
  */
 function ug_theme_preprocess_views_view_unformatted(&$vars) {
   if (isset($vars['view']->name)) {
-    $function = 'ug_theme_preprocess_views_view_unformatted__'.$vars['view']->name; 
+    $function = 'ug_theme_preprocess_views_view_unformatted__'.$vars['view']->name;
     if (function_exists($function)) {
      $function($vars);
     }
@@ -89,12 +89,12 @@ function ug_theme_preprocess_views_view_unformatted(&$vars) {
  */
 function ug_theme_preprocess_views_view(&$vars) {
   if (isset($vars['view']->name)) {
-    $function = 'ug_theme_preprocess_views_view__'.$vars['view']->name; 
+    $function = 'ug_theme_preprocess_views_view__'.$vars['view']->name;
     if (function_exists($function)) {
      $function($vars);
     }
   }
-} 
+}
 
 /**
  * FT3 - Featured item teaser list
@@ -117,42 +117,42 @@ function ug_theme_preprocess_views_view__ft3(&$vars) {
  */
 function ug_theme_preprocess_views_view_fields(&$vars) {
   if (isset($vars['view']->name)) {
-    $function = 'ug_theme_preprocess_views_view_fields__'.$vars['view']->name; 
+    $function = 'ug_theme_preprocess_views_view_fields__'.$vars['view']->name;
     if (function_exists($function)) {
      $function($vars);
     }
   }
-} 
+}
 
 
-/** 
- * E1 - Listing page for multiple events. 
- */ 
-function ug_theme_preprocess_views_view_fields__e1(&$vars) { 
-  $vars['title']    = $vars['fields']['title']->content; 
-  $vars['date']     = $vars['fields']['field_event_date']->content; 
-  $vars['image']    = $vars['fields']['field_event_image']->content; 
-  $vars['body']     = $vars['fields']['field_event_body']->content; 
-} 
+/**
+ * E1 - Listing page for multiple events.
+ */
+function ug_theme_preprocess_views_view_fields__e1(&$vars) {
+  $vars['title']    = $vars['fields']['title']->content;
+  $vars['date']     = $vars['fields']['field_event_date']->content;
+  $vars['image']    = $vars['fields']['field_event_image']->content;
+  $vars['body']     = $vars['fields']['field_event_body']->content;
+}
 
-/** 
- * E2a - Event Image 
- */ 
-function ug_theme_preprocess_views_view_fields__event_image(&$vars) { 
-  $vars['image']    = $vars['fields']['field_event_image']->content; 
-  $vars['caption']    = $vars['fields']['field_event_image_caption']->content; 
-} 
+/**
+ * E2a - Event Image
+ */
+function ug_theme_preprocess_views_view_fields__event_image(&$vars) {
+  $vars['image']    = $vars['fields']['field_event_image']->content;
+  $vars['caption']    = $vars['fields']['field_event_image_caption']->content;
+}
 
 
-/** 
+/**
  * Event month list
- */ 
-function ug_theme_preprocess_views_view_fields__event_month_list(&$vars) { 
-  $vars['title']    = $vars['fields']['title']->content; 
-  $vars['date']     = $vars['fields']['field_event_date']->content; 
-  $vars['image']    = $vars['fields']['field_event_image']->content; 
-  $vars['body']     = $vars['fields']['field_event_body']->content; 
-} 
+ */
+function ug_theme_preprocess_views_view_fields__event_month_list(&$vars) {
+  $vars['title']    = $vars['fields']['title']->content;
+  $vars['date']     = $vars['fields']['field_event_date']->content;
+  $vars['image']    = $vars['fields']['field_event_image']->content;
+  $vars['body']     = $vars['fields']['field_event_body']->content;
+}
 
 
 /**
@@ -208,7 +208,7 @@ function ug_theme_preprocess_views_view__pg3_page_item_teaser_list(&$vars) {
   } else {
 
     $view->display_handler->set_option('link_url', 'pages');
-   
+
   }
 
   $vars['more'] = $view->display_handler->render_more_link();
@@ -264,6 +264,7 @@ function ug_theme_preprocess_views_view_fields__pp6(&$vars) {
   $vars['title']          = (isset($vars['fields']['field_profile_title'])           ? $vars['fields']['field_profile_title']->content : '');
   $vars['unit']           = (isset($vars['fields']['field_profile_unit'])            ? $vars['fields']['field_profile_unit']->content : '');
   $vars['align']          = (isset($vars['fields']['field_profile_align_names'])     ? TRUE : FALSE);
+  $vars['custom_fields']  = (isset($vars['fields']['field_profile_custom'])          ? $vars['fields']['field_profile_custom']->content : '');
   $vars['fullname']       = t('<a href="@url">'.$vars['firstname'].' '.$vars['lastname'].'</a>', array('@url' => url('node/'.$vars['nid'])));
   $vars['content_width']  = 'col-md-12';
   $vars['content_offset'] = '';
@@ -329,7 +330,7 @@ function ug_theme_field__field_profile_custom_content($variables) {
 function ug_theme_preprocess_views_view_unformatted__b1(&$vars) {
   $vars['slide_number'] = "1";
   $vars['slide_count'] = count($vars['view']->result);
-} 
+}
 function ug_theme_preprocess_views_view_fields__b1(&$vars) {
   // $vars['title']    = $vars['fields']['title']->content;
   $vars['title']    = $vars['fields']['field_banner_headline']->content;
@@ -437,21 +438,21 @@ function ug_theme_preprocess_views_view_fields__n2(&$vars) {
   $vars['tags']         = $vars['fields']['field_news_tags']->content;
 }
 
-/** 
+/**
  * N2ab - Post Date / Written by
- */ 
-function ug_theme_preprocess_views_view_fields__n2ab(&$vars) { 
+ */
+function ug_theme_preprocess_views_view_fields__n2ab(&$vars) {
   $vars['created']      = $vars['fields']['created']->content;
   $vars['writer']       = $vars['fields']['field_news_writer']->content;
-} 
+}
 
-/** 
- * N2c - News Image 
- */ 
-function ug_theme_preprocess_views_view_fields__news_image(&$vars) { 
-  $vars['caption']  = $vars['fields']['field_news_caption']->content; 
-  $vars['image']    = $vars['fields']['field_news_image']->content; 
-} 
+/**
+ * N2c - News Image
+ */
+function ug_theme_preprocess_views_view_fields__news_image(&$vars) {
+  $vars['caption']  = $vars['fields']['field_news_caption']->content;
+  $vars['image']    = $vars['fields']['field_news_image']->content;
+}
 
 
 /**
@@ -493,7 +494,7 @@ function ug_theme_preprocess_views_view_fields__n3_summary(&$vars) {
 /**
  * F1 - FAQ listing
  */
-function ug_theme_preprocess_views_view_fields__f1(&$vars) { 
+function ug_theme_preprocess_views_view_fields__f1(&$vars) {
   $vars['question'] = $vars['fields']['title']->content;
 }
 
@@ -539,7 +540,7 @@ function ug_theme_field__field_service_private_heading($variables) {
   return '<h3>'.drupal_render($variables['items'][0]).'</h3>';
 }
 
- 
+
 /**
  * Returns HTML for a date element formatted as a single date.
  */
@@ -779,7 +780,7 @@ function ug_theme_pager_link($variables) {
   }else {
     $return_link = '<a' . drupal_attributes($attributes) . '>' . check_plain($text) . $pager_label .'</a>';
   }
-  
+
   return $return_link;
 }
 
@@ -971,7 +972,7 @@ function ug_theme_pager($variables) {
     }
 
     // OVERRIDE - add back in LAST link
-    // @todo add theme setting for this. 
+    // @todo add theme setting for this.
     // --- Uncommented section
     if ($li_last) {
       $items[] = array(
@@ -991,8 +992,8 @@ function ug_theme_pager($variables) {
 }
 
 /**
- * Override search module to add label 
- * Source: https://www.drupal.org/node/2540856 
+ * Override search module to add label
+ * Source: https://www.drupal.org/node/2540856
  */
 function ug_theme_bootstrap_search_form_wrapper($variables) {
   $output = '<div class="input-group">';
@@ -1018,13 +1019,13 @@ function ug_theme_bootstrap_search_form_wrapper($variables) {
   return $output;
 }
 /**
- * Modify the placeholder text in the site search box 
+ * Modify the placeholder text in the site search box
  */
-function ug_theme_form_search_block_form_alter(&$form, &$form_state, $form_id) {      
-      
+function ug_theme_form_search_block_form_alter(&$form, &$form_state, $form_id) {
+
     $form['search_block_form']['#attributes']['placeholder'] = t('Search this site');
 
-} 
+}
 
 /**
  * N3 - News teaser list
@@ -1103,9 +1104,9 @@ function ug_theme_button($variables) {
   return '<button' . drupal_attributes($element['#attributes']) . '>' . $label . "</button>\n";
 }
 
-/** 
- * Add spacing between webform fields 
- * https://www.drupal.org/node/2712217 - used the ideas from this patch. 
+/**
+ * Add spacing between webform fields
+ * https://www.drupal.org/node/2712217 - used the ideas from this patch.
  * May need to remove this override at some point.
  */
 function ug_theme_webform_element(&$variables) {
@@ -1147,7 +1148,7 @@ function ug_theme_feed_icon($variables) {
 }
 
 /**
-* 
+*
 */
 function ug_theme_form_alter(array &$form, array &$form_state = array(), $form_id = NULL) {
   bootstrap_form_alter($form, $form_state, $form_id);
