@@ -185,6 +185,8 @@ projects[token][version] = "1.6"
 projects[twitter][version] = "5.11"
 projects[twitter][patch][] = "https://www.drupal.org/files/issues/twitter-doubleclass-2661088-5.patch"
 
+projects[uuid][version] = "1.0"
+
 projects[views][version] = "3.17"
 
 projects[views_bulk_operations][version] = "3.3"

@@ -1,0 +1,25 @@
+<?php
+
+/**
+ * @file
+ * Set up the UG demo migration module.
+ */
+
+function ug_demo_enable() {
+  $path = dirname(__FILE__) . '/data';
+  $file = 'page.csv';
+  Migration::registerMigration('UGDemoMigration', pathinfo($file, PATHINFO_FILENAME), array());
+  Migration::registerMigration('UGDemoImageFiles');
+}
+
+function ug_demo_get_files($path) {
+  if (!file_exists("$path/page.csv")) {
+    file_prepare_directory($path, FILE_CREATE_DIRECTORY | FILE_MODIFY_PERMISSIONS);
+    copy('https://www-stage.uoguelph.ca/nursing/export/page.csv', $path . '/page.csv');
+  }
+}
+
+function ug_demo_disable() {
+  MigrateGroup::deregister('ug_demo');
+}
+

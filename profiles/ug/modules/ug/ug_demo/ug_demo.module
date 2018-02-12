@@ -1,0 +1,324 @@
+<?php
+
+/**
+ * @file
+ * UG Demo module.
+ */
+
+
+/*
+ * You must implement hook_migrate_api(), setting the API level to 2, for
+ * your migration classes to be recognized by the Migrate module.
+ */
+function ug_demo_migrate_api() {
+  $api = array(
+    'api' => 2,
+    'groups' => array(
+      'ug_demo' => array(
+        'title' => t('UG Demo'),
+      ),
+    ),
+    'migrations' => array(
+      'UGDemoFileMigration' => array('class_name' => 'UGDemoFileMigration', 'group_name' => 'ug_demo'),
+      'UGDemoPageMigration' => array('class_name' => 'UGDemoPageMigration', 'group_name' => 'ug_demo'),
+      'UGDemoNewsMigration' => array('class_name' => 'UGDemoNewsMigration', 'group_name' => 'ug_demo'),
+      'UGDemoEventMigration' => array('class_name' => 'UGDemoEventMigration', 'group_name' => 'ug_demo'),
+      'UGDemoBannerMigration' => array('class_name' => 'UGDemoBannerMigration', 'group_name' => 'ug_demo'),
+      'UGDemoFeatureMigration' => array('class_name' => 'UGDemoFeatureMigration', 'group_name' => 'ug_demo'),
+      'UGDemoFAQMigration' => array('class_name' => 'UGDemoFAQMigration', 'group_name' => 'ug_demo'),
+      'UGDemoCourseMigration' => array('class_name' => 'UGDemoCourseMigration', 'group_name' => 'ug_demo'),
+      'UGDemoProfileMigration' => array('class_name' => 'UGDemoProfileMigration', 'group_name' => 'ug_demo'),
+      'UGDemoSocialMigration' => array('class_name' => 'UGDemoSocialMigration', 'group_name' => 'ug_demo'),
+    ),
+  );
+  return $api;
+}
+
+/**
+ * UG Demo file migration.
+ */
+class UGDemoFileMigration extends Migration {
+  public function __construct($arguments) {
+    parent::__construct($arguments);
+    $this->map = new MigrateSQLMap($this->machineName,
+      array(
+        'image' => array(
+          'type' => 'varchar',
+          'length' => 255,
+          'not null' => TRUE,
+        ),
+      ),
+      MigrateDestinationFile::getKeySchema()
+    );
+    $this->destination = new MigrateDestinationFile('image');
+    $import_path = drupal_get_path('module', 'ug_demo') . '/data/';
+    $this->source = new MigrateSourceCSV($import_path . 'ug_demo.files.image.csv', $this->csvcolumns(), array('header_rows' => 1));
+    $this->addFieldMapping('value', 'image');
+    $this->addFieldMapping('file_replace')->defaultValue(FILE_EXISTS_REPLACE);
+    $this->addFieldMapping('source_dir')->defaultValue($import_path . 'images');
+    $this->addFieldMapping('destination_file', 'image');
+  }
+
+  function csvcolumns() {
+    $columns[0] = array('image', 'Image');
+    return $columns;
+  }
+
+}
+
+
+
+/**
+ *  Migrations for news.
+ */
+class UGDemoNewsMigration extends Migration {
+  public function __construct($arguments) {
+    parent::__construct($arguments);
+    $this->description = t('Import nodes.');
+    $this->map = new MigrateSQLMap($this->machineName,
+      array(
+        'uuid' => array(
+          'type' => 'char',
+          'length' => 36,
+          'not null' => FALSE,
+        ),
+      ),
+      MigrateDestinationNode::getKeySchema()
+    );
+    $import_path = drupal_get_path('module', 'ug_demo') . '/data/';
+    // Create a MigrateSource object.
+    $this->source = new MigrateSourceCSV($import_path . 'news.csv', $this->csvcolumns(), array('header_rows' => 1));
+    $this->destination = new MigrateDestinationNode('news');
+    // Title
+    $this->addFieldMapping('title', 'title');
+    // Body
+    $this->addFieldMapping('field_news_body', 'body');
+    $this->addFieldMapping('field_news_body:format')->defaultValue('filtered_html');
+    // Category
+    $this->addFieldMapping('field_news_tags', 'category');
+    // External link
+    $this->addFieldMapping('field_news_link', 'link');
+    // Image
+    $this->addFieldMapping('field_news_image', 'image');
+    $this->addFieldMapping('field_news_image:source_dir')->defaultValue($import_path . 'images');
+    //$this->addFieldMapping('field_news_image:file_class')->defaultValue('MigrateFileFid');
+    //$this->addFieldMapping('field_news_image:file_replace')->defaultValue(FILE_EXISTS_REPLACE);
+    //$this->addFieldMapping('field_news_image:source_dir')->defaultValue($import_path . 'images');
+    //$this->addFieldMapping('field_news_image:destination_dir')->defaultValue('public://');
+    // Caption
+    $this->addFieldMapping('field_news_caption', 'caption');
+    // Keywords
+    $this->addFieldMapping('field_tags', 'keywords');
+    // Created
+    $this->addFieldMapping('created', 'created')->defaultValue(strtotime("now"));
+  }
+
+  function csvcolumns() {
+    $columns[] = array('uuid', 'Node UUID');
+    $columns[] = array('title', 'Title');
+    $columns[] = array('attachment', 'Attachment');
+    $columns[] = array('body', 'Body');
+    $columns[] = array('category', 'Category');
+    $columns[] = array('link', 'External link');
+    $columns[] = array('image', 'Feature image');
+    $columns[] = array('caption', 'Feature image caption');
+    $columns[] = array('keywords', 'Keywords');
+    $columns[] = array('byline', 'Written by');
+    return $columns;
+  }
+
+  public function prepareRow($row) {
+    $row->image = str_replace('public://', '', $row->image);
+  }
+
+}
+
+
+/**
+ * Migration for page nodes.
+ */
+class UGDemoPageMigration extends Migration {
+  public function __construct($arguments) {
+    parent::__construct($arguments);
+    $this->description = t('Migrate UG demo content.');
+    $bundle = $arguments['bundle'];
+    $machine_name = $this->machineName;
+    $source_key = array();
+    $source_key['nid'] = array();
+    $source_key['nid']['type'] = 'int';
+    $source_key['nid']['not null'] = TRUE;
+    $source_key['nid']['description'] = 'Node ID';
+    $destination_key = MigrateDestinationNode::getKeySchema();
+    $this->map = new MigrateSQLMap($machine_name, $source_key, $destination_key);
+    $import_path = drupal_get_path('module', 'ug_demo') . '/data/';
+    $path = $import_path . 'ug_demo.nodes.page.csv';
+    $csvcolumns = array();
+    $csvcolumns[0] = array('nid', 'NID');
+    $csvcolumns[1] = array('title', 'Title');
+    $csvcolumns[2] = array('body', 'Body');
+    $csvcolumns[3] = array('category', 'Category');
+    $options = array('header_rows' => 1);
+    $fields = array();
+    $fields['uid'] = 'User ID';
+    $this->source = new MigrateSourceCSV($path, $csvcolumns, $options, $fields);
+    $this->destination = new MigrateDestinationNode('page');
+    $this->addFieldMapping('title', 'title');
+    $this->addFieldMapping('field_page_body', 'body');
+    $this->addFieldMapping('field_page_body:format')->defaultValue('filtered_html');
+    $this->addFieldMapping('field_page_category', 'category');
+  }
+
+  public function prepareRow($row) {
+    $row->uid = 0;
+  }
+
+  protected function generateMachineName($class_name = NULL) {
+    return drupal_strtolower(pathinfo($this->arguments['source_file'], PATHINFO_FILENAME));
+  }
+}
+
+
+
+/**
+ *  Base class for node migrations.
+ */
+class UGDemoNodeMigration extends Migration {
+  public function __construct($arguments) {
+    parent::__construct($arguments);
+    $bundle = $arguments['bundle'];
+    $this->description = t('Import @bundle nodes.', array('@bundle' => $bundle));
+    $this->map = new MigrateSQLMap($this->machineName,
+      array(
+        'Node UUID' => array(
+          'type' => 'char',
+          'length' => 36,
+          'not null' => FALSE,
+        ),
+      ),
+      MigrateDestinationNode::getKeySchema()
+    );
+    $import_path = drupal_get_path('module', 'ug_demo') . '/data/';
+    // Create a MigrateSource object.
+    $this->source = new MigrateSourceCSV($import_path . $bundle . '.csv', $this->csvcolumns(), array('header_rows' => 1));
+    $this->destination = new MigrateDestinationNode($bundle == 'course' ? 'course_outline' : $bundle);
+    // Title
+    $this->addFieldMapping('title', $bundle == 'profile' ? 'Display name' : 'Title');
+    // Keywords
+    $this->addFieldMapping('field_tags', 'Keywords');
+    // Body
+    $this->addFieldMapping('field_' . $bundle . '_body', $bundle == 'course' ? 'Details' : 'Body');
+    $this->addFieldMapping('field_' . $bundle . '_body:format')->defaultValue('filtered_html');
+    // Category
+    $this->addFieldMapping('field_' . $bundle . '_category', $bundle == 'social' ? 'Account category' : 'Category');
+    // Date
+    $this->addFieldMapping('field_' . $bundle . '_date', 'Date');
+    // Feature image
+    $this->addFieldMapping('field_' . $bundle . '_image', $bundle == 'news' ? 'Feature image' : 'Image');
+    $this->addFieldMapping('field_' . $bundle . '_image:file_replace')->defaultValue(FILE_EXISTS_REPLACE);
+    $this->addFieldMapping('field_' . $bundle . '_image:source_dir')->defaultValue($import_path . 'images');
+    // Caption
+    $this->addFieldMapping('field_' . $bundle . '_caption', $bundle == 'profile' ? 'Image caption' : 'Caption');
+    // Link
+    $this->addFieldMapping('field_' . $bundle . '_link', $bundle == 'banner' ? 'Headline Link' : 
+      $bundle == 'social' ? 'Account URL' : 'Link');
+    // Banner fields
+    $this->addFieldMapping('field_' . $bundle . '_alttext', 'Alt text');
+    $this->addFieldMapping('field_' . $bundle . '_headline', 'Headline');
+    $this->addFieldMapping('field_' . $bundle . '_weight', 'Order');
+    $this->addFieldMapping('field_' . $bundle . '_text', 'Summary');
+    $this->addFieldMapping('field_' . $bundle . '_text:format')->defaultValue('filtered_html');
+    // Answer
+    $this->addFieldMapping('field_' . $bundle . '_answer', 'Answer');
+    $this->addFieldMapping('field_' . $bundle . '_answer:format')->defaultValue('filtered_html');
+    // Name
+    $this->addFieldMapping('field_' . $bundle . '_name', $bundle == 'profile' ? 'Preferred name' : "Course name");
+    // Attachments
+    $this->addFieldMapping('field_' . $bundle . '_attachments', "Attachments");
+    // Website
+    $this->addFieldMapping('field_' . $bundle . '_website', $bundle == 'profile' ? 'Website links' : "Course Website");
+    // Course outlines
+    $this->addFieldMapping('field_' . $bundle . '_code', "Course code");
+    $this->addFieldMapping('field_' . $bundle . '_section', "Section");
+    $this->addFieldMapping('field_' . $bundle . '_term', "Course term");
+    $this->addFieldMapping('field_' . $bundle . '_instructor', "Course instructor");
+    $this->addFieldMapping('field_' . $bundle . '_instructor_url', "Course instructor url");
+    $this->addFieldMapping('field_' . $bundle . '_level', "Course level");
+    $this->addFieldMapping('field_' . $bundle . '_acad_level', "Academic level");
+    $this->addFieldMapping('field_' . $bundle . '_subject', "Subject");
+    $this->addFieldMapping('field_' . $bundle . '_department', "Academic department");
+    // Profile fields
+    $this->addFieldMapping('field_' . $bundle . '_lastname', 'Last name');
+    $this->addFieldMapping('field_' . $bundle . '_role', 'Role');
+    $this->addFieldMapping('field_' . $bundle . '_unit', 'Unit');
+    $this->addFieldMapping('field_' . $bundle . '_teaser', 'Summary');
+    $this->addFieldMapping('field_' . $bundle . '_teaser:format')->defaultValue('filtered_html');
+    $this->addFieldMapping('field_' . $bundle . '_summary', 'Body');
+    $this->addFieldMapping('field_' . $bundle . '_summary:format')->defaultValue('filtered_html');
+    $this->addFieldMapping('field_' . $bundle . '_title', 'Position/title');
+    $this->addFieldMapping('field_' . $bundle . '_subunit', 'Sub-unit');
+    $this->addFieldMapping('field_' . $bundle . '_research', 'Area of research');
+    $this->addFieldMapping('field_' . $bundle . '_address', 'Mailing address');
+    $this->addFieldMapping('field_' . $bundle . '_email', 'Email');
+    $this->addFieldMapping('field_' . $bundle . '_telephonenumber', 'Phone number');
+    $this->addFieldMapping('field_' . $bundle . '_faxnumber', 'Fax');
+    $this->addFieldMapping('field_' . $bundle . '_office', 'Office');
+    $this->addFieldMapping('field_' . $bundle . '_lab', 'Lab');
+    // Social network
+    $this->addFieldMapping('field_' . $bundle . '_network', 'Social media network');
+  }
+
+  function csvcolumns() {
+    return array();
+  }
+
+  public function prepareRow($row) {
+    $row->Image = str_replace('public://', '', $row->Image);
+    $row->{'Feature image'} = str_replace('public://', '', $row->{'Feature image'});
+  }
+}
+
+/**
+ * UG Demo event migration.
+ */
+class UGDemoEventMigration extends UGDemoNodeMigration {
+  public function __construct($arguments) {
+    parent::__construct(array_merge(array('bundle' => 'event'), $arguments));
+  }
+}
+
+class UGDemoBannerMigration extends UGDemoNodeMigration {
+  public function __construct($arguments) {
+    parent::__construct(array_merge(array('bundle' => 'banner'), $arguments));
+  }
+}
+
+class UGDemoFeatureMigration extends UGDemoNodeMigration {
+  public function __construct($arguments) {
+    parent::__construct(array_merge(array('bundle' => 'feature'), $arguments));
+  }
+}
+
+class UGDemoFAQMigration extends UGDemoNodeMigration {
+  public function __construct($arguments) {
+    parent::__construct(array_merge(array('bundle' => 'faq'), $arguments));
+  }
+}
+
+class UGDemoCourseMigration extends UGDemoNodeMigration {
+  public function __construct($arguments) {
+    parent::__construct(array_merge(array('bundle' => 'course'), $arguments));
+  }
+}
+
+class UGDemoProfileMigration extends UGDemoNodeMigration {
+  public function __construct($arguments) {
+    parent::__construct(array_merge(array('bundle' => 'profile'), $arguments));
+  }
+}
+
+class UGDemoSocialMigration extends UGDemoNodeMigration {
+  public function __construct($arguments) {
+    parent::__construct(array_merge(array('bundle' => 'social'), $arguments));
+  }
+}
+

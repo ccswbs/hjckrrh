@@ -1,0 +1,11 @@
+name = UG Demo Export
+description = UG Demo Export
+core = 7.x
+package = UG
+dependencies[] = views
+dependencies[] = views_data_export
+features[ctools][] = views:views_default:3.0
+features[features_api][] = api:2
+features[views_view][] = node_export
+features_exclude[dependencies][ctools] = ctools
+project path = profiles/ug/modules/ug/ug_demo_export
