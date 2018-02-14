@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Admin-only functionality.
@@ -121,7 +122,15 @@ function datalayer_settings_form($form_state) {
     '#multiple' => TRUE,
     '#title' => t('Expose user roles'),
     '#default_value' => variable_get('datalayer_expose_user_details_roles', array()),
-    '#description' => t('Roles that should expose active user details to the dataLayer. Leaving empty will expose to all roles.'),
+    '#description' => t('Roles that should expose active user details to the dataLayer. Leaving empty will expose for all roles.'),
+  );
+
+  $current_user_meta = _datalayer_collect_meta_properties('current_user');
+  $form['user']['datalayer_current_user_meta'] = array(
+    '#type' => 'checkboxes',
+    '#title' => t('Current User Meta Data'),
+    '#default_value' => variable_get('datalayer_current_user_meta', array()),
+    '#options' => drupal_map_assoc($current_user_meta),
   );
 
   return system_settings_form($form);

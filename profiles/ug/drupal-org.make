@@ -7,7 +7,7 @@ projects[auto_nodetitle][patch][] = "https://www.drupal.org/files/issues/auto_no
 
 projects[autologout][version] = "4.5"
 
-projects[backup_migrate][version] = "3.1"
+projects[backup_migrate][version] = "3.4"
 
 projects[bootstrap_fieldgroup][version] = "1.2"
 
@@ -43,7 +43,7 @@ projects[ds_bootstrap_layouts][version] = "3.1"
 
 projects[email][version] = "1.3"
 
-projects[entity][version] = "1.8"
+projects[entity][version] = "1.9"
 
 projects[entityreference][version] = "1.5"
 
@@ -64,6 +64,8 @@ projects[field_permissions][version] = "1.0"
 projects[field_validation][version] = "2.6"
 
 projects[filebrowser][version] = "3.3"
+
+projects[filefield_sources][version] = "1.11"
 
 projects[flag][version] = "3.9"
 

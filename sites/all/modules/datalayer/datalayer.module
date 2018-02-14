@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Client-side data space.
@@ -20,7 +21,6 @@ function datalayer_menu() {
 
   return $items;
 }
-
 
 /**
  * Implements hook_libraries_info().
@@ -49,7 +49,6 @@ function datalayer_libraries_info() {
   return $libraries;
 }
 
-
 /**
  * Implements hook_preprocess_HOOK().
  *
@@ -63,31 +62,13 @@ function datalayer_preprocess_page(&$variables) {
     datalayer_add(datalayer_get_page_data());
   }
 
-  // Expose user details (on configured URL patterns).
-  if (!user_is_anonymous()) {
-    $exp_user_urls = variable_get('datalayer_expose_user_details', array());
-    $exp_user_roles = array_filter(variable_get('datalayer_expose_user_details_roles', array()));
-    $matched_roles = array_intersect(array_keys($user->roles), $exp_user_roles);
-    // Honor settings.
-    if ($exp_user_urls && (count($exp_user_roles) == 0 || count($matched_roles))) {
-      $path = current_path();
-      $path_alias = drupal_lookup_path('alias', $path);
-      if (drupal_match_path($path, $exp_user_urls) || drupal_match_path($path_alias, $exp_user_urls)) {
-        datalayer_add(array(
-          'userName' => $user->name,
-          'userMail' => $user->mail,
-          'userRoles' => $user->roles,
-          'userCreated' => $user->created,
-          'userAccess' => $user->access,
-        ));
-      }
-    }
+  if (variable_get('datalayer_expose_user_details')) {
+    datalayer_add(datalayer_get_user_data());
   }
 
   // Always output active uid.
   datalayer_add(array('userUid' => $user->uid));
 }
-
 
 /**
  * Implements hook_preprocess_HOOK().
@@ -113,7 +94,7 @@ function datalayer_preprocess_html(&$variables) {
 
   // Include data-layer-helper library.
   if (variable_get('datalayer_lib_helper', FALSE)) {
-    // Libraries 2.0
+    // Libraries 2.0.
     if (function_exists('libraries_load')) {
       if (($library = libraries_detect('data-layer-helper')) && !empty($library['installed'])) {
         libraries_load('data-layer-helper');
@@ -125,7 +106,7 @@ function datalayer_preprocess_html(&$variables) {
       }
     }
     else {
-      // Libraies 1.0
+      // Libraies 1.0.
       $path = libraries_get_path('data-layer-helper');
       if (!empty($path) && file_exists($path . '/data-layer-helper.js')) {
         drupal_add_js($path . '/data-layer-helper.js');
@@ -136,39 +117,51 @@ function datalayer_preprocess_html(&$variables) {
   // Output configred language data.
   $languages = language_list();
   if (count($languages)) {
-    drupal_add_js(array('dataLayer' => array(
-      'languages' => $languages,
-      'defaultLang' => language_default('language'),
-    )), 'setting');
+    drupal_add_js(array(
+      'dataLayer' => array(
+        'languages' => $languages,
+        'defaultLang' => language_default('language'),
+      ),
+    ), 'setting');
   }
 
   // Common datalayer JS.
   drupal_add_js(drupal_get_path('module', 'datalayer') . '/datalayer.js');
 }
 
-
 /**
  * Collects up meta data for output.
+ *
+ * @param string $type
+ *   Entity type to collect meta from, defaults to generic.
  *
  * @return array
  *   Array of all candidate entity properties.
  */
-function _datalayer_collect_meta_properties() {
+function _datalayer_collect_meta_properties($type = '') {
+  $hooks = array();
+  if (is_string($type) && !empty($type)) {
+    $hooks[] = "datalayer_{$type}_meta";
+  }
+  $hooks[] = 'datalayer_meta';
   // Avoid duplicate builds.
-  $properties = &drupal_static(__FUNCTION__);
+  $properties = &drupal_static(__FUNCTION__ . $type);
   if (!isset($properties)) {
-
     $properties = array();
-    foreach (module_implements('datalayer_meta') as $module) {
-      // Call modules implementing datalayer_meta() and combine results.
-      $properties = array_merge($properties, module_invoke($module, 'datalayer_meta'));
+    foreach ($hooks as $hook) {
+      foreach (module_implements($hook) as $module) {
+        // Call modules implementing datalayer_meta() and combine results.
+        $properties = array_merge($properties, module_invoke($module, $hook));
+      }
+      if (!empty($properties)) {
+        break;
+      }
     }
-    drupal_alter('datalayer_meta', $properties);
+    drupal_alter($hooks, $properties);
   }
 
   return $properties;
 }
-
 
 /**
  * Implements hook_datalayer_meta().
@@ -187,11 +180,26 @@ function datalayer_datalayer_meta() {
   );
 }
 
+/**
+ * Implements hook_datalayer_current_user_meta().
+ *
+ * Defines current user meta data.
+ */
+function datalayer_datalayer_current_user_meta() {
+  return array(
+    'name',
+    'mail',
+    'roles',
+    'created',
+    'access',
+  );
+}
 
 /**
  * Return all the page meta data.
  *
  * @return array
+ *   Page data.
  */
 function datalayer_get_page_data() {
   $type = FALSE;
@@ -204,6 +212,39 @@ function datalayer_get_page_data() {
   return array();
 }
 
+/**
+ * Return all user data based on configured URL patterns.
+ *
+ * @return array
+ *   The user data.
+ */
+function datalayer_get_user_data() {
+  global $user;
+  $user_data = array();
+  if (!user_is_anonymous()) {
+    $exp_user_urls = variable_get('datalayer_expose_user_details', array());
+    $exp_user_roles = array_filter(variable_get('datalayer_expose_user_details_roles', array()));
+    $matched_roles = !empty($exp_user_roles) ? array_intersect_key($user->roles, $exp_user_roles) : $user->roles;
+    // Honor settings.
+    if ($exp_user_urls && count($matched_roles)) {
+      $path = current_path();
+      $path_alias = drupal_lookup_path('alias', $path);
+      if (drupal_match_path($path, $exp_user_urls) || drupal_match_path($path_alias, $exp_user_urls)) {
+        // Output various entity properties. Allow additions/alterations.
+        // NOTE: Properties mean different things on different entity types.
+        $properties = _datalayer_collect_meta_properties('current_user');
+        $user_meta = variable_get('datalayer_current_user_meta', array());
+        $selected_properties = _datalayer_get_selected_properties($properties, $user_meta);
+        $user_prefix = 'user';
+        $user_data = _datalayer_collect_meta_values($selected_properties, $user, $user_prefix);
+        if (in_array('roles', $selected_properties)) {
+          $user_data[$user_prefix . 'Roles'] = array_values($matched_roles);
+        }
+      }
+    }
+  }
+  return $user_data;
+}
 
 /**
  * Collect entity data for output and altering.
@@ -248,27 +289,10 @@ function _datalayer_get_entity_data($obj, $type) {
 
     // Output various entity properties. Allow additions/alterations.
     // NOTE: Properties mean different things on different entity types.
-    $properties = _datalayer_collect_meta_properties();
-    $selected_properties = array_filter(variable_get('datalayer_global_entity_meta', array()));
-
-    // Build meta output...
-    // Honor selective output configuration.
-    if (empty($selected_properties)) {
-      // Include all in output, only entity valid.
-      foreach ($properties as $p) {
-        if (isset($obj->$p)) {
-          $output_data['entity' . ucfirst($p)] = $obj->$p;
-        }
-      }
-    }
-    else {
-      // Include only entity valid and config selected.
-      foreach ($properties as $p) {
-        if (isset($obj->$p) && isset($selected_properties[$p])) {
-          $output_data['entity' . ucfirst($p)] = $obj->$p;
-        }
-      }
-    }
+    $properties = _datalayer_collect_meta_properties($type);
+    $entity_meta = array_filter(variable_get('datalayer_global_entity_meta', array()));
+    $selected_properties = _datalayer_get_selected_properties($properties, $entity_meta);
+    $output_data = array_merge(_datalayer_collect_meta_values($selected_properties, $obj), $output_data);
 
     // Output term data.
     if (variable_get('datalayer_output_terms', module_exists('taxonomy'))) {
@@ -304,7 +328,6 @@ function _datalayer_get_entity_data($obj, $type) {
   return $output_data;
 }
 
-
 /**
  * Allow adding to the data layer easy on the fly, similar to drupal_add_js().
  *
@@ -318,7 +341,7 @@ function _datalayer_get_entity_data($obj, $type) {
  * @return array
  *   All data layer data added thus far.
  */
-function datalayer_add($data = array(), $overwrite = FALSE) {
+function datalayer_add(array $data = array(), $overwrite = FALSE) {
   $output_data = &drupal_static(__FUNCTION__, _datalayer_defaults());
 
   // If we've been given data, add it to the output.
@@ -334,7 +357,6 @@ function datalayer_add($data = array(), $overwrite = FALSE) {
   return $output_data;
 }
 
-
 /**
  * Defines Drupal-wide data layer defaults.
  */
@@ -346,14 +368,13 @@ function _datalayer_defaults() {
   );
 }
 
-
 /**
  * Agnosticly get the current menu object. Passed type will be set for you.
  *
  * @param string $return_type
  *   Pass in a type variable by reference for later use.
  *
- * return object
+ * @return object
  *   Entity object of current menu callback page.
  */
 function _datalayer_menu_get_any_object(&$return_type) {
@@ -390,7 +411,6 @@ function _datalayer_menu_get_any_object(&$return_type) {
     return FALSE;
   }
 }
-
 
 /**
  * Fetch all taxonomy terms from an entity.
@@ -438,4 +458,42 @@ function _datalayer_get_entity_terms($entity_type, $bundle, $entity) {
   }
 
   return $terms;
+}
+
+/**
+ * Add the meta properties for given entity.
+ *
+ * @param array $properties
+ *   Selected properties for the entity.
+ * @param object $entity
+ *   The entity.
+ * @param string $key_prefix
+ *   The prefix for the property name.
+ */
+function _datalayer_collect_meta_values(array $properties, $entity, $key_prefix = 'entity') {
+  // Build meta output...
+  $meta_data = array();
+  foreach ($properties as $p) {
+    if (isset($entity->$p)) {
+      $meta_data[$key_prefix . ucfirst($p)] = $entity->$p;
+    }
+  }
+
+  return $meta_data;
+}
+
+/**
+ * Determine which properties will be output based on configuration.
+ *
+ * @param array $properties
+ *   Available properties for the entity.
+ * @param array $selected
+ *   Selected properties for the entity.
+ */
+function _datalayer_get_selected_properties(array $properties, array $selected) {
+  $selected_properties = array_filter($selected);
+  // Honor selective output configuration.
+  $selected_properties = empty($selected_properties) ? $properties : $selected_properties;
+
+  return $selected_properties;
 }

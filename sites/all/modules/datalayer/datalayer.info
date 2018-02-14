@@ -8,9 +8,9 @@ core = 7.x
 files[] = tests/datalayer.unit.test
 files[] = tests/datalayer.web.test
 
-; Information added by Drupal.org packaging script on 2017-02-26
-version = "7.x-1.1+15-dev"
+; Information added by Drupal.org packaging script on 2018-01-25
+version = "7.x-1.1+18-dev"
 core = "7.x"
 project = "datalayer"
-datestamp = "1488080285"
+datestamp = "1516843690"
 
