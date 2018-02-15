@@ -22,6 +22,8 @@ projects[ckeditor][version] = "1.17"
 
 projects[ckeditor_link][version] = "2.4"
 
+projects[config_perms][version] = "2.2"
+
 projects[crumbs][version] = "2.5"
 
 projects[css_injector][version] = "1.10"
