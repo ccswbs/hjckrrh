@@ -1,0 +1,173 @@
+<?php
+
+/**
+ * @file
+ * Drupal Module: Siteimprove Plugin.
+ *
+ * Adds the required Javascript to node forms pages for show a little box
+ * with the results from the latest SI scan of the current page.
+ */
+
+define('SITEIMPROVE_PERMISSION_USE', 'use siteimprove');
+define('SITEIMPROVE_PERMISSION_ADMINISTER', 'administer siteimprove');
+
+/**
+ * Implements hook_permission().
+ */
+function siteimprove_permission() {
+  return array(
+    SITEIMPROVE_PERMISSION_ADMINISTER => array(
+      'description' => t('Configure Siteimprove Plugin token.'),
+      'title'       => t('Administer Siteimprove Plugin'),
+    ),
+    SITEIMPROVE_PERMISSION_USE        => array(
+      'title' => t('Access Siteimprove Plugin'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_menu().
+ */
+function siteimprove_menu() {
+  $items['admin/config/system/siteimprove'] = array(
+    'access arguments' => array(SITEIMPROVE_PERMISSION_ADMINISTER),
+    'description'      => 'Configure Siteimprove Plugin token.',
+    'file'             => 'siteimprove.admin.inc',
+    'page arguments'   => array('siteimprove_admin_settings_form'),
+    'page callback'    => 'drupal_get_form',
+    'title'            => 'Siteimprove Plugin',
+    'type'             => MENU_NORMAL_ITEM,
+    'weight'           => 99,
+  );
+  return $items;
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function siteimprove_form_alter(&$form, &$form_state, $form_id) {
+  // Check if the user has access.
+  if (user_access(SITEIMPROVE_PERMISSION_USE)) {
+    // In node and taxonomy term forms, add siteimprove js.
+    if ((strpos($form_id, '_node_form') !== FALSE && isset($form_state['node']->nid))
+        || ($form_id == 'taxonomy_form_term' && isset($form_state['term']->tid))
+    ) {
+
+      // Add siteimprove js to entity forms.
+      $form['#after_build'][] = 'siteimprove_entity_form_after_build';
+
+      // Only show recheck button for published nodes or any term.
+      if ((strpos($form_id, '_node_form') !== FALSE && isset($form_state['node']->nid) && $form_state['node']->status <> 0)
+          || ($form_id == 'taxonomy_form_term' && isset($form_state['term']->tid))
+      ) {
+        // Add recheck button.
+        $form['actions']['recheck'] = array(
+          '#attributes' => array(
+            'class' => array('recheck-button'),
+          ),
+          '#type'       => 'button',
+          '#value'      => t('Siteimprove Recheck'),
+          '#weight'     => 7,
+        );
+      }
+    }
+  }
+}
+
+/**
+ * Alter node/taxonomy term forms.
+ *
+ * Add Siteimprove javascript in node/taxonomy term edit forms.
+ */
+function siteimprove_entity_form_after_build($form, &$form_state) {
+  // In node edit forms, add Siteimprove js scripts.
+  if (strpos($form['#form_id'], '_node_form') !== FALSE) {
+    $node = $form_state['node'];
+    if (isset($node->nid)) {
+      // Get friendly url of node.
+      $url = url('node/' . $form['nid']['#value'], array('absolute' => TRUE));
+    }
+  }
+  // In taxonomy term edit forms, add Siteimprove js scripts.
+  if ($form['#form_id'] == 'taxonomy_form_term') {
+    $term = $form_state['term'];
+    if (isset($term->tid)) {
+      // Get friendly url of taxonomy term.
+      $url = url('taxonomy/term/' . $form['tid']['#value'], array('absolute' => TRUE));
+    }
+  }
+  if (!empty($url)) {
+    SiteimproveUtils::includeJs($url, 'input');
+    SiteimproveUtils::includeJs($url, 'recheck', FALSE);
+  }
+  return $form;
+}
+
+/**
+ * Implements hook_node_insert().
+ */
+function siteimprove_node_insert($node) {
+  if ($node->status == 1 && user_access(SITEIMPROVE_PERMISSION_USE)) {
+    SiteimproveUtils::setSessionUrl($node, 'nid', 'node/');
+  }
+}
+
+/**
+ * Implements hook_node_update().
+ */
+function siteimprove_node_update($node) {
+  if ($node->status == 1 && user_access(SITEIMPROVE_PERMISSION_USE)) {
+    SiteimproveUtils::setSessionUrl($node, 'nid', 'node/');
+  }
+}
+
+/**
+ * Implements hook_taxonomy_term_insert().
+ */
+function siteimprove_taxonomy_term_insert($term) {
+  if (user_access(SITEIMPROVE_PERMISSION_USE)) {
+    SiteimproveUtils::setSessionUrl($term, 'tid', 'taxonomy/term/');
+  }
+}
+
+/**
+ * Implements hook_taxonomy_term_update().
+ */
+function siteimprove_taxonomy_term_update($term) {
+  if (user_access(SITEIMPROVE_PERMISSION_USE)) {
+    SiteimproveUtils::setSessionUrl($term, 'tid', 'taxonomy/term/');
+  }
+}
+
+/**
+ * Implements hook_init().
+ */
+function siteimprove_init() {
+  // Check if user has access and ignore some paths.
+  if (user_access(SITEIMPROVE_PERMISSION_USE) &&
+      ((empty($_SERVER['REDIRECT_QUERY_STRING']) || $_SERVER['REDIRECT_QUERY_STRING'] != 'render=overlay') || path_is_admin(current_path())) &&
+      current_path() != 'batch') {
+    // If exist siteimprove_url in SESSION, send to Siteimprove.
+    if (!empty($_SESSION['siteimprove_url'])) {
+      if (count($_SESSION['siteimprove_url']) > 1) {
+        $url    = url('<front>', array('absolute' => TRUE));
+        $method = 'recrawl';
+      }
+      else {
+        $url    = array_pop($_SESSION['siteimprove_url']);
+        $method = 'recheck';
+      }
+      // Include all Siteimprove js scripts.
+      SiteimproveUtils::includeJs($url, $method);
+      unset($_SESSION['siteimprove_url']);
+    }
+    // Ignore node (view/edit) and taxonomy (view/edit) pages.
+    if (!preg_match('/(^node\/\d*(\/edit)?$)|(^taxonomy\/term\/\d*(\/edit)?$)/', current_path())) {
+      SiteimproveUtils::includeJs(url(current_path(), array('absolute' => TRUE)), 'domain');
+    }
+    elseif (preg_match('/(^node\/\d*$)|(^taxonomy\/term\/\d*$)/', current_path())) {
+      SiteimproveUtils::includeJs(url(current_path(), array('absolute' => TRUE)), 'input');
+    }
+  }
+}
