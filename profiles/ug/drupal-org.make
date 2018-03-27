@@ -86,6 +86,8 @@ projects[image_url_formatter][version] = "1.4"
 
 projects[imce][version] = "1.10"
 
+projects[imce_mkdir][version] = "1.0"
+
 projects[import_html][version] = "1.0"
 
 projects[jquery_update][version] = "2.7"
