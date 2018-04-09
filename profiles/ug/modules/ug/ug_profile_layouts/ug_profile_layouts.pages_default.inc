@@ -145,7 +145,7 @@ function ug_profile_layouts_default_page_manager_handlers() {
   $pane->access = array();
   $pane->configuration = array(
     'label' => 'hidden',
-    'formatter' => 'field_collection_view',
+    'formatter' => 'field_collection_bootstrap',
     'delta_limit' => '0',
     'delta_offset' => '0',
     'delta_reversed' => 0,
@@ -155,6 +155,7 @@ function ug_profile_layouts_default_page_manager_handlers() {
       'add' => 'Add',
       'description' => 1,
       'view_mode' => 'full',
+      'title_field' => 'field_profile_heading',
     ),
     'context' => 'argument_entity_id:node_1',
     'override_title' => 0,

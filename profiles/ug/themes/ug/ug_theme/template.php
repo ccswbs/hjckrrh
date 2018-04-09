@@ -304,10 +304,14 @@ function ug_theme_preprocess_views_view_fields__pp6(&$vars) {
  */
 function ug_theme_field__field_profile_heading($variables) {
   $output = '';
+  $tabs = module_exists('field_collection_bootstrap');
 
   // Render the items.
   foreach ($variables['items'] as $delta => $item) {
-    $output .= '<h2>' . drupal_render($item) . '</h2>';
+    if ($tabs)
+      $output .= drupal_render($item);
+    else 
+      $output .= '<h2>' . drupal_render($item) . '</h2>';
   }
 
   return $output;

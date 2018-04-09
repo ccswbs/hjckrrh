@@ -1,0 +1,12 @@
+name = Field Collection Bootstrap Tabs
+description = Outputs field collection items on tabs
+core = 7.x
+dependencies[] = field_collection
+package = Fields
+
+
+; Information added by drush on 2018-04-09
+version = "unknown"
+project = "field_collection_bootstrap"
+datestamp = "1523286900"
+

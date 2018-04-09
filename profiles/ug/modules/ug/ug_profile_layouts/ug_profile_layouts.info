@@ -3,6 +3,7 @@ core = 7.x
 package = UG
 version = 7.x-12.0
 dependencies[] = ctools
+dependencies[] = field_collection_bootstrap
 dependencies[] = page_manager
 dependencies[] = ug_profile
 features[ctools][] = page_manager:pages_default:1
