@@ -110,21 +110,23 @@ function ug_wysiwyg_strongarm() {
     1 => array(
       'name' => 'User-1',
       'usertab' => 1,
-      'filesize' => 0,
-      'quota' => 0,
-      'tuquota' => 0,
+      'filesize' => '0',
+      'quota' => '0',
+      'tuquota' => '0',
       'extensions' => '*',
       'dimensions' => '1200x1200',
-      'filenum' => 0,
+      'filenum' => '0',
       'directories' => array(
         0 => array(
-          'name' => '.',
+          'name' => 'uploads',
           'subnav' => 1,
           'browse' => 1,
           'upload' => 1,
           'thumb' => 1,
           'delete' => 1,
           'resize' => 1,
+          'mkdir' => 1,
+          'rmdir' => 1,
         ),
       ),
       'thumbnails' => array(
@@ -147,6 +149,7 @@ function ug_wysiwyg_strongarm() {
           'suffix' => '',
         ),
       ),
+      'mkdirnum' => '0',
     ),
     2 => array(
       'name' => 'Sample profile',
