@@ -128,6 +128,17 @@ function ug_wysiwyg_strongarm() {
           'mkdir' => 1,
           'rmdir' => 1,
         ),
+        1 => array(
+          'name' => '.',
+          'subnav' => 0,
+          'browse' => 1,
+          'upload' => 1,
+          'thumb' => 1,
+          'delete' => 1,
+          'resize' => 1,
+          'mkdir' => 0,
+          'rmdir' => 0,
+        ),
       ),
       'thumbnails' => array(
         0 => array(
