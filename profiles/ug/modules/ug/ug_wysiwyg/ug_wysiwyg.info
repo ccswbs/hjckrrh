@@ -10,6 +10,7 @@ dependencies[] = ctools
 dependencies[] = features
 dependencies[] = filter
 dependencies[] = imce
+dependencies[] = imce_mkdir
 dependencies[] = pathologic
 dependencies[] = strongarm
 dependencies[] = ug_filter
