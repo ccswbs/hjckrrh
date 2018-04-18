@@ -39,6 +39,8 @@ projects[devel][version] = "1.5"
 
 projects[diff][version] = "3.2"
 
+projects[drafty][version] = "1.0-rc1"
+
 projects[ds][version] = "2.14"
 
 projects[ds_bootstrap_layouts][version] = "3.1"
@@ -201,6 +203,8 @@ projects[twitter][patch][] = "https://www.drupal.org/files/issues/twitter-double
 
 projects[uuid][version] = "1.0"
 
+projects[view_unpublished][version] = "1.2"
+
 projects[views][version] = "3.17"
 
 projects[views_bulk_operations][version] = "3.3"
@@ -212,6 +216,12 @@ projects[views_php][version] = "1.0-alpha1"
 projects[views_tree][version] = "2.0"
 
 projects[webform][version] = "4.14"
+
+projects[workbench][version] = "1.2"
+
+projects[workbench_moderation][version] = "3.0"
+
+projects[workbench_email][version] = "3.12"
 
 projects[wysiwyg_filter][version] = "1.6-rc3"
 projects[wysiwyg_filter][patch][] = "https://www.drupal.org/files/issues/wysiwyg_filter-Bypass-rules-835202-16.D7.patch"
