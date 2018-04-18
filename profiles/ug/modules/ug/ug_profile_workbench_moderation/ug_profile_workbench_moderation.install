@@ -1,0 +1,10 @@
+<?php
+/**
+ * Set publishing options for Profile content type.
+ * Turns on revisions and moderation.
+ * Implements hook_install().
+ */
+
+function ug_profile_workbench_moderation_install() {
+	variable_set('node_options_profile', array('moderation','revision'));
+}
