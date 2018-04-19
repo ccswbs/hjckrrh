@@ -63,10 +63,10 @@ projects[field_collection][version] = "1.0-beta11"
 
 projects[field_collection_tabs][version] = "1.1"
 
-projects[field_collection_bootstrap_tab][version] = "1.x"
-projects[field_collection_bootstrap_tab][type] = "module"
-projects[field_collection_bootstrap_tab][download][type] = "git"
-projects[field_collection_bootstrap_tab][download][url] = "https://git.drupal.org/sandbox/osman/2464117.git"
+projects[field_collection_bootstrap_tabs][version] = "1.x"
+projects[field_collection_bootstrap_tabs][type] = "module"
+projects[field_collection_bootstrap_tabs][download][type] = "git"
+projects[field_collection_bootstrap_tabs][download][url] = "https://git.drupal.org/sandbox/osman/2464117.git"
 
 projects[field_group][version] = "1.5"
 
