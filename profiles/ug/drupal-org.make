@@ -41,7 +41,7 @@ projects[diff][version] = "3.2"
 
 projects[drafty][version] = "1.0-rc1"
 
-projects[ds][version] = "2.14"
+projects[ds][version] = "2.15"
 
 projects[ds_bootstrap_layouts][version] = "3.1"
 
