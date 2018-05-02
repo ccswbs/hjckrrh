@@ -22,7 +22,7 @@ function ug_service_field_default_field_instances() {
         'label' => 'hidden',
         'module' => 'text',
         'settings' => array(),
-        'type' => 'text_default',
+        'type' => 'text_plain',
         'weight' => 1,
       ),
     ),
@@ -86,7 +86,7 @@ function ug_service_field_default_field_instances() {
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'hidden',
+        'label' => 'above',
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
@@ -121,10 +121,10 @@ function ug_service_field_default_field_instances() {
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'hidden',
+        'label' => 'above',
         'module' => 'taxonomy',
         'settings' => array(),
-        'type' => 'taxonomy_term_reference_plain',
+        'type' => 'taxonomy_term_reference_link',
         'weight' => 0,
       ),
     ),
@@ -153,9 +153,10 @@ function ug_service_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
+        'module' => 'taxonomy',
         'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 7,
+        'type' => 'taxonomy_term_reference_link',
+        'weight' => 1,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -183,15 +184,20 @@ function ug_service_field_default_field_instances() {
   // Exported field_instance: 'node-service-field_service_category'.
   $field_instances['node-service-field_service_category'] = array(
     'bundle' => 'service',
-    'default_value' => NULL,
+    'default_value' => array(
+      0 => array(
+        'tid' => 8,
+      ),
+    ),
     'deleted' => 0,
     'description' => '',
     'display' => array(
       'default' => array(
         'label' => 'above',
+        'module' => 'taxonomy',
         'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 6,
+        'type' => 'taxonomy_term_reference_link',
+        'weight' => 0,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -219,7 +225,80 @@ function ug_service_field_default_field_instances() {
   // Exported field_instance: 'node-service-field_service_description'.
   $field_instances['node-service-field_service_description'] = array(
     'bundle' => 'service',
-    'default_value' => NULL,
+    'default_value' => array(
+      0 => array(
+        'summary' => '',
+        'value' => '<div contenteditable="false">
+<div class="row">
+<div class="col-sm-4 col-md-3 col-xs-5">
+<p class="text-right"><span class="text-muted">Code:</span></p>
+</div>
+
+<div class="col-sm-8 col-md-9 col-xs-7">
+<p contenteditable="true"></p>
+</div>
+</div>
+
+<div class="row">
+<div class="col-md-3 col-sm-4 col-xs-5">
+<p class="text-right"><span class="text-muted">Lab:</span></p>
+</div>
+
+<div class="col-md-9 col-sm-8 col-xs-7">
+<p contenteditable="true"></p>
+</div>
+</div>
+
+<div class="row">
+<div class="col-md-3 col-sm-4 col-xs-5">
+<p class="text-right"><span class="text-muted">Days test started:</span></p>
+</div>
+
+<div class="col-md-9 col-sm-8 col-xs-7">
+<p contenteditable="true"></p>
+</div>
+</div>
+
+<div class="row">
+<div class="col-md-3 col-sm-4 col-xs-5">
+<p class="text-right"><span class="text-muted">TAT:</span></p>
+</div>
+
+<div class="col-md-9 col-md-8 col-xs-7">
+<p contenteditable="true"></p>
+</div>
+</div>
+
+<div class="row">
+<div class="col-md-3 col-sm-4 col-xs-5">
+<p class="text-right"><span class="text-muted">Available for: </span></p>
+</div>
+
+<div class="col-md-9 col-md-8 col-xs-7">
+<p contenteditable="true"></p>
+</div>
+</div>
+
+<h2>Specimen Type/Volume</h2>
+
+<p contenteditable="true"></p>
+
+<h2>Shipping Information</h2>
+
+<p contenteditable="true"></p>
+
+<h2>Collection Protocol</h2>
+
+<p contenteditable="true"></p>
+
+<h2>Additional Information</h2>
+
+<p contenteditable="true"></p>
+</div>
+',
+        'format' => 'filtered_html',
+      ),
+    ),
     'deleted' => 0,
     'description' => '',
     'display' => array(
@@ -228,7 +307,7 @@ function ug_service_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 0,
+        'weight' => 4,
       ),
       'teaser' => array(
         'label' => 'hidden',
@@ -271,14 +350,14 @@ function ug_service_field_default_field_instances() {
     'bundle' => 'service',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'Enter a comma separated list of keywords.',
+    'description' => '',
     'display' => array(
       'default' => array(
         'label' => 'above',
         'module' => 'taxonomy',
         'settings' => array(),
-        'type' => 'taxonomy_term_reference_plain',
-        'weight' => 5,
+        'type' => 'taxonomy_term_reference_link',
+        'weight' => 2,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -311,14 +390,14 @@ function ug_service_field_default_field_instances() {
     'bundle' => 'service',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'This field can only be viewed by authenticated users.',
+    'description' => '',
     'display' => array(
       'default' => array(
         'label' => 'inline',
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 1,
+        'weight' => 5,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -359,20 +438,13 @@ function ug_service_field_default_field_instances() {
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
-        'module' => 'field_collection',
-        'settings' => array(
-          'add' => '',
-          'delete' => '',
-          'description' => 1,
-          'edit' => '',
-          'view_mode' => 'full',
-        ),
-        'type' => 'field_collection_view',
-        'weight' => 4,
+        'label' => 'hidden',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 6,
       ),
       'teaser' => array(
-        'label' => 'above',
+        'label' => 'hidden',
         'settings' => array(),
         'type' => 'hidden',
         'weight' => 0,
@@ -405,14 +477,14 @@ function ug_service_field_default_field_instances() {
         'label' => 'above',
         'module' => 'field_collection',
         'settings' => array(
-          'add' => '',
-          'delete' => '',
-          'description' => 1,
-          'edit' => '',
+          'add' => 'Add',
+          'delete' => 'Delete',
+          'description' => TRUE,
+          'edit' => 'Edit',
           'view_mode' => 'full',
         ),
         'type' => 'field_collection_view',
-        'weight' => 2,
+        'weight' => 7,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -448,6 +520,7 @@ function ug_service_field_default_field_instances() {
         'label' => 'above',
         'module' => 'entityreference',
         'settings' => array(
+          'bypass_access' => FALSE,
           'link' => 1,
         ),
         'type' => 'entityreference_label',
@@ -471,7 +544,7 @@ function ug_service_field_default_field_instances() {
       'active' => 1,
       'module' => 'options',
       'settings' => array(),
-      'type' => 'options_buttons',
+      'type' => 'options_select',
       'weight' => 8,
     ),
   );
@@ -511,7 +584,6 @@ function ug_service_field_default_field_instances() {
   // Included for use with string extractors like potx.
   t('Content');
   t('Description');
-  t('Enter a comma separated list of keywords.');
   t('Heading');
   t('Internal notes');
   t('Keywords');
@@ -521,7 +593,6 @@ function ug_service_field_default_field_instances() {
   t('Service category');
   t('Service details');
   t('Service icon');
-  t('This field can only be viewed by authenticated users.');
 
   return $field_instances;
 }
