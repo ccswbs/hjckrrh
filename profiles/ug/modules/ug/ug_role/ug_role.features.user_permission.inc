@@ -99,12 +99,37 @@ function ug_role_user_default_permissions() {
     'module' => 'node',
   );
 
-  // Exported permission: 'administer panels styles'.
-  $permissions['administer panels styles'] = array(
-    'name' => 'administer panels styles',
+  // Exported permission: 'administer panels display styles'.
+  $permissions['administer panels display styles'] = array(
+    'name' => 'administer panels display styles',
     'roles' => array(
       'site manager' => 'site manager',
     ),
+    'module' => 'panels',
+  );
+
+  // Exported permission: 'administer panels pane styles'.
+  $permissions['administer panels pane styles'] = array(
+    'name' => 'administer panels pane styles',
+    'roles' => array(
+      'site manager' => 'site manager',
+    ),
+    'module' => 'panels',
+  );
+
+  // Exported permission: 'administer panels region styles'.
+  $permissions['administer panels region styles'] = array(
+    'name' => 'administer panels region styles',
+    'roles' => array(
+      'site manager' => 'site manager',
+    ),
+    'module' => 'panels',
+  );
+
+  // Exported permission: 'administer panels styles'.
+  $permissions['administer panels styles'] = array(
+    'name' => 'administer panels styles',
+    'roles' => array(),
     'module' => 'panels',
   );
 
