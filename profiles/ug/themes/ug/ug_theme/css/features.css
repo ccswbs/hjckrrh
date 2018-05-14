@@ -389,3 +389,8 @@ figure.face-figure a:focus figcaption.face-caption {
     position: absolute;
     bottom: 0;
 }
+
+.field-name-field-profile-image img {
+  margin-bottom: 2em;
+}
+
