@@ -337,9 +337,11 @@ figure.face-figure {
     height: 142px;
     width: 142px;
 }
-.img-overlay {
-    min-height: 100px;
-    min-width: 100px;
+.img-overlay a {
+    display: block;
+    min-width: 150px;
+    color: #fff !important;
+    text-shadow: 1px 1px 2px black, 0 0 1em black, 0 0 0.2em black;
 }
 
 figure.face-figure img, .img-overlay img {
@@ -349,9 +351,14 @@ figure.face-figure img, .img-overlay img {
     -webkit-transition: opacity 400ms ease;
     transition: opacity 400ms ease;
 }
+.img-overlay img {
+    line-height: 150px;
+    background-color: black;
+    font-weight: bold;
+}
 
 figure.face-figure figcaption.face-caption, .overlay-caption {
-    position :absolute;
+    position: absolute;
     z-index: 1;
     top: 0;
     bottom: 0;
@@ -361,6 +368,7 @@ figure.face-figure figcaption.face-caption, .overlay-caption {
     background-color: transparent;
     text-align: left !important;
     margin: 0;
+    padding: 5px;
     -webkit-transition: z-index 400ms;
     transition: z-index 400ms;
 }
@@ -379,8 +387,19 @@ figure.face-figure a:focus img,
 }
 figure.face-figure a:hover figcaption.face-caption,
 figure.face-figure a:focus figcaption.face-caption,
-.overlay-caption {
+.img-overlay a:hover .overlay-caption,
+.img-overlay a:focus .overlay-caption {
     z-index: 3;
+}
+
+.ug-red {
+    background-color: #C20430 !important;
+}
+.ug-blue {
+    background-color: #69A3B9 !important;
+}
+.ug-gold {
+    background-color: #FFC72A !important;
 }
 
 .views-exposed-widgets {
@@ -405,5 +424,14 @@ figure.face-figure a:focus figcaption.face-caption,
 }
 
 .field-name-field-profile-image img {
-  margin-bottom: 2em;
+    margin-bottom: 2em;
+}
+
+.overlay-text {
+    position: absolute;
+    bottom: 0;
+    left: 5px;
+}
+.text-white {
+    color: #ffffff;
 }
