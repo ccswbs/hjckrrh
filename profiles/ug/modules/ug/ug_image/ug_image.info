@@ -1,11 +1,12 @@
 name = UG Image
 core = 7.x
-version = VERSION
 package = UG
+version = 7.x-7.59
 dependencies[] = image
 features[features_api][] = api:2
 features[image][] = banner
 features[image][] = large
 features[image][] = medium
+features[image][] = news_thumbnail
 features[image][] = small
 features[image][] = thumbnail
