@@ -30,7 +30,7 @@ function ug_wysiwyg_filter_default_formats() {
           'valid_elements' => '@[accesskey|class|contenteditable|dir|hidden|lang|spellcheck|style|tabindex|title|translate],
 article, section, nav, aside, h1, h2, h3, h4, h5, h6, header, footer, address,
 p, hr, pre, blockquote[cite], ol[reversed|start|type], ul, li[value], dl, dt, dd, figure, figcaption, div,
-a[href|target|download|rel|hreflang|type|id|name|data-toggle|data-target],
+a[href|download|rel|hreflang|type|id|name|data-toggle|data-target],
 div[id|data-interval|data-keyboard|data-wrap],
 em, strong, small, s, cite, q, dfn, abbr, data[value], time[datetime], code, var, samp, kbd, sub, sup, i, b, u, mark, ruby, rb, rt, rtc, rp, bdi, bdo, span, br, wbr,
 ins[cite|datetime], del[cite|datetime],
