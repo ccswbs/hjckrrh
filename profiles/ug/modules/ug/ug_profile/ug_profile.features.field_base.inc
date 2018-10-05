@@ -83,7 +83,7 @@ function ug_profile_field_default_field_bases() {
       'display_default' => 1,
       'display_field' => 1,
       'profile2_private' => 0,
-      'uri_scheme' => 'public',
+      'uri_scheme' => 'private',
     ),
     'translatable' => 0,
     'type' => 'file',
