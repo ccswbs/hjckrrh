@@ -23,7 +23,7 @@ function print_epub_settings() {
     $link = print_epub_print_link();
 
     $current_epub_tool = variable_get('print_epub_epub_tool', PRINT_EPUB_EPUB_TOOL_DEFAULT);
-    $epub_tool_default =  array_key_exists($current_epub_tool, $epub_tools) ? $current_epub_tool : PRINT_EPUB_EPUB_TOOL_DEFAULT;
+    $epub_tool_default = array_key_exists($current_epub_tool, $epub_tools) ? $current_epub_tool : PRINT_EPUB_EPUB_TOOL_DEFAULT;
 
     $form['settings'] = array(
       '#type' => 'fieldset',
@@ -53,14 +53,9 @@ function print_epub_settings() {
     );
     if (module_exists('token')) {
       $form['settings']['print_epub_filename_patterns'] = array(
-        '#type' => 'fieldset',
-        '#title' => t('Replacement patterns'),
-        '#collapsible' => TRUE,
-        '#collapsed' => TRUE,
-      );
-      $form['settings']['print_epub_filename_patterns']['descriptions'] = array(
         '#theme' => 'token_tree',
         '#token_types' => array('node'),
+        '#dialog' => TRUE,
       );
     }
 
