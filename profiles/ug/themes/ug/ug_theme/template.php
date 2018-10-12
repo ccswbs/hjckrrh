@@ -1003,7 +1003,7 @@ function ug_theme_bootstrap_search_form_wrapper($variables) {
   $output = '<div class="input-group">';
 
 //added
-    $output .= '<label for="edit-search-block-form--2" class="element-invisible">Search this site</label>';
+    $output .= '<label for="'.$variables['element']['#id'].'" class="element-invisible">Search this site</label>';
 
   $output .= $variables['element']['#children'];
   $output .= '<span class="input-group-btn">';
