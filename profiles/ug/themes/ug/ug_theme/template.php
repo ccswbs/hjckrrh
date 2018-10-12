@@ -1147,7 +1147,7 @@ function ug_theme_preprocess_book_navigation(&$variables) {
  */
 function ug_theme_feed_icon($variables) {
   $text = t('Subscribe to !feed-title', array('!feed-title' => $variables['title']));
-  $image = '<span class="fa fa-rss"></span>';
+  $image = '<span class="fa fa-rss"></span><span class="element-invisible">Subscribe to Videos</span>';
   return l($image, $variables['url'], array('html' => TRUE, 'attributes' => array('class' => array('feed-icon', 'btn', 'btn-default'), 'title' => $text)));
 }
 
