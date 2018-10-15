@@ -1152,14 +1152,29 @@ function ug_theme_feed_icon($variables) {
 }
 
 /**
+* Overrides bootstrap_form_alter()
 *
+*  Fixes Issue 606 - By default, Bootstrap hides a 2nd Drupal-generated Search button.
+*  This fix ensures assistive tech users can also ignore this invisible button.
 */
+
 function ug_theme_form_alter(array &$form, array &$form_state = array(), $form_id = NULL) {
-  bootstrap_form_alter($form, $form_state, $form_id);
-  if($form_id == 'search_form') {
-    unset($form['basic']['submit']);
-  } else if ($form_id == 'search_block_form') {
-    $classes = &$form['actions']['submit']['#attributes']['class'];
-    $form['actions']['#attributes']['class'][] = 'element-hidden';
+
+  switch ($form_id){
+    case 'search_form':
+      $class_array = &$form['basic']['submit']['#attributes']['class'];
+      break;
+    case 'search_block_form':
+      $class_array = &$form['actions']['submit']['#attributes']['class'];
+      break;
+  }
+
+  if(isset($class_array)){
+    //Use Bootstrap hidden class instead of element-invisible
+    foreach ($class_array as $key => $value) {
+      if($value === 'element-invisible'){
+        $class_array[$key] = 'hidden';
+      }
+    }
   }
 }
