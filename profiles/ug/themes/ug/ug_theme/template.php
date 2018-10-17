@@ -1149,7 +1149,7 @@ function ug_theme_feed_icon($variables) {
   $text = t('Subscribe to !feed-title', array('!feed-title' => $variables['title']));
 /* #2436: Subscribe RSS Feed buttons do not read descriptive link text in Screen-reader Browse mode*/             
   $image = '<span class="fa fa-rss"></span><span class="element-invisible">'.$text.'</span>'; 
-  return l($image, $variables['url'], array('html' => TRUE, 'attributes' => array('class' => array('feed-icon', 'btn', 'btn-default'), 'title' => $text)));
+  return l($image, $variables['url'], array('html' => TRUE, 'attributes' => array('class' => array('feed-icon', 'btn', 'btn-default'))));
 }
 
 /**
