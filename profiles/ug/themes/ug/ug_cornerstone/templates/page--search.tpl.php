@@ -102,7 +102,7 @@
 
       <?php if (!empty($primary_nav) || !empty($secondary_nav) || !empty($page['navigation'])): ?>
         <div id="primary-nav" class="navbar-collapse collapse flex-bottom flex-right ">
-          <nav role="navigation">
+          <nav role="navigation aria-label="<?php print $site_name; ?> navigation"> 
             <?php if (!empty($primary_nav)): ?>
               <?php print render($primary_nav); ?>
             <?php endif; ?>
@@ -125,15 +125,16 @@
   </div>
 </header> <!-- /#page-header -->
 
+<main role="main">
 <div class="main-container container">
-
-
 
   <?php if (!empty($breadcrumb)): ?>
     <div class="row search-and-breadcrumb">
+	<nav aria-label="Breadcrumb">
       <div class="col-sm-12">
         <?php print $breadcrumb; ?>
       </div>
+	</nav>
    </div>
   <?php endif; ?>
 
@@ -193,8 +194,11 @@
 
   </div>
 </div>
+</main>
 <div id="ug-footer-local">
+ <section role="region" aria-label="footer">
   <footer class="footer container">
     <?php print render($page['footer']); ?>
   </footer>
+  </section>
 </div>
