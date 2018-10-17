@@ -63,9 +63,12 @@ BR - Banner
             /*border: 1px solid #666666;*/
         }
 
-        .slidesjs-navigation-top button.slidesjs-psply:focus,
-        .slidesjs-navigation-top button.slidesjs-psply:hover {
+        .slidesjs-navigation-top button.slidesjs-psply:hover {                                                      
+            background: #404040;/* #222222;*/                                                                                    
+        }                                                        
+        .slidesjs-navigation-top button.slidesjs-psply:focus {
             background: #222222;
+            outline: 1px #FFFFFF dotted; 
         }
 
         @media all and (min-width:768px) {
@@ -78,11 +81,15 @@ BR - Banner
     Slide Navigation Buttons
     ---------------------**/
 
-        .slidesjs-navigation-bottom button.slidesjs-previous:focus,
         .slidesjs-navigation-bottom button.slidesjs-previous:hover,
-        .slidesjs-navigation-bottom button.slidesjs-next:focus,
-        .slidesjs-navigation-bottom button.slidesjs-next:hover {
+        .slidesjs-navigation-bottom button.slidesjs-next:hover {                                                    
+            background: #404040;/* #222222;*/                                                                                    
+        }                                                          
+
+        .slidesjs-navigation-bottom button.slidesjs-previous:focus,
+        .slidesjs-navigation-bottom button.slidesjs-next:focus {
             background: #222222;
+	    outline: 1px #FFFFFF dotted;	
         }
 
         .slidesjs-navigation-bottom .slidesjs-next,
@@ -122,7 +129,7 @@ BR - Banner
         .row.slidesjs-navigation-bottom a.slidesjs-slide-title {
             font-weight: 500;
             font-size: 1.214em; /* 17px */
-            text-decoration: none;
+            text-decoration: underline;
         }
 
         .row.slidesjs-navigation-bottom a.slidesjs-slide-title:focus,
