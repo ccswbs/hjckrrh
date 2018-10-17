@@ -66,6 +66,7 @@ BR - Banner
         .slidesjs-navigation-top button.slidesjs-psply:focus,
         .slidesjs-navigation-top button.slidesjs-psply:hover {
             background: #222222;
+            outline: 1px #FFFFFF dotted; 
         }
 
         @media all and (min-width:768px) {
@@ -83,6 +84,7 @@ BR - Banner
         .slidesjs-navigation-bottom button.slidesjs-next:focus,
         .slidesjs-navigation-bottom button.slidesjs-next:hover {
             background: #222222;
+	    outline: 1px #FFFFFF dotted;	
         }
 
         .slidesjs-navigation-bottom .slidesjs-next,
