@@ -1,6 +1,6 @@
 <div id="ug-header"><div class="container"> 
   <!-- Static navbar -->
-  <nav class="navbar navbar-default navbar-static-top" role="navigation" aria-label="University of Guelph main website navigtion">
+  <nav class="navbar navbar-default navbar-static-top" role="navigation" aria-label="University of Guelph main website navigation">
     <div class="container-fluid">
       <div class="navbar-header">
         <a class="navbar-brand" href="http://www.uoguelph.ca/"><img alt="University of Guelph" src="//www.uoguelph.ca/img/universityofguelph.png"></a>
@@ -20,7 +20,7 @@
         </ul>
 
 
-        <form class="navbar-form navbar-right" role="search" aria-label="University of Guelph main web site search form" id="searchbox_011117603928904778939:tp3ks5ha2dw" name="searchform" action="//www.uoguelph.ca/search/">
+        <form class="navbar-form navbar-right" role="search" id="searchbox_011117603928904778939:tp3ks5ha2dw" name="searchform" action="//www.uoguelph.ca/search/">
           <input type="hidden" name="commonname" class="search1" id="searchtext2">
           <input type="hidden" name="vl(freeText0)" class="search1" id="searchtext3">
           <input type="hidden" name="cx" value="011117603928904778939:tp3ks5ha2dw">
