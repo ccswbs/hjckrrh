@@ -7,7 +7,7 @@ projects[auto_nodetitle][patch][] = "https://www.drupal.org/files/issues/auto_no
 
 projects[autologout][version] = "4.5"
 
-projects[backup_migrate][version] = "3.4"
+projects[backup_migrate][version] = "3.5"
 
 projects[bootstrap_fieldgroup][version] = "1.2"
 
@@ -18,7 +18,7 @@ projects[captcha][version] = "1.5"
 
 projects[cck][version] = "3.0-alpha3"
 
-projects[ckeditor][version] = "1.17"
+projects[ckeditor][version] = "1.18"
 
 projects[ckeditor_link][version] = "2.4"
 
@@ -33,11 +33,11 @@ projects[ctools][patch][] = "https://www.drupal.org/files/issues/2018-03-26/view
 
 projects[datalayer][version] = "1.x-dev"
 
-projects[date][version] = "2.9"
+projects[date][version] = "2.10"
 
 projects[devel][version] = "1.5"
 
-projects[diff][version] = "3.2"
+projects[diff][version] = "3.3"
 
 projects[drafty][version] = "1.0-rc1"
 
@@ -119,13 +119,13 @@ projects[mailsystem][version] = "2.34"
 
 projects[masquerade][version] = "1.0-rc7"
 
-projects[media][version] = "2.1"
+projects[media][version] = "2.19"
 
 projects[media_flickr][version] = "1.0-alpha4"
 
 projects[menu_block][version] = "2.7"
 
-projects[menu_breadcrumb][version] = "1.5"
+projects[menu_breadcrumb][version] = "1.x-dev"
 
 projects[metatag][version] = "1.21"
 
@@ -134,7 +134,7 @@ projects[migrate][version] = "2.8"
 projects[migrate_d2d][version] = "2.1"
 projects[migrate_d2d][patch][] = "https://www.drupal.org/files/issues/migrate_d2d-menu_names_and_cleanup-1489858-11.patch"
 
-projects[mimemail][version] = "1.0-beta4"
+projects[mimemail][version] = "1.1"
 
 projects[module_filter][version] = "2.0"
 
@@ -166,7 +166,7 @@ projects[pathauto][version] = "1.3"
 
 projects[pathologic][version] = "3.1"
 
-projects[print][version] = "2.0"
+projects[print][version] = "2.1"
 
 projects[profile2][version] = "1.3"
 
@@ -178,7 +178,7 @@ projects[recaptcha][version] = "2.2"
 
 projects[redirect][version] = "1.0-rc3"
 
-projects[references][version] = "2.1"
+projects[references][version] = "2.2"
 
 projects[restrict_password_change][version] = "1.0-beta2"
 
@@ -202,7 +202,7 @@ projects[token][version] = "1.6"
 projects[twitter][version] = "5.11"
 projects[twitter][patch][] = "https://www.drupal.org/files/issues/twitter-doubleclass-2661088-5.patch"
 
-projects[uuid][version] = "1.0"
+projects[uuid][version] = "1.1"
 
 projects[view_unpublished][version] = "1.2"
 

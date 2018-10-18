@@ -34,9 +34,9 @@ files[] = includes/sources.filesource.inc
 files[] = tests/BackupMigrateHelper.test
 files[] = tests/BackupMigrateBasicsTest.test
 
-; Information added by Drupal.org packaging script on 2018-01-24
-version = "7.x-3.4"
+; Information added by Drupal.org packaging script on 2018-02-05
+version = "7.x-3.5"
 core = "7.x"
 project = "backup_migrate"
-datestamp = "1516810618"
+datestamp = "1517871486"
 
