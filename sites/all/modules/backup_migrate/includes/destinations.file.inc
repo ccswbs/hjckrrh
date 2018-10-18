@@ -34,7 +34,7 @@ class backup_migrate_destination_files extends backup_migrate_destination {
       $filepath = rtrim($dir, "/") ."/". $file->filename();
 
       // Allow files to be overwritten by the filesystem.
-      $replace_method = $settings->append_timestamp == 1 ? FILE_EXISTS_REPLACE : FILE_EXISTS_RENAME;
+      $replace_method = $settings->append_timestamp == 2 ? FILE_EXISTS_REPLACE : FILE_EXISTS_RENAME;
 
       // Copy the file if there are multiple destinations.
       if (count($settings->get_destinations()) > 1) {

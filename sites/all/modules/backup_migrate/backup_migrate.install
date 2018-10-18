@@ -769,3 +769,10 @@ function backup_migrate_update_7305() {
     'default' => 'builtin',
   ));
 }
+
+/**
+ * Leave a message to explain the mixup over the backup option.
+ */
+function backup_migrate_update_7306() {
+  drupal_set_message(t('Please note that release 7.x-3.4 had a bug which caused all backups to be overwritten instead of having a timestamp added. Please review all backup settings to ensure they work as intended.'), 'warning');
+}

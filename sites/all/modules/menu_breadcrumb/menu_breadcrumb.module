@@ -17,7 +17,7 @@ define('MENU_BREADCRUMB_REGEX_DEFAULT', '/^book-toc-\d+$/Books/');
 define('MENU_BREADCRUMB_REGEX_MATCH', '%^(/.+/)([^/]+)/$%');
 
 /**
- * Implementation of hook_help().
+ * Implements hook_help().
  */
 function menu_breadcrumb_help($path, $arg) {
   $output = '';
@@ -25,6 +25,7 @@ function menu_breadcrumb_help($path, $arg) {
     case 'admin/config/modules#description':
       $output = t('Allows you to use the menu the current page belongs to for the breadcrumb.');
       break;
+
     case 'admin/config/menu_breadcrumb':
       $output = t('<p>By default, Drupal will use the Navigation menu for the breadcrumb. This module allows you to use the menu the current page belongs to for the breadcrumb.</p><p>As an added bonus, it also allows you to append the page title to the breadcrumb (either as a clickable url or not) and hide the breadcrumb if it only contains the link to the front page.</p>');
       break;
@@ -34,7 +35,7 @@ function menu_breadcrumb_help($path, $arg) {
 }
 
 /**
- * Implementation of hook_menu().
+ * Implements hook_menu().
  */
 function menu_breadcrumb_menu() {
   $items['admin/config/user-interface/menu-breadcrumb'] = array(
@@ -50,6 +51,7 @@ function menu_breadcrumb_menu() {
 
 /**
  * Default menu item.
+ *
  * If the module is not yet configured, we only need this
  * as a starting point. This determines the default weight
  * and 'enabled' status for any new menus.
@@ -67,7 +69,7 @@ function _menu_breadcrumb_default_menu() {
 /**
  * Get the menu selection configuration.
  *
- * @return
+ * @return array
  *   Array of menu selections and weights.
  */
 function _menu_breadcrumb_get_menus() {
@@ -117,7 +119,7 @@ function _menu_breadcrumb_get_menus() {
     // Remove any defunct menu names. Only visible if we are showing
     // the admin settings form, so don't waste time processing this
     // otherwise.
-    if ($_GET['q'] == 'admin/config/menu_breadcrumb') {
+    if ($_GET['q'] == 'admin/config/user-interface/menu-breadcrumb') {
       $current_menu_names = array_merge($drupal_menu_names, array_unique($match_cache), array('menu_breadcrumb_default_menu'));
       $menus_current = array_intersect(array_keys($menus), $current_menu_names);
       $menus = array_intersect_key($menus, array_flip($menus_current));
@@ -129,10 +131,11 @@ function _menu_breadcrumb_get_menus() {
 
 /**
  * Helper for _menu_breadcrumb_get_menus().
+ *
  * Determine whether each 'unknown' menu is genuinely new,
  * or was previously aggregated by a pattern match.
  *
- * @return
+ * @return array
  *   Array of new/unknown menus.
  */
 function _menu_breadcrumb_process_unknown_menus($unknown_menu_names, $menus, $match_cache_old, $match_cache_rebuild) {
@@ -144,7 +147,7 @@ function _menu_breadcrumb_process_unknown_menus($unknown_menu_names, $menus, $ma
     'devel',
     'admin_menu',
   );
-  // consider hook here allowing modules to disable their menu
+  // Consider hook here allowing modules to disable their menu
   // by default.
 
   foreach ($unknown_menu_names as $menu_name) {
@@ -175,6 +178,7 @@ function _menu_breadcrumb_process_unknown_menus($unknown_menu_names, $menus, $ma
 
 /**
  * Helper for _menu_breadcrumb_get_menus().
+ *
  * Compare new menus against the defined menu patterns,
  * and update the persistent variable caches accordingly.
  */
@@ -241,12 +245,15 @@ function _menu_breadcrumb_process_new_menus($new_menus, &$menus, &$match_cache, 
   foreach (array_keys($menus) as $menu_name) {
     $menus[$menu_name]['name'] = $menu_name;
   }
-  uasort($menus, '_menu_breadcrumb_sort'); // sort by weight.
+
+  // Sort by weight.
+  uasort($menus, '_menu_breadcrumb_sort');
   variable_set('menu_breadcrumb_menus', $menus);
 }
 
 /**
  * Sort-by-weight comparison.
+ *
  * Sub-sort by menu_name, for consistency in the settings form.
  */
 function _menu_breadcrumb_sort($menu1, $menu2) {
@@ -263,7 +270,7 @@ function _menu_breadcrumb_sort($menu1, $menu2) {
 /**
  * Get the menu/selection list.
  *
- * @return
+ * @return array
  *   An array indicating the enabled status of each menu.
  */
 function menu_breadcrumb_menu_list() {
@@ -290,7 +297,19 @@ function menu_breadcrumb_menu_list() {
 }
 
 /**
- * Implementation of hook_init().
+ * Implements hook_menu_breadcrumb_alter().
+ *
+ * Alter links in the active trail before it is rendered as the breadcrumb.
+ */
+function menu_breadcrumb_menu_breadcrumb_alter(&$active_trail, $item) {
+  // Removes "Home" link to the front page, in case you already have one.
+  if (variable_get('menu_breadcrumb_remove_home_link', FALSE) && $active_trail[0]['href'] === '<front>') {
+    array_shift($active_trail);
+  }
+}
+
+/**
+ * Implements hook_init().
  *
  * Set the active menu according to the current path.
  */
@@ -307,7 +326,8 @@ function menu_breadcrumb_init() {
 
     // Choose the highest-priority 'Enabled' menu.
     $match_cache = variable_get('menu_breadcrumb_pattern_matches', array());
-    $menu_list = array_filter(menu_breadcrumb_menu_list()); // enabled menus.
+    // Enabled menus.
+    $menu_list = array_filter(menu_breadcrumb_menu_list());
 
     foreach (array_keys($menu_list) as $menu_name) {
       $is_pattern = (substr($menu_name, 0, 1) == '/' && substr($menu_name, -1, 1) == '/');
@@ -337,13 +357,19 @@ function menu_breadcrumb_init() {
   // Generate the breadcrumbs using the active menu.
   $breadcrumb = drupal_get_breadcrumb();
 
+  // If the breadcrumb is just the menu root, try to generate breadcrumb from URL if wanted.
+  if (count($breadcrumb) == 1 && variable_get('menu_breadcrumb_no_menu_use_menu_path', 0)) {
+    // Try to set breadcrumb based on URL path.
+    $breadcrumb = _menu_breadcrumb_by_path($breadcrumb);
+  }
+
   if (variable_get('menu_breadcrumb_append_node_title', 0) == 1) {
     $node_title = filter_xss(menu_get_active_title(), array());
     if (variable_get('menu_breadcrumb_append_node_url', 0) == 1) {
-      $breadcrumb[] = $is_front ? l(t('Home'), '<front>') : l($node_title, $_GET['q'], array('html' => TRUE,));
+      $breadcrumb[] = $is_front ? l(t('Home'), '<front>') : l(t($node_title), $_GET['q'], array('html' => TRUE,));
     }
     else {
-      $breadcrumb[] = $is_front ? t('Home') : $node_title;
+      $breadcrumb[] = $is_front ? t('Home') : t($node_title);
     }
   }
 
@@ -357,7 +383,7 @@ function menu_breadcrumb_init() {
 /**
  * Menu breadcrumb admin settings form.
  *
- * @return
+ * @return array
  *   The settings form used by Menu breadcrumb.
  */
 function menu_breadcrumb_admin_settings_form() {
@@ -387,6 +413,20 @@ function menu_breadcrumb_admin_settings_form() {
     '#title' => t('Hide the breadcrumb if the breadcrumb only contains the link to the front page.'),
     '#description' => t('Choose whether or not the breadcrumb should be hidden if the breadcrumb only contains a link to the front page (<em>Home</em>.).'),
     '#default_value' => variable_get('menu_breadcrumb_hide_on_single_item', 0),
+  );
+
+  $form['menu_breadcrumb_no_menu_use_menu_path'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('If the page is not in a menu, attempt to create a breadcrumb based on its URL'),
+    '#description' => t('Choose whether or not the breadcrumb should attempt to be generated from its URL if it does not belong to a menu'),
+    '#default_value' => variable_get('menu_breadcrumb_no_menu_use_menu_path', 0),
+  );
+
+  $form['menu_breadcrumb_remove_home_link'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Remove "Home" link.'),
+    '#description' => t('Removes "Home" link to the front page, in case you already have one.'),
+    '#default_value' => variable_get('menu_breadcrumb_remove_home_link', 0),
   );
 
   $form['include_exclude'] = array(
@@ -423,12 +463,12 @@ function menu_breadcrumb_admin_settings_form() {
     }
 
     // Ensure that regex patterns do not cause invalid id attributes.
-    $safe_id_prefix = 'edit-menu-breadcrumb-menus-'. menu_breadcrumb_html_id($menu_name);
+    $safe_id_prefix = 'edit-menu-breadcrumb-menus-' . menu_breadcrumb_html_id($menu_name);
 
     $form['include_exclude']['menu_breadcrumb_menus'][$menu_name] = array(
       'enabled' => array(
         '#type' => 'checkbox',
-        '#id' => $safe_id_prefix .'-enabled',
+        '#id' => $safe_id_prefix . '-enabled',
         '#title' => '',
         '#default_value' => $menu['enabled'],
       ),
@@ -439,7 +479,7 @@ function menu_breadcrumb_admin_settings_form() {
         '#type' => 'weight',
         '#default_value' => !empty($menu['weight']) ? (int) $menu['weight'] : 0,
         '#delta' => $weight_delta,
-        '#id' => $safe_id_prefix .'-weight-wrapper',
+        '#id' => $safe_id_prefix . '-weight-wrapper',
       ),
       'type' => array(
         '#type' => 'value',
@@ -527,8 +567,8 @@ function menu_breadcrumb_admin_settings_form_validate($form, &$form_state) {
       if (!preg_match(MENU_BREADCRUMB_REGEX_MATCH, $pattern)) {
         $t_args = array(
           '%pattern' => $pattern,
-          '%regex'   => MENU_BREADCRUMB_REGEX_MATCH
-        ) ;
+          '%regex'   => MENU_BREADCRUMB_REGEX_MATCH,
+        );
         form_set_error('menu_breadcrumb_menu_patterns', t("Invalid pattern syntax: %pattern does not match %regex", $t_args));
       }
     }
@@ -545,7 +585,7 @@ function menu_breadcrumb_admin_settings_form_submit($form, &$form_state) {
 }
 
 /**
- * Implementation of hook_theme().
+ * Implements hook_theme().
  */
 function menu_breadcrumb_theme() {
   return array(
@@ -561,7 +601,7 @@ function menu_breadcrumb_theme() {
 function theme_menu_breadcrumb_menus_table($variables) {
   $form = $variables['form'];
   drupal_add_tabledrag('menu-breadcrumb-menus', 'order', 'sibling', 'menu-weight');
-  $table['attributes']['id'] = 'menu-breadcrumb-menus' ;
+  $table['attributes']['id'] = 'menu-breadcrumb-menus';
   $table['header'] = array(
     t('Menu'),
     t('Enabled'),
@@ -581,18 +621,20 @@ function theme_menu_breadcrumb_menus_table($variables) {
       $rows[] = array('data' => $row, 'class' => array('draggable'));
     }
   }
-  $table['rows'] = $rows ;
+  $table['rows'] = $rows;
 
   return theme('table', $table);
 }
 
 /**
  * Prepare a string for use as a valid HTML ID and guarantee uniqueness.
- * Adapted from Drupal 7's drupal_html_id().
+ *
+ * This is adapted from Drupal 7's drupal_html_id().
  *
  * @param $id
  *   The ID to clean.
- * @return
+ *
+ * @return string
  *   The cleaned ID.
  */
 function menu_breadcrumb_html_id($id) {
@@ -614,7 +656,7 @@ function menu_breadcrumb_html_id($id) {
   // duplicate IDs, which would break JS code and XHTML validity anyways. For
   // now, it's an acceptable stopgap solution.
   if (isset($seen_ids[$id])) {
-    $id = $id .'-'. ++$seen_ids[$id];
+    $id = $id . '-' . ++$seen_ids[$id];
   }
   else {
     $seen_ids[$id] = 1;
@@ -623,3 +665,87 @@ function menu_breadcrumb_html_id($id) {
   return $id;
 }
 
+/**
+ * Internal function to set breadcrumb based on URL path.
+ */
+function _menu_breadcrumb_by_path($breadcrumb = array()) {
+  global $language;
+  $parent_candidates = _menu_breadcrumb_get_parent_candidates(drupal_get_path_alias());
+
+  if (empty($parent_candidates)) {
+    return $breadcrumb;
+  }
+
+  $matched_menus = array();
+  $matched_link_titles = array();
+  $query = db_select('menu_links', 'ml')
+    ->fields('ml', array('menu_name', 'mlid', 'link_path', 'link_title', 'depth', 'weight'))
+    ->condition('link_path', $parent_candidates, 'IN')
+    // Do not touch admin menu.
+    ->condition('menu_name', 'management', '!=')
+    // Only consider normal, visible menu links.
+    ->condition('hidden', 0);
+
+  if (module_exists('i18n_menu')) {
+    $query->condition('language', $language->language);
+  }
+
+  $results = $query->execute();
+
+  foreach ($results as $record) {
+    // If there is more than one matched link in a menu,
+    // use the deepest, heaviest.
+    if (!isset($matched_menus[$record->menu_name]) || $record->depth > $matched_menus[$record->menu_name]['depth'] || ($record->depth == $matched_menus[$record->menu_name]['depth'] && $record->weight > $matched_menus[$record->menu_name]['weight'])) {
+      $matched_menus[$record->menu_name]['link_path'] = $record->link_path;
+      $matched_menus[$record->menu_name]['depth'] = $record->depth;
+      $matched_menus[$record->menu_name]['weight'] = $record->weight;
+    }
+
+    // Get the Link Title if it can be found in a menu item.
+    if ($record->link_title && !isset($matched_link_titles[$record->link_path])) {
+      $matched_link_titles[$record->link_path] = $record->link_title;
+      if (module_exists('i18n_menu')) {
+        $matched_link_titles[$record->link_path] = _i18n_menu_link_title((array) $record, $language->language);
+      }
+    }
+  }
+
+  // Remove current page from breadcrumb.
+  array_pop($parent_candidates);
+
+  foreach ($parent_candidates as $link_path) {
+    // If the page title is found on a menu item, use it.
+    if (isset($matched_link_titles[$link_path])) {
+      $breadcrumb[] = l($matched_link_titles[$link_path], $link_path);
+    }
+    // Otherwise, use slow method to find out the title of a page.
+    elseif ($menu_item = menu_get_item($link_path)) {
+      $breadcrumb[] = l($menu_item['title'], $link_path);
+    }
+  }
+
+  return $breadcrumb;
+}
+
+/**
+ * Returns an array of parent candidates.
+ *
+ * e.g. given the argument 'foo/bar/zee', this returns an array of 
+ * internal Drupal paths for 'foo', 'foo/bar', 'foo/bar/zee'.
+ *
+ * @param string $path
+ *   A Drupal path alias.
+ *
+ * @return array
+ *   An array of internal Drupal paths.
+ */
+function _menu_breadcrumb_get_parent_candidates($path) {
+  $pieces = explode('/', $path);
+  $path = '';
+  $parent_candidates = array();
+  foreach ($pieces as $piece) {
+    $path .= $piece . '/';
+    $parent_candidates[] = drupal_get_normal_path(rtrim($path, '/'));
+  }
+  return $parent_candidates;
+}

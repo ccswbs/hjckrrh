@@ -1,6 +1,8 @@
 <?php
+
 /**
- * @file panels-bootstrap-tabs.tpl.php
+ * @file
+ * Panels tabs template panels-bootstrap-tabs.tpl.php.
  */
 ?>
 

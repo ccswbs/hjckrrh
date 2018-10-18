@@ -64,7 +64,7 @@ function panels_bootstrap_styles_merge_plugin($plugin, $style_name, $substyle) {
 }
 
 /**
- * Theme fuction for the region styles.
+ * Theme function for the region styles.
  */
 function theme_panels_bootstrap_styles_render_region(&$variables) {
   $settings = $variables['settings'];
@@ -97,9 +97,8 @@ function theme_panels_bootstrap_styles_render_region(&$variables) {
     'footer_element' => $substyle['footer_element'],
     'links_element' => $substyle['links_element'],
   );
-
-  $variables['#collapsible'] = !empty($settings['collapsible']);
-  $variables['#collapsed'] = !empty($settings['collapsible']) && !empty($settings['collapsed']);
+  $variables['#collapsible'] = !empty($settings['collapsible']) || $substyle['name'];
+  $variables['#collapsed'] = (!empty($settings['collapsible']) || $substyle['name']) && !empty($settings['collapsed']);
 
   $variables['style_settings'] = $style;
   $output = theme('panels_bootstrap_region', $variables);
@@ -115,7 +114,7 @@ function theme_panels_bootstrap_styles_render_pane(&$variables) {
   $substyle = $style['substyle'];
 
   // Prepare the classes.
-  $base = $substyle['name'];
+  $base = ($substyle['name'] == 'accordion' ? 'panel' : $substyle['name']);
   $wrapper_classes = array($base);
   if (!empty($substyle['modifier_classes'])) {
     $wrapper_classes[] = !empty($settings['modifier_class']) ? $settings['modifier_class'] : $base . '-default';
@@ -139,9 +138,8 @@ function theme_panels_bootstrap_styles_render_pane(&$variables) {
     'footer_element' => $substyle['footer_element'],
     'links_element' => $substyle['links_element'],
   );
-
-  $variables['#collapsible'] = !empty($settings['collapsible']);
-  $variables['#collapsed'] = !empty($settings['collapsible']) && !empty($settings['collapsed']);
+  $variables['#collapsible'] = !empty($settings['collapsible'])|| $substyle['name'] == 'accordion';
+  $variables['#collapsed'] = (!empty($settings['collapsible'])|| $substyle['name'] == 'accordion') && !empty($settings['collapsed']);
 
   $variables['style_settings'] = $style;
   $output = theme('panels_bootstrap_pane', $variables);

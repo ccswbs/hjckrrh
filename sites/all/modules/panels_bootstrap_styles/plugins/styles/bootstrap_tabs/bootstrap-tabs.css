@@ -5,5 +5,5 @@
  * removing pane titles for panes that are within Mini-Panels.
  */
 .panels-bootstrap-tabs .tab-pane > .panel-pane > .pane-title {
-    display: none;
+  display: none;
 }

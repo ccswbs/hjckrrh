@@ -1,12 +1,11 @@
 name = Panels Bootstrap Styles
-description = Pane & region styles for panels module using the Twitter Bootstrap css framework.
+description = Pane & region styles for panels module using the Twitter Bootstrap CSS framework.
 package = Panels
 dependencies[] = panels
 core = 7.x
 
-; Information added by Drupal.org packaging script on 2014-12-27
-version = "7.x-1.0-alpha1+5-dev"
+; Information added by Drupal.org packaging script on 2018-05-17
+version = "7.x-1.0-alpha1+19-dev"
 core = "7.x"
 project = "panels_bootstrap_styles"
-datestamp = "1419643381"
-
+datestamp = "1526583486"
