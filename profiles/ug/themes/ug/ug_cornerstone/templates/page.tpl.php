@@ -202,7 +202,7 @@
 </div>
 </main>
 <div id="ug-footer-local">
-<section role="region" aria-label="footer">	
+<section role="region" aria-label="<?php print variable_get('site_name'); ?>footer">	
   <footer class="footer container">
     <?php print render($page['footer']); ?>
   </footer>
