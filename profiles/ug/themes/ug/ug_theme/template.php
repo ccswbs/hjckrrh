@@ -1000,7 +1000,7 @@ function ug_theme_pager($variables) {
  * Source: https://www.drupal.org/node/2540856
  */
 function ug_theme_bootstrap_search_form_wrapper($variables) {
-  $output = '<label for="edit-search-block-form--2">Search ' .variable_get('site_name'). '</label>';
+  $output .= '<label for="'.$variables['element']['#id'].'" >Search ' .variable_get('site_name'). '</label>';
   $output .= '<div class="input-group">';
 
 //added
