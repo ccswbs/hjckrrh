@@ -1000,10 +1000,11 @@ function ug_theme_pager($variables) {
  * Source: https://www.drupal.org/node/2540856
  */
 function ug_theme_bootstrap_search_form_wrapper($variables) {
-  $output = '<div class="input-group">';
+  $output = '<label for="edit-search-block-form--2">Search ' .variable_get('site_name'). '</label>';
+  $output .= '<div class="input-group">';
 
 //added
-    $output .= '<label for="'.$variables['element']['#id'].'" class="element-invisible">Search this site</label>';
+    //$output .= '<label for="'.$variables['element']['#id'].'" class="element-invisible">Search this site</label>';
 
   $output .= $variables['element']['#children'];
   $output .= '<span class="input-group-btn">';
@@ -1027,8 +1028,7 @@ function ug_theme_bootstrap_search_form_wrapper($variables) {
  */
 function ug_theme_form_search_block_form_alter(&$form, &$form_state, $form_id) {
 
-    $form['search_block_form']['#attributes']['placeholder'] = t('Search this site');
-
+    $form['search_block_form']['#attributes']['placeholder'] = t('');
 }
 
 /**
