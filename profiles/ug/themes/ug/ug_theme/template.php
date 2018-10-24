@@ -1023,13 +1023,6 @@ function ug_theme_bootstrap_search_form_wrapper($variables) {
   $output .= '</div>';
   return $output;
 }
-/**
- * Modify the placeholder text in the site search box
- */
-function ug_theme_form_search_block_form_alter(&$form, &$form_state, $form_id) {
-
-    $form['search_block_form']['#attributes']['placeholder'] = t('');
-}
 
 /**
  * N3 - News teaser list
@@ -1156,16 +1149,24 @@ function ug_theme_feed_icon($variables) {
 *
 *  Fixes Issue 606 - By default, Bootstrap hides a 2nd Drupal-generated Search button.
 *  This fix ensures assistive tech users can also ignore this invisible button.
+*
+*  Updates placeholder text for search forms
 */
 
 function ug_theme_form_alter(array &$form, array &$form_state = array(), $form_id = NULL) {
 
   switch ($form_id){
+
+    // Affects Drupal search results page
     case 'search_form':
       $class_array = &$form['basic']['submit']['#attributes']['class'];
+      $form['basic']['keys']['#attributes']['placeholder'] = t('');
       break;
+
+    // Affects Drupal block form
     case 'search_block_form':
       $class_array = &$form['actions']['submit']['#attributes']['class'];
+      $form['search_block_form']['#attributes']['placeholder'] = t('');
       break;
   }
 
