@@ -109,7 +109,7 @@ function ug_event_field_default_field_instances() {
     'settings' => array(
       'description_field' => 1,
       'file_directory' => '',
-      'file_extensions' => 'txt pdf doc docx rtf png gif jpg jpeg zip xls xlsx ppt pptx csv vtt',
+      'file_extensions' => 'txt pdf doc docx rtf png gif jpg jpeg zip xls xlsx ppt pptx csv vtt mp3 ogg',
       'max_filesize' => '',
       'user_register_form' => FALSE,
     ),
