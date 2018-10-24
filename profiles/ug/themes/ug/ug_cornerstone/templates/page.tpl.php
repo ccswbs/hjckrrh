@@ -102,7 +102,7 @@
 
       <?php if (!empty($primary_nav) || !empty($secondary_nav) || !empty($page['navigation'])): ?>
         <div id="primary-nav" class="navbar-collapse collapse flex-bottom flex-right ">
-          <nav role="navigation aria-label="website <?php print $site_name; ?> navigation">
+          <nav aria-label="<?php print $site_name; ?>">
             <?php if (!empty($primary_nav)): ?>
               <?php print render($primary_nav); ?>
             <?php endif; ?>
@@ -119,28 +119,26 @@
   </div>
 </header>
 
-<header id="page-header" role="banner">
+<section id="page-header" aria-label="Page header">
   <div class="container">
     <?php print render($page['header']); ?>
   </div>
-</header> <!-- /#page-header -->
+</section> <!-- /#page-header -->
 
-<main role="main">
+<main>
 <div class="main-container container">
-
-
 
   <?php if (!empty($breadcrumb)): ?>
     <div class="row search-and-breadcrumb">
-    <section role="region" aria-label="breadcrumb navigation">
-      <div class="col-sm-9">
-        <?php print $breadcrumb; ?>
-      </div>
-      <div class="col-sm-3">
-        <?php $block = module_invoke('search', 'block_view', 'form');
-        print render($block['content']); ?>
-     </div>
-   </section> 
+      <nav aria-label="breadcrumb">
+        <div class="col-sm-9">
+          <?php print $breadcrumb; ?>
+        </div>
+        <div class="col-sm-3">
+          <?php $block = module_invoke('search', 'block_view', 'form');
+          print render($block['content']); ?>
+        </div>
+    </nav> 
    </div>
   <?php endif; ?>
 
@@ -202,9 +200,7 @@
 </div>
 </main>
 <div id="ug-footer-local">
-<section role="Region" aria-label="primary footer region">	
-  <footer class="footer container">
+  <footer aria-label="<?php print variable_get('site_name'); ?>" class="footer container">
     <?php print render($page['footer']); ?>
   </footer>
-</section>
 </div>

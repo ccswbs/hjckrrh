@@ -73,7 +73,7 @@
  * @ingroup themeable
  */
 ?>
-<header id="navbar" role="banner" class="<?php print $navbar_classes; ?>">
+<header id="navbar" class="<?php print $navbar_classes; ?>">
   <div class="container">
     <div class="flex-container">
 
@@ -102,7 +102,7 @@
 
       <?php if (!empty($primary_nav) || !empty($secondary_nav) || !empty($page['navigation'])): ?>
         <div id="primary-nav" class="navbar-collapse collapse flex-bottom flex-right ">
-          <nav role="navigation">
+          <nav aria-label="<?php print $site_name; ?>">
             <?php if (!empty($primary_nav)): ?>
               <?php print render($primary_nav); ?>
             <?php endif; ?>
@@ -119,21 +119,22 @@
   </div>
 </header>
 
-<header id="page-header">
+<section id="page-header" aria-label="Page header">
   <div class="container">
     <?php print render($page['header']); ?>
   </div>
-</header> <!-- /#page-header -->
+</section> <!-- /#page-header -->
 
+<main>
 <div class="main-container container">
-
-
 
   <?php if (!empty($breadcrumb)): ?>
     <div class="row search-and-breadcrumb">
-      <div class="col-sm-12">
-        <?php print $breadcrumb; ?>
-      </div>
+      <nav aria-label="breadcrumb">
+        <div class="col-sm-12">
+          <?php print $breadcrumb; ?>
+        </div>
+    </nav> 
    </div>
   <?php endif; ?>
 
@@ -193,8 +194,9 @@
 
   </div>
 </div>
+</main>
 <div id="ug-footer-local">
-  <footer class="footer container">
+  <footer aria-label="<?php print variable_get('site_name'); ?>" class="footer container">
     <?php print render($page['footer']); ?>
   </footer>
 </div>

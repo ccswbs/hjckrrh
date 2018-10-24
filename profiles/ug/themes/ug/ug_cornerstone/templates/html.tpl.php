@@ -63,10 +63,10 @@
   </noscript>
 </head>
 <body class="<?php print $classes; ?>" <?php print $attributes;?>>
-  <div id="skip-link">
-    <a href="#main-content" class="element-invisible element-focusable"><?php print t('Skip to main content'); ?></a>
-  </div>
-  <?php include('includes/ug-header.inc'); ?>
+  <nav id="skip-link" aria-label="Skip links"> 
+   <a href="#main-content" class="element-invisible element-focusable"><?php print t('Skip to main content'); ?></a>
+  </nav>    
+<?php include('includes/ug-header.inc'); ?>
   <?php print $page_top; ?>
   <?php print $page; ?>
   <?php print $page_bottom; ?>
