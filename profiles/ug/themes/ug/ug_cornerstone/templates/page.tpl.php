@@ -119,7 +119,7 @@
   </div>
 </header>
 
-<section id="page-header" aria-label="Page header" style="z-index: 2147483646;">
+<section id="page-header" aria-label="Page header">
   <div class="container">
     <?php print render($page['header']); ?>
   </div>
