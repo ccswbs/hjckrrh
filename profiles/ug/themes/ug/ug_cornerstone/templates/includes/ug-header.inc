@@ -1,6 +1,6 @@
 <div id="ug-header"><div class="container"> 
   <!-- Static navbar -->
-  <nav class="navbar navbar-default navbar-static-top" role="navigation" aria-label="University of Guelph main">
+  <nav class="navbar navbar-default navbar-static-top" aria-label="University of Guelph main">
     <div class="container-fluid">
       <div class="navbar-header">
         <a class="navbar-brand" href="http://www.uoguelph.ca/"><img alt="University of Guelph" src="//www.uoguelph.ca/img/universityofguelph.png"></a>
