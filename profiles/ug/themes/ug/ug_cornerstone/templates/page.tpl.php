@@ -119,7 +119,7 @@
   </div>
 </header>
 
-<section id="page-header" aria-label="Page header">
+<section role="complementary" id="page-header" aria-label="Page header">
   <div class="container">
     <?php print render($page['header']); ?>
   </div>
