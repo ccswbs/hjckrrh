@@ -64,7 +64,7 @@ BR - Banner
         }
 
         .slidesjs-navigation-top button.slidesjs-psply:hover {                                                      
-            background: #404040;/* #222222;*/                                                                                    
+            background: #222222;                                                                                   
         }                                                        
         .slidesjs-navigation-top button.slidesjs-psply:focus {
             background: #222222;
@@ -83,7 +83,7 @@ BR - Banner
 
         .slidesjs-navigation-bottom button.slidesjs-previous:hover,
         .slidesjs-navigation-bottom button.slidesjs-next:hover {                                                    
-            background: #404040;/* #222222;*/                                                                                    
+            background: #222222;                                                                                    
         }                                                          
 
         .slidesjs-navigation-bottom button.slidesjs-previous:focus,
