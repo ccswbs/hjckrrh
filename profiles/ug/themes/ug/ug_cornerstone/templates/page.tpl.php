@@ -131,12 +131,8 @@
   <?php if (!empty($breadcrumb)): ?>
     <div class="row search-and-breadcrumb">
       <nav aria-label="breadcrumb">
-        <div class="col-sm-9">
+        <div class="col-sm-12">
           <?php print $breadcrumb; ?>
-        </div>
-        <div class="col-sm-3">
-          <?php $block = module_invoke('search', 'block_view', 'form');
-          print render($block['content']); ?>
         </div>
     </nav> 
    </div>
