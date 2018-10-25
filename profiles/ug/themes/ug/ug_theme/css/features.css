@@ -64,10 +64,10 @@ BR - Banner
         }
 
         .slidesjs-navigation-top button.slidesjs-psply:hover {                                                      
-            background: #222222;                                                                                   
+            background: #404040;                                                                                   
         }                                                        
         .slidesjs-navigation-top button.slidesjs-psply:focus {
-            background: #222222;
+            background: #404040;
             outline: 1px #FFFFFF dotted; 
         }
 
@@ -83,12 +83,12 @@ BR - Banner
 
         .slidesjs-navigation-bottom button.slidesjs-previous:hover,
         .slidesjs-navigation-bottom button.slidesjs-next:hover {                                                    
-            background: #222222;                                                                                    
+            background: #404040;                                                                                    
         }                                                          
 
         .slidesjs-navigation-bottom button.slidesjs-previous:focus,
         .slidesjs-navigation-bottom button.slidesjs-next:focus {
-            background: #222222;
+            background: #404040;
 	    outline: 1px #FFFFFF dotted;	
         }
 
