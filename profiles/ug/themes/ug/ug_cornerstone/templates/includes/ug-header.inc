@@ -3,7 +3,7 @@
   <nav class="navbar navbar-default navbar-static-top" aria-label="University of Guelph main">
     <div class="container-fluid">
       <div class="navbar-header">
-        <a class="navbar-brand" href="http://www.uoguelph.ca/"><img alt="University of Guelph" src="//www.uoguelph.ca/img/universityofguelph.png"></a>
+        <a class="navbar-brand" href="http://www.uoguelph.ca/"><img alt="University of Guelph homepage." src="//www.uoguelph.ca/img/universityofguelph.png"></a>
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#ug-navbar" aria-expanded="false" aria-controls="navbar"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
       </div>
       <div id="ug-navbar" class="navbar-collapse collapse" tabindex="-1">
