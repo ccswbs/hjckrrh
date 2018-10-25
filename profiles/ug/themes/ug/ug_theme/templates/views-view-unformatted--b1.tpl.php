@@ -20,7 +20,7 @@
     <!-- Slide Previous and Next Buttons -->
     <?php if ($slide_count > 1): ?>
       <div class="col-sm-1 col-xs-3">
-        <button class="btn btn-block slidesjs-previous" role="button">
+        <button class="btn btn-block slidesjs-previous">
           <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
           <span class="sr-only"><?php print t('Previous item'); ?></span>
         </button>
@@ -32,7 +32,7 @@
         </div>
       </div>
       <div class="col-sm-1 col-xs-3">
-        <button class="btn btn-block slidesjs-next" role="button">
+        <button class="btn btn-block slidesjs-next">
           <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
           <span class="sr-only"><?php print t('Next item'); ?></span>
         </button>
