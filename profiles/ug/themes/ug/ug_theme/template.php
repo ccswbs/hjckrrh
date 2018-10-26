@@ -1255,3 +1255,15 @@ function ug_theme_status_messages($variables) {
   }                                                                                                                 
   return $output;                                                                                                   
 }                                               
+
+/**
+ * Override: field_collection_bootstrap_tab_title()
+ *
+ * Include aria-expanded on page load
+ */
+function ug_theme_field_collection_bootstrap_tab_title($variables) {
+  $tab_id = $variables['tab_id'];
+  $title = $variables['title'];
+  $active = $variables['active'];
+   return '<li role="presentation"' . (($active) ? ' class="active"' : '') . '><a href="#' . $tab_id . '" aria-controls="' . $tab_id . '" role="tab" data-toggle="tab" aria-expanded=' . (($active) ? '"true"' : '"false"')  . '>' . $title . '</a></li>';
+}
