@@ -129,7 +129,7 @@ BR - Banner
         .row.slidesjs-navigation-bottom a.slidesjs-slide-title {
             font-weight: 500;
             font-size: 1.214em; /* 17px */
-            text-decoration: none;
+            text-decoration: underline;
         }
 
         .row.slidesjs-navigation-bottom a.slidesjs-slide-title:focus,
