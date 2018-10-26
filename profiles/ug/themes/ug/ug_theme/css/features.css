@@ -135,6 +135,7 @@ BR - Banner
         .row.slidesjs-navigation-bottom a.slidesjs-slide-title:focus,
         .row.slidesjs-navigation-bottom a.slidesjs-slide-title:hover{
             text-decoration: underline;
+	    color: #64A0D3;
         }
 
         .row.slidesjs-navigation-bottom .slidesjs-slide-link {
