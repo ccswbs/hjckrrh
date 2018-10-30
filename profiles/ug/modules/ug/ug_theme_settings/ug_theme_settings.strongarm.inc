@@ -13,26 +13,6 @@ function ug_theme_settings_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'fontawesome_external';
-  $strongarm->value = array(
-    'use_cdn' => 0,
-    'external_location' => 'https://use.fontawesome.com/releases/v5.4.1/js/all.js',
-  );
-  $export['fontawesome_external'] = $strongarm;
-
-  $strongarm = new stdClass();
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
-  $strongarm->name = 'fontawesome_shim';
-  $strongarm->value = array(
-    'use_shim' => 1,
-    'external_location' => '',
-  );
-  $export['fontawesome_shim'] = $strongarm;
-
-  $strongarm = new stdClass();
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
   $strongarm->name = 'jquery_update_compression_type';
   $strongarm->value = 'min';
   $export['jquery_update_compression_type'] = $strongarm;
