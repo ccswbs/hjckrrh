@@ -124,6 +124,19 @@ function ug_theme_preprocess_views_view_fields(&$vars) {
   }
 }
 
+/**
+ * V2 - Accessible Video
+ */
+function ug_theme_preprocess_views_view_fields__v2(&$vars) {
+
+  $vars['nid']   = $vars['fields']['nid']->content;
+  $vars['title'] = $vars['fields']['title']->content;
+  $vars['video'] = $vars['fields']['field_video_id']->content;
+  $vars['transcript'] = $vars['fields']['field_transcript_file']->content;
+  $vars['description'] = $vars['fields']['field_description_file']->content;
+
+}
+
 
 /**
  * E1 - Listing page for multiple events.
@@ -1053,7 +1066,6 @@ function ug_theme_preprocess_views_view__pp7(&$vars) {
 
   $vars['more'] = $view->display_handler->render_more_link();
 }
-
 
 function ug_theme_form_required_marker($variables) {
   // This is also used in the installer, pre-database setup.
