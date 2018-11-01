@@ -41,12 +41,12 @@
     googleApiReady = true;
   }
 </script>
-<script src="http://apis.google.com/js/client.js?onload=initGoogleClientApi"></script>
-
-<h2>Test two</h2>
+<script src="https://apis.google.com/js/client.js?onload=initGoogleClientApi"></script>
 
 <div class="row">
+	<?php if (!empty($transcript)): ?>
 	<div class="col-md-8">
+	<?php endif; ?>
 		<video data-able-player playsinline <?php if (!empty($transcript)) echo "data-transcript-div='transcript-container{$nid}'" ?> data-youtube-id="<?php print $video ?>" id="video<?php print $nid ?>" preload="auto">
 		<?php if (!empty($transcript)): ?>
 		        <track kind="captions" src="<?php print $transcript ?>" srclang="en" />
@@ -55,8 +55,8 @@
 			<track kind="descriptions" src="<?php print $description ?>" srclang="en" />
 		<?php endif; ?>
 		</video>
-	</div>
 	<?php if (!empty($transcript)): ?>
+	</div>
 	<div class="col-md-4">
         	<div id="transcript-container<?php print $nid ?>"></div>
 	</div>
