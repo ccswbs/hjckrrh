@@ -23,9 +23,16 @@ function ug_fontawesome_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
+  $strongarm->name = 'fontawesome_method';
+  $strongarm->value = 'webfonts';
+  $export['fontawesome_method'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
   $strongarm->name = 'fontawesome_shim';
   $strongarm->value = array(
-    'use_shim' => 1,
+    'use_shim' => 0,
     'external_location' => '',
   );
   $export['fontawesome_shim'] = $strongarm;
