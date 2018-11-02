@@ -530,18 +530,18 @@ function ug_video_views_default_views() {
   $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['title']['element_default_classes'] = FALSE;
   /* Field: Content: Body */
-  $handler->display->display_options['fields']['body']['id'] = 'body';
-  $handler->display->display_options['fields']['body']['table'] = 'field_data_body';
-  $handler->display->display_options['fields']['body']['field'] = 'body';
-  $handler->display->display_options['fields']['body']['label'] = '';
-  $handler->display->display_options['fields']['body']['exclude'] = TRUE;
-  $handler->display->display_options['fields']['body']['element_type'] = 'div';
-  $handler->display->display_options['fields']['body']['element_class'] = 'media-summary';
-  $handler->display->display_options['fields']['body']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['body']['element_default_classes'] = FALSE;
-  $handler->display->display_options['fields']['body']['hide_alter_empty'] = FALSE;
-  $handler->display->display_options['fields']['body']['type'] = 'text_summary_or_trimmed';
-  $handler->display->display_options['fields']['body']['settings'] = array(
+  $handler->display->display_options['fields']['field_video_body']['id'] = 'body';
+  $handler->display->display_options['fields']['field_video_body']['table'] = 'field_data_body';
+  $handler->display->display_options['fields']['field_video_body']['field'] = 'body';
+  $handler->display->display_options['fields']['field_video_body']['label'] = '';
+  $handler->display->display_options['fields']['field_video_body']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_video_body']['element_type'] = 'div';
+  $handler->display->display_options['fields']['field_video_body']['element_class'] = 'media-summary';
+  $handler->display->display_options['fields']['field_video_body']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_video_body']['element_default_classes'] = FALSE;
+  $handler->display->display_options['fields']['field_video_body']['hide_alter_empty'] = FALSE;
+  $handler->display->display_options['fields']['field_video_body']['type'] = 'text_summary_or_trimmed';
+  $handler->display->display_options['fields']['field_video_body']['settings'] = array(
     'trim_length' => '150',
   );
   /* Field: Global: Custom text */

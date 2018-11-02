@@ -10,8 +10,8 @@
 function ug_video_field_default_field_instances() {
   $field_instances = array();
 
-  // Exported field_instance: 'node-accessible_video-body'.
-  $field_instances['node-accessible_video-body'] = array(
+  // Exported field_instance: 'node-accessible_video-field_video_body'.
+  $field_instances['node-accessible_video-field_video_body'] = array(
     'bundle' => 'accessible_video',
     'default_value' => NULL,
     'deleted' => 0,
@@ -35,7 +35,7 @@ function ug_video_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'body',
+    'field_name' => 'field_video_body',
     'label' => 'Body',
     'required' => FALSE,
     'settings' => array(
