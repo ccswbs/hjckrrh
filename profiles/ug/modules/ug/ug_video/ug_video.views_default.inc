@@ -531,7 +531,7 @@ function ug_video_views_default_views() {
   $handler->display->display_options['fields']['title']['element_default_classes'] = FALSE;
   /* Field: Content: Body */
   $handler->display->display_options['fields']['field_video_body']['id'] = 'body';
-  $handler->display->display_options['fields']['field_video_body']['table'] = 'field_data_body';
+  $handler->display->display_options['fields']['field_video_body']['table'] = 'field_data_field_video_body';
   $handler->display->display_options['fields']['field_video_body']['field'] = 'body';
   $handler->display->display_options['fields']['field_video_body']['label'] = '';
   $handler->display->display_options['fields']['field_video_body']['exclude'] = TRUE;
@@ -552,7 +552,7 @@ function ug_video_views_default_views() {
   $handler->display->display_options['fields']['nothing']['alter']['text'] = '<div class="media-header">
     <h3 class="media-heading ug-media-heading">[title]</h3>
 </div>
-[body]';
+[field_video_body]';
   $handler->display->display_options['fields']['nothing']['element_type'] = 'div';
   $handler->display->display_options['fields']['nothing']['element_class'] = 'col-md-6 xs-gutter';
   $handler->display->display_options['fields']['nothing']['element_label_colon'] = FALSE;
@@ -640,7 +640,7 @@ function ug_video_views_default_views() {
   $handler->display->display_options['fields']['title']['element_default_classes'] = FALSE;
   /* Field: Content: Body */
   $handler->display->display_options['fields']['field_video_body']['id'] = 'body';
-  $handler->display->display_options['fields']['field_video_body']['table'] = 'field_data_body';
+  $handler->display->display_options['fields']['field_video_body']['table'] = 'field_data_field_video_body';
   $handler->display->display_options['fields']['field_video_body']['field'] = 'body';
   $handler->display->display_options['fields']['field_video_body']['label'] = '';
   $handler->display->display_options['fields']['field_video_body']['exclude'] = TRUE;
@@ -661,7 +661,7 @@ function ug_video_views_default_views() {
   $handler->display->display_options['fields']['nothing']['alter']['text'] = '<div class="media-header">
     <h2 class="media-heading">[title]</h2>
 </div>
-[body]';
+[field_video_body]';
   $handler->display->display_options['fields']['nothing']['element_type'] = 'div';
   $handler->display->display_options['fields']['nothing']['element_class'] = 'col-md-8';
   $handler->display->display_options['fields']['nothing']['element_label_colon'] = FALSE;
