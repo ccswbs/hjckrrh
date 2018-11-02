@@ -69,7 +69,7 @@ function ug_video_default_page_manager_handlers() {
   $pane->pid = 'new-81234f15-2c41-49c5-9433-ae2b09cbabbe';
   $pane->panel = 'middle';
   $pane->type = 'token';
-  $pane->subtype = 'node:body';
+  $pane->subtype = 'node:field_video_body';
   $pane->shown = TRUE;
   $pane->access = array();
   $pane->configuration = array(
