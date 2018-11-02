@@ -26,23 +26,6 @@
  */
 ?>
 
-<!-- Dependencies -->
-<script src="https://ableplayer.github.io/ableplayer/thirdparty/modernizr.custom.js"></script>
-<script src="https://ableplayer.github.io/ableplayer/thirdparty/js.cookie.js"></script>
-<!-- CSS -->
-<link href="https://ableplayer.github.io/ableplayer/build/ableplayer.min.css" rel="stylesheet" type="text/css" />
-<!-- JavaScript -->
-<script src="https://ableplayer.github.io/ableplayer/build/ableplayer.js"></script>
-<!-- YouTube support -->
-<script>
-  var youTubeDataAPIKey = "AIzaSyChAWjEK4rPjakw7UvLBMnxZ5OsGzIcRQg";
-  var googleApiReady = false;
-  function initGoogleClientApi() {
-    googleApiReady = true;
-  }
-</script>
-<script src="https://apis.google.com/js/client.js?onload=initGoogleClientApi"></script>
-
 <div class="row">
 	<?php if (!empty($transcript)): ?>
 	<div class="col-md-8">
