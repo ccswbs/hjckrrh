@@ -67,8 +67,35 @@ function ug_theme_preprocess_image_style(&$vars) {
 function ug_theme_icon($variables) {
   $icon = $variables['icon'];
   $bundle = $variables['bundle'];
-  $attributes = array('class' => array($bundle, $bundle.'-'.$icon));
+  $prefix = $bundle;
+
+  // Ensure Font Awesome prefixes work if .fab, .fas, etc.
+  if(strpos($prefix, 'fa') === 0) {
+    $prefix = 'fa';
+  }
+
+  $attributes = array('class' => array($bundle, $prefix.'-'.$icon));
   return '<span' . drupal_attributes($attributes) . '></span>';
+}
+
+/**
+ * Processes the icon bundle
+ */
+
+function process_icon_bundle($network_key){
+
+  // Default is Font Awesome brand .fab
+  // Add any non-brand icons (e.g. rss) to $fa_icons array
+  $fa_icons = array('rss');
+  $bundle = 'fab';
+
+  foreach ($fa_icons as $key => $value) {
+    if($network_key == $value){
+      $bundle = 'fa';
+    }
+  }
+
+  return $bundle;
 }
 
 
@@ -344,7 +371,6 @@ function ug_theme_preprocess_views_view_fields__b1(&$vars) {
   $vars['alt']      = $vars['fields']['field_banner_alttext']->content;
 }
 
-
 /**
  * S1 - Share this page
  */
@@ -364,7 +390,7 @@ function ug_theme_preprocess_views_view_fields__s3(&$vars) {
   $vars['network_key']  = $vars['fields']['field_social_network']->content;
   $vars['network_name'] = $vars['fields']['field_social_network_1']->content;
   $vars['link']         = $vars['fields']['field_social_link']->content;
-  $vars['icon']         = theme('icon', array('bundle' => 'fa', 'icon' => $vars['network_key']));
+  $vars['icon'] = theme('icon', array('bundle' => process_icon_bundle($vars['network_key']), 'icon' => $vars['network_key']));
 }
 
 
@@ -377,8 +403,8 @@ function ug_theme_preprocess_views_view_fields__s4(&$vars) {
   $vars['title'] = l($title, $link, array('html' => TRUE));
   $vars['network_key'] = $vars['fields']['field_social_network']->content;
   $vars['network_name'] = $vars['fields']['field_social_network_1']->content;
-  $vars['link'] = $vars['fields']['field_social_link']->content;
-  $vars['icon'] = theme('icon', array('bundle' => 'fa', 'icon' => $vars['network_key']));
+  $vars['link'] = $vars['fields']['field_social_link']->content;  
+  $vars['icon'] = theme('icon', array('bundle' => process_icon_bundle($vars['network_key']), 'icon' => $vars['network_key']));
 }
 
 /**
@@ -403,9 +429,9 @@ function ug_theme_preprocess_views_view_fields__s5b_attachment(&$vars) {
  */
 function ug_theme_preprocess_views_view_fields__s6(&$vars) {
   $vars['title']    = $vars['fields']['title']->content;
-  $vars['network']  = $vars['fields']['field_social_network']->content;
+  $vars['network_key']  = $vars['fields']['field_social_network']->content;
   $vars['link']     = $vars['fields']['field_social_link']->content;
-  $vars['icon']     = theme('icon', array('bundle' => 'fa', 'icon' => $vars['network']));
+  $vars['icon']     = theme('icon', array('bundle' => process_icon_bundle($vars['network_key']), 'icon' => $vars['network_key']));
 }
 
 
