@@ -442,3 +442,33 @@ figure.face-figure a:focus figcaption.face-caption,
 .text-white {
     color: #ffffff;
 }
+
+/*************************
+V - Accessible Video
+*************************/
+
+.able {
+    margin: 0 !important;
+    box-shadow: 0 0 8px !important;
+}
+
+.able-wrapper {
+    max-height: 66vh !important;
+}
+
+.able-window-toolbar {
+    padding: 2px 10px 2px 10px !important;
+}
+
+.able-status-bar {
+    padding: 0 0.5em !important;
+}
+
+@media screen and (max-width: 992px) {
+    .able-transcript-area {
+        height: 200px !important;
+    }
+    .able-transcript {
+        height: 150px !important;
+    }
+}
