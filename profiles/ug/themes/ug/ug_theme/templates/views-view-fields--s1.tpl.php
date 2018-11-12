@@ -32,7 +32,7 @@
 
 <!-- Facebook -->
 <li>
-  <a class="h1" data-toggle="tooltip" data-placement="bottom"
+  <a class="h1" data-toggle="tooltip" data-placement="bottom" data-container="main"
     href="https://www.facebook.com/sharer/sharer.php?u=<?php print $link; ?>"
     title="<?php print t('Share on Facebook'); ?>"
     ><span class="fa fa-facebook-square"></span>
@@ -44,7 +44,7 @@
 
 <!-- Twitter -->
 <li>
-  <a class="h1" data-toggle="tooltip" data-placement="bottom"
+  <a class="h1" data-toggle="tooltip" data-placement="bottom" data-container="main"
     href="http://twitter.com/home?status=<?php print $link; ?>"
     title="<?php print t('Share on Twitter'); ?>"
     ><span class="fa fa-twitter-square"></span>
@@ -56,7 +56,7 @@
 
 <!-- LinkedIn -->
 <li>
-  <a class="h1" data-toggle="tooltip" data-placement="bottom"
+  <a class="h1" data-toggle="tooltip" data-placement="bottom" data-container="main"
     href="http://www.linkedin.com/shareArticle?mini=true&amp;url=<?php print $link; ?>&amp;title=&amp;summary="
     title="<?php print t('Share on LinkedIn'); ?>"
     ><span class="fa fa-linkedin-square"></span>
@@ -68,7 +68,7 @@
 
 <!-- Print -->
 <li>
-  <a class="h1" data-toggle="tooltip" data-placement="bottom" href="<?php echo url('print/'.$nid); ?>" title="<?php echo t('Print this page'); ?>">
+  <a class="h1" data-toggle="tooltip" data-placement="bottom" data-container="main" href="<?php echo url('print/'.$nid); ?>" title="<?php echo t('Print this page'); ?>">
     <span class="fa fa-print"></span>
     <span class="element-invisible">
       <?php echo t('Print this page'); ?>
