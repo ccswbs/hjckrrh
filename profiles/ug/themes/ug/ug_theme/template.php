@@ -567,10 +567,19 @@ function ug_theme_preprocess_views_view_fields__sr8(&$vars) {
 }
 
 /**
- * Service detail headers
+ * Output Service detail headers as a heading level 3.
  */
 function ug_theme_field__field_service_public_heading($variables) {
-  return '<h3>'.drupal_render($variables['items'][0]).'</h3>';
+  $output = '';
+  $tabs = module_exists('field_collection_bootstrap');
+  // Render the items.
+  foreach ($variables['items'] as $delta => $item) {
+    if ($tabs)
+      $output .= drupal_render($item);
+    else 
+      $output .= '<h3>' . drupal_render($item) . '</h3>';
+  }
+  return $output;
 }
 
 /**
@@ -579,7 +588,6 @@ function ug_theme_field__field_service_public_heading($variables) {
 function ug_theme_field__field_service_private_heading($variables) {
   return '<h3>'.drupal_render($variables['items'][0]).'</h3>';
 }
-
 
 /**
  * Returns HTML for a date element formatted as a single date.
