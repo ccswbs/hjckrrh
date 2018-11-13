@@ -178,16 +178,16 @@
 
     <?php if (!empty($page['sidebar_first'])): ?>
       <?php if (!empty($page['sidebar_second'])): ?>
-        <aside class="col-sm-3 col-sm-pull-6" role="complementary">
+        <aside class="col-sm-3 col-sm-pull-6" aria-label="Primary">
       <?php else: ?>
-        <aside class="col-sm-3 col-sm-pull-9" role="complementary">
+        <aside class="col-sm-3 col-sm-pull-9" aria-label="Primary">
       <?php endif; ?>
         <?php print render($page['sidebar_first']); ?>
       </aside>  <!-- /#sidebar-first -->
     <?php endif; ?>
 
     <?php if (!empty($page['sidebar_second'])): ?>
-      <aside class="col-sm-3" role="complementary">
+      <aside class="col-sm-3" aria-label="Secondary">
         <?php print render($page['sidebar_second']); ?>
       </aside>  <!-- /#sidebar-second -->
     <?php endif; ?>
