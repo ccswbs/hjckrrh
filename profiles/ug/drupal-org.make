@@ -82,7 +82,11 @@ projects[flag][version] = "3.9"
 
 projects[flood_control][version] = "1.0"
 
-projects[fontawesome][version] = "2.6"
+projects[fontawesome][version] = "3.7"
+libraries[fontawesome][download][type] = "git"
+libraries[fontawesome][download][url] = "https://github.com/FortAwesome/Font-Awesome.git"
+libraries[fontawesome][directory_name] = "fontawesome"
+libraries[fontawesome][destination] = "libraries"
 
 projects[google_analytics][version] = "2.3"
 

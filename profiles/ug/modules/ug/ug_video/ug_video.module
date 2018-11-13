@@ -1,0 +1,21 @@
+<?php
+/**
+ * @file
+ * Code for the UG Video feature.
+ */
+
+include_once 'ug_video.features.inc';
+
+drupal_add_js('https://ableplayer.github.io/ableplayer/thirdparty/modernizr.custom.js', 'external');
+drupal_add_js('https://ableplayer.github.io/ableplayer/thirdparty/js.cookie.js', 'external');
+drupal_add_js('https://ableplayer.github.io/ableplayer/build/ableplayer.js', 'external');
+drupal_add_js('
+	var youTubeDataAPIKey = "AIzaSyChAWjEK4rPjakw7UvLBMnxZ5OsGzIcRQg";
+	var googleApiReady = false;
+	function initGoogleClientApi() {
+		googleApiReady = true;
+	}
+', 'inline');
+drupal_add_js('https://apis.google.com/js/client.js?onload=initGoogleClientApi', 'external');
+
+drupal_add_css('https://ableplayer.github.io/ableplayer/build/ableplayer.min.css', 'external');

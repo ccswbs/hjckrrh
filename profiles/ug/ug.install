@@ -57,3 +57,10 @@ function ug_update_7700(&$sandbox) {
   }
 }
 
+
+/**
+ * Enable UG Font Awesome 
+ */
+function ug_update_7701(&$sandbox) {
+  module_enable(array('ug_fontawesome'));
+}

@@ -1,0 +1,13 @@
+name = UG Font Awesome
+description = UG configuration for Font Awesome
+core = 7.x
+package = UG
+dependencies[] = ctools
+dependencies[] = fontawesome
+dependencies[] = strongarm
+features[ctools][] = strongarm:strongarm:1
+features[features_api][] = api:2
+features[variable][] = fontawesome_external
+features[variable][] = fontawesome_method
+features[variable][] = fontawesome_shim
+project path = /tmp

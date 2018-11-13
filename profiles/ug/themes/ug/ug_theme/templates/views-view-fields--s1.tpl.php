@@ -35,7 +35,7 @@
   <a class="h1" data-toggle="tooltip" data-placement="bottom" data-container="main"
     href="https://www.facebook.com/sharer/sharer.php?u=<?php print $link; ?>"
     title="<?php print t('Share on Facebook'); ?>"
-    ><span class="fa fa-facebook-square"></span>
+    ><span class="fab fa-facebook-square"></span>
     <span class="element-invisible">
       <?php print t('Share on Facebook'); ?>
     </span>
@@ -47,7 +47,7 @@
   <a class="h1" data-toggle="tooltip" data-placement="bottom" data-container="main"
     href="http://twitter.com/home?status=<?php print $link; ?>"
     title="<?php print t('Share on Twitter'); ?>"
-    ><span class="fa fa-twitter-square"></span>
+    ><span class="fab fa-twitter-square"></span>
     <span class="element-invisible">
       <?php print t('Share on Twitter'); ?>
     </span>
@@ -59,7 +59,7 @@
   <a class="h1" data-toggle="tooltip" data-placement="bottom" data-container="main"
     href="http://www.linkedin.com/shareArticle?mini=true&amp;url=<?php print $link; ?>&amp;title=&amp;summary="
     title="<?php print t('Share on LinkedIn'); ?>"
-    ><span class="fa fa-linkedin-square"></span>
+    ><span class="fab fa-linkedin"></span>
     <span class="element-invisible">
       <?php print t('Share on LinkedIn'); ?>
     </span>
@@ -69,7 +69,7 @@
 <!-- Print -->
 <li>
   <a class="h1" data-toggle="tooltip" data-placement="bottom" data-container="main" href="<?php echo url('print/'.$nid); ?>" title="<?php echo t('Print this page'); ?>">
-    <span class="fa fa-print"></span>
+    <span class="fas fa-print"></span>
     <span class="element-invisible">
       <?php echo t('Print this page'); ?>
     </span>
