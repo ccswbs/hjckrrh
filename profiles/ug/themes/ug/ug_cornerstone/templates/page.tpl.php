@@ -178,7 +178,7 @@
 
     <?php if (!empty($page['sidebar_first'])): ?>
       <?php if (!empty($page['sidebar_second'])): ?>
-        <aside class="col-sm-3 col-sm-pull-6" aria-label="Secondary">
+        <aside class="col-sm-3 col-sm-pull-6" aria-label="Primary">
       <?php else: ?>
         <aside class="col-sm-3 col-sm-pull-9" aria-label="Primary">
       <?php endif; ?>
