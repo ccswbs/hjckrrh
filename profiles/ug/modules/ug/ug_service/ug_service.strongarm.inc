@@ -13,6 +13,27 @@ function ug_service_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
+  $strongarm->name = 'diff_enable_revisions_page_node_service';
+  $strongarm->value = 1;
+  $export['diff_enable_revisions_page_node_service'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'diff_show_preview_changes_node_service';
+  $strongarm->value = 1;
+  $export['diff_show_preview_changes_node_service'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'diff_view_mode_preview_node_service';
+  $strongarm->value = 'full';
+  $export['diff_view_mode_preview_node_service'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
   $strongarm->name = 'field_bundle_settings_node__service';
   $strongarm->value = array(
     'view_modes' => array(
@@ -34,13 +55,13 @@ function ug_service_strongarm() {
       'search_result' => array(
         'custom_settings' => FALSE,
       ),
+      'print' => array(
+        'custom_settings' => FALSE,
+      ),
       'token' => array(
         'custom_settings' => FALSE,
       ),
       'revision' => array(
-        'custom_settings' => FALSE,
-      ),
-      'print' => array(
         'custom_settings' => FALSE,
       ),
     ),
@@ -105,7 +126,7 @@ function ug_service_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'pathauto_node_service_pattern';
-  $strongarm->value = 'services/[node:title]';
+  $strongarm->value = '';
   $export['pathauto_node_service_pattern'] = $strongarm;
 
   $strongarm = new stdClass();
