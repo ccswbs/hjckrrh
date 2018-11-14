@@ -10,6 +10,16 @@
 function ug_service_user_default_permissions() {
   $permissions = array();
 
+  // Exported permission: 'create field_service_price'.
+  $permissions['create field_service_price'] = array(
+    'name' => 'create field_service_price',
+    'roles' => array(
+      'author' => 'author',
+      'site manager' => 'site manager',
+    ),
+    'module' => 'field_permissions',
+  );
+
   // Exported permission: 'create field_service_private'.
   $permissions['create field_service_private'] = array(
     'name' => 'create field_service_private',
@@ -98,6 +108,16 @@ function ug_service_user_default_permissions() {
     'module' => 'node',
   );
 
+  // Exported permission: 'edit field_service_price'.
+  $permissions['edit field_service_price'] = array(
+    'name' => 'edit field_service_price',
+    'roles' => array(
+      'editor' => 'editor',
+      'site manager' => 'site manager',
+    ),
+    'module' => 'field_permissions',
+  );
+
   // Exported permission: 'edit field_service_private'.
   $permissions['edit field_service_private'] = array(
     'name' => 'edit field_service_private',
@@ -105,6 +125,17 @@ function ug_service_user_default_permissions() {
       'editor' => 'editor',
       'moderator' => 'moderator',
       'publisher' => 'publisher',
+    ),
+    'module' => 'field_permissions',
+  );
+
+  // Exported permission: 'edit own field_service_price'.
+  $permissions['edit own field_service_price'] = array(
+    'name' => 'edit own field_service_price',
+    'roles' => array(
+      'author' => 'author',
+      'editor' => 'editor',
+      'site manager' => 'site manager',
     ),
     'module' => 'field_permissions',
   );
@@ -172,6 +203,15 @@ function ug_service_user_default_permissions() {
     'module' => 'taxonomy',
   );
 
+  // Exported permission: 'view field_service_price'.
+  $permissions['view field_service_price'] = array(
+    'name' => 'view field_service_price',
+    'roles' => array(
+      'authenticated user' => 'authenticated user',
+    ),
+    'module' => 'field_permissions',
+  );
+
   // Exported permission: 'view field_service_private'.
   $permissions['view field_service_private'] = array(
     'name' => 'view field_service_private',
@@ -179,6 +219,17 @@ function ug_service_user_default_permissions() {
       'editor' => 'editor',
       'moderator' => 'moderator',
       'publisher' => 'publisher',
+    ),
+    'module' => 'field_permissions',
+  );
+
+  // Exported permission: 'view own field_service_price'.
+  $permissions['view own field_service_price'] = array(
+    'name' => 'view own field_service_price',
+    'roles' => array(
+      'author' => 'author',
+      'editor' => 'editor',
+      'site manager' => 'site manager',
     ),
     'module' => 'field_permissions',
   );

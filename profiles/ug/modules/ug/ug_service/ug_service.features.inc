@@ -31,7 +31,7 @@ function ug_service_node_info() {
     'service' => array(
       'name' => t('Service'),
       'base' => 'node_content',
-      'description' => '',
+      'description' => t('Use for services that your clients can register for or order.'),
       'has_title' => '1',
       'title_label' => t('Title'),
       'help' => '',

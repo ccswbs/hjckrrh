@@ -71,10 +71,10 @@ function ug_service_strongarm() {
           'weight' => '0',
         ),
         'redirect' => array(
-          'weight' => '9',
+          'weight' => '10',
         ),
         'path' => array(
-          'weight' => '10',
+          'weight' => '11',
         ),
       ),
       'display' => array(),

@@ -21,7 +21,7 @@ function ug_service_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Who can use this service?',
-    'weight' => '5',
+    'weight' => '6',
     'children' => array(
       0 => 'field_service_audience',
     ),
