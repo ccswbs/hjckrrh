@@ -443,7 +443,7 @@ function ug_service_layouts_default_page_manager_pages() {
     'parent' => array(
       'type' => 'normal',
       'title' => 'Services',
-      'name' => 'main-menu',
+      'name' => 'navigation',
       'weight' => '0',
     ),
   );
@@ -463,7 +463,7 @@ function ug_service_layouts_default_page_manager_pages() {
   $handler->conf = array(
     'title' => 'Panel',
     'no_blocks' => 0,
-    'pipeline' => 'standard',
+    'pipeline' => 'ipe',
     'body_classes_to_remove' => '',
     'body_classes_to_add' => '',
     'css_id' => '',
@@ -501,7 +501,7 @@ function ug_service_layouts_default_page_manager_pages() {
     ),
   );
   $display->cache = array();
-  $display->title = 'CCS Services';
+  $display->title = 'Services';
   $display->uuid = '02e5baf3-b1f9-4177-bca0-f01fcb5c1524';
   $display->storage_type = 'page_manager';
   $display->storage_id = 'page_services__panel_context_15805d9d-902d-4bea-abcd-a2a5f379f9bb';
