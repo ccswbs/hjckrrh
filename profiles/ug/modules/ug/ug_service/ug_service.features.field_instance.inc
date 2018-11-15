@@ -318,7 +318,7 @@ function ug_service_field_default_field_instances() {
     'bundle' => 'service',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => 'Enter a comma separated list of keywords.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -358,7 +358,7 @@ function ug_service_field_default_field_instances() {
     'bundle' => 'service',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => 'This field can only be viewed by authenticated users.',
     'display' => array(
       'default' => array(
         'label' => 'inline',
@@ -554,6 +554,7 @@ function ug_service_field_default_field_instances() {
   t('Call to action');
   t('Content');
   t('Description');
+  t('Enter a comma separated list of keywords.');
   t('Heading');
   t('Internal notes');
   t('Keywords');
@@ -563,6 +564,7 @@ function ug_service_field_default_field_instances() {
   t('Service category');
   t('Service details');
   t('Service icon');
+  t('This field can only be viewed by authenticated users.');
 
   return $field_instances;
 }
