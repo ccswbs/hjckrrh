@@ -770,3 +770,10 @@ ul.list-narrow li {
 .help-block {
  color: #504F58;
 }
+
+/* To fix tab gap on pages with detail-page class */
+
+.detail-page .nav-tabs > li {
+    margin-bottom: -1px !important;
+}
+

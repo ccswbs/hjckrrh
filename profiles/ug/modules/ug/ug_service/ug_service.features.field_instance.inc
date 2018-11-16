@@ -144,6 +144,51 @@ function ug_service_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-service-field_call_to_action'.
+  $field_instances['node-service-field_call_to_action'] = array(
+    'bundle' => 'service',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'An area for buttons or promos encouraging users to take action with respect to service requests, support, etc.',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 4,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_call_to_action',
+    'label' => 'Call to action',
+    'required' => 0,
+    'settings' => array(
+      'linkit' => array(
+        'button_text' => 'Search',
+        'enable' => 0,
+        'profile' => 'feature',
+      ),
+      'text_processing' => 1,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 5,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 2,
+    ),
+  );
+
   // Exported field_instance: 'node-service-field_service_audience'.
   $field_instances['node-service-field_service_audience'] = array(
     'bundle' => 'service',
@@ -153,9 +198,10 @@ function ug_service_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
+        'module' => 'taxonomy',
         'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 7,
+        'type' => 'taxonomy_term_reference_link',
+        'weight' => 1,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -189,9 +235,10 @@ function ug_service_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
+        'module' => 'taxonomy',
         'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 6,
+        'type' => 'taxonomy_term_reference_link',
+        'weight' => 0,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -228,7 +275,7 @@ function ug_service_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 0,
+        'weight' => 5,
       ),
       'teaser' => array(
         'label' => 'hidden',
@@ -262,7 +309,7 @@ function ug_service_field_default_field_instances() {
         'summary_rows' => 5,
       ),
       'type' => 'text_textarea_with_summary',
-      'weight' => 2,
+      'weight' => 3,
     ),
   );
 
@@ -277,8 +324,8 @@ function ug_service_field_default_field_instances() {
         'label' => 'above',
         'module' => 'taxonomy',
         'settings' => array(),
-        'type' => 'taxonomy_term_reference_plain',
-        'weight' => 5,
+        'type' => 'taxonomy_term_reference_link',
+        'weight' => 2,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -302,7 +349,7 @@ function ug_service_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'taxonomy_autocomplete',
-      'weight' => 7,
+      'weight' => 8,
     ),
   );
 
@@ -318,7 +365,7 @@ function ug_service_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 1,
+        'weight' => 6,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -347,7 +394,7 @@ function ug_service_field_default_field_instances() {
         'size' => 10,
       ),
       'type' => 'text_textfield',
-      'weight' => 3,
+      'weight' => 4,
     ),
   );
 
@@ -359,17 +406,10 @@ function ug_service_field_default_field_instances() {
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
-        'module' => 'field_collection',
-        'settings' => array(
-          'add' => '',
-          'delete' => '',
-          'description' => 1,
-          'edit' => '',
-          'view_mode' => 'full',
-        ),
-        'type' => 'field_collection_view',
-        'weight' => 4,
+        'label' => 'hidden',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 8,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -390,7 +430,7 @@ function ug_service_field_default_field_instances() {
       'module' => 'field_collection',
       'settings' => array(),
       'type' => 'field_collection_embed',
-      'weight' => 6,
+      'weight' => 7,
     ),
   );
 
@@ -405,14 +445,14 @@ function ug_service_field_default_field_instances() {
         'label' => 'above',
         'module' => 'field_collection',
         'settings' => array(
-          'add' => '',
-          'delete' => '',
-          'description' => 1,
-          'edit' => '',
+          'add' => 'Add',
+          'delete' => 'Delete',
+          'description' => TRUE,
+          'edit' => 'Edit',
           'view_mode' => 'full',
         ),
         'type' => 'field_collection_view',
-        'weight' => 2,
+        'weight' => 7,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -433,7 +473,7 @@ function ug_service_field_default_field_instances() {
       'module' => 'field_collection',
       'settings' => array(),
       'type' => 'field_collection_embed',
-      'weight' => 4,
+      'weight' => 5,
     ),
   );
 
@@ -448,6 +488,7 @@ function ug_service_field_default_field_instances() {
         'label' => 'above',
         'module' => 'entityreference',
         'settings' => array(
+          'bypass_access' => FALSE,
           'link' => 1,
         ),
         'type' => 'entityreference_label',
@@ -472,7 +513,7 @@ function ug_service_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 8,
+      'weight' => 9,
     ),
   );
 
@@ -509,6 +550,8 @@ function ug_service_field_default_field_instances() {
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('An area for buttons or promos encouraging users to take action with respect to service requests, support, etc.');
+  t('Call to action');
   t('Content');
   t('Description');
   t('Enter a comma separated list of keywords.');

@@ -1,7 +1,7 @@
 name = UG Service Layouts
 core = 7.x
 package = UG
-version = 7.x-7.52
+version = 7.x-7.60
 project = ug_service_layouts
 dependencies[] = ctools
 dependencies[] = page_manager
@@ -12,3 +12,4 @@ features[page_manager_pages][] = services
 features[page_manager_pages][] = services_audience
 features[page_manager_pages][] = services_az
 features[page_manager_pages][] = services_by_keyword
+project path = /var/tmp
