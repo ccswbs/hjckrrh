@@ -1,6 +1,6 @@
 #!/bin/sh
 set -xeuo pipefail
-TMP=/tmp
+TMP=/var/tmp
 CORE=7.x
 RELEASE=$(git describe --tags)
 NAME=ug
