@@ -1,6 +1,8 @@
 #!/bin/sh
 set -xeuo pipefail
-TMP=/var/tmp
+
+TMP=${TMP:-/tmp}
+DRUSH_TEMP=${DRUSH_TEMP:-$TMP}
 CORE=7.x
 RELEASE=$(git describe --tags)
 NAME=ug
@@ -9,6 +11,9 @@ PKG=$TMP/package-$NAME
 CWD=$(pwd)
 DRUSH=drush
 DRUSHMAKEFLAGS=--drupal-org-allowed-patch-url=/\\.patch$/
+
+# Set drush temp directory
+export DRUSH_TEMP
 
 # Clean and recreate package directory
 rm -rf $PKG
