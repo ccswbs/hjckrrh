@@ -228,5 +228,5 @@ projects[wysiwyg_filter][version] = "1.6-rc3"
 projects[wysiwyg_filter][patch][] = "https://www.drupal.org/files/issues/wysiwyg_filter-Bypass-rules-835202-16.D7.patch"
 
 ; Themes
-projects[bootstrap][version] = "3.8"
+projects[bootstrap][version] = "3.22"
 

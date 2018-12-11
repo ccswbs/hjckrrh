@@ -1,7 +1,8 @@
 // Media query variables.
-$tablet:  "screen and (min-width: 768px)";
-$normal:  "screen and (min-width: 992px)";
-$wide:    "screen and (min-width: 1200px)";
+$tablet:              "screen and (min-width: #{$screen-sm-min})";
+$normal:              "screen and (min-width: #{$screen-md-min})";
+$wide:                "screen and (min-width: #{$screen-lg-min})";
+$grid-breakpoint:     "screen and (min-width: #{$grid-float-breakpoint})";
 
 // Drop shadows.
 @mixin box-shadow($shadow) {
@@ -45,7 +46,7 @@ html {
 }
 body {
   // Fix horizontal scrolling on iOS devices.
-  // http://drupal.org/node/1870076
+  // https://www.drupal.org/node/1870076
   position: relative;
   &.admin-expanded.admin-vertical.admin-nw .navbar,
   &.admin-expanded.admin-vertical.admin-sw .navbar {
@@ -53,7 +54,7 @@ body {
   }
   // Add padding to body if various toolbar or navbars are fixed on top.
   &.navbar-is-fixed-top {
-    padding-top: 64px !important;
+    padding-top: 64px;
   }
   &.navbar-is-fixed-bottom {
     padding-bottom: 64px !important;
@@ -171,7 +172,7 @@ body {
   margin-right: -15px;
   padding-left: 15px;
   padding-right: 15px;
-  @media #{$tablet} {
+  @media #{$grid-breakpoint} {
     margin-right: 0;
     padding-left: 0;
   }
@@ -264,7 +265,6 @@ fieldset legend.panel-heading {
 }
 fieldset .panel-body {
   clear: both;
-  display: inherit;
 }
 fieldset .panel-heading a.panel-title {
   color: inherit;
@@ -845,4 +845,31 @@ body.navbar-tray-open.navbar-vertical.navbar-fixed {
 }
 #navbar-administration.navbar-oriented .navbar-tray-vertical {
   width: 24rem;
+}
+
+/**
+ * Icon styles.
+ */
+a {
+  &.icon-before .glyphicon,
+  & .glyphicon.icon-before {
+    margin-right: .25em;
+  }
+  &.icon-after .glyphicon,
+  & .glyphicon.icon-after {
+    margin-left: .25em;
+  }
+}
+
+.btn {
+  &.icon-before .glyphicon,
+  & .glyphicon.icon-before {
+    margin-left: -.25em;
+    margin-right: .25em;
+  }
+  &.icon-after .glyphicon,
+  & .glyphicon.icon-after {
+    margin-left: .25em;
+    margin-right: -.25em;
+  }
 }
