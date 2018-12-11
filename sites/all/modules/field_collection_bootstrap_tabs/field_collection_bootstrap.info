@@ -5,9 +5,9 @@ dependencies[] = field_collection
 package = Fields
 
 
-; Information added by drush on 2018-10-26
+; Information added by drush on 2018-11-30
 version = "7.x-1.x-dev"
 core = "7.x"
 project = "field_collection_bootstrap_tabs"
-datestamp = "1540564170"
+datestamp = "1543590365"
 
