@@ -76,6 +76,8 @@ projects[field_validation][version] = "2.6"
 
 projects[filebrowser][version] = "3.3"
 
+projects[filefield_paths][version] = "1.1"
+
 projects[filefield_sources][version] = "1.11"
 
 projects[flag][version] = "3.9"
