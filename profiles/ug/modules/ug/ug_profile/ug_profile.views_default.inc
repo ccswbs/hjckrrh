@@ -823,6 +823,20 @@ function ug_profile_views_default_views() {
   $handler->display->display_options['fields']['field_profile_unit']['element_type'] = '0';
   $handler->display->display_options['fields']['field_profile_unit']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_profile_unit']['type'] = 'taxonomy_term_reference_plain';
+  /* Field: Content: Body */
+  $handler->display->display_options['fields']['field_profile_summary']['id'] = 'field_profile_summary';
+  $handler->display->display_options['fields']['field_profile_summary']['table'] = 'field_data_field_profile_summary';
+  $handler->display->display_options['fields']['field_profile_summary']['field'] = 'field_profile_summary';
+  $handler->display->display_options['fields']['field_profile_summary']['label'] = '';
+  $handler->display->display_options['fields']['field_profile_summary']['element_label_colon'] = FALSE;
+  /* Field: Content: Website links */
+  $handler->display->display_options['fields']['field_profile_website']['id'] = 'field_profile_website';
+  $handler->display->display_options['fields']['field_profile_website']['table'] = 'field_data_field_profile_website';
+  $handler->display->display_options['fields']['field_profile_website']['field'] = 'field_profile_website';
+  $handler->display->display_options['fields']['field_profile_website']['label'] = 'Website';
+  $handler->display->display_options['fields']['field_profile_website']['hide_empty'] = TRUE;
+  $handler->display->display_options['fields']['field_profile_website']['click_sort_column'] = 'url';
+  $handler->display->display_options['fields']['field_profile_website']['delta_offset'] = '0';
   /* Sort criterion: Content: Last name (field_profile_lastname) */
   $handler->display->display_options['sorts']['field_profile_lastname_value']['id'] = 'field_profile_lastname_value';
   $handler->display->display_options['sorts']['field_profile_lastname_value']['table'] = 'field_data_field_profile_lastname';
