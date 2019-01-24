@@ -86,6 +86,19 @@
 		        <?php print $office; ?>
 		      </p>
 		    <?php endif; ?>
+		    <?php if ($summary): ?>
+		      <p>
+		        <?php print $summary; ?>
+		      </p>
+		    <?php endif; ?>
+		    <?php if ($website): ?>
+		      <p>
+		        <?php print t("<strong>@label:</strong>", array('@label' => 'Website')); ?>
+		        <?php print $website; ?>
+		      </p>
+		    <?php endif; ?>
+
+
         <?php if($custom_fields): ?>
           <?php print $custom_fields; ?>
         <?php endif; ?>
