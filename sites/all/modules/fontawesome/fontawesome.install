@@ -1,0 +1,69 @@
+<?php
+
+/**
+ * @file
+ * Requirements page for Font Awesome.
+ */
+
+/**
+ * Implements hook_requirements().
+ */
+function fontawesome_requirements($phase) {
+  $requirements = array();
+
+  // Report the version of Font Awesome.
+  if ($phase == 'runtime') {
+    // Make sure Libraries is loaded before loading Font Awesome.
+    drupal_load('module', 'libraries');
+    $fontawesome = libraries_detect(FONTAWESOME_LIBRARY . '_svg');
+
+    $requirements['fontawesome'] = array(
+      'title' => $fontawesome['name'],
+    );
+
+    // Get translator.
+    $t = get_t();
+
+    // Don't really check for Font Awesome if we are using the CDN version.
+    $settings = variable_get('fontawesome_external', array(
+      'use_cdn' => TRUE,
+      'external_location' => '',
+    ));
+    if ($settings['use_cdn']) {
+      $requirements['fontawesome']['severity'] = REQUIREMENT_OK;
+      $requirements['fontawesome']['value'] = $t('Using CDN version: ') . $settings['external_location'];
+    }
+    else {
+      if ($fontawesome['installed']) {
+        $requirements['fontawesome']['severity'] = REQUIREMENT_OK;
+        $requirements['fontawesome']['value'] = $t('Local version: @version', array(
+          '@version' => $fontawesome['version'],
+        ));
+      }
+      else {
+        $requirements['fontawesome']['severity'] = REQUIREMENT_WARNING;
+        $requirements['fontawesome']['value'] = $fontawesome['error message'];
+      }
+    }
+    $requirements['fontawesome']['value'] .= ' (' . l($t('settings'), 'admin/config/content/fontawesome') . ')';
+  }
+
+  return $requirements;
+}
+
+/**
+ * Implements hook_install().
+ */
+function fontawesome_uninstall() {
+  // Delete set variables.
+  db_delete('variable')
+    ->condition('name', db_like('fontawesome_') . '%', 'LIKE')
+    ->execute();
+
+  // Icon API module : Delete fontawesome icon bundle & clear cache.
+  if (module_exists('icon') && ($cache = cache_get('icon_bundles')) && !empty($cache->data)) {
+    $fa_icon_bundle = isset($cache->data['fontawesome']) ? $cache->data['fontawesome'] : array();
+    $fa_icon_bundle['path'] = isset($fa_icon_bundle['path']) ? $fa_icon_bundle['path'] : 'fontawesome';
+    icon_bundle_delete($fa_icon_bundle);
+  }
+}

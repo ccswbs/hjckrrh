@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * @file
+ * Install, update, and uninstall hooks for the Data Layer module.
+ */
+
+/**
+ * Implements hook_uninstall().
+ */
+function datalayer_uninstall() {
+  // Remove all configurations.
+  global $conf;
+  foreach ($conf as $key => $value) {
+    if (0 === strpos($key, 'datalayer_')) {
+      variable_del($key);
+    }
+  }
+}

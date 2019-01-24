@@ -1,0 +1,67 @@
+Scanner Search and Replace
+--------------------------
+
+BEFORE YOU START:
+
+Backup your database! Scanner Search and Replace is a very powerful tool, and
+as such is very dangerous. You can easily destroy your entire site with it. Be
+sure to backup your database before using it. No, really.
+
+
+I. INSTALLATION:
+
+http://drupal.org/documentation/install/modules-themes/modules-7
+
+1. Place the entire scanner folder in your sites/all/modules directory.
+
+2. Go to [Administration -> Modules] and enable the scanner module.
+
+3. Go to [Administration -> People -> Permissions] and apply your
+preferred access settings to the scanner module. You can set which roles can
+administer the module -- e.g., determine which fields can be scanned and modify
+defaults -- and which roles can use the module. This is is handy if, say, you
+only want the site admin to administer the module, but you want content
+managers to be able to perform search and replace actions.
+
+4. Go to the Scanner administration panel and select which fields you want to
+include in search and replace actions. More information on that is available
+below in the Administration Options section.
+
+
+II. ADMINISTRATION OPTIONS:
+
+You can access the Scanner admin settings two ways:
+
+- Go to [Administration -> Configuration -> Search and Replace Scanner].
+
+- Go to [Administration -> Content -> Search and Replace Scanner] and
+select the "Settings" tab.
+
+A. Default Options:
+
+In this section, you can set the defaults for several search options that
+Scanner users will see when they use the search and replace form. Users will
+still be able to change the options on their own, but the defaults can make
+things easier for them if they're likely to only perform one kind of search
+most of the time.
+
+You can also select whether teasers for nodes should be rebuilt after a
+replacement has been made to the body or other fields for that node. Most
+admins will select this option, because it ensures that teasers are in synch
+with node content. But see section II.A above for more info on why leaving
+this option unselected might be helpful.
+
+If your site has categories set up in the Taxonomy module, you can restrict
+search and replace actions to nodes that contain terms in a given category
+(a.k.a "vocabulary"). Select the vocabularies that you want to allow
+restricting by. When users go to the search and replace form, they will have
+the option of selecting one or more terms from those vocabularies for limiting
+their searches.
+
+B. Fields that can be searched:
+
+The most important part of administering Scanner is making sure you select one
+or more options in the "Fields that can be searched" section. Fields are listed
+in [nodetype: fieldname] format. If you only want to allow people with access
+to search and replace on the Body field of the Basic Page content type,
+select [page: body].

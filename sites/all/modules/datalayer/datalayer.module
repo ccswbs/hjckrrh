@@ -1,0 +1,499 @@
+<?php
+
+/**
+ * @file
+ * Client-side data space.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function datalayer_menu() {
+  $items['admin/config/search/datalayer'] = array(
+    'title' => 'Data Layer',
+    'description' => 'Output page meta data for client-side use.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('datalayer_settings_form'),
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'datalayer.admin.inc',
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_libraries_info().
+ *
+ * Defines external libraries.
+ */
+function datalayer_libraries_info() {
+  $libraries = array();
+
+  $libraries['data-layer-helper'] = array(
+    'name' => 'Data Layer Helper',
+    'version' => '0.1.0',
+    'vendor url' => 'https://github.com/google/data-layer-helper',
+    'download url' => 'https://github.com/google/data-layer-helper/archive/master.zip',
+    'files' => array(
+      'js' => array(
+        'data-layer-helper.js' => array(
+          'type' => 'file',
+          'group' => JS_LIBRARY,
+          'every_page' => TRUE,
+        ),
+      ),
+    ),
+    'error message' => t('Data layer helper library missing.'),
+  );
+  return $libraries;
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ *
+ * Add data for output.
+ */
+function datalayer_preprocess_page(&$variables) {
+  global $user;
+
+  // Add details about the page entity.
+  if (variable_get('datalayer_add_page_meta', TRUE)) {
+    datalayer_add(datalayer_get_page_data());
+  }
+
+  if (variable_get('datalayer_expose_user_details')) {
+    datalayer_add(datalayer_get_user_data());
+  }
+
+  // Always output active uid.
+  datalayer_add(array('userUid' => $user->uid));
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ *
+ * Outputs data inclusions for the page.
+ */
+function datalayer_preprocess_html(&$variables) {
+  // Get active data, includes defaults.
+  $output_data = datalayer_add();
+  // Allow modules to alter data with hook_datalayer_alter().
+  drupal_alter('datalayer', $output_data);
+
+  $output = !empty($output_data) ? drupal_json_encode($output_data) : '';
+  $render = array(
+    '#type' => 'html_tag',
+    '#tag' => 'script',
+    '#value' => 'dataLayer = [' . $output . '];',
+    '#attributes' => array(
+      'type' => 'text/javascript',
+    ),
+  );
+  drupal_add_html_head($render, 'datalayer_meta');
+
+  // Include data-layer-helper library.
+  if (variable_get('datalayer_lib_helper', FALSE)) {
+    // Libraries 2.0.
+    if (function_exists('libraries_load')) {
+      if (($library = libraries_detect('data-layer-helper')) && !empty($library['installed'])) {
+        libraries_load('data-layer-helper');
+      }
+      else {
+        // Something went wrong.
+        $error = $library['error'];
+        $error_message = $library['error message'];
+      }
+    }
+    else {
+      // Libraies 1.0.
+      $path = libraries_get_path('data-layer-helper');
+      if (!empty($path) && file_exists($path . '/data-layer-helper.js')) {
+        drupal_add_js($path . '/data-layer-helper.js');
+      }
+    }
+  }
+
+  // Output configred language data.
+  $languages = language_list();
+  if (count($languages)) {
+    drupal_add_js(array(
+      'dataLayer' => array(
+        'languages' => $languages,
+        'defaultLang' => language_default('language'),
+      ),
+    ), 'setting');
+  }
+
+  // Common datalayer JS.
+  drupal_add_js(drupal_get_path('module', 'datalayer') . '/datalayer.js');
+}
+
+/**
+ * Collects up meta data for output.
+ *
+ * @param string $type
+ *   Entity type to collect meta from, defaults to generic.
+ *
+ * @return array
+ *   Array of all candidate entity properties.
+ */
+function _datalayer_collect_meta_properties($type = '') {
+  $hooks = array();
+  if (is_string($type) && !empty($type)) {
+    $hooks[] = "datalayer_{$type}_meta";
+  }
+  $hooks[] = 'datalayer_meta';
+  // Avoid duplicate builds.
+  $properties = &drupal_static(__FUNCTION__ . $type);
+  if (!isset($properties)) {
+    $properties = array();
+    foreach ($hooks as $hook) {
+      foreach (module_implements($hook) as $module) {
+        // Call modules implementing datalayer_meta() and combine results.
+        $properties = array_merge($properties, module_invoke($module, $hook));
+      }
+      if (!empty($properties)) {
+        break;
+      }
+    }
+    drupal_alter($hooks, $properties);
+  }
+
+  return $properties;
+}
+
+/**
+ * Implements hook_datalayer_meta().
+ *
+ * Defines default meta data.
+ */
+function datalayer_datalayer_meta() {
+  return array(
+    'language',
+    'tnid',
+    'vid',
+    'name',
+    'uid',
+    'created',
+    'status',
+  );
+}
+
+/**
+ * Implements hook_datalayer_current_user_meta().
+ *
+ * Defines current user meta data.
+ */
+function datalayer_datalayer_current_user_meta() {
+  return array(
+    'name',
+    'mail',
+    'roles',
+    'created',
+    'access',
+  );
+}
+
+/**
+ * Return all the page meta data.
+ *
+ * @return array
+ *   Page data.
+ */
+function datalayer_get_page_data() {
+  $type = FALSE;
+  $obj = _datalayer_menu_get_any_object($type);
+  if (is_object($obj) && $type) {
+    // @todo Add field data.
+    // Populate entity properties and values.
+    return _datalayer_get_entity_data($obj, $type);
+  }
+  return array();
+}
+
+/**
+ * Return all user data based on configured URL patterns.
+ *
+ * @return array
+ *   The user data.
+ */
+function datalayer_get_user_data() {
+  global $user;
+  $user_data = array();
+  if (!user_is_anonymous()) {
+    $exp_user_urls = variable_get('datalayer_expose_user_details', array());
+    $exp_user_roles = array_filter(variable_get('datalayer_expose_user_details_roles', array()));
+    $matched_roles = !empty($exp_user_roles) ? array_intersect_key($user->roles, $exp_user_roles) : $user->roles;
+    // Honor settings.
+    if ($exp_user_urls && count($matched_roles)) {
+      $path = current_path();
+      $path_alias = drupal_lookup_path('alias', $path);
+      if (drupal_match_path($path, $exp_user_urls) || drupal_match_path($path_alias, $exp_user_urls)) {
+        // Output various entity properties. Allow additions/alterations.
+        // NOTE: Properties mean different things on different entity types.
+        $properties = _datalayer_collect_meta_properties('current_user');
+        $user_meta = variable_get('datalayer_current_user_meta', array());
+        $selected_properties = _datalayer_get_selected_properties($properties, $user_meta);
+        $user_prefix = 'user';
+        $user_data = _datalayer_collect_meta_values($selected_properties, $user, $user_prefix);
+        if (in_array('roles', $selected_properties)) {
+          $user_data[$user_prefix . 'Roles'] = array_values($matched_roles);
+        }
+      }
+    }
+  }
+  return $user_data;
+}
+
+/**
+ * Collect entity data for output and altering.
+ *
+ * @param object $obj
+ *   Entity object of the page menu callback.
+ * @param string $type
+ *   String representing entitie's type.
+ *
+ * @return array
+ *   All properties and values for output of page entity.
+ */
+function _datalayer_get_entity_data($obj, $type) {
+  $output_data = &drupal_static(__FUNCTION__);
+  if (empty($output_data)) {
+
+    // Explicit additions and generalized properties...
+    $entity_info = entity_get_info($type);
+    $bundle = FALSE;
+
+    // Entity type.
+    $output_data['entityType'] = $type;
+    // Entity bundle.
+    if (isset($obj->{$entity_info['entity keys']['bundle']})) {
+      $bundle = $obj->{$entity_info['entity keys']['bundle']};
+      $output_data['entityBundle'] = $bundle;
+    }
+    // Entity indetifier.
+    if (isset($obj->{$entity_info['entity keys']['id']})) {
+      $output_data['entityId'] = $obj->{$entity_info['entity keys']['id']};
+    }
+    // Entity title.
+    if (isset($entity_info['entity keys']) && isset($entity_info['entity keys']['label']) &&
+        isset($obj->{$entity_info['entity keys']['label']})) {
+
+      $output_data['entityLabel'] = $obj->{$entity_info['entity keys']['label']};
+    }
+    elseif ($entity_info['label'] === 'User') {
+      // User entities don't report a label.
+      $output_data['entityLabel'] = $obj->name;
+    }
+
+    // Output various entity properties. Allow additions/alterations.
+    // NOTE: Properties mean different things on different entity types.
+    $properties = _datalayer_collect_meta_properties($type);
+    $entity_meta = array_filter(variable_get('datalayer_global_entity_meta', array()));
+    $selected_properties = _datalayer_get_selected_properties($properties, $entity_meta);
+    $output_data = array_merge(_datalayer_collect_meta_values($selected_properties, $obj), $output_data);
+
+    // Output term data.
+    if (variable_get('datalayer_output_terms', module_exists('taxonomy'))) {
+      $selected_vocabs = array_filter(variable_get('datalayer_vocabs', array()));
+
+      if ($type == 'taxonomy_term') {
+        $output_data['entityTaxonomy'] = array(
+          $obj->vocabulary_machine_name => array($obj->tid => $obj->name),
+        );
+      }
+      else {
+
+        // Meta data on content.
+        if ($taxonomy = _datalayer_get_entity_terms($type, $bundle, $obj)) {
+          // Limit configured vocabs.
+          if (empty($selected_vocabs)) {
+            $output_data['entityTaxonomy'] = $taxonomy;
+          }
+          else {
+            foreach ($taxonomy as $vocab => $terms) {
+              if (isset($selected_vocabs[$vocab])) {
+                $output_data['entityTaxonomy'][$vocab] = $terms;
+              }
+            }
+          }
+        }
+
+      }
+    }
+
+  }
+
+  return $output_data;
+}
+
+/**
+ * Allow adding to the data layer easy on the fly, similar to drupal_add_js().
+ *
+ * Passing empty params will return current dataLayer output.
+ *
+ * @param array $data
+ *   An array of dataLayer data keyed by variable name (optional).
+ * @param bool $overwrite
+ *   If data should overwrite existing dataLayer vars of same name (optional).
+ *
+ * @return array
+ *   All data layer data added thus far.
+ */
+function datalayer_add(array $data = array(), $overwrite = FALSE) {
+  $output_data = &drupal_static(__FUNCTION__, _datalayer_defaults());
+
+  // If we've been given data, add it to the output.
+  if (!empty($data)) {
+    if ($overwrite) {
+      $output_data = array_merge($output_data, $data);
+    }
+    else {
+      $output_data += $data;
+    }
+  }
+
+  return $output_data;
+}
+
+/**
+ * Defines Drupal-wide data layer defaults.
+ */
+function _datalayer_defaults() {
+  global $language;
+  return array(
+    'drupalLanguage' => $language->language,
+    'drupalCountry' => variable_get('site_default_country', ''),
+  );
+}
+
+/**
+ * Agnosticly get the current menu object. Passed type will be set for you.
+ *
+ * @param string $return_type
+ *   Pass in a type variable by reference for later use.
+ *
+ * @return object
+ *   Entity object of current menu callback page.
+ */
+function _datalayer_menu_get_any_object(&$return_type) {
+  // Figure out how this entity is loaded.
+  $type = FALSE;
+  $item = menu_get_item();
+
+  // Non-entities may not have load functions.
+  if (is_array($item['load_functions'])) {
+    $vals = array_values($item['load_functions']);
+    $load_function = $vals[0];
+    $arg_position = array_search($load_function, $item['load_functions']);
+
+    // Compare to entity types.
+    $entity_info = entity_get_info();
+    foreach ($entity_info as $i => $e) {
+      if ($e['load hook'] == $load_function) {
+        $type = $i;
+      }
+    }
+  }
+
+  // Many happy returns.
+  if ($type && $obj = menu_get_object($type, $arg_position)) {
+    if (is_object($obj)) {
+      $return_type = $type;
+      return $obj;
+    }
+    else {
+      return FALSE;
+    }
+  }
+  else {
+    return FALSE;
+  }
+}
+
+/**
+ * Fetch all taxonomy terms from an entity.
+ *
+ * All fields of field type "taxonomy_term_reference" will be included.
+ * Idea found at https://api.drupal.org/comment/50393#comment-50393
+ *
+ * @param string $entity_type
+ *   What type of entity.
+ * @param string $bundle
+ *   What bundle within entity type.
+ * @param object $entity
+ *   Actual entity object to process.
+ *
+ * @return array
+ *   Array with tids of entity.
+ */
+function _datalayer_get_entity_terms($entity_type, $bundle, $entity) {
+  $terms = array();
+
+  // Use very lightweight field info list to find relevant fields.
+  foreach (field_info_field_map() as $field_name => $field_info) {
+    if ($field_info['type'] <> "taxonomy_term_reference") {
+      continue;
+    }
+    if (array_key_exists($entity_type, $field_info['bundles'])) {
+      if (in_array($bundle, $field_info['bundles'][$entity_type])) {
+        if (isset($entity->{$field_name})) {
+
+          // Collect terms from fields for return.
+          $values = field_get_items($entity_type, $entity, $field_name);
+          foreach ((array) $values as $term_array) {
+            // Limit to existant tids.
+            if (isset($term_array['tid'])) {
+              $term = taxonomy_term_load($term_array['tid']);
+              if (isset($term->tid) && isset($term->name)) {
+                $terms[$term->vocabulary_machine_name][$term->tid] = $term->name;
+              }
+            }
+          }
+
+        }
+      }
+    }
+  }
+
+  return $terms;
+}
+
+/**
+ * Add the meta properties for given entity.
+ *
+ * @param array $properties
+ *   Selected properties for the entity.
+ * @param object $entity
+ *   The entity.
+ * @param string $key_prefix
+ *   The prefix for the property name.
+ */
+function _datalayer_collect_meta_values(array $properties, $entity, $key_prefix = 'entity') {
+  // Build meta output...
+  $meta_data = array();
+  foreach ($properties as $p) {
+    if (isset($entity->$p)) {
+      $meta_data[$key_prefix . ucfirst($p)] = $entity->$p;
+    }
+  }
+
+  return $meta_data;
+}
+
+/**
+ * Determine which properties will be output based on configuration.
+ *
+ * @param array $properties
+ *   Available properties for the entity.
+ * @param array $selected
+ *   Selected properties for the entity.
+ */
+function _datalayer_get_selected_properties(array $properties, array $selected) {
+  $selected_properties = array_filter($selected);
+  // Honor selective output configuration.
+  $selected_properties = empty($selected_properties) ? $properties : $selected_properties;
+
+  return $selected_properties;
+}

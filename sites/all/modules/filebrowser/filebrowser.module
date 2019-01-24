@@ -1,0 +1,1411 @@
+<?php
+/* This file is part of "filebrowser".
+ *    Copyright 2009, arNuméral
+ *    Author : Yoran Brault
+ *    eMail  : yoran.brault@bad_arnumeral.fr (remove bad_ before sending an email)
+ *    Site   : http://www.arnumeral.fr
+ *
+ * "filebrowser" is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * "filebrowser" is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with "filebrowser"; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
+
+require_once "filebrowser.common.inc";
+require_once "filebrowser.helpers.inc";
+
+/**
+ * Implements hook_node_info().
+ */
+function filebrowser_node_info() {
+  return array(
+    'dir_listing' => array(
+      'type' => 'dir_listing',
+      'base' => 'filebrowser',
+      'name' => t('Directory listing'),
+      'description' => t("A listing of files similar to how Apache lists files in a directory."),
+    )
+  );
+}
+
+/**
+ * Implements hook_permission().
+ */
+function filebrowser_permission() {
+  return array(
+    FILEBROWSER_CREATE_DIRECTORY_LISTING => array(
+      'title' => t('Create a directory listing')),
+    FILEBROWSER_DELETE_OWN_DIRECTORY_LISTINGS => array(
+      'title' => t('Delete own directory listings')),
+    FILEBROWSER_DELETE_ANY_DIRECTORY_LISTINGS => array(
+      'title' => t('Delete any directory listing')),
+    FILEBROWSER_EDIT_OWN_DIRECTORY_LISTINGS => array(
+      'title' => t('Edit own directory listings')),
+    FILEBROWSER_EDIT_ANY_DIRECTORY_LISTINGS => array(
+      'title' => t('Edit any directory listing')),
+    FILEBROWSER_VIEW_DIRECTORY_LISTINGS => array(
+      'title' => t('View directory listings')),
+    FILEBROWSER_UPLOAD => array(
+      'title' => t('Upload files')),
+    FILEBROWSER_DOWNLOAD_ARCHIVE => array(
+      'title' => t('Download archive')),
+    FILEBROWSER_DELETE_FILE => array(
+      'title' => t('Delete file')),
+    FILEBROWSER_RENAME_FILE => array(
+      'title' => t('Rename file')),
+    FILEBROWSER_DOWNLOAD => array(
+      'title' => t('Download files')),
+    FILEBROWSER_CREATE_FOLDER => array(
+      'title' => t('Create folders'))
+    );
+}
+
+/**
+ * Implements hook_form().
+ */
+function filebrowser_form(&$node, &$form_state) {
+  $type = node_type_get_type($node);
+
+  $form['title'] = array(
+    '#type' => 'textfield',
+    '#title' => check_plain($type->title_label),
+    '#default_value' => !empty($node->title) ? $node->title : '',
+    '#required' => TRUE,
+  );
+
+  $form['folder_path'] = array(
+    '#type' => 'textfield',
+    '#title' => t('The system file path to the directory'),
+    '#description' => t('This can be an absolute path or should be relative to the Drupal root directory.'),
+    '#default_value' => isset($node->folder_path) ? $node->folder_path : '',
+    '#required' => TRUE
+  );
+
+  if (module_exists('token')) {
+    $form['token_help'] = array(
+      '#title' => t('Replacement patterns'),
+      '#type' => 'fieldset',
+      '#collapsible' => TRUE,
+      '#collapsed' => TRUE
+    );
+
+    $form['token_help']['help'] = array(
+      '#theme' => 'token_tree',
+      '#token_types' => array('node'),
+    );
+  }
+
+  /** Folder rights
+   * *************************************************************** */
+  $form['folder_rights'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Folder rights'),
+    '#tree' => TRUE,
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+  );
+
+  $form['folder_rights']['explore_subdirs'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Allow subdirectory listings.'),
+    '#default_value' => isset($node->folder_rights->explore_subdirs) ? $node->folder_rights->explore_subdirs : '',
+  );
+
+  $form['folder_rights']['download_archive'] = array(
+    '#type' => 'checkbox',
+    '#title' => t("Allow folder's files to be downloaded as an archive"),
+    '#description' => t("Check this if you allow users to download all folder files as an archive."),
+    '#default_value' => isset($node->folder_rights->download_archive) ? $node->folder_rights->download_archive :'',
+  );
+
+  $form['folder_rights']['create_folders'] = array(
+    '#type' => 'checkbox',
+    '#title' => t("Allow folder to be created"),
+    '#description' => t("Check this if you allow users to create new folders."),
+    '#default_value' => isset($node->folder_rights->create_folders) ? $node->folder_rights->create_folders : '',
+  );
+
+  $managers = _filebrowser_options(_filebrowser_externals('download_manager_info'));
+  $form['folder_rights']['download_manager'] = array(
+    '#type' => 'select',
+    '#title' => t("Download manager"),
+    '#description' => t("A download manager will handle the way of download folder files."),
+    '#default_value' => isset($node->folder_rights->download_manager) ? $node->folder_rights->download_manager :'',
+    '#options' => $managers,
+    '#weight' => -7
+  );
+  $form['folder_rights']['force_download'] = array(
+    '#type' => 'checkbox',
+    '#title' => t("Force download"),
+    '#description' => t("If you select this options clicking a file-link will download the file. Leave this option off if you want the file to open in your browser."),
+    '#default_value' => isset($node->folder_rights->force_download) ? $node->folder_rights->force_download :'',
+  );
+  $forbidden_files_default = "descript.ion\nfile.bbs\n*.git\nCSV\n*.svn";
+
+  $form['folder_rights']['forbidden_files'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Blacklist'),
+    '#description' => t('List of forbidden files. Use wildcards (*) if you want to exclude specific file extension. Example: *.git will exclude all files with .git extension.'),
+    '#default_value' => isset($node->folder_rights->forbidden_files) ? $node->folder_rights->forbidden_files : $forbidden_files_default,
+  );
+  $form['folder_rights']['filtered_files'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Whitelist'),
+    '#description' => t('List of patterns to filter, one per line, you can use wildcards (ex. *.pdf).'),
+    '#default_value' => isset($node->folder_rights->filtered_files) ? $node->folder_rights->filtered_files : '',
+  );
+
+  /** Folder uploads
+   * *************************************************************** */
+  $form['folder_uploads'] = array(
+    '#type' => 'fieldset',
+    '#tree' => TRUE,
+    '#title' => t('Folder Upload'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+  );
+  $form['folder_uploads']['enabled'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Allow uploads'),
+    '#description' => t('Allow users to upload files.'),
+    '#default_value' => isset($node->folder_uploads->enabled) ? $node->folder_uploads->enabled : '',
+  );
+  $form['folder_uploads']['allow_overwrite'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Allow overwrites'),
+    '#description' => t('Allow files to be overwritten.'),
+    '#default_value' => isset($node->folder_uploads->allow_overwrite) ? $node->folder_uploads->allow_overwrite : '',
+  );
+  $form['folder_uploads']['accepted_uploaded_files'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Accepted files for uploading'),
+    '#description' => t('List of file patterns accepted for upload. Empty means anything.'),
+    '#default_value' => isset($node->folder_uploads->accept_uploaded_files) ? $node->folder_uploads->accept_uploaded_files : '',
+  );
+
+  /** Folder presentation
+   * *************************************************************** */
+  $form['folder_presentation'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Folder presentation'),
+    '#tree' => TRUE,
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+  );
+  $presentations = _filebrowser_options(_filebrowser_externals('presentations'));
+  $form['folder_presentation']['default_view'] = array(
+    '#type' => 'select',
+    '#title' => t("Default view"),
+    '#default_value' => isset($node->folder_presentation->default_view) ? $node->folder_presentation->default_view : '',
+    '#options' => $presentations
+  );
+  $form['folder_presentation']['encoding'] = array(
+    '#type' => 'textfield',
+    '#title' => t('FileSystem encoding'),
+    '#description' => t('Set here your file system encoding (UTF-8, ISO-8859-15, etc.).'),
+    '#default_value' => isset($node->folder_presentation->encoding) ? $node->folder_presentation->encoding : 'UTF-8',
+    '#required' => TRUE
+  );
+  $form['folder_presentation']['hide_extension'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Hide file extensions'),
+    '#default_value' => isset($node->folder_presentation->hide_extension) ? $node->folder_presentation->hide_extension : '',
+  );
+
+  $columns = _filebrowser_externals('metadata_info');
+  $form['folder_presentation']['visible_columns'] = array(
+    '#type' => 'checkboxes',
+    '#title' => t("Visible columns"),
+    '#default_value' => _filebrowser_properties_to_checkboxes($node->folder_presentation->visible_columns),
+    '#options' => _filebrowser_options($columns)
+  );
+
+  $sortable = array();
+  foreach ($columns as $name => $data) {
+    if (isset($data['sortable']) && $data['sortable']) {
+      $sortable[$name] = $data['title'];
+    }
+  }
+  $form['folder_presentation']['default_sort'] = array(
+    '#type' => 'select',
+    '#title' => t("Default sort"),
+    '#default_value' => isset($node->folder_presentation->default_sort) ? $node->folder_presentation->default_sort : '',
+    '#options' => $sortable
+  );
+
+  $form['folder_presentation']['default_sort_order'] = array(
+    '#type' => 'select',
+    '#title' => t("Default sort order"),
+    '#default_value' => isset($node->folder_presentation->default_sort_order) ? $node->folder_presentation->default_sort_order : '',
+    '#options' => array(
+      'asc' => t('Ascendant'),
+      'desc' => t('Descendant')
+    )
+  );
+
+  /** Specific file handlers settings
+   * *************************************************************** */
+  $handlers = module_implements("filebrowser_handler_info");
+  if (count($handlers)) {
+    $form['file_handlers'] = array(
+      '#type' => 'fieldset',
+      '#tree' => TRUE,
+      '#title' => 'File handlers',
+      '#collapsible' => TRUE,
+      '#collapsed' => TRUE,
+    );
+    foreach ($handlers as $module) {
+      $info = module_invoke($module, "filebrowser_handler_info");
+      $form['file_handlers']["$module"] = array(
+        '#type' => 'fieldset',
+        '#tree' => TRUE,
+        '#title' => $info['description'],
+        '#collapsible' => TRUE,
+        '#collapsed' => TRUE,
+        '#weight' => -6
+      );
+      $default_setting = $node->file_handlers->$module;
+      if (!$default_setting) {
+        $default_setting = (object)array();
+      }
+      $settings = module_invoke($module, "filebrowser_handler_settings", $default_setting);
+      $form['file_handlers']["$module"]['enabled_thumbnailer'] = array(
+        '#type' => 'checkbox',
+        '#title' => t('Enabled as thumbnailer'),
+        '#description' => t('Enable this file handler as thumbnailer.'),
+        '#default_value' => isset($default_setting->enabled_thumbnailer) ? $default_setting->enabled_thumbnailer : FALSE
+      );
+      $form['file_handlers']["$module"]['enabled_metadata'] = array(
+        '#type' => 'checkbox',
+        '#title' => t('Enabled as metadata provider'),
+        '#description' => t('Enable this file handler as metadata provider.'),
+        '#default_value' => isset($default_setting->enabled_metadata) ? $default_setting->enabled_metadata : FALSE
+      );
+      foreach ($settings as $key => $setting) {
+        $form['file_handlers']["$module"][$key] = $setting;
+      }
+    }
+  }
+  return $form;
+}
+
+/**
+ * Implements hook_validate().
+ */
+function filebrowser_validate(& $node) {
+  $node->folder_presentation = (object)$node->folder_presentation;
+  $path = _filebrowser_get_node_root($node);                  // get the folder path
+  $encoded_path = _filebrowser_encoding_to_fs($node, $path);
+
+  // check if this is an amazon s3 path, if so validate it via the s3_fb module
+  if (is_s3_filesystem($encoded_path)) {
+    validate_s3($encoded_path);
+    return;
+  }
+
+  if (!is_dir($encoded_path)) {
+    $success = mkdir($encoded_path, 0777, TRUE);
+    if (!$success) {
+      form_set_error('file_path', t('The directory %dir is not a valid directory and I\'m unable to help this.', array(
+        '%dir' => $path
+         )));
+    }
+    else {
+      drupal_set_message(t('The directory %dir has been created.', array(
+        '%dir' => $path
+        )));
+    }
+  }
+  else {
+    if (!is_readable($encoded_path)) {
+      form_set_error('file_path', t('The directory %dir is not readable.', array(
+        '%dir' => $path
+        )));
+    }
+  }
+}
+
+//todo : is this valid for D7?
+/**
+ * hook_db_rewrite_sql implementation.
+ */
+function filebrowser_db_rewrite_sql($query, $primary_table, $primary_field, $args) {
+  global $user;
+  if ($primary_table == 'n' && $primary_field == 'nid' && !user_access(FILEBROWSER_VIEW_DIRECTORY_LISTINGS, $user)) {
+    $return = array(
+        'where' => "n.type != 'dir_listing'"
+    );
+    return $return;
+  }
+}
+
+/**
+ * Implements hook_load().
+ */
+function filebrowser_load($nodes) {
+    $query = db_select('node_dir_listing', 'n');
+    $query->condition('nid', array_keys($nodes));
+    $query->fields('n');
+    foreach ($query->execute() as $data) {
+      $additions = (object)unserialize($data->properties);
+      $additions->folder_path = $data->folder_path;
+      $additions->nid = $data->nid;
+      _filebrowser_prepare_record($additions, TRUE);
+      foreach ($additions as $key => $value) {
+        $nodes[$data->nid]->$key = $value;
+      }
+    }
+  }
+
+/**
+ * Implements hook_insert().
+ */
+function filebrowser_insert($node) {
+  _filebrowser_prepare_record($node, FALSE);
+  drupal_write_record("node_dir_listing", $node);
+}
+
+/**
+ * Implements hook_update().
+ */
+function filebrowser_update($node) {
+  _filebrowser_prepare_record($node, FALSE);
+  drupal_write_record("node_dir_listing", $node, 'nid');
+  // Issue #2760957: listing edit resets fids
+  // No need to reset the fids on node edit.
+  // _filebrowser_node_content_delete($node);
+}
+
+/**
+ * Implements hook_delete().
+ */
+function filebrowser_delete($node) {
+  db_query('DELETE FROM {node_dir_listing} WHERE nid = :nid', array(':nid' => $node->nid));
+  _filebrowser_node_content_delete($node);
+}
+
+/**
+ * Implements hook_menu().
+ */
+ // FIXME: Do we need a admin/config for default values??
+ // Some site wide defaults are set now in hook_form
+function filebrowser_menu() {
+  $items = array();
+  $items['filebrowser/download/%'] = array(
+    'page callback' => 'filebrowser_page_download',
+    'file' => 'filebrowser.pages.inc',
+    'page arguments' => array(2),
+    'type' => MENU_CALLBACK,
+    'access arguments' => array(FILEBROWSER_DOWNLOAD)
+  );
+
+  $items['filebrowser/delete/%'] = array(
+    'page callback' => 'filebrowser_page_delete',
+    'file' => 'filebrowser.pages.inc',
+    'page arguments' => array(2),
+    'type' => MENU_CALLBACK,
+    'access arguments' => array(FILEBROWSER_DELETE_FILE)
+  );
+
+  $items['filebrowser/rename/%'] = array(
+    'page callback' => 'filebrowser_page_rename',
+    'file' => 'filebrowser.pages.inc',
+    'page arguments' => array(2),
+    'type' => MENU_CALLBACK,
+    'access arguments' => array(FILEBROWSER_RENAME_FILE)
+  );
+
+  $items['filebrowser/metadata/%'] = array(
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('filebrowser_form_metadata', 2),
+    'access callback' => '_filebrowser_metadata_access',
+    'access arguments' => array(2),
+    'file' => 'filebrowser.pages.inc',
+    'type' => MENU_CALLBACK
+  );
+
+  $items['filebrowser/thumbnails/%'] = array(
+    'page callback' => 'filebrowser_update_thumbnails',
+    'page arguments' => array( 2),
+    'access callback' => '_filebrowser_metadata_access',
+    'access arguments' => array(2),
+    'file' => 'filebrowser.pages.inc',
+    'type' => MENU_CALLBACK
+  );
+  return $items;
+}
+
+/**
+ * Implements hook_init().
+ */
+function filebrowser_view($node, $view_mode) {
+  if ($view_mode == "full") {
+    _filebrowser_load_files($node);
+    // Full node content view
+    // Keep track of the current location and update breadcrumbs to reflect that.
+    $breadcrumbs = array(
+        l(t('Home'), NULL)
+    );
+    $breadcrumb_path = "";
+    //print_r($node);
+    //return;
+    $path_elements = explode('/', rtrim($node->file_listing['.']['relative-path'], "/"));
+    for ($i = 0; $i < count($path_elements); $i++) {
+      $child_dir = $path_elements[$i] == '' ? '/' : $path_elements[$i];
+      // Issue #2511546. Add a slash from the third breadcrumb
+      $breadcrumb_path = ($i < 2) ? $breadcrumb_path . $child_dir : $breadcrumb_path . '/' . $child_dir;
+      $fid = db_query("SELECT fid FROM {node_dir_listing_content}
+                     WHERE path = :path", array(':path' => $breadcrumb_path))->fetchField();
+      if ($child_dir == '/') {
+        $label = $node->title;
+      } else {
+        $label = $child_dir;
+      }
+      if ($i < (count($path_elements) - 1)) {
+        $breadcrumbs[] = l($label, "node/{$node->nid}/$fid");
+      } else {
+        $breadcrumbs[] = $label;
+      }
+      drupal_set_breadcrumb($breadcrumbs);
+
+      // Insert file listing  content part
+      $current_view = _filebrowser_externals('presentations', $node->folder_presentation->default_view);
+      $node->content['filebrowser_content'] = array(
+          '#markup' => count($node->file_listing) == 0 ? '' : theme($current_view['theme'], array('node' => $node)),
+          '#weight' => 1
+      );
+      if ($node->folder_uploads->enabled && user_access(FILEBROWSER_UPLOAD)) {
+        $form = drupal_get_form('filebrowser_form_upload', $node);
+        $node->content['filebrowser_form_upload'] = array(
+            '#markup' => drupal_render($form),
+            '#weight' => 2
+        );
+      }
+      if ($node->folder_uploads->enabled && user_access(FILEBROWSER_CREATE_FOLDER)) {
+        $form = drupal_get_form('filebrowser_form_create_folder', $node);
+        $node->content['filebrowser_form_create_folder'] = array(
+            '#markup' => drupal_render($form),
+            '#weight' => 3
+        );
+      }
+      $statistics = array(
+          'empty' => t('This folder is empty')
+      );
+      if ($node->file_listing['.']['folders_count'] > 0) {
+        $statistics['folders'] = format_plural($node->file_listing['.']['folders_count'], '1 folder', '@count folders');
+        $statistics['empty'] = NULL;
+      }
+      if ($node->file_listing['.']['files_count'] > 0) {
+        $statistics['files'] = format_plural($node->file_listing['.']['files_count'], '1 file', '@count files');
+        $statistics['size'] = format_size($node->file_listing['.']['size']);
+        $statistics['empty'] = NULL;
+      }
+      $node->content['filebrowser_statistics'] = array(
+          '#markup' => theme('dir_listing_statistics', $statistics),
+          '#weight' => 3
+      );
+    }
+  }
+
+  // Insert filebrowser links
+  $node->content['links']['filebrowser'] = array(
+    '#theme' => 'links__node__blog',
+    '#links' => _filebrowser_links($node),
+    '#attributes' => array('class' => array('links', 'inline')),
+  );
+
+  return $node;
+}
+
+/**
+ * Implements hook_node_view().
+ */
+function filebrowser_node_view($node, $view_mode) {
+  //debugPrintCallingFunction();
+  if ($node->type == 'dir_listing' && $view_mode == 'full') {
+//  debug($node-> file_listing, 'node-> file_listing');
+    $links = array();
+    if (_filebrowser_metadata_access($node->file_listing['.']['fid'])) {
+      $links['file_browser_metadata'] = array(
+        'href' => "filebrowser/metadata/{$node->file_listing['.']['fid']}",
+        'title' => t("Edit Metadatas"),
+        'query' => drupal_get_destination(),
+      );
+    }
+    $thumbnailers = module_implements("filebrowser_thumbnailer_prepare");
+    if (count($thumbnailers) != 0) {
+      $links['file_browser_update_thumbnails'] = array(
+        'href' => "filebrowser/thumbnails/{$node->file_listing['.']['fid']}",
+        'title' => t("Update thumbnails"),
+        'query' => drupal_get_destination()
+      );
+    }
+
+    $node->content['links']['filebrowser'] = array(
+      '#theme' => 'links',
+      '#links' => $links,
+    );
+  }
+}
+
+/**
+ * upload form definition.
+ */
+function filebrowser_form_upload($form, &$form_state, $node) {
+  $form = array();
+  $form['filebrowser_uploads'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('File Upload'),
+      '#collapsible' => TRUE,
+      '#collapsed' => TRUE,
+      '#description' => t('Uploaded file will be saved to the current directory.'),
+      '#prefix' => '<div class="attachments">',
+      '#suffix' => '</div>',
+      '#weight' => 30
+  );
+  // Wrapper for fieldset contents (used by ahah.js).
+  /*      $form['filebrowser_uploads']['wrapper'] = array(
+        '#prefix' => '<div id="attach-wrapper">',
+        '#suffix' => '</div>',
+      '#type'=>'textfield'
+
+      );*/
+  $form['node'] = array(
+    '#type' => 'value',
+    '#value' => $node,
+  );
+  $form['#attributes'] = array(
+      'enctype' => "multipart/form-data"
+  );
+
+  _filebrowser_load_files($node);
+  $form['#submit'][] = 'filebrowser_form_upload_submit';
+  $form['#validate'][] = 'filebrowser_form_upload_validate';
+
+  $i = 1; // Later we can have multi-upload
+  $form['filebrowser_uploads']["file_$i"] = array(
+      '#type' => 'file',
+      '#title' => t('Upload file'),
+      '#size' => 40
+  );
+  $form['filebrowser_uploads']["description_$i"] = array(
+      '#type' => 'textarea',
+      '#title' => t('Description'),
+      '#size' => 255
+  );
+  $form['filebrowser_uploads']["file_name_$i"] = array(
+      '#type' => 'textfield',
+      '#description' => t('Just put filename with NO EXTENSION here if you want to rename the file you want to upload'),
+      '#title' => t('New name'),
+      '#size' => 40
+  );
+  $form['submitted'] = array(
+      '#tree' => TRUE
+  );
+  $form['filebrowser_uploads']['submit'] = array(
+      '#type' => 'submit',
+      '#value' => t('Upload')
+  /* '#ahah' => array(
+        'path' => 'upload/js',
+        'wrapper' => 'attach-wrapper',
+        'progress' => array('type' => 'bar', 'message' => t('Please wait...')),
+      ), */
+  );
+  $form['#redirect'] = NULL;
+  return $form;
+}
+
+/**
+ * uploads validation.
+ */
+function filebrowser_form_upload_validate($form, &$form_state) {
+  $node = $form_state['values']['node'];
+  _filebrowser_load_files($node);
+
+  $i = 1; // Later we can have multi-upload
+  $target = _filebrowser_build_new_upload_file_name($node, $form_state, $i);
+
+  if (!$node->folder_uploads->allow_overwrite && file_exists($target)) {
+    form_error($form['filebrowser_uploads']["file_$i"], t("This file already exists."));
+  }
+  if (!empty($node->folder_uploads->accepted_uploaded_files) && !_filebrowser_match_path($target, $node->folder_uploads->accepted_uploaded_files)) {
+    form_error($form['filebrowser_uploads']["file_$i"], t("Sorry, you can't upload this kind of file."));
+  }
+}
+
+/**
+ * uploads submition.
+ */
+function filebrowser_form_upload_submit($form, &$form_state) {
+  $i = 1; // Later we can have multi-upload
+  $node = $form_state['values']['node'];
+  $target = _filebrowser_build_new_upload_file_name($node, $form_state, $i);
+  //debug ($target, 'just prior to copy()');
+  $success = copy($_FILES['files']['tmp_name']["file_$i"], $target);
+  if (!$success) {
+    drupal_set_message(t("Unable to upload this file, do you have filesystem right to do that ?"), 'error');
+  }
+  else {
+    _filebrowser_load_files($node, NULL, TRUE); // force listing rebuild
+    if (!empty($form['filebrowser_uploads']["description_$i"])) {
+      $file = $node->file_listing[_filebrowser_safe_basename($target)];
+      module_invoke_all('filebrowser_metadata_set', $file, array(
+          'description' => $form_state['values']["description_$i"]
+      ));
+    }
+  }
+  drupal_goto("node/{$node->nid}/{$node->file_listing['.']['fid']}", _filebrowser_url_query());
+}
+
+function filebrowser_form_create_folder($form, $form_state, $node) {
+  $form = array();
+  $form['filebrowser_create_folder'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Create a folder'),
+      '#collapsible' => TRUE,
+      '#collapsed' => TRUE,
+      '#description' => t('This folder will be created within the current directory.'),
+      '#weight' => 30
+  );
+  $form['node'] = array('#type' => 'value', '#value' => $node,);
+  $form['#submit'][] = 'filebrowser_form_create_folder_submit';
+  $form['#validate'][] = 'filebrowser_form_create_folder_validate';
+  $form['filebrowser_create_folder']['folder_name'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Folder Name'),
+      '#size' => 40,
+      '#required' => TRUE
+  );
+  $form['filebrowser_create_folder']['description'] = array(
+      '#type' => 'textarea',
+      '#title' => t('Description'),
+      '#size' => 255
+  );
+  $form['submitted'] = array(
+      '#tree' => TRUE
+  );
+  $form['filebrowser_create_folder']['submit'] = array(
+      '#type' => 'submit',
+      '#value' => t('Create')
+  );
+  return $form;
+}
+
+/**
+ * Implements hook_validate() for creating a folder
+ */
+function filebrowser_form_create_folder_validate($form, $form_state) {
+  $node = $form_state['values']['node'];
+  _filebrowser_load_files($node);
+  $target = _filebrowser_encoding_to_fs($node, "{$node-> file_listing['.']['full-path']}/{$form_state['values']['folder_name']}");
+
+  if (file_exists($target)) {
+    form_error($form['filebrowser_create_folder']['folder_name'], t("This folder already exists."));
+  }
+}
+
+/**
+ * create folder submission.
+ */
+function filebrowser_form_create_folder_submit($form, & $form_state) {
+  $i = 1; // Later we can have multi-upload
+  $node = $form_state['values']['node'];
+  $target = _filebrowser_encoding_to_fs($node, "{$node->file_listing['.']['full-path']}/{$form_state['values']['folder_name']}");
+  $success = mkdir($target, 0777);
+  if (!$success) {
+    drupal_set_message(t("Unable to create this folder, do you have filesystem right to do that ?"), 'error');
+  }
+  else {
+    _filebrowser_load_files($node, NULL, TRUE); // force listing rebuild
+    if (!empty($form_state['values']["description"])) {
+      $file = $node->file_listing[_filebrowser_safe_basename($target)];
+      module_invoke_all('filebrowser_metadata_set', $file, array(
+          'description' => $form_state['values']["description"]
+      ));
+    }
+  }
+  drupal_goto("node/{$node->nid}/{$node->file_listing['.']['fid']}", _filebrowser_url_query());
+}
+
+function filebrowser_form_actions($form, &$form_state, $header, $options, $actions, $node) {
+  // debug($header);
+  $form = array();
+  $form['#node'] = $node;
+  $form['table'] = array(
+    '#type' => 'tableselect',
+    '#header' => $header,
+    '#options' => $options,
+    '#multiple' => TRUE,
+  );
+  // search $options array to find the "Up Dir" line and de-activate the checkbox
+  foreach ($options as $key => $option) {
+    if (!$option['fid']) {
+      $form['table'][$key]['#disabled'] = true;
+    }
+  }
+
+  //if (isset($form['table'][]))
+  // Normally the checkboxes are created by form_process_tableselect(). They are created manually here
+  // to have the checkboxes behave the way we want it for filebrowser.
+  /*  foreach ($options as $key => $data) {
+    $form['table'][$key] = array(
+      '#type' => 'checkbox',
+      '#title' => $data['fid'],
+      //'#title_display' => 'invisible',
+      //'#return_value' =>  'foop',
+      '#default_value' => 0,
+      // disable the checkbox and hide it if this item has no fid (is not a selectable item)
+      '#disabled' => empty($data['fid']) ? TRUE : FALSE,
+      '#attributes' => empty($data['fid']) ? array('style' => 'display:none;') : '',
+      );
+  }*/
+  $fb_options = array(
+    '' => t('choose an action')
+  );
+  foreach ($actions as $action) {
+    $fb_options[$action['operation']] = $action['title'];
+  }
+  $form['action'] = array(
+      '#prefix' => '<br/><div class="container-inline">',
+      '#title' => t('actions'),
+      '#type' => 'select',
+      '#options' => $fb_options
+  );
+  $form['submit'] = array(
+      '#value' => t('Process'),
+      '#type' => 'submit',
+      '#suffix' => '</div><br/>'
+  );
+  return $form;
+}
+
+function filebrowser_form_actions_submit($form, $form_state) {
+  // Collect de selected checkboxes in put them in array $fid
+  $fids = array();
+  if (!empty($form_state['values']['action'])) {
+  foreach ($form_state['values']['table'] as $key => $value) {
+    if ($value) {
+      $fids[] = $form['table']['#options'][$key]['fid'];
+    }
+	}
+  $result = module_invoke_all('filebrowser_action_process', $form['#node'], $form_state['values']['action'], $fids);
+    if ($result) {
+      return $result;
+    }
+  }
+  header('Location: ' . request_uri(), TRUE, 302);
+  exit();
+}
+
+/**
+ * File delete confirmation form
+ * CHECK: $node is used but not defined in this function
+ */
+function filebrowser_form_delete_confirm($form, &$form_state, $fids) {
+
+  // Items to delete.
+  $items = array();
+
+  // This flag indicates that a folder has been selected for deletion.
+  $folder_selected = FALSE;
+
+  // Scan passed fids and retrieve item fullnames.
+  foreach ($fids as $fid) {
+    $file = _filebrowser_node_content_load($fid);
+    $node = node_load($file['nid']);
+
+    // Additional data.
+    $file['full-path'] = _filebrowser_encoding_to_fs($node, _filebrowser_get_node_root($node) . $file['path']);
+    $file['display-name'] = _filebrowser_safe_basename($file['full-path']);
+
+    // Retrieve item metadata (needed to retrieve item icon).
+    $result = module_invoke_all('filebrowser_metadata_get', $file);
+    if ($result && is_array($result)) {
+      $file = array_merge($file, $result);
+    }
+
+    // Retrieve thumbnail.
+    $file['thumbnail'] = _filebrowser_thumbnails_generate($node, $file);
+
+    // Store item data.
+    $items[$fid] = $file;
+  }
+
+  // Store items being deleted into a form value.
+  $form['items_to_delete'] = array('#type' => 'value', '#value' => $items);
+
+  // Compose the list of files being deleted.
+  $list = '<ul>';
+  foreach ($items as $item) {
+    $list .= '<li>' . $item['thumbnail'] . ' ';
+    if ($item['kind']) {
+      $folder_selected = TRUE;
+      $list .= '<b>' . $item['display-name'] . '</b>';
+    }
+    else {
+      $list .= $item['display-name'];
+    }
+    $list .= '</li>';
+  }
+  $list .= '</ul>';
+  $form['items'] = array(
+    '#type' => 'item',
+    '#title' => t('Items being deleted'),
+    '#markup' => $list
+  );
+
+  // If at least a folder has been selected, add a confirmation checkbox.
+  if ($folder_selected) {
+    $form['confirmation'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Confirm deletion of selected <b>subfolders</b> and all of their content.'),
+      '#default_value' => FALSE,
+    );
+  }
+  else {
+    // No confirmation needed, we'll add a "fake" field.
+    $form['confirmation'] = array(
+      '#type' => 'value',
+      '#value' => TRUE,
+    );
+  }
+
+  // show the form to the user
+  return confirm_form(
+    $form,
+    t('Are you sure you want to delete the following items?'),
+    isset($_GET['destination']) ? $_GET['destination'] : 'node/' . $node->nid,
+    t('This action cannot be undone.'),
+    t('Delete'),
+    t('Cancel')
+  );
+}
+
+/**
+ * File delete confirmation form submit
+ */
+function filebrowser_form_delete_confirm_validate($form, &$form_state) {
+  // Check if the confirmation checkbox has been checked.
+  if (empty($form_state['values']['confirmation'])) {
+    form_set_error('confirmation', t('You must confirm deletion of selected subfolders.'));
+  }
+}
+
+/**
+ * File delete confirmation form submit
+ */
+function filebrowser_form_delete_confirm_submit($form, &$form_state) {
+
+  foreach ($form_state['values']['items_to_delete'] as $file) {
+    $fullpath = $file['full-path'];
+    if (is_s3_filesystem($fullpath)) {
+      s3_delete($fullpath);
+    }
+    else {
+      if (is_file($fullpath)) {
+        $result = unlink($fullpath);
+        if ($result) {
+          // Remove metadata of the deleted file.
+          module_invoke_all('filebrowser_metadata_set', $file, NULL);
+        }
+        else {
+          drupal_set_message(t('Unable to delete @file', array(
+            '@file' => $fullpath
+          )), 'warning');
+        }
+      }
+      else {
+        $result = _filebrowser_rmdir($fullpath);
+        if (!$result) {
+          drupal_set_message(t('Unable to prune @file (not empty ?)', array(
+            '@file' => $fullpath
+          )), 'warning');
+        }
+      }
+    }
+  }
+
+}
+
+/**
+ * File rename form.
+ * CHECK: $node is used but not defined in this function
+ */
+function filebrowser_form_rename($form, &$form_state, $fids) {
+
+  // Store original items.
+  $original_files = array();
+
+  // Array of textboxes with new names.
+  $form['new_names'] = array(
+    '#tree' => TRUE,
+  );
+  foreach ($fids as $fid) {
+    $content = _filebrowser_node_content_load($fid);
+    $node = node_load($content['nid']);
+    $name = _filebrowser_safe_basename($content['path']);
+    $path = _filebrowser_encoding_to_fs($node, _filebrowser_get_node_root($node) . $content['root']);
+    $original_files[$fid] = array(
+      'path' => $path,
+      'display-name' => $name,
+      'full-path' => $path . '/' . $name,
+    );
+    $form['new_names'][$fid] = array(
+      '#type' => 'textfield',
+      '#default_value' => $name,
+    );
+  }
+
+  // Store original names into form values.
+  $form['original_files'] = array('#type' => 'value', '#value' => $original_files);
+
+  return confirm_form(
+    $form,
+    t('Rename selected items...'),
+    isset($_GET['destination']) ? $_GET['destination'] : 'node/' . $node->nid,
+    t('This action cannot be undone.'),
+    t('Rename'),
+    t('Cancel')
+  );
+
+}
+
+/**
+ * Validate rename form values.
+ */
+function filebrowser_form_rename_validate($form, &$form_state) {
+
+  // Do not accept path separators into new filenames.
+  foreach ($form_state['values']['new_names'] as $fid => $new_name) {
+    if (strpos($new_name, '/') !== FALSE || strpos($new_name, "\\") !== FALSE) {
+      form_set_error('new_names[' . $fid . ']', t('Invalid filename: :filename', array(':filename' => $new_name)));
+    }
+  }
+
+}
+
+/**
+ * Rename files.
+ */
+function filebrowser_form_rename_submit($form, &$form_state) {
+
+  // Original and new names.
+  $original_files = $form_state['values']['original_files'];
+  $new_names = $form_state['values']['new_names'];
+
+  // Scan each original file to see if it has been changed
+  foreach ($original_files as $fid => $original_file) {
+    // Test if filename was changed.
+    if (!empty($new_names[$fid]) && $original_file['display-name'] != $new_names[$fid]) {
+      $new_file = array(
+        'display-name' => $new_names[$fid],
+        'full-path' => $original_file['path'] . '/' . $new_names[$fid],
+      );
+      // Test if original file still exists.
+      if (file_exists($original_file['full-path'])) {
+        // Load original metadata.
+        $metadata = module_invoke_all('filebrowser_metadata_get', $original_file);
+        // Rename the file.
+        rename($original_file['full-path'], $new_file['full-path']);
+        // Save metadata to the new filename.
+        module_invoke_all('filebrowser_metadata_set', $new_file, $metadata);
+        // Clear the old one.
+        module_invoke_all('filebrowser_metadata_set', $original_file, NULL);
+      }
+    }
+  }
+
+}
+
+/**
+ * hook_node_access implementation.
+ */
+function filebrowser_node_access($node, $op, $account) {
+  if ($op == 'view') {
+    if (!user_access(FILEBROWSER_VIEW_DIRECTORY_LISTINGS, $account)) {
+      return FALSE;
+    }
+  }
+
+  if ($op == 'create') {
+    if (!user_access(FILEBROWSER_CREATE_DIRECTORY_LISTING, $account)) {
+      return FALSE;
+    }
+  }
+
+  if ($op == 'update') {
+    if (!user_access(FILEBROWSER_EDIT_ANY_DIRECTORY_LISTINGS, $account) || !(user_access(FILEBROWSER_EDIT_OWN_DIRECTORY_LISTINGS, $account) && ($account->uid == $node->uid))) {
+      return FALSE;
+    }
+  }
+
+  if ($op == 'delete') {
+    if (!user_access(FILEBROWSER_DELETE_ANY_DIRECTORY_LISTINGS, $account) || (user_access(FILEBROWSER_DELETE_OWN_DIRECTORY_LISTINGS, $account) && ($account->uid == $node->uid))) {
+      return FALSE;
+    }
+  }
+}
+
+/**
+ * hook_filebrowser_actions_info implementation
+ * @param unknown_type $node
+ */
+function filebrowser_filebrowser_actions_info($node) {
+  $actions = array();
+  if ($node->file_listing['.']['files_count'] || $node->file_listing['.']['folders_count'] ) {
+    if (_filebrowser_can_download_archive($node) && function_exists('zip_open')) {
+      $actions[] = array(
+          'operation' => 'download',
+          'title' => t("Download selected items as an ZIP archive (only files)")
+      );
+    }
+    if (user_access(FILEBROWSER_DELETE_FILE)) {
+      $actions[] = array(
+          'operation' => 'delete',
+          'title' => t("Delete selected items")
+      );
+    }
+    if (user_access(FILEBROWSER_RENAME_FILE)) {
+      $actions[] = array(
+          'operation' => 'rename',
+          'title' => t("Rename selected items")
+      );
+    }
+  }
+  return $actions;
+}
+
+/**
+ * hook_filebrowser_action_process implementation
+ * When downloading files $fids will be configured as
+ * fid_of_root:fid,fid,fid etc.
+ *
+ * @param $node
+ * @param $action string action selected by dropdown list on download form.
+ * @param $fids string id's of files to retrieve
+ */
+function filebrowser_filebrowser_action_process($node, $action, $fids) {
+  switch ($action) {
+    case 'download' :
+      $root_fid = $node->file_listing['.']['fid'];
+      if (count($fids) > 0) {
+        $root_fid .= ":" . implode(',', $fids);
+      }
+      require_once "filebrowser.pages.inc";
+      filebrowser_page_download($root_fid);
+      break;
+
+    case 'delete' :
+      drupal_goto("filebrowser/delete/" . implode(',', $fids), array('query' => drupal_get_destination()) );
+
+    case 'rename' :
+      drupal_goto("filebrowser/rename/" . implode(',', $fids), array('query' => drupal_get_destination()) );
+  }
+}
+
+/**
+ * hook_filebrowser_download_manager_info implementation.
+ */
+function filebrowser_filebrowser_download_manager_info() {
+  return array(
+      'public' => array(
+          'title' => t('Direct download (files are served by the web server and should be accessible by it)')
+      ),
+      'private' => array(
+          'title' => t('Private download (files are served by PHP/Drupal an could be everywhere)')
+      )
+  );
+}
+
+/**
+ * hook_filebrowser_download_manager_process implementation.
+ */
+function filebrowser_filebrowser_download_manager_process($delta = NULL, $file = NULL, $filename = NULL, $force_download = NULL) {
+  $content_disposition = ($force_download ? 'Content-Disposition: attachment; filename="' : 'Content-Disposition: inline; filename="');
+  switch ($delta) {
+    case 'public' :
+      $web_root = getcwd();
+      if (strpos($web_root, $file) === 0) {
+        $target = substr($file, strlen($web_root));
+      }
+      else {
+        $target = $file;
+      }
+      header("Location: " . url(trim($target, '/'), array('absolute' => TRUE)));
+      return TRUE;
+
+    case 'private' :
+      if(ini_get('zlib.output_compression')) {
+        ini_set('zlib.output_compression', 'Off');
+      }
+      $headers = array(
+        'Content-Description' => 'File Transfer',
+          'Cache-Control' => 'public, must-revalidate, max-age=0', // HTTP/1.1
+          'Pragma' => 'public',
+          'Expires' => 'Sat, 26 Jul 1997 05:00:00 GMT', // Date in the past
+          'Last-Modified' => gmdate('D, d M Y H:i:s') . ' GMT',
+          'Content-Type' => file_get_mimetype($filename),
+          'Content-Transfer-Encoding' => 'binary',
+          'Content-Length' => filesize($file),
+      );
+
+      if (stristr("MSIE", getenv("HTTP_USER_AGENT")) || stristr("Internet Explorer", getenv("HTTP_USER_AGENT"))) {
+        $headers['Content-Disposition'] = 'inline; filename="' . mb_convert_encoding(_filebrowser_safe_basename($filename), "ISO-8859-2", "UTF-8") . '";';
+      }
+      else {
+        $content_disposition = ($force_download ? 'attachment;' : 'inline;');
+        $headers['Content-Disposition'] =  $content_disposition.' filename="'. _filebrowser_safe_basename($filename) . '";';
+      }
+      if (ob_get_level()) {
+        ob_end_clean();
+      }
+      foreach ($headers as $name => $value) {
+        drupal_add_http_header($name, $value);
+      }
+
+      drupal_send_headers();
+
+      drupal_set_time_limit(0);
+      // Transfer file in 1024 byte chunks to save memory usage.
+      if  ($fd = fopen($file, 'rb')) {
+        while (!feof($fd)) {
+          print fread($fd, 1024);
+         }
+         fclose($fd);
+      }
+      else {
+        drupal_not_found();
+      }
+      drupal_exit();
+  }
+}
+
+/**
+ * hook_filebrowser_presentation
+ */
+function filebrowser_filebrowser_presentations() {
+  return array(
+      'list-view' => array(
+          'title' => t('Present this folder as a list-view'),
+          'theme' => 'dir_listing_list_view'
+      ),
+      'icon-view' => array(
+          'title' => t('Present this folder as an icon-view'),
+          'theme' => 'dir_listing_icon_view'
+      )
+  );
+}
+
+/**
+ * hook_filebrowser_metadata_definition implementation.
+ */
+function filebrowser_filebrowser_metadata_info() {
+  return array(
+      FILEBROWSER_DATA_NAME_ICON => array(
+          'title' => t('Icon')
+      ),
+      FILEBROWSER_DATA_NAME_DISPLAY_NAME => array(
+          'title' => t('Display name'),
+          'sortable' => TRUE,
+          'type' => 'string'
+      ),
+      FILEBROWSER_DATA_NAME_CREATED => array(
+          'title' => t('created'),
+          'sortable' => TRUE,
+          'type' => 'integer'
+      ),
+      FILEBROWSER_DATA_NAME_SIZE => array(
+          'title' => t('size'),
+          'sortable' => TRUE,
+          'type' => 'integer'
+      ),
+      FILEBROWSER_DATA_NAME_MODIFIED => array(
+          'title' => t('modified'),
+          'sortable' => TRUE,
+          'type' => 'integer'
+      ),
+      FILEBROWSER_DATA_NAME_TYPE => array(
+          'title' => t('Mime type'),
+          'sortable' => TRUE,
+          'type' => 'string'
+      ),
+      FILEBROWSER_DATA_NAME_DESCRIPTION => array(
+          'title' => t('Description'),
+          'writable' => TRUE,
+          'sortable' => TRUE,
+          'type' => 'string'
+      )
+  );
+}
+
+function filebrowser_filebrowser_metadata_get($file) {
+  $full_path = $file['full-path'];
+  $is_file = is_file($full_path);
+  $result = array(
+      'created' => 0,
+      'modified' => 0,
+      'size' => 0,
+      'kind' => $is_file ? 0 : 1,
+      'mime-type' => !$is_file ? "folder" : file_get_mimetype($full_path),
+      'description' => _filebrowser_read_description($full_path)
+  );
+
+  if (($f_stats = stat($full_path)) !== FALSE) {
+    if (is_file($full_path)) {
+      $result['size'] = $f_stats['size'];
+    }
+    $result['created'] = $f_stats['ctime'];
+    $result['modified'] = $f_stats['mtime'];
+  }
+  return $result;
+}
+
+function filebrowser_filebrowser_metadata_set($file, $metadata) {
+  $base_path = _filebrowser_safe_dirname($file['full-path']);
+  $data = _filebrowser_load_description_file($base_path);
+  if (!isset($data['file'])) {
+    $data['file'] = "$base_path/descript.ion";
+  }
+  if ($metadata === NULL) {
+    // Clear metadata for the given file.
+    unset($data['data'][$file['display-name']]);
+  }
+  else {
+    $data['data'][$file['display-name']] = $metadata['description'];
+  }
+  _filebrowser_save_description_file($data, $base_path);
+  _filebrowser_load_description_file($base_path, $data);
+}
+
+/**
+ * Implements hook_theme().
+ */
+function filebrowser_theme() {
+  return array(
+    'dir_listing_list_view' => array(
+      'variables' => array('node' => NULL),
+      'file' => 'filebrowser.theme.inc'
+    ),
+    'dir_listing_icon' => array(
+      'template' => 'dir_listing_icon',
+    /*  'variables' => array(
+          'data' => NULL,
+          'thumbnail' => NULL,
+          'title' => NULL,
+          'description' => NULL,
+          'href' => NULL,
+          'new' => NULL
+      ),*/
+  ),
+    'dir_listing_icon_view' => array(
+      'variables' => array('node' => NULL),
+      'file' => 'filebrowser.theme.inc'
+    ),
+    'dir_listing_statistics' => array(
+      'variables' => array('statistics' => NULL),
+      'file' => 'filebrowser.theme.inc'
+    ),
+    'dir_listing_metadata_group' => array(
+
+      'file' => 'filebrowser.theme.inc'
+    )
+  );
+}
+
+function filebrowser_node_operations() {
+  $operations = array(
+    'filebrowser_thumbnails' => array(
+      'label' => t('Update filebrowser thumbnails'),
+      'callback' => 'filebrowser_node_mass_update_thumbnails',
+      'callback arguments' => array(),
+    ),
+  );
+  return $operations;
+}
+
+function filebrowser_node_mass_update_thumbnails($nodes) {
+  module_load_include("pages.inc", "filebrowser");
+  foreach ($nodes as $nid) {
+    $node = node_load($nid);
+    _filebrowser_load_files($node);
+    $fids[]=$node->file_listing['.']['fid'];
+  }
+  filebrowser_update_thumbnails($fids);
+}
+
+/* In D6 -version this was hook_links || now moved to hook_view
+ * @return array of links
+ */
+// CHECK IF there are more links from D6 JSJ FIXME
+function _filebrowser_links($node) {
+}
+
+
+/**
+ * Removes a whole directory tree recursively.
+ *
+ * @param string $dir Directory to remove
+ *
+ * @return boolean TRUE on success, FALSE otherwise.
+ */
+function _filebrowser_rmdir($dir) {
+
+  if (is_dir($dir)) {
+    $children = scandir($dir);
+    foreach ($children as $child) {
+      if ($child != '.' && $child != '..') {
+        $fullname = $dir . '/' . $child;
+        if (is_file($fullname) || is_link($fullname)) {
+          unlink($fullname);
+        }
+        elseif (is_dir($fullname)) {
+          if (!_filebrowser_rmdir($fullname)) {
+            return FALSE;
+          }
+        }
+      }
+    }
+    reset($children);
+    return rmdir($dir);
+  }
+
+}
+
+/**
+ * Check if a file is on a S3 filesystem
+ * @param $target
+ * @return bool true if it is a S3 filesystem, false otherwise
+ */
+function is_s3_filesystem($target) {
+  if (module_exists('s3_fb')) {
+    if (is_s3_dir($target)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+/**
+ * Check if a given path is an amazon directory
+ * @param $dir Directory to check.
+ * @return bool TRUE if it is an amazon directory, FALSE if not.
+ */
+function is_s3_dir(&$dir) {
+  $dir_prefix = substr($dir, 0, 5);
+  if ($dir_prefix == 's3://') {
+    return true;
+  }
+  else {
+    return false;
+  }
+}

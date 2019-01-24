@@ -1,0 +1,294 @@
+# $Id$
+#
+# French translation of Drupal (general)
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+# Generated from files:
+#  filebrowser.admin.inc: n/a
+#  filebrowser.module: n/a
+#  filebrowser.info: n/a
+#  filebrowser_images/filebrowser_images.info: n/a
+#  filebrowser_images/filebrowser_images.module: n/a
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2009-07-22 10:37+0200\n"
+"PO-Revision-Date: 2009-07-22 10:44+0100\n"
+"Last-Translator: Dominique Vial <dominique@domsware.com>\n"
+"Language-Team: French <dominique@domsware.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n>1);\n"
+
+#: filebrowser.admin.inc:27
+msgid "Leave node permissions to an external module"
+msgstr "Laisser la gestion des permissions de noeud à un module externe"
+
+#: filebrowser.admin.inc:29
+msgid "Check this if you are using an external permission module using node_access system (ex. nodeaccess module)."
+msgstr "Cocher cette option si vous utilisez un module externe de permissions utilisant node_access system (ex. nodeaccess module)."
+
+#: filebrowser.module:91
+msgid "No ZIP support found in PHP installation, please contact your administrator"
+msgstr "Aucun support ZIP trouvé dans l'installation PHP, contacter SVP votre administrateur"
+
+#: filebrowser.module:108
+msgid "Unable to create temporary zip file '@file'"
+msgstr "Impossible de créer le fichier zip temporaire '@file'"
+
+#: filebrowser.module:218
+msgid "You're not allowed to browse sub folders."
+msgstr "Vous n'avez pas la permission de parcourir les sous-répertoires"
+
+#: filebrowser.module:229
+msgid "You're not allowed to view %dir."
+msgstr "Vous n'avez pas la permission d'afficher le répertoire %dir."
+
+#: filebrowser.module:377
+msgid "Folder Description"
+msgstr "Description du répertoire"
+
+#: filebrowser.module:392
+msgid "The system file path to the directory"
+msgstr "Chemin vers le répertoire"
+
+#: filebrowser.module:393
+msgid "This can be an absolute path or should be relative to the Drupal root directory."
+msgstr "Peut être un chemin absolu ou relatif au répertoire racine de Drupal"
+
+#: filebrowser.module:400
+msgid "Replacement patterns"
+msgstr "Motifs de remplacement"
+
+#: filebrowser.module:413;786
+msgid "Description"
+msgstr "Description"
+
+#: filebrowser.module:414
+msgid "This will overide metainformations from .bbs or .ion files."
+msgstr "Ceci remplacera les métainformations des fichiers .bbs ou .ion ."
+
+#: filebrowser.module:422
+msgid "Folder rights"
+msgstr "Autorisations du répertoire"
+
+#: filebrowser.module:431
+msgid "Allow subdirectory listings."
+msgstr "Autoriser les listes de fichiers pour les sous-répertoires."
+
+#: filebrowser.module:437
+msgid "Use private downloads"
+msgstr "Utiliser les téléchargements privés"
+
+#: filebrowser.module:438
+msgid "Use private downloads if your files are outside Drupal root or if you want Drupal to check permissions."
+msgstr "Utiliser les téléchargements privés si vos fichiers sont situés en dehors de la racine Drupal (root) ou bien si vous souhaitez que Drupal contrôle les permissions."
+
+#: filebrowser.module:444
+msgid "Download all files as an archive"
+msgstr "Télécharger tous les fichiers dans une archive"
+
+#: filebrowser.module:445
+msgid "Check this if you allow users to download all folder files as an archive."
+msgstr "Cocher cette option pour autoriser les utilisateurs à télécharger tous les fichiers du répertoire dans une archive."
+
+#: filebrowser.module:451
+msgid "Forbidden files"
+msgstr "Fichiers interdits"
+
+#: filebrowser.module:452
+msgid "List of patterns of forbidden files, you can use wildcards (ex. .*)."
+msgstr "Liste des motifs des fichiers interdits. Vous pouvez utiliser des jokers (ex. .*)."
+
+#: filebrowser.module:457
+msgid "Filteredfiles"
+msgstr "Fichiers filtrés"
+
+#: filebrowser.module:458
+msgid "List of patterns to filter, one per line, you can use wildcards (ex. *.pdf)."
+msgstr "Liste des motifs de filtrage, un par ligne. Vous pouvez utiliser des jokers (ex. *.pdf)."
+
+#: filebrowser.module:465
+msgid "Folder Upload"
+msgstr "Envoi dans le répertoire"
+
+#: filebrowser.module:472
+msgid "Allow uploads"
+msgstr "Autoriser les envois."
+
+#: filebrowser.module:473
+msgid "Allow users to upload files."
+msgstr "Autoriser les utilisateurs à envoyer des fichiers."
+
+#: filebrowser.module:478
+msgid "Allow overwrites"
+msgstr "Autoriser les remplacements"
+
+#: filebrowser.module:479
+msgid "Allow files to be overwrotes."
+msgstr "Autoriser les fichiers à être remplacés"
+
+#: filebrowser.module:484
+msgid "Accepted files for uploading"
+msgstr "Fichiers autorisés pour l'envoi"
+
+#: filebrowser.module:485
+msgid "List of file patterns accepted for upload. Empty means anything."
+msgstr "Liste des motifs de fichier acceptés pour l'envoi. Vide signifie tout."
+
+#: filebrowser.module:491
+msgid "Folder presentation"
+msgstr "Présentation du répertoire"
+
+#: filebrowser.module:500
+msgid "CSS class"
+msgstr "Classe CSS"
+
+#: filebrowser.module:506
+msgid "Hide file extensions"
+msgstr "Cacher les extensions de fichier"
+
+#: filebrowser.module:512
+msgid "Visible columns"
+msgstr "Colonnes visibles"
+
+#: filebrowser.module:515
+msgid "Icon"
+msgstr "Icône"
+
+#: filebrowser.module:516
+msgid "Size"
+msgstr "Taille"
+
+#: filebrowser.module:517
+msgid "Creation time"
+msgstr "Heure de création"
+
+#: filebrowser.module:518
+msgid "Modification time"
+msgstr "Heure de modification"
+
+#: filebrowser.module:519
+msgid "Mime type"
+msgstr "Type MIME"
+
+#: filebrowser.module:553
+msgid "Directory listing"
+msgstr "Affichage de répertoire"
+
+#: filebrowser.module:555
+msgid "A listing of files similar to how Apache lists files in a directory."
+msgstr "Affiche le contenu d'un répertoire d'une façon similaire à Apache"
+
+#: filebrowser.module:619
+msgid "If you specify an absolute path, you should choose \"private downloads\"."
+msgstr "Si vous indiquez un chemin absolu alors vous devez choisir \"Utiliser les téléchargements privés\"."
+
+#: filebrowser.module:625
+msgid "The directory %dir is not a valid directory."
+msgstr "Le répertoire %dir n'est pas un répertoire valide."
+
+#: filebrowser.module:632
+msgid "The directory %dir is not readable."
+msgstr "Le répertoire n'est pas accessible"
+
+#: filebrowser.module:660
+msgid "Download files as an Archive"
+msgstr "Télécharger les fichiers dans une Archive"
+
+#: filebrowser.module:724
+msgid "Home"
+msgstr "Accueil"
+
+#: filebrowser.module:760
+msgid "File Upload"
+msgstr "Envoi de fichier"
+
+#: filebrowser.module:763
+msgid "Uploaded file will be saved to the current directory."
+msgstr "Les fichiers envoyés seront sauvés dans le répertoire courant."
+
+#: filebrowser.module:776
+msgid "Upload file"
+msgstr "Envoyer un fichier"
+
+#: filebrowser.module:781
+msgid "New name"
+msgstr "Nouveau nom"
+
+#: filebrowser.module:794
+msgid "Upload"
+msgstr "Envoi"
+
+#: filebrowser.module:812
+msgid "This file already exists."
+msgstr "Ce fichier existe déjà."
+
+#: filebrowser.module:815
+msgid "Sorry, you can't upload this kind of file."
+msgstr "Désolé, vous ne pouvez pas envoyer ce genre de fichier."
+
+#: filebrowser.module:972
+msgid "Go up"
+msgstr "Remonter"
+
+#: filebrowser.module:1010
+msgid "Name"
+msgstr "Nom"
+
+#: filebrowser.module:1069
+msgid "Contains @fc totaling @ds in size."
+msgstr "@fc - @ds"
+
+#: filebrowser.module:1070
+msgid "1 file"
+msgid_plural "@count files"
+msgstr[0] "1 fichier"
+msgstr[1] "@count fichiers"
+
+#: filebrowser.module:682
+msgid "File Browser"
+msgstr "Navigateur de fichiers"
+
+#: filebrowser.module:683
+msgid "Configure File Browser."
+msgstr "Configurer File Browser."
+
+#: filebrowser.info:0
+msgid "Filebrowser"
+msgstr "Navigateur de fichiers"
+
+#: filebrowser.info:0
+msgid "Provides FTP-like browsing capabilities."
+msgstr "Apporte des fonctionnalités de navigation similaires à celles du FTP"
+
+#: filebrowser.info:0
+#: filebrowser_images/filebrowser_images.info:0
+msgid "File management"
+msgstr "Gestion de fichiers"
+
+#: filebrowser_images/filebrowser_images.module:38
+msgid "Unable to resize @file"
+msgstr "Impossible de recharger l'image @file"
+
+#: filebrowser_images/filebrowser_images.module:45
+msgid "Unable to load image @file"
+msgstr "Impossible de charger l'image @file"
+
+#: filebrowser_images/filebrowser_images.module:66
+msgid "Image thumbnails width"
+msgstr "Longueur des vignettes d'images"
+
+#: filebrowser_images/filebrowser_images.module:68
+msgid "Image thumbnails width."
+msgstr "Longueur des vignettes d'images."
+
+#: filebrowser_images/filebrowser_images.info:0
+msgid "Filebrowser Images"
+msgstr "Navigateur de fichier Images"
+
+#: filebrowser_images/filebrowser_images.info:0
+msgid "Add image handling to filebrowser"
+msgstr "Ajouter le support d'image au navigateur de fichiers"
+

@@ -1,0 +1,26 @@
+<?php
+
+/**
+ * @file
+ * Install file for the siteimprove module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function siteimprove_install() {
+  // Request new token.
+  if ($token = SiteimproveUtils::requestToken()) {
+    variable_set('siteimprove_token', $token);
+  }
+  else {
+    drupal_set_message(t('There was an error requesting a new token. Please try again in a few minutes.'), 'error');
+  }
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function siteimprove_uninstall() {
+  variable_del('siteimprove_token');
+}

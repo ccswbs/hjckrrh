@@ -1,0 +1,206 @@
+<?php
+
+/* This file is part of "filebrowser STARTER".
+ *    Copyright 2010, arNuméral
+ *    Author : Yoran Brault
+ *    eMail  : yoran.brault@bad_arnumeral.fr (remove bad_ before sending an email)
+ *    Site   : http://www.arnumeral.fr
+ *
+ * "filebrowser STARTER" is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * "filebrowser STARTER" is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with "Broken Anchor for Node comments Module"; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
+
+/**
+ * file "object" structure
+ * 'p1020677.jpg' => array(
+          'nid' => 316,
+          'display-name' => "p1020677.jpg",
+          'relative-path' => "/p1020677.jpg",
+          'full-path' => "/storage/shared/archives/photos/2009 - Orwen/albums publics/sixième-septième mois/p1020677.jpg",
+          'status' => 0,
+          'created' => 1277399795,
+          'modified' => 1275072438,
+          'size' => 426949,
+          'kind' => 0,
+          'mime-type' => "image/jpeg",
+          'description' => "Il dévore déjà les livres",
+          'fid' => 910,
+          'url'=> "http://"
+ */
+
+/**
+ * hook_filebrowser_thumbnailer implementation. 
+ * @param $file a filebrowser file object
+ * @param $settings handler settings (as provider by hook_filebrowser_handler_settings)
+ * @return a working XHTML markup (with A, IMG & co.) 
+ */
+function filebrowser_STARTER_filebrowser_thumbnailer($file, $settings) {
+  return "
+  	<div 
+  		style='width:{$settings->size}px;height:{$settings->size}px;background-color:red;' >
+  	{$file['display-name']}
+  	</div>";
+}
+
+/**
+ * hook_filebrowser_handler_settings implementation
+ * @param $settings previously stored settings (see this as a kind of $form_data)
+ * @return a Drupal form element
+ */
+function filebrowser_STARTER_filebrowser_handler_settings($settings) {
+  $form['size'] = array(
+      '#type' => 'textfield', 
+      '#title' => t('Thumbnails size'), 
+      '#default_value' => $settings->size ? $settings->size : 128, 
+      '#description' => t("Thumbnails size.") 
+  );
+  return $form;
+}
+
+/**
+ * hook_filebrowser_handler_info()
+ * @return An array describing the handler.
+ */
+function filebrowser_STARTER_filebrowser_handler_info() {
+  return array(
+      'description' => 'filebrowser STARTER handler' 
+  );
+}
+
+/**
+ * hook_filebrowser_metadata_info implementation. 
+ * @return an array of metatada information.  
+ */
+function filebrowser_STARTER_filebrowser_metadata_info() {
+  return array(
+      'STARTER_foo' => array(
+          'title' => t('Foo'), 
+          'writable' => TRUE, 
+          'sortable' => TRUE, 
+          'type' => 'string' 
+      ) 
+  );
+}
+
+/**
+ * hook_filebrowser_metadata_get implementation.
+ * @file the filebrowser file object to extract metadata from 
+ * @return an array of metatada
+ */
+function filebrowser_STARTER_filebrowser_metadata_get($file) {
+  return array(
+      'STARTER_foo' => 'bar ' . $file['display-name'] 
+  );
+}
+
+/**
+ * hook_filebrowser_metadata_get implementation.
+ * @file the filebrowser file object to extract metadata from 
+ * @return an array of metatada
+ */
+function filebrowser_STARTER_filebrowser_metadata_set($file, $metadata) {
+  if (isset($metadata['STARTER_foo'])) {
+    drupal_set_message('It seems that you want to change "foo" to ' . $metadata['STARTER_foo'] . ' for ' . $file['display-name']);
+  }
+}
+
+/**
+ * hook_filebrowser_presentation implementation.
+ * @return 	a list of presentation composed by a unique key (of the array), a title and a theme 
+ * name that will be used like this :
+ * theme(PRESENTATION_THEME, $filebrowser_node);
+ * So this can be a theme function or a template. $node->file_listing give you access to
+ * file objects. 
+ */
+function filebrowser_STARTER_filebrowser_presentations() {
+  return array(
+      'foo-view' => array(
+          'title' => t('STARTER view'), 
+          'theme' => 'filebrowser_STARTER_view' 
+      ) 
+  );
+}
+
+/**
+ * hook_theme implementation.
+ */
+function filebrowser_STARTER_theme() {
+  return array(
+      'filebrowser_STARTER_view' => array(
+          'arguments' => array(
+              'node' => NULL 
+          ), 
+          'template' => 'filebrowser_STARTER_view' 
+      ) 
+  );
+}
+
+/**
+ * hook_filebrowser_download_manager_info implementation.
+ * @return an array of avalaible downlod managers (key/human description)
+ */
+function filebrowser_STARTER_filebrowser_download_manager_info() {
+  return array(
+      'foo' => array(
+          'title' => t('Foo download manager') 
+      ) 
+  );
+}
+
+/**
+ * hook_filebrowser_download_manager_process implementation.
+ * @param delta the key of the download manager. 
+ * @param file the file object to download
+ * @param filename exposed file name
+ * @return TRUE of everything ok, anything else if you want to throw an access denied error. 
+ */
+function filebrowser_STARTER_filebrowser_download_manager_process($delta = NULL, $file = NULL, $filename = NULL) {
+  switch ($delta) {
+    case 'foo' :
+      print "I'm a foo downloader and I don't want to work today (I'm also french..;-). <bR>";
+      print "file: $file<br/>";
+      print "target: $filename<br/>";
+      return TRUE;
+  }
+}
+
+/**
+ * 
+ * @param unknown_type $node
+ * @param unknown_type $action
+ * @param unknown_type $fids
+ */
+function filebrowser_STARTER_filebrowser_action_process($node, $action, $fids) {
+  switch ($action) {
+    case 'foo' :
+      // processing for foo action
+      break;
+  }
+}
+
+/**
+ * 
+ * @param unknown_type $node
+ */
+function filebrowser_STARTER_filebrowser_actions_info($node) {
+  $actions = array();
+  if ($node->file_listing['.']['files_count'] > 0) {
+      $actions[] = array(
+          'operation' => 'foo', 
+          'title' => t("Foo action for files only") 
+      );
+  }
+  return $actions;
+}

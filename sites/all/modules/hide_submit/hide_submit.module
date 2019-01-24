@@ -1,0 +1,157 @@
+<?php
+
+/**
+ * @file
+ * This module blocks users from accidentally submitting a form twice. The
+ * protection only comes from jQuery and is not server side, so this is only
+ * effective against accidentally clicking of the button by users with
+ * Javascript enabled (which is a very high percent of users).
+ */
+
+/**
+ * Adds the settings.
+ *
+ * @return
+ *   TRUE if hide_submit is active.
+ */
+function hide_submit_add_settings() {
+  $hide_submit_settings = drupal_static(__FUNCTION__, array());
+
+  if (empty($hide_submit_settings)) {
+    $hide_submit_settings = array('hide_submit' => array(
+      'hide_submit_status' => variable_get('hide_submit_status', TRUE),
+      'hide_submit_method' => variable_get('hide_submit_method', 'disable'),
+      'hide_submit_css' => variable_get('hide_submit_css', 'hide-submit-disable'),
+      'hide_submit_abtext' => t(variable_get('hide_submit_abtext', '')),
+      'hide_submit_atext' => t(variable_get('hide_submit_atext', '')),
+      'hide_submit_hide_css' => variable_get('hide_submit_hide_css', 'hide-submit-processing'),
+      'hide_submit_hide_text' => t(variable_get('hide_submit_hide_text', 'Processing...')),
+      'hide_submit_indicator_style' => t(variable_get('hide_submit_indicator_style', 'expand-left')),
+      'hide_submit_spinner_color' => t(variable_get('hide_submit_spinner_color', '#000')),
+      'hide_submit_spinner_lines' => (int)variable_get('hide_submit_spinner_lines', 12),
+      'hide_submit_hide_fx' => t(variable_get('hide_submit_hide_fx', FALSE)),
+      'hide_submit_reset_time' => (int)variable_get('hide_submit_reset_time', 5000),
+    ));
+
+    // Allow other modules to modify settings.
+    drupal_alter('hide_submit', $hide_submit_settings);
+
+    // Add settings.
+    if ($hide_submit_settings['hide_submit']['hide_submit_status']) {
+      drupal_add_js($hide_submit_settings, 'setting');
+    }
+  }
+  // Return false if on views_ui page to prevent issues.
+  $path = current_path();
+  $path_alias = drupal_lookup_path('alias', $path);
+  $urls = array(
+    'admin/structure/views',
+    'admin/structure/views/*',
+  );
+  $patterns = implode("\n", $urls);
+
+  if (drupal_match_path($path, $patterns) || drupal_match_path($path_alias, $patterns)) {
+    return FALSE;
+  }
+  else {
+    return $hide_submit_settings['hide_submit']['hide_submit_status'];
+  }
+}
+
+/**
+ * Adds the JS and CSS to the form.
+ */
+function hide_submit_attach_js_css(&$form) {
+  // Add JavaScript.
+  if (!isset($form['#attached']['js'])) {
+    $form['#attached']['js'] = array();
+  }
+  $form['#attached']['js'][drupal_get_path('module', 'hide_submit') . '/js/hide_submit.js'] = array(
+    'type' => 'file',
+    'weight' => 10,
+  );
+  if (variable_get('hide_submit_method') == 'indicator') {
+    $form['#attached']['js'][drupal_get_path('module', 'hide_submit') . '/js/spin.min.js'] = array(
+      'type' => 'file',
+      'weight' => 11,
+    );
+    $form['#attached']['js'][drupal_get_path('module', 'hide_submit') . '/js/ladda.min.js'] = array(
+      'type' => 'file',
+      'weight' => 12,
+    );
+  }
+
+  // Add CSS.
+  if (!isset($form['#attached']['css'])) {
+    $form['#attached']['css'] = array();
+  }
+  if (variable_get('hide_submit_method') == 'indicator') {
+    $form['#attached']['css'][drupal_get_path('module', 'hide_submit') . '/css/ladda-themeless.min.css'] = array(
+      'type' => 'file',
+      'weight' => 9,
+    );
+  }
+  $form['#attached']['css'][drupal_get_path('module', 'hide_submit') . '/css/hide_submit.css'] = array(
+    'type' => 'file',
+    'weight' => 10,
+  );
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function hide_submit_form_alter(&$form, &$form_state, $form_id) {
+  if (user_access('bypass hide submit') && 1 != $GLOBALS['user']->uid) {
+    return;
+  }
+  if (hide_submit_add_settings()) {
+    hide_submit_attach_js_css($form);
+    $form['#after_build'][] = 'hide_submit_after_build';
+  }
+}
+
+/**
+ * After build form callback.
+ */
+function hide_submit_after_build($form, &$form_state) {
+  if (hide_submit_add_settings()) {
+    hide_submit_attach_js_css($form);
+  }
+
+  return $form;
+}
+
+/**
+ * Implements hook_menu().
+ */
+function hide_submit_menu() {
+  $items = array();
+
+  $items['admin/config/content/hide-submit'] = array(
+    'title' => 'Hide submit settings',
+    'description' => 'Configure the hiding of the form submit button.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('hide_submit_settings'),
+    'access arguments' => array('administer hide submit'),
+    'file' => 'hide_submit.admin.inc',
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_permission().
+ */
+function hide_submit_permission() {
+  return array(
+    'administer hide submit' => array(
+      'title' => t('Administer hide submit module'),
+      'description' => t('Perform administration tasks for hide submit module.'),
+    ),
+    'bypass hide submit' => array(
+      'title' => t('Bypass hide submit button'),
+      'description' => t('Disables hide_submit functionality for users'),
+    ),
+  );
+}

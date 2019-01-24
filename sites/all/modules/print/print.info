@@ -1,0 +1,13 @@
+name = "Printer-friendly pages"
+description = "Generates a printer-friendly version of Drupal pages."
+core = 7.x
+package = "Printer, email and PDF versions"
+files[] = print_join_page_counter.inc
+dependencies[] = node
+configure = admin/config/user-interface/print
+
+; Information added by Drupal.org packaging script on 2018-10-03
+version = "7.x-2.1"
+core = "7.x"
+project = "print"
+datestamp = "1538588885"

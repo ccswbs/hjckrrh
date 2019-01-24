@@ -1,0 +1,79 @@
+<?php
+/**
+ * @file
+ * Drupal system status
+ */
+
+/**
+ * Implements hook_help().
+ *
+ * Displays help and module information.
+ */
+function system_status_help($path, $arg) {
+  switch ($path) {
+    case 'admin/help#system_status':
+      $output = '<h2>' . t('System Status module information') .'</h2>';
+      $output .= '<p>' . t('System Status provides an easy way to get an overview of all the available updates for your Drupal websites.') . '<br/>';
+      $output .= t('Enable the System Status module on all your Drupal websites and allow reporting to Lumturio.com for a centralized overview and email summaries of available updates and installed versions.') . '</p>';
+      $output .= '<p>' . t('How does it work?') . '</p>';
+      $output .= '<ul>';
+      $output .= '<li>' . t('Enable the System Status module on your Drupal website') . '</li>';
+      $output .= '<li>' . t('Add this site to your Lumturio.com overview.') . '</li>';
+      $output .= '</ul>';
+
+      return $output;
+    break;
+  }
+}
+
+/**
+ * Implements hook_menu().
+ */
+function system_status_menu() {
+  $items = array();
+
+  $items['admin/reports/system_status'] = array(
+    'title' => 'System Status',
+    'description' => 'Output of the System status module',
+    'access callback' => 'system_status_access_callback',
+    'access arguments' => array(3),
+    'page callback' => 'system_status_status_page',
+    'file' => 'system_status_status.page.inc',
+    'type' => MENU_CALLBACK,
+  );
+
+  $items['admin/config/system/system_status'] = array(
+    'title' => 'System Status',
+    'description' => ' Drupal module and core monitor',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('system_status_form'),
+    'file' => 'system_status.admin.inc',
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_menu_site_status_alter().
+ */
+function system_status_menu_site_status_alter(&$menu_site_status, $path) {
+  if (strpos($path, 'admin/reports/system_status') !== FALSE && $menu_site_status == MENU_SITE_OFFLINE) {
+    $menu_site_status = MENU_SITE_ONLINE;
+  }
+}
+
+/**
+ * Access callback: Verify the used token
+ * 
+ * @see system_status_menu()
+ */
+function system_status_access_callback($token = FALSE) {
+
+  if ($token == variable_get('system_status_token', "")) {
+    return TRUE;
+  }
+
+  return FALSE;
+}

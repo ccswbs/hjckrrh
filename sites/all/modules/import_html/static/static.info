@@ -1,0 +1,12 @@
+name = Static HTML
+description = Keep static HTML files synchonised with database nodes EXPERIMENTAL -DO NOT USE
+package = "Import/Export"
+dependencies[] = import_html
+core = 7.x
+
+; Information added by Drupal.org packaging script on 2015-01-25
+version = "7.x-1.0"
+core = "7.x"
+project = "import_html"
+datestamp = "1422220985"
+
