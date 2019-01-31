@@ -263,6 +263,28 @@ function ug_profile_field_default_field_instances() {
       'description_field' => 1,
       'file_directory' => '',
       'file_extensions' => 'txt pdf doc docs odt ppt pps docx dotx ppsx pptx xlsx xltx mp3',
+      'filefield_paths' => array(
+        'active_updating' => 0,
+        'file_name' => array(
+          'options' => array(
+            'pathauto' => 0,
+            'slashes' => 0,
+            'transliterate' => 0,
+          ),
+          'value' => '[file:ffp-name-only-original].[file:ffp-extension-original]',
+        ),
+        'file_path' => array(
+          'options' => array(
+            'pathauto' => 0,
+            'slashes' => 0,
+            'transliterate' => 0,
+          ),
+          'value' => '',
+        ),
+        'redirect' => 0,
+        'retroactive_update' => 0,
+      ),
+      'filefield_paths_enabled' => 1,
       'max_filesize' => '',
       'user_register_form' => FALSE,
     ),
