@@ -1055,7 +1055,7 @@ function ug_profile_views_default_views() {
   $handler->display->display_options['style_options']['columns_sm'] = '12';
   $handler->display->display_options['style_options']['columns_md'] = '6';
   $handler->display->display_options['style_options']['columns_lg'] = '6';
-  $handler->display->display_options['style_options']['column_class'] = 'no-gutter teaser-list';
+  $handler->display->display_options['style_options']['column_class'] = 'teaser-list';
   $handler->display->display_options['defaults']['style_options'] = FALSE;
   $handler->display->display_options['defaults']['row_plugin'] = FALSE;
   $handler->display->display_options['row_plugin'] = 'fields';
