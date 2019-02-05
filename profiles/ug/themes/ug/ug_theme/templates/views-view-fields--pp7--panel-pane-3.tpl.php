@@ -29,6 +29,7 @@
  * @ingroup views_templates
  */
 ?>
+
 <div class="col-xs-12">
   <div class="media-thumbnail"><?php print $image; ?></div>
   <div class="media-header"><?php print $title; ?></div>

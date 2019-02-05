@@ -29,14 +29,16 @@
  * @ingroup views_templates
  */
 ?>
-<div class="col-md-4">
-  <div class="media-thumbnail">
-    <?php print $image; ?>
+<div class="row">
+  <div class="col-xs-5">
+    <div class="media-thumbnail">
+      <?php print $image; ?>
+    </div>
+  </div>  
+  <div class="col-xs-7 xs-gutter">
+    <div class="media-header">
+      <?php print $title; ?>
+    </div>
+    <div class="media-summary"><?php print $teaser; ?></div>
   </div>
-</div>  
-<div class="col-md-8 xs-gutter">
-	<div class="media-header">
-	  <?php print $title; ?>
-	</div>
-  <div class="media-summary"><?php print $teaser; ?></div>
 </div>
