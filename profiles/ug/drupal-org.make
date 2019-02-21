@@ -109,7 +109,7 @@ projects[ldap][version] = "2.2"
 
 projects[libraries][version] = "2.3"
 
-projects[link][version] = "1.4"
+projects[link][version] = "1.6"
 
 projects[linkchecker][version] = "1.2"
 
