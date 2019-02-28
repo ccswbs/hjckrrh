@@ -1,0 +1,17 @@
+name = U of G LDAP Configuration
+description = Standard U of G LDAP configuration.
+core = 7.x
+package = Lightweight Directory Access Protocol
+version = 7.x-1.0
+project = uog_ldap
+dependencies[] = ctools
+dependencies[] = ldap_authorization
+dependencies[] = ldap_servers
+dependencies[] = strongarm
+features[ctools][] = ldap_authorization:ldap_authorization:1
+features[ctools][] = ldap_servers:ldap_servers:1
+features[ctools][] = strongarm:strongarm:1
+features[features_api][] = api:2
+features[ldap_authorization][] = drupal_role
+features[ldap_servers][] = UofG
+features[variable][] = ldap_authentication_conf

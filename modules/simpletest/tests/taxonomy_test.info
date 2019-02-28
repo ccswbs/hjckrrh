@@ -5,8 +5,3 @@ version = VERSION
 core = 7.x
 hidden = TRUE
 dependencies[] = taxonomy
-
-; Information added by Drupal.org packaging script on 2019-01-16
-version = "7.63"
-project = "drupal"
-datestamp = "1547681965"
