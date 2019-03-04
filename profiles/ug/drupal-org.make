@@ -160,7 +160,7 @@ projects[panels_bootstrap_styles][version] = "1.x-dev"
 
 projects[panels_mini_ipe][version] = "1.0-beta4"
 
-projects[path_breadcrumbs][version] = "3.3"
+projects[path_breadcrumbs][version] = "3.4"
 
 projects[path_redirect_import][version] = "1.0-rc4"
 
