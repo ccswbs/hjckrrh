@@ -1,7 +1,0 @@
-<?php
-/**
- * @file
- * Code for the U of G LDAP Configuration feature.
- */
-
-include_once 'uog_ldap.features.inc';
