@@ -17,9 +17,9 @@ function ug_user_default_ldap_servers() {
   $ldap_servers_conf->name = 'UG Central Directory';
   $ldap_servers_conf->status = TRUE;
   $ldap_servers_conf->ldap_type = 'default';
-  $ldap_servers_conf->address = 'directory.uoguelph.ca';
-  $ldap_servers_conf->port = 389;
-  $ldap_servers_conf->tls = TRUE;
+  $ldap_servers_conf->address = 'ldaps://directory.uoguelph.ca';
+  $ldap_servers_conf->port = 636;
+  $ldap_servers_conf->tls = FALSE;
   $ldap_servers_conf->followrefs = FALSE;
   $ldap_servers_conf->bind_method = 1;
   $ldap_servers_conf->binddn = 'uid=drupalpx,ou=people,o=uoguelph.ca';
