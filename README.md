@@ -1,8 +1,4 @@
-Prototype of AODA remediation features.
 
-Features
+University of Guelph Drupal 7 Distribution
 
- * UG News
-
- * UG Front
-
+Last updated: 3/6/2019 04:11 PM
