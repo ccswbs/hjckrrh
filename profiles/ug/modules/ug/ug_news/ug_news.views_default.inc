@@ -439,7 +439,7 @@ function ug_news_views_default_views() {
   $handler->display->display_options['fields']['field_news_image']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_news_image']['click_sort_column'] = 'fid';
   $handler->display->display_options['fields']['field_news_image']['settings'] = array(
-    'image_style' => 'image_medium',
+    'image_style' => 'medium',
     'image_link' => '',
   );
   /* Field: Content: Post date */
