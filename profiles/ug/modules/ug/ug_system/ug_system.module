@@ -1,0 +1,53 @@
+<?php
+
+/**
+ * Implements hook_menu().
+ */
+function ug_system_menu() {
+
+  $items['admin/config/system/production-mode'] = array(
+    'title' => 'Production mode',
+    'description' => 'Put the site in production mode.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('ug_system_production_mode'),
+    'access arguments' => array('administer site configuration'),
+    //'file' => 'ug_system.admin.inc',
+    'weight' => -10,
+  );
+
+  return $items;
+}
+
+/**
+ * Form builder; Configure the site's production status.
+ *
+ * @ingroup forms
+ * @see system_settings_form()
+ */
+function ug_system_production_mode() {
+  $form['ug_system_production_mode'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Put site into production mode'),
+    '#default_value' => variable_get('ug_system_production_mode', 0),
+    '#description' => t('Enable production mode.'),
+  );
+
+  return system_settings_form($form);
+}
+
+function ug_system_production_mode_validate($form, &$form_state) {
+  require_once(drupal_get_path('module', 'system').'/system.admin.inc');
+  if (system_status(TRUE)) {
+    form_set_error('status', t('Please resolve system status errors before continuing.'));
+  }
+}
+
+/**
+ * Implements hook_preprocess_page().
+ */
+function ug_system_preprocess_html(&$variables) {
+  if (!variable_get('ug_system_production_mode', 0)) {
+    $variables['head_title'] = '[DEVELOPMENT] ' . $variables['head_title'];
+  }
+}
+

@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * Implements hook_requirements().
+ */
+function ug_system_requirements($phase) {
+  $requirements = array();
+  if ($phase == 'runtime') {
+    $update_notify_emails = variable_get('update_notify_emails', array());
+    $requirements['ug_system_update_notify_emails'] = array(
+      'title' => t('Update notify emails'),
+      'value' => implode(', ', $update_notify_emails),
+    );
+    if (in_array('admin@example.com', $update_notify_emails)) {
+      $requirements['ug_system_update_notify_emails']['description'] = t('Update notification email has not been changed from its default value.');
+      $requirements['ug_system_update_notify_emails']['severity'] = REQUIREMENT_ERROR;
+    }
+  }
+  return $requirements;
+}
+
