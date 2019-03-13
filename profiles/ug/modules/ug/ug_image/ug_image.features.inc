@@ -57,6 +57,21 @@ function ug_image_image_default_styles() {
     ),
   );
 
+  // Exported image style: news_large.
+  $styles['news_large'] = array(
+    'label' => 'News large',
+    'effects' => array(
+      4 => array(
+        'name' => 'image_scale_and_crop',
+        'data' => array(
+          'width' => 360,
+          'height' => 200,
+        ),
+        'weight' => 1,
+      ),
+    ),
+  );
+
   // Exported image style: news_thumbnail.
   $styles['news_thumbnail'] = array(
     'label' => 'News thumbnail',
