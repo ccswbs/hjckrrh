@@ -1091,6 +1091,21 @@ function ug_theme_preprocess_views_view__n3(&$vars) {
 }
 
 /**
+ * N4 - News teaser row
+ */
+function ug_theme_preprocess_views_view__n4(&$vars) {
+
+  $view = views_get_current_view();
+
+  if(!empty($view->args[0])){
+    $category_filter = $view->args[0];
+    $view->display_handler->set_option('link_url', 'news/category/' . $category_filter);
+  }
+
+  $vars['more'] = $view->display_handler->render_more_link();
+}
+
+/**
  * PP7 - People profiles teaser list
  */
 function ug_theme_preprocess_views_view__pp7(&$vars) {
