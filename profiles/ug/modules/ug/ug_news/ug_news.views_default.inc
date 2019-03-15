@@ -1081,6 +1081,7 @@ function ug_news_views_default_views() {
 
   /* Display: Content pane with Summary */
   $handler = $view->new_display('panel_pane', 'Content pane with Summary', 'panel_pane_2');
+  $handler->display->display_options['link_url'] = '/news';
   $handler->display->display_options['allow']['use_pager'] = 0;
   $handler->display->display_options['allow']['items_per_page'] = 'items_per_page';
   $handler->display->display_options['allow']['offset'] = 0;
