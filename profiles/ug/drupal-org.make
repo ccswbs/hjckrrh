@@ -208,7 +208,8 @@ projects[uuid][version] = "1.1"
 
 projects[view_unpublished][version] = "1.2"
 
-projects[views][version] = "3.17"
+projects[views][version] = "3.21"
+projects[views][patch][] = "https://www.drupal.org/files/issues/2019-03-13/3039953-25.patch"
 
 projects[views_bootstrap][version] = "3.2"
 
