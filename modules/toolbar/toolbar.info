@@ -3,3 +3,8 @@ description = Provides a toolbar that shows the top-level administration menu it
 core = 7.x
 package = Core
 version = VERSION
+
+; Information added by Drupal.org packaging script on 2019-03-20
+version = "7.65"
+project = "drupal"
+datestamp = "1553100118"

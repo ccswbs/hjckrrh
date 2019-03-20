@@ -33,3 +33,8 @@ regions[footer] = Footer
 
 settings[shortcut_module_link] = 0
 
+
+; Information added by Drupal.org packaging script on 2019-03-20
+version = "7.65"
+project = "drupal"
+datestamp = "1553100118"
