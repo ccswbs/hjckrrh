@@ -1,0 +1,8 @@
+name = UG Psych Handbook
+core = 7.x
+package = UG
+features[features_api][] = api:2
+features[rules_config][] = rules_sync_content
+features_exclude[dependencies][entity] = entity
+features_exclude[dependencies][rules] = rules
+features_exclude[rules_config][rules_sync_nodes] = rules_sync_nodes
