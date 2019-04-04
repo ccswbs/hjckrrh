@@ -176,6 +176,7 @@ function _update_process_info_list(&$projects, $list, $project_type, $status) {
     // section at the top of the report.
     if ($project_name == 'drupal') {
       $project_display_type = 'core';
+      $file->info['version'] = VERSION;
     }
     else {
       $project_display_type = $project_type;
