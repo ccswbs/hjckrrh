@@ -2,18 +2,32 @@
 
 set -eu
 
-ENV=$1
-
-if [ -z "$ENV" ]
-  then
-    echo "Usage: $0 ENV" 
-    exit 1
-  fi
-
+ENV="dev"
 TAG="live"
 ORG="university-of-guelph"
 TERMINUS="terminus"
 TFLAGS="--no-interaction --no-ansi"
+
+while [ $# -gt 0 ]
+  do
+    case $1 in
+      -e|--env)
+        ENV=$2
+        shift
+        shift
+        ;;
+      -t|--tag)
+        TAG=$2
+        shift
+        shift
+        ;;
+      -o|--org)
+        ORG=$2
+        shift
+        shift
+        ;;
+    esac
+  done
 
 SITES=$($TERMINUS $TFLAGS site:list --field=id)
 
