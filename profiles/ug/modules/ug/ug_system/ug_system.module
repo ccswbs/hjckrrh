@@ -1,6 +1,6 @@
 <?php
 // DEFINE('API_URL', "https://app.lumturio.com/api/");
-// DEFINE('API_TOKEN', "7tMeJBFO3EYx5K2iYsgNzpBiI84Jws");
+// DEFINE('API_TOKEN', "");
 
 /**
 * Implements hook_menu().
