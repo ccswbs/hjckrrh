@@ -1,0 +1,7 @@
+name = UG Node mirror
+core = 7.x
+package = UG
+dependencies[] = entity
+dependencies[] = rules
+features[features_api][] = api:2
+features[rules_config][] = rules_sync_nodes

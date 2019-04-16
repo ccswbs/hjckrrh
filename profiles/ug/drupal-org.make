@@ -195,6 +195,8 @@ projects[services][version] = "3.20"
 
 projects[siteimprove][version] = "1.0"
 
+projects[smtp][version] = "1.7"
+
 projects[strongarm][version] = "2.0"
 
 projects[system_status][version] = "3.1"
