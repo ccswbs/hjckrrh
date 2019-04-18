@@ -1,0 +1,17 @@
+name = UG Mail
+description = UG mail configuration settings
+core = 7.x
+package = UG
+dependencies[] = ctools
+dependencies[] = smtp
+dependencies[] = strongarm
+features[ctools][] = strongarm:strongarm:1
+features[features_api][] = api:2
+features[variable][] = mail_system
+features[variable][] = smtp_host
+features[variable][] = smtp_on
+features[variable][] = smtp_port
+features[variable][] = smtp_previous_mail_system
+features[variable][] = smtp_protocol
+features[variable][] = smtp_username
+project path = profiles/ug/modules/ug
