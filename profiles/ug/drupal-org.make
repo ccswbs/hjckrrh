@@ -138,7 +138,7 @@ projects[migrate_d2d][patch][] = "https://www.drupal.org/files/issues/migrate_d2
 
 projects[mimemail][version] = "1.1"
 
-projects[module_filter][version] = "2.0"
+projects[module_filter][version] = "2.2"
 
 projects[module_missing_message_fixer][version] = "1.2"
 
