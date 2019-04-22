@@ -41,8 +41,8 @@ function ug_system_requirements($phase) {
       'title' => t('UG recaptcha Site key'),
       'description' => t('This ensures the recaptcha site key is correct'),
     );
-    if ($recaptcha_site_key != '6LfhO_gSAAAAAL4stbeWkKhUsmgs2u68CvBxk53M') {
-      $requirements['ug_system_recaptcha_site_key']['value'] = t('Incorrect key');
+    if ($recaptcha_site_key == '') {
+      $requirements['ug_system_recaptcha_site_key']['value'] = t('Key has not been set');
       $requirements['ug_system_recaptcha_site_key']['severity'] = REQUIREMENT_ERROR;
       $requirements['ug_system_recaptcha_site_key']['description'] = t('recaptcha Site key is missing/incorrect');
     }
@@ -55,8 +55,8 @@ function ug_system_requirements($phase) {
       'title' => t('UG recaptcha Secret key'),
       'description' => t('This ensures the recaptcha secret key is correct'),
     );
-    if ($recaptcha_secret_key != '6LfhO_gSAAAAAKdSU9SUzOHwBjueKx-2vjlQR0L5')  {
-      $requirements['ug_system_recaptcha_secret_key']['value'] = t('Incorrect key');
+    if ($recaptcha_secret_key == '')  {
+      $requirements['ug_system_recaptcha_secret_key']['value'] = t('Key has not been set');
       $requirements['ug_system_recaptcha_secret_key']['severity'] = REQUIREMENT_ERROR;
       $requirements['ug_system_recaptcha_secret_key']['description'] = t('recaptcha Secret key is missing/incorrect');
     }
@@ -72,7 +72,7 @@ function ug_system_requirements($phase) {
     if ($error_level != '0'){
       $requirements['ug_system_error_level']['value'] = t('Not configured');
       $requirements['ug_system_error_level']['severity'] = REQUIREMENT_ERROR;
-      $requirements['ug_system_error_level']['description'] = t('Turn error messages off. Value should be 0(None)');
+      $requirements['ug_system_error_level']['description'] = t('Turn error messages off. Value should be None');
     }
 
     // ------------------------
@@ -81,12 +81,12 @@ function ug_system_requirements($phase) {
     $cache_lifetime = variable_get('cache_lifetime');
     $requirements['ug_system_cache_lifetime'] = array(
       'title' => t('UG Minimum Cache lifetime'),
-      'description' => t('This ensures that the cache lifettime is enabled under Configuration / Performance and it is set to 5 mins'),
+      'description' => t('This ensures that the cache lifettime is enabled at <a href="@cache_lifetime_settings">config/Performance</a> and it is set to 5 mins', array('@cache_lifetime_settings' => url('admin/config/development/performance'))),
     );
     if ($cache_lifetime != '300') {
       $requirements['ug_system_cache_lifetime']['value'] = t('Caching is not enabled');
       $requirements['ug_system_cache_lifetime']['severity'] = REQUIREMENT_ERROR;
-      $requirements['ug_system_cache_lifetime']['description'] = t('Set to 5 min (300)');
+      $requirements['ug_system_cache_lifetime']['description'] = t('Enable caching at <a href="@cache_lifetime_settings">config/Performance</a> and set to 5 min', array('@cache_lifetime_settings' => url('admin/config/development/performance')));
     }
 
     // ------------------------
@@ -95,24 +95,24 @@ function ug_system_requirements($phase) {
     $page_cache_maximum_age = variable_get('page_cache_maximum_age');
     $requirements['ug_system_page_cache_maximum_age'] = array(
       'title' => t('UG Expiration of cached pages'),
-      'description' => t('This ensures page caching is enabled under Configuration / Performance and it is set to 5 mins'),
+      'description' => t('This ensures that the page caching is enabled at <a href="@cache_pages_settings">config/Performance</a> and it is set to 5 mins', array('@cache_pages_settings' => url('admin/config/development/performance'))),
     );
     if ($page_cache_maximum_age != '300') {
       $requirements['ug_system_page_cache_maximum_age']['value'] = t('Caching is not enabled');
       $requirements['ug_system_page_cache_maximum_age']['severity'] = REQUIREMENT_ERROR;
-      $requirements['ug_system_page_cache_maximum_age']['description'] = t('set to 5 min (300)');
+      $requirements['ug_system_page_cache_maximum_age']['description'] = t('Enable caching at <a href="@cache_pages_settings">config/Performance</a> and set to 5 min', array('@cache_pages_settings' => url('admin/config/development/performance')));
     }
 
     // ------------------------
     // LDAP CONFIGURATION
     // ------------------------
-    $ldap = db_query("select * from {ldap_servers}");
+    $ldap = db_query("select * from {ldap_servers} where sid='ug'");
     $requirements['ug_system_ldap'] = array(
       'title' => t('UG Ldap binding'),
-      'description' => t('This ensures LDAP proxy password is configured and LDAP method is set to binding under People / LDAP configuration / servers / binding method '),
+      'description' => t('This ensures LDAP proxy password is configured and LDAP method is set to binding under <a href="@ldap_settings">config/LDAP configuration/servers/binding method</a>' , array('@ldap_settings' => url('admin/config/people/ldap/servers/edit/ug'))),
     );
-    if ($ldap->fetchColumn(11) == NULL and $ldap->fetchColumn(9) != '1' ) {
-      $requirements['ug_system_ldap']['description'] = t('Ldap binding is not configured correctly');
+    if ($ldap->fetchColumn(11) == NULL && $ldap->fetchColumn(9) != '1' ) {
+      $requirements['ug_system_ldap']['description'] = t('Ldap binding is not configured correctly go to <a href="@ldap_settings">config/LDAP configuration/servers/binding method</a>' , array('@ldap_settings' => url('admin/config/people/ldap/servers/edit/ug')));
       $requirements['ug_system_ldap']['severity'] = REQUIREMENT_ERROR;
     }
 
