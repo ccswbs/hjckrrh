@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the UG Course Outlines Workbench Moderation feature.
+ */
+
+include_once 'ug_course_outlines_workbench_moderation.features.inc';
