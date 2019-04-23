@@ -119,6 +119,7 @@ function ug_workbench_moderation_user_default_permissions() {
   $permissions['use workbench_moderation needs review tab'] = array(
     'name' => 'use workbench_moderation needs review tab',
     'roles' => array(
+      'editor' => 'editor',
       'moderator' => 'moderator',
       'publisher' => 'publisher',
       'site manager' => 'site manager',
