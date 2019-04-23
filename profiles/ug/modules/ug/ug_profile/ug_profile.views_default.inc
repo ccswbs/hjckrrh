@@ -836,6 +836,9 @@ function ug_profile_views_default_views() {
   $handler->display->display_options['fields']['field_profile_website']['field'] = 'field_profile_website';
   $handler->display->display_options['fields']['field_profile_website']['label'] = 'Website';
   $handler->display->display_options['fields']['field_profile_website']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_profile_website']['element_type'] = 'span';
+  $handler->display->display_options['fields']['field_profile_website']['element_label_type'] = 'strong';
+  $handler->display->display_options['fields']['field_profile_website']['element_wrapper_type'] = 'div';
   $handler->display->display_options['fields']['field_profile_website']['hide_empty'] = TRUE;
   $handler->display->display_options['fields']['field_profile_website']['click_sort_column'] = 'url';
   $handler->display->display_options['fields']['field_profile_website']['delta_offset'] = '0';
