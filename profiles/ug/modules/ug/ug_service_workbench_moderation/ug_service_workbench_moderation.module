@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the UG Service Workbench Moderation feature.
+ */
+
+include_once 'ug_service_workbench_moderation.features.inc';
