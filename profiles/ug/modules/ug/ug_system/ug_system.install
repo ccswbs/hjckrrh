@@ -122,6 +122,7 @@ function ug_system_requirements($phase) {
     $nagios = variable_get('ug_system_add_nagios');
     $requirements['ug_system_add_nagios'] = array(
       'title' => t('UG add site to Nagios'),
+      'value' => t('Ticket submitted'),
       'description' => t('This ensures a footprints ticket has been sent to add the site url to nagios'),
     );
     if ($nagios != '1') {
@@ -133,16 +134,16 @@ function ug_system_requirements($phase) {
     // --------------------------------
     // SITE ADDED TO LUMTURIO DASHBOARD
     // --------------------------------
-    $lumturio = variable_get('ug_system_add_lumturio');
-    $requirements['ug_system_add_lumturio'] = array(
-      'title' => t('UG add site URL to lumturio dashboard'),
-      'description' => t('This ensures the site is on the lumturio dashboard'),
-    );
-    if ($lumturio != '1') {
-      $requirements['ug_system_add_lumturio']['value'] = t('Site has not been added to lumturio');
-      $requirements['ug_system_add_lumturio']['severity'] = REQUIREMENT_ERROR;
-      $requirements['ug_system_add_lumturio']['description'] = t('go to confing to add site');
-    }
+    // $lumturio = variable_get('ug_system_add_lumturio');
+    // $requirements['ug_system_add_lumturio'] = array(
+    //   'title' => t('UG add site URL to lumturio dashboard'),
+    //   'description' => t('This ensures the site is on the lumturio dashboard'),
+    // );
+    // if ($lumturio != '1') {
+    //   $requirements['ug_system_add_lumturio']['value'] = t('Site has not been added to lumturio');
+    //   $requirements['ug_system_add_lumturio']['severity'] = REQUIREMENT_ERROR;
+    //   $requirements['ug_system_add_lumturio']['description'] = t('go to confing to add site');
+    // }
 
     // ------------------------
     // GOOGLE ANALYTICS
