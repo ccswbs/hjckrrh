@@ -79,8 +79,8 @@ function ug_faq_strongarm() {
   $strongarm->api_version = 1;
   $strongarm->name = 'node_options_faq';
   $strongarm->value = array(
-    0 => 'promote',
-    1 => 'moderation',
+    0 => 'status',
+    1 => 'promote',
     2 => 'revision',
   );
   $export['node_options_faq'] = $strongarm;
