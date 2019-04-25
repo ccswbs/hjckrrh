@@ -1,0 +1,10 @@
+<?php
+/**
+ * Set publishing options for News content type.
+ * Turns on revisions and moderation.
+ * Implements hook_install().
+ */
+
+function ug_news_workbench_moderation_install() {
+	variable_set('node_options_news', array('moderation','revision'));
+}

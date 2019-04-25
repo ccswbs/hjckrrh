@@ -1,0 +1,10 @@
+<?php
+/**
+ * Set publishing options for Page content type.
+ * Turns on revisions and moderation.
+ * Implements hook_install().
+ */
+
+function ug_page_workbench_moderation_install() {
+	variable_set('node_options_page', array('moderation','revision'));
+}

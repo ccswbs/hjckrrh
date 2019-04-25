@@ -1,0 +1,10 @@
+<?php
+/**
+ * Set publishing options for FAQ content type.
+ * Turns on revisions and moderation.
+ * Implements hook_install().
+ */
+
+function ug_faq_workbench_moderation_install() {
+	variable_set('node_options_faq', array('moderation','revision'));
+}

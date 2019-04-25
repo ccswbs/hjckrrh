@@ -1,9 +1,10 @@
-name = UG Events Workbench Moderation
+name = UG Event Workbench Moderation
 core = 7.x
 package = UG
 dependencies[] = ctools
 dependencies[] = features
 dependencies[] = strongarm
+dependencies[] = ug_event
 dependencies[] = ug_workbench_moderation
 dependencies[] = view_unpublished
 features[ctools][] = strongarm:strongarm:1
