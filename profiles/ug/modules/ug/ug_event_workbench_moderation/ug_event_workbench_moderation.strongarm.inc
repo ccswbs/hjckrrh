@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * ug_events_workbench_moderation.strongarm.inc
+ * ug_event_workbench_moderation.strongarm.inc
  */
 
 /**
  * Implements hook_strongarm().
  */
-function ug_events_workbench_moderation_strongarm() {
+function ug_event_workbench_moderation_strongarm() {
   $export = array();
 
   $strongarm = new stdClass();

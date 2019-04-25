@@ -1,0 +1,10 @@
+<?php
+/**
+ * Set publishing options for Service Catalogue content type.
+ * Turns on revisions and moderation.
+ * Implements hook_install().
+ */
+
+function ug_service_workbench_moderation_install() {
+	variable_set('node_options_service', array('moderation','revision'));
+}

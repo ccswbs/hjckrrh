@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * ug_events_workbench_moderation.features.user_permission.inc
+ * ug_event_workbench_moderation.features.user_permission.inc
  */
 
 /**
  * Implements hook_user_default_permissions().
  */
-function ug_events_workbench_moderation_user_default_permissions() {
+function ug_event_workbench_moderation_user_default_permissions() {
   $permissions = array();
 
   // Exported permission: 'view any unpublished event content'.

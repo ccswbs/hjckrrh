@@ -14,8 +14,10 @@ function ug_workbench_moderation_workbench_email_export() {
       'to_name' => 'needs_review',
       'author' => 1,
       'automatic' => 1,
-      'subject' => 'Web content edits sent for review',
-      'message' => 'Recent updates to your web content requires review. The website content publishers have been notified.',
+      'subject' => 'Web content sent for review: "[node:title]"',
+      'message' => 'Recent updates to your web content "[node:title]" requires review.
+
+The website content publishers have been notified.',
       'role' => 'original author',
     ),
     'draft:needs_review:publisher' => array(
@@ -23,8 +25,9 @@ function ug_workbench_moderation_workbench_email_export() {
       'to_name' => 'needs_review',
       'author' => 0,
       'automatic' => 1,
-      'subject' => 'Web content edit: review required',
-      'message' => 'Web content review required.
+      'subject' => 'Web content review required: "[node:title]"',
+      'message' => 'Web content review required for "[node:title]".
+
 The following content author has requested a review of recent changes:
 
 User: [current-user:name]
@@ -36,8 +39,8 @@ Author email: [current-user:mail]',
       'to_name' => 'published',
       'author' => 1,
       'automatic' => 1,
-      'subject' => 'Web content published',
-      'message' => 'Your updates to the web content have been approved by [current-user:name].
+      'subject' => 'Web content published: "[node:title]"',
+      'message' => 'Your updates to the web content "[node:title]" have been approved by [current-user:name].
 The content moderators have published your content.',
       'role' => 'original author',
     ),
