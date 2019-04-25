@@ -66,7 +66,7 @@ projects[field_collection_tabs][version] = "1.1"
 projects[field_collection_bootstrap_tabs][version] = "1.x"
 projects[field_collection_bootstrap_tabs][type] = "module"
 projects[field_collection_bootstrap_tabs][download][type] = "git"
-projects[field_collection_bootstrap_tabs][download][url] = "https://git.drupal.org/sandbox/osman/2464117.git"
+projects[field_collection_bootstrap_tabs][download][url] = "https://git.drupalcode.org/sandbox/osman-2464117.git"
 
 projects[field_group][version] = "1.5"
 
@@ -138,7 +138,7 @@ projects[migrate_d2d][patch][] = "https://www.drupal.org/files/issues/migrate_d2
 
 projects[mimemail][version] = "1.1"
 
-projects[module_filter][version] = "2.0"
+projects[module_filter][version] = "2.2"
 
 projects[module_missing_message_fixer][version] = "1.2"
 
