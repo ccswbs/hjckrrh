@@ -81,10 +81,11 @@ function ug_system_requirements($phase) {
     $cache_lifetime = variable_get('cache_lifetime');
     $requirements['ug_system_cache_lifetime'] = array(
       'title' => t('UG Minimum Cache lifetime'),
+      'value' => t('Enabled'),
       'description' => t('This ensures that the cache lifettime is enabled at <a href="@cache_lifetime_settings">config/Performance</a> and it is set to 5 mins', array('@cache_lifetime_settings' => url('admin/config/development/performance'))),
     );
     if ($cache_lifetime != '300') {
-      $requirements['ug_system_cache_lifetime']['value'] = t('Caching is not enabled');
+      $requirements['ug_system_cache_lifetime']['value'] = t('Not enabled');
       $requirements['ug_system_cache_lifetime']['severity'] = REQUIREMENT_ERROR;
       $requirements['ug_system_cache_lifetime']['description'] = t('Enable caching at <a href="@cache_lifetime_settings">config/Performance</a> and set to 5 min', array('@cache_lifetime_settings' => url('admin/config/development/performance')));
     }
@@ -95,10 +96,11 @@ function ug_system_requirements($phase) {
     $page_cache_maximum_age = variable_get('page_cache_maximum_age');
     $requirements['ug_system_page_cache_maximum_age'] = array(
       'title' => t('UG Expiration of cached pages'),
+      'value' => t('Enabled'),
       'description' => t('This ensures that the page caching is enabled at <a href="@cache_pages_settings">config/Performance</a> and it is set to 5 mins', array('@cache_pages_settings' => url('admin/config/development/performance'))),
     );
     if ($page_cache_maximum_age != '300') {
-      $requirements['ug_system_page_cache_maximum_age']['value'] = t('Caching is not enabled');
+      $requirements['ug_system_page_cache_maximum_age']['value'] = t('Not enabled');
       $requirements['ug_system_page_cache_maximum_age']['severity'] = REQUIREMENT_ERROR;
       $requirements['ug_system_page_cache_maximum_age']['description'] = t('Enable caching at <a href="@cache_pages_settings">config/Performance</a> and set to 5 min', array('@cache_pages_settings' => url('admin/config/development/performance')));
     }
@@ -131,34 +133,36 @@ function ug_system_requirements($phase) {
       $requirements['ug_system_add_nagios']['description'] = t('Go to the config form to submit ticket');
     }
 
-    // --------------------------------
-    // SITE ADDED TO LUMTURIO DASHBOARD
-    // --------------------------------
-    // $lumturio = variable_get('ug_system_add_lumturio');
-    // $requirements['ug_system_add_lumturio'] = array(
-    //   'title' => t('UG add site URL to lumturio dashboard'),
-    //   'description' => t('This ensures the site is on the lumturio dashboard'),
-    // );
-    // if ($lumturio != '1') {
-    //   $requirements['ug_system_add_lumturio']['value'] = t('Site has not been added to lumturio');
-    //   $requirements['ug_system_add_lumturio']['severity'] = REQUIREMENT_ERROR;
-    //   $requirements['ug_system_add_lumturio']['description'] = t('go to confing to add site');
-    // }
-
     // ------------------------
     // GOOGLE ANALYTICS
     // ------------------------
-    /*  $googleanalytics_account = variable_get('googleanalytics_account');
-    if ($googleanalytics_account == "UA-0000000-00") {
-    $requirements['ug_system_googleanalytics_account'] = array(
-    'title' => t('UG Google analytics'),
-    'description' => t('Google analytics account not configured'),
-    'value' => check_plain($googleanalytics_account),
-    'severity' => REQUIREMENT_WARNING,
-  );
-}*/
+    $google_analytics_module = module_exists('googleanalytics');
+    $requirements['ug_system_google_analytics'] = array(
+      'title' => t('UG Google analytics module'),
+      'value' => t('Enabled'),
+      'description' => t('This ensures the google analytics module is enabled'),
+    );
+    if ($google_analytics_module == FALSE) {
+      $requirements['ug_system_google_analytics']['value'] = t('Not enabled');
+      $requirements['ug_system_google_analytics']['severity'] = REQUIREMENT_WARNING;
+      $requirements['ug_system_google_analytics']['description'] = t('Turn on google analytics module');
+    }
 
-
+    $menu_link_check = db_query("select link_path from {menu_links} where link_path LIKE '%w-stage%'")->fetchAll();
+    foreach ($menu_link_check as $row) {
+      $arr = array($row->link_path);
+    }
+    $requirements['ug_system_test'] = array(
+      'title' => t('UG menu links'),
+      'value' => t('No links'),
+      'description' => t('Ensures there are no menu links to the stage site'),
+    );
+    if ($menu_link_check != NULL ) {
+      $requirements['ug_system_test']['description'] = t('There are menu links to the stage site');
+      $requirements['ug_system_test']['value'] = t('@num link(s)', array('@num' => count($menu_link_check)) );
+      $requirements['ug_system_test']['severity'] = REQUIREMENT_ERROR;
+    }
 }
+
 return $requirements;
 }

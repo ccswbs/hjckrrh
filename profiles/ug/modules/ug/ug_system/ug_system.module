@@ -47,7 +47,7 @@ function ug_system_add_site_form(){
 
   $form['ug_system_api_key'] = array(
     '#type' => 'textfield',
-    '#title' => t('Enter lumturio api key [confirm site is not on lumturio]'),
+    '#title' => t('Enter lumturio api key'),
     '#attributes' =>array('value' => variable_get('ug_system_api_key')),
     '#description' => t('Lumturio api key, can be found on the lumturio dashnoard under settings'),
   );
@@ -80,18 +80,9 @@ function ug_system_form_submit_button($form, &$form_state){
     drupal_set_message(t("Ticket has been submitted"), 'status');
   }
 
-  $lumturio_submit_checkbox = variable_get('ug_system_add_lumturio');
-  if($lumturio_submit_checkbox == '1' ) {
-    $post_result = ug_system_lumturio_post("/site.addsite");
-    if($post_result['ok'] == true) {
-    drupal_set_message(t("Site has been added to lumturio"), 'status');
-  }
-  }
   if (!empty($message['result'])) {
     drupal_set_message("Mail sent!");
   }
-
-
 }
 
 /**
@@ -108,18 +99,6 @@ function ug_system_mail($key, &$message, $params ){
 }
 
 /**
-* Implements hook_validate().
-*/
-// function ug_system_add_site_form_validate($form, &$form_state) {
-//   if (empty($_POST["nagios"])) {
-//     form_set_error('status', t('Please check add site to nagios'));
-//   }
-//   elseif (empty($_POST["lumturio"])) {
-//     form_set_error('status', t('Please check add site to lumturio'));
-//   }
-// }
-
-/**
 * Implements hook_form_FORM_ID_alter().
 **/
 function ug_system_form_ug_system_add_site_form_alter(&$form, &$form_state, $form_id) {
@@ -133,7 +112,6 @@ function ug_system_form_ug_system_add_site_form_alter(&$form, &$form_state, $for
   if(($lumturio_checkbox  == '1')){
     $form['ug_system_add_lumturio']['#disabled'] = TRUE;
     $form['submit']['#disabled'] = TRUE;
-    $form['ug_system_add_lumturio']['#description'] = t("Site has been added to lumurio dashboard");
   }
 }
 
@@ -145,11 +123,17 @@ if($get_result['ok'] == true) {
   foreach($sites as $site) {
     if($site['site_url'] == $base_url) {
       $site_available = TRUE;
-      drupal_set_message(t("site is already added to lumturio"), 'status');
+      drupal_set_message(t("site is already on lumturio"), 'status');
     }
   }
-  if ($site_available == FALSE) {
-    drupal_set_message(t("Site needs to be added to lumturio"), 'warning');
+  $lumturio_checkbox = variable_get('ug_system_add_lumturio');
+  if ($site_available == FALSE && $lumturio_checkbox == '1') {
+    $lumturio_checkbox = variable_get('ug_system_add_lumturio');
+    $post_result = ug_system_lumturio_post("/site.addsite");
+    dvm($post_result);
+    if($post_result['ok'] == true) {
+      drupal_set_message(t("Site has been added to lumturio"), 'status');
+    }
   }
 }
 
