@@ -35,6 +35,8 @@ projects[datalayer][version] = "1.x-dev"
 
 projects[date][version] = "2.10"
 
+projects[date_ical][version] = "3.5"
+
 projects[devel][version] = "1.5"
 
 projects[diff][version] = "3.3"
