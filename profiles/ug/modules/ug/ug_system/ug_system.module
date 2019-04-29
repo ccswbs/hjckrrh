@@ -28,7 +28,7 @@ function ug_system_menu() {
 }
 
 /**
-* Form builder
+* Form builder; Add the site to nagios and Lumturio
 **/
 function ug_system_add_site_form(){
   $form['ug_system_add_nagios'] = array(
@@ -55,13 +55,14 @@ function ug_system_add_site_form(){
   $form['ug_system_site_UUID'] = array(
     '#type' => 'textfield',
     '#title' => t('Enter the site UUID'),
-    '#description' => t('Enable the sysytem status module, go to config/system/system status to get websiteUUID'),
+    '#description' => t('Enable the sysytem status module, go to <a href="@system_status">System Status</a> to get websiteUUID' , array('@system_status' => url('admin/config/system/system_status'))),
+    '#attributes' =>array('value' => variable_get('ug_system_site_UUID')),
+    //Make the site UUID a required field if the Lumturio api key is checked
     '#states' => array(
       'required' => array(
         ':input[name="ug_system_add_lumturio"]' => array('checked' => TRUE),
       ),
     ),
-    '#attributes' =>array('value' => variable_get('ug_system_site_UUID')),
   );
 
   $form = system_settings_form($form);
@@ -70,18 +71,17 @@ function ug_system_add_site_form(){
 }
 
 /**
-* Callback function.
+* Callback function for ug_system_add_site_form
 **/
 function ug_system_form_submit_button($form, &$form_state){
   $nagios_submit_checkbox = variable_get('ug_system_add_nagios');
   if($nagios_submit_checkbox == '1' ) {
     $to = 'oukanah@icloud.com';
     $message = drupal_mail('ug_system','ug_system_email',$to, language_default(), 'no-reply@example.com', TRUE); //Sends email
-    drupal_set_message(t("Ticket has been submitted"), 'status');
   }
 
   if (!empty($message['result'])) {
-    drupal_set_message("Mail sent!");
+    drupal_set_message(t("Ticket has been submitted"), 'status');
   }
 }
 
@@ -111,7 +111,7 @@ function ug_system_form_ug_system_add_site_form_alter(&$form, &$form_state, $for
   $lumturio_checkbox = variable_get('ug_system_add_lumturio');
   if(($lumturio_checkbox  == '1')){
     $form['ug_system_add_lumturio']['#disabled'] = TRUE;
-    $form['submit']['#disabled'] = TRUE;
+    $form['ug_system_add_lumturio']['#description'] = t("Site has been added to lumturio");
   }
 }
 
@@ -128,9 +128,8 @@ if($get_result['ok'] == true) {
   }
   $lumturio_checkbox = variable_get('ug_system_add_lumturio');
   if ($site_available == FALSE && $lumturio_checkbox == '1') {
-    $lumturio_checkbox = variable_get('ug_system_add_lumturio');
     $post_result = ug_system_lumturio_post("/site.addsite");
-    dvm($post_result);
+    //dvm($post_result);
     if($post_result['ok'] == true) {
       drupal_set_message(t("Site has been added to lumturio"), 'status');
     }
@@ -138,7 +137,7 @@ if($get_result['ok'] == true) {
 }
 
 /**
-* Connection function, calls lumturio api
+* Connection function,sends a GET request to the lumturio api
 */
 function ug_system_lumturio_get($path)
 {
@@ -162,16 +161,22 @@ function ug_system_lumturio_get($path)
 }
 
 /**
-* Connection function, calls lumturio api
+* Connection function, sens a POST request to the lumturio api
 */
 function ug_system_lumturio_post($path)
 {
+  //Site url we want to add
   global $base_url;
+
+  //the data we are sending as param1=value1&param2=value2;
   $reqArray = array(
     'site_url' => $base_url,
     'site_uuid' => variable_get('ug_system_site_UUID'),
   );
+
+  //Encode the array, lumturio accepts json only
   $data = drupal_json_encode($reqArray);
+
   $options = array(
     'method' => 'POST',
     'data' => $data,
@@ -185,7 +190,7 @@ function ug_system_lumturio_post($path)
   if($response->code >= 200 && $response->code < 300)
   {
     // a valid response was received, so we return the data
-    return $response->data;
+    return drupal_json_decode($response->data);
   }
   // A valid response was not received, so we return FALSE
   return FALSE;

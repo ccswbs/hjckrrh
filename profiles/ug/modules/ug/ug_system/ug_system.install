@@ -19,9 +19,9 @@ function ug_system_requirements($phase) {
       $requirements['ug_system_update_notify_emails']['severity'] = REQUIREMENT_ERROR;
     }
 
-    // ------------------------
+    // ----------
     // SITE MAIL
-    // ------------------------
+    // ----------
     $site_mail = variable_get('site_mail');
     $requirements['ug_system_site_mail'] = array(
       'title' => t('UG Site e-mail'),
@@ -33,9 +33,9 @@ function ug_system_requirements($phase) {
       $requirements['ug_system_site_mail']['severity'] = REQUIREMENT_ERROR;
     }
 
-    // ------------------------
+    // -------------------
     // RECAPTCHA SITE KEY
-    // ------------------------
+    // -------------------
     $recaptcha_site_key = variable_get('recaptcha_site_key');
     $requirements['ug_system_recaptcha_site_key'] = array(
       'title' => t('UG recaptcha Site key'),
@@ -47,9 +47,9 @@ function ug_system_requirements($phase) {
       $requirements['ug_system_recaptcha_site_key']['description'] = t('recaptcha Site key is missing/incorrect');
     }
 
-    // ------------------------
+    // ---------------------
     // RECAPTCHA SECRET KEY
-    // ------------------------
+    // ---------------------
     $recaptcha_secret_key = variable_get('recaptcha_secret_key');
     $requirements['ug_system_recaptcha_secret_key'] = array(
       'title' => t('UG recaptcha Secret key'),
@@ -61,9 +61,9 @@ function ug_system_requirements($phase) {
       $requirements['ug_system_recaptcha_secret_key']['description'] = t('recaptcha Secret key is missing/incorrect');
     }
 
-    // ------------------------
+    // -------------------
     // ERROR NOTIFICATIONS
-    // ------------------------
+    // -------------------
     $error_level = variable_get('error_level');
     $requirements['ug_system_error_level'] = array(
       'title' => t('UG Error Messages'),
@@ -75,9 +75,9 @@ function ug_system_requirements($phase) {
       $requirements['ug_system_error_level']['description'] = t('Turn error messages off. Value should be None');
     }
 
-    // ------------------------
+    // --------------
     // CACHE LIFETIME
-    // ------------------------
+    // --------------
     $cache_lifetime = variable_get('cache_lifetime');
     $requirements['ug_system_cache_lifetime'] = array(
       'title' => t('UG Minimum Cache lifetime'),
@@ -90,9 +90,9 @@ function ug_system_requirements($phase) {
       $requirements['ug_system_cache_lifetime']['description'] = t('Enable caching at <a href="@cache_lifetime_settings">config/Performance</a> and set to 5 min', array('@cache_lifetime_settings' => url('admin/config/development/performance')));
     }
 
-    // ------------------------
+    // -----------------
     // CACHE MAXIMUM AGE
-    // ------------------------
+    // -----------------
     $page_cache_maximum_age = variable_get('page_cache_maximum_age');
     $requirements['ug_system_page_cache_maximum_age'] = array(
       'title' => t('UG Expiration of cached pages'),
@@ -105,9 +105,9 @@ function ug_system_requirements($phase) {
       $requirements['ug_system_page_cache_maximum_age']['description'] = t('Enable caching at <a href="@cache_pages_settings">config/Performance</a> and set to 5 min', array('@cache_pages_settings' => url('admin/config/development/performance')));
     }
 
-    // ------------------------
-    // LDAP CONFIGURATION
-    // ------------------------
+    // --------------------------------------------------------------------
+    // LDAP CONFIGURATION - checks if binding is set and password is filled
+    // --------------------------------------------------------------------
     $ldap = db_query("select * from {ldap_servers} where sid='ug'");
     $requirements['ug_system_ldap'] = array(
       'title' => t('UG Ldap binding'),
@@ -119,7 +119,7 @@ function ug_system_requirements($phase) {
     }
 
     // ------------------------------------
-    // TICKET CREATED TO ADD SITE TO NAGIOS
+    // CREATES TO ADD SITE TO NAGIOS
     // -------------------------------------
     $nagios = variable_get('ug_system_add_nagios');
     $requirements['ug_system_add_nagios'] = array(
@@ -133,9 +133,9 @@ function ug_system_requirements($phase) {
       $requirements['ug_system_add_nagios']['description'] = t('Go to the config form to submit ticket');
     }
 
-    // ------------------------
+    // -----------------
     // GOOGLE ANALYTICS
-    // ------------------------
+    // -----------------
     $google_analytics_module = module_exists('googleanalytics');
     $requirements['ug_system_google_analytics'] = array(
       'title' => t('UG Google analytics module'),
@@ -148,6 +148,9 @@ function ug_system_requirements($phase) {
       $requirements['ug_system_google_analytics']['description'] = t('Turn on google analytics module');
     }
 
+    // ----------------------------------------
+    // CHECKS FOR W-STAGE pattern in menu links
+    // ----------------------------------------
     $menu_link_check = db_query("select link_path from {menu_links} where link_path LIKE '%w-stage%'")->fetchAll();
     foreach ($menu_link_check as $row) {
       $arr = array($row->link_path);
