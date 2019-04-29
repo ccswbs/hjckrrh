@@ -1,0 +1,287 @@
+<?php
+/**
+ * @file
+ *
+ */
+
+/**
+ * Implementation of hook_menu().
+ *
+ */
+function jquery_countdown_menu() {
+  
+  $items = array();
+  
+  $items['admin/config/user-interface/jquery-countdown'] = array(
+    'title' => t('jQuery Countdown Settings'),
+    'access arguments' => array('administer jquery countdown'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('jquery_countdown_admin'),
+    'file' => 'jquery_countdown.admin.inc'
+  );
+  
+  $items['ajax/jquery-countdown-terminate'] = array(
+    'access arguments' => array('access content'),
+    'page callback' => 'jquery_countdown_invoke_rule',
+    'file' => 'jquery_countdown.pages.inc',
+    'type' => MENU_CALLBACK
+  );
+  
+  return $items;
+}// end function jquery_countdown_menu;
+
+/**
+ * Implementation of hook_block_info().
+ *
+ */
+function jquery_countdown_block_info() {
+  
+  $blocks = array();
+  $blocks['jquery_countdown']['info'] = t('jQuery Countdown Block');
+  $blocks['jquery_countdown']['cache'] = DRUPAL_NO_CACHE;
+  
+  return $blocks;
+
+}// end function jquery_countdown_block_info;
+
+/**
+ * Implementation of hook_block_view().
+ *
+ */
+function jquery_countdown_block_view($delta = '') {
+  
+  
+  $block = array();
+  
+  switch($delta) {
+    
+    case 'jquery_countdown':
+      $block['subject'] = check_plain(variable_get('jquery_countdown_event_name', t('jQuery Countdown')));
+      $block['content'] = _jquery_countdown_block_content($delta);
+      break;
+  }
+  
+  return $block;
+}// end function jquery_countdown_block_view;
+
+
+function _jquery_countdown_block_content($delta = '') {
+  
+  // @TODO: ? Never used please explain... or fix it... 
+  $init_format = date("F d, Y g:i a", time());
+  
+  $format = '';
+  $msg_format = check_plain(variable_get('jquery_countdown_msg_format', ''));
+  
+  $format .= preg_match("/%years/", $msg_format)? 'Y' : $format;
+  $format .= preg_match("/%months/", $msg_format)? 'O' : $format;
+  $format .= preg_match("/%weeks/", $msg_format)? 'W' : $format;
+  $format .= preg_match("/%days/", $msg_format)? 'D' : $format;
+  $format .= preg_match("/%hours/", $msg_format)? 'H' : $format;
+  $format .= preg_match("/%minutes/", $msg_format)? 'M' : $format;
+  $format .= preg_match("/%seconds/", $msg_format)? 'S' : $format;
+  $event_name = check_plain(variable_get('jquery_countdown_event_name', ''));
+  
+  $until = date("F d, Y g:i a", strtotime(variable_get('jquery_countdown_target', '')));
+
+  $description = t(variable_get('jquery_countdown_description', 'Until @event_name') . ' ', array('@event_name' => $event_name));
+  
+  $options = array(
+    'until' => $until,
+    'format' => $format,
+    'description' => $description,
+    'onExpiry' => 'Drupal.jQueryCountdownEvent',
+    'expiryText' => check_plain(variable_get('jquery_countdown_exp_txt', ''))
+  );
+  
+  return theme('jquery_countdown', array('options' => $options, 'id' => 'jquery_countdown-' . $delta ));
+}// end function _jquery_countdown_block_content;
+
+/**
+ * Adds a jQuery Countdown JavaScript element to the page.
+ *
+ * @param $selector
+ *   (optional) The jQuery selector to apply the countdown to. If a
+ *   selector isn't provided, the jQuery Countdown plugin will just be
+ *   added to the page.
+ * @param $options
+ *   (optional) The jQuery Countdown parameters to pass to the creation
+ *   of the element. The available parameters can be found at:
+ *   http://keith-wood.name/countdown.html#quick
+ *   
+ *   The date arguments (until or since), can either be a number
+ *   representing the number of seconds, a string used to construct
+ *   the JavaScript Date object, or the argument list passed to the
+ *   JavaScript Date object.
+ *
+ *   The onExpiry and onTick arguments is JavaScript that will be
+ *   passed through "eval()" when the events are called.
+ */
+function jquery_countdown_add($selector = NULL, $options = array()) {
+  // Add jQuery Countdown only if it hasn't been added yet.
+  drupal_add_library('jquery_countdown', 'jquery.countdown');
+
+  // Make sure to only add the same selector once.
+  static $added_selectors = array();
+  if (!empty($selector) && !isset($added_selectors[$selector])) {
+    $added_selectors[$selector] = $options;
+
+    // Add the countdown element to the settings so that it's processed by the behaviours.
+    drupal_add_js(array('jquery_countdown' => array($selector => $options)), 'setting');
+  }
+}
+
+/**
+ * Implementation of hook_library()
+ * provides the jquery.countdown script with css as library
+ */
+ function jquery_countdown_library() {
+   $libraries = array();
+   
+   // jquery.countdown core script
+   $libraries['jquery.countdown'] = array(
+    'title' => 'jQuery Countdown',
+    'website' => 'http://keith-wood.name/countdown.html',
+    'version' => '1.5.9',
+    'js' => array(
+      drupal_get_path('module', 'jquery_countdown') . '/jquery_countdown/jquery.countdown.js' => array(),
+      drupal_get_path('module', 'jquery_countdown') . '/jquery_countdown.js' => array(),
+      drupal_get_path('module', 'jquery_countdown') . '/jquery.countdown-drupal.js' => array('group' => JS_THEME),
+    ),
+    'css' => array(
+      drupal_get_path('module', 'jquery_countdown') . '/jquery_countdown/jquery.countdown.css' => array(
+        'type' => 'file',
+        'media' => 'screen',
+      ),
+    ),
+   );
+   
+   return $libraries;
+ }
+
+/**
+ * Implements hook_field_formatter_info().
+ * provides the jquery_countdown formatter for use with date field
+ * @TODO: setting like first or last field and much more...
+ * @TODO: check for existing date module!
+ */
+function jquery_countdown_field_formatter_info() {
+  $formatters = array(
+    'jquery_countdown' => array(
+      'label' => t('jQuery Countdown'),
+      'field types' => array('date', 'datestamp', 'datetime'),
+    ),
+  );
+  return $formatters;
+}
+
+function jquery_countdown_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $element = array();
+  $settings = $display['settings'];
+  $formatter = $display['type'];
+
+  $vars = array(
+    'entity' => $entity,
+    'entity_type' => $entity_type,
+    'field' => $field,
+    'instance' => $instance,
+    'langcode' => $langcode,
+    'items' => $items,
+    'display' => $display,
+    'dates' => array(),
+    'options' => array(
+      'until' => date("F d, Y g:i a", time()), // default time to prevent errors
+      'format' => 'DHMS',
+      'description' => '',
+    ),
+  );
+
+  // See if we are only supposed to display a selected
+  // item from multiple value date fields.
+  $selected_deltas = array();
+  if (!empty($entity->date_id)) {
+    foreach ((array) $entity->date_id as $key => $id) {
+      list($module, $nid, $field_name, $selected_delta, $other) = explode(':', $id);
+      if ($field_name == $field['field_name']) {
+        $selected_deltas[] = $selected_delta;
+      }
+    }
+  }
+
+  switch ($display['type']) {
+    case 'jquery_countdown':
+    default:
+      foreach ($items as $delta => $item) {
+        if (!empty($entity->date_id) && !in_array($delta, $selected_deltas)) {
+          continue;
+        }
+        else {
+          $vars['delta'] = $delta;
+          $vars['item'] = $item;
+          $vars['id'] = $instance['field_name'] . '-' . $instance['id']; // use field as unique id
+          $vars['options']['until'] = date("F d, Y g:i a +0000", strtotime($item['value'])); // get date from start field
+
+          $element[$delta] = array('#markup' => theme('jquery_countdown', $vars));
+
+        }
+      }    
+    break;
+  }
+  
+  return $element;
+}
+
+/**
+ * Implementation of hook_theme().
+ */
+function jquery_countdown_theme($existing, $type, $theme, $path) {
+  return array(
+    'jquery_countdown' => array(
+      'variables' => array(
+        'options' => NULL,
+        'id' => NULL,
+        'content' => NULL,
+      ),
+    ),
+  );
+}
+
+/**
+ * Constructs a jQuery Countdown element and adds the required JavaScript.
+ *
+ * @param $content
+ *   (optional) The initial content to put in the countdown. This is what is shown
+ *   when JavaScript is not available.
+ * @param $options
+ *   (optional) The options to apply to the element.
+ * @param $id
+ *   (optional) The name of the element.
+ */
+function theme_jquery_countdown($variables) {
+  //@TODO: add javascript fallback for target time as possible $content ?!
+  $id = $variables['id'];
+  $options = $variables['options'];
+  $content = $variables['content'];
+
+  // Construct the ID name and add the JavaScript.
+  $id = drupal_html_id($id);
+  // add the Javascript
+  jquery_countdown_add('#'. $id, $options);
+
+  // Construct the HTML.
+  return '<div id="' . $id . '" class="jquery-countdown">' . $content . '</div>';
+}
+
+/**
+ * Implements hook_permission()
+ * "Administer jquery countdown"
+ *
+ * @return array
+ */
+function jquery_countdown_permission() {
+  return array(
+    'administer jquery countdown' => array(
+      'title' => t('Administer jquery countdown'),
+    ),
+  );
+}

@@ -1,0 +1,37 @@
+<?php
+// $Id$
+
+/**
+ * @file
+ * jQuery Countdown install file.
+ */
+ 
+ 
+/**
+ * Implementation of hook_install().
+ *
+ */
+function jquery_countdown_install() {
+  
+  variable_set('jquery_countdown_event_name', '');
+  variable_set('jquery_countdown_target', '');
+  variable_set('jquery_countdown_exp_txt', '');
+  variable_set('jquery_countdown_msg_format', '%days %hours %minutes %seconds');
+  
+  drupal_set_message(t('jQuery Countdown has been installed successfully. <a href="!link">Click here</a> for configurations!', array(
+    '!link' => url('admin/config/user-interface/jquery-countdown')
+  )));
+}// end function jquery_countdown_install;
+
+/**
+ * Implementation of hook_uninstall().
+ *
+ */
+function jquery_countdown_uninstall() {
+  
+  variable_del('jquery_countdown_event_name');
+  variable_del('jquery_countdown_target');
+  variable_del('jquery_countdown_exp_txt');
+  variable_del('jquery_countdown_msg_format');
+  
+}// end function jquery_countdown_uninstall;

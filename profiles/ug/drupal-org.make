@@ -2,6 +2,11 @@
 core = 7.x
 api = 2
 
+projects[admin_menu][version] = "3.0-rc5"
+
+projects[advagg][version] = "2.23"
+
+
 projects[auto_nodetitle][version] = "1.0"
 projects[auto_nodetitle][patch][] = "https://www.drupal.org/files/issues/auto_nodetitle-dont_double_escape_titles-565922-39-against-1.0-stable.patch"
 
@@ -22,6 +27,12 @@ projects[ckeditor][version] = "1.18"
 
 projects[ckeditor_link][version] = "2.4"
 
+projects[computed_field] = "1.1"
+
+projects[constant_contact] = "3.6"
+
+projects[content_access] = "1.2-beta2"
+
 projects[config_perms][version] = "2.2"
 
 projects[crumbs][version] = "2.5"
@@ -38,6 +49,8 @@ projects[date][version] = "2.10"
 projects[date_ical][version] = "3.5"
 
 projects[devel][version] = "1.5"
+
+projects[devel_themer][version] = "1.x-dev"
 
 projects[diff][version] = "3.3"
 
@@ -61,6 +74,8 @@ projects[features][version] = "2.10"
 
 projects[feeds][version] = "2.0-beta3"
 
+projects[feeds_ftp_fetcher][version] = "1.0"
+
 projects[field_collection][version] = "1.0-beta11"
 
 projects[field_collection_tabs][version] = "1.1"
@@ -75,6 +90,8 @@ projects[field_group][version] = "1.5"
 projects[field_permissions][version] = "1.0"
 
 projects[field_validation][version] = "2.6"
+
+projects[file_entity][version] = "2.22"
 
 projects[filebrowser][version] = "3.3"
 
@@ -95,6 +112,8 @@ projects[google_tag][patch][] = "https://www.drupal.org/files/issues/2911657_var
 
 projects[hide_submit][version] = "2.4"
 
+projects[htmlmail][version] = "2.71"
+
 projects[image_url_formatter][version] = "1.4"
 
 projects[imce][version] = "1.10"
@@ -103,11 +122,17 @@ projects[imce_mkdir][version] = "1.0"
 
 projects[import_html][version] = "1.0"
 
+projects[job_scheduler][version] = "2.0"
+
+projects[jquery_countdown][version] = "1.1"
+
 projects[jquery_update][version] = "2.7"
 
 projects[js_injector][version] = "2.1"
 
 projects[ldap][version] = "2.2"
+
+projects[legal][version] = "1.7"
 
 projects[libraries][version] = "2.3"
 
@@ -123,6 +148,8 @@ projects[mailsystem][version] = "2.34"
 
 projects[masquerade][version] = "1.0-rc7"
 
+projects[maxlength][version] = "3.2"
+
 projects[media][version] = "2.19"
 
 projects[media_flickr][version] = "1.0-alpha4"
@@ -130,6 +157,8 @@ projects[media_flickr][version] = "1.0-alpha4"
 projects[menu_block][version] = "2.7"
 
 projects[menu_breadcrumb][version] = "1.x-dev"
+
+projects[menu_per_role][version] = "1.0"
 
 projects[metatag][version] = "1.21"
 
@@ -147,6 +176,8 @@ projects[module_missing_message_fixer][version] = "1.2"
 projects[mpac][version] = "1.2"
 
 projects[node_clone][version] = "1.0-rc2"
+
+projects[node_export][version] = "3.1"
 
 projects[oauth][version] = "3.3"
 
@@ -195,6 +226,8 @@ projects[scanner][version] = "1.0-beta1"
 
 projects[services][version] = "3.20"
 
+projects[shs][version] = "1.8"
+
 projects[siteimprove][version] = "1.0"
 
 projects[smtp][version] = "1.7"
@@ -204,6 +237,11 @@ projects[strongarm][version] = "2.0"
 projects[system_status][version] = "3.1"
 
 projects[token][version] = "1.6"
+
+projects[token_tweaks][version] = "1.x-dev"
+projects[token_tweaks][type] = "module"
+projects[token_tweaks][download][type] = "git"
+projects[token_tweaks][download][url] = "https://git.drupalcode.org/project/token_tweaks.git"
 
 projects[twitter][version] = "5.11"
 projects[twitter][patch][] = "https://www.drupal.org/files/issues/twitter-doubleclass-2661088-5.patch"
@@ -221,6 +259,8 @@ projects[views_bulk_operations][version] = "3.3"
 
 projects[views_data_export][version] = "3.1"
 
+projects[views_field_view][version] = "1.1"
+
 projects[views_php][version] = "1.0-alpha1"
 
 projects[views_tree][version] = "2.0"
@@ -235,6 +275,8 @@ projects[workbench_email][version] = "3.12"
 
 projects[wysiwyg_filter][version] = "1.6-rc3"
 projects[wysiwyg_filter][patch][] = "https://www.drupal.org/files/issues/wysiwyg_filter-Bypass-rules-835202-16.D7.patch"
+
+projects[xmlsitemap][version] = "2.4"
 
 ; Themes
 projects[bootstrap][version] = "3.22"

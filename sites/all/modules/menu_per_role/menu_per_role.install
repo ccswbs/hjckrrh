@@ -1,0 +1,40 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the menu_per_role module.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function menu_per_role_schema() {
+  $schema['menu_per_role'] = array(
+    'fields' => array(
+      'mlid' => array(
+        'description' => 'The menu identifier.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'rids' => array(
+        'description' => 'The role identifiers separated by commas. Show to those roles.',
+        'type' => 'text',
+        'not null' => TRUE,
+      ),
+      'hrids' => array(
+        'description' => 'The role identifiers separated by commas. Hide from those roles.',
+        'type' => 'text',
+        'not null' => TRUE,
+      ),
+    ),
+    'primary key' => array('mlid'),
+    'foreign keys' => array(
+      'mlid' => array(
+        'table' => 'menu',
+        'columns' => array('mlid' => 'mlid'),
+      ),
+    ),
+  );
+  return $schema;
+}

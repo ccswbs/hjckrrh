@@ -1,0 +1,14 @@
+<?php
+
+/**
+ * @file
+ * Installer functions and update hooks.
+ */
+
+/**
+ * Implements hook_enable().
+ */
+function feeds_ftp_fetcher_enable() {
+  // Clear the cache to display the module in Feeds as available plugin.
+  cache_clear_all('plugins:feeds:plugins', 'cache');
+}

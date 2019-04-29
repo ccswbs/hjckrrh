@@ -1,0 +1,14 @@
+name = Legal
+description = Display Terms and Conditions statement on the registration page.
+configure = admin/config/people/legal
+core = 7.x
+files[] = legal.test
+
+
+
+; Information added by Drupal.org packaging script on 2017-05-17
+version = "7.x-1.7"
+core = "7.x"
+project = "legal"
+datestamp = "1495027094"
+

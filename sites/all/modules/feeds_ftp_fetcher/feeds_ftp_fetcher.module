@@ -1,0 +1,37 @@
+<?php
+/**
+ * @file
+ * This is a Feeds plugin that will fetch files from an FTP server.
+ */
+
+/**
+ * Implements hook_feeds_plugins().
+ */
+function feeds_ftp_fetcher_feeds_plugins() {
+  $path = drupal_get_path('module', 'feeds_ftp_fetcher') . '/plugins';
+  $info = array();
+  $info['FeedsFTPFetcher'] = array(
+    'name' => 'FTP Fetcher',
+    'description' => 'Download content from an FTP server',
+    'help' => 'Fetches files via FTP',
+    'handler' => array(
+      'parent' => 'FeedsFetcher',
+      'class' => 'FeedsFTPFetcher',
+      'file' => 'FeedsFTPFetcher.inc',
+      'path' => $path,
+    ),
+  );
+  $info['FeedsSFTPFetcher'] = array(
+    'name' => 'SFTP Fetcher',
+    'description' => 'Download content from an SFTP server',
+    'help' => 'Fetches files via SFTP',
+    'handler' => array(
+      'parent' => 'FeedsFetcher',
+      'class' => 'FeedsSFTPFetcher',
+      'file' => 'FeedsSFTPFetcher.inc',
+      'path' => $path,
+    ),
+  );
+
+  return $info;
+}
