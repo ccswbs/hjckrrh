@@ -295,13 +295,14 @@ function ug_theme_preprocess_views_view_fields__pp6(&$vars) {
   $vars['firstname']      = (isset($vars['fields']['field_profile_name'])            ? $vars['fields']['field_profile_name']->content : '');
   $vars['lastname']       = (isset($vars['fields']['field_profile_lastname'])        ? $vars['fields']['field_profile_lastname']->content : '');
   $vars['teaser']         = (isset($vars['fields']['field_profile_teaser'])          ? $vars['fields']['field_profile_teaser']->content : '');
-  $vars['summary']         = (isset($vars['fields']['field_profile_summary'])          ? $vars['fields']['field_profile_summary']->content : '');
+  $vars['summary']        = (isset($vars['fields']['field_profile_summary'])         ? $vars['fields']['field_profile_summary']->content : '');
   $vars['phone']          = (isset($vars['fields']['field_profile_telephonenumber']) ? $vars['fields']['field_profile_telephonenumber']->content : '');
   $vars['email']          = (isset($vars['fields']['field_profile_email'])           ? $vars['fields']['field_profile_email']->content : '');
   $vars['office']         = (isset($vars['fields']['field_profile_office'])          ? $vars['fields']['field_profile_office']->content : '');
   $vars['title']          = (isset($vars['fields']['field_profile_title'])           ? $vars['fields']['field_profile_title']->content : '');
   $vars['unit']           = (isset($vars['fields']['field_profile_unit'])            ? $vars['fields']['field_profile_unit']->content : '');
   $vars['website']        = (isset($vars['fields']['field_profile_website'])         ? $vars['fields']['field_profile_website']->content : '');
+  $vars['tags']        = (isset($vars['fields']['field_tags'])                    ? $vars['fields']['field_tags']->content : '');
   $vars['align']          = (isset($vars['fields']['field_profile_align_names'])     ? TRUE : FALSE);
   $vars['custom_fields']  = (isset($vars['fields']['field_profile_custom'])          ? $vars['fields']['field_profile_custom']->content : '');
   

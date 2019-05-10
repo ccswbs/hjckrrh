@@ -836,9 +836,23 @@ function ug_profile_views_default_views() {
   $handler->display->display_options['fields']['field_profile_website']['field'] = 'field_profile_website';
   $handler->display->display_options['fields']['field_profile_website']['label'] = 'Website';
   $handler->display->display_options['fields']['field_profile_website']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_profile_website']['element_type'] = 'span';
+  $handler->display->display_options['fields']['field_profile_website']['element_label_type'] = 'strong';
+  $handler->display->display_options['fields']['field_profile_website']['element_wrapper_type'] = 'div';
   $handler->display->display_options['fields']['field_profile_website']['hide_empty'] = TRUE;
   $handler->display->display_options['fields']['field_profile_website']['click_sort_column'] = 'url';
   $handler->display->display_options['fields']['field_profile_website']['delta_offset'] = '0';
+  /* Field: Content: Keywords */
+  $handler->display->display_options['fields']['field_tags']['id'] = 'field_tags';
+  $handler->display->display_options['fields']['field_tags']['table'] = 'field_data_field_tags';
+  $handler->display->display_options['fields']['field_tags']['field'] = 'field_tags';
+  $handler->display->display_options['fields']['field_tags']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_tags']['element_type'] = 'span';
+  $handler->display->display_options['fields']['field_tags']['element_label_type'] = 'strong';
+  $handler->display->display_options['fields']['field_tags']['element_wrapper_type'] = 'div';
+  $handler->display->display_options['fields']['field_tags']['hide_empty'] = TRUE;
+  $handler->display->display_options['fields']['field_tags']['type'] = 'taxonomy_term_reference_plain';
+  $handler->display->display_options['fields']['field_tags']['delta_offset'] = '0';
   /* Sort criterion: Content: Last name (field_profile_lastname) */
   $handler->display->display_options['sorts']['field_profile_lastname_value']['id'] = 'field_profile_lastname_value';
   $handler->display->display_options['sorts']['field_profile_lastname_value']['table'] = 'field_data_field_profile_lastname';

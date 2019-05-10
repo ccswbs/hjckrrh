@@ -86,6 +86,12 @@
 		        <?php print $office; ?>
 		      </p>
 		    <?php endif; ?>
+		    <?php if ($tags): ?>
+		      <p>
+		        <?php print t("<strong>@label:</strong>", array('@label' => 'Keywords')); ?>
+		        <?php print $tags; ?>
+		      </p>
+		    <?php endif; ?>
 		    <?php if ($summary): ?>
 		      <p>
 		        <?php print $summary; ?>
