@@ -144,8 +144,6 @@ projects[linkit][version] = "3.5"
 
 projects[login_destination][version] = "1.1"
 
-projects[maillog][version] = "7.x-1.0-alpha1"
-
 projects[mailsystem][version] = "2.34"
 
 projects[masquerade][version] = "1.0-rc7"
@@ -226,7 +224,7 @@ projects[rules][patch][] = "https://www.drupal.org/files/issues/rules-fix-fatal-
 
 projects[scanner][version] = "1.0-beta1"
 
-projects[services][version] = "3.20"
+projects[services][version] = "3.24"
 
 projects[shs][version] = "1.8"
 
