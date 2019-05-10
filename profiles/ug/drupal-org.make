@@ -144,6 +144,8 @@ projects[linkit][version] = "3.5"
 
 projects[login_destination][version] = "1.1"
 
+projects[maillog][version] = "7.x-1.0-alpha1"
+
 projects[mailsystem][version] = "2.34"
 
 projects[masquerade][version] = "1.0-rc7"
