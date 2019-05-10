@@ -1,0 +1,10 @@
+<?php
+/**
+ * Set publishing options for Book content type.
+ * Turns on revisions and moderation.
+ * Implements hook_install().
+ */
+
+function ug_book_install() {
+	variable_set('node_options_book', array('status','revision'));
+}

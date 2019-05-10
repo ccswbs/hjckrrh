@@ -1,0 +1,10 @@
+<?php
+/**
+ * Set publishing options for Feature content type.
+ * Turns on revisions and moderation.
+ * Implements hook_install().
+ */
+
+function ug_feature_workbench_moderation_install() {
+	variable_set('node_options_feature', array('moderation','revision'));
+}

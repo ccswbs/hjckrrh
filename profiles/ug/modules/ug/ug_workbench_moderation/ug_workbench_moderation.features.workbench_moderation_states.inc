@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * ug_profile_workbench_moderation.features.workbench_moderation_states.inc
+ * ug_workbench_moderation.features.workbench_moderation_states.inc
  */
 
 /**
  * Implements hook_workbench_moderation_export_states().
  */
-function ug_profile_workbench_moderation_workbench_moderation_export_states() {
+function ug_workbench_moderation_workbench_moderation_export_states() {
   $items = array(
     'draft' => array(
       'name' => 'draft',

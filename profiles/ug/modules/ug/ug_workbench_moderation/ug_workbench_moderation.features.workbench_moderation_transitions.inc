@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * ug_profile_workbench_moderation.features.workbench_moderation_transitions.inc
+ * ug_workbench_moderation.features.workbench_moderation_transitions.inc
  */
 
 /**
  * Implements hook_workbench_moderation_export_transitions().
  */
-function ug_profile_workbench_moderation_workbench_moderation_export_transitions() {
+function ug_workbench_moderation_workbench_moderation_export_transitions() {
   $items = array(
     'draft:needs_review' => array(
       'from_name' => 'draft',
