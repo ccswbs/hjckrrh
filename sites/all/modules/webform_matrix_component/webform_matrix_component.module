@@ -1,0 +1,622 @@
+<?php
+
+/**
+ * @file
+ * Provide matrix component for webform
+ * @author Chetan Singhal <chetansinghal1988@gmail.com>
+ */
+module_load_include('inc', 'webform_matrix_component', '/components/matrix');
+module_load_include('inc', 'webform', '/includes/webform.components');
+
+/**
+ * Implements _webform_theme_component().
+ */
+function webform_matrix_component_theme() {
+  return
+          array(
+              'webform_matrix_table' => array(
+                  'render element' => 'element',
+              //'file' => 'components/matrix.inc',
+              //'path' => drupal_get_path('module', 'webform_matrix_component'),
+              ),
+  );
+}
+
+/**
+ * Define components to Webform.
+ * @see webform.api.php
+ * @see webform_components()
+ */
+function webform_matrix_component_webform_component_info() {
+  $components = array();
+
+  $components['matrix'] = array(
+      'label' => t('Matrix'),
+      'description' => t('Basic matrix type. Add One More Element in Row'),
+      'features' => array(
+          // This component supports defmatault values. Defaults to TRUE.
+          'default_value' => FALSE,
+          // This component supports a description field. Defaults to TRUE.
+          'description' => TRUE,
+          // This component supports a title attribute. Defaults to TRUE.
+          'title' => TRUE,
+          // This component has a title that can be toggled as displayed or not.
+          'title_display' => TRUE,
+          // This component has a title that can be displayed inline.
+          'title_inline' => FALSE,
+          // If this component can be used as a conditional SOURCE. All components
+          // may always be displayed conditionally, regardless of this setting.
+          // Defaults to TRUE.
+          'conditional' => TRUE,
+          // If this component allows other components to be grouped within it
+          // (like a fieldset or tabs). Defaults to FALSE.
+          'group' => FALSE,
+          // Add content to CSV downloads. Defaults to TRUE.
+          'csv' => TRUE,
+      ),
+      'file' => 'components/matrix.inc',
+      'file path' => drupal_get_path('module', 'webform_matrix_component'),
+  );
+  return $components;
+}
+
+/**
+ * Implements hook_form_formid_alter().
+ */
+function webform_matrix_component_form_webform_component_edit_form_alter(&$form, &$form_state, $formid) {
+
+  if ($form['type']['#value'] == 'matrix') {
+    $component = $form_state['build_info']['args'][1];
+    $matrix_form = _webform_matrix_component_get_column_form($form, $form_state, $component);
+    $form = array_merge($form, $matrix_form);
+  }
+}
+
+/**
+ * Implements hook_form_formid_alter().
+ */
+function webform_matrix_component_form_webform_admin_settings_alter(&$form, &$form_state, $formid) {
+  // Admin settings for webform_matrix_component
+  // Admin settings for webform_matrix_component
+  // Can define rows/cols for matrix components
+  // Default rows-10,cols-10.
+  $form['matrix_fieldset'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Matrix Component Settings'),
+      '#collapsible' => 1,
+      '#collapsed' => 1,
+  );
+  $form['matrix_fieldset']['webform_matrix_component_webform_matrix_rows'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Matrix Rows'),
+      '#description' => t('Enter the max rows in matrix component'),
+      '#default_value' => variable_get('webform_matrix_component_webform_matrix_rows', 20),
+      '#element_validate' => array('_webform_matrix_component_validate_number'),
+  );
+  $form['matrix_fieldset']['webform_matrix_component_webform_matrix_cols'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Matrix Cols'),
+      '#description' => t('Enter the max cols in matrix component'),
+      '#default_value' => variable_get('webform_matrix_component_webform_matrix_cols', 10),
+      '#element_validate' => array('_webform_matrix_component_validate_number'),
+  );
+  $form['matrix_fieldset']['webform_matrix_component_webform_matrix_title_required'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Is Matrix Title Required'),
+      '#return_value' => 1,
+      '#description' => t('Make Matrix title required or not'),
+      '#default_value' => variable_get('webform_matrix_component_webform_matrix_title_required', 1),
+  );
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function webform_matrix_component_form_alter(&$form, &$form_state, $form_id) {
+  if (strpos($form_id, 'webform_client_form_') === 0) {
+    module_load_include('inc', 'webform', '/components/date');
+
+    foreach ($form['#node']->webform['components'] as $cid => $component) {
+      if ($component['type'] == 'matrix' && $form['details']['page_num']['#value'] == $component['page_num']) {
+        $nid = $component['nid'];
+        $value = array();
+
+        // If in a multi-step form, a submission ID may be specified in form state.
+        // Load this submission. This allows anonymous users to use auto-save.
+        if (empty($submission) && !empty($form_state['build_info']['args'][1]->sid)) {
+          $submission = webform_get_submission($nid, $form_state['build_info']['args'][1]->sid);
+          if (!empty($submission->data[$cid])) {
+            $value = $submission->data[$cid];
+          }
+        }
+
+        $formkey = $component['form_key'];
+        $pid = $component['pid'];
+        
+        $parents = webform_component_parent_keys($form['#node'], $component);
+        $element = drupal_array_get_nested_value($form['submitted'], $parents);
+        $element['#attached']['css'][] = drupal_get_path('module', 'webform_matrix_component') . '/webform_matrix_component.css';
+
+		if (empty($value) && isset($element['#component_value'])) {
+          $value = $element['#component_value'];
+        }
+
+        $datepicker = FALSE;
+        if (isset($component['extra']['matrix_col'])) {
+
+          $editvalue = NULL;
+
+          if (!empty($value[0])) {
+            $editvalue = unserialize($value[0]);
+            foreach (array_keys($editvalue) as $key) {
+              $empty = TRUE;
+              for ($i = 1; $i <= $component['extra']['matrix_col']; $i++) {
+                if (!empty($editvalue[$key][$i])) {
+                  $empty = FALSE;
+                  break;
+                }
+              }
+              if ($empty) {
+                unset($editvalue[$key]);
+              }
+            }
+          }
+
+          $matrix_col = $component['extra']['matrix_col'];
+          $matrix_row = !empty($editvalue) ? count($editvalue) : $component['extra']['matrix_row'];
+
+          if (empty($form_state[$formkey]['temp_matrix_rows'])) {
+            $form_state[$formkey]['temp_matrix_rows'] = $matrix_row;
+          }
+
+          if ($component['extra']['title_display'] !== 'none') {
+            //$element['#matrix_header'] = _webform_filter_xss($component['name']);
+              $element['#matrix_header'] = $element['#title'];
+          }
+
+          for ($prow = 1; $prow <= $form_state[$formkey]['temp_matrix_rows']; $prow++) {
+            if (isset($component['extra']['element'])) {
+
+              $headers = array();
+              foreach ($component['extra']['element'] as $elekey => $elevalue) {
+                list($j, $i) = explode('-', $elekey);
+
+                $eletype = $elevalue['type'];
+                $title = isset($elevalue['title']) ? $elevalue['title'] : $elekey;
+                $title = _webform_filter_xss($title);
+
+                
+                $title_display = "invisible";
+
+                // Only first row is manadatory.
+                $required = FALSE;
+                if ($prow == 1) {
+                  // If component is mandatory.
+                  $required = $component['mandatory'] ? TRUE : FALSE;
+
+                  if (!$required) {
+                    // If particular element is manadatory.
+                    $required = $elevalue['mandatory'] ? TRUE : FALSE;
+                  }
+                }
+                
+                $htitle = $title;
+                if($component['mandatory'] || $elevalue['mandatory']){
+                    $htitle.=theme_form_required_marker($title);
+                }
+                $headers[] = $htitle;
+                
+                switch ($eletype) {
+
+                  case 'textfield':
+                    $elevalue['default_value'] = isset($elevalue['default_value'])?$elevalue['default_value']:"";
+                    $element[$prow][$i] = array(
+                      '#type' => 'textfield',
+                      '#title' => check_plain($title),
+                      '#size' => !empty($elevalue['size']) ? $elevalue['size'] : 15,
+                      '#maxlength' => !empty($elevalue['maxlength']) ? $elevalue['maxlength'] : 50,
+                      '#default_value' => isset($editvalue[$prow][$i]) ? $editvalue[$prow][$i] : $elevalue['default_value'],
+                      '#required' => $required,
+                      '#title_display' => $title_display,
+                      '#validated' => TRUE,
+                      '#webform_validated' => FALSE,
+                    );
+
+                    break;
+
+                  case 'select':
+                    //Choose Select Type Radio/ListBox/Checkbox
+                    $select_type = isset($elevalue['select_type']) ? $elevalue['select_type'] : 'list';
+                    $is_multiple = isset($elevalue['multiple']) ? $elevalue['multiple'] : 0;
+                    // Options
+                    $options = $elevalue['option'];
+                    $option_array = array();
+
+                    //Convert option to string to array
+                    $option_array = _webform_matrix_component_select_option_from_text($options);
+
+                    switch ($select_type) {
+                      case 'list':
+                        $element[$prow][$i] = array(
+                            '#type' => 'select',
+                            '#title' => check_plain($title),
+                            '#options' => $option_array,
+                            '#required' => $required,
+                            '#title_display' => $title_display,
+                            '#empty_option' => t('Select'),
+                            '#empty_value' => '',
+                            '#default_value' => isset($editvalue[$prow][$i]) ? $editvalue[$prow][$i] : $elevalue['default_value'],
+                        );
+                        if ($is_multiple) {
+                          $element[$prow][$i]['#multiple'] = TRUE;
+                        }
+                        break;
+
+                      case 'radio':
+                        $element[$prow][$i] = array(
+                            '#title' => check_plain($title),
+                            '#options' => $option_array,
+                            '#required' => $required,
+                            '#title_display' => $title_display,
+                        );
+                        if ($is_multiple) {
+                          $element[$prow][$i]['#type'] = 'checkboxes';
+                          $element[$prow][$i]['#default_value'] = is_array($editvalue[$prow][$i]) ? $editvalue[$prow][$i] : array($editvalue[$prow][$i]);
+                        }
+                        else {
+                          $element[$prow][$i]['#type'] = 'radios';
+                          if (isset($editvalue[$prow][$i]) && $editvalue[$prow][$i]) {
+                            $element[$prow][$i]['#default_value'] = $editvalue[$prow][$i];
+                          }
+                        }
+                        $element[$prow][$i]['#validated'] = TRUE;
+                        $element[$prow][$i]['#webform_validated'] = FALSE;
+                        break;
+                    }
+                    break;
+
+                  case 'date':
+                    $datepicker = isset($elevalue['datepicker']) ? $elevalue['datepicker'] : FALSE;
+                    $element[$prow][$i] = array(
+                        '#type' => 'date',
+                        '#title' => check_plain($title),
+                        '#title_display' => $title_display,
+                        '#required' => $required,
+                        '#start_date' => !empty($elevalue['startdate']) ? $elevalue['startdate'] : '-2 years',
+                        '#end_date' => !empty($elevalue['enddate']) ? $elevalue['enddate'] : '+2 years',
+                        '#year_textfield' => 0,
+                        '#default_value' => !empty($editvalue[$prow][$i]) ? $editvalue[$prow][$i] : $elevalue['default_date'],
+                        '#timezone' => 'user',
+                        //'#process' => array('webform_expand_date'),
+                        '#theme' => 'webform_date_matrix',
+                        //'#theme_wrappers' => array('webform_element'),
+                        '#element_validate' => array('webform_validate_date'),
+                        '#datepicker' => $datepicker,
+                        '#reference_timestamp' => NULL,
+                        '#exclude' => array(),
+                        '#webform_component' => array('cid' => $cid, 'type' => 'date'),
+                    );
+                    break;
+
+                  case 'label':
+                    // Label markup can be different on each row so we neeed to loop through each label.
+                    foreach($elevalue['label_name'] as $delta => $label_element) {
+                      $element[$prow][$i][$delta] = array(
+                        '#type' => 'item',
+                        '#title' => check_plain($title),
+                        '#markup' => webform_filter_xss($label_element),
+                        '#attributes' => array('class' => array('form-item')),
+                        '#default_value' => isset($editvalue[$prow][$i])?$editvalue[$prow][$i]:"",
+                        '#title_display' => $title_display,
+                      );
+                      $element[$prow][$i]['#webform_matrix_component_labels'] = TRUE;
+                    }
+                    // Determine whether add row button has been clicked.
+                    if(isset($form_state['triggering_element']['#parents']) && strstr(end($form_state['triggering_element']['#parents']), 'add_row')) {
+                      // Determine how many rows have been added.
+                      $added_rows = $form_state[$formkey]['temp_matrix_rows'] - count($elevalue['label_name']);
+
+                      for($added_row = 0; $added_row < $added_rows; $added_row++) {
+                        // Add an additional label for each dynamically added row using the header as the value.
+                        $element[$prow][$i][] = array(
+                          '#type' => 'item',
+                          '#title' => check_plain($title),
+                          '#markup' => check_plain($title),
+                          '#attributes' => array('class' => array('form-item')),
+                          '#title_display' => $title_display,
+                        );
+                      }
+                    }
+                    break;
+                case 'textarea':
+                    $element[$prow][$i] = array(
+                       '#type' => 'textarea',
+                       '#title' => check_plain($title),
+                       '#rows' => !empty($elevalue['rows']) ? $elevalue['rows'] : 1,
+                       '#cols' => !empty($elevalue['cols']) ? $elevalue['cols'] : 15,
+  		       '#resizable' => TRUE,
+                       '#title_display' => $title_display,
+                       '#default_value' => isset($editvalue[$prow][$i]) ? $editvalue[$prow][$i] : "",
+                       '#title' => check_plain($title),
+                       '#required' => $required,
+                       '#validated' => TRUE,
+                       '#webform_validated' => FALSE,
+                    );
+                    
+                    break;
+                }
+                drupal_alter('webform_render_matrix', $component, $elevalue, $element[$prow][$i]);
+              }
+            }
+            
+            if (isset($component['extra']['remove_row_feature']) && $component['extra']['remove_row_feature'] == 2) {
+                $element['remove_row_line_' . $formkey."_".$prow] = array(
+                  '#type' => 'submit',
+                  '#name' => 'remove_row_line' . $formkey."_".$prow,
+                  '#value' => isset($component['extra']['remove_row_button_text']) ? t($component['extra']['remove_row_button_text']) : t('Remove a row'),
+                  '#submit' => array('_webform_matrix_component_get_remove_row_line_submit'),
+                  '#limit_validation_errors' => array(),
+                  '#ajax' => array(
+                      'callback' => '_webform_matrix_component_get_remove_row_line',
+                      'wrapper' => "edit-$formkey-$pid",
+                  ),
+              );
+            }
+          }
+        }
+        $element['#headers'] = $headers;
+        $element['#temp_max_row'] = $form_state[$formkey]['temp_matrix_rows'];
+
+        if (isset($component['extra']['add_row_feature']) && $component['extra']['add_row_feature'] == 1) {
+          $element['add_row_' . $formkey] = array(
+              '#type' => 'submit',
+              '#name' => 'add_row_' . $formkey,
+              '#value' => isset($component['extra']['add_row_button_text']) ? t($component['extra']['add_row_button_text']) : t('Add a row'),
+              '#submit' => array('_webform_matrix_component_get_add_row_submit'),
+              '#limit_validation_errors' => array(),
+              '#ajax' => array(
+                  'callback' => '_webform_matrix_component_get_add_row',
+                  'wrapper' => "edit-$formkey-$pid",
+              ),
+          );
+        }
+        
+        if (isset($component['extra']['remove_row_feature']) && $component['extra']['remove_row_feature'] == 1) {
+          $element['remove_row_' . $formkey] = array(
+              '#type' => 'submit',
+              '#name' => 'remove_row_' . $formkey,
+              '#value' => isset($component['extra']['remove_row_button_text']) ? t($component['extra']['remove_row_button_text']) : t('Remove a row'),
+              '#submit' => array('_webform_matrix_component_get_remove_row_submit'),
+              '#limit_validation_errors' => array(),
+              '#ajax' => array(
+                  'callback' => '_webform_matrix_component_get_remove_row',
+                  'wrapper' => "edit-$formkey-$pid",
+              ),
+          );
+        }
+        
+        if ($datepicker) {
+          $element['#attached']['library'] = array(array('system', 'ui.datepicker'));
+        }
+
+        $parents = _webform_matrix_component_fieldset_parents($component['cid'], $form['submitted']);
+        $parents[] = $formkey;
+        drupal_array_set_nested_value($form['submitted'], $parents, $element);
+        $parents[] = '#theme';
+        drupal_array_set_nested_value($form['submitted'], $parents, array('webform_matrix_table'));
+      }
+    }
+  }
+}
+
+/**
+ * Searchs for the parents of the component, in case it's under fieldsets.
+ * Returns an array with the fieldsets under the component is nested.
+ * @param type $cid. Component ID
+ * @param type $submitted. The webform elements
+ * @param type $parents
+ * @param boolean $found
+ * @return type array.
+ */
+function _webform_matrix_component_fieldset_parents($cid, $submitted, &$parents = array(), &$found = FALSE) {
+
+  foreach (element_children($submitted) as $component_name) {
+    if ($submitted[$component_name]['#webform_component']['type'] == 'fieldset') {
+      // Check if the matrix is a direct child of this fieldset:
+      $parents[] = $component_name;
+      _webform_matrix_component_fieldset_parents($cid, $submitted[$component_name], $parents, $found);
+      if ($found) {
+        return $parents;
+      }
+    }
+    elseif ($submitted[$component_name]['#webform_component']['cid'] == $cid) {
+      $found = TRUE;
+      return $parents;
+    }
+  }
+  array_pop($parents);
+}
+
+/**
+ * Theme for webform matrix.
+ */
+function theme_webform_matrix_table($variables) {
+				
+		$element = $variables['element'];
+ 
+  $component = $element['#webform_component'];
+  $form_key = $component['form_key'];
+  $pid = $component['pid'];
+  $id = "edit-$form_key-$pid";
+  $matrix_col = $component['extra']['matrix_col'];
+  $above = !empty($element['#webform_component']['extra']['description_above']);
+  $matrix_row = $element['#temp_max_row']; //$component['extra']['matrix_row'];
+  //'remove_row_line' . $formkey."_".$prow
+  $headers = $element['#headers'];
+  // Make table headers translatable
+  foreach ($headers as $key => $header) {
+    $headers[$key] = t($header);
+  }
+
+  $rows = array();
+  $is_remove_line = false;
+  for ($i = 1; $i <= $matrix_row; $i++) {
+    $cols = array();
+    for ($j = 1; $j <= $matrix_col; $j++) {
+      // Make select options translatable
+      // this includes the default "Select" label
+      if (isset($element[$i][$j]['#type']) && $element[$i][$j]['#type'] === 'select') {
+        // To translate just the "Select" label
+        // use the following line instead of the foreach loop
+        // $element[$i][$j]['#options'][''] = t($element[$i][$j]['#options']['']);
+        foreach ($element[$i][$j]['#options'] as $key => $option) {
+          $element[$i][$j]['#options'][$key] = t('!option', array('!option' => $option));
+        }
+      }
+      // If element type is label then extract the correct label for the current row.
+      if(isset($element[$i][$j]['#webform_matrix_component_labels']) && $element[$i][$j]['#webform_matrix_component_labels'] == TRUE) {
+        $cols[] = drupal_render($element[$i][$j][$i]);
+      }
+      else {
+        // All other elements types.
+        $cols[] = drupal_render($element[$i][$j]);
+      }
+    }
+    if(isset($element['remove_row_line_' . $element['#webform_component']['form_key']."_".$i])){
+        $cols[] = drupal_render($element['remove_row_line_' . $element['#webform_component']['form_key']."_".$i]);
+        $is_remove_line = true;
+    }
+    $rows[] = $cols;
+  }
+
+  if($is_remove_line){
+      //$headers[] = 'Remove action';
+      $headers[] = isset($component['extra']['remove_row_header_text']) ? t($component['extra']['remove_row_header_text']) : t('Remove action');
+  }
+  $rows[] = array(array('data' => drupal_render($element['add_row']), 'colspan' => $matrix_col));
+  $form_class = str_replace('_', '-', $form_key);
+  
+// Convert the parents array into a string, excluding the "submitted" wrapper.
+  $nested_level = $element['#parents'][0] == 'submitted' ? 1 : 0;
+  $parents = str_replace('_', '-', implode('--', array_slice($element['#parents'], $nested_level)));
+  
+  $output = "<div class='form-item webform-component webform-component-matrix webform-component--$form_class webform-component--$parents' id='$id'>";
+  $caption = !empty($element['#matrix_header']) ? $element['#matrix_header'] : NULL;
+  
+  if($above){
+      $caption .= !empty($element['#description']) ? '<div>' . $element['#description'] . "</div>" : "";
+  }
+  $output .= theme('table', array('caption' => $caption,'header' => $headers, 'rows' => $rows, 'attributes' => array('id' => array("$id-table"))));
+ 
+  // Render the 'add row' button.  Add row button id is in format add_row_formId.
+  $add_row_id = 'add_row_' . $element['#webform_component']['form_key'];
+  $remove_row_id = 'remove_row_' . $element['#webform_component']['form_key'];
+  $output .= drupal_render_children($element, array($add_row_id));
+  $output .= drupal_render_children($element, array($remove_row_id));
+
+  if(!$above){
+    $output .= !empty($element['#description']) ? '<div>' . $element['#description'] . "</div>" : "";
+  }
+  $output .= "</div>";
+  
+  return $output;
+}
+
+/**
+ * Add new row into existing matrix component.
+ *
+ * @see webform_matrix_component_form_alter()
+ * @see _webform_matrix_component_get_add_row()
+ */
+function _webform_matrix_component_get_add_row_submit($form, &$form_state) {
+  // The matrix is the previous to last element on the #parents array:
+  end($form_state['triggering_element']['#parents']);
+  $form_key = prev($form_state['triggering_element']['#parents']);
+  $form_state[$form_key]['temp_matrix_rows'] ++;
+  $form_state['rebuild'] = TRUE;
+}
+
+
+/**
+ * # ajax callback.
+ *
+ * @see webform_matrix_component_form_alter()
+ * @see _webform_matrix_component_get_add_row_submit()
+ */
+function _webform_matrix_component_get_add_row($form, &$form_state) {
+  $parents = $form_state['triggering_element']['#parents'];
+  array_pop($parents);
+  return drupal_array_get_nested_value($form, $parents);
+}
+
+/**
+ * Add new row into existing matrix component.
+ *
+ * @see webform_matrix_component_form_alter()
+ * @see _webform_matrix_component_get_add_row()
+ */
+function _webform_matrix_component_get_remove_row_submit($form, &$form_state) {
+  // The matrix is the previous to last element on the #parents array:
+  end($form_state['triggering_element']['#parents']);
+  $form_key = prev($form_state['triggering_element']['#parents']);
+  if($form_state[$form_key]['temp_matrix_rows']>1){
+    $form_state[$form_key]['temp_matrix_rows'] --;
+    $form_state['rebuild'] = TRUE;
+  }else{
+      form_set_error($form_key, 'This is last row cannot delete.');
+  }
+  
+}
+
+
+/**
+ * # ajax callback.
+ *
+ * @see webform_matrix_component_form_alter()
+ * @see _webform_matrix_component_get_add_row_submit()
+ */
+function _webform_matrix_component_get_remove_row($form, &$form_state) {
+  $parents = $form_state['triggering_element']['#parents'];
+  array_pop($parents);
+  return drupal_array_get_nested_value($form, $parents);
+}
+
+function _webform_matrix_component_get_remove_row_line_submit($form, &$form_state){
+  // The matrix is the previous to last element on the #parents array:
+  end($form_state['triggering_element']['#parents']);
+  $form_key = prev($form_state['triggering_element']['#parents']);
+  //pre($form_state[$form_key]); die;
+  $triggering_row =  $form_state['input']['_triggering_element_name'];
+  if($form_state[$form_key]['temp_matrix_rows']>1){
+    $remove_line_array = explode("_", $triggering_row);
+
+    $size_array  = count($remove_line_array); 
+    $remove_line =  $remove_line_array[$size_array-1];
+    $rowKeys = array_values(array_filter(array_keys($form['submitted'][$form_key]), 'is_int'));
+    $shifted = false;
+    foreach ($rowKeys as $key) {
+      if ($shifted) {
+        $form_state["input"]["submitted"][$form_key][$key - 1] = $form_state["input"]["submitted"][$form_key][$key];
+        $form['submitted'][$form_key][$key - 1] = $form['submitted'][$form_key][$key];
+        unset($form['submitted'][$form_key][$key]);
+        unset($form_state["input"]["submitted"][$form_key][$key]);
+      } else if ($key == $remove_line) {
+        $shifted = true;
+        unset($form['submitted'][$form_key][$key]);
+        unset($form_state["input"]["submitted"][$form_key][$key]);
+      }
+    }
+
+    $form_state[$form_key]['temp_matrix_rows']--;
+
+    $form_state['rebuild'] = TRUE;
+  }else{
+      form_set_error($form_key, 'This is last row cannot delete.');
+  }
+}
+
+function _webform_matrix_component_get_remove_row_line($form, &$form_state){
+    $parents = $form_state['triggering_element']['#parents'];
+  array_pop($parents);
+  return drupal_array_get_nested_value($form, $parents);
+}

@@ -1,0 +1,28 @@
+name =Webform Matrix Component
+description = Matrix Component for webform
+core = 7.x
+package = Webform
+dependencies[] = webform
+
+files[] = tests/webform_matrix_component.test
+
+; Information added by drupal.org packaging script on 2013-10-03
+version = "7.x-3.0"
+core = "7.x"
+project = "webform_matrix_component"
+datestamp = "1380780972"
+
+
+; Information added by Drupal.org packaging script on 2015-09-14
+version = "7.x-4.17+1-dev"
+core = "7.x"
+project = "webform_matrix_component"
+datestamp = "1442249350"
+
+
+; Information added by Drupal.org packaging script on 2017-07-24
+version = "7.x-4.28"
+core = "7.x"
+project = "webform_matrix_component"
+datestamp = "1500860646"
+

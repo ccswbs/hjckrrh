@@ -267,6 +267,8 @@ projects[views_tree][version] = "2.0"
 
 projects[webform][version] = "4.14"
 
+projects[webform_matrix_component][version] = "4.28"
+
 projects[workbench][version] = "1.2"
 
 projects[workbench_moderation][version] = "3.0"

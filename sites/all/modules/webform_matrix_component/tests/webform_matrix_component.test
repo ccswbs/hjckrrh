@@ -1,0 +1,132 @@
+<?php
+
+/**
+ * @file
+ * Tests for the Weform Matrix Component module.
+ */
+
+/**
+ * Tests for webform matrix component.
+ */
+class WebformMatrixTestCase extends DrupalWebTestCase {
+  /**
+   * Implements getInfo().
+   */
+  public static function getInfo() {
+    return array(
+      'name' => t('Webform matrix component'),
+      'description' => t('Tests webform matrix component.'),
+      'group' => t('Webform'),
+    );
+  }
+
+  /**
+   * Implements setUp().
+   */
+  function setUp() {
+    parent::setUp(array('webform_matrix_component'));
+
+    // Create webform node
+    $settings = array(
+      'title' => 'Matrix node',
+      'type' => 'webform',
+    );
+    $node = $this->drupalCreateNode($settings);
+
+    // Add a matrix component.
+    $matrix = array(
+      'nid' => $node->nid,
+      'cid' => 1,
+      'pid' => 0,
+      'form_key' => 'matrix',
+      'name' => 'Matrix',
+      'type' => 'matrix',
+      'value' => '',
+      'extra' => array(
+        'matrix_row' => 3,
+        'add_row_feature' => 1,
+        'remove_row_feature' => 0,
+        'add_row_button_text' => 'Add a row',
+        'remove_row_button_text' => 'Remove a row',
+        'matrix_col' => 3,
+        'element' => array(
+          'element-1' => array(
+            'type' => 'select',
+            'title' => 'Select title',
+            'mandatory' => 1,
+            'option' => "key1|value1\nkey2|value2",
+            'select_type' => 'list',
+            'multiple' => 0,
+            'default_value' => 'key2',
+          ),
+          'element-2' => array(
+            'type' => 'textfield',
+            'title' => 'Textfield title',
+            'mandatory' => 1,
+            'size' => 50,
+            'default_value' => '',
+            'maxlength ' => 50,
+          ),
+          'element-3' => array(
+            'type' => 'date',
+            'title' => 'Date title',
+            'mandatory' => 0,
+            'datepicker' => 1,
+            'startdate' => '-2 years',
+            'enddate' => '+2 years',
+            'default_date' => '',
+          ),
+        ),
+        'private' => FALSE,
+        'title_display' => 0,
+        'description' => '',
+      ),
+      'required' => '0',
+      'weight' => 10,
+    );
+
+    $node->webform['components'][1] = $matrix;
+    node_save($node);
+  }
+
+  /**
+   * Implements tearDown().
+   */
+  function tearDown() {
+    // Delete webform nodes.
+    $result = db_select('node')
+        ->fields('node')
+        ->condition('type', 'webform')
+        ->execute();
+    foreach ($result as $node) {
+      node_delete($node->nid);
+    }
+
+    parent::tearDown();
+  }
+
+  /**
+   * Test output matrix fields.
+   */
+  function testWebformOutputMatrixFields() {
+    $node = $this->drupalGetNodeByTitle('Matrix node');
+    // Get the node page
+    $this->drupalGet('node/' . $node->nid);
+
+    for ($row = 1; $row <= 3; $row++) {
+      // Assert select field with default
+      $this->assertFieldById('edit-submitted-matrix-' . $row . '-1', 'key2');
+      // Assert textfield
+      $this->assertFieldById('edit-submitted-matrix-' . $row . '-2');
+    }
+
+    // Add a row button
+    $this->assertFieldById('edit-submitted-matrix-add-row-matrix', 'Add a row');
+
+    // Assert some texts are present
+    $this->assertText(t('Matrix'));
+    $this->assertText(t('Select title'));
+    $this->assertText(t('Textfield title'));
+    $this->assertText(t('Date title'));
+  }
+}
