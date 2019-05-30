@@ -76,8 +76,9 @@ function ug_system_add_site_form(){
 function ug_system_form_submit_button($form, &$form_state){
   $nagios_submit_checkbox = variable_get('ug_system_add_nagios');
   if($nagios_submit_checkbox == '1' ) {
-    $to = 'oukanah@icloud.com';
-    $message = drupal_mail('ug_system','ug_system_email',$to, language_default(), 'no-reply@example.com', TRUE); //Sends email
+    $to = '58888help@uoguelph.ca';
+    $from = 'no-reply@example.com'
+    $message = drupal_mail('ug_system','ug_system_email',$to, language_default(), $from, TRUE); //Sends email
   }
 
   if (!empty($message['result'])) {
@@ -91,9 +92,9 @@ function ug_system_form_submit_button($form, &$form_state){
 function ug_system_mail($key, &$message, $params ){
   switch ($key) {
     case 'ug_system_email':
-    $message['subject'] = t('add site');
-    $message['body'][] = t('This is an email');
-    $message['body'][] = t('This is an email');
+    $message['subject'] = t('add a site to Nagios');
+    $message['body'][] = t("The CCS Web development and solutions team would like to add " . $base_url . " to nagios");
+    $message['body'][] = t('Thank you');
     break;
   }
 }
@@ -116,7 +117,7 @@ function ug_system_form_ug_system_add_site_form_alter(&$form, &$form_state, $for
 }
 
 $get_result = ug_system_lumturio_get("/site.getsites");
-if($get_result['ok'] == true) {
+if($get_result['ok'] == TRUE) {
   $sites = $get_result['items'];
   $site_available = FALSE;
 
@@ -124,12 +125,17 @@ if($get_result['ok'] == true) {
     if($site['site_url'] == $base_url) {
       $site_available = TRUE;
       drupal_set_message(t("site is already on lumturio"), 'status');
+      break;
     }
   }
+//  dvm($site_available);
+  if ($site_available == FALSE) {
+    drupal_set_message(t("Please add " .$base_url. " to the lumturio dashboard"), 'warning');
+  }
+
   $lumturio_checkbox = variable_get('ug_system_add_lumturio');
   if ($site_available == FALSE && $lumturio_checkbox == '1') {
     $post_result = ug_system_lumturio_post("/site.addsite");
-    //dvm($post_result);
     if($post_result['ok'] == true) {
       drupal_set_message(t("Site has been added to lumturio"), 'status');
     }
