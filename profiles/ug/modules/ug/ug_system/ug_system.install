@@ -4,6 +4,7 @@
 * Implements hook_requirements().
 **/
 function ug_system_requirements($phase) {
+  global $base_url;
   $requirements = array();
   if ($phase == 'runtime') {
     // ------------------------
@@ -192,7 +193,7 @@ function ug_system_requirements($phase) {
         $requirements['ug_system_add_lumturio']['value'] = t("site is already on lumturio");
       }
       else {
-        $requirements['ug_system_add_lumturio']['value'] = t("Please add the website to the lumturio dashboard");
+        $requirements['ug_system_add_lumturio']['value'] = t("Please add " .$base_url. " to the lumturio dashboard");
         $requirements['ug_system_add_lumturio']['severity'] = REQUIREMENT_ERROR;
       }
 
