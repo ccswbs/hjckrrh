@@ -1082,6 +1082,69 @@ function ug_news_views_default_views() {
   /* Display: Content pane with Summary */
   $handler = $view->new_display('panel_pane', 'Content pane with Summary', 'panel_pane_2');
   $handler->display->display_options['link_url'] = '/news';
+  $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Field: Content: Feature image */
+  $handler->display->display_options['fields']['field_news_image']['id'] = 'field_news_image';
+  $handler->display->display_options['fields']['field_news_image']['table'] = 'field_data_field_news_image';
+  $handler->display->display_options['fields']['field_news_image']['field'] = 'field_news_image';
+  $handler->display->display_options['fields']['field_news_image']['label'] = '';
+  $handler->display->display_options['fields']['field_news_image']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_news_image']['click_sort_column'] = 'fid';
+  $handler->display->display_options['fields']['field_news_image']['settings'] = array(
+    'image_style' => 'news_large',
+    'image_link' => '',
+  );
+  /* Field: Content: Title */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'node';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['label'] = '';
+  $handler->display->display_options['fields']['title']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
+  $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+  $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
+  /* Field: Content: Title (plain text) */
+  $handler->display->display_options['fields']['title_1']['id'] = 'title_1';
+  $handler->display->display_options['fields']['title_1']['table'] = 'node';
+  $handler->display->display_options['fields']['title_1']['field'] = 'title';
+  $handler->display->display_options['fields']['title_1']['ui_name'] = 'Content: Title (plain text)';
+  $handler->display->display_options['fields']['title_1']['label'] = '';
+  $handler->display->display_options['fields']['title_1']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['title_1']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['title_1']['link_to_node'] = FALSE;
+  /* Field: Content: External link */
+  $handler->display->display_options['fields']['field_news_link']['id'] = 'field_news_link';
+  $handler->display->display_options['fields']['field_news_link']['table'] = 'field_data_field_news_link';
+  $handler->display->display_options['fields']['field_news_link']['field'] = 'field_news_link';
+  $handler->display->display_options['fields']['field_news_link']['label'] = '';
+  $handler->display->display_options['fields']['field_news_link']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['field_news_link']['alter']['text'] = '<h3><a href="[field_news_link-url]">[title_1]</a></h3>';
+  $handler->display->display_options['fields']['field_news_link']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_news_link']['empty'] = '<h3>[title]</h3>';
+  $handler->display->display_options['fields']['field_news_link']['hide_empty'] = TRUE;
+  $handler->display->display_options['fields']['field_news_link']['click_sort_column'] = 'url';
+  $handler->display->display_options['fields']['field_news_link']['type'] = 'link_plain';
+  /* Field: Content: Body */
+  $handler->display->display_options['fields']['field_news_body']['id'] = 'field_news_body';
+  $handler->display->display_options['fields']['field_news_body']['table'] = 'field_data_field_news_body';
+  $handler->display->display_options['fields']['field_news_body']['field'] = 'field_news_body';
+  $handler->display->display_options['fields']['field_news_body']['label'] = '';
+  $handler->display->display_options['fields']['field_news_body']['alter']['max_length'] = '80';
+  $handler->display->display_options['fields']['field_news_body']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_news_body']['type'] = 'smart_trim_format';
+  $handler->display->display_options['fields']['field_news_body']['settings'] = array(
+    'trim_link' => '0',
+    'trim_length' => '96',
+    'trim_type' => 'chars',
+    'trim_suffix' => '...',
+    'more_link' => '0',
+    'more_text' => 'Read more',
+    'summary_handler' => 'full',
+    'trim_options' => array(
+      'text' => 0,
+    ),
+    'trim_preserve_tags' => '',
+  );
   $handler->display->display_options['allow']['use_pager'] = 0;
   $handler->display->display_options['allow']['items_per_page'] = 'items_per_page';
   $handler->display->display_options['allow']['offset'] = 0;
