@@ -341,7 +341,9 @@ function ug_theme_preprocess_views_view_fields__pp6(&$vars) {
  function ug_theme_preprocess_views_view_fields__pp7(&$vars) {
    $vars['title']  = $vars['fields']['title']->content;
    $vars['teaser'] = $vars['fields']['field_profile_teaser']->content;
-   $vars['image']  = $vars['fields']['field_profile_image']->content;
+   if(isset($vars['fields']['field_profile_image']->content)) {
+    $vars['image']  = $vars['fields']['field_profile_image']->content;
+   }
  }
 
 /**
