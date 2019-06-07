@@ -1060,7 +1060,7 @@ function ug_profile_views_default_views() {
   /* Display: Inline image layout */
   $handler = $view->new_display('panel_pane', 'Inline image layout', 'panel_pane_1');
   $handler->display->display_options['link_url'] = '/people';
-  $handler->display->display_options['pane_title'] = 'PP7 - People profile teaser list (inline image)';
+  $handler->display->display_options['pane_title'] = 'View: PP7 - People profile teaser list (inline image)';
   $handler->display->display_options['allow']['use_pager'] = 0;
   $handler->display->display_options['allow']['items_per_page'] = 'items_per_page';
   $handler->display->display_options['allow']['offset'] = 0;
@@ -1117,7 +1117,7 @@ function ug_profile_views_default_views() {
   $handler->display->display_options['fields']['field_profile_teaser']['alter']['text'] = '<div class="media-thumbnail">[field_profile_image]</div>
 [field_profile_teaser]';
   $handler->display->display_options['fields']['field_profile_teaser']['element_label_colon'] = FALSE;
-  $handler->display->display_options['pane_title'] = 'PP7 - People profile teaser list (block image)';
+  $handler->display->display_options['pane_title'] = 'View: PP7 - People profile teaser list (block image)';
   $handler->display->display_options['allow']['use_pager'] = 0;
   $handler->display->display_options['allow']['items_per_page'] = 'items_per_page';
   $handler->display->display_options['allow']['offset'] = 0;
