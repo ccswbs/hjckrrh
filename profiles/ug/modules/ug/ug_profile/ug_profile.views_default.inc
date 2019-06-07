@@ -1057,9 +1057,67 @@ function ug_profile_views_default_views() {
   $handler->display->display_options['filters']['field_profile_image_fid']['field'] = 'field_profile_image_fid';
   $handler->display->display_options['filters']['field_profile_image_fid']['operator'] = 'not empty';
 
-  /* Display: Content pane */
-  $handler = $view->new_display('panel_pane', 'Content pane', 'panel_pane_1');
+  /* Display: Inline image layout */
+  $handler = $view->new_display('panel_pane', 'Inline image layout', 'panel_pane_1');
   $handler->display->display_options['link_url'] = '/people';
+  $handler->display->display_options['pane_title'] = 'PP7 - People profile teaser list (inline image)';
+  $handler->display->display_options['allow']['use_pager'] = 0;
+  $handler->display->display_options['allow']['items_per_page'] = 'items_per_page';
+  $handler->display->display_options['allow']['offset'] = 0;
+  $handler->display->display_options['allow']['link_to_view'] = 0;
+  $handler->display->display_options['allow']['more_link'] = 'more_link';
+  $handler->display->display_options['allow']['more_text'] = 'more_text';
+  $handler->display->display_options['allow']['path_override'] = 0;
+  $handler->display->display_options['allow']['title_override'] = 'title_override';
+  $handler->display->display_options['allow']['exposed_form'] = 0;
+  $handler->display->display_options['allow']['fields_override'] = 0;
+  $handler->display->display_options['argument_input'] = array(
+    'tid' => array(
+      'type' => 'user',
+      'context' => 'entity:field_collection_item.archived',
+      'context_optional' => 0,
+      'panel' => '0',
+      'fixed' => '',
+      'label' => 'Category or Keyword Tag ID',
+    ),
+  );
+
+  /* Display: Block image layout */
+  $handler = $view->new_display('panel_pane', 'Block image layout', 'panel_pane_2');
+  $handler->display->display_options['link_url'] = '/people';
+  $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Field: Content: Title */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'node';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['label'] = '';
+  $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
+  $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+  $handler->display->display_options['fields']['title']['element_type'] = 'h3';
+  $handler->display->display_options['fields']['title']['element_class'] = 'media-heading';
+  $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
+  /* Field: Content: Image */
+  $handler->display->display_options['fields']['field_profile_image']['id'] = 'field_profile_image';
+  $handler->display->display_options['fields']['field_profile_image']['table'] = 'field_data_field_profile_image';
+  $handler->display->display_options['fields']['field_profile_image']['field'] = 'field_profile_image';
+  $handler->display->display_options['fields']['field_profile_image']['label'] = '';
+  $handler->display->display_options['fields']['field_profile_image']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_profile_image']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_profile_image']['click_sort_column'] = 'fid';
+  $handler->display->display_options['fields']['field_profile_image']['settings'] = array(
+    'image_style' => 'medium',
+    'image_link' => '',
+  );
+  /* Field: Content: Summary */
+  $handler->display->display_options['fields']['field_profile_teaser']['id'] = 'field_profile_teaser';
+  $handler->display->display_options['fields']['field_profile_teaser']['table'] = 'field_data_field_profile_teaser';
+  $handler->display->display_options['fields']['field_profile_teaser']['field'] = 'field_profile_teaser';
+  $handler->display->display_options['fields']['field_profile_teaser']['label'] = '';
+  $handler->display->display_options['fields']['field_profile_teaser']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['field_profile_teaser']['alter']['text'] = '<div class="media-thumbnail">[field_profile_image]</div>
+[field_profile_teaser]';
+  $handler->display->display_options['fields']['field_profile_teaser']['element_label_colon'] = FALSE;
+  $handler->display->display_options['pane_title'] = 'PP7 - People profile teaser list (block image)';
   $handler->display->display_options['allow']['use_pager'] = 0;
   $handler->display->display_options['allow']['items_per_page'] = 'items_per_page';
   $handler->display->display_options['allow']['offset'] = 0;
