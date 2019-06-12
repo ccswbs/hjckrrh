@@ -1165,6 +1165,18 @@ function ug_news_views_default_views() {
       'label' => 'Category',
     ),
   );
+
+  /* Display: Feed */
+  $handler = $view->new_display('feed', 'Feed', 'n4_feed');
+  $handler->display->display_options['pager']['type'] = 'some';
+  $handler->display->display_options['style_plugin'] = 'rss';
+  $handler->display->display_options['row_plugin'] = 'node_rss';
+  $handler->display->display_options['path'] = 'news/feed';
+  $handler->display->display_options['displays'] = array(
+    'panel_pane_1' => 'panel_pane_1',
+    'panel_pane_2' => 'panel_pane_2',
+    'default' => 0,
+  );
   $export['n4'] = $view;
 
   $view = new view();
