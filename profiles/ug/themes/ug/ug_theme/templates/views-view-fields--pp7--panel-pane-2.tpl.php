@@ -34,6 +34,7 @@
 	  <?php print $title; ?>
 	</div>
   <div class="media-summary">
+    <div class="media-thumbnail"><?php print $image; ?></div>
     <?php print $teaser; ?>
   </div>
 </div>
