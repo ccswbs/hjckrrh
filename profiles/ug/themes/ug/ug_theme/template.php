@@ -54,7 +54,6 @@ function ug_theme_theme() {
   );
 }
 
-
 function ug_theme_preprocess_image_style(&$vars) {
   $vars['attributes']['class'][] = 'img-responsive';
   $vars['attributes']['class'][] = 'img-rounded';
@@ -115,29 +114,41 @@ function ug_theme_preprocess_views_view_unformatted(&$vars) {
  * Allow each views template to specify its own view preprocess function.
  */
 function ug_theme_preprocess_views_view(&$vars) {
+  
   if (isset($vars['view']->name)) {
     $function = 'ug_theme_preprocess_views_view__'.$vars['view']->name;
     if (function_exists($function)) {
      $function($vars);
     }
   }
+
+  /** 
+   * sharing the panel view's title override with RSS theme_feed_icon function so that
+   * the result is properly labelled for a11y.
+   *    $override_bool: check to see if a panel title override exists (1 is true)
+   *    $override_str:  title string to share with theme_feed_icon function
+   */
+  
+  $override_bool = $vars['view']->display_handler->display->display_options['pane_conf']['override_title'];
+  if($override_bool == 1){
+    $override_str = $vars['view']->display_handler->display->display_options['pane_conf']['override_title_text'];
+    $vars['title'] = $override_str;
+    $vars['feed_icon'] = ug_theme_feed_icon($vars);
+  }
+
 }
 
 /**
  * FT3 - Featured item teaser list
  */
 function ug_theme_preprocess_views_view__ft3(&$vars) {
-
   $view = views_get_current_view();
-
   if(!empty($view->args[0])){
     $category_filter = $view->args[0];
     $view->display_handler->set_option('link_url', 'features/category/' . $category_filter);
   }
-
   $vars['more'] = $view->display_handler->render_more_link();
-}
-
+} 
 
 /**
  * Allow each views template to specify its own fields preprocess function.
@@ -1206,9 +1217,10 @@ function ug_theme_preprocess_book_navigation(&$variables) {
  *     feed.
  *   - title: A descriptive title of the feed.
  */
+
 function ug_theme_feed_icon($variables) {
   $text = t('Subscribe to !feed-title', array('!feed-title' => $variables['title']));
-/* #2436: Subscribe RSS Feed buttons do not read descriptive link text in Screen-reader Browse mode*/             
+  #2436: Subscribe RSS Feed buttons do not read descriptive link text in Screen-reader Browse mode*/             
   $image = '<span class="fa fa-rss"></span><span class="element-invisible">'.$text.'</span>'; 
   return l($image, $variables['url'], array('html' => TRUE, 'attributes' => array('class' => array('feed-icon', 'btn', 'btn-default'))));
 }
