@@ -186,19 +186,59 @@ class ' . $class_name . ' implements MailSystemInterface {';
       db_or()->condition($class_condition)
       ->condition($file_condition)
     );
+	
+    // Check if class path is absolute path.  If it is, class path has to be calculated relative to drupal root.
+    $relative_path = $class_file;
+    if (strpos($relative_path, DIRECTORY_SEPARATOR) === 0) {
+      $relative_path = _mailsystem_get_relative_path($class_file);
+    }
+	
     // Make sure that registry functions are available.
     require_once 'includes/registry.inc';
     // Parse the newly-created class file and add it to the registry.
-    _registry_parse_file($class_file, $class_contents, 'mailsystem');
+    _registry_parse_file($relative_path, $class_contents, 'mailsystem');
     // Clear the mailsystem cache so that it will pick up the new class.
     drupal_static_reset('mailsystem_get_classes');
     drupal_set_message(
       t('Class <code>%class</code> written to <code>%file</code>.',
-        array('%class' => $class_name, '%file' => $class_file)
+        array('%class' => $class_name, '%file' => $relative_path)
       )
     );
   }
   return $class_name;
+}
+
+/**
+ * Helper function that calculates relative path of given file from drupal root path.
+ *
+ * @param string $class_file
+ *   Absolute path to the file
+ * @return string
+ *   Relative path to the file from drupal root
+ */
+function _mailsystem_get_relative_path($class_file) {
+  // Obtain parts of file path
+  $path_parts = explode(DIRECTORY_SEPARATOR, $class_file);
+
+  // Obtain parts of drupal root
+  $drupal_root = drupal_realpath(DRUPAL_ROOT);
+  $drupal_parts = explode(DIRECTORY_SEPARATOR, $drupal_root);
+
+  // Build Relative path
+  $relative_path = array();
+  $relative_start = null;
+  for ($i = 0; $i < sizeof($path_parts); $i++) {
+    if (!isset($drupal_parts[$i]) || $drupal_parts[$i] != $path_parts[$i]) {
+      if ($relative_start === null) {
+        $relative_start = $i;
+      }
+      $relative_path[] = $path_parts[$i];
+    }
+  }
+  $difference = (sizeof($drupal_parts) - $relative_start) >= 0 ? (sizeof($drupal_parts) - $relative_start) : 0;
+  $relative_path = str_repeat('..' . DIRECTORY_SEPARATOR, $difference) . implode(DIRECTORY_SEPARATOR, $relative_path);
+
+  return $relative_path;
 }
 
 /**

@@ -145,6 +145,7 @@ projects[linkit][version] = "3.5"
 projects[login_destination][version] = "1.1"
 
 projects[mailsystem][version] = "2.34"
+projects[mailsystem][patch][] = "https://www.drupal.org/files/issues/mailsystem-newclass-wsod-2563443-16-7.x-2.34.patch"
 
 projects[masquerade][version] = "1.0-rc7"
 
