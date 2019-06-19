@@ -245,6 +245,7 @@ projects[token_tweaks][version] = "1.x-dev"
 projects[token_tweaks][type] = "module"
 projects[token_tweaks][download][type] = "git"
 projects[token_tweaks][download][url] = "https://git.drupalcode.org/project/token_tweaks.git"
+projects[token_tweaks][download][branch] = "7.x-1.x"
 
 projects[twitter][version] = "5.11"
 projects[twitter][patch][] = "https://www.drupal.org/files/issues/twitter-doubleclass-2661088-5.patch"
