@@ -1,0 +1,60 @@
+<?php
+/**
+ * @file
+ * Install, update, and uninstall functions for the youtube module.
+ */
+
+/**
+ * Implements hook_field_schema().
+ */
+function youtube_field_schema($field) {
+  $columns = array(
+    'input' => array(
+      'type' => 'varchar',
+      'length' => 1024,
+      'not null' => FALSE,
+    ),
+    'video_id' => array(
+      'type' => 'varchar',
+      'length' => 15,
+      'not null' => FALSE,
+    ),
+  );
+  $indexes = array(
+    'video_id' => array('video_id'),
+  );
+  return array(
+    'columns' => $columns,
+    'indexes' => $indexes,
+  );
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function youtube_uninstall() {
+  // Delete youtube variables when module is removed.
+  variable_del('youtube_color');
+  variable_del('youtube_enablejsapi');
+  variable_del('youtube_modestbranding');
+  variable_del('youtube_player_class');
+  variable_del('youtube_privacy');
+  variable_del('youtube_suggest');
+  variable_del('youtube_theme');
+  variable_del('youtube_thumb_dir');
+  variable_del('youtube_thumb_hires');
+  variable_del('youtube_thumb_token_image_style');
+  variable_del('youtube_wmode');
+}
+
+/**
+ * Replace the youtube_playerid setting variable with youtube_player_class. This
+ * is needed to fix issue of duplicate player IDs on the same page.
+ */
+function youtube_update_7103() {
+  $legacy_player_id = variable_get('youtube_playerid');
+  if ($legacy_player_id) {
+    variable_set('youtube_player_class', $legacy_player_id);
+  }
+  variable_del('youtube_playerid');
+}

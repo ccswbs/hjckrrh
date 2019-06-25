@@ -114,6 +114,8 @@ projects[hide_submit][version] = "2.4"
 
 projects[htmlmail][version] = "2.71"
 
+projects[image_resize][version] = "1.01"
+
 projects[image_url_formatter][version] = "1.4"
 
 projects[imce][version] = "1.10"
@@ -121,6 +123,8 @@ projects[imce][version] = "1.10"
 projects[imce_mkdir][version] = "1.0"
 
 projects[import_html][version] = "1.0"
+
+projects[insert][version] = "1.4"
 
 projects[job_scheduler][version] = "2.0"
 
@@ -283,6 +287,8 @@ projects[wysiwyg_filter][version] = "1.6-rc3"
 projects[wysiwyg_filter][patch][] = "https://www.drupal.org/files/issues/wysiwyg_filter-Bypass-rules-835202-16.D7.patch"
 
 projects[xmlsitemap][version] = "2.4"
+
+projects[youtube][version] = "1.7"
 
 ; Themes
 projects[bootstrap][version] = "3.22"

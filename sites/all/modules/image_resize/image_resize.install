@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * @file
+ * Contains image_resize.install.
+ */
+
+/**
+ * Implements hook_uninstall().
+ *
+ * Remove variables that the module has set.
+ */
+function image_resize_uninstall() {
+  variable_del('image_resize_dir_path');
+  variable_del('image_resize_backup_images');
+  variable_del('image_resize_backup_dir_path');
+  variable_del('image_resize_formats');
+  variable_del('image_resize_type');
+  variable_del('image_resize_dimension');
+  variable_del('image_resize_quality');
+  variable_del('image_resize_batch_size');
+  variable_del('image_resize_file_size');
+}

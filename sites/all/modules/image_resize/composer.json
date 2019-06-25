@@ -1,0 +1,21 @@
+{
+    "name": "drupal/image_resize",
+    "description": "Resize images that are not managed by Drupal.",
+    "type": "drupal-module",
+    "homepage": "https://www.drupal.org/project/image_resize",
+    "authors": [
+        {
+            "name": "Goran Nikolovski",
+            "email": "nikolovski84@gmail.com",
+            "homepage": "http://gorannikolovski.com",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "issues": "https://www.drupal.org/node/add/project-issue/image_resize",
+        "email": "nikolovski84@gmail.com"
+    },
+    "license": "GPL-2.0+",
+    "minimum-stability": "dev",
+    "require": {}
+}

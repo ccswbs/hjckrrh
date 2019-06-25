@@ -1,0 +1,337 @@
+<?php
+
+/**
+ * @file
+ * Contains image_resize.module.
+ */
+
+ /**
+  * Implements hook_permission().
+  */
+function image_resize_permission() {
+  return array(
+    'administer image resize module' => array(
+      'title' => t('Administer Image Resize module'),
+    ),
+    'access image resize module' => array(
+      'title' => t('Access Image Resize module'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_menu().
+ */
+function image_resize_menu() {
+  $items = array();
+
+  $items['admin/config/media/image-resize/settings'] = array(
+    'title' => 'Image Resize settings',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('image_resize_admin_form'),
+    'access arguments' => array('administer image resize module'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  $items['admin/config/media/image-resize'] = array(
+    'title' => 'Image Resize',
+    'description' => 'Resize images that are not managed by Drupal.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('image_resize_form'),
+    'access arguments' => array('access image resize module'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  return $items;
+}
+
+/**
+ * Module settings form.
+ */
+function image_resize_admin_form() {
+  $form = array();
+
+  $form['image_resize_dir_path'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Directory path'),
+    '#default_value' => variable_get('image_resize_dir_path', 'public://'),
+    '#size' => 60,
+    '#required' => TRUE,
+    '#description' => t('Enter internal path to your images directory (e.g. public://images).'),
+  );
+
+  $form['image_resize_backup_images'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Backup images'),
+    '#default_value' => variable_get('image_resize_backup_images', FALSE),
+    '#description' => t('Check this option if you want to make a backup of original image files.'),
+  );
+
+  $form['image_resize_backup_dir_path'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Backup directory path'),
+    '#default_value' => variable_get('image_resize_backup_dir_path', 'public://backup'),
+    '#size' => 60,
+    '#required' => TRUE,
+    '#description' => t('Enter internal path to your backup directory (e.g. public://backup).'),
+    '#states' => [
+      'visible' => [
+        ':input[name="image_resize_backup_images"]' => ['checked' => TRUE],
+      ],
+    ],
+  );
+
+  $form['image_resize_formats'] = array(
+    '#type' => 'checkboxes',
+    '#title' => t('Image formats'),
+    '#options' => array(
+      'jpg' => t('jpg, jpeg'),
+      'png' => t('png'),
+      'gif' => t('gif'),
+    ),
+    '#default_value' => variable_get('image_resize_formats', array(
+      'jpg',
+      'png',
+      'gif',
+    )),
+    '#size' => 60,
+    '#required' => TRUE,
+    '#description' => t('Select image formats that you want to resize.'),
+  );
+
+  $form['image_resize_type'] = array(
+    '#type' => 'select',
+    '#title' => t('Dimension'),
+    '#options' => array('width' => t('Width'), 'height' => t('Height')),
+    '#default_value' => variable_get('image_resize_type', 'width'),
+    '#description' => t('Select image dimension.'),
+  );
+
+  $form['image_resize_dimension'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Resize selected dimension to (px)'),
+    '#default_value' => variable_get('image_resize_dimension', 500),
+    '#size' => 6,
+    '#maxlength' => 5,
+    '#required' => TRUE,
+    '#element_validate' => array('element_validate_integer_positive'),
+    '#description' => t('Other dimension will be calculated to preserve the aspect ratio.'),
+  );
+
+  $form['image_resize_quality'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Image quality (%)'),
+    '#default_value' => variable_get('image_resize_quality', 90),
+    '#size' => 6,
+    '#maxlength' => 5,
+    '#required' => TRUE,
+    '#element_validate' => array('element_validate_integer_positive'),
+    '#description' => t('Only for jpg image format.'),
+  );
+
+  $form['image_resize_batch_size'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Batch size'),
+    '#default_value' => variable_get('image_resize_batch_size', 5),
+    '#size' => 6,
+    '#maxlength' => 5,
+    '#required' => TRUE,
+    '#element_validate' => array('element_validate_integer_positive'),
+    '#description' => t('Enter how many images you want to process in one batch request.'),
+  );
+
+  $form['image_resize_file_size'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Min. file size (KB)'),
+    '#default_value' => variable_get('image_resize_file_size', 600),
+    '#size' => 6,
+    '#maxlength' => 5,
+    '#required' => TRUE,
+    '#element_validate' => array('element_validate_integer'),
+    '#description' => t('Images with the file size below this value will not be resized. Enter 0 to skip file size check.'),
+  );
+
+  return system_settings_form($form);
+}
+
+/**
+ * Implements hook_form().
+ */
+function image_resize_form($form, &$form_state) {
+  $form = array();
+
+  $form['markup'] = array(
+    '#type' => 'markup',
+    '#markup' => t('Min. PHP version for this module to work is 5.5.0.') . '<br>' .
+    t('Before resizing, make sure your images have correct rigths (files should be writable).') . '<br>' .
+    '<a href="/admin/config/media/image-resize/settings">Module settings</a>' .
+    '<br><br>',
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Start resizing'),
+  );
+
+  return $form;
+}
+
+/**
+ * Resize form submit handler.
+ */
+function image_resize_form_submit($form, &$form_state) {
+  $batch = array(
+    'operations' => array(),
+    'title' => t('Resize images'),
+    'init_message' => t('Preparing...'),
+    'progress_message' => t('Resizing batch @current of @total'),
+    'error_message' => t('Error while resizing'),
+  );
+
+  $batch_size = variable_get('image_resize_batch_size');
+  $image_paths = array_chunk(image_resize_get_images_paths(), $batch_size);
+
+  if (!$image_paths) {
+    drupal_set_message(t('No images to resize.'), 'warning');
+    return FALSE;
+  }
+
+  foreach ($image_paths as $image_path) {
+    $batch['operations'][] = array('image_resize_image', array($image_path));
+  }
+
+  batch_set($batch);
+  drupal_set_message(t('Resizing images has been completed'));
+}
+
+/**
+ * Get image file paths.
+ */
+function image_resize_get_images_paths() {
+  $paths = array();
+  $dir_path = rtrim(variable_get('image_resize_dir_path'), '/');
+  $image_formats = variable_get('image_resize_formats');
+  $file_size = variable_get('image_resize_file_size');
+  $dir_path = drupal_realpath($dir_path);
+  if (!file_exists($dir_path)) {
+    return $paths;
+  }
+  $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir_path), RecursiveIteratorIterator::SELF_FIRST);
+  $image_formats = array_flip($image_formats);
+
+  foreach ($files as $file) {
+    if ($file->isFile()) {
+      if ($file_size > 0 && ($file->getSize() < ($file_size * 1024))) {
+        continue;
+      }
+      $file_path = $file->getRealpath();
+      $file_ext = pathinfo($file_path, PATHINFO_EXTENSION);
+      if (!isset($image_formats[$file_ext])) {
+        continue;
+      }
+      list($original_width, $original_height) = getimagesize($file_path);
+      $dimension_type = variable_get('image_resize_type');
+      $dimension = variable_get('image_resize_dimension');
+      if ($dimension_type == 'width') {
+        if ($dimension < $original_width) {
+          $paths[] = $file_path;
+        }
+      }
+      else {
+        if ($dimension < $original_height) {
+          $paths[] = $file_path;
+        }
+      }
+    }
+  }
+
+  return $paths;
+}
+
+/**
+ * Resize images.
+ */
+function image_resize_image(array $image_paths) {
+  $image_resize_backup_images = variable_get('image_resize_backup_images');
+  $image_resize_backup_dir_path = variable_get('image_resize_backup_dir_path');
+  if ($image_resize_backup_images && $image_resize_backup_dir_path) {
+    $prepared = file_prepare_directory($image_resize_backup_dir_path, FILE_CREATE_DIRECTORY);
+    if (!$prepared) {
+      drupal_set_message(t('Directory @image_resize_backup_dir_path cannot be created.', array('@image_resize_backup_dir_path' => $image_resize_backup_dir_path)), 'error');
+      return;
+    }
+  }
+
+  foreach ($image_paths as $image_path) {
+    $dimension_type = variable_get('image_resize_type');
+    $dimension = variable_get('image_resize_dimension');
+    list($original_width, $original_height) = getimagesize($image_path);
+    $ratio = $original_width / $original_height;
+    $quality = variable_get('image_resize_quality');
+
+    if ($dimension_type == 'height') {
+      $height = $dimension;
+      $widht = $height * $ratio;
+    }
+    else {
+      $widht = $dimension;
+      $height = $widht / $ratio;
+    }
+
+    $image_ext = pathinfo($image_path, PATHINFO_EXTENSION);
+    $filename = pathinfo($image_path, PATHINFO_BASENAME);
+    switch ($image_ext) {
+      case 'jpg':
+      case 'jpeg':
+        try {
+          if ($image_resize_backup_images && $image_resize_backup_dir_path) {
+            copy($image_path, rtrim($image_resize_backup_dir_path, '/') . '/' . $filename);
+          }
+          $image = imagecreatefromjpeg($image_path);
+          $scaled = imagescale($image, $widht, $height);
+          if ($scaled) {
+            imagejpeg($scaled, $image_path, $quality);
+            imagedestroy($image);
+          }
+        }
+        catch (Exception $e) {
+          drupal_set_message(t('Error: @error', array('@error' => $e->getMessage())), 'error');
+        }
+        break;
+
+      case 'png':
+        try {
+          if ($image_resize_backup_images && $image_resize_backup_dir_path) {
+            copy($image_path, rtrim($image_resize_backup_dir_path, '/') . '/' . $filename);
+          }
+          $image = imagecreatefrompng($image_path);
+          $scaled = imagescale($image, $widht, $height);
+          if ($scaled) {
+            imagepng($scaled, $image_path);
+            imagedestroy($image);
+          }
+        }
+        catch (Exception $e) {
+          drupal_set_message(t('Error: @error', array('@error' => $e->getMessage())), 'error');
+        }
+        break;
+
+      case 'gif':
+        try {
+          if ($image_resize_backup_images && $image_resize_backup_dir_path) {
+            copy($image_path, rtrim($image_resize_backup_dir_path, '/') . '/' . $filename);
+          }
+          $image = imagecreatefromgif($image_path);
+          $scaled = imagescale($image, $widht, $height);
+          if ($scaled) {
+            imagegif($scaled, $image_path);
+            imagedestroy($image);
+          }
+        }
+        catch (Exception $e) {
+          drupal_set_message(t('Error: @error', array('@error' => $e->getMessage())), 'error');
+        }
+        break;
+    }
+  }
+}

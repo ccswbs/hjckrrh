@@ -1,0 +1,11 @@
+name = Image Resize
+description = "Resize images that are not managed by Drupal."
+core = 7.x
+package = Media
+configure = admin/config/media/image-resize
+
+; Information added by Drupal.org packaging script on 2018-09-10
+version = "7.x-1.01"
+core = "7.x"
+project = "image_resize"
+datestamp = "1536574083"
