@@ -194,7 +194,7 @@ projects[page_title][version] = "2.7"
 
 projects[panelizer][version] = "3.1"
 
-projects[panels][version] = "3.8"
+projects[panels][version] = "3.9"
 
 projects[panels_bootstrap_layouts][version] = "3.0"
 
