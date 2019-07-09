@@ -89,7 +89,7 @@ projects[field_collection_bootstrap_tabs][type] = "module"
 projects[field_collection_bootstrap_tabs][download][type] = "git"
 projects[field_collection_bootstrap_tabs][download][url] = "https://git.drupalcode.org/sandbox/osman-2464117.git"
 
-projects[field_group][version] = "1.5"
+projects[field_group][version] = "1.6"
 
 projects[field_permissions][version] = "1.0"
 
