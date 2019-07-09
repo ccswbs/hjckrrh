@@ -266,7 +266,7 @@ projects[views][version] = "3.23"
 
 projects[views_bootstrap][version] = "3.2"
 
-projects[views_bulk_operations][version] = "3.3"
+projects[views_bulk_operations][version] = "3.5"
 
 projects[views_data_export][version] = "3.1"
 
