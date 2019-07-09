@@ -78,6 +78,8 @@ projects[feeds][version] = "2.0-beta3"
 
 projects[feeds_ftp_fetcher][version] = "1.0"
 
+projects[feeds_tamper][version] = "1.2"
+
 projects[field_collection][version] = "1.0-beta11"
 
 projects[field_collection_tabs][version] = "1.1"
