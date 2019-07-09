@@ -138,7 +138,7 @@ projects[jquery_update][version] = "2.7"
 
 projects[js_injector][version] = "2.1"
 
-projects[ldap][version] = "2.2"
+projects[ldap][version] = "2.5"
 
 projects[legal][version] = "1.7"
 
