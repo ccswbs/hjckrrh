@@ -228,7 +228,7 @@ projects[restrict_password_change][version] = "1.0-beta2"
 
 projects[role_delegation][version] = "1.1"
 
-projects[rules][version] = "2.9"
+projects[rules][version] = "2.12"
 projects[rules][patch][] = "https://www.drupal.org/files/issues/rules-fix-fatal-error-features-revert-2186363-2.patch"
 
 projects[scanner][version] = "1.0-beta1"
