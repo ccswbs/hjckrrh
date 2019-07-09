@@ -72,7 +72,7 @@ projects[facebook_pixel][version] = "1.1"
 
 projects[faq][version] = "1.1"
 
-projects[features][version] = "2.10"
+projects[features][version] = "2.11"
 
 projects[feeds][version] = "2.0-beta3"
 
