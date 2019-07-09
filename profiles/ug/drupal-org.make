@@ -245,7 +245,7 @@ projects[smtp][version] = "1.7"
 
 projects[strongarm][version] = "2.0"
 
-projects[system_status][version] = "3.1"
+projects[system_status][version] = "3.3"
 
 projects[token][version] = "1.6"
 

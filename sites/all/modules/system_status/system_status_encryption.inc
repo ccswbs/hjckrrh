@@ -26,9 +26,9 @@ class SystemStatusEncryption {
   }
 
   /**
-   * System Status: encrypt a plaintext message.
+   * System Status: encrypt a plaintext message using mcrypt.
    */
-  public static function encrypt($plaintext) {
+  public static function encrypt_mcrypt($plaintext) {
     $key = hash("SHA256", variable_get('system_status_encrypt_token', 'Error-no-token'), TRUE);
 
     $iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
@@ -41,6 +41,20 @@ class SystemStatusEncryption {
     $ciphertext = $iv . $ciphertext;
 
     return base64_encode($ciphertext);
+  }
+
+
+  /**
+   * System Status: encrypt a plaintext message using openssl.
+   */
+  public static function encrypt_openssl($plaintext) {
+    $key = hash("SHA256", variable_get('system_status_encrypt_token', 'Error-no-token'), TRUE);
+    $plaintext_utf8 = utf8_encode($plaintext);
+
+    $iv = openssl_random_pseudo_bytes(16);
+    $cyphertext = openssl_encrypt($plaintext_utf8, 'AES-128-CBC', $key, OPENSSL_RAW_DATA, $iv);
+
+    return base64_encode($iv.$cyphertext);
   }
 
 }
