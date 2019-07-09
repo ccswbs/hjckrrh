@@ -247,7 +247,7 @@ projects[strongarm][version] = "2.0"
 
 projects[system_status][version] = "3.3"
 
-projects[token][version] = "1.6"
+projects[token][version] = "1.7"
 
 projects[token_tweaks][version] = "1.x-dev"
 projects[token_tweaks][type] = "module"
