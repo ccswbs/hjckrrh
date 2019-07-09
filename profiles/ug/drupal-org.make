@@ -64,6 +64,8 @@ projects[email][version] = "1.3"
 
 projects[entity][version] = "1.9"
 
+projects[entityform][version] = "2.0-rc4"
+
 projects[entityreference][version] = "1.5"
 
 projects[facebook_pixel][version] = "1.1"
