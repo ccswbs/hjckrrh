@@ -109,7 +109,7 @@ projects[flood_control][version] = "1.0"
 
 projects[fontawesome][version] = "3.7"
 
-projects[google_analytics][version] = "2.3"
+projects[google_analytics][version] = "2.6"
 
 projects[google_tag][version] = "1.3"
 projects[google_tag][patch][] = "https://www.drupal.org/files/issues/2911657_variable_php_error.patch"
