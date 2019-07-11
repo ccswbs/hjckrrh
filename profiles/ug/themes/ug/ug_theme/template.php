@@ -114,28 +114,24 @@ function ug_theme_preprocess_views_view_unformatted(&$vars) {
  * Allow each views template to specify its own view preprocess function.
  */
 function ug_theme_preprocess_views_view(&$vars) {
-  
-  if (isset($vars['view']->name)) {
-    $function = 'ug_theme_preprocess_views_view__'.$vars['view']->name;
+  $view = $vars['view'];
+  if (isset($view->name)) {
+    $function = 'ug_theme_preprocess_views_view__'.$view->name;
     if (function_exists($function)) {
      $function($vars);
     }
   }
 
-  /** 
-   * sharing the panel view's title override with RSS theme_feed_icon function so that
-   * the result is properly labelled for a11y.
-   *    $override_bool: check to see if a panel title override exists (1 is true)
-   *    $override_str:  title string to share with theme_feed_icon function
-   */
-  
-  $override_bool = $vars['view']->display_handler->display->display_options['pane_conf']['override_title'];
-  if($override_bool == 1){
-    $override_str = $vars['view']->display_handler->display->display_options['pane_conf']['override_title_text'];
-    $vars['title'] = $override_str;
-    $vars['feed_icon'] = ug_theme_feed_icon($vars);
-  }
-
+  // Replace the build title with overriden title from the pane in feed links.
+  // The feed icon has already been rendered at this point, so it's too late to alter the output.
+  $has_feed_icon = isset($vars['feed_icon']);
+  $has_pane_conf = isset($view->display_handler->display->display_options['pane_conf']);
+  if ($has_feed_icon && $has_pane_conf) {
+    $pane_conf = $view->display_handler->display->display_options['pane_conf'];
+    if ($pane_conf['override_title'] === 1) {
+      $vars['feed_icon'] = str_replace($view->build_info['title'], $pane_conf['override_title_text'], $vars['feed_icon']);
+    }
+  }       
 }
 
 /**
