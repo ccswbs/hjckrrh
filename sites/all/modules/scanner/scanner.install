@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Search and Replace Scanner install - creates necessary tables.
+ * Search and Replace Scanner install scripts, etc.
  */
 
 /**
@@ -56,4 +56,11 @@ function scanner_schema() {
   );
 
   return $schema;
+}
+
+/**
+ * Rebuild the menu cache.
+ */
+function scanner_update_7100() {
+  variable_set('menu_rebuild_needed', TRUE);
 }

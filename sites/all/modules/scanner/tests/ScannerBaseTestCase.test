@@ -1,0 +1,142 @@
+<?php
+
+/**
+ * @file
+ * Base test class to make other tests simpler.
+ */
+
+/**
+ * Base test class to make other tests simpler.
+ */
+abstract class ScannerBaseTestCase extends DrupalWebTestCase {
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setUp(array $modules = array()) {
+    // Enable this custom module.
+    $modules[] = 'scanner';
+
+    // Used to generate some test content.
+    $modules[] = 'devel';
+    $modules[] = 'devel_generate';
+
+    // Build the site.
+    parent::setUp($modules);
+
+    // Bump up error reporting.
+    variable_set('error_level', 2);
+  }
+
+  /**
+   * A word which will be inserted into a number of nodes, just to make sure it
+   * is present.
+   *
+   * @var string
+   */
+  protected $word = 'banana';
+
+  /**
+   * This word will replace the other word.
+   *
+   * @var string
+   */
+  protected $replaceWord = 'mango';
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function verbose($message, $title = NULL) {
+    // Handle arrays, objects, etc.
+    if (!is_string($message)) {
+      $message = "<pre>\n" . print_r($message, TRUE) . "\n</pre>\n";
+    }
+
+    // Optional title to go before the output.
+    if (!empty($title)) {
+      $title = '<h2>' . check_plain($title) . "</h2>\n";
+    }
+
+    parent::verbose($title . $message);
+  }
+
+  /**
+   * Log in as user 1.
+   */
+  protected function loginUser1() {
+    $password = user_password();
+    // Reset the user 1 password.
+    $account = user_load(1);
+    $edit = array(
+      'pass' => $password,
+    );
+    $account = user_save($account, $edit);
+    $account->pass_raw = $password;
+
+    // Log in as user 1.
+    $this->drupalLogin($account);
+  }
+
+  /**
+   * Generate some sample content.
+   *
+   * This mirrors some of the logic from devel_generate_content() with the
+   * exception that it specifically tries to ensure the custom word $this->word
+   * is present in the title and/or body field of some content.
+   *
+   * @param int $count
+   *   The number of nodes to generate with a minimum of five; defaults to 50.
+   * @param string $content_type
+   *   The content type to generate; defaults to 'article'.
+   */
+  function generateSampleContent($count = 50, $content_type = 'article') {
+    // A minimum of five.
+    if ($count < 5) {
+      $count = 5;
+    }
+
+    // Replace devel_generate_content() so that the content can be customized.
+    module_load_include('inc', 'devel_generate');
+    module_load_include('inc', 'devel_generate', 'devel_generate.fields');
+    for ($x = 0; $x < $count; $x++) {
+      $node = new StdClass();
+      $node->type = $content_type;
+      $node->revision = 0;
+      $node->promote = 0;
+      $node->status = 1;
+      $node->uid = 1;
+      $node->language = LANGUAGE_NONE;
+      $node->devel_generate = array(
+        'word' => $this->word,
+      );
+
+      // A portion of nodes will have the custom word inserted.
+      if (mt_rand(0, 5) == 5) {
+        $node->title = devel_create_greeking(2, TRUE)
+          . ' ' . $this->word
+          . ' ' . devel_create_greeking(2, TRUE);
+      }
+      else {
+        $node->title = devel_create_greeking(5, TRUE);
+      }
+
+      // Add any more base fields that might be appropriate.
+      devel_generate_fields($node, 'node', $node->type);
+
+      // Add the custom word to the body field on some records and specifically
+      // remove it from the others.
+      if (mt_rand(0, 5) == 5) {
+        $node->body[LANGUAGE_NONE][0]['value'] = devel_create_para(3, 1)
+          . '<p>' . $this->word . '</p>'
+          . devel_create_para(3, 1);
+      }
+      else {
+        $node->body[LANGUAGE_NONE][0]['value'] = str_replace($this->word, '', $node->body[LANGUAGE_NONE][0]['value']);
+      }
+
+      // Save the node.
+      node_save($node);
+    }
+  }
+
+}

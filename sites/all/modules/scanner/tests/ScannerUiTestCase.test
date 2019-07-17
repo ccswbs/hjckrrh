@@ -1,0 +1,55 @@
+<?php
+
+/**
+ * @file
+ * Some tests for the Search and Replace Scanner module.
+ */
+
+/**
+ * Test the UI for the Scanner module.
+ */
+class ScannerUiTestCase extends ScannerBaseTestCase {
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function getInfo() {
+    return array(
+      'name' => 'Scanner UI',
+      'description' => 'Confirm that the Scanner module admin UI works.',
+      'group' => 'scanner',
+    );
+  }
+
+  /**
+   * Make sure the site still works. For now just check the front page.
+   */
+  public function testTheSiteStillWorks() {
+    // Log in as user 1, we don't care about permissions for this.
+    $this->loginUser1();
+
+    // Load the settings form.
+    $this->drupalGet('admin/config/content/scanner');
+    $this->assertResponse(200);
+
+    // Run through the form options that should be visible.
+    $this->assertText(t('Default options'));
+    $this->assertFieldByName('scanner_mode');
+    $this->assertFieldByName('scanner_wholeword');
+    $this->assertFieldByName('scanner_regex');
+    $this->assertFieldByName('scanner_published');
+    $this->assertFieldByName('scanner_pathauto');
+
+    // The taxonomy handling.
+    $this->assertText('Allow restrictions by terms in a vocabulary');
+    $this->assertFieldByName('scanner_vocabulary[1]');
+
+    // Field handling.
+    $this->assertText('Fields that will be searched');
+    $this->assertFieldByName('scanner_body_field_revision_body_article');
+    $this->assertFieldByName('scanner_title_node_revision_article');
+    $this->assertFieldByName('scanner_body_field_revision_body_page');
+    $this->assertFieldByName('scanner_title_node_revision_page');
+  }
+
+}
