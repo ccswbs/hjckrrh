@@ -1,0 +1,118 @@
+<?php
+
+/**
+ * @file
+ * Test basic search & replace functionality.
+ */
+
+/**
+ * Test basic search & replace functionality.
+ */
+class ScannerBasicsTestCase extends ScannerBaseTestCase {
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function getInfo() {
+    return array(
+      'name' => 'Scanner basics',
+      'description' => 'Test the basic search & replace functionality.',
+      'group' => 'scanner',
+      'dependencies' => array(
+        'devel',
+      ),
+    );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setUp(array $modules = array()) {
+    parent::setUp($modules);
+
+    // Log in as user 1, to avoid permissions problems.
+    $this->loginUser1();
+
+    // Generate some sample content.
+    $this->generateSampleContent();
+  }
+
+  /**
+   * Make sure the basic search functionality works.
+   */
+  public function testSearch() {
+    // Get an idea for what content is available.
+    $this->drupalGet('admin/content');
+    $this->assertResponse(200);
+
+    // Confirm what fields will be searchable.
+    $this->drupalGet('admin/config/content/scanner');
+    $this->assertResponse(200);
+    $this->drupalPost(NULL, array(), t('Save configuration'));
+
+    // Load the search form.
+    $this->drupalGet('admin/content/scanner');
+    $this->assertResponse(200);
+
+    // Search for a word.
+    $values = array(
+      'search' => $this->word,
+    );
+    $this->drupalPost(NULL, $values, t('Search'));
+    $this->assertResponse(200);
+
+    // Make sure the 'no results' message wasn't found.
+    $this->assertNoText('Your search yielded no results.');
+    $this->assertText('Search Results');
+
+    // Identify how many items were found.
+    $xpath = $this->xpath('//ol//a');
+    $results_count = count($xpath);
+
+    // Try replacing the text.
+    $values = array(
+      'replace' => $this->replaceWord,
+    );
+    $this->drupalPost(NULL, $values, t('Replace'));
+    $this->assertResponse(200);
+
+    // Confirm the confirmation form shows the correct information.
+    $this->assertText(t('Confirm Replace'));
+    $this->assertText(t('Are you sure you want to make the following replacement?'));
+    $this->assertText(t('Search for:'));
+    $this->assertText('[' . $this->word . ']');
+    $this->assertText(t('Replace with:'));
+    $this->assertText('[' . $this->replaceWord . ']');
+    $this->assertFieldById('edit-confirm');
+    $this->assertFieldById('edit-cancel');
+
+    // Submit the confirmation form.
+    $this->drupalPost(NULL, array(), t('Yes, Continue'));
+    $this->assertResponse(200);
+    $this->assertText(strip_tags(t('Replacing [%search] with [%replace] ...', array('%search' => $this->word, '%replace' => $this->replaceWord))));
+
+    // There should be the same number of items replaced as there were items
+    // found the first time.
+    $xpath = $this->xpath('//ol//a');
+    $this->assertEqual($results_count, count($xpath));
+
+    // Search the content again, this time look for the replacement word.
+    $this->drupalGet('admin/content/scanner');
+    $this->assertResponse(200);
+    $values = array(
+      'search' => $this->replaceWord,
+    );
+    $this->drupalPost(NULL, $values, t('Search'));
+    $this->assertResponse(200);
+
+    // Make sure the 'no results' message wasn't found.
+    $this->assertNoText('Your search yielded no results.');
+    $this->assertText('Search Results');
+
+    // There should be the same number of results found on this search as there
+    // were items found the first time.
+    $xpath = $this->xpath('//ol//a');
+    $this->assertEqual($results_count, count($xpath));
+  }
+
+}

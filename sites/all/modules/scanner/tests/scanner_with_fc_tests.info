@@ -1,0 +1,16 @@
+name = Scanner with Field Collection
+description = "Some helper logic for the Scanner module's tests."
+core = 7.x
+
+; Don't show this on the modules admin page.
+hidden = TRUE
+
+dependencies[] = scanner:scanner
+dependencies[] = devel_generate:devel_generate
+dependencies[] = field_collection:field_collection
+
+; Information added by Drupal.org packaging script on 2018-05-19
+version = "7.x-1.0"
+core = "7.x"
+project = "scanner"
+datestamp = "1526760786"

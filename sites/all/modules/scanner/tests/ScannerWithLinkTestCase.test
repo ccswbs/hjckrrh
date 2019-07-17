@@ -1,0 +1,121 @@
+<?php
+
+/**
+ * @file
+ * Test integration with Link.
+ */
+
+/**
+ * Test integration with Link.
+ */
+class ScannerWithLinkTestCase extends ScannerBasicsTestCase {
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function getInfo() {
+    return array(
+      'name' => 'Scanner with Link',
+      'description' => 'Repeat the base tests with Link.',
+      'group' => 'scanner',
+      'dependencies' => array(
+        'devel',
+        'link',
+      ),
+    );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setUp(array $modules = array()) {
+    // Enable the Link module.
+    $modules[] = 'link';
+
+    // Some helper logic.
+    $modules[] = 'scanner_with_link_tests';
+
+    // Buid the site.
+    parent::setUp($modules);
+
+    // Delete the same content created above.
+    $this->removeSampleContent();
+
+    // Add a Link field to the Article content type.
+    $field = array(
+      'field_name' => 'field_links',
+      'type' => 'link_field',
+      'cardinality' => -1,
+      'translatable' => FALSE,
+    );
+    field_create_field($field);
+    $instance = array(
+      'entity_type' => 'node',
+      'field_name' => 'field_links',
+      'bundle' => 'article',
+      'label' => 'Links',
+      'widget' => array(
+        'type' => 'link_field',
+      ),
+    );
+    field_create_instance($instance);
+
+    // Generate some sample content.
+    $this->generateSampleContent();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function testSearch() {
+    $search_or = db_or()
+      ->condition('field_links_title', '%' . db_like($this->searchWord) . '%', 'LIKE')
+      ->condition('field_links_url', '%' . db_like($this->searchWord) . '%', 'LIKE');
+    $replace_or = db_or()
+      ->condition('field_links_title', '%' . db_like($this->replaceWord) . '%', 'LIKE')
+      ->condition('field_links_url', '%' . db_like($this->replaceWord) . '%', 'LIKE');
+    
+    // Look for 'link' data that contains the search word.
+    $pre_search_count = db_select('field_data_field_links', 'l')
+      ->fields('l', array('entity_type', 'entity_id', 'delta'))
+      ->condition($search_or)
+      ->execute()
+      ->rowCount();
+
+    // Look for 'link' data that contains the replacement word.
+    $pre_replace_count = db_select('field_data_field_links', 'l')
+      ->fields('l', array('entity_type', 'entity_id', 'delta'))
+      ->condition($replace_or)
+      ->execute()
+      ->rowCount();
+
+    $this->assertNotEqual($pre_search_count, $pre_replace_count, 'Search word count and Replace word count not the same');
+    $this->assertNotEqual($pre_search_count, 0, 'Search word count is not zero');
+    $this->assertEqual($pre_replace_count, 0, 'Replace word count is zero');
+
+    // Run the parent tests.
+    parent::testSearch();
+
+    // Look for 'link' data that contains the search word.
+    $post_search_count = db_select('field_data_field_links', 'l')
+      ->fields('l')
+      ->condition($search_or)
+      ->execute()
+      ->rowCount();
+
+    // Look for 'link' data that contains the replacement word.
+    $post_replace_count = db_select('field_data_field_links', 'l')
+      ->fields('l')
+      ->condition($replace_or)
+      ->execute()
+      ->rowCount();
+
+    $this->assertNotEqual($pre_search_count, $post_search_count, 'Pre and post Search word count are not the same');
+    $this->assertNotEqual($pre_replace_count, $post_replace_count, 'Pre and post Replace word count are not the same');
+
+    $this->assertNotEqual($post_search_count, $post_replace_count, 'Search word count and Replace word count not the same');
+    $this->assertEqual($post_search_count, 0, 'Search word count is zero');
+    $this->assertNotEqual($post_replace_count, 0, 'Replace word count is not zero');
+  }
+
+}

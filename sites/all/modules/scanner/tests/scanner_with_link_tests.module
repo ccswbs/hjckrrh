@@ -1,0 +1,27 @@
+<?php
+
+/**
+ * @file
+ * Helper logic.
+ */
+
+/**
+ * Implements hook_node_presave().
+ */
+function scanner_with_link_tests_node_presave($node) {
+  if (isset($node->devel_generate['word'], $node->field_links[LANGUAGE_NONE])) {
+    if (!empty($node->field_links[LANGUAGE_NONE])) {
+      module_load_include('inc', 'devel_generate');
+      $node->field_links[LANGUAGE_NONE] = array(
+        array(
+          'title' => devel_create_greeking(2, TRUE)
+            . ' ' . $node->devel_generate['word']
+            . ' ' . devel_create_greeking(2, TRUE),
+          'url' => 'https://example.com/page/'
+            . $node->devel_generate['word']
+            . '/blah',
+        ),
+      );
+    }
+  }
+}

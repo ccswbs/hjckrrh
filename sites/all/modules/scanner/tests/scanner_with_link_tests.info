@@ -1,0 +1,16 @@
+name = Scanner with Link
+description = "Some helper logic for the Scanner module's tests."
+core = 7.x
+
+; Don't show this on the modules admin page.
+hidden = TRUE
+
+dependencies[] = scanner:scanner
+dependencies[] = devel_generate:devel_generate
+dependencies[] = link:link
+
+; Information added by Drupal.org packaging script on 2018-11-10
+version = "7.x-1.1"
+core = "7.x"
+project = "scanner"
+datestamp = "1541817786"
