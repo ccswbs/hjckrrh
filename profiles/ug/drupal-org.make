@@ -74,6 +74,8 @@ projects[features][version] = "2.10"
 
 projects[feeds][version] = "2.0-beta3"
 
+projects[feeds_comment_processor][version] = "1.0"
+
 projects[feeds_ftp_fetcher][version] = "1.0"
 
 projects[feeds_tamper][version] = "1.1"
