@@ -30,7 +30,7 @@
 	<?php if (!empty($transcript)): ?>
 	<div class="col-md-8">
 	<?php endif; ?>
-		<video data-able-player playsinline data-hide-controls data-speed-icons="arrows" <?php if (!empty($transcript)) echo "data-transcript-div='transcript-container{$nid}'" ?> data-youtube-id="<?php print $video ?>" id="video<?php print $nid ?>" preload="auto">
+		<video data-able-player playsinline <?php if (!empty($transcript)) echo "data-transcript-div='transcript-container{$nid}'" ?> data-youtube-id="<?php print $video ?>" id="video<?php print $nid ?>" preload="auto">
 		<?php if (!empty($transcript)): ?>
 		        <track kind="captions" src="<?php print $transcript ?>" srclang="en" />
 		<?php endif; ?>
