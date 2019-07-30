@@ -128,8 +128,11 @@ function ug_theme_preprocess_views_view(&$vars) {
   $has_pane_conf = isset($view->display_handler->display->display_options['pane_conf']);
   if ($has_feed_icon && $has_pane_conf) {
     $pane_conf = $view->display_handler->display->display_options['pane_conf'];
-    if ($pane_conf['override_title'] === 1) {
-      $vars['feed_icon'] = str_replace($view->build_info['title'], $pane_conf['override_title_text'], $vars['feed_icon']);
+    $has_override_title = isset($pane_conf['override_title']);
+    if ($has_override_title) {
+      if ($pane_conf['override_title'] === 1) {
+        $vars['feed_icon'] = str_replace($view->build_info['title'], $pane_conf['override_title_text'], $vars['feed_icon']);
+      }
     }
   }       
 }
