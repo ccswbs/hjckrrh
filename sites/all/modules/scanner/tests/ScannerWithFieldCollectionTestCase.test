@@ -1,0 +1,89 @@
+<?php
+
+/**
+ * @file
+ * Test integration with Field Collection.
+ */
+
+/**
+ * Test integration with Field Collection.
+ */
+class ScannerWithFieldCollectionTestCase extends ScannerBasicsTestCase {
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function getInfo() {
+    return array(
+      'name' => 'Scanner with Field Collection',
+      'description' => 'Repeat the base tests with Field Collection.',
+      'group' => 'scanner',
+      'dependencies' => array(
+        'devel',
+        'field_collection',
+      ),
+    );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setUp(array $modules = array()) {
+    // Enable the FC module.
+    $modules[] = 'field_collection';
+
+    // Some helper logic.
+    $modules[] = 'scanner_with_fc_tests';
+
+    // Buid the site.
+    parent::setUp($modules);
+
+    // Delete the same content created above.
+    module_load_include('inc', 'devel_generate');
+    devel_generate_content_kill(array('node_types' => array('article')));
+
+    // Add a FC field to the Article content type.
+    $this->drupalGet('admin/structure/types/manage/article/fields');
+    $this->assertResponse(200);
+    $edit = array(
+      'fields[_add_new_field][label]' => 'Stuff',
+      'fields[_add_new_field][field_name]' => 'stuff',
+      'fields[_add_new_field][type]' => 'field_collection',
+      'fields[_add_new_field][widget_type]' => 'field_collection_embed',
+    );
+    $this->drupalPost(NULL, $edit, t('Save'));
+    $this->assertResponse(200);
+    $edit = array();
+    $this->drupalPost(NULL, $edit, t('Save field settings'));
+    $this->assertResponse(200);
+    $edit = array(
+      'field[cardinality]' => -1,
+    );
+    $this->drupalPost(NULL, $edit, t('Save settings'));
+    $this->assertResponse(200);
+    $this->assertText('Saved Stuff configuration.');
+
+    // Add a text field to the FC type.
+    $this->drupalGet('admin/structure/field-collections/field-stuff/fields');
+    $this->assertResponse(200);
+    $edit = array(
+      'fields[_add_new_field][label]' => 'Text',
+      'fields[_add_new_field][field_name]' => 'text',
+      'fields[_add_new_field][type]' => 'text',
+      'fields[_add_new_field][widget_type]' => 'text_textfield',
+    );
+    $this->drupalPost(NULL, $edit, t('Save'));
+    $this->assertResponse(200);
+    $edit = array();
+    $this->drupalPost(NULL, $edit, t('Save field settings'));
+    $this->assertResponse(200);
+    $edit = array();
+    $this->drupalPost(NULL, $edit, t('Save settings'));
+    $this->assertResponse(200);
+    $this->assertText('Saved Text configuration.');
+
+    // Generate some sample content.
+    $this->generateSampleContent();
+  }
+
+}

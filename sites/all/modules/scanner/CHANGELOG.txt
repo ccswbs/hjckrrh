@@ -1,0 +1,45 @@
+Search and Replace Scanner 7.x-1.0, 2018-05-19
+----------------------------------------------
+#2971838 by DamienMcKenna: Add a CHANGELOG.txt file.
+#1193366 by DamienMcKenna, Nitesh Pawar, 44sunsets, Shreya Shetty: Support Link
+  field.
+#2616640 by Eric_A, DamienMcKenna, _vid, gtoffoli, petschep, Suraj_Vantagode,
+  Bool Boost, hass, urix, danheisel, xaa: Field language broken.
+#2971524 by DamienMcKenna: Write a first test.
+#2971844 by DamienMcKenna: Add test dependencies.
+#2971844 by DamienMcKenna: Write test coverage for the search functionality.
+#2973179 by DamienMcKenna: Processing hits "not enough time" if
+  max_execution_time is 0.
+#2280999 by DamienMcKenna: Replacement in field collection.
+#2971845 by DamienMcKenna: Write test coverage for the text replacement
+  functionality.
+#2905579 by DamienMcKenna: Drupal Coding Standards.
+#2971525 by DamienMcKenna: Move settings page into a separate file.
+
+
+Search and Replace Scanner 7.x-1.0-beta1, 2015-10-16
+----------------------------------------------------
+By rossetti: Started D7 port.
+#1789136 by ericras: JavaScript bugs w/7.x version.
+#1668686 by ericras: Add t() wrapper to 'Replace' text.
+#1789964 by ericras: Search does not include Field Collections.
+#1788174 by ericras: Strict warning fix for drupal_render() calls.
+#1578284 by ericras: Add menu item to Content menu in addition to tab.
+By ericras: Variable $shutting_down not set if there were no results.
+By ericras: Coding Standards, whitespace, documentation and creation of
+  theme.inc.
+By ericras: Typo in 'scanner.theme.inc'.
+#1587488 by ericras: Better notice when no matches found when replacing.
+By ericras: Remove permission descriptions, not needed.
+By ericras: Change search regexp to match all results & display in ul.
+By ericras: Use length of string match, not regular expression.
+By ericras: Proper html display of "Can't display search result..." warning.
+By ericras: Fix errant use of $search_db in D6->D7 upgrade from db_query to
+  db_select.
+  Whole word search was broken. $search_db no longer needed as we are not
+  building a string of query params any longer with D7. Need to use $where
+  string in the conditions because that includes the [[:<:]] brackets.
+By ericras: Properly combine (now removed) $search_db and $where into new
+  $where.
+By ericras: Change 'scanning' to 'searching' for consistency.
+By ericras: Update variable names and structure to be more standard.

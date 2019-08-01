@@ -1,0 +1,37 @@
+<?php
+
+/**
+ * @file
+ * Helper logic.
+ */
+
+/**
+ * Implements hook_node_presave().
+ */
+function scanner_with_fc_tests_node_presave($node) {
+  if (isset($node->devel_generate['word'], $node->field_stuff[LANGUAGE_NONE])) {
+    foreach ($node->field_stuff[LANGUAGE_NONE] as $key => &$field) {
+      $fc = field_collection_item_load($field['value']);
+      if (mt_rand(0, 5) == 5) {
+        foreach ($fc->field_text[LANGUAGE_NONE] as $fc_key => &$fc_field) {
+          // This field is a single string with a max length of 255. So, the
+          // easiest way to replace a single word in the string is to split it
+          // into an array, pick an array element at random to replace, and
+          // then recombine the string.
+          $bits = explode(' ', $fc_field['value']);
+          $pos = mt_rand(0, count($bits) - 1);
+          $bits[$pos] = $node->devel_generate['word'];
+          $fc_field['value'] = substr(implode(' ', $bits), 0, 255);
+        }
+      }
+      else {
+        foreach ($fc->field_text[LANGUAGE_NONE] as $fc_key => &$fc_field) {
+          $fc_field['value'] = str_replace($node->devel_generate['word'], '', $fc_field['value']);
+        }
+      }
+
+      // Don't update the host entity.
+      $fc->save(TRUE);
+    }
+  }
+}

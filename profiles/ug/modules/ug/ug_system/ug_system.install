@@ -4,6 +4,7 @@
 * Implements hook_requirements().
 **/
 function ug_system_requirements($phase) {
+  global $base_url;
   $requirements = array();
   if ($phase == 'runtime') {
     // ------------------------
@@ -123,7 +124,7 @@ function ug_system_requirements($phase) {
     // -------------------------------------
     $nagios = variable_get('ug_system_add_nagios');
     $requirements['ug_system_add_nagios'] = array(
-      'title' => t('UG add site to Nagios'),
+      'title' => t('UG add website to Nagios'),
       'value' => t('Ticket submitted'),
       'description' => t('This ensures a footprints ticket has been sent to add the site url to nagios'),
     );
@@ -164,6 +165,46 @@ function ug_system_requirements($phase) {
       $requirements['ug_system_test']['description'] = t('There are menu links to the stage site');
       $requirements['ug_system_test']['value'] = t('@num link(s)', array('@num' => count($menu_link_check)) );
       $requirements['ug_system_test']['severity'] = REQUIREMENT_ERROR;
+    }
+
+    // -----------------------------
+    // CHECKS LUMTURIO FOR SITE URL
+    // -----------------------------
+    $get_result = ug_system_lumturio_get("/site.getsites");
+    $lumturio = variable_get('ug_system_add_lumturio');
+    $requirements['ug_system_add_lumturio'] = array(
+      'title' => t('UG add website to Lumturio'),
+      'description' => t('This ensures the website has been added to the lumturio dashboard'),
+    );
+    if($get_result['ok'] == TRUE) {
+      $sites = $get_result['items'];
+      $site_available = FALSE;
+
+      foreach($sites as $site) {
+        if($site['site_url'] == $base_url) {
+          $site_available = TRUE;
+          break;
+        }
+        else {
+          $site_available = FALSE;
+        }
+      }
+      if ($site_available == TRUE) {
+        $requirements['ug_system_add_lumturio']['value'] = t("site is already on lumturio");
+      }
+      else {
+        $requirements['ug_system_add_lumturio']['value'] = t("Please add " .$base_url. " to the lumturio dashboard");
+        $requirements['ug_system_add_lumturio']['severity'] = REQUIREMENT_ERROR;
+      }
+
+      $lumturio_checkbox = variable_get('ug_system_add_lumturio');
+      if ($site_available == FALSE && $lumturio_checkbox == '1') {
+        $post_result = ug_system_lumturio_post("/site.addsite");
+        if($post_result['ok'] == true) {
+          $requirements['ug_system_add_lumturio']['value'] = t("Site has been added to lumturio");
+          $requirements['ug_system_add_lumturio']['severity'] = REQUIREMENT_OK;
+        }
+      }
     }
 }
 

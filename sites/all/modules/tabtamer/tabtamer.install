@@ -1,0 +1,27 @@
+<?php
+
+/**
+ * @file
+ * The install and update code for the tabtamer module.
+ *
+ * @ingroup tabtamer
+ */
+
+/**
+ * Implements hook_install().
+ */
+function tabtamer_install() {
+  db_update('system')
+  ->fields(array(
+    'weight' => 90,
+  ))
+  ->condition('name', 'tabtamer')
+  ->execute();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function tabtamer_uninstall() {
+  variable_del('tabtamer_tab_settings');
+}

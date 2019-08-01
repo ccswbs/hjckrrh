@@ -1,0 +1,125 @@
+<?php
+
+/**
+ * @file
+ * The TabTamer module.
+ *
+ * The TabTamer module provides an easy-to-use interface for ordering and
+ * disabling tabs.
+ *
+ * @ingroup tabtamer
+ */
+
+define('TABTAMER_CACHE_ID', 'tabtamer_cache');
+define('TABTAMER_CACHE_TABLE', 'cache_menu');
+
+/**
+ * Implements hook_theme().
+ */
+function tabtamer_theme($existing, $type, $theme, $path) {
+  return array('tabtamer_tabs_form' => array('render element' => 'form'));
+}
+
+/**
+ * Implementation of hook_help();
+ */
+function tabtamer_help($path, $arg) {
+  switch ($path) {
+    case "admin/help#tabtamer":
+      return t('Tab Tamer lets you hide, disable and re-order all Drupal menu tabs. After making changes, you must Clear all caches under Performance in order to reflect your changes. By default the administrative tabs are not shown. You can enable this feature under the Settings tab. As the Tab Tamer list is cached, you need to Clear all caches when disabling or enabling this feature in order to reflect your choice.');
+      break;
+  }
+}
+
+/**
+ * Implements hook_menu().
+ */
+function tabtamer_menu() {
+  $items = array();
+
+  $items['admin/config/system/tabtamer'] = array(
+    'title' => 'Tab Tamer',
+    'description' => 'Tab Tamer lets you hide, disable and re-order all Drupal menu tabs.',
+    'access arguments' => array('administer tabtamer'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('tabtamer_tabs_form'),
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'tabtamer.admin.inc',
+  );
+  $items['admin/config/system/tabtamer/tabs'] = array(
+    'title' => t('Edit tabs'),
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'weight' => -1,
+  );
+  $items['admin/config/system/tabtamer/settings'] = array(
+    'title' => 'Settings',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('tabtamer_admin'),
+    'access arguments' => array('administer tabtamer'),
+    'type' => MENU_LOCAL_TASK,
+    'file' => 'tabtamer.admin.inc',
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_permission().
+ */
+function tabtamer_permission() {
+  return array(
+    'administer tabtamer' => array(
+      'title' => t('administer tabtamer'),
+      'description' => t('Administer the Tab Tamer'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_menu_alter().
+ */
+function tabtamer_menu_alter(&$items) {
+
+  // We will be altering the $items variable, so we create a backup in case we need
+  // to see the original state of the $items array.
+  _tabtamer_backup($items);
+
+  $tabs = variable_get('tabtamer_tab_settings', array());
+  foreach ($tabs as $path => $val) {
+
+    // Only set the attributes if the menu router item exists.
+    if (!empty($items[$val['tabtamer_original_path']])) {
+      $items[$val['tabtamer_original_path']]['weight'] = $val['weight'];
+      if ($val['action'] == 'hidden') {
+        $items[$val['tabtamer_original_path']]['type'] = MENU_CALLBACK;
+      }
+      elseif ($val['action'] == 'disabled') {
+        unset($items[$val['tabtamer_original_path']]);
+      }
+      else {
+        if (!empty($val['tabtamer_title'])) {
+          $items[$val['tabtamer_original_path']]['title'] = $val['tabtamer_title'];
+
+          // we are providing a title, so remove any title callback and arguments
+          if (isset($items[$val['tabtamer_original_path']]['title callback'])) {
+            unset($items[$val['tabtamer_original_path']]['title callback']);
+          }
+          if (isset($items[$val['tabtamer_original_path']]['title arguments'])) {
+            unset($items[$val['tabtamer_original_path']]['title arguments']);
+          }
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Helper function to create a backup of the menu router table.
+ */
+function _tabtamer_backup($menu = array()) {
+  static $backup = array();
+  if (!empty($menu)) {
+    $backup = $menu;
+  }
+  return $backup;
+}
