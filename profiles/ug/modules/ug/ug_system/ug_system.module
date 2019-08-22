@@ -49,13 +49,13 @@ function ug_system_add_site_form(){
     '#type' => 'textfield',
     '#title' => t('Enter lumturio api key'),
     '#attributes' =>array('value' => variable_get('ug_system_api_key')),
-    '#description' => t('Lumturio api key, can be found on the lumturio dashnoard under settings'),
+    '#description' => t('Lumturio api key, can be found on the lumturio dashboard under settings'),
   );
 
   $form['ug_system_site_UUID'] = array(
     '#type' => 'textfield',
     '#title' => t('Enter the site UUID'),
-    '#description' => t('Enable the sysytem status module, go to <a href="@system_status">System Status</a> to get websiteUUID' , array('@system_status' => url('admin/config/system/system_status'))),
+    '#description' => t('Enable the system status module, go to <a href="@system_status">System Status</a> to get websiteUUID' , array('@system_status' => url('admin/config/system/system_status'))),
     '#attributes' =>array('value' => variable_get('ug_system_site_UUID')),
     //Make the site UUID a required field if the Lumturio api key is checked
     '#states' => array(
