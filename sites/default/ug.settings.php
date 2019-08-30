@@ -47,6 +47,7 @@ if (isset($_ENV['PANTHEON_ENVIRONMENT']) && php_sapi_name() != 'cli') {
       $_SERVER['REQUEST_URI'] = $ug_base_path . $_SERVER['REQUEST_URI'];
       // Set cookie domain.
       $cookie_domain = '.' . $ug_primary_domain;
+      $cookie_path = $ug_base_path;
       // Set Drupal base URL.
       $base_url = 'https://' . $ug_primary_domain . $ug_base_path;
   }

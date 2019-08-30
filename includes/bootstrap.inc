@@ -753,7 +753,7 @@ function drupal_settings_initialize() {
   global $base_url, $base_path, $base_root;
 
   // Export these settings.php variables to the global namespace.
-  global $databases, $cookie_domain, $conf, $installed_profile, $update_free_access, $db_url, $db_prefix, $drupal_hash_salt, $is_https, $base_secure_url, $base_insecure_url;
+  global $databases, $cookie_domain, $cookie_path, $conf, $installed_profile, $update_free_access, $db_url, $db_prefix, $drupal_hash_salt, $is_https, $base_secure_url, $base_insecure_url;
   $conf = array();
 
   if (file_exists(DRUPAL_ROOT . '/' . conf_path() . '/settings.php')) {
@@ -818,8 +818,13 @@ function drupal_settings_initialize() {
   $base_insecure_url = str_replace('https://', 'http://', $base_url);
 
   if ($cookie_domain) {
-    // If the user specifies the cookie domain, also use it for session name.
+    // If the user specifies the cookie domain, use it for session name.
     $session_name = $cookie_domain;
+
+    // If the user specifies the cookie path, include it in session name.
+    if ($cookie_path && $cookie_path !== '/') {
+      $session_name .= $cookie_path;
+    }
   }
   else {
     // Otherwise use $base_url as session name, without the protocol
@@ -838,11 +843,16 @@ function drupal_settings_initialize() {
       $cookie_domain = '.' . $cookie_domain[0];
     }
   }
+
   // Per RFC 2109, cookie domains must contain at least one dot other than the
   // first. For hosts such as 'localhost' or IP Addresses we don't set a cookie domain.
   if (count(explode('.', $cookie_domain)) > 2 && !is_numeric(str_replace('.', '', $cookie_domain))) {
     ini_set('session.cookie_domain', $cookie_domain);
   }
+  if ($cookie_path && $cookie_path !== '/') {
+    ini_set('session.cookie_path', $cookie_path);
+  }
+
   // To prevent session cookies from being hijacked, a user can configure the
   // SSL version of their website to only transfer session cookies via SSL by
   // using PHP's session.cookie_secure setting. The browser will then use two

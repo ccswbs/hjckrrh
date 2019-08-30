@@ -358,6 +358,14 @@ ini_set('session.cookie_lifetime', 2000000);
 # $cookie_domain = '.example.com';
 
 /**
+ * By default, Drupal sets cookies to the root path of the domain, which causes
+ * session cookies to be available across sites within subdirectories on the
+ * same domain. To restrict cookies by path, uncomment the line below and
+ * specify the site's path.
+ */
+# $cookie_path='/';
+
+/**
  * Variable overrides:
  *
  * To override specific entries in the 'variable' table for this site,
