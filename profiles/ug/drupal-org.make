@@ -192,7 +192,7 @@ projects[oauth][version] = "3.3"
 
 projects[page_title][version] = "2.7"
 
-projects[panelizer][version] = "3.1"
+projects[panelizer][version] = "3.4"
 
 projects[panels][version] = "3.9"
 
@@ -258,7 +258,7 @@ projects[token_tweaks][download][branch] = "7.x-1.x"
 projects[twitter][version] = "5.11"
 projects[twitter][patch][] = "https://www.drupal.org/files/issues/twitter-doubleclass-2661088-5.patch"
 
-projects[uuid][version] = "1.1"
+projects[uuid][version] = "1.3"
 
 projects[view_unpublished][version] = "1.2"
 
