@@ -48,7 +48,7 @@ projects[date][version] = "2.10"
 
 projects[date_ical][version] = "3.5"
 
-projects[devel][version] = "1.5"
+projects[devel][version] = "1.7"
 
 projects[devel_themer][version] = "1.x-dev"
 
@@ -56,7 +56,7 @@ projects[diff][version] = "3.3"
 
 projects[drafty][version] = "1.0-rc1"
 
-projects[ds][version] = "2.15"
+projects[ds][version] = "2.16"
 
 projects[ds_bootstrap_layouts][version] = "3.1"
 
@@ -64,23 +64,23 @@ projects[email][version] = "1.3"
 
 projects[entity][version] = "1.9"
 
+projects[entityform][version] = "2.0-rc4"
+
 projects[entityreference][version] = "1.5"
 
 projects[facebook_pixel][version] = "1.1"
 
 projects[faq][version] = "1.1"
 
-projects[features][version] = "2.10"
+projects[features][version] = "2.11"
 
 projects[feeds][version] = "2.0-beta3"
 
-projects[feeds_comment_processor][version] = "1.0"
-
 projects[feeds_ftp_fetcher][version] = "1.0"
 
-projects[feeds_tamper][version] = "1.1"
+projects[feeds_tamper][version] = "1.2"
 
-projects[field_collection][version] = "1.0-beta11"
+projects[field_collection][version] = "1.0-beta13"
 
 projects[field_collection_tabs][version] = "1.1"
 
@@ -89,7 +89,7 @@ projects[field_collection_bootstrap_tabs][type] = "module"
 projects[field_collection_bootstrap_tabs][download][type] = "git"
 projects[field_collection_bootstrap_tabs][download][url] = "https://git.drupalcode.org/sandbox/osman-2464117.git"
 
-projects[field_group][version] = "1.5"
+projects[field_group][version] = "1.6"
 
 projects[field_permissions][version] = "1.0"
 
@@ -109,7 +109,7 @@ projects[flood_control][version] = "1.0"
 
 projects[fontawesome][version] = "3.7"
 
-projects[google_analytics][version] = "2.3"
+projects[google_analytics][version] = "2.6"
 
 projects[google_tag][version] = "1.3"
 projects[google_tag][patch][] = "https://www.drupal.org/files/issues/2911657_variable_php_error.patch"
@@ -138,11 +138,11 @@ projects[jquery_update][version] = "2.7"
 
 projects[js_injector][version] = "2.1"
 
-projects[ldap][version] = "2.2"
+projects[ldap][version] = "2.5"
 
 projects[legal][version] = "1.7"
 
-projects[libraries][version] = "2.3"
+projects[libraries][version] = "2.5"
 
 projects[link][version] = "1.6"
 
@@ -194,7 +194,7 @@ projects[page_title][version] = "2.7"
 
 projects[panelizer][version] = "3.1"
 
-projects[panels][version] = "3.8"
+projects[panels][version] = "3.9"
 
 projects[panels_bootstrap_layouts][version] = "3.0"
 
@@ -228,10 +228,10 @@ projects[restrict_password_change][version] = "1.0-beta2"
 
 projects[role_delegation][version] = "1.1"
 
-projects[rules][version] = "2.9"
+projects[rules][version] = "2.12"
 projects[rules][patch][] = "https://www.drupal.org/files/issues/rules-fix-fatal-error-features-revert-2186363-2.patch"
 
-projects[scanner][version] = "1.0"
+projects[scanner][version] = "1.0-beta1"
 
 projects[services][version] = "3.24"
 
@@ -243,17 +243,11 @@ projects[smart_trim][version] = "1.5"
 
 projects[smtp][version] = "1.7"
 
-projects[stringoverrides][version] = "1.8"
-
 projects[strongarm][version] = "2.0"
 
-projects[system_status][version] = "3.1"
+projects[system_status][version] = "3.3"
 
-projects[tabtamer][version] = "1.1"
-
-projects[taxonomy_csv][version] = "5.10"
-
-projects[token][version] = "1.6"
+projects[token][version] = "1.7"
 
 projects[token_tweaks][version] = "1.x-dev"
 projects[token_tweaks][type] = "module"
@@ -264,18 +258,17 @@ projects[token_tweaks][download][branch] = "7.x-1.x"
 projects[twitter][version] = "5.11"
 projects[twitter][patch][] = "https://www.drupal.org/files/issues/twitter-doubleclass-2661088-5.patch"
 
-projects[uuid][version] = "1.3"
+projects[uuid][version] = "1.1"
 
 projects[view_unpublished][version] = "1.2"
 
-projects[views][version] = "3.21"
-projects[views][patch][] = "https://www.drupal.org/files/issues/2019-03-13/3039953-25.patch"
+projects[views][version] = "3.23"
 
 projects[views_bootstrap][version] = "3.2"
 
-projects[views_bulk_operations][version] = "3.3"
+projects[views_bulk_operations][version] = "3.5"
 
-projects[views_data_export][version] = "3.1"
+projects[views_data_export][version] = "3.2"
 
 projects[views_field_view][version] = "1.1"
 
@@ -283,7 +276,7 @@ projects[views_php][version] = "1.0-alpha1"
 
 projects[views_tree][version] = "2.0"
 
-projects[webform][version] = "4.14"
+projects[webform][version] = "4.15"
 
 projects[webform_matrix_component][version] = "4.28"
 

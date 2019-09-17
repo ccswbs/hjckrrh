@@ -69,11 +69,14 @@ function system_status_status_page() {
     $res['core']['drupal'] = array("version" => VERSION);
   }
 
-  if (extension_loaded('mcrypt')) {
-    $res = SystemStatusEncryption::encrypt(drupal_json_encode(array("system_status" => $res)));
-    drupal_json_output(array("system_status" => "encrypted", "data" => $res, "drupal_version" => "7", "engine_version" => "DRUPAL7"));
+  if(function_exists('openssl_random_pseudo_bytes')) {
+    $res = SystemStatusEncryption::encrypt_openssl(drupal_json_encode(array("system_status" => $res)));
+    drupal_json_output(array("system_status" => "encrypted_openssl", "data" => $res, "drupal_version" => "7", "engine_version" => "DRUPAL7", "php_version" => phpversion()));
+  } else if(extension_loaded('mcrypt')) {
+    $res = SystemStatusEncryption::encrypt_mcrypt(drupal_json_encode(array("system_status" => $res)));
+    drupal_json_output(array("system_status" => "encrypted", "data" => $res, "drupal_version" => "7", "engine_version" => "DRUPAL7", "php_version" => phpversion()));
+  } else {
+    drupal_json_output(array("system_status" => $res, "drupal_version" => "7", "engine_version" => "DRUPAL7", "php_version" => phpversion()));
   }
-  else {
-    drupal_json_output(array("system_status" => $res, "drupal_version" => "7", "engine_version" => "DRUPAL7"));
-  }
+
 }

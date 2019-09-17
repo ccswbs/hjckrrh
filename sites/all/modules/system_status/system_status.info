@@ -4,9 +4,8 @@ core = 7.x
 configure = admin/config/system/system_status
 files[] = system_status_encryption.inc
 
-; Information added by Drupal.org packaging script on 2015-09-21
-version = "7.x-3.1"
+; Information added by Drupal.org packaging script on 2018-11-15
+version = "7.x-3.3"
 core = "7.x"
 project = "system_status"
-datestamp = "1442861340"
-
+datestamp = "1542299592"
