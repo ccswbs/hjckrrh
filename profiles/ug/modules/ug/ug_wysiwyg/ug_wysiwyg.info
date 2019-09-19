@@ -6,6 +6,7 @@ version = 7.x-7.52
 project = ug_wysiwyg
 dependencies[] = ckeditor
 dependencies[] = ckeditor_link
+dependencies[] = ckeditor_wiris
 dependencies[] = ctools
 dependencies[] = features
 dependencies[] = filter
