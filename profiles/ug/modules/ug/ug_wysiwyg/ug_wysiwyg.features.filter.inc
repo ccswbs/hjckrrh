@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * ug_wysiwyg.features.filter.inc
@@ -488,7 +489,7 @@ role[button|navigation|presentation]',
     'weight' => -9,
     'filters' => array(
       'pathologic' => array(
-        'weight' => 50,
+        'weight' => -38,
         'status' => 1,
         'settings' => array(
           'settings_source' => 'global',
@@ -499,6 +500,11 @@ role[button|navigation|presentation]',
             'local_paths' => '',
           ),
         ),
+      ),
+      'filter_mathjax' => array(
+        'weight' => -37,
+        'status' => 1,
+        'settings' => array(),
       ),
     ),
   );

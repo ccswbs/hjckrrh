@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * ug_wysiwyg.features.ckeditor_profile.inc
@@ -131,7 +132,8 @@ function ug_wysiwyg_ckeditor_profile_defaults() {
     [\'Link\',\'Unlink\',\'Anchor\'],
     \'/\',
     [\'Format\'],[\'Styles\'],
-    [\'Maximize\',\'ShowBlocks\']
+    [\'Maximize\',\'ShowBlocks\'],
+    [\'Mathjax\']
 ]',
         'expand' => 't',
         'default' => 't',
@@ -171,7 +173,7 @@ function ug_wysiwyg_ckeditor_profile_defaults() {
         'html_entities' => 'f',
         'scayt_autoStartup' => 'f',
         'theme_config_js' => 'f',
-        'js_conf' => '',
+        'js_conf' => 'config.mathJaxLib = \'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML\';',
         'loadPlugins' => array(
           'ckeditor_link' => array(
             'name' => 'drupal_path',
@@ -189,6 +191,18 @@ function ug_wysiwyg_ckeditor_profile_defaults() {
               ),
             ),
             'default' => 't',
+          ),
+          'mathjax' => array(
+            'name' => 'mathjax',
+            'desc' => 'Plugin for inserting Mathematical Formula (MathJax). See <a href="http://ckeditor.com/addon/mathjax">addon page</a> for more details. See <a href="/hjckrrh/admin/help/ckeditor#mathjax">help</a> for additional instructions.',
+            'path' => '//cdn.ckeditor.com/4.4.3/full-all/plugins/mathjax/',
+            'buttons' => array(
+              'Mathjax' => array(
+                'icon' => 'icons/mathjax.png',
+                'label' => 'Insert Mathematical Formulas',
+              ),
+            ),
+            'default' => 'f',
           ),
           'tableresize' => array(
             'name' => 'tableresize',
