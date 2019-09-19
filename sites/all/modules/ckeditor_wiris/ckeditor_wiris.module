@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * Implements hook_ckeditor_plugin().
+ */
+function ckeditor_wiris_ckeditor_plugin() {
+  return array(
+    'ckeditor_wiris' => array(
+      'name' => 'ckeditor_wiris',
+      'desc' => 'CKEditor WIRIS plugin. Allow users to insert math and chemistry equations into your CKEditor.',
+      'path' => base_path() . drupal_get_path('module', 'ckeditor_wiris') . '/js/plugins/ckeditor_wiris/',
+      'buttons' => array(
+        'ckeditor_wiris_formulaEditor' => array(
+          'label' => t('MathType'),
+          'icon' => 'icons/formula.png',
+        ),
+        'ckeditor_wiris_formulaEditorChemistry' => array(
+          'label' => t('ChemType'),
+          'icon' => 'icons/chem.png',
+        ),
+      )
+    )
+  );
+}
