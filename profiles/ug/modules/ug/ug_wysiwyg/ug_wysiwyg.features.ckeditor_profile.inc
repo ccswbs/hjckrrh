@@ -207,18 +207,6 @@ function ug_wysiwyg_ckeditor_profile_defaults() {
             ),
             'default' => 't',
           ),
-          'mathjax' => array(
-            'name' => 'mathjax',
-            'desc' => 'Plugin for inserting Mathematical Formula (MathJax). See <a href="http://ckeditor.com/addon/mathjax">addon page</a> for more details. See <a href="/admin/help/ckeditor#mathjax">help</a> for additional instructions.',
-            'path' => '//cdn.ckeditor.com/4.4.3/full-all/plugins/mathjax/',
-            'buttons' => array(
-              'Mathjax' => array(
-                'icon' => 'icons/mathjax.png',
-                'label' => 'Insert Mathematical Formulas',
-              ),
-            ),
-            'default' => 'f',
-          ),
           'tableresize' => array(
             'name' => 'tableresize',
             'desc' => 'Table Resize plugin. See <a href="http://ckeditor.com/addon/tableresize">addon page</a> for more details.',

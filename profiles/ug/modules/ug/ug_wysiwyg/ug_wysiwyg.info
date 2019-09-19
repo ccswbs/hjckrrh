@@ -12,6 +12,7 @@ dependencies[] = features
 dependencies[] = filter
 dependencies[] = imce
 dependencies[] = imce_mkdir
+dependencies[] = mathjax
 dependencies[] = pathologic
 dependencies[] = strongarm
 dependencies[] = ug_filter
