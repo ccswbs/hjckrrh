@@ -27,6 +27,8 @@ projects[ckeditor][version] = "1.18"
 
 projects[ckeditor_link][version] = "2.4"
 
+projects[ckeditor_wiris][version] = "1.3"
+
 projects[computed_field] = "1.1"
 
 projects[constant_contact] = "3.6"
