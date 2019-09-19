@@ -27,8 +27,7 @@ function ug_wysiwyg_ckeditor_profile_defaults() {
     [\'Link\',\'Unlink\',\'Anchor\'],
     \'/\',
     [\'Format\'],[\'Styles\'],
-    [\'Maximize\',\'ShowBlocks\'],
-    [\'ckeditor_wiris_formulaEditor\',\'ckeditor_wiris_formulaEditorChemistry\']
+    [\'Maximize\',\'ShowBlocks\']
 ]',
         'expand' => 't',
         'default' => 't',
@@ -75,21 +74,6 @@ function ug_wysiwyg_ckeditor_profile_defaults() {
             'desc' => 'CKEditor Link - A plugin to easily create links to Drupal internal paths',
             'path' => '%base_path%sites/all/modules/ckeditor_link/plugins/link/',
           ),
-          'ckeditor_wiris' => array(
-            'name' => 'ckeditor_wiris',
-            'desc' => 'CKEditor WIRIS plugin. Allow users to insert math and chemistry equations into your CKEditor.',
-            'path' => '/hjckrrh/sites/all/modules/ckeditor_wiris/js/plugins/ckeditor_wiris/',
-            'buttons' => array(
-              'ckeditor_wiris_formulaEditor' => array(
-                'label' => 'MathType',
-                'icon' => 'icons/formula.png',
-              ),
-              'ckeditor_wiris_formulaEditorChemistry' => array(
-                'label' => 'ChemType',
-                'icon' => 'icons/chem.png',
-              ),
-            ),
-          ),
           'drupalbreaks' => array(
             'name' => 'drupalbreaks',
             'desc' => 'Plugin for inserting Drupal teaser and page breaks.',
@@ -101,18 +85,6 @@ function ug_wysiwyg_ckeditor_profile_defaults() {
               ),
             ),
             'default' => 't',
-          ),
-          'mathjax' => array(
-            'name' => 'mathjax',
-            'desc' => 'Plugin for inserting Mathematical Formula (MathJax). See <a href="http://ckeditor.com/addon/mathjax">addon page</a> for more details. See <a href="/hjckrrh/admin/help/ckeditor#mathjax">help</a> for additional instructions.',
-            'path' => '//cdn.ckeditor.com/4.4.3/full-all/plugins/mathjax/',
-            'buttons' => array(
-              'Mathjax' => array(
-                'icon' => 'icons/mathjax.png',
-                'label' => 'Insert Mathematical Formulas',
-              ),
-            ),
-            'default' => 'f',
           ),
           'tableresize' => array(
             'name' => 'tableresize',
@@ -211,7 +183,7 @@ function ug_wysiwyg_ckeditor_profile_defaults() {
           'ckeditor_wiris' => array(
             'name' => 'ckeditor_wiris',
             'desc' => 'CKEditor WIRIS plugin. Allow users to insert math and chemistry equations into your CKEditor.',
-            'path' => '/hjckrrh/sites/all/modules/ckeditor_wiris/js/plugins/ckeditor_wiris/',
+            'path' => '%base_path%sites/all/modules/ckeditor_wiris/js/plugins/ckeditor_wiris/',
             'buttons' => array(
               'ckeditor_wiris_formulaEditor' => array(
                 'label' => 'MathType',
@@ -237,7 +209,7 @@ function ug_wysiwyg_ckeditor_profile_defaults() {
           ),
           'mathjax' => array(
             'name' => 'mathjax',
-            'desc' => 'Plugin for inserting Mathematical Formula (MathJax). See <a href="http://ckeditor.com/addon/mathjax">addon page</a> for more details. See <a href="/hjckrrh/admin/help/ckeditor#mathjax">help</a> for additional instructions.',
+            'desc' => 'Plugin for inserting Mathematical Formula (MathJax). See <a href="http://ckeditor.com/addon/mathjax">addon page</a> for more details. See <a href="/admin/help/ckeditor#mathjax">help</a> for additional instructions.',
             'path' => '//cdn.ckeditor.com/4.4.3/full-all/plugins/mathjax/',
             'buttons' => array(
               'Mathjax' => array(
