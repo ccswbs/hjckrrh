@@ -19,13 +19,8 @@ function ug_wysiwyg_filter_default_formats() {
     'status' => 1,
     'weight' => -10,
     'filters' => array(
-      'ug_tables' => array(
-        'weight' => 0,
-        'status' => 1,
-        'settings' => array(),
-      ),
       'wysiwyg' => array(
-        'weight' => 0,
+        'weight' => -45,
         'status' => 1,
         'settings' => array(
           'valid_elements' => '@[accesskey|class|contenteditable|dir|hidden|lang|spellcheck|style|tabindex|title|translate],
@@ -459,13 +454,18 @@ role[button|navigation|presentation]',
           'rule_bypass_style_urls' => 0,
         ),
       ),
+      'ug_tables' => array(
+        'weight' => -44,
+        'status' => 1,
+        'settings' => array(),
+      ),
       'filter_htmlcorrector' => array(
-        'weight' => 10,
+        'weight' => -39,
         'status' => 1,
         'settings' => array(),
       ),
       'pathologic' => array(
-        'weight' => 50,
+        'weight' => -38,
         'status' => 1,
         'settings' => array(
           'settings_source' => 'global',
@@ -476,6 +476,11 @@ role[button|navigation|presentation]',
             'local_paths' => '',
           ),
         ),
+      ),
+      'filter_mathjax' => array(
+        'weight' => -37,
+        'status' => 1,
+        'settings' => array(),
       ),
     ),
   );
