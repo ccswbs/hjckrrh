@@ -525,6 +525,44 @@ return false;';
   $handler->display->display_options['empty']['area']['empty'] = TRUE;
   $handler->display->display_options['empty']['area']['content'] = 'No results found.';
   $handler->display->display_options['empty']['area']['format'] = 'full_html';
+  $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Field: Content: Date */
+  $handler->display->display_options['fields']['field_event_date']['id'] = 'field_event_date';
+  $handler->display->display_options['fields']['field_event_date']['table'] = 'field_data_field_event_date';
+  $handler->display->display_options['fields']['field_event_date']['field'] = 'field_event_date';
+  $handler->display->display_options['fields']['field_event_date']['label'] = '';
+  $handler->display->display_options['fields']['field_event_date']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_event_date']['element_default_classes'] = FALSE;
+  $handler->display->display_options['fields']['field_event_date']['settings'] = array(
+    'format_type' => 'short',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+  );
+  /* Field: Content: Title */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'node';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['label'] = '';
+  $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
+  $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+  $handler->display->display_options['fields']['title']['element_type'] = 'p';
+  $handler->display->display_options['fields']['title']['element_class'] = 'media-heading';
+  $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['title']['element_default_classes'] = FALSE;
+  /* Field: Content: Registration Link */
+  $handler->display->display_options['fields']['field_event_registration_link']['id'] = 'field_event_registration_link';
+  $handler->display->display_options['fields']['field_event_registration_link']['table'] = 'field_data_field_event_registration_link';
+  $handler->display->display_options['fields']['field_event_registration_link']['field'] = 'field_event_registration_link';
+  $handler->display->display_options['fields']['field_event_registration_link']['label'] = '';
+  $handler->display->display_options['fields']['field_event_registration_link']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['field_event_registration_link']['alter']['text'] = '<a class="btn btn-success btn-sm" href="[field_event_registration_link-url]">Register</a>';
+  $handler->display->display_options['fields']['field_event_registration_link']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_event_registration_link']['element_wrapper_type'] = 'p';
+  $handler->display->display_options['fields']['field_event_registration_link']['element_default_classes'] = FALSE;
+  $handler->display->display_options['fields']['field_event_registration_link']['click_sort_column'] = 'url';
+  $handler->display->display_options['fields']['field_event_registration_link']['type'] = 'link_plain';
   $handler->display->display_options['allow']['use_pager'] = 0;
   $handler->display->display_options['allow']['items_per_page'] = 'items_per_page';
   $handler->display->display_options['allow']['offset'] = 0;
