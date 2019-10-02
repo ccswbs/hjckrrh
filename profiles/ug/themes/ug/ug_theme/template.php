@@ -219,6 +219,18 @@ function ug_theme_field__field_event_heading($vars) {
   return '<h3>'.drupal_render($vars['items'][0]).'</h3>';
 }
 
+/**
+ * Event Registration Link field
+ */
+function ug_theme_preprocess_field(&$vars) {
+  $field_name = $vars['element']['#field_name'];
+  if ($field_name == 'field_event_registration_link') {
+    $vars['items'][0]['#element']['title'] = 'Register';
+    $vars['items'][0]['#element']['attributes'] = array (
+      'class' => 'btn btn-success btn-lg btn-block',
+    );
+  }
+}
 
 
 /**
