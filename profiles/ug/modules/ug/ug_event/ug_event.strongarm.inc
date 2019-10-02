@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * ug_event.strongarm.inc
@@ -32,6 +33,24 @@ function ug_event_strongarm() {
       'rss' => array(
         'custom_settings' => FALSE,
       ),
+      'search_index' => array(
+        'custom_settings' => FALSE,
+      ),
+      'search_result' => array(
+        'custom_settings' => FALSE,
+      ),
+      'diff_standard' => array(
+        'custom_settings' => FALSE,
+      ),
+      'print' => array(
+        'custom_settings' => FALSE,
+      ),
+      'token' => array(
+        'custom_settings' => FALSE,
+      ),
+      'revision' => array(
+        'custom_settings' => FALSE,
+      ),
     ),
     'extra_fields' => array(
       'form' => array(
@@ -40,6 +59,12 @@ function ug_event_strongarm() {
         ),
         'redirect' => array(
           'weight' => '12',
+        ),
+        'metatags' => array(
+          'weight' => '14',
+        ),
+        'path' => array(
+          'weight' => '13',
         ),
       ),
       'display' => array(),

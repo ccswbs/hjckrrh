@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * ug_event.views_default.inc
@@ -108,7 +109,7 @@ function ug_event_views_default_views() {
     'event_category' => 'event_category',
     'tags' => 'tags',
   );
-  /* Filter criterion: Content: Published */
+  /* Filter criterion: Content: Published status */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
@@ -134,7 +135,7 @@ function ug_event_views_default_views() {
   $handler = $view->new_display('panel_pane', 'Upcoming Events', 'panel_pane_1');
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
-  /* Filter criterion: Content: Published */
+  /* Filter criterion: Content: Published status */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
@@ -367,7 +368,7 @@ return false;';
   $handler->display->display_options['arguments']['nid']['summary']['number_of_records'] = '0';
   $handler->display->display_options['arguments']['nid']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['nid']['summary_options']['items_per_page'] = '25';
-  /* Filter criterion: Content: Published */
+  /* Filter criterion: Content: Published status */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
@@ -492,7 +493,7 @@ return false;';
     'event_category' => 'event_category',
     'tags' => 'tags',
   );
-  /* Filter criterion: Content: Published */
+  /* Filter criterion: Content: Published status */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
@@ -694,7 +695,7 @@ return false;';
   $handler->display->display_options['arguments']['field_event_date_value']['granularity_reset'] = 0;
   $handler->display->display_options['arguments']['field_event_date_value']['title_format'] = 'custom';
   $handler->display->display_options['arguments']['field_event_date_value']['title_format_custom'] = 'F Y';
-  /* Filter criterion: Content: Published */
+  /* Filter criterion: Content: Published status */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
@@ -913,7 +914,7 @@ return false;';
     'event_category' => 'event_category',
   );
   $handler->display->display_options['arguments']['field_event_category_tid']['validate_options']['type'] = 'convert';
-  /* Filter criterion: Content: Published */
+  /* Filter criterion: Content: Published status */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
@@ -1043,7 +1044,7 @@ return false;';
     'event_category' => 'event_category',
   );
   $handler->display->display_options['arguments']['field_event_category_tid']['validate_options']['type'] = 'convert';
-  /* Filter criterion: Content: Published */
+  /* Filter criterion: Content: Published status */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
@@ -1432,7 +1433,7 @@ return false;';
   $handler->display->display_options['arguments']['field_event_category_tid']['validate_options']['vocabularies'] = array(
     'event_category' => 'event_category',
   );
-  /* Filter criterion: Content: Published */
+  /* Filter criterion: Content: Published status */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
@@ -1668,7 +1669,7 @@ return false;';
     'event_category' => 'event_category',
   );
   $handler->display->display_options['arguments']['field_event_category_tid']['validate_options']['type'] = 'convert';
-  /* Filter criterion: Content: Published */
+  /* Filter criterion: Content: Published status */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';

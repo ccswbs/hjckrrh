@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * ug_event.features.user_permission.inc
