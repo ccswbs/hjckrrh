@@ -84,13 +84,16 @@ $conf['404_fast_html'] = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN"
 drupal_fast_404();
 
 /**
- * Redirect to HTTPS:
- *
- * Require HTTPS across all Pantheon environments.
- * Check if Drupal or WordPress is running via command line.
+ * Pantheon configuration
  */
-if (isset($_SERVER['PANTHEON_ENVIRONMENT']) && ($_SERVER['HTTPS'] === 'OFF') && (php_sapi_name() != "cli")) {
-  if (!isset($_SERVER['HTTP_USER_AGENT_HTTPS']) || (isset($_SERVER['HTTP_USER_AGENT_HTTPS']) && $_SERVER['HTTP_USER_AGENT_HTTPS'] != 'ON')) {
+if (isset($_ENV['PANTHEON_ENVIRONMENT']) && (php_sapi_name() != "cli"))
+{
+  // Set local variables from environment
+  $site  = $_ENV['PANTHEON_SITE_NAME'];
+  $env   = $_ENV['PANTHEON_ENVIRONMENT'];
+
+  // Redirect to HTTPS
+  if ($_SERVER['HTTPS'] === 'OFF') {
     // Send redirect
     header('HTTP/1.0 301 Moved Permanently');
     header('Location: https://'. $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
@@ -100,126 +103,121 @@ if (isset($_SERVER['PANTHEON_ENVIRONMENT']) && ($_SERVER['HTTPS'] === 'OFF') && 
     }
     exit();
   }
-}
 
-/**
- * Reverse proxy configuration:
- */
-if (isset($_SERVER['REMOTE_ADDR']) && ($_SERVER['REMOTE_ADDR'] === '131.104.92.23')) {
-  // Domain masking:
-  // Some sites on Pantheon share a common domain name (e.g. www.uoguelph.ca). Pantheon
-  // refers to this as 'domain masking' and it is not officially supported. These sites
-  // are forwarded through an Apache reverse proxy server. The original domain name of
-  // the site is translated to the Pantheon platform URL. On the Pantheon side, Drupal
-  // must be tricked into thinking it is running under the primary domain name from a
-  // subdirectory. The general case is to rewrite the request URL to:
-  // www.uoguelph.ca/{sitename}, but there are exceptions.
+  // Reverse proxy configuration
+  if (isset($_SERVER['REMOTE_ADDR']) && ($_SERVER['REMOTE_ADDR'] === '131.104.92.23')) {
+    // Domain masking:
+    // Some sites on Pantheon share a common domain name (e.g. www.uoguelph.ca). Pantheon
+    // refers to this as 'domain masking' and it is not officially supported. These sites
+    // are forwarded through an Apache reverse proxy server. The original domain name of
+    // the site is translated to the Pantheon platform URL. On the Pantheon side, Drupal
+    // must be tricked into thinking it is running under the primary domain name from a
+    // subdirectory. The general case is to rewrite the request URL to:
+    // www.uoguelph.ca/{sitename}, but there are exceptions.
+    // Every site on Pantheon has a "platform domain" derived from the site name and 
+    // environment, ending in pantheonsite.io.
+    $platform_domain = $env . '-' . $site . '.pantheon.io';
 
-  // Domain masking is only required if the request comes from the proxy server and
-  // the HTTP host matches the Pantheon platform URL.
-  if ($_SERVER["HTTP_HOST"] === $_ENV['PANTHEON_ENVIRONMENT'] . '-' . $_ENV['PANTHEON_SITE_NAME'] . '.pantheon.io') {
-
-    // Some sites use a primary domain other than www.uoguelph.ca
-    $proxy_domain = array(
-	  'a11yportal' => 'wellness.uoguelph.ca',
-	  'cecs' => 'www.recruitguelph.ca',
-	  'counselling' => 'wellness.uoguelph.ca',
-	  'graduatestudies' => 'graduatestudies.uoguelph.ca',
-	  'healthservices' => 'wellness.uoguelph.ca',
-	  'hpc1' => 'wellness.uoguelph.ca',
-	  'sas1' => 'wellness.uoguelph.ca',
-	  'sws' => 'wellness.uoguelph.ca',
-	  'wellnesseducation' => 'wellness.uoguelph.ca',
+    // Site specific reverse proxy configuration. If a reverse proxy site does not
+    // follow the https://www.uoguelph.ca/sitename pattern, override the reverse proxy
+    // domain and path here.
+    $proxy_conf = array(
+      'a11yportal' => array('domain' => 'wellness.uoguelph.ca', 'path' => '/accessibility/portal'),
+      'accessibilityweb' => array('path' => '/accessibility/web'),
+      'ahl1' => array('path' => '/ahl'),
+      'alliance1' => array('path' => '/alliance'),
+      'bioinformatics1' => array('path' => '/bioinformatics'),
+      'business2' => array('path' => '/lang'),
+      'cbspurchasing' => array('path' => '/cbs/purchasing'),
+      'ccs1' => array('path' => '/ccs'),
+      'ccsforms' => array('path' => '/ccs/forms'),
+      'cecs' => array('domain' => 'www.recruitguelph.ca'),
+      'cio1' => array('path' => '/cio'),
+      'cip1' => array('path' => '/cip'),
+      'counselling' => array('domain' => 'wellness.uoguelph.ca'),
+      'cps1' => array('path' => '/cps'),
+      'dhr1' => array('path' => '/diversity-human-rights'),
+      'dunfield' => array('path' => '/crc/dunfield'),
+      'engineering1' => array('path' => '/engineering'),
+      'finance1' => array('path' => '/finance'),
+      'fire1' => array('path' => '/fire'),
+      'fsadmin' => array('path' => '/foodscience/fsadmin'),
+      'fys' => array('path' => '/vpacademic/fys'),
+      'graduatestudies' => array('domain' => 'graduatestudies.uoguelph.ca'),
+      'graduatestudiesforms' => array('path' => '/graduatestudies/forms2'),
+      'gsa1' => array('path' => '/gsa'),
+      'healthservices' => array('domain' => 'wellness.uoguelph.ca', 'path' => '/health'),
+      'hpc1' => array('domain' => 'wellness.uoguelph.ca', 'path' => '/hpc'),
+      'hr1' => array('path' => '/hr'),
+      'ib2' => array('path' => '/ib'),
+      'international1' => array('path' => '/international'),
+      'iqap' => array('path' => '/vpacademic/iqap'),
+      'lvpo' => array('path' => '/finance/departments-services/purchasing-services/lvpo-forms'),
+      'management1' => array('path' => '/management'),
+      'mcs1' => array('path' => '/mcs'),
+      'oac1' => array('path' => '/oac'),
+      'police1' => array('path' => '/police'),
+      'ppp' => array('path' => '/vpacademic/ppp'),
+      'psa1' => array('path' => '/psa'),
+      'psychology1' => array('path' => '/psychology'),
+      'realestate1' => array('path' => '/realestate'),
+      'researchinnovation' => array('path' => '/research/innovation'),
+      'sas1' => array('domain' => 'wellness.uoguelph.ca', 'path' => '/accessibility'),
+      'ses1' => array('path' => '/ses'),
+      'sws' => array('domain' => 'wellness.uoguelph.ca'),
+      'studentaffairs1' => array('path' => '/studentaffairs'),
+      'sustainability1' => array('path' => '/sustainability'),
+      'tutoring1' => array('path' => '/tutoring'),
+      'wellnesseducation' => array('domain' => 'wellness.uoguelph.ca', 'path' => '/education'),
     );
 
-	// Generally the proxy path will match the site name, but in some cases they differ
-	$proxy_path = array(
-	  'a11yportal' => '/accessibility/portal',
-	  'accessibilityweb' => '/accessibility/web',
-	  'ahl1' => '/ahl',
-	  'alliance1' => '/alliance',
-	  'bioinformatics1' => '/bioinformatics',
-	  'business2' => '/lang',
-	  'cbspurchasing' => '/cbs/purchasing',
-	  'ccsforms' => '/ccs/forms',
-	  'cio1' => '/cio',
-	  'cip1' => '/cip',
-	  'cps1' => '/cps',
-	  'dhr1' => '/diversity-human-rights',
-	  'dunfield' => '/crc/dunfield',
-	  'engineering1' => '/engineering',
-	  'finance1' => '/finance',
-	  'fire1' => '/fire',
-	  'fsadmin' => '/foodscience/fsadmin',
-	  'fys' => '/vpacademic/fys',
-	  'graduatestudiesforms' => '/graduatestudies/forms2',
-	  'gsa1' => '/gsa',
-	  'healthservices' => '/health',
-	  'hpc1' => '/hpc',
-	  'hr1' => '/hr',
-	  'ib2' => '/ib',
-	  'international1' => '/international',
-	  'iqap' => '/vpacademic/iqap',
-	  'lvpo' => '/finance/departments-services/purchasing-services/lvpo-forms',
-	  'management1' => '/management',
-	  'mcs1' => '/mcs',
-	  'oac1' => '/oac',
-	  'police1' => '/police',
-	  'ppp' => '/vpacademic/ppp',
-	  'psa1' => '/psa',
-	  'psychology1' => '/psychology',
-	  'realestate1' => '/realestate',
-	  'researchinnovation' => '/research/innovation',
-	  'sas1' => '/accessibility',
-	  'ses1' => '/ses',
-	  'studentaffairs1' => '/studentaffairs',
-  	  'sustainability1' => '/sustainability',
-	  'psa1' => '/psa',
-	  'tutoring1' => '/tutoring',
-	  'wellnesseducation' => '/education',
-	);    
+    // Domain masking is only required if the request comes from the proxy server and
+    // the HTTP host matches the Pantheon platform URL.
+    if ($_SERVER["HTTP_HOST"] === $platform_domain) {
 
-    // Set default domain
-    if (!isset($proxy_domain[$_ENV['PANTHEON_SITE_NAME']])) {
-      $proxy_domain[$_ENV['PANTHEON_SITE_NAME']] = 'www.uoguelph.ca';
-    }
-   
-    // Set default base path
-    if (!isset($proxy_path[$_ENV['PANTHEON_SITE_NAME']])) {
-      $proxy_path[$_ENV['PANTHEON_SITE_NAME']] = '/' . $_ENV['PANTHEON_SITE_NAME'];
+      // Set default proxy domain and path
+      if (!isset($proxy_conf[$site])) {
+        $proxy_conf[$site] = array('domain' => 'www.uoguelph.ca', 'path' = '/' . $site);
+      }
+
+      // Set default proxy domain only
+      if (!isset($proxy_conf[$site]['domain'])) {
+        $proxy_conf[$site]['domain'] = 'www.uoguelph.ca';
+      }
+      
+      // Set default proxy path only
+      if (!isset($proxy_conf[$site]['path'])) {
+        $proxy_conf[$site]['path'] = '/' . $_ENV['site'];
+      }
+
+      // Rewrite request URI.
+      $_SERVER['REQUEST_URI'] = $proxy_conf[$site]['path'] . $_SERVER['REQUEST_URI'];
+
+      // Set cookie domain.
+      $cookie_domain = '.' . $proxy_conf[$site]['domain'];
+      $cookie_path = $proxy_conf[$site]['path'];
+
+      // Set Drupal base URL.
+      $base_url = 'https://' . $proxy_conf[$site]['domain'] . $proxy_conf[$site]['path'];
     }
 
-    // Rewrite request URI.
-    $_SERVER['REQUEST_URI'] = $proxy_path[$_ENV['PANTHEON_SITE_NAME']] . $_SERVER['REQUEST_URI'];
+    // Single sign-on:
+    // Oracle access manager sets the ca-uoguelph-user HTTP header with the user 
+    // name of the currently logged in user. The Drupal LDAP SSO module expects
+    // to find this value in the REMOTE_USER environment variable.
+    if (isset($_SERVER['HTTP_CA_UOGUELPH_USER'])) {
+      $_SERVER['REMOTE_USER'] = $_SERVER['HTTP_CA_UOGUELPH_USER'];
+    }
 
-    // Set cookie domain.
-    $cookie_domain = '.' . $proxy_domain[$_ENV['PANTHEON_SITE_NAME']];
-    $cookie_path = $proxy_path[$_ENV['PANTHEON_SITE_NAME']];
+    // end of reverse proxy configuration
+  } 
 
-    // Set Drupal base URL.
-    $base_url = 'https://' . $proxy_domain[$_ENV['PANTHEON_SITE_NAME']] . $proxy_path[$_ENV['PANTHEON_SITE_NAME']];
-  }
-
-  // Single sign-on:
-  // Oracle access manager sets the ca-uoguelph-user HTTP header with the user 
-  // name of the currently logged in user. The Drupal LDAP SSO module expects
-  // to find this value in the REMOTE_USER environment variable.
-
-  // Set the REMOTE_USER variable
-  if (isset($_SERVER['HTTP_CA_UOGUELPH_USER'])) {
-    $_SERVER['REMOTE_USER'] = $_SERVER['HTTP_CA_UOGUELPH_USER'];
-  }
-}
-
-/**
- * Reroute email
- *
- * The reroute email module prevents emails from being sent from development and
- * test environments, and can optionally redirect all emails to a specific address.
- */
-if (isset($_ENV['PANTHEON_ENVIRONMENT')) {
+  // The reroute email module prevents emails from being sent from development and
+  // test environments, and can optionally redirect all emails to a specific address.
   // Disable mail rerouting in live environments, enable it otherwise.
-  $conf['reroute_email_enable'] = ($_ENV['PANTHEON_ENVIRONMENT'] === 'live' ? 0 : 1);
+  $conf['reroute_email_enable'] = ($env === 'live' ? 0 : 1);
+
+  // end of pantheon configuration
 }
 
 /**
