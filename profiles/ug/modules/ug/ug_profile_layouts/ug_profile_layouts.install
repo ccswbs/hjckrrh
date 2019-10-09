@@ -1,0 +1,6 @@
+/**
+ * Enable Field Collection Bootstrap without making it required
+ */
+function ug_profile_layouts_install() {
+  module_enable(array('field_collection_bootstrap'));
+}
