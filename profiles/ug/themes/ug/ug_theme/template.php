@@ -180,6 +180,7 @@ function ug_theme_preprocess_views_view_fields__e1(&$vars) {
   $vars['date']     = $vars['fields']['field_event_date']->content;
   $vars['image']    = $vars['fields']['field_event_image']->content;
   $vars['body']     = $vars['fields']['field_event_body']->content;
+  $vars['register'] = $vars['fields']['field_event_registration_link']->content;
 }
 
 /**
