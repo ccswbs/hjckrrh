@@ -133,6 +133,93 @@ function ug_event_views_default_views() {
 
   /* Display: Upcoming Events */
   $handler = $view->new_display('panel_pane', 'Upcoming Events', 'panel_pane_1');
+  $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Field: Content: Nid */
+  $handler->display->display_options['fields']['nid']['id'] = 'nid';
+  $handler->display->display_options['fields']['nid']['table'] = 'node';
+  $handler->display->display_options['fields']['nid']['field'] = 'nid';
+  $handler->display->display_options['fields']['nid']['label'] = '';
+  $handler->display->display_options['fields']['nid']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['nid']['element_label_colon'] = FALSE;
+  /* Field: Content: Path */
+  $handler->display->display_options['fields']['path']['id'] = 'path';
+  $handler->display->display_options['fields']['path']['table'] = 'node';
+  $handler->display->display_options['fields']['path']['field'] = 'path';
+  $handler->display->display_options['fields']['path']['label'] = '';
+  $handler->display->display_options['fields']['path']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['path']['element_label_colon'] = FALSE;
+  /* Field: Content: Title */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'node';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['label'] = '';
+  $handler->display->display_options['fields']['title']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['title']['alter']['text'] = '<a href="[path]" id="e[nid]">[title]</a>';
+  $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
+  $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+  $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
+  /* Field: Content: Feature image */
+  $handler->display->display_options['fields']['field_event_image']['id'] = 'field_event_image';
+  $handler->display->display_options['fields']['field_event_image']['table'] = 'field_data_field_event_image';
+  $handler->display->display_options['fields']['field_event_image']['field'] = 'field_event_image';
+  $handler->display->display_options['fields']['field_event_image']['label'] = '';
+  $handler->display->display_options['fields']['field_event_image']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_event_image']['element_default_classes'] = FALSE;
+  $handler->display->display_options['fields']['field_event_image']['click_sort_column'] = 'fid';
+  $handler->display->display_options['fields']['field_event_image']['settings'] = array(
+    'image_style' => 'large',
+    'image_link' => '',
+  );
+  /* Field: Content: Date */
+  $handler->display->display_options['fields']['field_event_date']['id'] = 'field_event_date';
+  $handler->display->display_options['fields']['field_event_date']['table'] = 'field_data_field_event_date';
+  $handler->display->display_options['fields']['field_event_date']['field'] = 'field_event_date';
+  $handler->display->display_options['fields']['field_event_date']['label'] = '';
+  $handler->display->display_options['fields']['field_event_date']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_event_date']['element_default_classes'] = FALSE;
+  $handler->display->display_options['fields']['field_event_date']['settings'] = array(
+    'format_type' => 'long',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+  );
+  /* Field: Content: Body */
+  $handler->display->display_options['fields']['field_event_body']['id'] = 'field_event_body';
+  $handler->display->display_options['fields']['field_event_body']['table'] = 'field_data_field_event_body';
+  $handler->display->display_options['fields']['field_event_body']['field'] = 'field_event_body';
+  $handler->display->display_options['fields']['field_event_body']['label'] = '';
+  $handler->display->display_options['fields']['field_event_body']['alter']['max_length'] = '255';
+  $handler->display->display_options['fields']['field_event_body']['alter']['strip_tags'] = TRUE;
+  $handler->display->display_options['fields']['field_event_body']['alter']['html'] = TRUE;
+  $handler->display->display_options['fields']['field_event_body']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_event_body']['type'] = 'smart_trim_format';
+  $handler->display->display_options['fields']['field_event_body']['settings'] = array(
+    'trim_link' => '0',
+    'trim_length' => '600',
+    'trim_type' => 'chars',
+    'trim_suffix' => '...',
+    'more_link' => '0',
+    'more_text' => 'Read more',
+    'summary_handler' => 'full',
+    'trim_options' => array(
+      'text' => 0,
+    ),
+    'trim_preserve_tags' => '',
+  );
+  /* Field: Content: Registration Link */
+  $handler->display->display_options['fields']['field_event_registration_link']['id'] = 'field_event_registration_link';
+  $handler->display->display_options['fields']['field_event_registration_link']['table'] = 'field_data_field_event_registration_link';
+  $handler->display->display_options['fields']['field_event_registration_link']['field'] = 'field_event_registration_link';
+  $handler->display->display_options['fields']['field_event_registration_link']['label'] = '';
+  $handler->display->display_options['fields']['field_event_registration_link']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['field_event_registration_link']['alter']['text'] = '<a class="btn btn-success btn-sm" href="[field_event_registration_link-url]" aria-describedby="e[nid]">Register</a>';
+  $handler->display->display_options['fields']['field_event_registration_link']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_event_registration_link']['element_wrapper_type'] = 'p';
+  $handler->display->display_options['fields']['field_event_registration_link']['element_default_classes'] = FALSE;
+  $handler->display->display_options['fields']['field_event_registration_link']['click_sort_column'] = 'url';
+  $handler->display->display_options['fields']['field_event_registration_link']['type'] = 'link_plain';
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
   /* Filter criterion: Content: Published status */
