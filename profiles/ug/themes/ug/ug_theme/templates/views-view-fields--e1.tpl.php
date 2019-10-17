@@ -45,5 +45,8 @@
     <div class="media-meta"><?php print $date; ?></div>
   </header>
   <div class="media-summary"><?php print $body; ?></div>
+  <?php if (!empty($register)): ?>
+    <div class="media-action"><?php print $register; ?></div>
+  <?php endif; ?>
 </div>
 

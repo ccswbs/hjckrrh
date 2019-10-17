@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * ug_event_layouts.features.inc

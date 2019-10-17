@@ -7,6 +7,9 @@
     .teaser-list .media { 
         margin-top: 0; 
     }
+    .media-action {
+        margin-top: 1em;
+    }
 
     /*--- Theming ---*/
 
