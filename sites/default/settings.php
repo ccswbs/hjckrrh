@@ -177,7 +177,7 @@ if (isset($_ENV['PANTHEON_ENVIRONMENT']) && (php_sapi_name() != "cli"))
 
       // Set default proxy domain and path
       if (!isset($proxy_conf[$site])) {
-        $proxy_conf[$site] = array('domain' => 'www.uoguelph.ca', 'path' = '/' . $site);
+        $proxy_conf[$site] = array('domain' => 'www.uoguelph.ca', 'path' => '/' . $site);
       }
 
       // Set default proxy domain only
