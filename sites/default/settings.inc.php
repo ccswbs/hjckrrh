@@ -116,7 +116,7 @@ if (isset($_ENV['PANTHEON_ENVIRONMENT']) && (php_sapi_name() != "cli"))
     // www.uoguelph.ca/{sitename}, but there are exceptions.
     // Every site on Pantheon has a "platform domain" derived from the site name and 
     // environment, ending in pantheonsite.io.
-    $platform_domain = $env . '-' . $site . '.pantheon.io';
+    $platform_domain = $env . '-' . $site . '.pantheonsite.io';
 
     // Site specific reverse proxy configuration. If a reverse proxy site does not
     // follow the https://www.uoguelph.ca/sitename pattern, override the reverse proxy
@@ -180,14 +180,14 @@ if (isset($_ENV['PANTHEON_ENVIRONMENT']) && (php_sapi_name() != "cli"))
         $proxy_conf[$site] = array('domain' => 'www.uoguelph.ca', 'path' => '/' . $site);
       }
 
-      // Set default proxy domain only
+      // Use default proxy domain if none specified
       if (!isset($proxy_conf[$site]['domain'])) {
         $proxy_conf[$site]['domain'] = 'www.uoguelph.ca';
       }
       
-      // Set default proxy path only
+      // Use default proxy path if none specified
       if (!isset($proxy_conf[$site]['path'])) {
-        $proxy_conf[$site]['path'] = '/' . $_ENV['site'];
+        $proxy_conf[$site]['path'] = '/' . $site;
       }
 
       // Rewrite request URI.
