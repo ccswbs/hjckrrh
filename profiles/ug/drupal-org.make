@@ -70,7 +70,7 @@ projects[entityreference][version] = "1.5"
 
 projects[facebook_pixel][version] = "1.1"
 
-projects[faq][version] = "1.1"
+projects[faq][version] = "1.2"
 
 projects[features][version] = "2.11"
 
