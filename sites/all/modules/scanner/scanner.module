@@ -39,6 +39,12 @@ function scanner_menu() {
     'page arguments' => array('scanner_confirm_form'),
     'type' => MENU_CALLBACK,
   );
+  $items['admin/content/scanner/undo'] = array(
+    'title' => 'Undo',
+    'page callback' => 'scanner_undo_page',
+    'access arguments' => array('perform search and replace'),
+    'type' => MENU_LOCAL_TASK,
+  );
   $items['admin/content/scanner/undo/confirm'] = array(
     'title' => 'Confirm Undo',
     'access arguments' => array('perform search and replace'),
@@ -46,26 +52,13 @@ function scanner_menu() {
     'page arguments' => array('scanner_undo_confirm_form'),
     'type' => MENU_CALLBACK,
   );
-  $items['admin/content/scanner/settings'] = array(// Shows up on scanner page as tab.
-    'title' => 'Settings',
-    'page callback' => 'drupal_get_form',
-    'page arguments' => array('scanner_admin_form'),
-    'access arguments' => array('administer scanner settings'),
-    'type' => MENU_LOCAL_TASK,
-    'weight' => 1,
-  );
-  $items['admin/content/scanner/undo'] = array(// Shows up on scanner page as tab.
-    'title' => 'Undo',
-    'page callback' => 'scanner_undo_page',
-    'access arguments' => array('perform search and replace'),
-    'type' => MENU_LOCAL_TASK,
-  );
-  $items['admin/config/content/scanner'] = array(// Shows up on admin page.
+  $items['admin/config/content/scanner'] = array(
     'title' => 'Search and Replace Scanner',
     'description' => 'Configure defaults and what fields can be searched and replaced.',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('scanner_admin_form'),
     'access arguments' => array('administer scanner settings'),
+    'file' => 'scanner.admin.inc',
   );
 
   return $items;
@@ -124,7 +117,7 @@ function scanner_permission() {
  * Menu callback; presents the scan form and results.
  */
 function scanner_view() {
-  $output='';
+  $output = '';
 
   // Using set_html_head because it seems unecessary to load a separate css
   // file for just two simple declarations.
@@ -137,15 +130,15 @@ function scanner_view() {
   drupal_add_js("
     jQuery(document).ready(function() {
       var searchfield = jQuery('#edit-search');
-      jQuery('input[type=submit][value=". str_replace('\'', '\\\'', t('Search')) . "]').click(function() {
+      jQuery('input[type=submit][value=" . str_replace('\'', '\\\'', t('Search')) . "]').click(function() {
         var chars = searchfield.val().length;
         if (chars == 0) {
-          alert('". str_replace('\'', '\\\'', t('Please provide some search text and try again.')) . "');
+          alert('" . str_replace('\'', '\\\'', t('Please provide some search text and try again.')) . "');
           searchfield.addClass('error');
           searchfield[0].focus();
           return false;
         } else if (chars < 3) {
-          return confirm('". str_replace('\'', '\\\'', t('Searching for a keyword that has fewer than three characters could take a long time. Are you sure you want to continue?')) . "');
+          return confirm('" . str_replace('\'', '\\\'', t('Searching for a keyword that has fewer than three characters could take a long time. Are you sure you want to continue?')) . "');
         }
         return true;
       });
@@ -169,7 +162,7 @@ function scanner_view() {
     $status = NULL;
   }
 
-  if (!is_NULL($search) && $status >= SCANNER_STATUS_GO_SEARCH) {
+  if (!is_null($search) && $status >= SCANNER_STATUS_GO_SEARCH) {
     if ($status == SCANNER_STATUS_GO_CONFIRM) {
       drupal_goto('admin/content/scanner/scan/confirm');
     }
@@ -182,12 +175,12 @@ function scanner_view() {
       $results = scanner_execute('search');
     }
 
+    // @todo Please change this theme call to use an associative array for
+    // the $variables parameter.
     if ($results) {
-      // TODO Please change this theme call to use an associative array for the $variables parameter.
       $results = '<a name="results"></a><div><h2>' . $resulttxt . '</h2>' . $results;
     }
     else {
-      // TODO Please change this theme call to use an associative array for the $variables parameter.
       $results = t('Your search yielded no results.');
     }
 
@@ -223,6 +216,7 @@ function scanner_view() {
  *
  * @see scanner_form_validate()
  * @see scanner_form_submit()
+ *
  * @ingroup forms
  */
 function scanner_form($form, &$form_state) {
@@ -267,6 +261,13 @@ function scanner_form($form, &$form_state) {
   else {
     $terms = NULL;
   }
+
+  $form['settings_link'] = array(
+    '#markup' => t('The list of fields which will be searched and other options can be controlled from the !link.', array('!link' => l('settings page', 'admin/config/content/scanner'))),
+    '#prefix' => '<p>',
+    '#suffix' => '</p>',
+    '#access' => user_access('administer scanner settings'),
+  );
 
   $form['search'] = array(
     '#type' => 'textfield',
@@ -402,9 +403,9 @@ function scanner_form_submit($form, &$form_state) {
   // Save form input into session.
   $_SESSION['scanner_search']    = $form_state['values']['search'];
   $_SESSION['scanner_preceded']  = $form_state['values']['preceded'];
-  //$_SESSION['scanner_notpreceded'] = $form_state['values']['notpreceded'];
+  // $_SESSION['scanner_notpreceded'] = $form_state['values']['notpreceded'];
   $_SESSION['scanner_followed']  = $form_state['values']['followed'];
-  //$_SESSION['scanner_notfollowed'] = $form_state['values']['notfollowed'];
+  // $_SESSION['scanner_notfollowed'] = $form_state['values']['notfollowed'];
   $_SESSION['scanner_mode']      = $form_state['values']['mode'];
   $_SESSION['scanner_wholeword'] = $form_state['values']['wholeword'];
   $_SESSION['scanner_regex']     = $form_state['values']['regex'];
@@ -415,12 +416,12 @@ function scanner_form_submit($form, &$form_state) {
   }
   $_SESSION['scanner_replace']   = $form_state['values']['replace'];
 
-  /* TODO The 'op' element in the form values is deprecated.
-   Each button can have #validate and #submit functions associated with it.
-   Thus, there should be one button that submits the form and which invokes
-   the normal form_id_validate and form_id_submit handlers. Any additional
-   buttons which need to invoke different validate or submit functionality
-   should have button-specific functions. */
+  // @todo The 'op' element in the form values is deprecated.
+  // Each button can have #validate and #submit functions associated with it.
+  // Thus, there should be one button that submits the form and which invokes
+  // the normal form_id_validate and form_id_submit handlers. Any additional
+  // buttons which need to invoke different validate or submit functionality
+  // should have button-specific functions.
   if ($form_state['values']['op'] == t('Replace')) {
     $_SESSION['scanner_status'] = SCANNER_STATUS_GO_CONFIRM;
   }
@@ -434,6 +435,7 @@ function scanner_form_submit($form, &$form_state) {
  * Form constructor for the confirmation form.
  *
  * @see block_add_block_form_submit()
+ *
  * @ingroup forms
  */
 function scanner_confirm_form($form, &$form_state) {
@@ -507,12 +509,14 @@ function scanner_confirm_form($form, &$form_state) {
   $form['confirm'] = array(
     '#type' => 'submit',
     '#value' => t('Yes, Continue'),
-    '#prefix' => '<div class="scanner-buttons">', //see suffix in cancel button element
+    // see suffix in cancel button element.
+    '#prefix' => '<div class="scanner-buttons">',
   );
   $form['cancel'] = array(
     '#type' => 'submit',
     '#value' => t('No, Cancel'),
-    '#suffix' => '</div>', //see prefix in confirm button element
+    // see prefix in confirm button element.
+    '#suffix' => '</div>',
   );
 
   return $form;
@@ -524,12 +528,12 @@ function scanner_confirm_form($form, &$form_state) {
  * @see scanner_confirm_form()
  */
 function scanner_confirm_form_submit($form, &$form_state) {
-  /* TODO The 'op' element in the form values is deprecated.
-   Each button can have #validate and #submit functions associated with it.
-   Thus, there should be one button that submits the form and which invokes
-   the normal form_id_validate and form_id_submit handlers. Any additional
-   buttons which need to invoke different validate or submit functionality
-   should have button-specific functions. */
+  // @todo The 'op' element in the form values is deprecated.
+  // Each button can have #validate and #submit functions associated with it.
+  // Thus, there should be one button that submits the form and which invokes
+  // the normal form_id_validate and form_id_submit handlers. Any additional
+  // buttons which need to invoke different validate or submit functionality
+  // should have button-specific functions.
   if ($form_state['values']['op'] == t('Yes, Continue')) {
     $_SESSION['scanner_status'] = SCANNER_STATUS_GO_REPLACE;
   }
@@ -548,14 +552,13 @@ function scanner_undo_page() {
 
   $undoQuery = db_select('scanner', 's');
   $undoQuery->fields('s', array('undo_id', 'time', 'searched', 'replaced', 'count', 'undone'))
-            ->orderBy('undo_id', 'DESC');
+    ->orderBy('undo_id', 'DESC');
 
   $sandrs = $undoQuery->execute();
 
   $rows = array();
 
   foreach ($sandrs as $sandr) {
-
     if ($sandr->undone) {
       $operation = l(t('Redo'), 'admin/content/scanner/undo/confirm', array('query' => array('undo_id' => $sandr->undo_id)));
     }
@@ -579,22 +582,21 @@ function scanner_undo_page() {
  * Form constructor for the undo confirmation form.
  *
  * @see scanner_undo_confirm_form_submit()
+ *
  * @ingroup forms
  */
 function scanner_undo_confirm_form($form, &$form_state) {
-
   $undo_id = $_GET['undo_id'];
 
   if ($undo_id > 0) {
-
     $query = db_select('scanner', 's');
     $query->fields('s', array('undo_id', 'searched', 'replaced'))
-          ->condition('undo_id', $undo_id, '=');
+      ->condition('undo_id', $undo_id, '=');
 
     $result = $query->execute();
 
     foreach ($result as $undo) {
-        $undo = $undo;
+      $undo = $undo;
     }
 
   }
@@ -602,10 +604,10 @@ function scanner_undo_confirm_form($form, &$form_state) {
   if ($undo->undo_id > 0) {
     $form['info'] = array(
       '#markup' => '<h2>' . t('Do you want to undo:') . '</h2>' .
-                  '<h3>' . t('Searched for:') . '</h3>' .
-                  '<p>[<em>' . check_plain($undo->searched) . '</em>]</p>' .
-                  '<h3>' . t('Replaced with:') . '</h3>' .
-                  '<p>[<em>' . check_plain($undo->replaced) . '</em>]</p>',
+      '<h3>' . t('Searched for:') . '</h3>' .
+      '<p>[<em>' . check_plain($undo->searched) . '</em>]</p>' .
+      '<h3>' . t('Replaced with:') . '</h3>' .
+      '<p>[<em>' . check_plain($undo->replaced) . '</em>]</p>',
     );
 
     $form['undo_id'] = array(
@@ -639,12 +641,12 @@ function scanner_undo_confirm_form($form, &$form_state) {
  * @see scanner_undo_confirm_form()
  */
 function scanner_undo_confirm_form_submit($form, &$form_state) {
-  /* TODO The 'op' element in the form values is deprecated.
-   Each button can have #validate and #submit functions associated with it.
-   Thus, there should be one button that submits the form and which invokes
-   the normal form_id_validate and form_id_submit handlers. Any additional
-   buttons which need to invoke different validate or submit functionality
-   should have button-specific functions. */
+  // @todo The 'op' element in the form values is deprecated.
+  // Each button can have #validate and #submit functions associated with it.
+  // Thus, there should be one button that submits the form and which invokes
+  // the normal form_id_validate and form_id_submit handlers. Any additional
+  // buttons which need to invoke different validate or submit functionality
+  // should have button-specific functions.
   if ($form_state['values']['op'] == t('Yes, Continue')) {
     $query = db_select('scanner', 's');
     $query->fields('s', array('undo_data', 'undone'))
@@ -677,14 +679,14 @@ function scanner_undo_confirm_form_submit($form, &$form_state) {
     }
 
     drupal_set_message($count . ' ' . t('Nodes reverted'));
-    // TODO Please review the conversion of this statement to the D7 database API syntax.
-
+    // @todo Please review the conversion of this statement to the D7 database
+    // API syntax.
     db_update('scanner')
-    ->fields(array(
+      ->fields(array(
       'undone' => $undone,
     ))
-    ->condition('undo_id', $form_state['values']['undo_id'])
-    ->execute();
+      ->condition('undo_id', $form_state['values']['undo_id'])
+      ->execute();
   }
   else {
     drupal_set_message(t('Undo / Redo canceled'));
@@ -697,7 +699,8 @@ function scanner_undo_confirm_form_submit($form, &$form_state) {
 /**
  * Handles the actual search and replace.
  *
- * @param str $searchtype - either 'search', or 'replace'
+ * @param string $searchtype
+ *
  * @return The themed results.
  */
 function scanner_execute($searchtype = 'search') {
@@ -712,8 +715,9 @@ function scanner_execute($searchtype = 'search') {
   $processed = variable_get('scanner_partially_processed_' . $user->uid, array());
   $undo_data = variable_get('scanner_partial_undo_' . $user->uid, array());
 
-  // Get the field collection field to use when joining revisions, based on whether the current
-  // version of the field_collection module has revisioins enabled (7.x-1.0-beta5)
+  // Get the field collection field to use when joining revisions, based on
+  // whether the current version of the field_collection module has revisions
+  // enabled (7.x-1.0-beta5)
   $fc_revision_field = drupal_get_schema('field_collection_item_revision') ? 'revision_id' : 'value';
 
   unset($_SESSION['scanner_status']);
@@ -722,7 +726,8 @@ function scanner_execute($searchtype = 'search') {
   $preceded    = $_SESSION['scanner_preceded'];
   $followed    = $_SESSION['scanner_followed'];
   $mode        = $_SESSION['scanner_mode'];
-  $flag        = $mode ? NULL : 'i'; // Case sensitivity flag for use in php preg_search and preg_replace
+  // Case sensitivity flag for use in php preg_search and preg_replace.
+  $flag        = $mode ? NULL : 'i';
   $wholeword   = $_SESSION['scanner_wholeword'];
   $regex       = $_SESSION['scanner_regex'];
   $published   = $_SESSION['scanner_published'];
@@ -733,7 +738,8 @@ function scanner_execute($searchtype = 'search') {
   if ($searchtype == 'search') {
     drupal_set_message(t('Searching for: [%search] ...', array('%search' => $search)));
   }
-  else { //searchtype == 'replace'
+  // searchtype == 'replace'.
+  else {
     drupal_set_message(t('Replacing [%search] with [%replace] ...', array('%search' => $search, '%replace' => $replace)));
   }
 
@@ -757,18 +763,22 @@ function scanner_execute($searchtype = 'search') {
     $where = "[[:<:]]" . $preceded . $search . $followed . "[[:>:]]";
     $search_php = '\b' . $preceded_php . $search . $followed_php . '\b';
   }
+
   // Case 2.
   elseif ($wholeword && !$regex) {
     $where = "[[:<:]]" . $preceded . addcslashes($search, SCANNER_REGEX_CHARS) . $followed . "[[:>:]]";
     $search_php = '\b' . $preceded_php . addcslashes($search, SCANNER_REGEX_CHARS) . $followed_php . '\b';
   }
+
   // Case 3.
   elseif (!$wholeword && $regex) {
     $where = $preceded . $search . $followed;
     $search_php = $preceded_php . $search . $followed_php;
   }
+
   // Case 4.
-  else { //!wholeword and !regex:
+  // !wholeword and !regex:
+  else {
     $where = $preceded . addcslashes($search, SCANNER_REGEX_CHARS) . $followed;
     $search_php = $preceded_php . addcslashes($search, SCANNER_REGEX_CHARS) . $followed_php;
   }
@@ -794,20 +804,22 @@ function scanner_execute($searchtype = 'search') {
     $table = $map['table'];
     $field = $map['field'];
     $field_label = $map['field_label'];
-    $field_summary = NULL;
     $type = $map['type'];
+    $module = isset($map['module']) ? $map['module'] : NULL;
     $field_collection_parents = isset($map['field_collection_parents']) ? $map['field_collection_parents'] : NULL;
+
+    // Allow the table suffix to be altered.
+    $suffix = 'value';
+    // Trigger hook_scanner_field_suffix_alter().
+    drupal_alter('scanner_field_suffix', $suffix, $map);
 
     $query = db_select($table, 't');
     if ($table == 'node_revision') {
       $vid = 'vid';
     }
     else {
-      if (db_field_exists($table, $field . '_summary')) {
-        $field_summary = $field . '_summary';
-      }
-      $field = $field . '_value';
-      $field_label = $field_label . '_value';
+      $field = $field . '_' . $suffix;
+      $field_label = $field_label . '_' . $suffix;
       $vid = 'revision_id';
     }
     if (!empty($field_collection_parents)) {
@@ -820,11 +832,11 @@ function scanner_execute($searchtype = 'search') {
         $fc_table = 'field_revision_' . $fc_this;
         $prev_alias = ($i == $cnt_fc) ? 't' : ('fc' . $i);
         $query->join($fc_table, $fc_alias,
-            format_string('!PREV_ALIAS.entity_id = !FC_ALIAS.!FC_THIS_value AND !PREV_ALIAS.revision_id = !FC_ALIAS.!FC_THIS_!FC_REV',
-                array('!FC_ALIAS' => $fc_alias, '!FC_THIS' => $fc_this, '!PREV_ALIAS' => $prev_alias, '!FC_REV' => $fc_revision_field)));
+          format_string('!PREV_ALIAS.entity_id = !FC_ALIAS.!FC_THIS_value AND !PREV_ALIAS.revision_id = !FC_ALIAS.!FC_THIS_!FC_REV',
+            array('!FC_ALIAS' => $fc_alias, '!FC_THIS' => $fc_this, '!PREV_ALIAS' => $prev_alias, '!FC_REV' => $fc_revision_field)));
         if ($i == 1) {
           $query->join('node', 'n',
-              format_string('!FC_ALIAS.entity_id = n.nid AND !FC_ALIAS.revision_id = n.vid', array('!FC_ALIAS' => $fc_alias)));
+            format_string('!FC_ALIAS.entity_id = n.nid AND !FC_ALIAS.revision_id = n.vid', array('!FC_ALIAS' => $fc_alias)));
         }
       }
     }
@@ -832,49 +844,56 @@ function scanner_execute($searchtype = 'search') {
       // Must use vid and revision_id here. Make sure it saves as new revision.
       $query->join('node', 'n', 't.' . $vid . ' = n.vid');
     }
-    if (is_array($terms) && count($terms)) {
-      $db_or = db_or();
+    if (is_array($terms) && !empty($terms)) {
+      $terms_or = db_or();
       $query->join('taxonomy_index', 'tx', 'n.nid = tx.nid');
       foreach ($terms as $term) {
-        $db_or->condition('tx.tid', $term);
+        $terms_or->condition('tx.tid', $term);
       }
-      $query->condition($db_or);
+      $query->condition($terms_or);
     }
     $query->addField('t', $field, 'content');
-    if (isset($field_summary)) {
-      $query->addField('t', $field_summary, 'summary');
-    }
+
     if ($table != 'node_revision') {
       $query->fields('t', array('delta'));
     }
     $query->fields('n', array('nid', 'title'));
+
     $query->condition('n.type', $type, '=');
 
+    // Build the master 'where' arguments.
     $or = db_or();
     $binary = $mode ? ' BINARY' : '';
-    $or->condition('t.' . $field, $where, 'REGEXP' . $binary);
-    if (isset($field_summary)) {
-      $or->condition('t.' . $field_summary, $where, 'REGEXP' . $binary);
+    // Trigger hook_scanner_query_where().
+    foreach (module_implements('scanner_query_where') as $module_name) {
+      $function = $module_name . '_scanner_query_where';
+      $function($or, $table, $field, $where, $binary);
     }
     $query->condition($or);
 
     if ($published) {
       $query->condition('n.status', '1', '=');
     }
-    $result = $query->execute();
 
+    $result = $query->execute();
     $shutting_down = FALSE;
 
     // Perform the search or replace on each hit for the current field instance.
     foreach ($result as $row) {
+      // Results of an entity property, e.g. the node title, won't have a
+      // 'delta' attribute, so make sure there is one.
+      if (!isset($row->delta)) {
+        $row->delta = 0;
+      }
+
       $content = $row->content;
       $summary = isset($row->summary) ? $row->summary : '';
       $matches = array();
       $text = '';
 
-      // Checking for possible timeout.
-      // If within 5 seconds of timeout, attempt to expand environment.
-      if (REQUEST_TIME >= ($start_time + $max_execution_time - 5)) {
+      // If the max_execution_time setting has been set then check for possible
+      // timeout. If within 5 seconds of timeout, attempt to expand environment.
+      if ($max_execution_time > 0 && REQUEST_TIME >= ($start_time + $max_execution_time - 5)) {
         if (!$expanded) {
           if ($user->uid > 0) {
             $verbose = TRUE;
@@ -905,17 +924,22 @@ function scanner_execute($searchtype = 'search') {
 
       $node = node_load($row->nid);
 
+      // Build the regular expression used later.
+      $regexstr = "/$search_php/$flag";
+
       // Search.
       if ($searchtype == 'search') {
-        $regexstr = "/$search_php/$flag";
         $matches = array('0' => array());
+        $hits = 0;
 
         // Assign matches in the base text field to $matches[0].
-        $hits = preg_match_all($regexstr, $content, $matches, PREG_OFFSET_CAPTURE);
-        // Assign summary matches to $matches[1].
-        $hits += preg_match_all($regexstr, $summary, $matches_summary, PREG_OFFSET_CAPTURE);
-
-        $matches = array_merge($matches, $matches_summary);
+        // Trigger hook_scanner_preg_match_all().
+        foreach (module_implements('scanner_preg_match_all') as $module_name) {
+          $function = $module_name . '_scanner_preg_match_all';
+          $new_matches = array();
+          $hits += $function($new_matches, $regexstr, $row);
+          $matches = array_merge($matches, $new_matches);
+        }
 
         if ($hits > 0) {
           $context_length = 70;
@@ -924,13 +948,14 @@ function scanner_execute($searchtype = 'search') {
             $string = $key == 0 ? $content : $summary;
             foreach ($item as $match) {
               $text .= '<li>';
-              if ($key == 1) {
-                $text .= '<i>Summary:</i> ';
-              }
+              // if ($key == 1) {
+              //   $text .= '<i>Summary:</i> ';
+              // }
 
               // Don't want substr to wrap.
-              $start = $match[1]-$context_length > 0 ? $match[1]-$context_length : 0;
-              // If the match is close to the beginning of the string, need less context.
+              $start = $match[1] - $context_length > 0 ? $match[1] - $context_length : 0;
+              // If the match is close to the beginning of the string, need
+              // less context.
               $length = $match[1] >= $context_length ? $context_length : $match[1];
 
               if ($prepend = substr($string, $start, $length)) {
@@ -942,9 +967,9 @@ function scanner_execute($searchtype = 'search') {
 
               $text .= '<strong>' . htmlentities($match[0], ENT_COMPAT, 'UTF-8') . '</strong>';
 
-              if ($append = substr($string, $match[1]+strlen($match[0]), $context_length)) {
+              if ($append = substr($string, $match[1] + strlen($match[0]), $context_length)) {
                 $text .= htmlentities($append, ENT_COMPAT, 'UTF-8');
-                if (strlen($string) - ($match[1]+strlen($match[0])) > $context_length) {
+                if (strlen($string) - ($match[1] + strlen($match[0])) > $context_length) {
                   $text .= '...';
                 }
               }
@@ -954,9 +979,9 @@ function scanner_execute($searchtype = 'search') {
           $text .= '</ul>';
         }
         else {
-          $text = '<div class="messages warning"><h2 class="element-invisible">Warning message</h2>' .
-                   t("Can't display search result due to conflict between search term and internal preg_match_all function.") .
-                  '</div>';
+          $text = '<div class="messages warning"><h2 class="element-invisible">Warning message</h2>'
+            . t("Can't display search result due to conflict between search term and internal preg_match_all function.")
+            . '</div>';
         }
 
         $results[] = array(
@@ -969,18 +994,14 @@ function scanner_execute($searchtype = 'search') {
           'text' => $text,
         );
       }
+
       // Replace (and check to see if already processed).
       elseif (!isset($processed[$field][$row->nid][$row->delta])) {
-        if (!empty($field_collection_parents)) {
-          drupal_set_message(
-            t('[%search] not replaced in @field of node @nid - replacement not yet implemented for fields within field collections.',
-              array('%search' => $search, '@field' => $field_label, '@nid' => $node->nid)), 'warning');
-          continue;
-        }
         // Check first if pathauto_persist, a newer version of pathauto, or some
         // other module has already set $node->path['pathauto']. If not, set it
-        // to false (to prevent pathauto from touching the node during node_save())
-        // if a custom alias exists that doesn't follow pathauto rules.
+        // to false (to prevent pathauto from touching the node during
+        // node_save()) if a custom alias exists that doesn't follow pathauto
+        // rules.
         if (!isset($node->path['pathauto']) && module_exists('pathauto') && $pathauto) {
           list($id, , $bundle) = entity_extract_ids('node', $node);
           if (!empty($id)) {
@@ -993,49 +1014,104 @@ function scanner_execute($searchtype = 'search') {
         }
 
         $hits = 0;
-        $content_new = preg_replace("/$search_php/$flag", $replace, $content, -1, $hits);
-        preg_match('/(.+)_value$/', $field, $matches);
-        if (!empty($matches[0])) {
-          // Text Field or Text Area.
-          $node->{$matches[1]}[$node->language][$row->delta]['value'] = $content_new;
-          // Summary.
-          if (isset($node->{$matches[1]}[$node->language][$row->delta]['summary'])) {
-            $summary = $node->{$matches[1]}[$node->language][$row->delta]['summary'];
-            $node->{$matches[1]}[$node->language][$row->delta]['summary'] = preg_replace("/$search_php/$flag", $replace, $summary, -1, $hits_summary);
-            $hits += $hits_summary;
+        preg_match('/(.+)_' . $suffix . '$/', $field, $matches);
+
+        // Field collections.
+        if (!empty($field_collection_parents)) {
+          foreach ($node->{$field_collection_parents[0]} as $fc_lang => $fc_data) {
+            foreach ($fc_data as $key => $fc_item) {
+              $fc = field_collection_item_load($fc_item['value']);
+              $fc_changed = FALSE;
+              foreach ($fc->{$matches[1]}[LANGUAGE_NONE] as $fc_key => $fc_val) {
+                $fc_hits = 0;
+                $fc_content = preg_replace($regexstr, $replace, $fc_val[$suffix], -1, $fc_hits);
+                if ($fc_content != $fc_val['value']) {
+                  $fc_changed = TRUE;
+                  $fc->{$matches[1]}[LANGUAGE_NONE][$fc_key][$suffix] = $fc_content;
+                }
+
+                // Also need to handle the summary part of text+summary fields.
+                if (isset($fc_val['summary'])) {
+                  $summary_hits = 0;
+                  $fc_summary = preg_replace($regexstr, $replace, $fc_val['summary'], -1, $summary_hits);
+                  if ($fc_summary != $fc_val['summary']) {
+                    $fc_hits += $summary_hits;
+                    $fc_changed = TRUE;
+                    $fc->{$matches[1]}[LANGUAGE_NONE][$fc_key]['summary'] = $fc_summary;
+                  }
+                }
+
+                if ($fc_hits > 0) {
+                  $results[] = array(
+                    'title' => $node->title,
+                    'type' => $node->type,
+                    'count' => $fc_hits,
+                    'field' => $field,
+                    'field_label' => $field_label,
+                    'nid' => $node->nid,
+                  );
+                }
+              }
+
+              // If field collection revision handling is enabled, update the
+              // revision ID on the field.
+              // @todo Handle scenarios were the same FC is updated multiple
+              // times on the same request.
+              if ($fc_revision_field == 'revision_id') {
+                $fc->revision = 1;
+              }
+
+              // Update the field collection.
+              $fc->save(TRUE);
+
+              // If field collection revision handling is enabled, update the
+              // revision ID on the field; the entity's revision_id is updated
+              // during the save() method, so this is safe to do.
+              if ($fc_revision_field == 'revision_id') {
+                $node->{$field_collection_parents[0]}[$fc_lang][$key]['revision_id'] = $fc->revision_id;
+              }
+            }
           }
         }
+
+        // Normal node fields.
         else {
-           // Other type such as a Title.
-          $node->$field = $content_new;
+          // Trigger hook_scanner_preg_replace().
+          foreach (module_implements('scanner_preg_replace') as $module_name) {
+            $function = $module_name . '_scanner_preg_replace';
+            $hits += $function($node, $field, $matches, $row, $regexstr, $replace);
+          }
+
+          // Update the counter.
+          $results[] = array(
+            'title' => $node->title,
+            'nid' => $node->nid,
+            'type' => $node->type,
+            'count' => $hits,
+            'field' => $field,
+            'field_label' => $field_label,
+          );
         }
 
-        // A revision only created for the first change of the node.
-        // Subsequent changes of the same node do not generate additional revisions.
+        // A revision only created for the first change of the node. Subsequent
+        // changes of the same node do not generate additional revisions.
+        // @todo Need a better way of handling this.
         if (!isset($undo_data[$node->nid]['new_vid'])) {
           $node->revision = TRUE;
           $node->log = t('@name replaced %search with %replace via Scanner Search and Replace module.', array('@name' => $user->name, '%search' => $search, '%replace' => $replace));
           $undo_data[$node->nid]['old_vid'] = $node->vid;
         }
-
         node_save($node);
 
         // Array to log completed fields in case of shutdown.
         $processed[$field][$row->nid][$row->delta] = TRUE;
 
         // Undo data construction.
-        $undo_data[$node->nid]['new_vid'] = $node->vid; // Now set to updated vid after node_save().
-        $results[] = array(
-          'title' => $node->title,
-          'type' => $node->type,
-          'count' => $hits,
-          'field' => $field,
-          'field_label' => $field_label,
-          'nid' => $node->nid,
-        );
+        // Now set to updated vid after node_save().
+        $undo_data[$node->nid]['new_vid'] = $node->vid;
       }
-    } // end foreach
-  } // end foreach
+    }
+  }
 
   // If completed.
   if (isset($shutting_down) && !$shutting_down) {
@@ -1046,147 +1122,30 @@ function scanner_execute($searchtype = 'search') {
   if ($searchtype == 'search') {
     return theme('scanner_results', array('results' => $results));
   }
-  else { // searchtype == 'replace'
+  // searchtype == 'replace'.
+  else {
     if (count($undo_data) && !$shutting_down) {
-      $id = db_insert('scanner')
-            ->fields(array(
-                'undo_data' => serialize($undo_data),
-                'undone' => 0,
-                'searched' => $search,
-                'replaced' => $replace,
-                'count' => count($undo_data),
-                'time' => REQUEST_TIME,
-              ))
-            ->execute();
+      db_insert('scanner')
+        ->fields(array(
+          'undo_data' => serialize($undo_data),
+          'undone' => 0,
+          'searched' => $search,
+          'replaced' => $replace,
+          'count' => count($undo_data),
+          'time' => REQUEST_TIME,
+        ))
+        ->execute();
     }
 
     return theme('scanner_replace_results', array('results' => $results));
   }
 }
 
-// ***************************************************************************
-// Settings ******************************************************************
-// ***************************************************************************
-
 /**
- * Search and Replace Settings form.
- *
- * @return $form
+ * Implements hook_scanner_fields_alter().
  */
-function scanner_admin_form($node, &$form_state) {
-  $form['settings'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Default Options'),
-  );
-  $form['settings']['scanner_mode'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Default: Case Sensitive Search Mode'),
-    '#default_value' => variable_get('scanner_mode', 0),
-  );
-  $form['settings']['scanner_wholeword'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Default: Match Whole Word'),
-    '#default_value' => variable_get('scanner_wholeword', 0),
-  );
-  $form['settings']['scanner_regex'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Default: Regular Expression Search'),
-    '#default_value' => variable_get('scanner_regex', 0),
-  );
-  $form['settings']['scanner_published'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Default: Search Published Nodes Only'),
-    '#default_value' => variable_get('scanner_published', 1),
-  );
-  $form['settings']['scanner_pathauto'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Default: Maintain Custom Aliases'),
-    '#default_value' => variable_get('scanner_pathauto', 1),
-  );
-
-  if (module_exists('taxonomy')) {
-    $vocabularies = taxonomy_get_vocabularies();
-
-    if (count($vocabularies)) {
-      $options = array();
-      foreach ($vocabularies as $vocabulary) {
-        $options[$vocabulary->vid] = $vocabulary->name;
-      }
-
-      $form['taxonomy'] = array(
-        '#type' => 'fieldset',
-        '#title' => t('Allow restrictions by terms in a vocabulary'),
-        '#description' => t('Adds search option to only match nodes tagged with specified terms from these vocabularies.'),
-      );
-      $form['taxonomy']['scanner_vocabulary'] = array(
-        '#type' => 'checkboxes',
-        '#options' => $options,
-        '#default_value' => variable_get('scanner_vocabulary', array()),
-      );
-    }
-  }
-
-  $form['tables'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Fields that will be searched'),
-    '#description' => t('Fields are listed in [nodetype: fieldname] order:'),
-  );
-
-  $table_map = _scanner_get_all_tables_map();
-  usort($table_map, '_scanner_compare_fields_by_name');
-  foreach ($table_map as $item) {
-    $key = 'scanner_' . $item['field'] . '_' . $item['table'] . '_' . $item['type'];
-    $form['tables'][$key] = array(
-      '#type' => 'checkbox',
-      '#title' => filter_xss('<strong>' . $item['type'] . ':</strong> ' . $item['field'], $allowed_values = array('strong', 'p')),
-      '#default_value' => variable_get($key, TRUE),
-    );
-  }
-
-  return system_settings_form($form);
-}
-
-// ***************************************************************************
-// Internal Utility Functions ************************************************
-// ***************************************************************************
-/**
- * Add all text fields that are buried in field collections.
- *
- * This function will search recursively down any level of field collection
- * nesting to find all text fields.  Note that if a field collection is nested
- * within itself, this function will not traverse the field collection a second
- * time (which would otherwise result in infinite recusion).
- *
- * @param array $all_field_records
- *   Array of field records curerntly being built.
- * @param string $node_bundle
- *   The name of the node type being searched. Initially passed in as NULL b/c
- *   the first time this function runs it finds all "top level" field
- *   collections, which can be across multiple node types.  For each field
- *   collection instance found, however, if there are field collections inside
- *   of it we call this function recursively to find more fields.  On that
- *   recursive call, we pass in the node type where the top level field
- *   collection was found so that we have the appropriate node type to add to
- *   the text field records added to $all_field_records.
- * @param string $parent_bundle
- *   The bundle in which we are currently searching for field collections.
- *   Initially passed in as NULL b/c the first time this function runs it finds
- *   all "top level" field collections, which can be across multiple node types
- *   (a.k.a. bundles).  For each field collection instance found, however, if
- *   there are field collections inside of it we call this function recursively
- *   to find more fields.  On that recursive call, we pass in the bundle of the
- *   current field collection being searched so that the query in the recursive
- *   call can search for fields within that bundle.
- * @param array $parents
- *   An array tracking all field collection parents for text fields we
- *   eventually find.  Initially passed in as NULL b/c the first time this
- *   function runs it finds all "top level" field collections, which must each
- *   have its own instance of the $parents array.  The $parents array serves
- *   two purposes.  First, it is used to set the "field_collection_parents"
- *   value for all text fields found.  Second, it is used to prevent infinite
- *   recursion in the case where a field collection is nested within itself.
- */
-function _scanner_add_field_collection_fields(&$all_field_records, $node_bundle = NULL, $parent_bundle = NULL, $parents = NULL) {
+function field_collection_scanner_fields_alter(array &$all_field_records, $node_bundle = NULL, $parent_bundle = NULL, $parents = NULL) {
+  // On behalf of field_collection.module.
   $query = db_select('field_config_instance', 'instance_parent');
   $query->join('field_config', 'config_parent', 'instance_parent.field_name = config_parent.field_name');
   $query->join('field_config_instance', 'instance_child', 'instance_child.bundle = config_parent.field_name');
@@ -1214,10 +1173,11 @@ function _scanner_add_field_collection_fields(&$all_field_records, $node_bundle 
       $all_field_records[] = $record;
     }
     elseif ($record->module == 'field_collection') {
-      // This if statement prevents infinite recursion if a field collection is nested within itself.
+      // This if statement prevents infinite recursion if a field collection is
+      // nested within itself.
       if (!in_array($record->field_name, $field_parents)) {
         $field_parents[] = $record->field_name;
-        _scanner_add_field_collection_fields($all_field_records, $record->node_bundle, $record->field_name, $field_parents);
+        field_collection_scanner_fields_alter($all_field_records, $record->node_bundle, $record->field_name, $field_parents);
       }
     }
   }
@@ -1235,7 +1195,7 @@ function _scanner_add_field_collection_fields(&$all_field_records, $node_bundle 
  *   Comparison value determining which order these two fields should be sorted
  *   in relation to each other based on field label.
  */
-function _scanner_compare_fields_by_label($left, $right) {
+function _scanner_compare_fields_by_label(array $left, array $right) {
   $cmp = strcmp($left['type'], $right['type']);
   if ($cmp != 0) {
     return $cmp;
@@ -1256,7 +1216,7 @@ function _scanner_compare_fields_by_label($left, $right) {
  *   Comparison value determining which order these two fields should be sorted
  *   in relation to each other based on field name.
  */
-function _scanner_compare_fields_by_name($left, $right) {
+function _scanner_compare_fields_by_name(array $left, array $right) {
   $cmp = strcmp($left['type'], $right['type']);
   if ($cmp != 0) {
     return $cmp;
@@ -1273,9 +1233,10 @@ function _scanner_compare_fields_by_name($left, $right) {
  *   used for diplaying/querying.
  */
 function _scanner_get_all_tables_map() {
+  $tables_map = array();
+
   // Build list of title fields for all node types.
-  $ntypes = node_type_get_types();
-  foreach ($ntypes as $type) {
+  foreach (node_type_get_types() as $type) {
     if ($type->has_title) {
       $tables_map[] = array(
         'type' => $type->type,
@@ -1288,33 +1249,35 @@ function _scanner_get_all_tables_map() {
 
   $all_field_records = array();
 
-  if (module_exists('field')) {
+  // Trigger hook_scanner_field_types().
+  foreach (module_invoke_all('scanner_field_types') as $field_type) {
     $query = db_select('field_config_instance', 'fci');
     $query->join('field_config', 'fc', 'fci.field_name = fc.field_name');
     $query->fields('fci', array('field_name'));
+    $query->fields('fc', array('module'));
     $query->addField('fci', 'bundle', 'node_bundle');
     $query->condition('fci.entity_type', 'node');
-    $query->condition('fc.module', 'text', '=');
+    $query->condition('fc.module', $field_type, '=');
 
-    $result = $query->execute();
-
-    foreach ($result as $record) {
+    foreach ($query->execute() as $record) {
       $all_field_records[] = $record;
     }
   }
 
-  if (module_exists('field_collection')) {
-    _scanner_add_field_collection_fields($all_field_records);
-  }
+  // Trigger hook_scanner_fields_alter().
+  drupal_alter('scanner_fields', $all_field_records);
 
-  foreach ($all_field_records as $record) {
-    $tables_map[] = array(
-      'type' => $record->node_bundle,
-      'field' => $record->field_name,
-      'field_label' => (empty($record->field_collection_parents) ? '' : join('->', $record->field_collection_parents) . '->') . $record->field_name,
-      'table' => 'field_revision_' . $record->field_name,
-      'field_collection_parents' => isset($record->field_collection_parents) ? $record->field_collection_parents : NULL,
-    );
+  if (!empty($all_field_records)) {
+    foreach ($all_field_records as $record) {
+      $tables_map[] = array(
+        'type' => $record->node_bundle,
+        'field' => $record->field_name,
+        'field_label' => (empty($record->field_collection_parents) ? '' : join('->', $record->field_collection_parents) . '->') . $record->field_name,
+        'table' => 'field_revision_' . $record->field_name,
+        'field_collection_parents' => isset($record->field_collection_parents) ? $record->field_collection_parents : NULL,
+        'module' => $record->module,
+      );
+    }
   }
 
   return $tables_map;
@@ -1338,13 +1301,24 @@ function _scanner_get_selected_tables_map() {
 }
 
 /**
- * Attempt to stretch the amount of time available for processing so
- * that timeouts don't interrupt search and replace actions.
+ * Attempt to stretch the amount of time available for processing.
  *
- * This only works in hosting environments where changing PHP and
- * Apache settings on the fly is allowed.
+ * This way timeouts won't interrupt search and replace actions. This only works
+ * in hosting environments where changing PHP and Apache settings on the fly is
+ * allowed.
+ *
+ * @param $setting
+ *   The name of the PHP setting to change.
+ * @param $value
+ *   The new value to assign.
+ * @param bool $verbose
+ *   If set to TRUE, an extra message will be displayed indicating the status of
+ *   the execution.
+ *
+ * @return bool
+ *   Indicates whether the setting is changed.
  */
-function _scanner_change_env($setting, $value, $verbose) {
+function _scanner_change_env($setting, $value, $verbose = FALSE) {
   $old_value = ini_get($setting);
 
   if ($old_value != $value && $old_value != 0) {
@@ -1361,4 +1335,179 @@ function _scanner_change_env($setting, $value, $verbose) {
       return FALSE;
     }
   }
+}
+
+/**
+ * Implements hook_scanner_query_where().
+ */
+function scanner_scanner_query_where(&$or, $table, $field, $where, $binary) {
+  // Base field.
+  $or->condition('t.' . $field, $where, 'REGEXP' . $binary);
+}
+
+/**
+ * Implements hook_scanner_preg_match_all().
+ */
+function scanner_scanner_preg_match_all(&$matches, $regexstr, $row) {
+  return preg_match_all($regexstr, $row->content, $matches, PREG_OFFSET_CAPTURE);
+}
+
+/**
+ * Implements hook_scanner_preg_replace().
+ */
+function scanner_scanner_preg_replace(&$node, $field, $matches, $row, $regexstr, $replace) {
+  $language = NULL;
+  $hits = 0;
+  $old_value = NULL;
+
+  if (!empty($matches[1])) {
+    $language = field_language('node', $node, $matches[1]);
+    // Not every field has a 'value'.
+    if (isset($node->{$matches[1]}[$language][$row->delta]['value'])) {
+      $old_value = $node->{$matches[1]}[$language][$row->delta]['value'];
+    }
+  }
+  else {
+    $old_value = $node->{$field};
+  }
+
+  // Replace the string if one was identified.
+  if (isset($old_value)) {
+    $new_value = preg_replace($regexstr, $replace, $old_value, -1, $hits);
+  }
+
+  if (!empty($matches[1])) {
+    // Not every field has a 'value'.
+    if (isset($node->{$matches[1]}[$language][$row->delta]['value'])) {
+      $node->{$matches[1]}[$language][$row->delta]['value'] = $new_value;
+    }
+  }
+  else {
+    $node->{$field} = $new_value;
+  }
+
+  return $hits;
+}
+
+/**
+ * Implements hook_scanner_query_alter().
+ */
+function node_scanner_query_alter(&$query, $map, $table, $field) {
+  // Performed on behalf of node.module.
+  $query->condition('n.status', '1', '=');
+}
+
+/**
+ * Implements hook_scanner_field_types().
+ */
+function text_scanner_field_types() {
+  // Performed on behalf of text.module.
+  return array('text');
+}
+
+/**
+ * Implements hook_scanner_query_where().
+ */
+function text_scanner_query_where(&$or, $table, $field, $where, $binary) {
+  // Performed on behalf of text.module.
+  $field_summary = rtrim($field, '_value') . '_summary';
+  if (db_field_exists($table, $field_summary)) {
+    $or->condition('t.' . $field_summary, $where, 'REGEXP' . $binary);
+  }
+}
+
+/**
+ * Implements hook_scanner_query_alter().
+ */
+function text_scanner_query_alter(&$query, $map, $table, $field) {
+  // Performed on behalf of text.module.
+  $summary_field = rtrim($field, '_value') . '_summary';
+
+  // A 'summary' value exists for this field.
+  if (db_field_exists($table, $summary_field)) {
+    $query->addField('t', $field_summary, 'summary');
+  }
+}
+
+/**
+ * Implements hook_scanner_preg_match_all().
+ */
+function text_scanner_preg_match_all(&$matches, $regexstr, $row) {
+  // Performed on behalf of text.module.
+  if (!empty($row->summary)) {
+    return preg_match_all($regexstr, $row->summary, $matches, PREG_OFFSET_CAPTURE);
+  }
+  return 0;
+}
+
+/**
+ * Implements hook_scanner_preg_replace().
+ */
+function text_scanner_preg_replace(&$node, $field, $matches, $row, $regexstr, $replace) {
+  // Performed on behalf of text.module.
+  if (!empty($row->summary) && !empty($matches)) {
+    $old_value = $node->{$matches[1]}[$language][$row->delta]['summary'];
+    $new_value = preg_replace($regexstr, $replace, $old_value, -1, $hits);
+    $node->{$matches[1]}[$language][$row->delta]['summary'] = $new_value;
+    return $hits;
+  }
+  return 0;
+}
+
+/**
+ * Implements hook_scanner_field_types().
+ */
+function link_scanner_field_types() {
+  // Performed on behalf of link.module.
+  return array('link');
+}
+
+/**
+ * Implements hook_scanner_field_suffix_alter().
+ */
+function link_scanner_field_suffix_alter(&$suffix, $map) {
+  // Performed on behalf of link.module.
+  if (isset($map['module']) && $map['module'] == 'link') {
+    $suffix = 'title';
+  }
+}
+
+/**
+ * Implements hook_scanner_query_where().
+ */
+function link_scanner_query_where(&$or, $table, $field, $where, $binary) {
+  // Performed on behalf of link.module.
+  if (strpos($field, '_title') != FALSE) {
+    $field_url = rtrim($field, '_title') . '_url';
+    if (db_field_exists($table, $field_url)) {
+      $or->condition('t.' . $field_url, $where, 'REGEXP' . $binary);
+    }
+  }
+}
+
+/**
+ * Implements hook_scanner_preg_replace().
+ */
+function link_scanner_preg_replace(&$node, $field, $matches, $row, $regexstr, $replace) {
+  // Performed on behalf of link.module.
+  $hits = 0;
+
+  if (!empty($matches[1])) {
+    $language = field_language('node', $node, $matches[1]);
+
+    // The Link module uses two field values - 'title' and 'url', so each one
+    // needs to be checked separately.
+    foreach (array('title', 'url') as $field_key) {
+      if (isset($node->{$matches[1]}[$language][$row->delta][$field_key])) {
+        $old_value = $node->{$matches[1]}[$language][$row->delta][$field_key];
+        $new_value = preg_replace($regexstr, $replace, $old_value, -1, $new_hits);
+        if ($new_hits > 0) {
+          $node->{$matches[1]}[$language][$row->delta][$field_key] = $new_value;
+          $hits += $new_hits;
+        }
+      }
+    }
+  }
+
+  return $hits;
 }

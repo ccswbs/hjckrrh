@@ -34,7 +34,7 @@ abstract class ScannerBaseTestCase extends DrupalWebTestCase {
    *
    * @var string
    */
-  protected $word = 'banana';
+  protected $searchWord = 'banana';
 
   /**
    * This word will replace the other word.
@@ -81,15 +81,15 @@ abstract class ScannerBaseTestCase extends DrupalWebTestCase {
    * Generate some sample content.
    *
    * This mirrors some of the logic from devel_generate_content() with the
-   * exception that it specifically tries to ensure the custom word $this->word
+   * exception that it specifically tries to ensure the custom word $this->searchWord
    * is present in the title and/or body field of some content.
    *
    * @param int $count
-   *   The number of nodes to generate with a minimum of five; defaults to 50.
+   *   The number of nodes to generate with a minimum of five; defaults to 20.
    * @param string $content_type
    *   The content type to generate; defaults to 'article'.
    */
-  function generateSampleContent($count = 50, $content_type = 'article') {
+  protected function generateSampleContent($count = 20, $content_type = 'article') {
     // A minimum of five.
     if ($count < 5) {
       $count = 5;
@@ -107,13 +107,13 @@ abstract class ScannerBaseTestCase extends DrupalWebTestCase {
       $node->uid = 1;
       $node->language = LANGUAGE_NONE;
       $node->devel_generate = array(
-        'word' => $this->word,
+        'word' => $this->searchWord,
       );
 
       // A portion of nodes will have the custom word inserted.
       if (mt_rand(0, 5) == 5) {
         $node->title = devel_create_greeking(2, TRUE)
-          . ' ' . $this->word
+          . ' ' . $this->searchWord
           . ' ' . devel_create_greeking(2, TRUE);
       }
       else {
@@ -127,16 +127,27 @@ abstract class ScannerBaseTestCase extends DrupalWebTestCase {
       // remove it from the others.
       if (mt_rand(0, 5) == 5) {
         $node->body[LANGUAGE_NONE][0]['value'] = devel_create_para(3, 1)
-          . '<p>' . $this->word . '</p>'
+          . '<p>' . $this->searchWord . '</p>'
           . devel_create_para(3, 1);
       }
       else {
-        $node->body[LANGUAGE_NONE][0]['value'] = str_replace($this->word, '', $node->body[LANGUAGE_NONE][0]['value']);
+        $node->body[LANGUAGE_NONE][0]['value'] = str_replace($this->searchWord, '', $node->body[LANGUAGE_NONE][0]['value']);
       }
 
       // Save the node.
       node_save($node);
     }
+  }
+
+  /**
+   * Remove all content for a specific content type.
+   *
+   * @param string $content_type
+   *   The content type to generate; defaults to 'article'.
+   */
+  protected function removeSampleContent($content_type = 'article') {
+    module_load_include('inc', 'devel_generate');
+    devel_generate_content_kill(array('node_types' => array('article')));
   }
 
 }

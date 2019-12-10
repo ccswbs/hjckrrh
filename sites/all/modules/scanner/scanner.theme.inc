@@ -21,10 +21,10 @@ function theme_scanner_results($variables) {
       $output .= theme('scanner_item', array('item' => $item));
     }
     $output .= '</ol>';
-    // TODO: use pager to split up results
+    // @todo use pager to split up results.
   }
   else {
-    drupal_set_message(t('No matches found. Check the !url for fields that can be searched.', array('!url' => l(t('settings'), 'admin/content/scanner/settings'))), 'warning');
+    drupal_set_message(t('No matches found. Check the !url for fields that can be searched.', array('!url' => l(t('settings'), 'admin/config/content/scanner'))), 'warning');
   }
 
   return $output;
@@ -38,9 +38,9 @@ function theme_scanner_item($variables) {
   $item = $variables['item'];
   $item['count'] = $item['count'] > 0 ? $item['count'] : 'One or more';
   $output .= '<li class="scanner-result">';
-  $output .=   '<span class="scanner-title">' . l($item['title'], 'node/' . $item['nid']) . '</span><br />';
-  $output .=   '<span class="scanner-info">[' . $item['count'] . ' matches in ' . $item['type'] . ' ' . $item['field_label'] . ' field:]</span><br />';
-  $output .=   '<span class="scanner-text">' . $item['text'] . '</span>';
+  $output .= '<span class="scanner-title">' . l('#' . $item['nid'] . ': ' . $item['title'], 'node/' . $item['nid']) . '</span><br />';
+  $output .= '<span class="scanner-info">[' . $item['count'] . ' matches in ' . $item['type'] . ' ' . $item['field_label'] . ' field:]</span><br />';
+  $output .= '<span class="scanner-text">' . $item['text'] . '</span>';
   $output .= '</li>';
 
   return $output;
@@ -60,10 +60,10 @@ function theme_scanner_replace_results($variables) {
       $output .= theme('scanner_replace_item', array('item' => $item));
     }
     $output .= '</ol>';
-    // TODO: use pager to split up results
+    // @todo use pager to split up results.
   }
   else {
-    drupal_set_message(t('No matches found. Check the !url for fields that can be searched.', array('!url' => l(t('settings'), 'admin/content/scanner/settings'))), 'warning');
+    drupal_set_message(t('No matches found. Check the !url for fields that can be searched.', array('!url' => l(t('settings'), 'admin/config/content/scanner'))), 'warning');
   }
 
   return $output;
@@ -77,8 +77,8 @@ function theme_scanner_replace_item($variables) {
   $item = $variables['item'];
   $item['count'] = $item['count'] > 0 ? $item['count'] : 'One or more';
   $output .= '<li class="scanner-result">';
-  $output .=   '<span class="scanner-title">' . l($item['title'], 'node/' . $item['nid']) . '</span><br />';
-  $output .=   '<span class="scanner-info">[' . $item['count'] . ' replacements in ' . $item['type'] . ' ' . $item['field_label'] . ' field]</span>';
+  $output .= '<span class="scanner-title">' . l($item['title'], 'node/' . $item['nid']) . '</span><br />';
+  $output .= '<span class="scanner-info">[' . $item['count'] . ' replacements in ' . $item['type'] . ' ' . $item['field_label'] . ' field]</span>';
   $output .= '</li>';
 
   return $output;
