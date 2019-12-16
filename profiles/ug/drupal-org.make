@@ -278,7 +278,7 @@ projects[views_php][version] = "1.0-alpha1"
 
 projects[views_tree][version] = "2.0"
 
-projects[webform][version] = "4.15"
+projects[webform][version] = "4.21"
 
 projects[webform_matrix_component][version] = "4.28"
 

@@ -125,12 +125,12 @@ function _webform_edit_time($component) {
 function _webform_edit_time_validate($form, &$form_state) {
   // Validate that the start and end times are valid. Don't validate the default
   // time because with token substitution, it might not be valid at component
-  // definition time. The end time may be before the start time to faciliate
+  // definition time. The end time may be before the start time to facilitate
   // time ranges spanning midnight.
   foreach (array('start_time', 'end_time') as $field) {
     $time[$field] = FALSE;
     if (trim($form_state['values']['extra'][$field]) && ($time[$field] = strtotime('1-1-1970 UTC ' . $form_state['values']['extra'][$field])) === FALSE) {
-      form_set_error("extra][$field", t('The @field isn\'t a valid time.', array('@field' => $form['validation'][$field]['#title'])));
+      form_set_error("extra][$field", t("The @field isn't a valid time.", array('@field' => $form['validation'][$field]['#title'])));
     }
   }
 }
@@ -188,7 +188,7 @@ function webform_expand_time($element) {
   else {
     $default_values = array(
       'hour' => '',
-      'minute' => '0',
+      'minute' => '',
       'second' => '',
     );
   }
@@ -200,7 +200,7 @@ function webform_expand_time($element) {
   // Generate the choices for the hour drop-down select.
   $hours = $format_12_hour && !$reduced_range ? array_slice(range(0, 12), 1, 12, TRUE) : range(0, 23);
   if ($format_12_hour && $reduced_range) {
-    $hours = array_map(function($hour) {
+    $hours = array_map(function ($hour) {
       return (1 + ($hour + 11) % 12) . ($hour < 12 ? ' am' : ' pm');
     }, $hours);
   }
@@ -303,9 +303,10 @@ function theme_webform_time($variables) {
   return $output;
 }
 
+/**
+ * Validate that the time data is valid, calling form_error() if not.
+ */
 function webform_validate_time($element, $form_state) {
-  $form_key = $element['#webform_component']['form_key'];
-
   // Check if the user filled the required fields.
   if ($element['#required']) {
     foreach (array('hour', 'minute', 'ampm') as $field_type) {
@@ -317,7 +318,7 @@ function webform_validate_time($element, $form_state) {
   }
 
   // Check for a valid time. Allow a minute with no hour as "no time set".
-  if ($element['hour']['#value'] !== '' ) {
+  if ($element['hour']['#value'] !== '') {
     if (!is_numeric($element['hour']['#value']) || !is_numeric($element['minute']['#value']) || (isset($element['ampm']) && $element['ampm']['#value'] === '')) {
       form_error($element, t('Entered !name is not a valid time.', array('!name' => $element['#title'])));
       return;
@@ -325,7 +326,7 @@ function webform_validate_time($element, $form_state) {
 
     // Enforce the start and end times, if any.
     $timestamp = strtotime($element['hour']['#value'] . ':' . $element['minute']['#value'] . ' ' .
-      (isset($element['ampm']) ?  $element['ampm']['#value'] : ''));
+      (isset($element['ampm']) ? $element['ampm']['#value'] : ''));
     $start_time = strtotime($element['#start_time']);
     $end_time = strtotime($element['#end_time']);
     $subs = array(
@@ -494,11 +495,12 @@ function _webform_csv_data_time($component, $export_options, $value) {
 /**
  * Convert a time between a 24-hour and a 12-hour value.
  *
- * @param $array
+ * @param array $array
  *   An array of hour, minute, second, and optionally ampm.
- * @param $format
+ * @param string $format
  *   Either 12-hour or 24-hour.
- * @return
+ *
+ * @return array
  *   An array with hour, minute, second, and ampm (if using "12-hour").
  */
 function webform_time_convert($array, $format) {

@@ -1,7 +1,6 @@
 <?php
 
 /**
- * @file
  * Webform module tests.
  */
 class WebformTestCase extends DrupalWebTestCase {
@@ -12,14 +11,9 @@ class WebformTestCase extends DrupalWebTestCase {
   /**
    * {@inheritdoc}
    */
-  function setUp($added_modules = array()) {
-    // Enable Webform and Token module if available.
-    if (module_exists('token')) {
-      $modules = array('webform', 'token');
-    }
-    else {
-      $modules = array('webform');
-    }
+  public function setUp($added_modules = array()) {
+    // Enable Webform and Token modules.
+    $modules = array('webform', 'token');
     parent::setUp(array_merge($modules, $added_modules));
 
     // Create a profile field to test [user:?] tokens.
@@ -82,7 +76,7 @@ class WebformTestCase extends DrupalWebTestCase {
   /**
    * {@inheritdoc}
    */
-  function tearDown() {
+  public function tearDown() {
     // Delete the webform admin and any created nodes.
     foreach ($this->webform_users as $account) {
       $uid = $account->uid;
@@ -99,7 +93,10 @@ class WebformTestCase extends DrupalWebTestCase {
     parent::tearDown();
   }
 
-  function webformReset() {
+  /**
+   * Reset the form.
+   */
+  public function webformReset() {
     $this->_webform_node = NULL;
     $this->_webform_components = NULL;
   }
@@ -111,12 +108,13 @@ class WebformTestCase extends DrupalWebTestCase {
    *   - A default configuration for the component.
    *   - Values to try setting via POST
    *   - Values that should match the database storage when set via POST
-   *   - Values that should match the database storage when using the default values.
+   *   - Values that should match the database storage when using the default
+   *     values.
    *
    * @return array
    *   An array of each component settings.
    */
-  function webformComponents() {
+  public function webformComponents() {
     if (isset($this->_webform_components)) {
       return $this->_webform_components;
     }
@@ -166,8 +164,10 @@ class WebformTestCase extends DrupalWebTestCase {
           'type' => 'grid',
           'value' => '',
           'extra' => array(
-            'questions' => "0|Ålphå\n1|ıé†å\n2|Îé¬†å", // Left side
-            'options' => "0|øne\n1|twö\n2|ǼBƇ\n3|€Euro", // Top
+            // Left side.
+            'questions' => "0|Ålphå\n1|ıé†å\n2|Îé¬†å",
+            // Top.
+            'options' => "0|øne\n1|twö\n2|ǼBƇ\n3|€Euro",
           ),
           'required' => '0',
           'pid' => '2',
@@ -184,8 +184,10 @@ class WebformTestCase extends DrupalWebTestCase {
           'type' => 'grid',
           'value' => '',
           'extra' => array(
-            'questions' => "one|What's your option?\ntwo|Agåin?\nthree|One more time!", // Left side.
-            'options' => "one|Option one\ntwo|Option 2\nthree| Three is me", // Top
+            // Left side.
+            'questions' => "one|What's your option?\ntwo|Agåin?\nthree|One more time!",
+            // Top.
+            'options' => "one|Option one\ntwo|Option 2\nthree| Three is me",
           ),
           'required' => '0',
           'pid' => '0',
@@ -216,7 +218,8 @@ class WebformTestCase extends DrupalWebTestCase {
         'database default values' => array('two'),
         // Conditionals match against the 'sample values'.
         'match conditional values' => array(
-          'equal' => array('one', 'three'), // ANDed together match.
+          // ANDed together match.
+          'equal' => array('one', 'three'),
           'not_equal' => array('two'),
         ),
         'mismatch conditional values' => array(
@@ -716,11 +719,9 @@ class WebformTestCase extends DrupalWebTestCase {
           'pid' => '0',
           'weight' => '-15',
         ),
-        // Manually hard-code the input if token is not available.
-        // @todo: Update after http://drupal.org/node/1347790 is finished.
-        'sample values' => module_exists('token') ? NULL : 'bar',
+        'sample values' => NULL,
         'database values' => array('bar'),
-        'database default values' => module_exists('token') ? array('bar') : array(''),
+        'database default values' => array('bar'),
       ),
       'textfield_profile' => array(
         'component' => array(
@@ -737,9 +738,7 @@ class WebformTestCase extends DrupalWebTestCase {
         ),
         'sample values' => 'Female',
         'database values' => array('Female'),
-        // The default value will be blank if token does not exist.
-        // @todo: Update after http://drupal.org/node/1347790 is finished.
-        'database default values' => module_exists('token') ? array($this->webform_users['admin']->gender[LANGUAGE_NONE][0]['value']) : array(''),
+        'database default values' => array($this->webform_users['admin']->gender[LANGUAGE_NONE][0]['value']),
       ),
 
       // Test time components.
@@ -986,25 +985,28 @@ class WebformTestCase extends DrupalWebTestCase {
     return $this->_webform_components;
   }
 
-  function webformForm() {
+  /**
+   * Create a sample Webform node.
+   */
+  public function webformForm() {
     if (isset($this->_webform_node)) {
       return $this->_webform_node;
     }
 
     $settings = array(
-     'type' => 'webform',
-     'language'  => LANGUAGE_NONE,
-     'uid' => '1',
-     'status' => '1',
-     'promote' => '1',
-     'moderate' => '0',
-     'sticky' => '0',
-     'tnid' => '0',
-     'translate' => '0',
-     'title' => 'Test Webform',
-     'log' => '',
-     'format' => '1',
-     'webform' => array(
+      'type' => 'webform',
+      'language'  => LANGUAGE_NONE,
+      'uid' => '1',
+      'status' => '1',
+      'promote' => '1',
+      'moderate' => '0',
+      'sticky' => '0',
+      'tnid' => '0',
+      'translate' => '0',
+      'title' => 'Test Webform',
+      'log' => '',
+      'format' => '1',
+      'webform' => array(
         'confirmation' => 'Thanks!',
       ) + webform_node_defaults(),
     );
@@ -1029,7 +1031,7 @@ class WebformTestCase extends DrupalWebTestCase {
    *   An array of input values keyed by the component form key. If none
    *   are specified, the defaults will be pulled from webformComponents().
    */
-  function webformPost($input_values = NULL) {
+  public function webformPost($input_values = NULL) {
     $edit = array();
 
     if (empty($input_values)) {
@@ -1058,7 +1060,8 @@ class WebformTestCase extends DrupalWebTestCase {
   /**
    * Utility function to print out the current page being tested.
    */
-  function webformPrintPage() {
+  public function webformPrintPage() {
     $this->verbose($this->drupalGetContent());
   }
+
 }

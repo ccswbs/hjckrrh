@@ -224,7 +224,7 @@ function webform_expand_date($element) {
     unset($element['#value']);
   }
 
-  // Set defaults according to existing #default_value (set by Form API)
+  // Set defaults according to existing #default_value (set by Form API).
   if (isset($element['#default_value']['month']) || isset($element['#default_value']['day']) || isset($element['#default_value']['year'])) {
     $default_values = array(
       'month' => $element['#default_value']['month'],
@@ -255,12 +255,13 @@ function webform_expand_date($element) {
       $parts = $start_end == 'start' ? array(webform_strtodate('Y', '-2 years'), 1, 1) : array(webform_strtodate('Y', '+2 years'), 12, 31);
       $element_field = '';
     }
-    unset($element_field); // Drop PHP reference.
+    // Drop PHP reference.
+    unset($element_field);
     $parts[3] = $parts[0] . '-' . $parts[1] . '-' . $parts[2];
     $range[$start_end] = array_combine(array('year', 'month', 'day', 'date'), $parts);
   }
 
-  // The start date is not guaranteeed to be early than the end date for
+  // The start date is not guaranteed to be early than the end date for
   // historical reasons.
   if ($range['start']['date'] > $range['end']['date']) {
     $temp = $range['start'];
@@ -283,9 +284,10 @@ function webform_expand_date($element) {
         $month_options = array_intersect_key($month_options, array_flip(range($range['start']['month'], 12))) +
           array_intersect_key($month_options, array_flip(range(1, $range['end']['month'])));
       }
-      unset($month_options); // Drop PHP reference.
+      // Drop PHP reference.
+      unset($month_options);
       if ($delta_months <= 1) {
-        // The start and end date are either on the same month or consequtive
+        // The start and end date are either on the same month or consecutive
         // months. See if the days should be pruned.
         $day_options = &$element['day']['#options'];
         if ($range['start']['month'] == $range['end']['month']) {
@@ -299,7 +301,8 @@ function webform_expand_date($element) {
           $day_options = array_intersect_key($day_options, array_flip(range($range['start']['day'], $days_in_month))) +
             array_intersect_key($day_options, array_flip(range(1, $range['end']['day'])));
         }
-        unset($day_options); // Drop PHP reference.
+        // Drop PHP reference.
+        unset($day_options);
       }
     }
   }
@@ -311,10 +314,12 @@ function webform_expand_date($element) {
         $none = t('Month');
         $hidden_default = 1;
         break;
+
       case 'day':
         $none = t('Day');
         $hidden_default = 1;
         break;
+
       case 'year':
         $none = t('Year');
         $hidden_default = !empty($element['#default_value']['year']) ? $element['#default_value']['year'] : webform_strtodate('Y', 'today', $timezone);
@@ -384,7 +389,7 @@ function theme_webform_date($variables) {
     if ($element['#end_date']) {
       $calendar_class[] = 'webform-calendar-end-' . $element['#end_date'];
     }
-    $calendar_class[] ='webform-calendar-day-' . variable_get('date_first_day', 0);
+    $calendar_class[] = 'webform-calendar-day-' . variable_get('date_first_day', 0);
 
     $calendar = theme('webform_calendar', array('component' => $element['#webform_component'], 'calendar_classes' => $calendar_class));
   }
@@ -402,20 +407,21 @@ function theme_webform_date($variables) {
  * Element validation for Webform date fields.
  */
 function webform_validate_date($element, $form_state) {
-  $field_types = array('day', 'month', 'year');
+  $date_parts = array('day', 'month', 'year');
 
-  // Determine if the user has specified a date. Hidden parts of the date will be submitted automatically.
-  foreach ($field_types as $field_type) {
-    if (!in_array($field_type, $element['#exclude']) && $element[$field_type]['#value'] !== '') {
+  // Determine if the user has specified a date. Hidden parts of the date will
+  // be submitted automatically.
+  foreach ($date_parts as $date_part) {
+    if (!in_array($date_part, $element['#exclude']) && $element[$date_part]['#value'] !== '') {
       $field_found = TRUE;
     }
   }
 
   if (isset($field_found)) {
     // Check that each part of the date has been filled in.
-    foreach ($field_types as $field_type) {
-      if (empty($element[$field_type]['#value'])) {
-        form_error($element[$field_type], t('!part in !name is missing.', array('!name' => $element['#title'], '!part' => $element[$field_type]['#title'])));
+    foreach ($date_parts as $date_part) {
+      if (empty($element[$date_part]['#value'])) {
+        form_error($element[$date_part], t('!part in !name is missing.', array('!name' => $element['#title'], '!part' => $element[$date_part]['#title'])));
         $missing_fields = TRUE;
       }
     }
@@ -424,7 +430,7 @@ function webform_validate_date($element, $form_state) {
     }
 
     // Ensure date is made up of integers.
-    foreach (array('year', 'month', 'day') as $date_part) {
+    foreach ($date_parts as $date_part) {
       $element[$date_part]['#value'] = (int) $element[$date_part]['#value'];
     }
 
@@ -580,7 +586,8 @@ function _webform_csv_data_date($component, $export_options, $value) {
   if ($value[0]) {
     $timestamp = webform_strtotime($value[0]);
     if (!empty($export_options['iso8601_date'])) {
-      $format = 'Y-m-d'; // ISO 8601 date: 2004-02-12
+      // ISO 8601 date: 2004-02-12.
+      $format = 'Y-m-d';
     }
     else {
       $format = webform_date_format('short');
