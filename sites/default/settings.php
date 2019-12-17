@@ -105,7 +105,7 @@ if (isset($_ENV['PANTHEON_ENVIRONMENT']) && (php_sapi_name() != "cli"))
   }
 
   // Reverse proxy configuration
-  if (isset($_SERVER['REMOTE_ADDR']) && ($_SERVER['REMOTE_ADDR'] === '131.104.92.23')) {
+  if (isset($_SERVER['REMOTE_ADDR']) && ($_SERVER['REMOTE_ADDR'] === '131.104.92.23' || $_SERVER['REMOTE_ADDR'] === '131.104.16.8')) {
     // Domain masking:
     // Some sites on Pantheon share a common domain name (e.g. www.uoguelph.ca). Pantheon
     // refers to this as 'domain masking' and it is not officially supported. These sites
