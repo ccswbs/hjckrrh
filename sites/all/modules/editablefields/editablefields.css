@@ -1,0 +1,8 @@
+.editablefield-item {
+  position: relative;
+}
+.editablefield-hover-link {
+  font-size: x-small;
+  position: absolute;
+  z-index: 200;
+}

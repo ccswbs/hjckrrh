@@ -60,6 +60,8 @@ projects[ds][version] = "2.16"
 
 projects[ds_bootstrap_layouts][version] = "3.1"
 
+projects[editablefields][version] = "1.0-alpha4"
+
 projects[email][version] = "1.3"
 
 projects[entity][version] = "1.9"
