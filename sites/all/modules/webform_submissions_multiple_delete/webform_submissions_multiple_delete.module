@@ -1,0 +1,176 @@
+<?php
+/**
+ * @file
+ * Delete webform multiple submissions.
+ */
+
+/**
+ * Implements hook_permission().
+ */
+function webform_submissions_multiple_delete_permission() {
+  return array(
+    'access webform multiple delete' => array(
+      'title' => t('Access Webform Multiple Delete'),
+      'description' => t('Access the Webform Multiple Delete configuration admin pages'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_menu().
+ */
+function webform_submissions_multiple_delete_menu() {
+  $items = array();
+  $items['node/%webform_menu/webform-results/multiple-delete'] = array(
+    'title' => 'Multiple Delete',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('webform_submissions_multiple_delete_form', 1),
+    'access arguments' => array('access webform multiple delete'),
+    'weight' => 9,
+    'type' => MENU_LOCAL_TASK,
+  );
+  return $items;
+}
+
+/**
+ * Implements hook_form().
+ */
+function webform_submissions_multiple_delete_form($form, $form_state, $node) {
+  if (!isset($form_state['delete_submit']['submit'])) {
+    $form['#attached']['css'] = array(
+      drupal_get_path('module', 'webform_submissions_multiple_delete') . '/css/webform_submissions_multiple_delete.css',
+    );
+    // Creating the table header.
+    $header = array(
+      array('data' => t('#'), 'field' => 'serial'),
+      array('data' => t('Title'), 'field' => 'title'),
+      array('data' => t('User'), 'field' => 'submitby'),
+      array('data' => t('Submitted'), 'field' => 'submitdate'),
+    );
+
+    $rows = array();
+    // Looping for filling the table rows.
+    $query = db_select('webform_submissions', 'submission');
+    $query->join('webform_submitted_data', 'wsd', 'submission.sid = wsd.sid');
+    $query->fields('submission', array('sid', 'nid', 'uid', 'submitted', 'serial'));
+    $query->fields('wsd', array('data'));
+    $query->condition('submission.nid', $node->nid);
+    $query->orderBy('serial', 'DESC');
+    $result = $query->execute()->fetchAll();
+    foreach ($result as $data) {
+      if ($data->uid == 0) {
+        $username = t('Anonymous');
+      }
+      else {
+        $username = user_load($data->uid)->name;
+      }
+      $rows[$data->sid] = array(
+        $data->serial,
+        node_load($node->nid)->title,
+        $username,
+        format_date($data->submitted, 'short', '', date_default_timezone()),
+      );
+    }
+    $form['table'] = array(
+      '#type' => 'tableselect',
+      '#header' => $header,
+      '#options' => $rows,
+      '#empty' => t('No content available.'),
+    );
+    $form['delete_submit'] = array(
+      '#type' => 'submit',
+      '#value' => t('Delete'),
+      '#validate' => array('webform_submissions_multiple_delete_form_validate'),
+      '#submit' => array('webform_submissions_multiple_delete_form_submit'),
+    );
+    return $form;
+  }
+  else {
+    $path = current_path();
+    $form['nid'] = array('#type' => 'value', '#value' => $node->nid);
+    return confirm_form($form, t("Do you really want to want to proceed?"), $path, t("Warning, This cannot be undone, All selected data will be deleted and cannot be undone."), t("Proceed?"));
+  }
+  return $form;
+}
+
+/**
+ * Implements of form validation().
+ */
+function webform_submissions_multiple_delete_form_validate($form, &$form_state) {
+  if (!isset($form['confirm'])) {
+    $selectsubmission = check_plain(count(array_count_values($form_state['values']['table'])));
+    if ($selectsubmission == 0) {
+      form_set_error('Select one record', t('Please Select at least one record to delete'));
+    }
+  }
+}
+
+/**
+ * Implementation of batch creation().
+ */
+function webform_submissions_multiple_delete_form_submit($form, &$form_state) {
+  if (!isset($form_state['delete_submit']['submit'])) {
+    $form_state['delete_submit']['submit'] = TRUE;
+    $form_state['rebuild'] = TRUE;
+    $form_state['delete_submit']['original_form'] = $form_state['values'];
+  }
+  else {
+    $batch = webform_submissions_multiple_delete_webform_submission_batch($form, $form_state);
+    batch_set($batch);
+    $nid = $form['nid']['#value'];
+    batch_process('node/' . $nid . '/webform-results/multiple-delete');
+  }
+}
+
+/**
+ * Implementation of batch queue().
+ */
+function webform_submissions_multiple_delete_webform_submission_batch($form, &$form_state) {
+  $operations = array();
+  foreach ($form_state['delete_submit']['original_form']['table'] as $skey => $submission_id) {
+    if (!empty($submission_id)) {
+      $operations[] = array(
+        'webform_submissions_multiple_delete_webform_submission_process', array($submission_id),
+      );
+    }
+  }
+  $batch = array(
+    'init_message' => t('Initializing...'),
+    'title' => t('Submission Deletion in progress...'),
+    'operations' => $operations,
+    'progress_message' => t('@current Submission Deleted out of @total.'),
+    'error_message' => t('An Error has occurred!'),
+    'finished' => 'webform_submissions_multiple_delete_webform_submission_complete',
+  );
+  return $batch;
+}
+
+/**
+ * Implementation of batch context().
+ */
+function webform_submissions_multiple_delete_webform_submission_process($submission_id, &$context) {
+  webform_submissions_multiple_delete_webform_submission_action($submission_id, $context);
+}
+/**
+ * Implementation of batch success().
+ */
+function webform_submissions_multiple_delete_webform_submission_complete($success, $results, $operations) {
+  if (isset($results['success'])) {
+    if (count($results['success']) > 0) {
+      drupal_set_message(t('@count submissions has been deleted', array('@count' => count($results['success']))));
+    }
+  }
+}
+
+/**
+ * Implementation of batch process().
+ */
+function webform_submissions_multiple_delete_webform_submission_action($submission_id, &$context) {
+  // Deleting the data.
+  db_delete('webform_submitted_data')
+    ->condition('sid', $submission_id)
+    ->execute();
+  db_delete('webform_submissions')
+    ->condition('sid', $submission_id)
+    ->execute();
+}

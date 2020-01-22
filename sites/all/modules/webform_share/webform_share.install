@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * @file
+ * Standard installation, update, uninstall scripts.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function webform_share_install() {
+  db_update('system')
+    ->condition('name', 'webform_share')
+    ->condition('type', 'module')
+    ->fields(array('weight' => -2))
+    ->execute();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function webform_share_uninstall() {
+  // TODO: Implement!
+}
+
+/**
+ * Implements hook_install().
+ */
+function webform_share_update_7000() {
+  db_update('system')
+    ->condition('name', 'webform_share')
+    ->condition('type', 'module')
+    ->fields(array('weight' => -2))
+    ->execute();
+}

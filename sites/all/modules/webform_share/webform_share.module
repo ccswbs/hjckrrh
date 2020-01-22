@@ -1,0 +1,336 @@
+<?php
+
+/**
+ * @file
+ * Module to handle importing and exporting of webforms, as well as adding the
+ * ability to set content type defaults.
+ */
+
+/**
+ * Implements hook_permission().
+ * This is required as we are handling PHP based files on import / export.
+ */
+function webform_share_permission() {
+  return array(
+    'access webform share functionality' => array(
+      'title' => t('Configure Webform Share'),
+      'description' => t('This permission enables the user to paste and run PHP code on the server.'),
+      'restrict access' => TRUE,
+    ),
+  );
+}
+
+/**
+ * Helper function to get the content type defaults.
+ */
+function webform_share_node_type_defaults($type) {
+  if (in_array($type, webform_variable_get('webform_node_types'))) {
+    return variable_get('webform_share_' . $type, '');
+  }
+  return '';
+}
+
+/**
+ * Implements hook_menu().
+ */
+function webform_share_menu() {
+  $items = array();
+  $items['node/%webform_menu/webform/ws-export'] = array(
+    'title' => 'Export',
+    'page callback' => 'webform_share_export',
+    'page arguments' => array(1),
+    'access callback' => 'node_access',
+    'access arguments' => array('update', 1),
+    'weight' => 5,
+    'type' => MENU_LOCAL_TASK,
+  );
+  $items['node/%webform_menu/webform/ws-import'] = array(
+    'title' => 'Import',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('webform_share_components_update_form', 1),
+    'access callback' => 'webform_share_menu_access',
+    'access arguments' => array(1),
+    'weight' => 6,
+    'type' => MENU_LOCAL_TASK,
+  );
+  $items['node/%webform_menu/webform/ws-reset'] = array(
+    'title' => 'Reset',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('webform_share_components_update_form', 1, TRUE),
+    'access callback' => 'webform_share_menu_access',
+    'access arguments' => array(1, 'reset'),
+    'weight' => 7,
+    'type' => MENU_LOCAL_TASK,
+  );
+
+  return $items;
+}
+
+/**
+ * Menu access callback.
+ * Custom check on both the user access and node access.
+ */
+function webform_share_menu_access($node, $reset = FALSE) {
+  if (node_access('update', $node)) {
+    // We can only reset if there is some defaults set.
+    if ($reset && !webform_share_node_type_defaults($node->type)) {
+      return FALSE;
+    }
+    return user_access('access webform share functionality');
+  }
+  return FALSE;
+}
+
+/**
+ * This form is used to update or to reset the webform.
+ */
+function webform_share_components_update_form($form, &$form_state, $node, $op = 'import') {
+  $form_state['node'] = $node;
+  $form['components_only'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Update components only'),
+    '#default_value' => 1,
+    '#description' => t('If unchecked, the roles, emails and other settings will be overridden.'),
+  );
+  $form['keep_existing_components'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Keep existing components that are not included in the import'),
+    '#default_value' => 1,
+    '#description' => t('If unchecked, the existing components that do not map to an imported webform form_key will be deleted. All submission data associated with those components will be lost.'),
+  );
+  $form['import'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Import code'),
+    '#default_value' => '',
+    '#description' => t('Copy the code that was generated from a webform share export. This should not include &lt;?PHP or ?&gt; tags.'),
+    '#required' => TRUE,
+  );
+  if ($op == 'reset') {
+    $form['import']['#access'] = FALSE;
+    $form['import']['#default_value'] = variable_get('webform_share_'. $node->type, '');
+  }
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => $op == 'reset' ? t('Reset') : t('Import'),
+  );
+
+  return $form;
+}
+
+/**
+ * Submit callback to update the node.
+ */
+function webform_share_components_update_form_submit($form, &$form_state) {
+  $node = $form_state['node'];
+  if ($webform = _webform_share_eval($form_state['values']['import'])) {
+    $hook_params = array(
+      'operation' => 'update',
+      'node' => $node,
+      'options' => array(
+        'components_only' => $form_state['values']['components_only'],
+        'keep_existing_components' => $form_state['values']['keep_existing_components'],
+      ),
+    );
+    drupal_alter('webform_share_import', $webform, $hook_params);
+    // Load the original node and use this to map any fields based off
+    // the form_key parameter. We need to preserve the existing cid if
+    // possible to preserve the submission data.
+    $original = node_load($node->nid, NULL, TRUE);
+    $existing_components = array();
+    foreach ($original->webform['components'] as $cid => $component) {
+      $existing_components[$component['form_key']] = $cid;
+    }
+
+    // Get the max cid for this node's webform so we know where our safe
+    // starting point is.
+    $current_max_cid = webform_share_get_next_max_cid($node->nid);
+
+    // Overwrite the entire form if the user is updating everything.
+    if (empty($form_state['values']['components_only'])) {
+      $node->webform = $webform;
+      $webform['nid'] = $node->nid;
+    }
+
+    $old_to_new_mappings = array();
+
+    // Map the imported components to the existing webform components.
+    $node->webform['components'] = array();
+    foreach ($webform['components'] as $index => $component) {
+      if (isset($existing_components[$component['form_key']])) {
+        $cid = $existing_components[$component['form_key']];
+        unset($existing_components[$component['form_key']]);
+      }
+      else {
+        $cid = ++$current_max_cid;
+      }
+
+      $old_to_new_mappings[$component['cid']] = $cid;
+      if (!empty($component['pid'])) {
+        // This mapping assumes that parents always come before children.
+        if (empty($old_to_new_mappings[$component['pid']])) {
+          drupal_set_message(t('Unable to find the correct fieldset for %component.', array(
+            '%component' => $component['name'],
+            )), 'error', TRUE);
+        }
+        else {
+          $component['pid'] = $old_to_new_mappings[$component['pid']];
+        }
+      }
+      // Set the new cid.
+      $component['cid'] = $cid;
+      $component['nid'] = $node->nid;
+      $node->webform['components'][$cid] = $component;
+    }
+
+    // Map the imported conditionals.
+    $webform['conditionals'] = isset($webform['conditionals']) ? $webform['conditionals'] : array();
+    foreach ($webform['conditionals'] as $index => $conditional) {
+      foreach ($conditional['rules'] as $rindex => $rule) {
+        if (isset($rule['source']) && $rule['source'] != NULL) {
+          $rule['nid'] = $node->nid;
+          if (!empty($old_to_new_mappings[$rule['source']])) {
+            $rule['source'] = $old_to_new_mappings[$rule['source']];
+          }
+          else {
+            drupal_set_message(t('Unable to find the correct sources for conditionals.'), 'error', FALSE);
+          }
+          $conditional['rules'][$rindex] = $rule;
+        }
+      }
+
+      foreach ($conditional['actions'] as $aindex => $action) {
+        if (isset($action['target']) && $action['target'] != NULL) {
+          $action['nid'] = $node->nid;
+          if (!empty($old_to_new_mappings[$action['target']])) {
+            $action['target'] = $old_to_new_mappings[$action['target']];
+          }
+          else {
+            drupal_set_message(t('Unable to find the correct targets for conditionals.'), 'error', FALSE);
+          }
+          $conditional['actions'][$aindex] = $action;
+        }
+      }
+
+      $node->webform['conditionals'][$index] = $conditional;
+    }
+
+    // If requested, re-add the existing components rather than allowing these
+    // to be deleted. Existing cid values are safe to reuse.
+    if (!empty($form_state['values']['keep_existing_components'])) {
+      foreach ($existing_components as $form_key => $cid) {
+        $node->webform['components'][$cid] = $original->webform['components'][$cid];
+      }
+    }
+
+    if (isset($node->webform['emails'])) {
+      foreach ($node->webform['emails'] as $index => $component) {
+        $node->webform['emails'][$index]['nid'] = $node->nid;
+      }
+    }
+    node_save($node);
+  }
+  $form_state['redirect'] = 'node/' . $node->nid . '/webform';
+}
+
+/**
+ * Retrieves that last "cid" for a node's webform.
+ *
+ * @param int $nid
+ * @return int
+ */
+function webform_share_get_next_max_cid($nid) {
+  $max_cid = db_select('webform_component', 'w')
+      ->fields('w', array('cid'))
+      ->condition('nid', $nid)
+      ->orderBy('cid', 'DESC')
+      ->range(0, 1)
+      ->execute()
+      ->fetchField();
+  return (empty($max_cid) ? 0 : $max_cid);
+}
+
+/**
+ * Menu callback to generate the webform dump.
+ */
+function webform_share_export($node) {
+  drupal_alter('webform_share_export', $node);
+
+  $webform = '$webform = ' . var_export($node->webform, TRUE) . ";\n\n";
+
+  if (ob_get_level()) {
+    ob_end_clean();
+  }
+
+  drupal_add_http_header('Content-Type', 'text/plain; charset=utf-8');
+  drupal_add_http_header('Content-Disposition', 'attachment; filename="webform-' . $node->type . '-' . $node->nid . '.txt";');
+  drupal_add_http_header('Content-Length', sprintf('%u', strlen($webform)));
+
+  print $webform;
+
+  exit();
+}
+
+/**
+ * This hooks into the node type form to add the webform share default settings
+ * textarea.
+ */
+function webform_share_form_node_type_form_alter(&$form, $form_state) {
+  // Targets content type edit forms
+  if (isset($form['#node_type'])) {
+    // Only adds the element to content types that have been tag for webforms.
+    if (in_array($form['#node_type']->type, webform_variable_get('webform_node_types'))) {
+      // Make sure that the user has permission.
+      if (user_access('access webform share functionality')) {
+        $form['workflow']['webform_share'] = array(
+          '#type' => 'textarea',
+          '#title' => t('Web form default components'),
+          '#default_value' => variable_get('webform_share_' . $form['#node_type']->type, ''),
+          // Access PHP so we need to control this.
+          '#access' => user_access('access webform share functionality'),
+          '#description' => t('Copy the code that was generated from a webform share export. This should not include &lt;?PHP or ?&gt; tags.'),
+        );
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_node_insert().
+ */
+function webform_share_node_insert($node) {
+  if ($type_defaults = webform_share_node_type_defaults($node->type)) {
+    if ($webform = _webform_share_eval($type_defaults)) {
+      $hook_params = array(
+        'operation' => 'insert',
+        'node' => $node,
+        'options' => array(
+          'components_only' => FALSE,
+          'keep_existing_components' => FALSE,
+        ),
+      );
+      drupal_alter('webform_share_import', $webform, $hook_params);
+      $node->webform = $webform;
+      $node->webform['nid'] = $node->nid;
+      if (isset($node->webform['components'])) {
+        $node->webform['components'] = array_filter((array) $node->webform['components']);
+        foreach ($node->webform['components'] as $index => $component) {
+          $node->webform['components'][$index]['nid'] = $node->nid;
+        }
+      }
+      if (isset($node->webform['emails'])) {
+        foreach ($node->webform['emails'] as $index => $email) {
+          $node->webform['emails'][$index]['nid'] = $node->nid;
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Private helper function to assist in getting the information from the
+ * webform dump.
+ */
+function _webform_share_eval($str) {
+  eval($str);
+  return empty($webform) ? FALSE : $webform;
+}

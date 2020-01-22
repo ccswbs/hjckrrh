@@ -282,6 +282,12 @@ projects[webform][version] = "4.21"
 
 projects[webform_matrix_component][version] = "4.28"
 
+projects[webform_share][version] = "1.3"
+
+projects[webform_submissions_multiple_delete][version] = "1.8"
+
+projects[webform_validation][version] = "1.9"
+
 projects[workbench][version] = "1.2"
 
 projects[workbench_moderation][version] = "3.0"

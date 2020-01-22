@@ -1,0 +1,13 @@
+<?php
+/**
+ * @file
+ * Installation Success Message.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function webform_submissions_multiple_delete_install() {
+  $t = get_t();
+  drupal_set_message(check_plain($t('Webform Submissions Multiple Delete Module has been successfully installed')));
+}
