@@ -67,7 +67,7 @@ class FeedsExTextEncoder implements FeedsExEncoderInterface {
   /**
    * The set of encodings compatible with UTF-8.
    *
-   * @param array
+   * @var array
    */
   protected static $utf8Compatible = array('utf-8', 'utf8', 'us-ascii', 'ascii');
 

@@ -7,9 +7,6 @@
 
 /**
  * Parses HTML documents with QueryPath.
- *
- * @todo Make convertEncoding() into a helper function so that they aren't \
- *   copied in 2 places.
  */
 class FeedsExQueryPathHtml extends FeedsExQueryPathXml {
 
@@ -31,13 +28,6 @@ class FeedsExQueryPathHtml extends FeedsExQueryPathXml {
    */
   protected function getRawValue(QueryPath $node) {
     return $node->html();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  protected function convertEncoding($data, $encoding = 'UTF-8') {
-    return FeedsExXmlUtility::convertHtmlEncoding($data, $this->config['source_encoding']);
   }
 
   /**

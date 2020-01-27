@@ -5,44 +5,54 @@
  * Contains FeedsExJmesPathLinesUnitTests.
  */
 
-/**
- * Unit tests for FeedsExJmesPathLines.
- */
-class FeedsExJmesPathLinesUnitTests extends FeedsExJsonPathLinesUnitTests {
+if (class_exists('TUnit')) {
 
-  public static function getInfo() {
-    return array(
-      'name' => 'JMESPath JSON lines parser unit tests',
-      'description' => 'Unit tests for FeedsExJmesPathLines.',
-      'group' => 'Feeds EX',
-    );
-  }
+  /**
+   * Unit tests for FeedsExJmesPathLines.
+   */
+  class FeedsExJmesPathLinesUnitTests extends FeedsExJsonPathLinesUnitTests {
 
-  public function setUp() {
-    parent::setUp();
+    /**
+     * {@inheritdoc}
+     */
+    public static function getInfo() {
+      return array(
+        'name' => 'JMESPath JSON lines parser unit tests',
+        'description' => 'Unit tests for FeedsExJmesPathLines.',
+        'group' => 'Feeds EX',
+      );
+    }
 
-    require_once $this->moduleDir . '/src/FeedsExJmesPath.inc';
-    require_once $this->moduleDir . '/src/FeedsExJmesPathLines.inc';
+    /**
+     * {@inheritdoc}
+     */
+    public function setUp() {
+      parent::setUp();
 
-    $this->source = $this->getMockFeedsSource();
-    $this->parser = FeedsConfigurable::instance('FeedsExJmesPathLines', strtolower($this->randomName()));
-    $this->parser->setMessenger(new FeedsExTestMessenger());
+      require_once $this->moduleDir . '/src/FeedsExJmesPath.inc';
+      require_once $this->moduleDir . '/src/FeedsExJmesPathLines.inc';
 
-    // Set compile directory manually.
-    $this->variableDel('feeds_ex_jmespath_compile_dir');
-    $path = file_directory_temp() . '/' . drupal_base64_encode(drupal_random_bytes(40)) . '_feeds_ex_jmespath_dir';
-    $this->variableSet('feeds_ex_jmespath_compile_dir', $path);
+      $this->source = $this->getMockFeedsSource();
+      $this->parser = FeedsPlugin::instance('FeedsExJmesPathLines', strtolower($this->randomName()));
+      $this->parser->setMessenger(new FeedsExTestMessenger());
 
-    $this->parser->setConfig(array(
-      'sources' => array(
-        'title' => array(
-          'name' => 'Title',
-          'value' => 'name',
+      // Set compile directory manually.
+      $this->variableDel('feeds_ex_jmespath_compile_dir');
+      $path = file_directory_temp() . '/' . drupal_base64_encode(drupal_random_bytes(40)) . '_feeds_ex_jmespath_dir';
+      $this->variableSet('feeds_ex_jmespath_compile_dir', $path);
+
+      $this->parser->setConfig(array(
+        'sources' => array(
+          'title' => array(
+            'name' => 'Title',
+            'value' => 'name',
+          ),
         ),
-      ),
-    ));
-    $this->fetcherResult = new FeedsFileFetcherResult($this->moduleDir . '/tests/resources/test.jsonl');
-    // Tests are in FeedsExJsonPathLinesUnitTests.
+      ));
+      $this->fetcherResult = new FeedsFileFetcherResult($this->moduleDir . '/tests/resources/test.jsonl');
+      // Tests are in FeedsExJsonPathLinesUnitTests.
+    }
+
   }
 
 }

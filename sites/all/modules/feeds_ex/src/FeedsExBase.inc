@@ -185,7 +185,7 @@ abstract class FeedsExBase extends FeedsParser {
     $result = new FeedsParserResult();
     // Set link.
     $fetcher_config = $source->getConfigFor($source->importer->fetcher);
-    $result->link = is_string($fetcher_config['source']) ? $fetcher_config['source'] : '';
+    $result->link = isset($fetcher_config['source']) && is_string($fetcher_config['source']) ? $fetcher_config['source'] : '';
 
     try {
       $this->setUp($source, $fetcher_result);
@@ -363,9 +363,13 @@ abstract class FeedsExBase extends FeedsParser {
    *   The prepared raw string.
    */
   protected function prepareRaw(FeedsFetcherResult $fetcher_result) {
-    $raw = trim($this->getEncoder()->convertEncoding($fetcher_result->getRaw()));
+    $raw = $this->getEncoder()->convertEncoding($fetcher_result->getRaw());
 
-    if (!strlen($raw)) {
+    // Strip null bytes.
+    $raw = trim(str_replace("\0", '', $raw));
+
+    // Check that the string has at least one character.
+    if (!isset($raw[0])) {
       throw new FeedsExEmptyException();
     }
 

@@ -12,6 +12,14 @@ class FeedsExTestFeedsSource extends FeedsSource {
 
   /**
    * Log messages stored for later use.
+   *
+   * Each message has the following keys:
+   * - type;
+   * - message;
+   * - variables;
+   * - severity.
+   *
+   * @var array
    */
   protected $logMessages = array();
 

@@ -34,13 +34,6 @@ class FeedsExHtml extends FeedsExXml {
   /**
    * {@inheritdoc}
    */
-  protected function convertEncoding($data, $encoding = 'UTF-8') {
-    return FeedsExXmlUtility::convertHtmlEncoding($data, $this->config['source_encoding']);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   protected function prepareDocument(FeedsSource $source, FeedsFetcherResult $fetcher_result) {
     $raw = $this->prepareRaw($fetcher_result);
     if ($this->config['use_tidy'] && extension_loaded('tidy')) {
@@ -71,7 +64,6 @@ class FeedsExHtml extends FeedsExXml {
       'wrap' => 0,
       'tidy-mark' => FALSE,
       'escape-cdata' => TRUE,
-      'word-2000' => TRUE,
     );
   }
 

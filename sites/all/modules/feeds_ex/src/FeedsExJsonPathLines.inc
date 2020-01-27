@@ -79,7 +79,7 @@ class FeedsExJsonPathLines extends FeedsExJsonPath {
    * {@inheritdoc}
    */
   protected function executeSourceExpression($machine_name, $expression, $row) {
-    $result = jsonPath($row, $expression);
+    $result = $this->getParser()->search($row, $expression);
 
     if (is_scalar($result)) {
       return $result;

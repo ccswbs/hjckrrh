@@ -6,13 +6,28 @@ dependencies[] = feeds
 test_dependencies[] = tunit
 test_dependencies[] = querypath
 
+; Parsers.
+files[] = src/FeedsExBase.inc
+files[] = src/FeedsExHtml.inc
+files[] = src/FeedsExJmesPath.inc
+files[] = src/FeedsExJmesPathLines.inc
+files[] = src/FeedsExJsonPath.inc
+files[] = src/FeedsExJsonPathLines.inc
+files[] = src/FeedsExQueryPathHtml.inc
+files[] = src/FeedsExQueryPathXml.inc
+files[] = src/FeedsExXml.inc
+
+; Helpers.
 files[] = src/File/FeedsExLineIterator.php
 files[] = src/Json/Utility.php
 files[] = src/Text/Utility.php
 files[] = src/Xml/Utility.php
 
+; Tests.
 files[] = src/Tests/FeedsExUnitTests.test
 files[] = src/Tests/FeedsExHtml.test
+files[] = src/Tests/FeedsExJmesPath.test
+files[] = src/Tests/FeedsExJmesPathLines.test
 files[] = src/Tests/FeedsExJsonPath.test
 files[] = src/Tests/FeedsExJsonPathLines.test
 files[] = src/Tests/FeedsExQueryPathHtml.test
@@ -21,10 +36,11 @@ files[] = src/Tests/FeedsExUi.test
 files[] = src/Tests/FeedsExXml.test
 
 core = 7.x
+php = 5.3
 
-; Information added by Drupal.org packaging script on 2015-04-10
-version = "7.x-1.0-beta2"
+; Information added by Drupal.org packaging script on 2017-12-24
+version = "7.x-1.0-beta2+24-dev"
 core = "7.x"
 project = "feeds_ex"
-datestamp = "1428707882"
+datestamp = "1514107992"
 

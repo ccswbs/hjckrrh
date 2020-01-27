@@ -24,7 +24,12 @@ class FeedsExJmesPath extends FeedsExBase {
   /**
    * The JMESPath parser.
    *
-   * @var An object with an __invoke() method.
+   * This is an object with an __invoke() method.
+   *
+   * @var object
+   *
+   * @todo add interface so checking for an object with an __invoke() method
+   * becomes explicit?
    */
   protected $runtime;
 
@@ -149,11 +154,16 @@ class FeedsExJmesPath extends FeedsExBase {
    * {@inheritdoc}
    */
   protected function executeContext(FeedsSource $source, FeedsFetcherResult $fetcher_result) {
-    $raw = $this->prepareRaw($fetcher_result);
-    $parsed = FeedsExJsonUtility::decodeJsonArray($raw);
+    $parsed = FeedsExJsonUtility::decodeJsonObject($this->prepareRaw($fetcher_result));
     $parsed = $this->search($this->config['context']['value'], $parsed);
-    if (!is_array($parsed)) {
+
+    if (!is_array($parsed) && !is_object($parsed)) {
       throw new RuntimeException(t('The context expression must return an object or array.'));
+    }
+
+    // If an object is returned, consider it one item.
+    if (is_object($parsed)) {
+      return array($parsed);
     }
 
     $state = $source->state(FEEDS_PARSE);
@@ -161,9 +171,9 @@ class FeedsExJmesPath extends FeedsExBase {
       $state->total = count($parsed);
     }
 
-    // @todo Consider using array slice syntax when it is supported.
     $start = (int) $state->pointer;
     $state->pointer = $start + $source->importer->getLimit();
+
     return array_slice($parsed, $start, $source->importer->getLimit());
   }
 
@@ -183,14 +193,30 @@ class FeedsExJmesPath extends FeedsExBase {
    * {@inheritdoc}
    */
   protected function executeSourceExpression($machine_name, $expression, $row) {
-    $result = $this->search($expression, $row);
+    try {
+      $result = $this->search($expression, $row);
+    }
+    catch (Exception $e) {
+      // There was an error executing this expression, nothing we can do about
+      // it.
+      return;
+    }
 
-    if (is_scalar($result)) {
+    if (is_object($result)) {
+      $result = (array) $result;
+    }
+
+    if (!is_array($result)) {
       return $result;
     }
 
-    // Return a single value if there's only one value.
-    return count($result) === 1 ? reset($result) : $result;
+    $count = count($result);
+
+    if ($count === 0) {
+      return;
+    }
+
+    return count($result) === 1 ? reset($result) : array_values($result);
   }
 
   /**
@@ -209,6 +235,9 @@ class FeedsExJmesPath extends FeedsExBase {
       // Remove newlines after nl2br() to make testing easier.
       return str_replace("\n", '', nl2br(check_plain(trim($e->getMessage()))));
     }
+    catch (Exception $e) {
+      // This is a problem executing the query, which we don't worry about.
+    }
   }
 
   /**
@@ -216,7 +245,7 @@ class FeedsExJmesPath extends FeedsExBase {
    */
   protected function startErrorHandling() {
     // Clear the json errors from previous parsing.
-    json_decode('');
+    json_decode('{}');
   }
 
   /**
@@ -243,11 +272,9 @@ class FeedsExJmesPath extends FeedsExBase {
    * {@inheritdoc}
    */
   protected function loadLibrary() {
-    if (!$path = feeds_ex_library_path('jmespath.php', 'vendor/autoload.php')) {
+    if (!FeedsExJsonUtility::jmesPathParserInstalled()) {
       throw new RuntimeException(t('The JMESPath library is not installed.'));
     }
-
-    require_once DRUPAL_ROOT . '/' . $path;
   }
 
 }
@@ -260,7 +287,7 @@ class FeedsExJmesPathV1Wrapper {
   /**
    * The version 1 runtime.
    *
-   * @var \JmesPath\Runtime\RuntimeInterface.
+   * @var \JmesPath\Runtime\RuntimeInterface
    */
   protected $runtime;
 
