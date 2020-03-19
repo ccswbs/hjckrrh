@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * ug_wysiwyg.features.ckeditor_profile.inc
@@ -101,8 +102,8 @@ function ug_wysiwyg_ckeditor_profile_defaults() {
     'CKEditor Global Profile' => array(
       'name' => 'CKEditor Global Profile',
       'settings' => array(
-        'skin' => 'moono',
-        'ckeditor_path' => '//cdn.ckeditor.com/4.4.3/full-all',
+        'skin' => 'moono-lisa',
+        'ckeditor_path' => '//cdn.ckeditor.com/4.14.0/full-all',
         'ckeditor_local_path' => '',
         'ckeditor_plugins_path' => '%m/plugins',
         'ckeditor_plugins_local_path' => '',

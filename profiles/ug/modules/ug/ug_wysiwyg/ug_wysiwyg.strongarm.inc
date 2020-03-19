@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * ug_wysiwyg.strongarm.inc

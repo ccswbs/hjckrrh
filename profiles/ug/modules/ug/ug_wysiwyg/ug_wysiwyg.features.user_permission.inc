@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * ug_wysiwyg.features.user_permission.inc

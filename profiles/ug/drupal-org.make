@@ -23,7 +23,7 @@ projects[captcha][version] = "1.5"
 
 projects[cck][version] = "3.0-alpha3"
 
-projects[ckeditor][version] = "1.18"
+projects[ckeditor][version] = "1.19"
 
 projects[ckeditor_link][version] = "2.4"
 
