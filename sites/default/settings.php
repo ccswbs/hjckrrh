@@ -66,6 +66,11 @@ $conf['404_fast_paths'] = '/\.(?:txt|png|gif|jpe?g|css|js|ico|swf|flv|cgi|bat|pl
 $conf['404_fast_html'] = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN" "http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>404 Not Found</title></head><body><h1>Not Found</h1><p>The requested URL "@path" was not found on this server.</p></body></html>';
 
 /**
+ * Specify every reverse proxy IP address in your environment.
+ */
+$conf['reverse_proxy_addresses'] = array('131.104.92.23', '131.104.16.4', '131.104.16.8');
+
+/**
  * By default the page request process will return a fast 404 page for missing
  * files if they match the regular expression set in '404_fast_paths' and not
  * '404_fast_paths_exclude' above. 404 errors will simultaneously be logged in
@@ -104,12 +109,8 @@ if (isset($_ENV['PANTHEON_ENVIRONMENT']) && (php_sapi_name() != "cli"))
     exit();
   }
 
-  // Reverse proxy address range. Requests from this address range should use
-  // the reverse proxy configuration.
-  $rev_proxy_addr = '131.104.16.';
-  
   // Reverse proxy configuration
-  if (isset($_SERVER['REMOTE_ADDR']) && (substr($_SERVER['REMOTE_ADDR'], 0, strlen($rev_proxy_addr)) === $rev_proxy_addr)) {
+  if (isset($_SERVER['REMOTE_ADDR']) && (in_array($_SERVER['REMOTE_ADDR'], $conf['reverse_proxy_addresses'], TRUE))) {
     // Domain masking:
     // Some sites on Pantheon share a common domain name (e.g. www.uoguelph.ca). Pantheon
     // refers to this as 'domain masking' and it is not officially supported. These sites
@@ -213,6 +214,9 @@ if (isset($_ENV['PANTHEON_ENVIRONMENT']) && (php_sapi_name() != "cli"))
     if (isset($_SERVER['HTTP_CA_UOGUELPH_USER'])) {
       $_SERVER['REMOTE_USER'] = $_SERVER['HTTP_CA_UOGUELPH_USER'];
     }
+
+    // Enable Drupal's reverse proxy features
+    $conf['reverse_proxy'] = TRUE;
 
     // end of reverse proxy configuration
   } 
