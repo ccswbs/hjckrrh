@@ -68,7 +68,7 @@ $conf['404_fast_html'] = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN"
 /**
  * Specify every reverse proxy IP address in your environment.
  */
-$conf['reverse_proxy_addresses'] = array('131.104.92.23', '131.104.16.4', '131.104.16.8');
+$conf['reverse_proxy_addresses'] = array('131.104.92.23', '131.104.16.42', '131.104.16.8');
 
 /**
  * By default the page request process will return a fast 404 page for missing
