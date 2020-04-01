@@ -159,8 +159,6 @@ if (isset($_ENV['PANTHEON_ENVIRONMENT']) && (php_sapi_name() != "cli"))
       'graduatestudies' => array('domain' => 'graduatestudies.uoguelph.ca'),
       'graduatestudiesforms' => array('path' => '/graduatestudies/forms2'),
       'gsa1' => array('path' => '/gsa'),
-      'healthservices' => array('domain' => 'wellness.uoguelph.ca', 'path' => '/health'),
-      'hpc1' => array('domain' => 'wellness.uoguelph.ca', 'path' => '/hpc'),
       'hr1' => array('path' => '/hr'),
       'ib2' => array('path' => '/ib'),
       'international1' => array('path' => '/international'),
@@ -181,7 +179,6 @@ if (isset($_ENV['PANTHEON_ENVIRONMENT']) && (php_sapi_name() != "cli"))
       'studentaffairs1' => array('path' => '/studentaffairs'),
       'sustainability1' => array('path' => '/sustainability'),
       'tutoring1' => array('path' => '/tutoring'),
-      'wellnesseducation' => array('domain' => 'wellness.uoguelph.ca', 'path' => '/education'),
     );
 
     // Domain masking is only required if the request comes from the proxy server and
