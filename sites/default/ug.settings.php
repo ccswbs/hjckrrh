@@ -177,7 +177,7 @@ if (isset($_ENV['PANTHEON_ENVIRONMENT']) && (php_sapi_name() != "cli"))
       'ses1' => array('path' => '/ses'),
       'sws1' => array('domain' => 'wellness.uoguelph.ca'),
       'studentaffairs1' => array('path' => '/studentaffairs'),
-      'sustainability1' => array('path' => '/sustainability'),
+      'sustainability1' => array('path' => '/campussustainability'),
       'tutoring1' => array('path' => '/tutoring'),
     );
 
