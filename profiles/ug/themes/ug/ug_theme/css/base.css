@@ -655,7 +655,7 @@ _:-ms-fullscreen, :root .carousel-table a.glyphicon {
 
 /* Hack for MS Edge's inadequate support of css all:initial ' */
 
-@supports (-ms-accelerator:true)  {
+@supports (-ms-ime-align:auto)  {
     .carousel-indicators { 
         position: static;
         width: auto;
