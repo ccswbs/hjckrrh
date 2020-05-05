@@ -525,6 +525,34 @@ Base Styles
       border-color: #9B1E16;
     }
 
+  /*--------------------------------
+  Responsive Video Embed
+  --------------------------------**/
+  .embed-responsive-4by3 {
+    padding-bottom: 75% !important;
+    }
+    .embed-responsive-16by9 {
+    padding-bottom: 56.25% !important;
+    }
+    .embed-responsive {
+    position: relative;
+    display: block;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    }
+    .embed-responsive .embed-responsive-item, 
+    .embed-responsive embed, .embed-responsive iframe, 
+    .embed-responsive object, .embed-responsive video {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    }
+
   /*---------------------
   Pagination
   ---------------------**/
