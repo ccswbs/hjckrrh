@@ -51,10 +51,18 @@ Base Styles
     margin-top: 0;
   }
 
+
+  @media (min-width: 768px) {
+    .lead {
+        font-size: 21px !important;
+    }
+  }
+
   /*---------------------
   Links
   ---------------------**/
-  a{
+  a,
+  a h1, a h2, a h3, a h4, a h5, a h6 {
       color: #2174BB; 
       /* WCAG 2.0 AA on #EEEEEE, #F5F5F5, #FFFFFF */
   }
