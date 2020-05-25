@@ -139,6 +139,8 @@ if (isset($_ENV['PANTHEON_ENVIRONMENT']) && (php_sapi_name() != "cli"))
       'ahl1' => array('path' => '/ahl'),
       'alliance1' => array('path' => '/alliance'),
       'arts1' => array('path' => '/arts'),
+      'bas1' => array('path' => '/bas'),
+      'bsc1' => array('path' => '/bsc'),
       'bioinformatics1' => array('path' => '/bioinformatics'),
       'business2' => array('path' => '/lang'),
       'cbspurchasing' => array('path' => '/cbs/purchasing'),
