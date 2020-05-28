@@ -134,6 +134,7 @@ if (isset($_ENV['PANTHEON_ENVIRONMENT']) && (php_sapi_name() != "cli"))
     // follow the https://www.uoguelph.ca/sitename pattern, override the reverse proxy
     // domain and path here.
     $proxy_conf = array(
+      'a11yonline' => array('domain' => 'wellness.uoguelph.ca', 'path' => '/accessibility/online'),
       'a11yportal' => array('domain' => 'wellness.uoguelph.ca', 'path' => '/accessibility/portal'),
       'accessibilityweb' => array('path' => '/accessibility/web'),
       'ahl1' => array('path' => '/ahl'),
