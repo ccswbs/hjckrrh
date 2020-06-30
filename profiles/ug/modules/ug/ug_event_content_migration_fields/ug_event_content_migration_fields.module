@@ -1,0 +1,8 @@
+<?php
+
+/**
+ * @file
+ * Code for the UG Event Content Migration Fields feature.
+ */
+
+include_once 'ug_event_content_migration_fields.features.inc';

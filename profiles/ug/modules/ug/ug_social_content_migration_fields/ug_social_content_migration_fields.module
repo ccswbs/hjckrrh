@@ -1,0 +1,8 @@
+<?php
+
+/**
+ * @file
+ * Code for the UG Social Media Content Migration Fields feature.
+ */
+
+include_once 'ug_social_content_migration_fields.features.inc';
