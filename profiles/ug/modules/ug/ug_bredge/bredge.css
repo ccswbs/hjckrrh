@@ -1,0 +1,48 @@
+/* brightedge footer styles */
+
+.be-ix-link-block {
+    clear: both;
+    background: #ffffff !important;
+    border-top: 1px solid #E5E5E5;
+    color: #555;
+    margin-bottom: -36px;
+    margin-left: -15px;
+    margin-right: -15px;
+    margin-top: 36px;
+}
+
+.be-label { 
+	margin: 10px 0px 0px 0px !important; 
+	font-weight: bold;
+ }
+
+ .be-related-link-container {
+     padding-left: 0 !important;
+ }
+
+ .be-ix-link-block .be-related-link-container .be-list .be-list-item a:hover,
+ .be-ix-link-block .be-related-link-container .be-list .be-list-item a:focus {
+     text-decoration: none !important;
+     border-bottom: 2px solid;
+ }
+
+@media (min-width: 1200px) {
+    .be-ix-link-block {
+        margin-left: calc(-100vw / 2 + 1170px / 2 - 15px);
+        margin-right: calc(-100vw / 2 + 1170px / 2 - 15px);
+    }
+}
+
+@media (min-width: 992px) {
+    .be-ix-link-block {
+        margin-left: calc(-100vw / 2 + 970px / 2 - 15px);
+        margin-right: calc(-100vw / 2 + 970px / 2 - 15px);
+    }
+}
+
+@media (min-width: 768px) {
+    .be-ix-link-block {
+        margin-left: calc(-100vw / 2 + 750px / 2 - 15px);
+        margin-right: calc(-100vw / 2 + 750px / 2 - 15px);
+    }  
+}

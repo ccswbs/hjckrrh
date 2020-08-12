@@ -1,0 +1,30 @@
+<?php
+drupal_add_js('//cdn.bc0a.com/autopilot/f00000000209359/autopilot_sdk.js', array(
+    'weight' => '-1000',
+    'type' => 'external',
+  )
+);
+
+function ug_bredge_block_info() {    
+  $blocks['ug_bredge'] = array(
+    // info: The name of the block.
+    'info' => t('Brightedge links'),
+  );
+
+  return $blocks;
+}
+
+function ug_bredge_block_view($delta = '') {
+  // The $delta parameter tells us which block is being requested.
+  switch ($delta) {
+    case 'ug_bredge':
+      
+      // $block['subject'] = t('BE Test');
+      $block['subject'] = null;
+      $block['content'] = '<div class="be-ix-link-block"><!--Link Block Target Div--></div>';
+
+      break;
+   }
+
+  return $block;
+}
