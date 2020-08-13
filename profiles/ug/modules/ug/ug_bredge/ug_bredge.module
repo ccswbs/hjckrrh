@@ -8,7 +8,9 @@ drupal_add_js('//cdn.bc0a.com/autopilot/f00000000209359/autopilot_sdk.js', array
 function ug_bredge_block_info() {    
   $blocks['ug_bredge'] = array(
     // info: The name of the block.
-    'info' => t('Brightedge links'),
+    'info' => t('Brightedge Links'),
+    'status' => TRUE,
+    'region' => 'footer',
   );
 
   return $blocks;
