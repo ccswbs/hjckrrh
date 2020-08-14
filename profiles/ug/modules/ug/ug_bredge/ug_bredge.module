@@ -9,6 +9,7 @@ function ug_bredge_block_info() {
   $blocks['ug_bredge'] = array(
     // info: The name of the block.
     'info' => t('Brightedge Links'),
+    'weight' => 40,
     'status' => TRUE,
     'region' => 'footer',
   );
