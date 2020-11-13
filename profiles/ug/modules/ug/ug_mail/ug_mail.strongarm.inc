@@ -58,7 +58,7 @@ function ug_mail_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'smtp_username';
-  $strongarm->value = 'azure_cd49d360b125dcbcc854a00d0d948bb7@azure.com';
+  $strongarm->value = 'apikey';
   $export['smtp_username'] = $strongarm;
 
   return $export;
