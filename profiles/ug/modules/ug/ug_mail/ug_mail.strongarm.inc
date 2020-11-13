@@ -51,7 +51,7 @@ function ug_mail_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'smtp_protocol';
-  $strongarm->value = 'standard';
+  $strongarm->value = 'tls';
   $export['smtp_protocol'] = $strongarm;
 
   $strongarm = new stdClass();
