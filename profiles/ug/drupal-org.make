@@ -299,7 +299,7 @@ projects[workbench_email][version] = "3.12"
 projects[wysiwyg_filter][version] = "1.6-rc3"
 projects[wysiwyg_filter][patch][] = "https://www.drupal.org/files/issues/wysiwyg_filter-Bypass-rules-835202-16.D7.patch"
 
-projects[xmlsitemap][version] = "2.4"
+projects[xmlsitemap][version] = "2.6"
 
 projects[youtube][version] = "1.7"
 
