@@ -62,6 +62,7 @@
  * - $page['sidebar_second']: Items for the second sidebar.
  * - $page['header']: Items for the header region.
  * - $page['footer']: Items for the footer region.
+ * - $page['coda']: Items for the coda region.
  *
  * @see bootstrap_preprocess_page()
  * @see template_preprocess()
@@ -200,3 +201,5 @@
     <?php print render($page['footer']); ?>
   </footer>
 </div>
+<?php print render($page['coda']); ?>
+
