@@ -1,4 +1,4 @@
-<div id="ug-header"><div class="container"> 
+<div id="ug-header"><div class="container">
   <!-- Static navbar -->
   <nav class="navbar navbar-default navbar-static-top" aria-label="University of Guelph main">
     <div class="container-fluid">
@@ -73,7 +73,7 @@
 
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">About <span class="sr-only">University of Guelph </span><span class="caret"></span></a>
-            
+
             <ul class="dropdown-menu navbar-default dropdown-menu-left" role="menu">
               <li><a href="//www.uoguelph.ca/about.html">About the University</a></li>
                           <li class="divider"></li>
@@ -93,7 +93,7 @@
           <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Services <span class="sr-only">at University of Guelph </span><span class="caret"></span></a>
             <ul class="dropdown-menu navbar-default" role="menu">
               <li><a href="http://gryphons.ca/">Athletics</a></li>
-              <li><a href="//www.bookstore.uoguelph.ca">Bookstore</a></li>
+              <li><a href="//bookstore.uoguelph.ca">Bookstore</a></li>
               <li><a href="//www.uoguelph.ca/police/">Campus Community Police</a></li>
               <li><a href="//www.uoguelph.ca/cpa/">Communications &amp; Public Affairs</a></li>
               <li><a href="//www.uoguelph.ca/community/" role="menuitem">Community Relations</a></li>
@@ -107,11 +107,11 @@
             </ul>
           </li>
         </ul>
-        
+
       </div>
-      <!--/.nav-collapse --> 
+      <!--/.nav-collapse -->
     </div>
-    <!--/.container-fluid --> 
+    <!--/.container-fluid -->
   </nav>
 </div></div>
 <!-- /container -->
