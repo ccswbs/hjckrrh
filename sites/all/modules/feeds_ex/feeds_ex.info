@@ -5,6 +5,7 @@ package = Feeds
 dependencies[] = feeds
 test_dependencies[] = tunit
 test_dependencies[] = querypath
+test_dependencies[] = views
 
 ; Parsers.
 files[] = src/FeedsExBase.inc
@@ -38,9 +39,8 @@ files[] = src/Tests/FeedsExXml.test
 core = 7.x
 php = 5.3
 
-; Information added by Drupal.org packaging script on 2017-12-24
-version = "7.x-1.0-beta2+24-dev"
+; Information added by Drupal.org packaging script on 2021-05-10
+version = "7.x-1.0-rc1+3-dev"
 core = "7.x"
 project = "feeds_ex"
-datestamp = "1514107992"
-
+datestamp = "1620641679"

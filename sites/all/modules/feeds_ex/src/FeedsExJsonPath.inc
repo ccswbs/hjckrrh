@@ -5,8 +5,6 @@
  * Contains FeedsExJsonPath.
  */
 
-use Peekmo\JsonPath\JsonStore;
-
 /**
  * Parses JSON via JSONPath.
  */
@@ -120,7 +118,15 @@ class FeedsExJsonPath extends FeedsExBase {
    */
   protected function loadLibrary() {
     if (!FeedsExJsonUtility::jsonPathParserInstalled()) {
-      throw new RuntimeException(t('The JSONPath library is not installed.'));
+      if (user_access('administer site configuration')) {
+        $link = l(t('status report'), 'admin/reports/status');
+      }
+      else {
+        $link = t('status report');
+      }
+      throw new RuntimeException(t('The JSONPath library is not installed. Check the !status_report_link for more info.', array(
+        '!status_report_link' => $link,
+      )));
     }
   }
 
@@ -135,12 +141,10 @@ class FeedsExJsonPath extends FeedsExBase {
       if (class_exists('Flow\JSONPath\JSONPath')) {
         $this->parser = new FeedsExJsonPathParserFlow();
       }
-      elseif (class_exists('Peekmo\JsonPath\JsonStore')) {
-        $this->parser = new FeedsExJsonPathParserPeekmo();
-      }
-      elseif (function_exists('jsonPath')) {
-        $this->parser = new FeedsExJsonPathParser();
-      }
+    }
+
+    if (!isset($this->parser)) {
+      throw new RuntimeException(t('Could not load the JSONPath library.'));
     }
 
     return $this->parser;
@@ -169,20 +173,6 @@ interface FeedsExJsonPathParserInterface {
 }
 
 /**
- * Wraps the standard JSONPath implementation.
- */
-class FeedsExJsonPathParser implements FeedsExJsonPathParserInterface {
-
-  /**
-   * {@inheritdoc}
-   */
-  public function search(array $data, $expression) {
-    return jsonPath($data, $expression);
-  }
-
-}
-
-/**
  * Wraps the Flow JSONPath implementation.
  */
 class FeedsExJsonPathParserFlow implements FeedsExJsonPathParserInterface {
@@ -196,21 +186,6 @@ class FeedsExJsonPathParserFlow implements FeedsExJsonPathParserInterface {
     $json_path = new $class($data);
 
     return $json_path->find($expression)->data();
-  }
-
-}
-
-/**
- * Wraps the Peekmo JSONPath implementation.
- */
-class FeedsExJsonPathParserPeekmo implements FeedsExJsonPathParserInterface {
-
-  /**
-   * {@inheritdoc}
-   */
-  public function search(array $data, $expression) {
-    $store = new JsonStore();
-    return $store->get($data, $expression);
   }
 
 }

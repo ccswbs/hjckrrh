@@ -5,9 +5,8 @@ hidden = TRUE
 dependencies[] = feeds_ex
 core = 7.x
 
-; Information added by Drupal.org packaging script on 2017-12-24
-version = "7.x-1.0-beta2+24-dev"
+; Information added by Drupal.org packaging script on 2021-05-10
+version = "7.x-1.0-rc1+3-dev"
 core = "7.x"
 project = "feeds_ex"
-datestamp = "1514107992"
-
+datestamp = "1620641679"

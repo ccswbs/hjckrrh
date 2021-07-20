@@ -4,9 +4,8 @@ dependencies[] = menu
 core = "7.x"
 configure = admin/config/user-interface/menu-breadcrumb
 
-; Information added by Drupal.org packaging script on 2016-06-09
-version = "7.x-1.6+3-dev"
+; Information added by Drupal.org packaging script on 2021-05-01
+version = "7.x-1.6+4-dev"
 core = "7.x"
 project = "menu_breadcrumb"
-datestamp = "1465478640"
-
+datestamp = "1619836938"
