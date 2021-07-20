@@ -20,7 +20,187 @@ function feeds_ex_uninstall() {
 }
 
 /**
+ * Implements hook_requirements().
+ */
+function feeds_ex_requirements($phase) {
+  $requirements = array();
+
+  if ($phase !== 'runtime') {
+    return $requirements;
+  }
+
+  drupal_load('module', 'feeds_ex');
+
+  $t = get_t();
+  $requirements['feeds_ex_jsonpath']['title'] = $t('JSONPath library');
+  $requirements['feeds_ex_jsonpath']['severity'] = REQUIREMENT_OK;
+  $requirements['feeds_ex_jsonpath']['value'] = $t('Installed');
+
+  if (FeedsExJsonUtility::jsonPathParserInstalled() === FALSE) {
+    $description = array(
+      'missing' => t('The <a href="@jsonpath">JSONPath</a> library is missing.', array(
+        '@jsonpath' => 'https://github.com/FlowCommunications/JSONPath',
+      )),
+      'library_download' => t('Download <a href="@download">@download</a> and place the contents of JSONPath-@version in sites/all/libraries/jsonpath', array(
+        '@version' => FEEDS_EX_JSONPATH_LIBRARY_VERSION,
+        '@download' => 'https://github.com/FlowCommunications/JSONPath/archive/' . FEEDS_EX_JSONPATH_LIBRARY_VERSION . '.tar.gz',
+      )),
+    );
+
+    // Check if the library files are there.
+    $library_files_present = FALSE;
+    if (!module_exists('libraries') && is_dir(DRUPAL_ROOT . '/sites/all/libraries/jsonpath/src/Flow/JSONPath')) {
+      $library_files_present = TRUE;
+    }
+    elseif (module_exists('libraries') && libraries_get_path('jsonpath')) {
+      $library_files_present = TRUE;
+    }
+
+    if ($library_files_present) {
+      unset($description['library_download']);
+      $description['library_install'] = t('The files for the JSONPath library seem to be present in /sites/all/libraries/jsonpath, but could not be loaded. Install the library in one of these two ways:');
+
+      // List all possible steps.
+      $steps = array(
+        '#theme' => 'item_list',
+        '#items' => array(
+          'libraries_and_xautoload' => t('Download and enable the modules !libraries_link and !xautoload_link.', array(
+            '!libraries_link' => l(t('Libraries'), 'https://www.drupal.org/project/libraries'),
+            '!xautoload_link' => l(t('X Autoload'), 'https://www.drupal.org/project/xautoload'),
+          )),
+          'libraries_only' => t('Download and enable the module !libraries_link.', array(
+            '!libraries_link' => l(t('Libraries'), 'https://www.drupal.org/project/libraries'),
+          )),
+          'xautoload_only' => t('Download and enable the module !xautoload_link.', array(
+            '!xautoload_link' => l(t('X Autoload'), 'https://www.drupal.org/project/xautoload'),
+          )),
+          'composer' => t('Or, on the command line, go to the jsonpath folder and execute the command !command.', array(
+            '!command' => '<code>composer install --no-dev</code>',
+          )),
+        ),
+      );
+
+      // If the libraries module is installed, then instructions to install that
+      // can be removed.
+      if (module_exists('libraries')) {
+        unset($steps['#items']['libraries_and_xautoload']);
+        unset($steps['#items']['libraries_only']);
+      }
+      else {
+        unset($steps['#items']['xautoload_only']);
+      }
+
+      // If the xautoload module is installed, then instructions to install that
+      // can be removed.
+      if (module_exists('xautoload')) {
+        unset($steps['#items']['libraries_and_xautoload']);
+        unset($steps['#items']['xautoload_only']);
+      }
+      else {
+        unset($steps['#items']['libraries_only']);
+      }
+
+      // If both modules are already installed, something else is wrong.
+      if (module_exists('libraries') && module_exists('xautoload')) {
+        $description['library_install'] = t('The files for the JSONPath library seem to be present in /sites/all/libraries/jsonpath, but could not be loaded. Try one or more of the following things:');
+        $steps = array(
+          '#theme' => 'item_list',
+          '#items' => array(
+            t('Check if the correct library is installed. This should be "flow/jsonpath" (check the composer.json file in /sites/all/libraries/jsonpath). If in doubt, download <a href="@download">@download</a> and place the contents of JSONPath-@version in sites/all/libraries/jsonpath.', array(
+              '@version' => FEEDS_EX_JSONPATH_LIBRARY_VERSION,
+              '@download' => 'https://github.com/FlowCommunications/JSONPath/archive/' . FEEDS_EX_JSONPATH_LIBRARY_VERSION . '.tar.gz',
+            )),
+            t('Clear the caches.'),
+            t('On the command line, go to the jsonpath folder and execute the command !command.', array(
+              '!command' => '<code>composer install --no-dev</code>',
+            )),
+          ),
+        );
+      }
+
+      $description['library_install_steps'] = drupal_render($steps);
+    }
+
+    $requirements['feeds_ex_jsonpath']['severity'] = REQUIREMENT_WARNING;
+    $requirements['feeds_ex_jsonpath']['description'] = implode(' ', $description);
+    $requirements['feeds_ex_jsonpath']['value'] = $t('Not installed');
+  }
+
+  return $requirements;
+}
+
+/**
  * Empty update hook to clear the cache.
  */
 function feeds_ex_update_7101() {
+}
+
+/**
+ * Checks if for any importers libraries got missing.
+ */
+function feeds_ex_update_7102() {
+  if (!class_exists('\Flow\JSONPath\JSONPath', TRUE)) {
+    if (!module_exists('feeds')) {
+      throw new DrupalUpdateException('Please enable the Feeds module to run this update.');
+    }
+    if (!module_exists('feeds_ex')) {
+      throw new DrupalUpdateException('Please enable the Feeds extensible parser module to run this update.');
+    }
+
+    if (FeedsExJsonUtility::jsonPathParserInstalled()) {
+      return;
+    }
+
+    $has_json_importer = FALSE;
+    // Check if any of the feeds importers are using the JSON parser.
+    foreach (feeds_importer_load_all(TRUE) as $importer) {
+      $plugin = $importer->config['parser']['plugin_key'];
+      switch ($plugin) {
+        case 'FeedsExJsonPath':
+        case 'FeedsExJsonPathLines':
+          // We've found an importer using jsonpath.
+          $has_json_importer = TRUE;
+          break 2;
+      }
+    }
+
+    if ($has_json_importer) {
+      // Try to enable xautoload and libraries.
+      $xautoload = module_enable(array('xautoload'));
+      $libraries = module_enable(array('libraries'));
+
+      if (!$xautoload || !$libraries) {
+        $modules = [];
+        if (!$xautoload) {
+          $modules[] = 'xautoload';
+        }
+        if (!$libraries) {
+          $modules[] = 'libraries';
+        }
+
+        throw new DrupalUpdateException(format_string("You are not loading flow/jsonpath using composer and the following modules couldn't be installed: @modules. Please download these modules or ensure flow/jsonpath is being loaded via your composer setup.", array(
+          '@modules' => implode(', ', $modules),
+        )));
+      }
+
+      // Libraries should be enabled at this point.
+      if (!file_exists(libraries_get_path('jsonpath') . '/src/Flow/JSONPath/JSONPath.php')) {
+        drupal_load('module', 'feeds_ex');
+
+        $message = '';
+        // Let's make sure they know about the security issue.
+        if (file_exists(libraries_get_path('jsonpath') . '/jsonpath.php')) {
+          $message = format_string('To remain secure because of issues identified in !sa, you must remove goessner/jsonpath and replace it with flow/jsonpath.', array(
+            '!sa' => '<a href="https://www.drupal.org/sa-contrib-2019-083">SA-CONTRIB-2019-083</a>',
+          ));
+        }
+        $message .= ' ' . format_string('The <a href="@jsonpath">JSONPath</a> library is missing. Download <a href="@download">@download</a> and place the contents of JSONPath-@version in sites/all/libraries/jsonpath', array(
+          '@jsonpath' => 'https://github.com/FlowCommunications/JSONPath',
+          '@version' => FEEDS_EX_JSONPATH_LIBRARY_VERSION,
+          '@download' => 'https://github.com/FlowCommunications/JSONPath/archive/' . FEEDS_EX_JSONPATH_LIBRARY_VERSION . '.tar.gz',
+        ));
+        throw new DrupalUpdateException($message);
+      }
+    }
+  }
 }

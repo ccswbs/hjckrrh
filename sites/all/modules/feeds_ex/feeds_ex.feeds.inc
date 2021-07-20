@@ -12,8 +12,15 @@ function feeds_ex_feeds_plugins() {
   $path = drupal_get_path('module', 'feeds_ex') . '/src';
 
   // In some cases, the module is not loaded yet when this include gets called.
-  // @todo Figure out why.
   drupal_load('module', 'feeds_ex');
+
+  // This function can be called when Drupal is rebuilding module data, due to
+  // Feeds implementing hook_system_info_alter(). In such case, the classes for
+  // this module are not yet available in the registry, so therefore we load any
+  // we use here to avoid fatal errors of classes not being found.
+  if (!class_exists('FeedsExJsonUtility')) {
+    require_once $path . '/Json/Utility.php';
+  }
 
   $plugins = array(
     'FeedsExBase' => array(
