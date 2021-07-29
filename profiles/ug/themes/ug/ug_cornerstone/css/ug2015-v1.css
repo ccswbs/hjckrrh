@@ -563,8 +563,8 @@ Live Date: June 23, 2015
         .detail-page .main-container .col-sm-8 dl {
             color: #2C2727;
             /*font-size: 1.143em;*/ /* 16px */
-            font-size: 16px;
-            line-height: 150%;
+            font-size: 1.6rem;
+            line-height: 1.5;
 		}
 		
 		/*--- Pixel to EM Conversion ---*/
