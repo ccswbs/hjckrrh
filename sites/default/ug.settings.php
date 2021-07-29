@@ -183,6 +183,7 @@ if (isset($_ENV['PANTHEON_ENVIRONMENT']) && (php_sapi_name() != "cli"))
       'studentaffairs1' => array('path' => '/studentaffairs'),
       'sustainability1' => array('path' => '/campussustainability'),
       'tutoring1' => array('path' => '/tutoring'),
+      'ugchemistry' => array('path' => '/chemistry'),
     );
 
     // Domain masking is only required if the request comes from the proxy server and
