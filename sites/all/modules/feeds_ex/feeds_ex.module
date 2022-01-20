@@ -6,6 +6,11 @@
  */
 
 /**
+ * Defines which commit to checkout from flow/jsonpath.
+ */
+define('FEEDS_EX_JSONPATH_LIBRARY_VERSION', '0.5.0');
+
+/**
  * Implements hook_menu().
  */
 function feeds_ex_menu() {
@@ -67,6 +72,36 @@ function feeds_ex_registry_files_alter(array &$files, array $modules) {
 }
 
 /**
+ * Implements hook_libraries_info().
+ */
+function feeds_ex_libraries_info() {
+  $libraries = array();
+  $libraries['jsonpath'] = array(
+    'name' => 'JSONPath',
+    'vendor url' => 'https://github.com/FlowCommunications/JSONPath',
+    'download url' => 'https://github.com/FlowCommunications/JSONPath/archive/' . FEEDS_EX_JSONPATH_LIBRARY_VERSION . '.tar.gz',
+    'version' => FEEDS_EX_JSONPATH_LIBRARY_VERSION,
+    'xautoload' => '_feeds_ex_xautoload_callback',
+  );
+
+  return $libraries;
+}
+
+/**
+ * Callback for xautoload.
+ *
+ * @see feeds_ex_libraries_info()
+ */
+function _feeds_ex_xautoload_callback($adapter) {
+  try {
+    $adapter->composerJson('composer.json');
+  }
+  catch (Exception $e) {
+    drupal_set_message($e->getMessage(), 'error', FALSE);
+  }
+}
+
+/**
  * Returns the path of a library.
  *
  * @param string $library
@@ -89,18 +124,6 @@ function feeds_ex_library_path($library, $file) {
   }
 
   return FALSE;
-}
-
-/**
- * Returns the path of the JSONPath library.
- *
- * We can't use feeds_ex_library_path() becuase we look in multiple locations.
- *
- * @return string|bool
- *   The relative path of the JSONPath directory, or false if not found.
- */
-function feeds_ex_jsonpath_library_path() {
-  return FeedsExJsonUtility::jsonPathLibraryPath();
 }
 
 /**

@@ -133,20 +133,13 @@ class FeedsExJsonUtility {
       return FALSE;
     }
 
-    // Newer forks of JSONPath are all modern and fancy with their autoloaders.
+    // Check if there is an autoload file. There is one when the library is
+    // installed with Composer in /sites/all/libraries/jsonpath.
     if (is_file($path . '/vendor/autoload.php')) {
       return $path . '/vendor/autoload.php';
     }
-    if (is_file($path . '/src/Peekmo/JsonPath/JsonStore.php')) {
-      return array(
-        $path . '/src/Peekmo/JsonPath/JsonStore.php',
-        $path . '/src/Peekmo/JsonPath/JsonPath.php',
-      );
-    }
-    // Old school. Look for multiple versions.
-    $files = glob($path . '/jsonpath*.php');
 
-    return $files ? reset($files) : FALSE;
+    return FALSE;
   }
 
   /**
@@ -156,11 +149,58 @@ class FeedsExJsonUtility {
    *   True if a parser is installed, false if not.
    */
   public static function jsonPathParserInstalled() {
-    if (class_exists('Flow\JSONPath\JSONPath') || class_exists('Peekmo\JsonPath\JsonStore') || function_exists('jsonPath')) {
+    // Check first if the class is already loaded.
+    if (class_exists('\Flow\JSONPath\JSONPath', TRUE)) {
+      // We're good!
       return TRUE;
     }
 
-    $path = self::jsonPathLibraryPath();
+    // Try loading the library using libraries module.
+    if (static::loadJsonPathUsingLibraries()) {
+      return TRUE;
+    }
+
+    // Try loading the library by checking common paths.
+    if (static::loadJsonPathUsingPath()) {
+      return TRUE;
+    }
+
+    // In all other cases, loading the library failed.
+    return FALSE;
+  }
+
+  /**
+   * Tries to load the jsonpath library using the libraries module.
+   *
+   * @return bool
+   *   True if loading succeed. False otherwise.
+   */
+  protected static function loadJsonPathUsingLibraries() {
+    // If not, then we should have libraries installed.
+    if (!module_exists('libraries')) {
+      return FALSE;
+    }
+    $library = libraries_load('jsonpath');
+    if ($library['loaded'] === FALSE) {
+      return FALSE;
+    }
+
+    if (!class_exists('\Flow\JSONPath\JSONPath', TRUE)) {
+      return FALSE;
+    }
+
+    return TRUE;
+  }
+
+  /**
+   * Tries to load the jsonpath library by looking for a path.
+   *
+   * @return bool
+   *   True if loading succeed. False otherwise.
+   */
+  protected static function loadJsonPathUsingPath() {
+    // Try loading the library by looking for it manually.
+    $path = static::jsonPathLibraryPath();
     if (!$path) {
       return FALSE;
     }
@@ -174,7 +214,11 @@ class FeedsExJsonUtility {
       require_once DRUPAL_ROOT . '/' . $path;
     }
 
-    return class_exists('Flow\JSONPath\JSONPath') || class_exists('Peekmo\JsonPath\JsonStore') || function_exists('jsonPath');
+    if (!class_exists('\Flow\JSONPath\JSONPath', TRUE)) {
+      return FALSE;
+    }
+
+    return TRUE;
   }
 
   /**

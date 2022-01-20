@@ -29,23 +29,23 @@ http://drupal.org/project/querypath
 
 JSONPath
 ========
-To use the JSONPath parser, you'll have two options:
+To use the JSONPath parser, you'll need PHP >= 5.4.
 
-1. Without composer (requires PHP 5.3+):
+There are two ways to install it:
 
-   Download from
-   https://github.com/Peekmo/JsonPath/releases
-   into sites/all/libraries/jsonpath and clear the cache.
+1. Without composer:
 
-2. With composer (requires PHP 5.4+), in sites/all/libraries:
+  1. Download and enable the modules "libraries" and "xautoload".
+  2. Download and unpack the following file
+     https://github.com/FlowCommunications/JSONPath/archive/0.5.0.tar.gz
+     and place the contents of JSONPath-0.5.0 in sites/all/libraries/jsonpath
+
+2. With composer, in sites/all/libraries:
 
    $ git clone https://github.com/FlowCommunications/JSONPath.git jsonpath
    $ cd jsonpath
    $ composer install --no-dev
    $ drush cc all # Or just clear the cache however you normally would.
-
-The composer version is newer and has additional bug fixes. This version is also
-used by the testbot on drupal.org.
 
 JMESPath
 ========
