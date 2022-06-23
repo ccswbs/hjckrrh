@@ -74,7 +74,7 @@ function print_pdf_controller() {
 
   $nodepath = (isset($node->nid)) ? 'node/' . $node->nid : drupal_get_normal_path($path);
   db_merge('print_pdf_page_counter')
-    ->key(array('path' => $nodepath))
+    ->key(array('path' => substr($nodepath, 0, 255)))
     ->fields(array(
       'totalcount' => 1,
       'timestamp' => REQUEST_TIME,
@@ -113,12 +113,10 @@ function print_pdf_generate_path($path, $query = NULL, $cid = NULL, $pdf_filenam
   if ($node) {
     // Call the tool's hook_pdf_tool_info(), to see if CSS must be expanded.
     $pdf_tool = explode('|', variable_get('print_pdf_pdf_tool', PRINT_PDF_PDF_TOOL_DEFAULT));
-    $cache_enabled = variable_get('print_pdf_cache_enabled', PRINT_PDF_CACHE_ENABLED_DEFAULT);
+    $cache_enabled = user_is_anonymous() && variable_get('print_pdf_cache_enabled', PRINT_PDF_CACHE_ENABLED_DEFAULT);
 
     $function = $pdf_tool[0] . '_pdf_tool_info';
-    if (function_exists($function)) {
-      $info = $function();
-    }
+    $info = function_exists($function) ? $function() : array();
     $expand = isset($info['expand_css']) ? $info['expand_css'] : FALSE;
 
     $html = theme('print', array(
@@ -137,8 +135,6 @@ function print_pdf_generate_path($path, $query = NULL, $cid = NULL, $pdf_filenam
     $html = preg_replace_callback($pattern, '_print_rewrite_urls', $html);
     // And make anchor links relative again, to permit in-PDF navigation.
     $html = preg_replace("!${base_url}/" . $link['path'] . '/.*?#!', '#', $html);
-    // Remove all scripts due to security concerns.
-    $html = preg_replace('!<script(.*?)>(.*?)</script>!is', '', $html);
 
     $meta = array(
       'node' => $node,
