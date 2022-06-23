@@ -214,7 +214,7 @@ projects[pathauto][version] = "1.3"
 
 projects[pathologic][version] = "3.1"
 
-projects[print][version] = "2.1"
+projects[print][version] = "2.4"
 
 projects[profile2][version] = "1.3"
 

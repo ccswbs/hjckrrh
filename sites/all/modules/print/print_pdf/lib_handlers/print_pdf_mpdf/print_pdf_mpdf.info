@@ -2,10 +2,10 @@ name = "mPDF library handler"
 description = "PDF generation library using mPDF."
 core = 7.x
 package = "Printer, email and PDF versions"
-dependencies[] = print_pdf
+dependencies[] = print:print_pdf
 
-; Information added by Drupal.org packaging script on 2018-10-03
-version = "7.x-2.1"
+; Information added by Drupal.org packaging script on 2022-05-31
+version = "7.x-2.4"
 core = "7.x"
 project = "print"
-datestamp = "1538588885"
+datestamp = "1653980177"

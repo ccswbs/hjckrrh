@@ -115,7 +115,7 @@ function print_mail_form_for_path($form, &$form_state, $path, $query = NULL, $us
   if (count($form_state['input']) == 0) {
     $nodepath = drupal_get_normal_path($path);
     db_merge('print_mail_page_counter')
-      ->key(array('path' => $nodepath))
+      ->key(array('path' => substr($nodepath, 0, 255)))
       ->fields(array(
         'totalcount' => 1,
         'timestamp' => REQUEST_TIME,
@@ -388,7 +388,7 @@ function print_mail_form_validate($form, &$form_state) {
  * @ingroup forms
  */
 function print_mail_form_submit($form, &$form_state) {
-  if (!array_key_exists('cancel', $form_state['values'])) {
+  if (!array_key_exists('cancel', $form_state['input'])) {
     module_load_include('inc', 'print', 'print.pages');
     module_load_include('inc', 'print', 'includes/print');
 

@@ -32,12 +32,18 @@ function print_epub_phpepub_print_epub_generate($html, $meta, $filename = NULL) 
 
   // Try to use local file access for image files.
   $html = _print_access_images_via_file($html, $images_via_file);
+  $version = _print_epub_phpepub_version($epub_tool[1]);
 
   // Set document information.
-  $epub = new EPub();
+  if (version_compare($version, '4.0.0', '>=')) {
+    $epub = new \PHPePub\Core\EPub();
+  }
+  else {
+    $epub = new EPub();
+  }
 
   $epub->setTitle(html_entity_decode($meta['title'], ENT_QUOTES, 'UTF-8'));
-  $epub->setIdentifier($meta['url'], EPub::IDENTIFIER_URI);
+  $epub->setIdentifier($meta['url'], $epub::IDENTIFIER_URI);
   $epub->setLanguage($language->language);
   if (isset($meta['name'])) {
     $epub->setAuthor(strip_tags($meta['name']), strip_tags($meta['name']));
