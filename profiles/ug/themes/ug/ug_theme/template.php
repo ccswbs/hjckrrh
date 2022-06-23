@@ -130,7 +130,7 @@ function ug_theme_preprocess_views_view(&$vars) {
     $pane_conf = $view->display_handler->display->display_options['pane_conf'];
     $has_override_title = isset($pane_conf['override_title']);
     if ($has_override_title) {
-      if ($pane_conf['override_title'] === 1) {
+      if ($pane_conf['override_title'] === 1 && isset($view->build_info['title'])) {
         $vars['feed_icon'] = str_replace($view->build_info['title'], $pane_conf['override_title_text'], $vars['feed_icon']);
       }
     }
@@ -727,7 +727,7 @@ function ug_theme_menu_link(array $variables) {
     elseif ((!empty($element['#original_link']['depth'])) && ($element['#original_link']['depth'] == 1)) {
       // Add our own wrapper.
       unset($element['#below']['#theme_wrappers']);
-      $sub_menu = '<ul class="dropdown-menu" role="menu">' . drupal_render($element['#below']) . '</ul>';
+      $sub_menu = '<ul class="dropdown-menu">' . drupal_render($element['#below']) . '</ul>';
       // Generate as standard dropdown.
       $element['#title'] .= ' <span class="caret"></span>';
       $element['#attributes']['class'][] = 'dropdown';

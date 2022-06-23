@@ -51,7 +51,7 @@
         <ul id="globalnav" class="nav navbar-nav navbar-right nav-clear">
 
           <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Academics <span class="sr-only">at University of Guelph</span> <span class="caret"></span></a>
-            <ul class="dropdown-menu navbar-default dropdown-menu-left" role="menu">
+            <ul class="dropdown-menu navbar-default dropdown-menu-left">
               <li><a href="//www.uoguelph.ca/admissions/">Undergraduate Admissions</a></li>
               <li><a href="//www.uoguelph.ca/graduatestudies/">Graduate Studies</a></li>
               <li><a href="http://opened.uoguelph.ca/student-resources/About-Distance-Education">Distance Education</a></li>
@@ -74,7 +74,7 @@
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">About <span class="sr-only">University of Guelph </span><span class="caret"></span></a>
             
-            <ul class="dropdown-menu navbar-default dropdown-menu-left" role="menu">
+            <ul class="dropdown-menu navbar-default dropdown-menu-left">
               <li><a href="//www.uoguelph.ca/about.html">About the University</a></li>
                           <li class="divider"></li>
               <li><a href="//www.uoguelph.ca/arboretum/">Arboretum</a></li>
@@ -91,12 +91,12 @@
           <li><a href="http://www.uoguelph.ca/research/">Research <span class="sr-only">at University of Guelph</span></a></li>
 
           <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Services <span class="sr-only">at University of Guelph </span><span class="caret"></span></a>
-            <ul class="dropdown-menu navbar-default" role="menu">
+            <ul class="dropdown-menu navbar-default">
               <li><a href="http://gryphons.ca/">Athletics</a></li>
               <li><a href="//www.bookstore.uoguelph.ca">Bookstore</a></li>
               <li><a href="//www.uoguelph.ca/police/">Campus Community Police</a></li>
               <li><a href="//www.uoguelph.ca/cpa/">Communications &amp; Public Affairs</a></li>
-              <li><a href="//www.uoguelph.ca/community/" role="menuitem">Community Relations</a></li>
+              <li><a href="//www.uoguelph.ca/community/">Community Relations</a></li>
               <li><a href="//www.uoguelph.ca/ccs/">Computing &amp; Communications Services</a></li>
               <li><a href="//www.hospitality.uoguelph.ca">Hospitality Services</a></li>
               <li><a href="//www.uoguelph.ca/hr/">Human Resources</a></li>
