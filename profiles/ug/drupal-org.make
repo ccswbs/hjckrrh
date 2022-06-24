@@ -194,6 +194,8 @@ projects[node_export][version] = "3.1"
 
 projects[oauth][version] = "3.3"
 
+projects[optimizedb][version] = "1.7"
+
 projects[page_title][version] = "2.7"
 
 projects[panelizer][version] = "3.4"
