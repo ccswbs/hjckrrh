@@ -1,0 +1,110 @@
+<?php
+
+/**
+ * @file
+ * Installation file for Database Optimization.
+ */
+
+/**
+ * Implements hook_enable().
+ *
+ * @see _optimizedb_tables_list()
+ */
+function optimizedb_enable() {
+  // Update information on the size of tables.
+  _optimizedb_tables_list();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function optimizedb_uninstall() {
+  variable_del('optimizedb_clear_period');
+  variable_del('optimizedb_last_clear');
+  variable_del('optimizedb_optimization_period');
+  variable_del('optimizedb_last_optimization');
+  variable_del('optimizedb_notify_optimize');
+  variable_del('optimizedb_tables_size');
+  variable_del('optimizedb_clear_type');
+}
+
+/**
+ * Implements hook_requirements().
+ */
+function optimizedb_requirements($phase) {
+  $requirements = array();
+  // Ensure translations don't break during installation.
+  $t = get_t();
+
+  if ($phase == 'runtime') {
+    // Check, if necessary optimization.
+    $notify_optimize = variable_get('optimizedb_notify_optimize', FALSE);
+
+    if ($notify_optimize) {
+      // The last time optimization in Unix format.
+      $last_optimization = variable_get('optimizedb_last_optimization', 0);
+
+      // If optimization is not carried out earlier
+      // must display an appropriate message.
+      if ((bool) $last_optimization !== FALSE) {
+        $time_optimization = $t('Last run: @date ago.', array(
+          '@date' => _optimizedb_date($last_optimization),
+        ));
+      }
+      else {
+        $time_optimization = $t('Optimization yet was not run.');
+      }
+
+      $requirements['optimizedb'] = array(
+        'title' => $t('Database Optimization'),
+        'description' => $t('You must perform <a href="@optimize_link">database optimization</a>. <a href="@hide_link">Hide notification</a>', array(
+          '@optimize_link' => url('admin/config/development/optimizedb'),
+          '@hide_link' => url('admin/config/development/optimizedb/hide'),
+        )),
+        'severity' => REQUIREMENT_ERROR,
+        'value' => $time_optimization,
+      );
+    }
+  }
+
+  if ($phase == 'install') {
+    // Need to verify the database connection, hook is called when
+    // install installation profile, if the module is added to the dependencies.
+    if (Database::isActiveConnection()) {
+      module_load_include('module', 'optimizedb', 'optimizedb');
+
+      if ($message = optimizedb_check_works()) {
+        $requirements['optimizedb'] = array(
+          'title' => $t('Database Optimization'),
+          'description' => $message,
+          'severity' => REQUIREMENT_ERROR,
+        );
+      }
+    }
+  }
+
+  return $requirements;
+}
+
+/**
+ * Clear the cache for cache_id "optimizedb_tables_status".
+ */
+function optimizedb_update_7100() {
+  cache_clear_all('optimizedb_tables_status');
+}
+
+/**
+ * Rebuild menu, a new menu item.
+ */
+function optimizedb_update_7101() {
+  menu_rebuild();
+}
+
+/**
+ * Changing the name of a variable.
+ */
+function optimizedb_update_7102() {
+  $clear_type = variable_get('optimize_clear_type', 0);
+  variable_set('optimizedb_clear_type', $clear_type);
+  variable_del('optimize_clear_type');
+}

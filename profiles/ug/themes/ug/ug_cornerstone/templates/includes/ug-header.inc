@@ -92,18 +92,18 @@
 
           <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Services <span class="sr-only">at University of Guelph </span><span class="caret"></span></a>
             <ul class="dropdown-menu navbar-default">
-              <li><a href="http://gryphons.ca/">Athletics</a></li>
-              <li><a href="//www.bookstore.uoguelph.ca">Bookstore</a></li>
-              <li><a href="//www.uoguelph.ca/police/">Campus Community Police</a></li>
-              <li><a href="//www.uoguelph.ca/cpa/">Communications &amp; Public Affairs</a></li>
-              <li><a href="//www.uoguelph.ca/community/">Community Relations</a></li>
-              <li><a href="//www.uoguelph.ca/ccs/">Computing &amp; Communications Services</a></li>
-              <li><a href="//www.hospitality.uoguelph.ca">Hospitality Services</a></li>
-              <li><a href="//www.uoguelph.ca/hr/">Human Resources</a></li>
-              <li><a href="//www.uoguelph.ca/studentaffairs/">Student Affairs</a></li>
-              <li><a href="http://housing.uoguelph.ca">Student Housing Services</a></li>
+              <li><a href="https://gryphons.ca">Athletics</a></li>
+              <li><a href="https://www.bookstore.uoguelph.ca">Bookstore</a></li>
+              <li><a href="https://cso.uoguelph.ca">Campus Safety Office</a></li>
+              <li><a href="//www.uoguelph.ca/cpa">Communications &amp; Public Affairs</a></li>
+              <li><a href="//www.uoguelph.ca/grce">Government Relations &amp; Community Engagement</a></li>
+              <li><a href="//www.uoguelph.ca/ccs">Computing &amp; Communications Services</a></li>
+              <li><a href="https://hospitality.uoguelph.ca">Hospitality Services</a></li>
+              <li><a href="//www.uoguelph.ca/hr">Human Resources</a></li>
+              <li><a href="//www.uoguelph.ca/studentaffairs">Student Affairs</a></li>
+              <li><a href="https://housing.uoguelph.ca">Student Housing Services</a></li>
               <li class="divider"></li>
-              <li><a href="//www.uoguelph.ca/services/">More Services</a></li>
+              <li><a href="//www.uoguelph.ca/services">More Services</a></li>
             </ul>
           </li>
         </ul>
