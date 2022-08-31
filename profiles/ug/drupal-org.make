@@ -239,7 +239,7 @@ projects[rules][patch][] = "https://www.drupal.org/files/issues/rules-fix-fatal-
 
 projects[scanner][version] = "1.1"
 
-projects[services][version] = "3.24"
+projects[services][version] = "3.28"
 
 projects[shs][version] = "1.8"
 
