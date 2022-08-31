@@ -161,7 +161,7 @@ projects[mailsystem][patch][] = "https://www.drupal.org/files/issues/mailsystem-
 
 projects[masquerade][version] = "1.0-rc7"
 
-projects[maxlength][version] = "3.2"
+projects[maxlength][version] = "3.3"
 
 projects[media][version] = "2.19"
 

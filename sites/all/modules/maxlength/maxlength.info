@@ -4,9 +4,8 @@ core = 7.x
 package = Fields
 
 files[] = maxlength.test
-; Information added by Drupal.org packaging script on 2015-03-11
-version = "7.x-3.2"
+; Information added by Drupal.org packaging script on 2019-10-09
+version = "7.x-3.3"
 core = "7.x"
 project = "maxlength"
-datestamp = "1426104788"
-
+datestamp = "1570633689"

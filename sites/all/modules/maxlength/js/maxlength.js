@@ -249,7 +249,7 @@
       counterElement: 'div',
       cssWarning: 'messages warning',
       cssExceeded: 'error',
-      counterText: Drupal.t('Content limitedd to @limit characters, remaining: <strong>@remaining</strong>'),
+      counterText: Drupal.t('Content limited to @limit characters, remaining: <strong>@remaining</strong>'),
       action: 'attach',
       enforce: false,
       truncateHtml: false
@@ -265,7 +265,8 @@
       return 'removed';
     }
 
-    var counterElement = $('<' + options.counterElement + ' id="' + $(this).attr('id') + '-' + options.css + '" class="' + options.css + '"></' + options.counterElement + '>');
+    var sanitizedId = ($(this).attr('id') + '-' + options.css).replace(/[^0-9a-z-_]/gi, '');
+    var counterElement = $('<' + options.counterElement + ' id="' + sanitizedId + '" class="' + options.css + '"></' + options.counterElement + '>');
     if ($(this).next('div.grippie').length) {
       $(this).next('div.grippie').after(counterElement);
     } else {
