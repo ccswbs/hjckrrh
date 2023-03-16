@@ -39,6 +39,9 @@ jobs:
         <<: *merge-defaults
         steps:
             - checkout
+            - add_ssh_keys:
+                fingerprints:
+                  - "f8:c0:e1:28:4d:f9:1a:01:aa:7f:d0:8c:f6:e1:e6:88"
             - run:
                 # https://github.com/pantheon-systems/upstream-update-build/blob/1.x/bin/automerge.sh
                 name: Merge the default branch back to the master branch
