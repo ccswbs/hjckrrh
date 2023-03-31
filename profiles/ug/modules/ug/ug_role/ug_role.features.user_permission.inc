@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * ug_role.features.user_permission.inc
@@ -238,19 +239,14 @@ function ug_role_user_default_permissions() {
   // Exported permission: 'ug_permit any role'.
   $permissions['ug_permit any role'] = array(
     'name' => 'ug_permit any role',
-    'roles' => array(
-      'site manager' => 'site manager',
-    ),
+    'roles' => array(),
     'module' => 'ug_permit',
   );
 
   // Exported permission: 'ug_permit node access'.
   $permissions['ug_permit node access'] = array(
     'name' => 'ug_permit node access',
-    'roles' => array(
-      'author' => 'author',
-      'editor' => 'editor',
-    ),
+    'roles' => array(),
     'module' => 'ug_permit',
   );
 
