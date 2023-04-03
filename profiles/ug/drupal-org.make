@@ -138,7 +138,7 @@ projects[job_scheduler][version] = "2.0"
 
 projects[jquery_countdown][version] = "1.1"
 
-projects[jquery_update][version] = "2.7"
+projects[jquery_update][version] = "4.1"
 
 projects[js_injector][version] = "2.1"
 
