@@ -242,7 +242,7 @@ function ug_permit_form_alter(&$form, $form_state) {
 		);
 		$form['ug_permit']['other_mode'] = array(
 			'#type' => 'select',
-			'#title' => t('Others may'),
+			'#title' => t('Anonymous users may'),
 			'#options' => array(
 				0004 => t('view this content'),
 				0000 => t('not access this content')
