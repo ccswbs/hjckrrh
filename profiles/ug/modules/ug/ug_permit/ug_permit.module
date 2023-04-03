@@ -194,6 +194,8 @@ function ug_permit_node_update($node) {
 
 function ug_permit_form_alter(&$form, $form_state) {
 	global $user;
+
+	/* Create list of roles, excluding Anonymous users */
 	$role_list = user_roles();
 	unset($role_list[1]);
 
