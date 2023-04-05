@@ -194,6 +194,11 @@ function ug_permit_node_update($node) {
 
 function ug_permit_form_alter(&$form, $form_state) {
 	global $user;
+
+	/* Create list of roles, excluding Anonymous users */
+	$role_list = user_roles();
+	unset($role_list[1]);
+
 	if (!empty($form['#node_edit_form']) && (user_access('ug_permit node access') ||
 		user_access('ug_permit any role') || $user->uid == 1)) {
 		$form['ug_permit'] = array(
@@ -221,7 +226,7 @@ function ug_permit_form_alter(&$form, $form_state) {
 			'#title' => t('Role'),
 			'#options' => array(0 => t('<none>')) + 
 				(($user->uid == 1 || user_access('ug_permit any role')) ?
-				 user_roles() : $user->roles),
+				 $role_list : $user->roles),
 			'#default_value' => isset($form['#node']->rid) ?
 				$form['#node']->rid : 0
 		);
@@ -239,10 +244,8 @@ function ug_permit_form_alter(&$form, $form_state) {
 		);
 		$form['ug_permit']['other_mode'] = array(
 			'#type' => 'select',
-			'#title' => t('Others may'),
+			'#title' => t('Anonymous users may'),
 			'#options' => array(
-				0007 => t('view, update, & delete this content'),
-				0006 => t('view, & update this content'),
 				0004 => t('view this content'),
 				0000 => t('not access this content')
 			),
