@@ -102,7 +102,7 @@
       </div>
 
       <?php if (!empty($primary_nav) || !empty($secondary_nav) || !empty($page['navigation'])): ?>
-        <div id="primary-nav" class="navbar-collapse collapse flex-bottom flex-right ">
+        <div id="primary-nav" role="navigation" class="navbar-collapse collapse flex-bottom flex-right ">
           <nav aria-label="<?php print $site_name; ?>">
             <?php if (!empty($primary_nav)): ?>
               <?php print render($primary_nav); ?>
