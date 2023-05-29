@@ -10,22 +10,23 @@
  */
 function smtp_requirements($phase) {
   $requirements = array();
+  $t = get_t();
 
   if ($phase == 'runtime') {
     if (variable_get('smtp_queue', FALSE) || variable_get('smtp_queue_fail', FALSE)) {
       $count = db_query("SELECT count('name') FROM {queue} WHERE name='smtp_send_queue'")->fetchField();
       $requirements['smtp_queue'] = array(
-        'title' => t('SMTP Queue'),
+        'title' => $t('SMTP Queue'),
         'value' => '',
         'severity' => REQUIREMENT_INFO,
       );
       if ($count > 0) {
         $requirements['smtp_queue']['value'] = format_plural($count, 'There is 1 message queued for delivery.', 'There are @count messages queued for delivery.', array('@count' => $count))
           . ' '
-          . t('Delivery of the message(s) will be attempted the next time cron runs.');
+          . $t('Delivery of the message(s) will be attempted the next time cron runs.');
       }
       else {
-        $requirements['smtp_queue']['value'] = t('There are no messages queued for delivery.');
+        $requirements['smtp_queue']['value'] = $t('There are no messages queued for delivery.');
       }
     }
   }
@@ -53,6 +54,9 @@ function smtp_uninstall() {
   variable_del('smtp_password');
   variable_del('smtp_port');
   variable_del('smtp_protocol');
+  variable_del('smtp_verify_peer');
+  variable_del('smtp_verify_peer_name');
+  variable_del('smtp_allow_self_signed');
   variable_del('smtp_queue');
   variable_del('smtp_queue_fail');
   variable_del('smtp_username');
@@ -128,4 +132,19 @@ function smtp_update_7102() {
  */
 function smtp_update_7103() {
   variable_del('smtp_test_address');
+}
+
+/**
+ * Add "smtp_verify_peer", "smtp_verify_peer_name", "smtp_allow_self_signed" variables
+ * based on current running PHP version for most compatibility.
+ */
+function smtp_update_7104() {
+  if (version_compare(phpversion(), '5.6.0', '>=')) {
+    variable_set('smtp_verify_peer', TRUE);
+    variable_set('smtp_verify_peer_name', TRUE);
+  }
+  else {
+    variable_set('smtp_verify_peer', FALSE);
+  }
+  variable_set('smtp_allow_self_signed', FALSE);
 }

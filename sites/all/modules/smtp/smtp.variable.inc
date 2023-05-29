@@ -27,7 +27,7 @@ function smtp_variable_group_info() {
  * @param array $options
  */
 function smtp_variable_info($options) {
-  $variable['smtp_fromname'] = array (
+  $variable['smtp_fromname'] = array(
     'title' => t('Email from name (SMTP module)'),
     'type' => 'string',
     'description' => t('Allow for site emails to be sent from a different name.'),

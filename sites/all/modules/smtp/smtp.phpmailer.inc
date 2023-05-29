@@ -209,6 +209,12 @@ class PHPMailer {
   public $SMTPAuth      = FALSE;
 
   /**
+   * Options array passed to stream_context_create when connecting via SMTP.
+   * @var array
+   */
+  public $SMTPOptions = array();
+
+  /**
    * Sets SMTP username.
    * @var string
    */
@@ -310,6 +316,7 @@ class PHPMailer {
   // PROPERTIES, PRIVATE AND PROTECTED
   /////////////////////////////////////////////////
 
+  protected $is_html        = '';
   private   $smtp           = NULL;
   private   $to             = array();
   private   $cc             = array();
@@ -618,7 +625,7 @@ class PHPMailer {
     $to = implode(', ', $toArr);
 
     $params = sprintf("-oi -f %s", $this->Sender);
-    if ($this->Sender != '' && strlen(ini_get('safe_mode'))< 1) {
+    if ($this->Sender != '') {
       $old_from = ini_get('sendmail_from');
       ini_set('sendmail_from', $this->Sender);
       if ($this->SingleTo === TRUE && count($toArr) > 1) {
@@ -673,7 +680,7 @@ class PHPMailer {
   protected function SmtpSend($header, $body) {
     $bad_rcpt = array();
 
-    if (!$this->SmtpConnect()) {
+    if (!$this->SmtpConnect($this->SMTPOptions)) {
       throw new phpmailerException(t('SMTP Error: Could not connect to SMTP host.'), self::STOP_CRITICAL);
     }
     $smtp_from = ($this->Sender == '') ? $this->From : $this->Sender;
@@ -739,13 +746,19 @@ class PHPMailer {
   /**
    * Initiates a connection to an SMTP server.
    * Returns FALSE if the operation failed.
+   * @param array $options An array of options compatible with stream_context_create()
    * @uses SMTP
    * @access public
    * @return bool
    */
-  public function SmtpConnect() {
+  public function SmtpConnect($options = null) {
     if (is_null($this->smtp)) {
       $this->smtp = new SMTP();
+    }
+
+    // if no options are provided, use whatever is set in the instance
+    if (is_null($options)) {
+        $options = $this->SMTPOptions;
     }
 
     $this->smtp->do_debug = $this->SMTPDebug;
@@ -770,7 +783,7 @@ class PHPMailer {
         $tls = ($this->SMTPSecure == 'tls');
         $ssl = ($this->SMTPSecure == 'ssl');
 
-        if ($this->smtp->Connect(($ssl ? 'ssl://':'') . $host, $port, $this->Timeout)) {
+        if ($this->smtp->Connect(($ssl ? 'ssl://':'') . $host, $port, $this->Timeout, $options)) {
 
           $hello = ($this->Helo != '' ? $this->Helo : $this->ServerHostname());
           $this->smtp->Hello($hello);
@@ -1437,30 +1450,8 @@ class PHPMailer {
       if (!is_readable($path)) {
         throw new phpmailerException(t('File Error: Could not open file: !nofile', array('!nofile' => $path)), self::STOP_CONTINUE);
       }
-      if (function_exists('get_magic_quotes')) {
-        function get_magic_quotes() {
-          return FALSE;
-        }
-      }
-      $magic_quotes = get_magic_quotes_runtime();
-      if ($magic_quotes) {
-        if (version_compare(PHP_VERSION, '5.3.0', '<')) {
-          set_magic_quotes_runtime(0);
-        }
-        else {
-          ini_set('magic_quotes_runtime', 0);
-        }
-      }
       $file_buffer  = file_get_contents($path);
       $file_buffer  = $this->EncodeString($file_buffer, $encoding);
-      if ($magic_quotes) {
-        if (version_compare(PHP_VERSION, '5.3.0', '<')) {
-          set_magic_quotes_runtime($magic_quotes);
-        }
-        else {
-          ini_set('magic_quotes_runtime', $magic_quotes);
-        }
-      }
       return $file_buffer;
     } catch (Exception $e) {
       $this->SetError($e->getMessage());
@@ -1634,7 +1625,7 @@ class PHPMailer {
     $eol = "\r\n";
     $escape = '=';
     $output = '';
-    while ( list(, $line) = each($lines) ) {
+    foreach ($lines as $line) {
       $linlen = strlen($line);
       $newline = '';
       for ($i = 0; $i < $linlen; $i++) {
@@ -1667,7 +1658,7 @@ class PHPMailer {
         $newline .= $c;
       } // end of for
       $output .= $newline . $eol;
-    } // end of while
+    } // end of foreach
     return $output;
   }
 
@@ -1739,7 +1730,7 @@ class PHPMailer {
       // If the string contains an '=', make sure it's the first thing we replace
       // so as to avoid double-encoding
       $s = array_search('=', $matches[0]);
-      if ($s !== false) {
+      if ($s !== FALSE) {
         unset($matches[0][$s]);
         array_unshift($matches[0], '=');
       }

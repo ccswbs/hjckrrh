@@ -97,6 +97,52 @@ function smtp_admin_settings() {
     '#description'   => $encryption_description,
   );
 
+  $form['server']['smtp_ssl_context'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('SSL Context Options'),
+    '#description' => t('Be careful when adjusting following options. See more details !url.', array('!url' => l(t('here'), 'https://secure.php.net/manual/en/context.ssl.php'))),
+    '#states' => array(
+      'invisible' => array(
+        ':input[name="smtp_protocol"]' => array('value' => t('standard')),
+      ),
+    ),
+  );
+  $form['server']['smtp_ssl_context']['smtp_verify_peer'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Verify SMTP server SSL certificate'),
+    '#default_value' => variable_get('smtp_verify_peer', version_compare(phpversion(), '5.6.0', '>=')),
+    '#description'   => t('This option is enabled by default from PHP 5.6.0. It checks whether SMTP server certificate is valid.'),
+    '#states' => array(
+      'invisible' => array(
+        ':input[name="smtp_protocol"]' => array('value' => t('standard')),
+      ),
+    ),
+  );
+  if (version_compare(phpversion(), '5.6.0', '>=')) {
+    $form['server']['smtp_ssl_context']['smtp_verify_peer_name'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Verify SMTP server SSL certificate CN'),
+      '#default_value' => variable_get('smtp_verify_peer_name', TRUE),
+      '#description'   => t('This option is introduced in PHP 5.6.0 and is enabled by default. It checks whether SMTP server certificate CN matches the SMTP server you specify above.'),
+      '#states' => array(
+        'invisible' => array(
+          ':input[name="smtp_protocol"]' => array('value' => t('standard')),
+        ),
+      ),
+    );
+  }
+  $form['server']['smtp_ssl_context']['smtp_allow_self_signed'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Allow SMTP server to use self-signed certificate'),
+    '#default_value' => variable_get('smtp_allow_self_signed', FALSE),
+    '#description'   => t('This option is disabled by default. It only takes effect when option <b>Verify SMTP server SSL certificate</b> is enabled.'),
+    '#states' => array(
+      'invisible' => array(
+        ':input[name="smtp_protocol"]' => array('value' => t('standard')),
+      ),
+    ),
+  );
+
   $form['auth'] = array(
     '#type'        => 'fieldset',
     '#title'       => t('SMTP Authentication'),
@@ -295,6 +341,5 @@ function smtp_admin_settings_submit_post_system_settings($form, &$form_state) {
     $params['subject'] = t('Drupal SMTP test e-mail');
     $params['body'] = array(t('If you receive this message it means your site is capable of using SMTP to send e-mail.'));
     drupal_mail('smtp', 'smtp-test', $test_address, $language, $params);
-    drupal_set_message(t('A test e-mail has been sent to @email. You may want to !check for any error messages.', array('@email' => $test_address, '!check' => l(t('check the logs'), 'admin/reports/dblog'))));
-  }
+    drupal_set_message(t('A test e-mail has been sent to @email. You may want to <a href="!check">check the logs</a> for any error messages.', array('@email' => $test_address, '!check' => url('admin/reports/dblog'))));  }
 }
