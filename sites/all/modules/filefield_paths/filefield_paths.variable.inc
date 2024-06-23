@@ -14,8 +14,8 @@ function filefield_paths_variable_info() {
   $variables['filefield_paths_temp_location'] = array(
     'title'             => t('Temporary file location'),
     'type'              => 'string',
-    'default'           => 'public://filefield_paths',
-    'description'       => t('The location that unprocessed files will be uploaded priot to being processed by File (Field) Paths.<br />It is recommended that you use the temporary file system (temporary://) if your server configuration allows for that.'),
+    'default'           => filefield_paths_recommended_temporary_scheme() . 'filefield_paths',
+    'description'       => t('The location that unprocessed files will be uploaded prior to being processed by File (Field) Paths.<br />It is recommended that you use the temporary file system (temporary://) if your server configuration allows for that.'),
     'validate callback' => 'filefield_paths_variable_temp_location_validate',
     'group'             => 'filefield_paths',
   );

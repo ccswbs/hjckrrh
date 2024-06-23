@@ -59,6 +59,7 @@ function file_entity_field_formatter_info() {
         'remote_playback' => 'remote_playback',
       ),
       'autoplay' => FALSE,
+      'playsinline' => FALSE,
       'loop' => FALSE,
       'muted' => FALSE,
       'width' => NULL,
@@ -194,6 +195,11 @@ function file_entity_field_formatter_settings_form($field, $instance, $view_mode
       '#type' => 'checkbox',
       '#default_value' => $settings['autoplay'],
     );
+    $element['playsinline'] = array(
+      '#title' => t('Plays inline'),
+      '#type' => 'checkbox',
+      '#default_value' => $settings['playsinline'],
+    );
     $element['loop'] = array(
       '#title' => t('Loop'),
       '#type' => 'checkbox',
@@ -304,6 +310,9 @@ function file_entity_field_formatter_settings_summary($field, $instance, $view_m
     if (isset($settings['autoplay'])) {
       $summary[] = t('Autoplay: %autoplay', array('%autoplay' => $settings['autoplay'] ? t('yes') : t('no')));
     }
+    if (isset($settings['playsinline'])) {
+      $summary[] = t('Plays inline: %playsinline', array('%playsinline' => $settings['playsinline'] ? t('yes') : t('no')));
+    }
     if (isset($settings['loop'])) {
       $summary[] = t('Loop: %loop', array('%loop' => $settings['loop'] ? t('yes') : t('no')));
     }
@@ -345,30 +354,37 @@ function file_entity_field_formatter_view($entity_type, $entity, $field, $instan
 
   switch ($display['type']) {
     case 'file_rendered':
+      // A file entity page view (/file/[fid]) may not have a value on the $field['field_name'] key
+      // @see https://www.drupal.org/project/file_entity/issues/3175010
+      $has_referencing_field = isset($field['field_name']) ? TRUE : FALSE;
       foreach ($items as $delta => $item) {
-        // Protect ourselves from recursive rendering.
-        static $recursive_render_depth = array();
         if (!empty($item)) {
-          $recursive_render_id = $entity_type . $field['field_name'] . $item['fid'];
-          if (isset($recursive_render_depth[$recursive_render_id])) {
-            $recursive_render_depth[$recursive_render_id]++;
-          }
-          else {
-            $recursive_render_depth[$recursive_render_id] = 1;
-          }
+          // The repeat-rendering protection may be disabled if necessary.
+          if (variable_get('file_entity_protect_repeated_render', TRUE) && $has_referencing_field) {
+            // Protect ourselves from repeated rendering.
+            static $repeated_render_depth = array();
+            list($entity_id) = entity_extract_ids($entity_type, $entity);
+            $repeated_render_id = $entity_type . $entity_id . $field['field_name'] . $item['fid'];
+            if (isset($repeated_render_depth[$repeated_render_id])) {
+              $repeated_render_depth[$repeated_render_id]++;
+            }
+            else {
+              $repeated_render_depth[$repeated_render_id] = 1;
+            }
 
-          if ($recursive_render_depth[$recursive_render_id] > 20) {
-            watchdog(
-              'file_entity',
-              'Recursive rendering detected when rendering entity %entity_type: %entity_id, using the %field_name field. Aborting rendering.',
-              array(
-                '%entity_type' => 'file',
-                '%entity_id' => $item['fid'],
-                '%field_name' => $field['field_name'],
-              ),
-              WATCHDOG_ERROR
-            );
-            return $element;
+            if ($repeated_render_depth[$repeated_render_id] > 20) {
+              watchdog(
+                'file_entity',
+                'Repeated rendering detected when rendering entity %entity_type: %entity_id, using the %field_name field. Aborting rendering.',
+                array(
+                  '%entity_type' => 'file',
+                  '%entity_id' => $item['fid'],
+                  '%field_name' => $field['field_name'],
+                ),
+                WATCHDOG_ERROR
+              );
+              return $element;
+            }
           }
 
           $file = file_load($item['fid']);
@@ -383,8 +399,18 @@ function file_entity_field_formatter_view($entity_type, $entity, $field, $instan
           // @see https://www.drupal.org/node/2333107
           $file->referencing_entity = $entity;
           $file->referencing_entity_type = $entity_type;
-          $file->referencing_field = $field['field_name'];
+          $file->referencing_field = $has_referencing_field ? $field['field_name'] : '';
 
+          // Prevent recursion by checking if the referencing entity is itself
+          // do not display it again (return an empty array).
+          // This senario is created a few lines below when file_view is called
+          // it returns an array containing a referncing entity that is itself.
+          // This is likely treating the symptom and not the root cause which is
+          // probably buried in some hook_file_view() setting the referencing
+          // entity.
+          if (!empty($entity->fid) && $entity->fid === $item['fid']) {
+            return $element;
+          }
           // Untranslatable fields are rendered with no language code, fall back
           // to the content language in that case.
           $element[$delta] = file_view($file, $settings['file_view_mode'], $langcode !== LANGUAGE_NONE ? $langcode : NULL);
@@ -401,6 +427,7 @@ function file_entity_field_formatter_view($entity_type, $entity, $field, $instan
           );
         }
       }
+
       break;
 
     case 'file_download_link':
@@ -414,10 +441,17 @@ function file_entity_field_formatter_view($entity_type, $entity, $field, $instan
           if (isset($item['description'])) {
             $file->description = $item['description'];
           }
+
+          $text = $settings['text'];
+          if (module_exists('i18n_string')) {
+            $key = 'file_entity:file_download_link:' . $entity_type . ':' . $instance['bundle'] . ':link_text:' . $text;
+            $text = i18n_string($key, $text);
+          }
+
           $element[$delta] = array(
             '#theme' => 'file_entity_download_link',
             '#file' => $file,
-            '#text' => $settings['text'],
+            '#text' => $text,
           );
         }
       }
@@ -485,6 +519,7 @@ function file_entity_field_formatter_view($entity_type, $entity, $field, $instan
           '#controls' => $settings['controls'],
           '#controls_list' => $settings['controls_list'],
           '#autoplay' => $settings['autoplay'],
+          '#playsinline' => $settings['playsinline'],
           '#loop' => $settings['loop'],
           '#muted' => $settings['muted'],
           '#width' => $settings['width'],
