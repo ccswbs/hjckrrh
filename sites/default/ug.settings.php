@@ -167,7 +167,6 @@ if (isset($_ENV['PANTHEON_ENVIRONMENT']) && (php_sapi_name() != "cli"))
       'engineering1' => array('path' => '/engineering'),
       'finance1' => array('path' => '/finance'),
       'fire1' => array('path' => '/fire'),
-      'food-science-booking' => array('path' => '/foodscience/booking'),
       'fsadmin' => array('path' => '/foodscience/fsadmin'),
       'fys' => array('path' => '/vpacademic/fys'),
       'graduatestudies' => array('domain' => 'graduatestudies.uoguelph.ca'),
