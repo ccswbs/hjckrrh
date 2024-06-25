@@ -99,7 +99,7 @@ projects[field_permissions][version] = "1.0"
 
 projects[field_validation][version] = "2.6"
 
-projects[file_entity][version] = "2.22"
+projects[file_entity][version] = "2.38"
 
 projects[filebrowser][version] = "3.3"
 
