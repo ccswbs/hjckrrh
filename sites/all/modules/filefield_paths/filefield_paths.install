@@ -64,6 +64,41 @@ function filefield_paths_dependencies() {
 }
 
 /**
+ * Implements hook_requirements().
+ */
+function filefield_paths_requirements($phase) {
+  $requirements = array();
+
+  $t = get_t();
+
+  if ($phase == 'runtime') {
+    $temporary_path = variable_get('filefield_paths_temp_location', NULL);
+
+    // If it's not set, we don't need to do anything because the default will
+    // be secure.
+    if (!$temporary_path) {
+      return array();
+    }
+
+    $temporary_scheme = substr($temporary_path, 0, 9);
+
+    // If private files are supported, and the temporary scheme is 'public://'
+    // then let the user know they need to change the temporary scheme in order
+    // to be secure.
+    if (in_array('private', stream_get_wrappers()) && is_writable('private://') && $temporary_scheme == 'public://') {
+      $requirements['filefield_paths'] = array(
+        'title' => $t('File (Field) Paths temporary path'),
+        'value' => l('Insecure!', 'admin/config/media/file-system/filefield-paths'),
+        'description' => $t('This site supports private files but the File (Field) Paths temporary path is under public:// which could lead to private files being temporarily exposed publicly. <a href="!url">Change the temporary path</a> to be under temporary:// or private:// in order to secure your files.', array('!url' => url('admin/config/media/file-system/filefield-paths'))),
+        'severity' => REQUIREMENT_ERROR,
+      );
+    }
+  }
+
+  return $requirements;
+}
+
+/**
  * Add origname field to {file_managed}.
  */
 function filefield_paths_update_7103() {
@@ -210,5 +245,29 @@ function filefield_paths_update_7107() {
         }
       }
     }
+  }
+}
+
+/**
+ * Change the temporary path if the site supports private files.
+ */
+function filefield_paths_update_7108() {
+  $temporary_path = variable_get('filefield_paths_temp_location', NULL);
+
+  // If it's not set, we don't need to do anything because the default will
+  // be secure.
+  if (!$temporary_path) {
+    return;
+  }
+
+  drupal_load('module', 'filefield_paths');
+  $scheme = substr($temporary_path, 0, 9);
+  $recommended_scheme = filefield_paths_recommended_temporary_scheme();
+
+  // If the scheme is 'public://' but the recommended scheme is NOT, then
+  // we need to update to the variable to use the recommended scheme.
+  if ($scheme == 'public://' && $recommended_scheme != 'public://') {
+    $temporary_path = $recommended_scheme . substr($temporary_path, 9);
+    variable_set('filefield_paths_temp_location', $temporary_path);
   }
 }

@@ -61,7 +61,7 @@ function filefield_paths_filefield_paths_process_file($type, $entity, $field, $i
     $wrappers = file_get_stream_wrappers(STREAM_WRAPPERS_WRITE);
     foreach ($items as &$file) {
       $source_scheme = file_uri_scheme($file['uri']);
-      $temporary_scheme = file_uri_scheme(variable_get('filefield_paths_temp_location', 'public://filefield_paths'));
+      $temporary_scheme = file_uri_scheme(variable_get('filefield_paths_temp_location', filefield_paths_recommended_temporary_scheme() . 'filefield_paths'));
       $destination_scheme = $field['settings']['uri_scheme'];
       if (in_array($source_scheme, array($temporary_scheme, $destination_scheme)) && !empty($wrappers[$destination_scheme])) {
         // Process file if this is a new entity, 'Active updating' is set or
