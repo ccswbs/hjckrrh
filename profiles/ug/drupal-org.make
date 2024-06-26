@@ -103,7 +103,7 @@ projects[file_entity][version] = "2.38"
 
 projects[filebrowser][version] = "3.3"
 
-projects[filefield_paths][version] = "1.1"
+projects[filefield_paths][version] = "1.2"
 
 projects[filefield_sources][version] = "1.11"
 
