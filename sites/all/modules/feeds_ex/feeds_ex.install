@@ -39,21 +39,25 @@ function feeds_ex_requirements($phase) {
   if (FeedsExJsonUtility::jsonPathParserInstalled() === FALSE) {
     $description = array(
       'missing' => t('The <a href="@jsonpath">JSONPath</a> library is missing.', array(
-        '@jsonpath' => 'https://github.com/FlowCommunications/JSONPath',
+        '@jsonpath' => 'https://github.com/SoftCreatR/JSONPath',
       )),
-      'library_download' => t('Download <a href="@download">@download</a> and place the contents of JSONPath-@version in sites/all/libraries/jsonpath', array(
-        '@version' => FEEDS_EX_JSONPATH_LIBRARY_VERSION,
-        '@download' => 'https://github.com/FlowCommunications/JSONPath/archive/' . FEEDS_EX_JSONPATH_LIBRARY_VERSION . '.tar.gz',
+      'library_download' => t('Download one of the releases from <a href="@download">@download</a> and place the contents of JSONPath-x.x in sites/all/libraries/jsonpath', array(
+        '@download' => 'https://github.com/SoftCreatR/JSONPath/releases',
       )),
     );
 
     // Check if the library files are there.
     $library_files_present = FALSE;
-    if (!module_exists('libraries') && is_dir(DRUPAL_ROOT . '/sites/all/libraries/jsonpath/src/Flow/JSONPath')) {
+    if (module_exists('libraries') && libraries_get_path('jsonpath')) {
       $library_files_present = TRUE;
     }
-    elseif (module_exists('libraries') && libraries_get_path('jsonpath')) {
-      $library_files_present = TRUE;
+    elseif (!module_exists('libraries')) {
+      if (is_dir(DRUPAL_ROOT . '/sites/all/libraries/jsonpath/src/Flow/JSONPath')) {
+        $library_files_present = TRUE;
+      }
+      elseif (is_file(DRUPAL_ROOT . '/sites/all/libraries/jsonpath/src/JSONPath.php')) {
+        $library_files_present = TRUE;
+      }
     }
 
     if ($library_files_present) {
@@ -106,9 +110,8 @@ function feeds_ex_requirements($phase) {
         $steps = array(
           '#theme' => 'item_list',
           '#items' => array(
-            t('Check if the correct library is installed. This should be "flow/jsonpath" (check the composer.json file in /sites/all/libraries/jsonpath). If in doubt, download <a href="@download">@download</a> and place the contents of JSONPath-@version in sites/all/libraries/jsonpath.', array(
-              '@version' => FEEDS_EX_JSONPATH_LIBRARY_VERSION,
-              '@download' => 'https://github.com/FlowCommunications/JSONPath/archive/' . FEEDS_EX_JSONPATH_LIBRARY_VERSION . '.tar.gz',
+            t('Check if the correct library is installed. This should be "softcreatr/jsonpath" (check the composer.json file in /sites/all/libraries/jsonpath). If in doubt, download one of the releases from <a href="@download">@download</a> and place the contents of JSONPath-x.x in sites/all/libraries/jsonpath.', array(
+              '@download' => 'https://github.com/SoftCreatR/JSONPath/releases',
             )),
             t('Clear the caches.'),
             t('On the command line, go to the jsonpath folder and execute the command !command.', array(
@@ -178,7 +181,7 @@ function feeds_ex_update_7102() {
           $modules[] = 'libraries';
         }
 
-        throw new DrupalUpdateException(format_string("You are not loading flow/jsonpath using composer and the following modules couldn't be installed: @modules. Please download these modules or ensure flow/jsonpath is being loaded via your composer setup.", array(
+        throw new DrupalUpdateException(format_string("You are not loading softcreatr/jsonpath using composer and the following modules couldn't be installed: @modules. Please download these modules or ensure softcreatr/jsonpath is being loaded via your composer setup.", array(
           '@modules' => implode(', ', $modules),
         )));
       }
@@ -190,14 +193,13 @@ function feeds_ex_update_7102() {
         $message = '';
         // Let's make sure they know about the security issue.
         if (file_exists(libraries_get_path('jsonpath') . '/jsonpath.php')) {
-          $message = format_string('To remain secure because of issues identified in !sa, you must remove goessner/jsonpath and replace it with flow/jsonpath.', array(
+          $message = format_string('To remain secure because of issues identified in !sa, you must remove goessner/jsonpath and replace it with softcreatr/jsonpath.', array(
             '!sa' => '<a href="https://www.drupal.org/sa-contrib-2019-083">SA-CONTRIB-2019-083</a>',
           ));
         }
-        $message .= ' ' . format_string('The <a href="@jsonpath">JSONPath</a> library is missing. Download <a href="@download">@download</a> and place the contents of JSONPath-@version in sites/all/libraries/jsonpath', array(
-          '@jsonpath' => 'https://github.com/FlowCommunications/JSONPath',
-          '@version' => FEEDS_EX_JSONPATH_LIBRARY_VERSION,
-          '@download' => 'https://github.com/FlowCommunications/JSONPath/archive/' . FEEDS_EX_JSONPATH_LIBRARY_VERSION . '.tar.gz',
+        $message .= ' ' . format_string('The <a href="@jsonpath">JSONPath</a> library is missing. Download one of the releases from <a href="@download">@download</a> and place the contents of JSONPath-x.x in sites/all/libraries/jsonpath', array(
+          '@jsonpath' => 'https://github.com/SoftCreatR/JSONPath',
+          '@download' => 'https://github.com/SoftCreatR/JSONPath/releases',
         ));
         throw new DrupalUpdateException($message);
       }

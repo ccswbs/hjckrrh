@@ -185,7 +185,16 @@ class FeedsExJsonPathParserFlow implements FeedsExJsonPathParserInterface {
     $class = 'Flow\JSONPath\JSONPath';
     $json_path = new $class($data);
 
-    return $json_path->find($expression)->data();
+    if (method_exists($json_path, 'getData')) {
+      return $json_path->find($expression)->getData();
+    }
+    elseif (method_exists($json_path, 'data')) {
+      return $json_path->find($expression)->data();
+    }
+
+    throw new RuntimeException(strtr('Error: no suitable method found for retrieving data from %s.', array(
+      '%s' => get_class($json_path),
+    )));
   }
 
 }

@@ -10,8 +10,9 @@
       "source": "http://cgit.drupalcode.org/feeds_ex"
     },
     "require": {
+      "drupal/feeds": "^2.0",
       "mtdowling/jmespath.php": "^2.0",
-      "flow/jsonpath": "~0.3",
+      "softcreatr/jsonpath": "^0.5 || ^0.7 || ^0.8",
       "querypath/querypath": "^3.0"
     }
 }

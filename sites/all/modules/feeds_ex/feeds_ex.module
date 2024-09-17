@@ -6,11 +6,6 @@
  */
 
 /**
- * Defines which commit to checkout from flow/jsonpath.
- */
-define('FEEDS_EX_JSONPATH_LIBRARY_VERSION', '0.5.0');
-
-/**
  * Implements hook_menu().
  */
 function feeds_ex_menu() {
@@ -78,9 +73,8 @@ function feeds_ex_libraries_info() {
   $libraries = array();
   $libraries['jsonpath'] = array(
     'name' => 'JSONPath',
-    'vendor url' => 'https://github.com/FlowCommunications/JSONPath',
-    'download url' => 'https://github.com/FlowCommunications/JSONPath/archive/' . FEEDS_EX_JSONPATH_LIBRARY_VERSION . '.tar.gz',
-    'version' => FEEDS_EX_JSONPATH_LIBRARY_VERSION,
+    'vendor url' => 'https://github.com/SoftCreatR/JSONPath',
+    'download url' => 'https://github.com/SoftCreatR/JSONPath/releases',
     'xautoload' => '_feeds_ex_xautoload_callback',
   );
 

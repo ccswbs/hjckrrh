@@ -36,13 +36,13 @@ There are two ways to install it:
 1. Without composer:
 
   1. Download and enable the modules "libraries" and "xautoload".
-  2. Download and unpack the following file
-     https://github.com/FlowCommunications/JSONPath/archive/0.5.0.tar.gz
-     and place the contents of JSONPath-0.5.0 in sites/all/libraries/jsonpath
+  2. Download and unpack one of the releases on
+     https://github.com/SoftCreatR/JSONPath/releases
+     and place the contents of JSONPath-x.x in sites/all/libraries/jsonpath
 
 2. With composer, in sites/all/libraries:
 
-   $ git clone https://github.com/FlowCommunications/JSONPath.git jsonpath
+   $ git clone https://github.com/SoftCreatR/JSONPath.git jsonpath
    $ cd jsonpath
    $ composer install --no-dev
    $ drush cc all # Or just clear the cache however you normally would.

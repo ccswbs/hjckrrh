@@ -285,7 +285,7 @@ class FeedsExXml extends FeedsExBase {
     // Only available in PHP >= 5.2.11.
     // See http://symfony.com/blog/security-release-symfony-2-0-17-released for
     // details.
-    if (function_exists('libxml_disable_entity_loader')) {
+    if (function_exists('libxml_disable_entity_loader') && \PHP_VERSION_ID < 80000) {
       $this->entityLoader = libxml_disable_entity_loader(TRUE);
     }
   }
@@ -298,7 +298,7 @@ class FeedsExXml extends FeedsExBase {
 
     libxml_clear_errors();
     libxml_use_internal_errors($this->handleXmlErrors);
-    if (function_exists('libxml_disable_entity_loader')) {
+    if (function_exists('libxml_disable_entity_loader') && \PHP_VERSION_ID < 80000) {
       libxml_disable_entity_loader($this->entityLoader);
     }
   }

@@ -632,6 +632,9 @@ function file_entity_add_upload_submit($form, &$form_state) {
       if (file_uri_scheme($file->uri) != $form_state['storage']['scheme']) {
         $file_destination = $form_state['storage']['scheme'] . '://' . file_uri_target($file->uri);
         $file_destination = file_stream_wrapper_uri_normalize($file_destination);
+        // Create the directory in case it doesn't exist.
+        $upload_location = dirname($file_destination);
+        file_prepare_directory($upload_location, FILE_CREATE_DIRECTORY);
         if ($moved_file = file_move($file, $file_destination, FILE_EXISTS_RENAME)) {
           // Only re-assign the file object if file_move() did not fail.
           $file = $moved_file;
