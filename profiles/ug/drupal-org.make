@@ -247,7 +247,7 @@ projects[siteimprove][version] = "1.0"
 
 projects[smart_trim][version] = "1.5"
 
-projects[smtp][version] = "1.7"
+projects[smtp][version] = "1.9"
 
 projects[strongarm][version] = "2.0"
 

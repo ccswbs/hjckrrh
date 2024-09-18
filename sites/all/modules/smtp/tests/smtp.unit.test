@@ -166,13 +166,80 @@ class SmtpUnitTest extends DrupalWebTestCase {
   }
 
   /**
+   * Tests email address parsing.
+   */
+  public function testAddressParsing() {
+    $scenarios = array(
+      array(
+        // Input.
+        'name@example.com',
+        // Expected.
+        array(
+          'email' => 'name@example.com',
+        ),
+      ),
+      array(
+        ' name@example.com',
+        array(
+          'input' => 'name@example.com',
+          'email' => 'name@example.com',
+        ),
+      ),
+      array(
+        'name@example.com ',
+        array(
+          'input' => 'name@example.com',
+          'email' => 'name@example.com',
+        ),
+      ),
+      array(
+        'some name <address@example.com>',
+        array(
+          'name' => 'some name',
+          'email' => 'address@example.com',
+        ),
+      ),
+      array(
+        '"some name" <address@example.com>',
+        array(
+          'name' => 'some name',
+          'email' => 'address@example.com',
+        ),
+      ),
+      array(
+        '<address@example.com>',
+        array(
+          'email' => 'address@example.com',
+        ),
+      ),
+    );
+
+    $mail_system = new SmtpMailSystemWrapper();
+
+    foreach ($scenarios as $scenario) {
+      list($input, $expected) = $scenario;
+
+      $ret = $mail_system->getComponents($input);
+
+      if (!empty($expected['input'])) {
+        $this->assertIdentical($expected['input'], $ret['input']);
+      }
+      else {
+        $this->assertIdentical($input, $ret['input']);
+      }
+      $this->assertIdentical(!empty($expected['name']) ? $expected['name'] : '', $ret['name']);
+      $this->assertIdentical(!empty($expected['email']) ? $expected['email'] : '', $ret['email']);
+    }
+  }
+
+  /**
    * Gets the latest Maillog entry.
    *
    * @return array
    *   Maillog entry.
    */
   protected function getLatestMaillogEntry() {
-    $query = 'SELECT idmaillog, header_from, header_to, header_reply_to, header_all, subject, body FROM {maillog} ORDER BY idmaillog DESC';
+    $query = 'SELECT id, header_from, header_to, header_reply_to, header_all, subject, body FROM {maillog} ORDER BY id DESC';
     $result = db_query_range($query, 0, 1);
 
     if ($maillog = $result->fetchAssoc()) {

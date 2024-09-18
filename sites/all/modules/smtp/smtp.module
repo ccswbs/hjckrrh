@@ -79,7 +79,7 @@ function smtp_mail($key, &$message, $params) {
 }
 
 /**
- * Implementation of hook_cron_queue_info().
+ * Implements hook_cron_queue_info().
  */
 function smtp_cron_queue_info() {
   $queues['smtp_send_queue'] = array(
@@ -96,13 +96,22 @@ function smtp_cron_queue_info() {
 }
 
 /**
- * smtp_send_queue queuer.
+ * Function to queue a message into the Drupal system queue.
+ *
+ * @param object
  */
-function smtp_send_queue($mailerObj) {
+function smtp_send_queue($mailer_object) {
   $queue = DrupalQueue::get('smtp_send_queue');
-  $queue->createItem($mailerObj);
+  $queue->createItem($mailer_object);
 }
 
+/**
+ * Queue runner function defined in hook_cron_queue_info() above.
+ *
+ * @param $message
+ *
+ * @return bool
+ */
 function smtp_send_queue_runner($message) {
   $logging = variable_get('smtp_debugging', SMTP_LOGGING_ERRORS);
 
@@ -154,4 +163,33 @@ function smtp_failed_messages($message) {
 function smtp_failure_queue_runner($message) {
   $queue = DrupalQueue::get('smtp_send_queue');
   $queue->createItem($message);
+}
+
+/**
+ * Implements hook_mailengine().
+ */
+function smtp_mailengine($op, $message = array()) {
+  switch ($op) {
+    case 'list':
+      return array(
+        'name' => t('SMTP'),
+        'description' => t('Mailing engine using the SMTP library.'),
+      );
+
+    case 'settings':
+      $form['info']['#markup'] = t('To configure your mail server settings, visit the <a href="@url">SMTP settings page</a>.', array('@url' => url('admin/config/system/smtp')));
+      return $form;
+
+    case 'multiple':
+    case 'single':
+    case 'send':
+      if (isset($message['address']) && !is_array($message['address'])) {
+        $message['address'] = array($message['address']);
+      }
+      $message['headers']['Content-Type'] = str_replace('multipart/alternative', 'multipart/mixed', $message['headers']['Content-Type']);
+      // Send the message.
+      $mail_system = new SmtpMailSystem();
+      return $mail_system->mail($message);
+  }
+  return FALSE;
 }
