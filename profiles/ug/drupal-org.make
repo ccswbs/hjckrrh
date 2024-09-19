@@ -42,8 +42,6 @@ projects[css_injector][version] = "1.10"
 projects[ctools][version] = "1.14"
 projects[ctools][patch][] = "https://www.drupal.org/files/issues/2018-03-26/views_panes-more_link_text-1000146-28.patch"
 
-projects[datalayer][version] = "1.x-dev"
-
 projects[date][version] = "2.10"
 
 projects[date_ical][version] = "3.5"
@@ -78,8 +76,6 @@ projects[features][version] = "2.11"
 
 projects[feeds][version] = "2.0-beta3"
 
-projects[feeds_ex][version] = "1.x-dev"
-
 projects[feeds_ftp_fetcher][version] = "1.0"
 
 projects[feeds_tamper][version] = "1.2"
@@ -99,7 +95,7 @@ projects[field_permissions][version] = "1.0"
 
 projects[field_validation][version] = "2.6"
 
-projects[file_entity][version] = "2.38"
+projects[file_entity][version] = "2.39"
 
 projects[filebrowser][version] = "3.3"
 
@@ -247,7 +243,7 @@ projects[siteimprove][version] = "1.0"
 
 projects[smart_trim][version] = "1.5"
 
-projects[smtp][version] = "1.7"
+projects[smtp][version] = "1.9"
 
 projects[strongarm][version] = "2.0"
 
