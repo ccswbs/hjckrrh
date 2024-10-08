@@ -1,0 +1,6 @@
+name = UG Brightedge
+description = Module to enable Brightedge block
+core = 7.x
+package = UG
+stylesheets[all][] = bredge.css
+

@@ -1,0 +1,6 @@
+/* brightedge footer styles */
+
+.be-ix-link-block .be-related-link-container .be-list .be-list-item a:hover {
+    text-decoration: none !important;
+}
+
