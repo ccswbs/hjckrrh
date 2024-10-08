@@ -64,3 +64,16 @@ function ug_update_7700(&$sandbox) {
 function ug_update_7701(&$sandbox) {
   module_enable(array('ug_fontawesome'));
 }
+
+/**
+ * Disable UG BrightEdge and UG Video if they exist
+ */
+function ug_update_7703(&$sandbox) {
+  if (module_exists('ug_bredge')) {
+    module_disable(array('ug_bredge'));
+  }
+
+  if (module_exists('ug_video')) {
+    module_disable(array('ug_video'));
+  }
+}
