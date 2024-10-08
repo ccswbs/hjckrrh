@@ -71,9 +71,11 @@ function ug_update_7701(&$sandbox) {
 function ug_update_7703(&$sandbox) {
   if (module_exists('ug_bredge')) {
     module_disable(array('ug_bredge'));
+    drupal_uninstall_modules(array('ug_bredge'));
   }
 
   if (module_exists('ug_video')) {
     module_disable(array('ug_video'));
+    drupal_uninstall_modules(array('ug_video'));
   }
 }
