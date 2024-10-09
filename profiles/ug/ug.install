@@ -66,8 +66,16 @@ function ug_update_7701(&$sandbox) {
 }
 
 /**
- * Enable UG BrightEdge
+ * Disable and uninstall UG BrightEdge and UG Video if they exist
  */
-function ug_update_7702(&$sandbox) {
-  module_enable(array('ug_bredge'));
+function ug_update_7704(&$sandbox) {
+  if (module_exists('ug_bredge')) {
+    module_disable(array('ug_bredge'));
+    drupal_uninstall_modules(array('ug_bredge'));
+  }
+
+  if (module_exists('ug_video')) {
+    module_disable(array('ug_video'));
+    drupal_uninstall_modules(array('ug_video'));
+  }
 }

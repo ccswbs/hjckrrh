@@ -27,7 +27,6 @@ dependencies[] = shortcut
 dependencies[] = toolbar
 dependencies[] = ug_banner
 dependencies[] = ug_breadcrumbs
-dependencies[] = ug_bredge
 dependencies[] = ug_course_outline_layouts
 dependencies[] = ug_course_outlines
 dependencies[] = ug_date_format
