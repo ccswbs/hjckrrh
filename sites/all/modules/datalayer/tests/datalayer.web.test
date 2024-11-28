@@ -41,7 +41,7 @@ class DataLayerWebTests extends DrupalWebTestCase {
    */
   public function testDataLayerVariableOutputByName() {
     $output = $this->drupalGet('node');
-    $this->assertRaw('dataLayer = [{');
+    $this->assertRaw('window.dataLayer = window.dataLayer || []; window.dataLayer.push(');
   }
 
   /**

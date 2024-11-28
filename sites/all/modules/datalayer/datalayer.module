@@ -85,7 +85,7 @@ function datalayer_preprocess_html(&$variables) {
   $render = array(
     '#type' => 'html_tag',
     '#tag' => 'script',
-    '#value' => 'dataLayer = [' . $output . '];',
+    '#value' => 'window.dataLayer = window.dataLayer || []; window.dataLayer.push(' . $output . ');',
     '#attributes' => array(
       'type' => 'text/javascript',
     ),
