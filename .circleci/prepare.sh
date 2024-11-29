@@ -22,5 +22,12 @@ terminus env:wake -n "$TERMINUS_SITE.dev"
 # Create a new environment for this particular test run.
 ###
 terminus build:env:create -n "$TERMINUS_SITE.dev" "$TERMINUS_ENV" --yes
+terminus connection:set "${TERMINUS_SITE}.${TERMINUS_ENV}" git
+echo "" >> pantheon.yml
+git add pantheon.yml
+git commit -m "no-op pantheon.yml"
+terminus build:env:push "${TERMINUS_SITE}.${TERMINUS_ENV}"
+
+terminus connection:set "${TERMINUS_SITE}.${TERMINUS_ENV}" sftp
 terminus env:wake -n "$TERMINUS_SITE.$TERMINUS_ENV"
 terminus drush -n "$TERMINUS_SITE.$TERMINUS_ENV" -- updatedb -y
