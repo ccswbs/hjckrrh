@@ -115,7 +115,7 @@ function node_export_book_menu() {
     'title' => 'Export book',
     'page callback' => '_node_export_book_run_export',
     'page arguments' => array(4),
-    'access arguments' => array('export bulk nodes'),
+    'access arguments' => array('export nodes'),
     'type' => MENU_CALLBACK,
   );
 

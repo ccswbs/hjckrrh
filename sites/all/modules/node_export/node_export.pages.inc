@@ -548,12 +548,12 @@ function node_export_import_form_submit($form, &$form_state) {
     }
     else {
       $save->original = $original;
-      form_set_value($form['upload']['file'], serialize($save), $form_state);
+      form_set_value($form['upload']['file'], json_encode($save), $form_state);
     }
   }
 
   if ($form_state['values']['file']) {
-    $file = unserialize($form_state['values']['file']);
+    $file = json_decode($form_state['values']['file'], FALSE);
     if (file_exists($file->uri)) {
       $code_string = file_get_contents($file->uri);
       unlink($file->uri);
@@ -570,9 +570,6 @@ function node_export_import_form_submit($form, &$form_state) {
     foreach ($result['output'] as $output) {
       drupal_set_message($output, ($result['success'] ? 'status' : 'error'));
     }
-    // We need to send this user somewhere, and we know they have permission
-    // for this page:
-    drupal_goto('node/add/node_export');
   }
 
 }

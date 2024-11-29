@@ -115,19 +115,24 @@ function node_export_dependency_load_dependencies(&$nodes, $nid, $reset = FALSE)
       // It the node doesn't exist in keyed nodes, add it.
       if (!isset($nodes[$dependency['id']])) {
         $new_node = node_load($dependency['id'], NULL, $reset);
-        if (node_export_access_export($new_node, $reset)) {
-          $new_node = node_export_prepare_node($new_node);
-          $nodes[$new_node->nid] = $new_node;
-          // Recursively load dependent nodes.
-          node_export_dependency_load_dependencies($nodes, $new_node->nid);
+        if ( !empty($new_node) ) {
+          if (node_export_access_export($new_node, $reset)) {
+            $new_node = node_export_prepare_node($new_node);
+            $nodes[$new_node->nid] = $new_node;
+            // Recursively load dependent nodes.
+            node_export_dependency_load_dependencies($nodes, $new_node->nid);
+          }
+          elseif (variable_get('node_export_dependency_abort', 0)) {
+            // Set this node to FALSE to trigger an error in node export.
+            // Do not use $new_node in this code in case there is a problem with it.
+            $nodes[$dependency['id']] = FALSE;
+            // Add a warning to watchdog.
+            watchdog('node_export_dependency', 'No access to export node dependency %nid', array('%nid' => $dependency['id']), WATCHDOG_WARNING);
+            drupal_set_message(t('No access to export node dependency %nid', array('%nid' => $dependency['id'])), 'error', FALSE);
+          }
         }
-        elseif (variable_get('node_export_dependency_abort', 0)) {
-          // Set this node to FALSE to trigger an error in node export.
-          // Do not use $new_node in this code in case there is a problem with it.
-          $nodes[$dependency['id']] = FALSE;
-          // Add a warning to watchdog.
-          watchdog('node_export_dependency', 'No access to export node dependency %nid', array('%nid' => $dependency['id']), WATCHDOG_WARNING);
-          drupal_set_message(t('No access to export node dependency %nid', array('%nid' => $dependency['id'])), 'error', FALSE);
+        else {
+          watchdog('node_export_dependency', "Found an empty dependency when trying to load dependency with id %id. Dependency array was: %vals", array('%id' => $dependency['id'], '%vals' => print_r($dependency, 1)), WATCHDOG_WARNING );
         }
       }
     }
