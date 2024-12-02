@@ -188,7 +188,7 @@ projects[mpac][version] = "1.2"
 
 projects[node_clone][version] = "1.0-rc2"
 
-projects[node_export][version] = "3.1"
+projects[node_export][version] = "3.3"
 
 projects[oauth][version] = "3.3"
 

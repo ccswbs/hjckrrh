@@ -411,7 +411,7 @@ function node_export_prepare_node(&$original_node) {
     node_save($original_node);
   }
 
-  $node = clone($original_node);
+  $node = clone $original_node;
 
   // Fix taxonomy array
   if (isset($node->taxonomy) && count($node->taxonomy)) {
@@ -801,7 +801,7 @@ function node_export_save(&$node) {
 function node_export_node_clone($original_node) {
   global $user;
 
-  $node = clone($original_node);
+  $node = clone $original_node;
 
   $node->nid = NULL;
   $node->vid = NULL;
@@ -1002,13 +1002,6 @@ function node_export_get_menu($node) {
  * Remove recursion problem from an object or array.
  */
 function node_export_remove_recursion($o) {
-  static $replace;
-  if (!isset($replace)) {
-    $replace = create_function(
-      '$m',
-      '$r="\x00{$m[1]}ecursion_export_node_";return \'s:\'.strlen($r.$m[2]).\':"\'.$r.$m[2].\'";\';'
-    );
-  }
   if (is_array($o) || is_object($o)) {
     $re = '#(r|R):([0-9]+);#';
     $serialize = serialize($o);
@@ -1018,7 +1011,7 @@ function node_export_remove_recursion($o) {
         $chunk = substr($serialize, $last, $pos - $last);
         if (preg_match($re, $chunk)) {
           $length = strlen($chunk);
-          $chunk = preg_replace_callback($re, $replace, $chunk);
+          $chunk = preg_replace_callback($re, '_node_export_remove_recursion', $chunk);
           $serialize = substr($serialize, 0, $last) . $chunk . substr($serialize, $last + ($pos - $last));
           $pos += strlen($chunk) - $length;
         }
@@ -1028,11 +1021,19 @@ function node_export_remove_recursion($o) {
         $last += 4 + $length;
         $pos = $last;
       }
-      $serialize = substr($serialize, 0, $last) . preg_replace_callback($re, $replace, substr($serialize, $last));
+      $serialize = substr($serialize, 0, $last) . preg_replace_callback($re, '_node_export_remove_recursion', substr($serialize, $last));
       $o = unserialize($serialize);
     }
   }
   return $o;
+}
+
+/**
+ * Callback function for preg_replace_callback() to remove recursion.
+ */
+function _node_export_remove_recursion($m) {
+  $r = "\x00{$m[1]}ecursion_export_node_";
+  return 's:' . strlen($r . $m[2]) . ':"' . $r . $m[2] . '";';
 }
 
 /**
