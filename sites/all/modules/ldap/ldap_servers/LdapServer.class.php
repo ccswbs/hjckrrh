@@ -1836,7 +1836,7 @@ class LdapServer {
     $ors = [];
     foreach ($member_group_dns as $i => $member_group_dn) {
       $all_group_dns[] = $member_group_dn;
-      if ($nested) {
+      if ($nested && $this->groupMembershipsAttrMatchingUserAttr) {
         if ($this->groupMembershipsAttrMatchingUserAttr == 'dn') {
           $member_value = $member_group_dn;
         }
