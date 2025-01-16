@@ -1,0 +1,167 @@
+<?php
+
+/**
+ * Tests the Tag1 D7ES module functionality.
+ */
+class Tag1D7esTestCase extends DrupalWebTestCase {
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function getInfo() {
+    return array(
+      'name' => 'Tag1 D7ES functional tests',
+      'description' => 'Test module installation and behavior.',
+      'group' => 'Tag1 D7ES',
+      'dependencies' => array('tag1_d7es'),
+    );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setUp(array $modules = array()) {
+    $modules[] = 'tag1_d7es';
+    parent::setUp($modules);
+  }
+
+  /**
+   * Get the site ID.
+   *
+   * @return string
+   *   The site ID.
+   */
+  protected function getSiteId() {
+    return variable_get('tag1_d7es_site_id');
+  }
+
+  /**
+   * Test module installation.
+   */
+  public function testInstallation() {
+    $siteId = $this->getSiteId();
+    $this->assertNotNull($siteId, 'A Site ID is generated');
+    $this->assertTrue(tag1_d7es_uuid_is_valid($siteId), 'The Site ID is a valid UUID');
+    $this->assertEqual(variable_get('tag1_d7es_phone_home'), 0, 'The phone-home variable is created and set to zero.');
+  }
+
+  /**
+   * Test request preflight.
+   */
+  public function testPreflight() {
+    $site_id = '';
+    $billing_email = '';
+    $this->assertFalse(tag1_d7es_preflight($site_id, $billing_email));
+    $this->assertWatchdogMessage(
+      "Unable to send data because the Site ID is not valid. Please visit <a href='/admin/config/system/tag1-d7es'>the configuration page (under advanced settings)</a> to correct it.",
+      array(),
+      'Missing Site ID is logged.'
+    );
+
+    $site_id = $this->getSiteId();
+    $this->assertFalse(tag1_d7es_preflight($site_id, $billing_email));
+    $this->assertWatchdogMessage(
+      "Unable to send data because the customer email address is not provided. Please visit <a href='/admin/config/system/tag1-d7es'>the configuration page</a> to provide it.",
+      array(),
+      'Missing account email address is logged.'
+    );
+
+    $billing_email = 'test@example.com';
+    $this->assertTrue(tag1_d7es_preflight($site_id, $billing_email));
+  }
+
+  /**
+   * Test phone-home payload creation.
+   */
+  public function testPayload() {
+    $data = _tag1_d7es_payload();
+
+    $this->assertTrue(array_key_exists('siteId', $data), 'siteId key exists');
+    $this->assertEqual($data['siteId'], $this->getSiteId(), 'Site ID matches the expected value');
+
+    $this->assertTrue(array_key_exists('billingEmail', $data), 'billingEmail key exists');
+    $this->assertEqual($data['billingEmail'], variable_get('tag1_d7es_billing_email'), 'Billing email matches the expected value');
+
+    $this->assertTrue(array_key_exists('timestamp', $data), 'timestamp key exists');
+    $this->assertNotNull($data['timestamp'], 'A value for the timestamp has been set');
+
+    $this->assertTrue(array_key_exists('siteUrl', $data), 'siteUrl key exists');
+    $this->assertNotNull($data['siteUrl'], 'A value for the siteUrl has been set');
+    $this->assertEqual($data['siteUrl'], $GLOBALS['base_url'], 'Site URL matches the expected value');
+
+    $this->assertTrue(array_key_exists('emails', $data), 'emails key exists');
+    $this->assertIdentical($data['emails'], array(), 'No email address data has been supplied.');
+
+    $email_addresses = 'test1@example.com, test2@example.com';
+    variable_set('tag1_d7es_email_addresses', $email_addresses);
+    $data = _tag1_d7es_payload();
+    $this->assertIdentical($data['emails'], array_map('trim', explode(',', $email_addresses)), 'Updated email addresses are included as a list.');
+
+    $this->assertTrue(array_key_exists('core', $data), 'core key exists');
+    $this->assertTrue(is_string($data['core']), 'Core value is a string');
+    $this->assertTrue(array_key_exists('php', $data), 'php key exists');
+    $this->assertTrue(is_string($data['php']), 'PHP value is a string');
+    $this->assertTrue(array_key_exists('dbVersion', $data), 'dbVersion key exists');
+    $this->assertTrue(is_string($data['dbVersion']), 'dbVersion value is a string');
+    $this->assertTrue(array_key_exists('modules', $data), 'modules key exists');
+    $this->assertTrue(is_array($data['modules']), 'Module data is an array');
+    $this->assertTrue(array_key_exists('themes', $data), 'themes key exists');
+    $this->assertTrue(is_array($data['themes']), 'Theme data is an array');
+
+    $this->assertFalse(array_key_exists('pantheonSiteId', $data));
+    $this->assertFalse(array_key_exists('pantheonBuildId', $data));
+  }
+
+  /**
+   * Test the email encoding function.
+   */
+  public function testEmailEncoding() {
+    $this->assertEqual(_tag1_d7es_encode_email('test@example.com'), 'dGVzdEBleGFtcGxlLmNvbQ==');
+    $this->assertEqual(_tag1_d7es_encode_email('test@me.com'), 'dGVzdEBtZS5jb20=!!!!');
+    $this->assertEqual(_tag1_d7es_encode_email('x@y.com'), 'eEB5LmNvbQ==!!!!!!!!');
+  }
+
+  /**
+   * Test module uninstallation.
+   */
+  public function testUninstall() {
+    $this->assertTrue(module_exists('tag1_d7es'));
+    // Set manually-configured variables.
+    variable_set('tag1_d7es_billing_email', 'test@example.com');
+    variable_set('tag1_d7es_email_addresses', 'test@example.com');
+    variable_set('tag1_d7es_endpoint', 'some url');
+
+    // Disable and uninstall.
+    module_disable(array('tag1_d7es'));
+    drupal_uninstall_modules(array('tag1_d7es'));
+
+    // Assert module uninstalled and variables are no longer present.
+    $this->assertFalse(module_exists('tag1_d7es'));
+    $this->assertNull(variable_get('tag1_d7es_site_id'));
+    $this->assertNull(variable_get('tag1_d7es_phone_home'));
+    $this->assertNull(variable_get('tag1_d7es_billing_email'));
+    $this->assertNull(variable_get('tag1_d7es_email_addresses'));
+    $this->assertNull(variable_get('tag1_d7es_endpoint'));
+    $this->assertNull(variable_get('tag1_d7es_send_update_emails'));
+  }
+
+  /**
+   * Verify that a watchdog message has been entered.
+   *
+   * @param string $watchdog_message
+   *   The watchdog message.
+   * @param array $variables
+   *   The array of variables passed to watchdog().
+   * @param string $message
+   *   The assertion message.
+   */
+  protected function assertWatchdogMessage($watchdog_message, $variables, $message) {
+    $status = (bool) db_query_range(
+      "SELECT 1 FROM {watchdog} WHERE message = :message AND variables = :variables",
+      0,
+      1,
+      array(':message' => $watchdog_message, ':variables' => serialize($variables)))->fetchField();
+    return $this->assert($status, format_string('@message', array('@message' => $message)));
+  }
+
+}

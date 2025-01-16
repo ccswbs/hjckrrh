@@ -1,0 +1,539 @@
+<?php
+
+define('TAG1_D7ES_UPDATE_TEST_CURRENT', 'ok');
+define('TAG1_D7ES_UPDATE_TEST_AVAILABLE', 'available');
+define('TAG1_D7ES_UPDATE_TEST_SECURITY', 'security');
+define('TAG1_D7ES_UPDATE_TEST_UNSECURE', 'unsecure');
+define('TAG1_D7ES_UPDATE_TEST_UNSUPPORTED', 'unsupported');
+
+/**
+ * Tests the Tag1 D7ES module's Update Status integration.
+ */
+class Tag1D7esUpdateTestCase extends UpdateTestHelper {
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function getInfo() {
+    return array(
+      'name' => 'Update report testing',
+      'description' => 'Tests the Tag1 D7ES customizations to the Update Manager report.',
+      'group' => 'Tag1 D7ES',
+    );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setUp() {
+    parent::setUp('update_test', 'update', 'tag1_d7es_test');
+    $admin_user = $this->drupalCreateUser(array('administer site configuration', 'administer modules'));
+    $this->drupalLogin($admin_user);
+  }
+
+  /**
+   * Assert that the given class is present in the HTML.
+   *
+   * Since we are not including update info for Drupal core, these classes will
+   * only show for our module listing.
+   *
+   * @param string $class
+   *   The class to assert.
+   */
+  public function assertClass($class) {
+    $elements = $this->xpath("//tr[contains(@class,:class)]", array(':class' => $class));
+    $this->assertTrue(!empty($elements), "CSS class '$class' found.");
+  }
+
+  /**
+   * Assert the expected status message is displayed.
+   *
+   * @param string $expected
+   *   The status to assert.
+   */
+  public function assertStatus($expected) {
+    $statuses = array(
+      TAG1_D7ES_UPDATE_TEST_CURRENT => t('Up to date'),
+      TAG1_D7ES_UPDATE_TEST_AVAILABLE => t('Update available'),
+      TAG1_D7ES_UPDATE_TEST_SECURITY => t('Security update required!'),
+      TAG1_D7ES_UPDATE_TEST_UNSECURE => t('Project not secure'),
+      TAG1_D7ES_UPDATE_TEST_UNSUPPORTED => t('Not supported!'),
+    );
+    if (array_key_exists($expected, $statuses)) {
+      $this->assertText($statuses[$expected]);
+      unset($statuses[$expected]);
+      foreach ($statuses as $status) {
+        $this->assertNoText($status);
+      }
+    }
+  }
+
+  /**
+   * Tests messaging overrides with a still-supported module.
+   */
+  public function testSupportedMessaging() {
+    $system_info = array(
+      '#all' => array(
+        'version' => '7.0',
+      ),
+      'tag1_d7es_test' => array(
+        'project' => 'tag1_d7es_test',
+        'version' => '7.x-1.0',
+        'hidden' => FALSE,
+      ),
+    );
+    variable_set('update_test_system_info', $system_info);
+    $this->refreshUpdateStatus(
+      array(
+        'tag1_d7es_test' => '1_0',
+      ),
+      'tag1-d7es-update-test'
+    );
+    $this->assertRaw('<h3>' . t('Modules') . '</h3>');
+    $this->assertRaw(l(t('Tag1 D7ES test'), 'http://example.com/project/tag1_d7es_test'), 'Link to tag1_d7es_test project appears.');
+    $this->assertStatus(TAG1_D7ES_UPDATE_TEST_CURRENT);
+    $this->assertClass('ok');
+
+    // Enable our module. Since the project is still supported by the community,
+    // messaging should not change.
+    module_enable(['tag1_d7es']);
+    $this->drupalGet('admin/reports/updates');
+    $this->assertStatus(TAG1_D7ES_UPDATE_TEST_CURRENT);
+    $this->assertClass('ok');
+
+    $now = time();
+    // Set an older phone-home.
+    variable_set('tag1_d7es_phone_home', $now - (86400 * 30));
+    $this->drupalGet('admin/reports/updates');
+    $this->assertStatus(TAG1_D7ES_UPDATE_TEST_CURRENT);
+    $this->assertClass('ok');
+
+    // Update to a recent phone-home.
+    variable_set('tag1_d7es_phone_home', $now);
+    $this->drupalGet('admin/reports/updates');
+    $this->assertStatus(TAG1_D7ES_UPDATE_TEST_CURRENT);
+    $this->assertClass('ok');
+  }
+
+  /**
+   * Tests a still-supported module with a pending update.
+   */
+  public function testSupportedWithUpdateMessaging() {
+    $system_info = array(
+      '#all' => array(
+        'version' => '7.0',
+      ),
+      'tag1_d7es_test' => array(
+        'project' => 'tag1_d7es_test',
+        'version' => '7.x-1.0',
+        'hidden' => FALSE,
+      ),
+    );
+    variable_set('update_test_system_info', $system_info);
+    $this->refreshUpdateStatus(
+      array(
+        'tag1_d7es_test' => '1_1',
+      ),
+      'tag1-d7es-update-test'
+    );
+    $this->assertRaw(l(t('Tag1 D7ES test'), 'http://example.com/project/tag1_d7es_test'), 'Link to tag1_d7es_test project appears.');
+    $this->assertStatus(TAG1_D7ES_UPDATE_TEST_AVAILABLE);
+    $this->assertClass('warning');
+
+    // Enable our module. Since the project is still supported by the community,
+    // messaging should not change.
+    module_enable(['tag1_d7es']);
+    $this->drupalGet('admin/reports/updates');
+    $this->assertStatus(TAG1_D7ES_UPDATE_TEST_AVAILABLE);
+    $this->assertClass('warning');
+
+    $now = time();
+    // Set an older phone-home.
+    variable_set('tag1_d7es_phone_home', $now - (86400 * 30));
+    $this->drupalGet('admin/reports/updates');
+    $this->assertStatus(TAG1_D7ES_UPDATE_TEST_AVAILABLE);
+    $this->assertClass('warning');
+
+    // Update to a recent phone-home.
+    variable_set('tag1_d7es_phone_home', $now);
+    $this->drupalGet('admin/reports/updates');
+    $this->assertStatus(TAG1_D7ES_UPDATE_TEST_AVAILABLE);
+    $this->assertClass('warning');
+  }
+
+  /**
+   * Tests a still-supported module with a pending security update.
+   */
+  public function testSupportedWithSecurityUpdateMessaging() {
+    $system_info = array(
+      '#all' => array(
+        'version' => '7.0',
+      ),
+      'tag1_d7es_test' => array(
+        'project' => 'tag1_d7es_test',
+        'version' => '7.x-1.0',
+        'hidden' => FALSE,
+      ),
+    );
+    variable_set('update_test_system_info', $system_info);
+    $this->refreshUpdateStatus(
+      array(
+        'tag1_d7es_test' => '1_2',
+      ),
+      'tag1-d7es-update-test'
+    );
+    $this->assertRaw(l(t('Tag1 D7ES test'), 'http://example.com/project/tag1_d7es_test'), 'Link to tag1_d7es_test project appears.');
+    $this->assertStatus(TAG1_D7ES_UPDATE_TEST_SECURITY);
+    $this->assertClass('error');
+
+    // Enable our module. Since the project is still supported by the community,
+    // messaging should not change.
+    module_enable(['tag1_d7es']);
+    $this->drupalGet('admin/reports/updates');
+    $this->assertStatus(TAG1_D7ES_UPDATE_TEST_SECURITY);
+    $this->assertClass('error');
+
+    $now = time();
+    // Set an older phone-home.
+    variable_set('tag1_d7es_phone_home', $now - (86400 * 30));
+    $this->drupalGet('admin/reports/updates');
+    $this->assertStatus(TAG1_D7ES_UPDATE_TEST_SECURITY);
+    $this->assertClass('error');
+
+    // Update to a recent phone-home.
+    variable_set('tag1_d7es_phone_home', $now);
+    $this->drupalGet('admin/reports/updates');
+    $this->assertStatus(TAG1_D7ES_UPDATE_TEST_SECURITY);
+    $this->assertClass('error');
+  }
+
+  /**
+   * Tests a still-supported module with a major branch update.
+   */
+  public function testSupportedWithMajorUpdateMessaging() {
+    $system_info = array(
+      '#all' => array(
+        'version' => '7.0',
+      ),
+      'tag1_d7es_test' => array(
+        'project' => 'tag1_d7es_test',
+        'version' => '7.x-1.0',
+        'hidden' => FALSE,
+      ),
+    );
+    variable_set('update_test_system_info', $system_info);
+    $this->refreshUpdateStatus(
+      array(
+        'tag1_d7es_test' => '1_3',
+      ),
+      'tag1-d7es-update-test'
+    );
+    $this->assertRaw(l(t('Tag1 D7ES test'), 'http://example.com/project/tag1_d7es_test'), 'Link to tag1_d7es_test project appears.');
+    $this->assertStatus(TAG1_D7ES_UPDATE_TEST_UNSUPPORTED);
+    $this->assertClass('error');
+
+    // Enable our module. Since the project is still supported by the community,
+    // messaging should not change.
+    module_enable(['tag1_d7es']);
+    $this->drupalGet('admin/reports/updates');
+    $this->assertStatus(TAG1_D7ES_UPDATE_TEST_UNSUPPORTED);
+    $this->assertClass('error');
+    $this->assertText('Recommended version:');
+
+    $now = time();
+    // Set an older phone-home.
+    variable_set('tag1_d7es_phone_home', $now - (86400 * 30));
+    $this->drupalGet('admin/reports/updates');
+    $this->assertStatus(TAG1_D7ES_UPDATE_TEST_UNSUPPORTED);
+    $this->assertClass('error');
+    $this->assertText('Recommended version:');
+
+    // Update to a recent phone-home.
+    variable_set('tag1_d7es_phone_home', $now);
+    $this->drupalGet('admin/reports/updates');
+    $this->assertStatus(TAG1_D7ES_UPDATE_TEST_UNSUPPORTED);
+    $this->assertClass('error');
+    $this->assertText('Recommended version:');
+  }
+
+  /**
+   * Tests messaging overrides of an unsupported module.
+   */
+  public function testUnsupportedMessaging() {
+    $system_info = array(
+      '#all' => array(
+        'version' => '7.0',
+      ),
+      'tag1_d7es_test' => array(
+        'project' => 'tag1_d7es_test',
+        'version' => '7.x-1.0',
+        'hidden' => FALSE,
+      ),
+    );
+    variable_set('update_test_system_info', $system_info);
+    $this->refreshUpdateStatus(
+      array(
+        'tag1_d7es_test' => '2_0',
+      ),
+      'tag1-d7es-update-test'
+    );
+    $this->assertStatus(TAG1_D7ES_UPDATE_TEST_UNSUPPORTED);
+    $this->assertText(t('Project not supported:'));
+    $this->assertClass('error');
+
+    // Enable our module.
+    module_enable(['tag1_d7es']);
+    $this->drupalGet('admin/reports/updates');
+    $this->assertStatus(TAG1_D7ES_UPDATE_TEST_UNSUPPORTED);
+    $this->assertText(t('Project not supported:'));
+    $this->assertClass('error');
+
+    // Set an older phone-home.
+    $now = time();
+    variable_set('tag1_d7es_phone_home', $now - (86400 * 30));
+    $this->drupalGet('admin/reports/updates');
+    $this->assertStatus(TAG1_D7ES_UPDATE_TEST_UNSUPPORTED);
+    $this->assertText(t('Project not supported:'));
+    $this->assertClass('error');
+
+    // Update to a recent phone-home. The module is supported.
+    variable_set('tag1_d7es_phone_home', $now);
+    $this->drupalGet('admin/reports/updates');
+    $this->assertStatus(TAG1_D7ES_UPDATE_TEST_CURRENT);
+    $this->assertNoText(t('Project not supported:'));
+    $this->assertClass('ok');
+  }
+
+  /**
+   * Tests messaging overrides of an unsupported module with a pending update.
+   */
+  public function testUnsupportedWithUpdateMessaging() {
+    $system_info = array(
+      '#all' => array(
+        'version' => '7.0',
+      ),
+      'tag1_d7es_test' => array(
+        'project' => 'tag1_d7es_test',
+        'version' => '7.x-1.0',
+        'hidden' => FALSE,
+      ),
+    );
+    variable_set('update_test_system_info', $system_info);
+    $this->refreshUpdateStatus(
+      array(
+        'tag1_d7es_test' => '2_1',
+      ),
+      'tag1-d7es-update-test'
+    );
+
+    // No module-disabled check here; we assume that our custom XML feed will
+    // not be used without having the module installed.
+    // Enable our module.
+    module_enable(['tag1_d7es']);
+    $this->drupalGet('admin/reports/updates');
+    $this->assertStatus(TAG1_D7ES_UPDATE_TEST_UNSUPPORTED);
+    $this->assertClass('error');
+
+    // Set an older phone-home.
+    $now = time();
+    variable_set('tag1_d7es_phone_home', $now - (86400 * 30));
+    $this->drupalGet('admin/reports/updates');
+    $this->assertStatus(TAG1_D7ES_UPDATE_TEST_UNSUPPORTED);
+    $this->assertClass('error');
+
+    // Update to a recent phone-home. The module shows an available update.
+    variable_set('tag1_d7es_phone_home', $now);
+    $this->drupalGet('admin/reports/updates');
+    $this->assertStatus(TAG1_D7ES_UPDATE_TEST_AVAILABLE);
+    $this->assertClass('warning');
+  }
+
+  /**
+   * Tests messaging overrides of an unsupported module with a security update.
+   */
+  public function testUnsupportedWithSecurityUpdateMessaging() {
+    $system_info = array(
+      '#all' => array(
+        'version' => '7.0',
+      ),
+      'tag1_d7es_test' => array(
+        'project' => 'tag1_d7es_test',
+        'version' => '7.x-1.0',
+        'hidden' => FALSE,
+      ),
+    );
+    variable_set('update_test_system_info', $system_info);
+    $this->refreshUpdateStatus(
+      array(
+        'tag1_d7es_test' => '2_2',
+      ),
+      'tag1-d7es-update-test'
+    );
+
+    // No module-disabled check here; we assume that our custom XML feed will
+    // not be used without having the module installed.
+    // Enable our module.
+    module_enable(['tag1_d7es']);
+    $this->drupalGet('admin/reports/updates');
+    $this->assertStatus(TAG1_D7ES_UPDATE_TEST_UNSUPPORTED);
+    $this->assertClass('error');
+
+    // Set an older phone-home.
+    $now = time();
+    variable_set('tag1_d7es_phone_home', $now - (86400 * 30));
+    $this->drupalGet('admin/reports/updates');
+    $this->assertStatus(TAG1_D7ES_UPDATE_TEST_UNSUPPORTED);
+    $this->assertClass('error');
+
+    // Update to a recent phone-home. The module shows an available update.
+    variable_set('tag1_d7es_phone_home', $now);
+    $this->drupalGet('admin/reports/updates');
+    $this->assertStatus(TAG1_D7ES_UPDATE_TEST_SECURITY);
+    $this->assertClass('error');
+  }
+
+  /**
+   * Tests messaging for a module that even we will not support.
+   */
+  public function testCompletelyUnsupportedMessaging() {
+    $system_info = array(
+      '#all' => array(
+        'version' => '7.0',
+      ),
+      'tag1_d7es_test' => array(
+        'project' => 'tag1_d7es_test',
+        'version' => '7.x-1.0',
+        'hidden' => FALSE,
+      ),
+    );
+    variable_set('update_test_system_info', $system_info);
+    $this->refreshUpdateStatus(
+      array(
+        'tag1_d7es_test' => '3_0',
+      ),
+      'tag1-d7es-update-test'
+    );
+
+    // No module-disabled check here; we assume that our custom XML feed will
+    // not be used without having the module installed.
+    // Enable our module.
+    module_enable(['tag1_d7es']);
+    $this->drupalGet('admin/reports/updates');
+    $this->assertStatus(TAG1_D7ES_UPDATE_TEST_UNSUPPORTED);
+    $this->assertClass('error');
+    $this->assertText(t('Project not supported:'));
+
+    // Set an older phone-home.
+    $now = time();
+    variable_set('tag1_d7es_phone_home', $now - (86400 * 30));
+    $this->drupalGet('admin/reports/updates');
+    $this->assertStatus(TAG1_D7ES_UPDATE_TEST_UNSUPPORTED);
+    $this->assertClass('error');
+    $this->assertText(t('Project not supported:'));
+
+    // Update to a recent phone-home. The module shows an available update.
+    variable_set('tag1_d7es_phone_home', $now);
+    $this->drupalGet('admin/reports/updates');
+    $this->assertStatus(TAG1_D7ES_UPDATE_TEST_UNSUPPORTED);
+    $this->assertClass('error');
+    $this->assertText(t('Project not supported:'));
+  }
+
+  /**
+   * Tests custom messaging for a module that even we will not support.
+   */
+  public function testCustomUnsupportedMessaging() {
+    $system_info = array(
+      '#all' => array(
+        'version' => '7.0',
+      ),
+      'tag1_d7es_test' => array(
+        'project' => 'tag1_d7es_test',
+        'version' => '7.x-1.0',
+        'hidden' => FALSE,
+      ),
+    );
+    variable_set('update_test_system_info', $system_info);
+    $this->refreshUpdateStatus(
+      array(
+        'tag1_d7es_test' => '3_1',
+      ),
+      'tag1-d7es-update-test'
+    );
+
+    // No module-disabled check here; we assume that our custom XML feed will
+    // not be used without having the module installed.
+    // Enable our module.
+    module_enable(['tag1_d7es']);
+    $this->drupalGet('admin/reports/updates');
+    $this->assertStatus(TAG1_D7ES_UPDATE_TEST_UNSUPPORTED);
+    $this->assertClass('error');
+    $this->assertText(t('Project not supported:'));
+    $this->assertNoText('This is a custom message.');
+
+    // Set an older phone-home.
+    $now = time();
+    variable_set('tag1_d7es_phone_home', $now - (86400 * 30));
+    $this->drupalGet('admin/reports/updates');
+    $this->assertStatus(TAG1_D7ES_UPDATE_TEST_UNSUPPORTED);
+    $this->assertClass('error');
+    $this->assertText(t('Project not supported:'));
+    $this->assertNoText('This is a custom message.');
+
+    // Update to a recent phone-home. The module shows an available update.
+    variable_set('tag1_d7es_phone_home', $now);
+    $this->drupalGet('admin/reports/updates');
+    $this->assertStatus(TAG1_D7ES_UPDATE_TEST_UNSUPPORTED);
+    $this->assertClass('error');
+    $this->assertText(t('Project not supported:'));
+    $this->assertText('This is a custom message.');
+  }
+
+  /**
+   * Tests messaging for a module that distinguishes major branch support.
+   */
+  public function testUnsupportedMajorMessaging() {
+    $system_info = array(
+      '#all' => array(
+        'version' => '7.0',
+      ),
+      'tag1_d7es_test' => array(
+        'project' => 'tag1_d7es_test',
+        'version' => '7.x-1.0',
+        'hidden' => FALSE,
+      ),
+    );
+    variable_set('update_test_system_info', $system_info);
+    $this->refreshUpdateStatus(
+      array(
+        'tag1_d7es_test' => '4_0',
+      ),
+      'tag1-d7es-update-test'
+    );
+
+    // No module-disabled check here; we assume that our custom XML feed will
+    // not be used without having the module installed.
+    // Enable our module.
+    module_enable(['tag1_d7es']);
+    $this->drupalGet('admin/reports/updates');
+    $this->assertStatus(TAG1_D7ES_UPDATE_TEST_UNSUPPORTED);
+    $this->assertClass('error');
+    $this->assertNoText(t('Recommended version:'));
+
+    // Set an older phone-home.
+    $now = time();
+    variable_set('tag1_d7es_phone_home', $now - (86400 * 30));
+    $this->drupalGet('admin/reports/updates');
+    $this->assertStatus(TAG1_D7ES_UPDATE_TEST_UNSUPPORTED);
+    $this->assertClass('error');
+    $this->assertNoText(t('Recommended version:'));
+
+    // Update to a recent phone-home. The module shows an available update.
+    variable_set('tag1_d7es_phone_home', $now);
+    $this->drupalGet('admin/reports/updates');
+    $this->assertStatus(TAG1_D7ES_UPDATE_TEST_UNSUPPORTED);
+    $this->assertClass('error');
+    $this->assertText(t('Recommended version:'));
+  }
+
+}

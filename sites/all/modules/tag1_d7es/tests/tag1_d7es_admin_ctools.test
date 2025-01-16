@@ -1,0 +1,40 @@
+<?php
+
+/**
+ * Tests the Tag1 D7ES module administration.
+ */
+class Tag1D7esAdminCtoolsTestCase extends Tag1D7esAdminTestCase {
+
+  /**
+   * A user account for testing.
+   *
+   * @var object
+   */
+  protected $user;
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function getInfo() {
+    return array(
+      'name' => 'Tag1 D7ES + CTools configuration test',
+      'description' => 'Test module configuration when CTools is enabled.',
+      'group' => 'Tag1 D7ES',
+      'dependencies' => array('ctools', 'tag1_d7es'),
+    );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setUp(array $modules = array()) {
+    $modules[] = 'ctools';
+    $modules[] = 'tag1_d7es';
+    parent::setUp($modules);
+
+    $this->user = $this->drupalCreateUser(array(
+      'administer site configuration',
+    ));
+  }
+
+}

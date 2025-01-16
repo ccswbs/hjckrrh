@@ -1,0 +1,97 @@
+<?php
+
+/**
+ * Test the module's hook_mail_alter.
+ */
+class Tag1D7esMailTestCase extends DrupalWebTestCase implements MailSystemInterface {
+  /**
+   * The most recent message that was sent through the test case.
+   *
+   * We take advantage here of the fact that static variables are shared among
+   * all instance of the same class.
+   *
+   * @var array
+   */
+  private static $sentMessage;
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function getInfo() {
+    return array(
+      'name' => 'Tag1 D7ES Update email notification',
+      'description' => 'Tests our configurable override of the Update Status notification.',
+      'group' => 'Tag1 D7ES',
+    );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setUp() {
+    parent::setUp(array('update', 'tag1_d7es'));
+
+    // Set this class as the SMTP library.
+    variable_set('mail_system', array('default-system' => 'Tag1D7esMailTestCase'));
+  }
+
+  /**
+   * Assert that the pluggable mail system is functional.
+   */
+  public function testPluggableFramework() {
+    global $language;
+
+    // Use MailTestCase for sending a message.
+    $message = drupal_mail('simpletest', 'mail_test', 'testing@example.com', $language);
+
+    // Assert whether the message was sent through the send function.
+    $this->assertEqual(self::$sentMessage['to'], 'testing@example.com', 'Pluggable mail system is extendable.');
+  }
+
+  /**
+   * Test that Update message sending may be configured.
+   *
+   * @see tag1_d7es_mail_alter()
+   */
+  public function testUpdateMessage() {
+    global $language;
+
+    // Reset the class variable holding a copy of the last sent message.
+    self::$sentMessage = NULL;
+
+    // Send a test message that tag1_d7es_mail_alter should cancel.
+    $message = drupal_mail('update', 'status_notify', 'to@example.com', $language);
+
+    // Assert that the message was not actually sent.
+    $this->assertNull(self::$sentMessage, 'Message was not sent.');
+
+    // Rerun the above but allow the message to be sent.
+    self::$sentMessage = NULL;
+    variable_set('tag1_d7es_send_update_emails', 1);
+    $message = drupal_mail('update', 'status_notify', 'to@example.com', $language);
+    $this->assertTrue(self::$sentMessage['send'], 'Message was sent.');
+  }
+
+  /**
+   * Concatenate and wrap the e-mail body for plain-text mails.
+   *
+   * @see DefaultMailSystem
+   */
+  public function format(array $message) {
+    // Join the body array into one string.
+    $message['body'] = implode("\n\n", $message['body']);
+    // Convert any HTML to plain-text.
+    $message['body'] = drupal_html_to_text($message['body']);
+    // Wrap the mail body for sending.
+    $message['body'] = drupal_wrap_mail($message['body']);
+    return $message;
+  }
+
+  /**
+   * Send function that is called through the mail system.
+   */
+  public function mail(array $message) {
+    self::$sentMessage = $message;
+  }
+
+}

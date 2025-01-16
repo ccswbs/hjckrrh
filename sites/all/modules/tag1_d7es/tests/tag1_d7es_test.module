@@ -1,0 +1,51 @@
+<?php
+
+/**
+ * @file
+ * Test module for Tag1 D7ES.
+ */
+
+/**
+ * Implements hook_menu().
+ *
+ * @see update_test_menu()
+ */
+function tag1_d7es_test_menu() {
+  $items = array();
+
+  $items['tag1-d7es-update-test'] = array(
+    'title' => 'Update test',
+    'page callback' => 'tag1_d7es_test_mock_page',
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
+
+  return $items;
+}
+
+/**
+ * Page callback: Prints mock XML for the Update Manager module.
+ *
+ * @see update_test_menu()
+ * @see update_test_mock_page()
+ */
+function tag1_d7es_test_mock_page($project_name) {
+  $xml_map = variable_get('update_test_xml_map', FALSE);
+  if (isset($xml_map[$project_name])) {
+    $availability_scenario = $xml_map[$project_name];
+  }
+  elseif (isset($xml_map['#all'])) {
+    $availability_scenario = $xml_map['#all'];
+  }
+  else {
+    // The test didn't specify (for example, the webroot has other modules and
+    // themes installed but they're disabled by the version of the site
+    // running the test. So, we default to a file we know won't exist, so at
+    // least we'll get an empty page from readfile instead of a bunch of
+    // Drupal page output.
+    $availability_scenario = '#broken#';
+  }
+
+  $path = drupal_get_path('module', 'tag1_d7es_test');
+  readfile("$path/$project_name.$availability_scenario.xml");
+}

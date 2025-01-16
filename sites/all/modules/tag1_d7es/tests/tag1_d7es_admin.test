@@ -1,0 +1,123 @@
+<?php
+
+/**
+ * Tests the Tag1 D7ES module administration.
+ */
+class Tag1D7esAdminTestCase extends DrupalWebTestCase {
+
+  /**
+   * A user account for testing.
+   *
+   * @var object
+   */
+  protected $user;
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function getInfo() {
+    return array(
+      'name' => 'Tag1 D7ES configuration test',
+      'description' => 'Test module configuration.',
+      'group' => 'Tag1 D7ES',
+      'dependencies' => array('tag1_d7es'),
+    );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setUp(array $modules = array()) {
+    $modules[] = 'tag1_d7es';
+    parent::setUp($modules);
+
+    $this->user = $this->drupalCreateUser(array(
+      'administer site configuration',
+    ));
+  }
+
+  /**
+   * Test the module configuration form.
+   */
+  public function testConfiguration() {
+    $this->drupalGet('admin/config/system/tag1-d7es');
+    $this->assertResponse(403, 'Anonymous user cannot see module configurations.');
+
+    $this->drupalLogin($this->user);
+    $this->drupalGet('admin/config/system/tag1-d7es');
+    $this->assertResponse(200, 'Admin user can see module configurations.');
+
+    $this->assertFieldById('edit-tag1-d7es-billing-email', '', 'A field for the billing email address exists.');
+    $this->assertFieldById('edit-tag1-d7es-email-addresses', '', 'A field to specify email addresses exists.');
+    $valid_site_id = variable_get('tag1_d7es_site_id');
+    $this->assertFieldById('edit-tag1-d7es-site-id', $valid_site_id, 'A field to set the Site ID exists and matches the current variable.');
+    $this->assertNoText(t('Drush release XML source'), 'Drush URL is not exposed.');
+
+    $edit = array();
+    $edit['tag1_d7es_site_id'] = 'invalid-site-id';
+    $this->drupalPost('admin/config/system/tag1-d7es', $edit, t('Save configuration'));
+    $this->assertText(t('The Site ID is not a valid UUID.'));
+    $this->assertText(t('@field_name field is required.', array('@field_name' => t('Customer email address'))));
+    $this->assertText(t('@field_name field is required.', array('@field_name' => t('Notification email addresses'))));
+    $billing_email = 'some value';
+    $edit['tag1_d7es_site_id'] = $valid_site_id;
+    $edit['tag1_d7es_billing_email'] = $billing_email;
+    $email_addresses = 'test1@example.com,test2@example.com';
+    $edit['tag1_d7es_email_addresses'] = $email_addresses;
+    $this->drupalPost('admin/config/system/tag1-d7es', $edit, t('Save configuration'));
+    $this->assertNoText(t('The Site ID is not a valid UUID.'));
+    $this->assertNoText(t('@field_name field is required.', array('@field_name' => t('Customer email address'))));
+    $this->assertNoText(t('@field_name field is required.', array('@field_name' => t('Notification email addresses'))));
+
+    $this->assertEqual(variable_get('tag1_d7es_billing_email'), $billing_email, 'Customer email updated successfully.');
+    $this->assertFieldById('edit-tag1-d7es-billing-email', $billing_email, 'The updated customer email is displayed in the field.');
+    $this->assertEqual(variable_get('tag1_d7es_email_addresses'), $email_addresses, 'Email addresses updated successfully.');
+    $this->assertFieldById('edit-tag1-d7es-email-addresses', $email_addresses, 'The updated email addresses are displayed in the field.');
+
+    $edit['tag1_d7es_site_id'] = '';
+    $this->drupalPost('admin/config/system/tag1-d7es', $edit, t('Save configuration'));
+    $this->assertText(t('@field_name field is required.', array('@field_name' => t('Site ID'))));
+    $new_site_id = tag1_d7es_uuid_generate();
+    $edit['tag1_d7es_site_id'] = $new_site_id;
+    $this->drupalPost('admin/config/system/tag1-d7es', $edit, t('Save configuration'));
+    $this->assertNoText(t('@field_name field is required.', array('@field_name' => t('Site ID'))));
+    $this->assertEqual(variable_get('tag1_d7es_site_id'), $new_site_id, 'Manual Site ID updated successfully.');
+    $this->assertFieldById('edit-tag1-d7es-site-id', $new_site_id, 'The updated manual site ID is displayed in the field.');
+
+    $this->assertFieldById('edit-tag1-d7es-endpoint', '', 'A field for changing the API endpoint exists.');
+    $prod_endpoint = TAG1_D7ES_ENDPOINT;
+    $this->assertEqual($prod_endpoint, _tag1_d7es_get_endpoint(), 'The default API endpoint is to the production environment.');
+    $new_endpoint = 'some other string';
+    $edit['tag1_d7es_endpoint'] = $new_endpoint;
+    $this->drupalPost('admin/config/system/tag1-d7es', $edit, t('Save configuration'));
+    $this->assertEqual(variable_get('tag1_d7es_endpoint'), $new_endpoint, 'Custom API endpoint updated successfully.');
+    $this->assertFieldById('edit-tag1-d7es-endpoint', $new_endpoint, 'The updated custom API endpoint is displayed in the field.');
+    $edit['tag1_d7es_endpoint'] = '';
+    $this->drupalPost('admin/config/system/tag1-d7es', $edit, t('Save configuration'));
+    $this->assertEqual($prod_endpoint, _tag1_d7es_get_endpoint(), 'The default API endpoint can be restored.');
+
+    $this->assertNoText('Continue to send core "Available updates" notifications', 'Update notifications message does not display');
+    module_enable(array('update'));
+    $this->drupalGet('admin/config/system/tag1-d7es');
+    $this->assertNoText('Continue to send core "Available updates" notifications', 'Update notifications message does not display if the module is enabled without configuration');
+    variable_set('update_notify_emails', array('test@example.com'));
+    $this->drupalGet('admin/config/system/tag1-d7es');
+    $this->assertText('Continue to send core "Available updates" notifications', 'Update notifications message displays when module is enabled and configured.');
+    $this->assertNoFieldChecked('edit-tag1-d7es-send-update-emails', 'Sending update notifications is disabled by default.');
+    $edit['tag1_d7es_send_update_emails'] = TRUE;
+    $this->drupalPost('admin/config/system/tag1-d7es', $edit, t('Save configuration'));
+    $this->assertFieldChecked('edit-tag1-d7es-send-update-emails', 'Sending update notifications can be enabled.');
+  }
+
+  /**
+   * Tests the display of the release XML URL.
+   */
+  public function testDrushReleaseXml() {
+    $release_xml = 'https://updates.drupal.org/release-history';
+    variable_set('update_fetch_url', $release_xml);
+    $this->drupalLogin($this->user);
+    $this->drupalGet('admin/config/system/tag1-d7es');
+    $this->assertText(t('Drush release XML source'), 'Drush URL markup is displayed.');
+  }
+
+}

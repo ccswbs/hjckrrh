@@ -1,0 +1,53 @@
+<?php
+
+/**
+ * Tests the Tag1 D7ES update_fetch_url configuration.
+ */
+class Tag1D7esFetchUrlTestCase extends DrupalWebTestCase {
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function getInfo() {
+    return array(
+      'name' => 'Tag1 D7ES update_fetch_url tests',
+      'description' => 'Test customized release datasource configuration',
+      'group' => 'Tag1 D7ES',
+      'dependencies' => array('tag1_d7es'),
+    );
+  }
+
+  /**
+   * Tests installation and configuration.
+   */
+  public function testUpdateFetchUrl() {
+    // Installation.
+    $previous_fetch_url = 'https://updates.drupal.org/release-history';
+    variable_set('update_fetch_url', $previous_fetch_url);
+    module_enable(['tag1_d7es']);
+    $this->assertEqual(variable_get('tag1_d7es_original_update_fetch_url'), $previous_fetch_url);
+
+    // Disable and uninstall.
+    module_disable(array('tag1_d7es'));
+    drupal_uninstall_modules(array('tag1_d7es'));
+    $this->assertNull(variable_get('tag1_d7es_original_update_fetch_url'));
+    $this->assertEqual(variable_get('update_fetch_url'), $previous_fetch_url);
+  }
+
+  /**
+   * Test the update_fetch_url customization.
+   */
+  public function testUpdateFetchUrlPersonalization() {
+    $update_fetch_url = tag1_d7es_personalize_updates_endpoint('test@example.com');
+    $this->assertEqual($update_fetch_url, 'https://test@example.com:dGVzdEBleGFtcGxlLmNvbQ==@updates.tag1.com/release-history');
+  }
+
+  /**
+   * Test the drush url customization.
+   */
+  public function testDrushUrlPersonalization() {
+    $drush_update_url = tag1_d7es_personalize_drush_source_endpoint('test@example.com');
+    $this->assertEqual($drush_update_url, 'https://test%40example.com:dGVzdEBleGFtcGxlLmNvbQ%3D%3D@updates.tag1.com/release-history');
+  }
+
+}

@@ -1,0 +1,29 @@
+<?php
+
+/**
+ * Tests the Tag1 D7ES module functionality with CTools support.
+ */
+class Tag1D7esCtoolsTestCase extends Tag1D7esTestCase {
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function getInfo() {
+    return array(
+      'name' => 'Tag1 D7ES + CTools integration tests',
+      'description' => 'Test module installation and behavior when CTools is enabled.',
+      'group' => 'Tag1 D7ES',
+      'dependencies' => array('ctools', 'tag1_d7es'),
+    );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setUp(array $modules = array()) {
+    $modules[] = 'ctools';
+    $modules[] = 'tag1_d7es';
+    parent::setUp($modules);
+  }
+
+}
