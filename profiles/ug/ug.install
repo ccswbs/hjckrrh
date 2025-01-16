@@ -85,4 +85,5 @@ function ug_update_7704(&$sandbox) {
  */
 function ug_update_7705(&$sandbox) {
   module_enable(array('tag1_d7es'));
+  variable_set('tag1_d7es_email_addresses', 'wsadmin@uoguelph.ca');
 }
