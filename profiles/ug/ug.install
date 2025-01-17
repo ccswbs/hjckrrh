@@ -84,7 +84,6 @@ function ug_update_7704(&$sandbox) {
  * Enable Tag1 D7ES module
  */
 function ug_update_7705(&$sandbox) {
-  $site_mail = variable_get('site_mail', '');
   module_enable(array('tag1_d7es'));
-  variable_set('tag1_d7es_email_addresses', $site_mail);
+  variable_set('tag1_d7es_email_addresses', 'wsadmin@uoguelph.ca');
 }
