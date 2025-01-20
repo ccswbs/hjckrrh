@@ -5,7 +5,7 @@ main() {
   # Variables
   local MODULE_NAME="tag1_d7es"
   local PANTHEON_UPSTREAM_DIR="modules/pantheon/$MODULE_NAME"
-  local PR_BASE_BRANCH="default"
+  local PR_BASE_BRANCH="master"
   local CURRENT_VERSION
   local LATEST_VERSION
   local TEMP_BRANCH
