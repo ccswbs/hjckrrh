@@ -48,3 +48,6 @@ Thumbs.db
 # SASS #
 ##########
 .sass-cache
+
+
+vendor/
