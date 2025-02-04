@@ -111,10 +111,6 @@ projects[flood_control][version] = "1.0"
 
 projects[fontawesome][version] = "3.7"
 
-projects[google_analytics][version] = "2.6"
-
-projects[google_tag][version] = "1.3"
-
 projects[hide_submit][version] = "2.4"
 
 projects[htmlmail][version] = "2.71"
