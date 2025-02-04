@@ -1,0 +1,13 @@
+name = Google Tag Manager Test
+description = Helper module for testing Google Tag Manager (do not enable manually)
+package = Testing
+core = 7.x
+hidden = TRUE
+
+test_dependencies[] = ctools:ctools
+test_dependencies[] = google_tag:google_tag
+test_dependencies[] = variable:variable_realm
+
+version = 7.x-2.4
+project = google_tag
+datestamp = 1738184042

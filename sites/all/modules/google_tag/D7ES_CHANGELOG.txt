@@ -1,0 +1,4 @@
+google_tag 7.x-2.4, 2024-01-29
+-----------------------
+- Repackaged upstream 7.x-2.3 to fix security issues:
+    - SA-CONTRIB-2025-011
