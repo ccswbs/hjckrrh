@@ -11,6 +11,9 @@ files[] = link.migrate.inc
 files[] = views/link_views_handler_argument_target.inc
 files[] = views/link_views_handler_filter_protocol.inc
 
+; Filter XSS issues in attributes.
+files[] = src/AttributeXss.php
+
 ; Tests.
 ; Most tests extend from this class.
 files[] = tests/LinkBaseTestClass.test
@@ -33,9 +36,10 @@ test_dependencies[] = token:token
 
 ; Standalone unit tests.
 files[] = tests/LinkUnitTestCase.test
+files[] = tests/LinkAttributeXssTestCase.test
 
-; Information added by Drupal.org packaging script on 2022-05-04
-version = "7.x-1.11"
+; Information added by Drupal.org packaging script on 2025-03-19
+version = "7.x-1.13"
 core = "7.x"
 project = "link"
-datestamp = "1651671649"
+datestamp = "1742393546"

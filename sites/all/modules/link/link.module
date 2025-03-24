@@ -859,21 +859,13 @@ function _link_sanitize(&$item, $delta, &$field, $instance, &$entity) {
       }
       $item['attributes']['title'] = token_replace($item['attributes']['title'], array($entity_token_type => $entity_loaded), array('clear' => TRUE));
     }
-    $item['attributes']['title'] = filter_xss($item['attributes']['title'], array(
-      'b',
-      'br',
-      'code',
-      'em',
-      'i',
-      'img',
-      'span',
-      'strong',
-      'sub',
-      'sup',
-      'tt',
-      'u',
-    ));
   }
+
+  // Sanitize attributes.
+  if (!empty($item['attributes'])) {
+    $item['attributes'] = AttributeXss::sanitizeAttributes($item['attributes']);
+  }
+
   // Handle attribute classes.
   if (!empty($item['attributes']['class'])) {
     $classes = explode(' ', $item['attributes']['class']);
@@ -1085,7 +1077,8 @@ function _link_default_attributes() {
  * $complete_form['#field_info'][$element['#field_name']].
  */
 function link_field_process($element, $form_state, $complete_form) {
-  $instance = field_widget_instance($element, $form_state);
+  $field_state = field_form_get_state($element['#field_parents'], $element['#field_name'], $element['#language'], $form_state);
+  $instance = !empty($field_state['instance']) ? $field_state['instance'] : array();
   if (!$instance) {
     // The element comes from a custom form, we have to manually create the
     // $instance settings.
@@ -1190,6 +1183,19 @@ function link_field_process($element, $form_state, $complete_form) {
   }
 
   return $element;
+}
+
+/**
+ * Implements template_preprocess_form_element_label().
+ */
+function link_preprocess_form_element_label(&$vars) {
+  $element = &$vars['element'];
+  if ('link_field' == $element['#type']) {
+    if (isset($element['url']) && !isset($element['title'])) {
+      // Link label directly to the URL field.
+      $element['#id'] .= '-url';
+    }
+  }
 }
 
 /**
@@ -1819,7 +1825,7 @@ function link_url_type($text) {
   $external_pattern = '/^' . $protocol . '?' . $authentication . '?(' . $domain . '|' . $ipv4 . '|' . $ipv6 . ' |localhost)' . $port . '?';
 
   // Pattern specific to internal links.
-  $internal_pattern = "/^(?:[a-z0-9" . $link_ichars . "_\-+\[\] ]+)";
+  $internal_pattern = "/^(?:[a-z0-9" . $link_ichars . "_\-+\[\]\/ ]+)";
   $internal_pattern_file = "/^(?:[a-z0-9" . $link_ichars . "_\-+\[\]\. \/\(\)][a-z0-9" . $link_ichars . "_\-+\[\]\. \(\)][a-z0-9" . $link_ichars . "_\-+\[\]\. \/\(\)]+)$/i";
 
   $directories = "(?:\/[a-z0-9" . $link_ichars . "_\-\.~+%=&,$'#!():;*@\[\]]*)*";

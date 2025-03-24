@@ -140,6 +140,20 @@ class LinkSanitizeTest extends LinkBaseTestClass {
   }
 
   /**
+   * Assert that attributes are filtered.
+   */
+  public function testXssFiltering() {
+    $item['url'] = 'https://www.drupal.org/';
+    $item['attributes']['class'] = 'classy';
+    $item['attributes']['onmouseover'] = 'alert(document.cookie)';
+    list($field, $instance, $entity) = $this->generateParams();
+    _link_sanitize($item, NULL, $field, $instance, $entity);
+    $this->verbose('<pre>' . print_r($item, TRUE) . '</pre>');
+    $this->assertEqual('classy', $item['attributes']['class']);
+    $this->assertFalse(isset($item['attributes']['onmouseover']));
+  }
+
+  /**
    * Test that query URLs can be turned into absolute URLs.
    */
   public function testBlankTitleWithQuery() {

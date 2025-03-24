@@ -1,3 +1,22 @@
+Link 7.x-1.13, 2025-03-18
+-------------------------
+By catch, ram4nd, dmaienmckenna, mr.baileys: Improved attribute filtering.
+
+
+Link 7.x-1.12, 2025-03-13
+-------------------------
+#3330054 by DamienMcKenna, hadsie: Internal link regex needs support for /
+  character.
+#3276037 by xlin1003, DamienMcKenna: PHP 7.4  Notice: Trying to access array
+  offset on value of type null in field_widget_instance() when use in custom
+  form.
+#3399967 by dqd, tadean, klausi: PHP 8 Usage of max() with potential string
+  values.
+#1309768 by dqd, rudiedirkx, jcfiala: Wrong `for` attribute on the label.
+#3315915 by Manoj Raj.R, damienmckenna, dineshreddymathuku: Rework README.txt as
+  a Markdown file.
+
+
 Link 7.x-1.11, 2022-05-04
 -------------------------
 By brad.bulger, DamienMcKenna, greggles: Improved output w/o token handling.

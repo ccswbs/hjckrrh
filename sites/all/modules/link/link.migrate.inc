@@ -109,12 +109,12 @@ class MigrateLinkFieldHandler extends MigrateFieldHandler {
     // found.
     //
     // First of all, determine the maximum delta from non-empty URLs.
-    $max_delta = max(array_merge(array(0), array_keys($values)));
+    $max_delta = max(array_merge(array(0), array_map('intval', array_keys($values))));
 
     // Next, determine the max delta from arguments.
     foreach ($arguments as $key => $value) {
       if (is_array($value)) {
-        $max_delta = max($max_delta, max(array_keys($value)));
+        $max_delta = max($max_delta, max(array_map('intval', array_keys($value))));
       }
     }
 

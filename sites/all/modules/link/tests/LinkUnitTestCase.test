@@ -97,4 +97,35 @@ class LinkUnitTestCase extends DrupalUnitTestCase {
     }
   }
 
+  /**
+   * Test link_url_type().
+   */
+  public function testLinkUrlType() {
+    $urls = array(
+      '<front>' => LINK_FRONT,
+      'mailto:email@drupal.org' => LINK_EMAIL,
+      'tel:1231231234' => LINK_TEL,
+      'tel:123-1234' => FALSE,
+      'news:something' => LINK_NEWS,
+      'file://some/thing.png' => LINK_FILE,
+      'https://www.drupal.org' => LINK_EXTERNAL,
+      'https://www.drupal.org/?page=42' => LINK_EXTERNAL,
+      'https://www.drupal.org/?page=42&mango=thebest' => LINK_EXTERNAL,
+      'https://www.drupal.org/#footer' => LINK_EXTERNAL,
+      'https://www.drupal.org/?page=42#footer' => LINK_EXTERNAL,
+
+      // Internal paths.
+      'node/123' => LINK_INTERNAL,
+      '/node/123' => LINK_INTERNAL,
+      'node/123?page=42' => LINK_INTERNAL,
+      '/node/123?page=42' => LINK_INTERNAL,
+      'node/123#footer' => LINK_INTERNAL,
+      '/node/123#footer' => LINK_INTERNAL,
+    );
+    foreach ($urls as $url => $expected_type) {
+      $found_type = link_url_type($url);
+      $this->assertEqual($found_type, $expected_type);
+    }
+  }
+
 }
