@@ -7,8 +7,6 @@ hidden = TRUE
 files[] = smtp_tests.mail.inc
 test_dependencies[] = smtp
 
-; Information added by Drupal.org packaging script on 2023-01-10
-version = "7.x-1.9"
-core = "7.x"
-project = "smtp"
-datestamp = "1673392516"
+version = 7.x-1.10
+project = smtp
+datestamp = 1743618095
