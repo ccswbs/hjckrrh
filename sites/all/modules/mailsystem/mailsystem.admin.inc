@@ -2,7 +2,11 @@
 
 /**
  * @file
- * Administrative form for setting the mail_system variable.
+ * Administrative interface for the mail_system variable.
+ */
+
+/**
+ * Form constructor for the mailsystem settings form.
  */
 function mailsystem_admin_settings() {
   $args = array(
@@ -11,73 +15,27 @@ function mailsystem_admin_settings() {
     '!format' => url('http://api.drupal.org/api/drupal/includes--mail.inc/function/MailSystemInterface%3A%3Aformat/7'),
     '@format' => 'format()',
     '!mail' => url('http://api.drupal.org/api/drupal/includes--mail.inc/function/MailSystemInterface%3A%3Amail/7'),
+    '!hook_mail' => 'http://api.drupal.org/api/drupal/modules%21system%21system.api.php/function/hook_mail/7',
     '@mail' => 'mail()',
     '!default_class' => url('http://api.drupal.org/api/drupal/modules--system--system.mail.inc/class/DefaultMailSystem/7'),
     '@default_class' => mailsystem_default_value(),
     '%module' => 'module',
     '%key' => 'key',
   );
-  $form = array('#submit' => array('mailsystem_admin_settings_submit'));
-  $mail_system = mailsystem_get();
-  $mail_defaults = mailsystem_defaults();
-  $mailsystem_classes = mailsystem_get_classes();
-  $descriptions = array();
-  foreach (system_rebuild_module_data() as $item) {
-    if ($item->status) {
-      $descriptions[$item->name] = (
-        empty($item->info['package'])
-        ? '' : $item->info['package']
-      ) . ' » ' . t('!module module', array('!module' => $item->info['name']));
-    }
-  }
-  asort($descriptions);
+
+  $mail_system = mailsystem_read_settings();
+  $delivery_classes = mailsystem_admin_get_delivery_classes();
+  $formatter_classes = mailsystem_admin_get_formatter_classes();
+  $mail_modules = mailsystem_admin_get_mail_modules();
+
   $form['mailsystem'] = array(
     '#type' => 'fieldset',
     '#title' => t('Mail System Settings'),
-    '#description' => t(
-      'Drupal provides a default <a href="!interface"><code>@interface</code></a> class called <a href="!default_class"><code>@default_class</code></a>. Modules may provide additional classes. Each <a href="!interface"><code>@interface</code></a> class may be associated with one or more identifiers, composed of a %module and an optional %key. Each email being sent also has a %module and a %key. To decide which class to use, Drupal uses the following search order: <ol><li>The class associated with the %module and %key, if any.</li><li>The class associated with the %module, if any.</li><li>The site-wide default <a href="!interface"><code>@interface</code></a> class.</li></ol>', $args
-    ),
+    '#description' => t('Drupal provides a default <a href="!interface"><code>@interface</code></a> class called <a href="!default_class"><code>@default_class</code></a>. Modules may provide additional classes. Each <a href="!interface"><code>@interface</code></a> class may be associated with one or more identifiers, composed of a %module and an optional %key. Each email being sent also has a %module and a %key. To decide which class to use, Drupal uses the following search order: <ol><li>The class associated with the %module and %key, if any.</li><li>The class associated with the %module, if any.</li><li>The site-wide default <a href="!interface"><code>@interface</code></a> class.</li></ol>', $args),
     '#collapsible' => FALSE,
     '#tree' => TRUE,
   );
-  $form['mailsystem'][mailsystem_default_id()] = array(
-    '#type' => 'select',
-    '#title' => t(
-      'Site-wide default <a href="!interface"><code>@interface</code></a> class', $args
-    ),
-    '#options' => $mailsystem_classes,
-    '#default_value' => $mail_system[mailsystem_default_id()],
-  );
-  $mailsystem_classes = array(
-    mailsystem_default_id() => t('Remove this setting.')
-  ) + $mailsystem_classes;
-  foreach (array_diff_key($mail_system, $mail_defaults) as $id => $class) {
-    // Separate $id into $module and $key.
-    $module = $id;
-    while ($module && empty($descriptions[$module])) {
-      // Remove a key from the end
-      $module = implode('_', explode('_', $module, -1));
-    }
-    // If an array key of the $mail_system variable is neither "default-system"
-    // nor begins with a module name, then it should be unset.
-    if (empty($module)) {
-      watchdog('mailsystem', "Removing bogus mail_system key %id.", array('%id' => $id), WATCHDOG_WARNING);
-      unset($mail_system[$id]);
-      continue;
-    }
-    // Set $title to the human-readable module name.
-    $title = preg_replace('/^.* » /', '', $descriptions[$module]);
-    if ($key = substr($id, strlen($module) + 1)) {
-      $title .= " ($key key)";
-    }
-    $title .= ' class';
-    $form['mailsystem'][$id] = array(
-      '#type' => 'select',
-      '#title' => $title,
-      '#options' => $mailsystem_classes,
-      '#default_value' => $class,
-    );
-  }
+
   // Generate a list of themes which may used to render emails.
   $theme_options = array('current' => t('Current'), 'default' => t('Default'));
   if (module_exists('domain_theme')) {
@@ -91,60 +49,100 @@ function mailsystem_admin_settings() {
     }
   }
   $form['mailsystem']['mailsystem_theme'] = array(
+    '#type' => 'select',
+    '#title' => t('Theme to render the emails'),
+    '#description' => t('Select the theme that will be used to render the emails. This can be either the current theme, the default theme, the domain theme or any active theme.'),
+    '#options' => $theme_options,
+    '#default_value' => variable_get('mailsystem_theme', 'current'),
+  );
+
+  $form['mailsystem'][mailsystem_default_id()] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Site-wide default mail system'),
+  );
+  $form['mailsystem'][mailsystem_default_id()]['mail'] = array(
+    '#type' => 'select',
+    '#title' => t('Delivery'),
+    '#options' => $delivery_classes,
+    '#default_value' => $mail_system[mailsystem_default_id()]['mail'],
+    '#description' => t('Class used to send the mail'),
+  );
+  $form['mailsystem'][mailsystem_default_id()]['format'] = array(
+    '#type' => 'select',
+    '#title' => t('Formatting'),
+    '#options' => $formatter_classes,
+    '#default_value' => $mail_system[mailsystem_default_id()]['format'],
+    '#description' => t('Class used to format the body of the mail'),
+  );
+
+  unset($mail_system[mailsystem_default_id()]);
+
+  foreach ($mail_system as $id => $settings) {
+    $form['mailsystem'][$id] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Custom settings for mail-id %id', array('%id' => $id)),
+    );
+    $form['mailsystem'][$id]['mail'] = array(
       '#type' => 'select',
-      '#title' => t('Theme to render the emails'),
-      '#description' => t('Select the theme that will be used to render the emails. This can be either the current theme, the default theme, the domain theme or any active theme.'),
-      '#options' => $theme_options,
-      '#default_value' => variable_get('mailsystem_theme', 'current'),
-  );
-  $form['class'] = array(
+      '#title' => t('Delivery'),
+      '#options' => $delivery_classes,
+      '#default_value' => $settings['mail'],
+      '#description' => t('Class used to send the mail'),
+    );
+    $form['mailsystem'][$id]['format'] = array(
+      '#type' => 'select',
+      '#title' => t('Formatting'),
+      '#options' => $formatter_classes,
+      '#default_value' => $settings['format'],
+      '#description' => t('Class used to format the body of the mail'),
+    );
+    $form['mailsystem'][$id]['submit'] = array(
+      '#type' => 'submit',
+      '#value' => t('Remove custom settings for mail-id @id', array('@id' => $id)),
+      '#submit' => array('mailsystem_admin_remove_setting_submit'),
+      '#limit_validation_errors' => array(
+        array('mailsystem', $id),
+      ),
+    );
+  }
+
+  $form['mailsystem']['add-custom-settings'] = array(
     '#type' => 'fieldset',
-    '#title' => t('New Class'),
-    '#description' => t(
-      'Create a new <a href="!interface"><code>@interface</code></a> that inherits its methods from other classes. The new class will be named after the other classes it uses.', $args
-    ),
+    '#title' => t('Add custom settings'),
     '#collapsible' => TRUE,
     '#collapsed' => TRUE,
-    '#tree' => TRUE,
+    '#element_validate' => array('mailsystem_admin_add_setting_validate'),
   );
-  $mailsystem_classes[mailsystem_default_id()] = '--Select--';
-  $form['class']['format'] = array(
-    '#type' => 'select',
-    '#title' => t(
-      'Class to use for the <a href="!format"><code>@format</code></a> method', $args
-    ),
-    '#options' => $mailsystem_classes,
-  );
-  $form['class']['mail'] = array(
-    '#type' => 'select',
-    '#title' => t(
-      'Class to use for the <a href="!mail"><code>@mail</code></a> method', $args
-    ),
-    '#options' => $mailsystem_classes,
-  );
-  $form['identifier'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('New Setting'),
-    '#description' => t('Add a new %module and %key to the settings list.',
-      array(
-        '%module' => 'module',
-        '%key' => 'key',
-      )
-    ),
-    '#collapsible' => TRUE,
-    '#collapsed' => TRUE,
-    '#tree' => TRUE,
-  );
-  array_unshift($descriptions, t('-- Select --'));
-  $form['identifier']['module'] = array(
+  $form['mailsystem']['add-custom-settings']['module'] = array(
     '#type' => 'select',
     '#title' => t('Module'),
-    '#options' => $descriptions,
+    '#options' => $mail_modules,
   );
-  $form['identifier']['key'] = array(
+  $form['mailsystem']['add-custom-settings']['key'] = array(
     '#type' => 'textfield',
     '#title' => t('Key'),
-    '#size' => 80,
+    '#size' => 30,
+    '#description' => t('An optional key which further specifies the mail in question. You may have to examine the source code of the <a href="!hook_mail">hook_mail</a> implementation of the module in question in order to find an appropriate value', $args),
+  );
+  $form['mailsystem']['add-custom-settings']['mail'] = array(
+    '#type' => 'select',
+    '#title' => t('Delivery'),
+    '#options' => $delivery_classes,
+    '#description' => t('Class used to send the mail'),
+  );
+  $form['mailsystem']['add-custom-settings']['format'] = array(
+    '#type' => 'select',
+    '#title' => t('Formatting'),
+    '#options' => $formatter_classes,
+    '#description' => t('Class used to format the body of the mail'),
+  );
+  $form['mailsystem']['add-custom-settings']['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Add custom settings'),
+    '#submit' => array('mailsystem_admin_add_setting_submit'),
+    '#limit_validation_errors' => array(
+      array('mailsystem', 'add-custom-settings'),
+    ),
   );
   $form['submit'] = array(
     '#type' => 'submit',
@@ -154,49 +152,137 @@ function mailsystem_admin_settings() {
 }
 
 /**
- * Processes mailsystem_admin_settings form.
+ * Form validation handler for mailsystem settings form.
+ *
+ * Add an additional custom setting for a module/key.
+ */
+function mailsystem_admin_add_setting_validate($fieldset, &$form_state) {
+  // Only perform this validation if we're adding a custom setting.
+  if (!isset($form_state['submit_handlers']) || !in_array('mailsystem_admin_add_setting_submit', $form_state['submit_handlers'])) {
+    return;
+  }
+
+  $module = $fieldset['module']['#value'];
+  $key = $fieldset['key']['#value'];
+  $id = $module;
+  if (!empty($key)) {
+    $id .= '_' . $key;
+  }
+
+  $mail_system = mailsystem_get();
+  if (isset($mail_system[$id])) {
+    form_error($fieldset['module'], t('A setting already exists for this combination of module and key'));
+  }
+
+  $form_state['new_settings_id'] = $id;
+}
+
+/**
+ * Form API submit callback: Add an additional custom setting for a module/key.
+ */
+function mailsystem_admin_add_setting_submit($form, &$form_state) {
+  $values = $form_state['values']['mailsystem']['add-custom-settings'];
+
+  $id = $form_state['new_settings_id'];
+  mailsystem_admin_save_custom_setting($id, $values);
+
+  drupal_set_message(t('Added new custom setting for mail-id %id',
+    array('%id' => $id)));
+}
+
+/**
+ * Form API submit callback: Remove a custom setting.
+ */
+function mailsystem_admin_remove_setting_submit($form, &$form_state) {
+  $parents = $form_state['triggering_element']['#parents'];
+  // Submit.
+  array_pop($parents);
+  // Fieldset.
+  $id = array_pop($parents);
+
+  mailsystem_clear(array($id => $id));
+
+  drupal_set_message(t('Removed custom setting for mail-id %id',
+    array('%id' => $id)));
+}
+
+/**
+ * Form API submit callback: save settings.
  */
 function mailsystem_admin_settings_submit($form, &$form_state) {
   variable_set('mailsystem_theme', $form_state['values']['mailsystem']['mailsystem_theme']);
   // Rebuild the theme registry to make changes needed by theme rendering.
   drupal_theme_rebuild();
   unset($form_state['values']['mailsystem']['mailsystem_theme']);
+  unset($form_state['values']['mailsystem']['add-custom-settings']);
 
-  $default_id = mailsystem_default_id();
-  $mail_system = array(
-    $default_id => (
-      empty($form_state['values'][$default_id])
-      ? mailsystem_default_value()
-      : $form_state['values'][$default_id]
-    )
-  );
-  foreach (element_children($form_state['values']['mailsystem']) as $module) {
-    $class = $form_state['values']['mailsystem'][$module];
-    if (!empty($class) && $class != $default_id) {
-      $mail_system[$module] = $class;
-    }
+  foreach ($form_state['values']['mailsystem'] as $id => $values) {
+    mailsystem_admin_save_custom_setting($id, $values);
   }
-  unset($form_state['values']['mailsystem']);
-  if ($form_state['values']['class']['format'] === mailsystem_default_id()) {
-    unset($form_state['values']['class']['format']);
-  }
-  if ($form_state['values']['class']['mail'] === mailsystem_default_id()) {
-    unset($form_state['values']['class']['mail']);
-  }
-  if ($form_state['values']['class']) {
-    $new_class = mailsystem_create_class($form_state['values']['class']);
+
+  drupal_set_message(t('Saved settings for mailsystem'));
+}
+
+/**
+ * Helper function. Writes the setting values for a given mail-id.
+ */
+function mailsystem_admin_save_custom_setting($id, $values) {
+  if ($values['format'] != $values['mail']) {
+    $value = array(
+      'mail' => $values['mail'],
+      'format' => $values['format'],
+    );
   }
   else {
-    $new_class = $mail_system[mailsystem_default_id()];
+    $value = $values['mail'];
   }
-  unset($form_state['values']['class']);
-  if ($id = $form_state['values']['identifier']['module']) {
-    if (!empty($form_state['values']['identifier']['key'])) {
-      $id .= '_' . $form_state['values']['identifier']['key'];
-    }
-    $mail_system[$id] = $new_class;
+  mailsystem_set(array($id => $value));
+}
+
+/**
+ * Retrieves a list of modules implementing hook_mail().
+ *
+ * @return array
+ *   An associative array of module descriptions keyed by the corresponding
+ *   module machine name.
+ */
+function mailsystem_admin_get_mail_modules() {
+  $modules = module_implements('mail');
+  $result = array();
+
+  foreach ($modules as $module) {
+    $info = system_get_info('module', $module);
+    $description = empty($info['package']) ? t('Other') : $info['package'];
+    $description .= ' » ' . $info['name'];
+    $result[$module] = $description;
   }
-  unset($form_state['values']['identifier']);
-  variable_set('mail_system', $mail_system);
-  drupal_set_message(t('The configuration options have been saved.'));
+
+  return $result;
+}
+
+/**
+ * Returns a list of classes suitable for sending mail.
+ *
+ * @return array
+ *   List of the names of classes implementing MailSystemInterface.
+ */
+function mailsystem_admin_get_delivery_classes() {
+  $delivery_classes = mailsystem_get_classes();
+  unset($delivery_classes['MailsystemDelegateMailSystem']);
+  return $delivery_classes;
+}
+
+/**
+ * Returns a list of classes suitable for formatting email.
+ *
+ * @todo: Currently we consider all classes capable of both mail delivery and
+ * formatting. If required in the future the mechanism could be extended such
+ * that specific classes only serve either as formatter or delivery-system if
+ * appropriate.
+ *
+ * @return array
+ *   List of the names of classes implementing MailSystemInterface.
+ */
+function mailsystem_admin_get_formatter_classes() {
+  return mailsystem_admin_get_delivery_classes();
 }

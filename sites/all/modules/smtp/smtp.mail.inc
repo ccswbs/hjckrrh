@@ -5,6 +5,10 @@
  *
  */
 
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+
 /**
 * Modify the drupal mail system to use smtp when sending emails.
 * Include the option to choose between plain text or HTML
@@ -60,6 +64,15 @@ class SmtpMailSystem implements MailSystemInterface {
   }
 
   public function mailWithoutQueue(array $message) {
+    // Load the PHPMailer classes, but only if they aren't already loaded.
+    if (!class_exists(PHPMailer::class) || !class_exists(SMTP::class) || !class_exists(Exception::class)) {
+      $module_path = drupal_get_path('module', 'smtp');
+      $mailer_files = ['PHPMailer.php', 'SMTP.php', 'Exception.php'];
+      foreach ($mailer_files as $file) {
+        require_once DRUPAL_ROOT . '/' . $module_path . '/PHPMailer/src/' . $file;
+      }
+    }
+
     $to = $message['to'];
     $from = $message['from'];
     $from_name = isset($message['from_name']) ? $message['from_name'] : FALSE;

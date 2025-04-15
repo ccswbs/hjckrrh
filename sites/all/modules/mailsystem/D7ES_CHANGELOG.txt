@@ -1,0 +1,9 @@
+Mail System 7.x-3.1, 2025-04-04
+-----------------------
+- Further fix upgrade path to address a bug in the upgrade code that could cause serious
+  damage to the site code.
+- Ensure that custom classes are migrated correctly.
+
+Mail System 7.x-3.0, 2025-04-02 (Withdrawn)
+-----------------------
+- Fix for upgrade path from 7.x-2.x to 7.x-3.x to handle private and public filesystems.

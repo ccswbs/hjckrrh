@@ -1,0 +1,15 @@
+{
+  "name": "drupal/mailsystem",
+  "type": "drupal-module",
+  "description": "Provides a user interface for per-module and site-wide mail_system selection.",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "authors": [],
+  "support": {},
+  "require": {
+
+  },
+  "require-dev": {
+
+  }
+}

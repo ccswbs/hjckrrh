@@ -1,0 +1,29 @@
+{
+    "name": "drupal/smtp",
+    "type": "drupal-module",
+    "description": "Allow for site emails to be sent through an SMTP server of your choice.",
+    "keywords": [
+        "Drupal"
+    ],
+    "license": "GPL-2.0+",
+    "authors": [],
+    "support": {},
+    "require-dev": {
+        "drupal/maillog": "^1.0@RC",
+        "drupal/coder": "^8.2@stable",
+        "phpunit/phpunit": "^5.7",
+        "symfony/filesystem": "^3.4",
+        "drush/drush": "^8.3.3"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://packages.drupal.org/7"
+        }
+    ]
+}

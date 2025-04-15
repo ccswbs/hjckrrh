@@ -4,7 +4,17 @@
  * Some tests for the SMTP module.
  */
 
+use PHPMailer\PHPMailer\PHPMailer;
+
+require_once(DRUPAL_ROOT . DIRECTORY_SEPARATOR . drupal_get_path('module', 'smtp') . DIRECTORY_SEPARATOR . 'PHPMailer' . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'PHPMailer.php');
+
 class SmtpUnitTest extends DrupalWebTestCase {
+
+  /**
+   * @var \PHPMailer\PHPMailer\PHPMailer
+   */
+  protected $phpmailer;
+
   /**
    * {@inheritdoc}
    */
@@ -43,6 +53,8 @@ class SmtpUnitTest extends DrupalWebTestCase {
 
     // Use Maillog to log all emails.
     variable_set('maillog_log', TRUE);
+
+    $this->phpmailer = new PHPMailer();
   }
 
   /**
@@ -105,7 +117,7 @@ class SmtpUnitTest extends DrupalWebTestCase {
     variable_set('smtp_queue', TRUE);
 
     // Send a test message.
-    $langcode = language_default('language');
+    $langcode = language_default();
     $sender = 'simpletest@example.com';
     $to_email = 'to_test@example.com';
     $reply_email = 'reply_test@example.com';
@@ -142,7 +154,7 @@ class SmtpUnitTest extends DrupalWebTestCase {
     variable_set('smtp_username', 'hello@example.com');
 
     // Send a test message.
-    $langcode = language_default('language');
+    $langcode = language_default();
     $sender = 'simpletest@example.com';
     $to_email = 'to_test@example.com';
     $reply_email = 'reply_test@example.com';
@@ -230,6 +242,26 @@ class SmtpUnitTest extends DrupalWebTestCase {
       $this->assertIdentical(!empty($expected['name']) ? $expected['name'] : '', $ret['name']);
       $this->assertIdentical(!empty($expected['email']) ? $expected['email'] : '', $ret['email']);
     }
+  }
+
+  /**
+   * Test case for https://nvd.nist.gov/vuln/detail/CVE-2020-36326.
+   */
+  public function testCVW_2020_36326() {
+    // Ensure that phar resources are rejected.
+    try {
+      $this->phpmailer->AddAttachment('phar://phar.php');
+    } catch (\Exception $exception) {
+      $this->assert(TRUE, 'Exception thrown when attempting to add a phar resource as attachment.');
+    }
+
+    // Ensure that remote URL's are rejected.
+    $this->phpmailer->AddAttachment('https://github.com/PHPMailer/PHPMailer/raw/master/README.md');
+    $this->assertTrue(empty($this->phpmailer->GetAttachments()), 'phar resources and remote files were not added as attachments.');
+
+    // Ensure that adding regular attachments still works.
+    $this->phpmailer->addAttachment(drupal_get_path('module', 'smtp') . '/tests/attachment.txt');
+    $this->assertFalse(empty($this->phpmailer->GetAttachments()), 'Regular file was added as an attachment.');
   }
 
   /**

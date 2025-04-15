@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Copy of drupal_html_to_text improvements from issue #299138.
@@ -13,7 +14,7 @@
  * We deliberately use variable_get('mail_line_endings', MAIL_LINE_ENDINGS)
  * rather than "\r\n".
  *
- * @param $text
+ * @param string $text
  *   The plain text to process.
  * @param array $options
  *   (optional) An array containing one or more of the following keys:
@@ -69,8 +70,9 @@ function mailsystem_wrap_mail($text, array $options = array()) {
 }
 
 /**
- * Transform an HTML string into plain text, preserving the structure of the
- * markup. Useful for preparing the body of a node to be sent by e-mail.
+ * Transform an HTML string into plain text, preserving structure of the Markup.
+ *
+ * Useful for preparing the body of a node to be sent by e-mail.
  *
  * The output will be suitable for use as 'format=flowed; delsp=yes' text
  * (RFC 3676) and can be passed directly to drupal_mail() for sending.
@@ -89,18 +91,18 @@ function mailsystem_wrap_mail($text, array $options = array()) {
  * - <li value=...>: Ordered list item numbers.
  * - <ol start=...>: Ordered list start number.
  *
- * @param $string
+ * @param string $string
  *   The string to be transformed.
- * @param $allowed_tags
+ * @param array $allowed_tags
  *   (optional) If supplied, a list of tags that will be transformed. If
  *   omitted, all supported tags are transformed.
  *
- * @return
+ * @return string
  *   The transformed string.
  *
  * @see drupal_mail()
  */
-function mailsystem_html_to_text($string, $allowed_tags = NULL) {
+function mailsystem_html_to_text($string, array $allowed_tags = NULL) {
   $eol = variable_get('mail_line_endings', MAIL_LINE_ENDINGS);
   // Cache list of supported tags.
   static $supported_tags;
@@ -126,7 +128,7 @@ function mailsystem_html_to_text($string, $allowed_tags = NULL) {
   // Change non-breaking spaces back to regular spaces, and trim line breaks.
   // chr(160) is the non-breaking space character.
   $text = str_replace(chr(160), ' ', trim($text, $eol));
-  // Add footnotes;
+  // Add footnotes;.
   if ($notes) {
     // Add a blank line before the footnote list.
     $text .= $eol;
@@ -142,21 +144,24 @@ function mailsystem_html_to_text($string, $allowed_tags = NULL) {
  *
  * Recursively converts $node to text, wrapping and indenting as necessary.
  *
- * @param $node
+ * @param DOMNode $node
  *   The source DOMNode.
- * @param $allowed_tags
+ * @param array $allowed_tags
  *   A list of tags that will be transformed.
  * @param array &$notes
  *   A writeable array of footnote reference numbers, keyed by their
  *   respective hyperlink destination urls.
- * @param $line_length
+ * @param int $line_length
  *   The maximum length of a line, for wrapping.  Defaults to 80 characters.
  * @param array $parents
  *   The list of ancestor tags, from nearest to most distant.  Defaults to an
  *   empty array().
- * @param $count
+ * @param int $count
  *   The number to use for the next list item within an ordered list.  Defaults
  *   to 1.
+ *
+ * @return string
+ *   The converted text.
  */
 function _mailsystem_html_to_text(DOMNode $node, array $allowed_tags, array &$notes, $line_length = 80, array $parents = array(), &$count = NULL) {
   if (!isset($count)) {
@@ -407,7 +412,8 @@ function _mailsystem_html_to_text(DOMNode $node, array $allowed_tags, array &$no
   // Copy each child node to output.
   if ($node->hasChildNodes()) {
     foreach ($node->childNodes as $child) {
-      $child_text .= _mailsystem_html_to_text($child, $allowed_tags, $notes, $line_length - drupal_strlen($indent), $parents, $child_count);    }
+      $child_text .= _mailsystem_html_to_text($child, $allowed_tags, $notes, $line_length - drupal_strlen($indent), $parents, $child_count);
+    }
   }
   // We only add prefix and suffix if the child nodes were non-empty.
   if ($child_text > '') {
@@ -416,7 +422,7 @@ function _mailsystem_html_to_text(DOMNode $node, array $allowed_tags, array &$no
       $child_text = drupal_strtoupper($child_text);
     }
     // Don't add a newline to an existing newline.
-    if ($suffix === $eol && drupal_substr($child_text, - drupal_strlen($eol)) === $eol) {
+    if ($suffix === $eol && drupal_substr($child_text, -drupal_strlen($eol)) === $eol) {
       $suffix = '';
     }
     // Trim spaces around newlines except with <pre> or inline tags.
@@ -459,20 +465,20 @@ function _mailsystem_html_to_text(DOMNode $node, array $allowed_tags, array &$no
  *
  * @param DOMNode $node
  *   The DOMNode corresponding to the <table> tag and its contents.
- * @param $allowed_tags
+ * @param array $allowed_tags
  *   The list of allowed tags passed to _mailsystem_html_to_text().
  * @param array &$notes
  *   A writeable array of footnote reference numbers, keyed by their
  *   respective hyperlink destination urls.
- * @param $table_width
+ * @param int $table_width
  *   The desired maximum table width, after word-wrapping each table cell.
  *
- * @return
+ * @return string
  *   A plain text representation of the table.
  *
  * @see _mailsystem_html_to_text()
  */
-function _mailsystem_html_to_text_table(DOMNode $node, $allowed_tags = NULL, array &$notes = array(), $table_width = 80) {
+function _mailsystem_html_to_text_table(DOMNode $node, array $allowed_tags = NULL, array &$notes = array(), $table_width = 80) {
   $eol = variable_get('mail_line_endings', MAIL_LINE_ENDINGS);
   $header = array();
   $footer = array();
@@ -482,7 +488,8 @@ function _mailsystem_html_to_text_table(DOMNode $node, $allowed_tags = NULL, arr
   while (TRUE) {
     if (isset($current->tagName)) {
       switch ($current->tagName) {
-        case 'caption':  // The table caption is added first.
+        // The table caption is added first.
+        case 'caption':
           $text = _mailsystem_html_to_text($current, $allowed_tags, $notes, $table_width);
           break;
 
@@ -496,7 +503,8 @@ function _mailsystem_html_to_text_table(DOMNode $node, $allowed_tags = NULL, arr
               $footer[] = $current;
               break;
 
-            default: // Either 'tbody' or 'table'
+            // Either 'tbody' or 'table'.
+            default:
               $body[] = $current;
               break;
           }
@@ -582,7 +590,7 @@ function _mailsystem_html_to_text_table(DOMNode $node, $allowed_tags = NULL, arr
             $j++;
           }
         }
-        // Calculate the total table width;
+        // Calculate the total table width;.
         $this_width = array_sum($widths) + $num_cols + 1;
         if ($this_width > $table_width) {
           // Wider than desired.
@@ -647,7 +655,7 @@ function _mailsystem_html_to_text_table(DOMNode $node, $allowed_tags = NULL, arr
       }
       // Generate the row separator line.
       $separator = '+';
-      for($i = 0; $i < $num_cols; $i++) {
+      for ($i = 0; $i < $num_cols; $i++) {
         $separator .= str_repeat('-', $widths[$i]) . '+';
       }
       $separator .= $eol;

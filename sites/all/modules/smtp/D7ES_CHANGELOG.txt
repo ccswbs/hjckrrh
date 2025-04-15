@@ -1,0 +1,6 @@
+SMTP Authentication Support 7.x-1.x, xxxx-xx-xx (development version)
+-----------------------
+
+SMTP Authentication Support 7.x-1.10, 2025-04-02
+-----------------------
+- Update PHPMailer version to 6.9.3. Fixes various security issues.

@@ -4,8 +4,6 @@ core = 7.x
 package = Mail
 configure = admin/config/system/smtp
 files[] = smtp.mail.inc
-files[] = smtp.phpmailer.inc
-files[] = smtp.transport.inc
 
 ; Test suite.
 files[] = tests/smtp.unit.test
@@ -13,8 +11,6 @@ files[] = tests/smtp.unit.test
 ; For the tests the Maillog module is also required.
 test_dependencies[] = maillog
 
-; Information added by Drupal.org packaging script on 2023-01-10
-version = "7.x-1.9"
-core = "7.x"
-project = "smtp"
-datestamp = "1673392516"
+version = 7.x-1.10
+project = smtp
+datestamp = 1743618095
