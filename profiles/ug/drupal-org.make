@@ -44,7 +44,7 @@ projects[ctools][patch][] = "https://www.drupal.org/files/issues/2018-03-26/view
 
 projects[datalayer][version] = "1.x-dev"
 
-projects[date][version] = "2.10"
+projects[date][version] = "2.14"
 
 projects[date_ical][version] = "3.5"
 
@@ -64,7 +64,7 @@ projects[editablefields][version] = "1.0-alpha4"
 
 projects[email][version] = "1.3"
 
-projects[entity][version] = "1.9"
+projects[entity][version] = "1.11"
 
 projects[entityform][version] = "2.0-rc4"
 
@@ -227,8 +227,7 @@ projects[restrict_password_change][version] = "1.0-beta2"
 
 projects[role_delegation][version] = "1.3"
 
-projects[rules][version] = "2.12"
-projects[rules][patch][] = "https://www.drupal.org/files/issues/rules-fix-fatal-error-features-revert-2186363-2.patch"
+projects[rules][version] = "2.14"
 
 projects[scanner][version] = "1.1"
 
