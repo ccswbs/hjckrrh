@@ -1,0 +1,10 @@
+name = Facebook Pixel
+description = Allows your site to be tracked by Facebook Pixel.
+package = Statistics
+core = 7.x
+configure = admin/config/system/facebook_pixel
+# project = facebook_pixel
+
+version = 7.x-1.2
+project = facebook_pixel
+datestamp = 1745429369
