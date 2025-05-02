@@ -1,0 +1,9 @@
+name = Flag Fields Test
+description = Test module for fields on Flagging entities.
+dependencies[] = flag
+core = 7.x
+hidden = TRUE
+
+version = 7.x-3.10
+project = flag
+datestamp = 1744841119

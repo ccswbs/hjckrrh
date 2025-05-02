@@ -1,0 +1,7 @@
+Flag 7.x-3.x, xxxx-xx-xx (development version)
+-----------------------
+
+Flag 7.x-3.10, 2025-04-16
+-----------------------
+- Fixed XSS via AJAX request in flag.js
+- Fixed execution of tests on PHP 8.2

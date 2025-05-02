@@ -1,0 +1,10 @@
+name = Flag hook_flag_access test
+description = Tests for hook_flag_access
+core = 7.x
+dependencies[] = flag
+package = Flags
+hidden = TRUE
+
+version = 7.x-3.10
+project = flag
+datestamp = 1744841119
