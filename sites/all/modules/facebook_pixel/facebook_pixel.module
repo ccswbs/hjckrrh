@@ -135,6 +135,7 @@ function facebook_pixel_preprocess_page(&$variables) {
   }
 
   if ($pixel_id = variable_get('facebook_pixel_id')) {
+    $pixel_id = urlencode($pixel_id);
     $script = "
 <!-- Facebook Pixel Code -->
 <script>

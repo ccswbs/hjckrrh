@@ -1,0 +1,24 @@
+{
+    "name": "drupal/facebook_pixel",
+    "type": "drupal-module",
+    "description": "Allows your site to be tracked by Facebook Pixel.",
+    "keywords": [
+        "Drupal"
+    ],
+    "license": "GPL-2.0+",
+    "authors": [],
+    "support": {},
+    "require": {},
+    "require-dev": {},
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://packages.drupal.org/7"
+        }
+    ]
+}

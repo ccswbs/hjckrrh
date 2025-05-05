@@ -1,0 +1,6 @@
+Facebook Pixel 7.x-1.x, xxxx-xx-xx (development version)
+-----------------------
+
+Facebook Pixel 7.x-1.2, 2025-04-23
+-----------------------
+- Fix XSS in Pixel ID.
