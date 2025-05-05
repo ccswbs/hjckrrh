@@ -38,6 +38,9 @@ abstract class FlagTestCaseBase extends DrupalWebTestCase {
  */
 class FlagFlaggingCRUDTestCase extends FlagTestCaseBase {
 
+  protected $flag_unflag_user;
+  protected $flag;
+
   /**
    * Implements getInfo().
    */
@@ -619,6 +622,7 @@ class FlagEntityTokensTestCase extends FlagTestCaseBase {
 
     // Flag the term as the user.
     $flag = flag_get_flag('term_flag');
+
     $flag->flag('flag', $term->tid, $flag_user_1);
 
     $flag_user_2 = $this->drupalCreateUser(array('flag term_flag',));
@@ -642,6 +646,8 @@ class FlagEntityTokensTestCase extends FlagTestCaseBase {
  * Access to flags using the basic flag link.
  */
 class FlagAccessLinkTestCase extends FlagTestCaseBase {
+
+  protected $nid;
 
   /**
    * Implements getInfo().
@@ -768,6 +774,11 @@ class FlagAccessLinkTestCase extends FlagTestCaseBase {
  * Test the 'confirm form' link type.
  */
 class FlagLinkTypeConfirmTestCase extends DrupalWebTestCase {
+
+  protected $flag_data;
+  protected $flag;
+  protected $flag_unflag_user;
+  protected $nid;
 
   /**
    * Implements getInfo().
@@ -913,6 +924,8 @@ class FlagLinkTypeConfirmTestCase extends DrupalWebTestCase {
  * Verifies the implementation of hook_flag_access().
  */
 class FlagHookFlagAccessTestCase extends FlagTestCaseBase {
+
+  protected $nid;
 
   /**
    * Implements getInfo().
@@ -1150,6 +1163,11 @@ class FlagFlaggingFieldTestCase extends FlagTestCaseBase {
  */
 class FlagEntityFieldQueryTestCase extends FlagTestCaseBase {
 
+  protected $flag1;
+  protected $flag2;
+  protected $flag3;
+  protected $flag_unflag_user;
+
   /**
    * Implements getInfo().
    */
@@ -1254,6 +1272,8 @@ class FlagEntityFieldQueryTestCase extends FlagTestCaseBase {
  * Verifies the invocation of hooks when performing flagging and unflagging.
  */
 class FlagHookInvocationsTestCase extends FlagTestCaseBase {
+
+  protected $flag_unflag_user;
 
   /**
    * Implements getInfo().
@@ -1661,6 +1681,11 @@ class FlagHookInvocationsTestCase extends FlagTestCaseBase {
  * Verifies the optimization for comment viewing.
  */
 class FlagCommentOptimizationTestCase extends FlagTestCaseBase {
+
+  protected $flag;
+  protected $user;
+  protected $nid;
+  protected $cids;
 
   /**
    * Implements getInfo().

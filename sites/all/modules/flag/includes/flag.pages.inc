@@ -45,6 +45,8 @@ function flag_page($action, $flag, $entity_id) {
   // If successful, return data according to the request type.
   if ($js) {
     drupal_add_http_header('Content-Type', 'text/javascript; charset=utf-8');
+    drupal_add_http_header('X-Flag-Token', $token);
+
     $flag->link_type = 'toggle';
     // Any errors that have been set will be output below
     // the flag link with javascript.

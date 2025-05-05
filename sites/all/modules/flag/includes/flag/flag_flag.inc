@@ -38,6 +38,7 @@
  * that can't be found, the special handler flag_broken. Finally, this calls
  * $flag->construct() on the new handler object.
  */
+#[AllowDynamicProperties]
 class flag_flag {
 
   /**
@@ -339,15 +340,15 @@ class flag_flag {
    * Fetches, possibly from some cache, an entity this flag works with.
    */
   function fetch_entity($entity_id, $object_to_remember = NULL) {
-    static $cache = array();
+    $cache = &drupal_static(__FUNCTION__, []);
     if (isset($object_to_remember)) {
-      $cache[$entity_id] = $object_to_remember;
+      $cache[$this->entity_type][$entity_id] = $object_to_remember;
     }
-    if (!array_key_exists($entity_id, $cache)) {
+    if (empty($cache[$this->entity_type][$entity_id])) {
       $entity = $this->_load_entity($entity_id);
-      $cache[$entity_id] = $entity ? $entity : NULL;
+      $cache[$this->entity_type][$entity_id] = $entity ? $entity : NULL;
     }
-    return $cache[$entity_id];
+    return $cache[$this->entity_type][$entity_id];
   }
 
   /**
