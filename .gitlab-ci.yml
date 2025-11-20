@@ -9,6 +9,13 @@
 # - DrupalSpoons
 ################
 
+# Include packaging pipeline
+include:
+  - project: "tag1consulting/d7es-ci-packaging"
+    ref: main
+    file:
+      - "templates/package_release/package_release.yml"
+
 ################
 # Workflow
 #
@@ -39,6 +46,8 @@ workflow:
     - if: $CI_PIPELINE_SOURCE == "web"
      # Run if triggered from WebIDE
     - if: $CI_PIPELINE_SOURCE == "webide"
+    # Run if tag pushed - required for packaging pipeline
+    - if: $CI_COMMIT_TAG
 
 ################
 # Variables
@@ -55,10 +64,12 @@ workflow:
 
 variables:
   _CONFIG_DOCKERHUB_ROOT: "drupalci"
-  _TARGET_PHP: "8.1"
+  _TARGET_PHP: "8.2"
   CONCURRENCY: 15
   GIT_DEPTH: "3"
   COMPOSER_ALLOW_SUPERUSER: 1
+  SKIP_PHPSTAN: "1"
+  SKIP_PHPCS: "1"
 
 ################
 # Stages
@@ -86,6 +97,11 @@ stages:
   # and artifacts.
   ################
   - 🗜️ Test
+
+  # Used by packaging pipeline
+  - packaging
+  - upload
+  - release
 
 #############
 # Templates #
@@ -122,10 +138,10 @@ stages:
 # Jobs define what scripts are actually executed in each stage.
 ################
 
-'🧹 PHP Compatibility checks (PHPCS)':
+'🧹 PHPCS':
   stage: 🪄 Lint
   variables:
-    PHPCS_PHP_VERSION: "5.6"
+    PHPCS_PHP_VERSION: "8.2"
     KUBERNETES_CPU_REQUEST: "16"
   interruptible: true
   allow_failure: true
@@ -146,6 +162,8 @@ stages:
     reports:
       codequality: phpcs-quality-report.json
   rules:
+    - if: $SKIP_PHPCS == "1"
+      when: never
     - <<: *run-on-mr
   before_script:
     - echo "{}" > composer.json
@@ -159,11 +177,59 @@ stages:
     - echo "If this list contains more files than what you changed, then you need to rebase your branch."
     - vendor/bin/phpcs --basepath=$CI_PROJECT_DIR --report-\\Micheh\\PhpCodeSniffer\\Report\\Gitlab=phpcs-quality-report.json --report-full --report-summary --standard=PHPCompatibility --runtime-set testVersion $PHPCS_PHP_VERSION --extensions=php,module,inc,install,test,profile,theme $MODIFIED
 
+'🧹 PHPStan':
+  stage: 🪄 Lint
+  variables:
+    KUBERNETES_CPU_REQUEST: "16"
+  interruptible: true
+  rules:
+    - if: $SKIP_PHPSTAN != "1"
+  retry:
+    max: 2
+    when:
+      - unknown_failure
+      - api_failure
+      - stuck_or_timeout_failure
+      - runner_system_failure
+      - scheduler_failure
+  image:
+    name: $_CONFIG_DOCKERHUB_ROOT/php-$_TARGET_PHP-apache:production
+  script:
+    - composer install --optimize-autoloader
+    - if [ -n "$COMPOSER_UPDATE" ]; then
+      composer update --optimize-autoloader;
+      composer outdated;
+      fi
+    - vendor/bin/phpstan --version
+    # Rely on PHPStan caching to execute analysis multiple times without performance drawback.
+    # Output a copy in junit.
+    - php vendor/bin/phpstan analyze --error-format=gitlab > phpstan-quality-report.json || EXIT_CODE=$?
+    - php vendor/bin/phpstan analyze --no-progress --error-format=junit > phpstan-junit.xml || true
+    - |
+      if [ -n "$EXIT_CODE" ]; then
+        # Output a copy in plain text for human logs.
+        php vendor/bin/phpstan analyze --no-progress || true
+        # Generate a new baseline.
+        echo "Generating an PHPStan baseline file (available as job artifact)."
+        php vendor/bin/phpstan analyze --no-progress --generate-baseline=phpstan-baseline.php || true
+        exit $EXIT_CODE
+      fi
+
+  artifacts:
+    reports:
+      codequality: phpstan-quality-report.json
+      junit: phpstan-junit.xml
+    # Only store the baseline if the job fails.
+    when: on_failure
+    paths:
+      - phpstan-baseline.php
+
+
 # Default job.
-'PHP 8.1 MySQL 5.7':
+'PHP 8.2 MySQL 5.7':
   <<: *default-stage
   variables:
-    _TARGET_PHP: "8.1"
+    _TARGET_PHP: "8.2"
     _TARGET_DB: "mysql-5.7"
   rules:
     - <<: *run-on-commit
@@ -198,6 +264,13 @@ stages:
   variables:
     _TARGET_PHP: "8.2"
     _TARGET_DB: "mysql-8"
+
+# Not yet supported by Tag1 as there are a few known test failures.
+'PHP 8.3 MySQL 5.7':
+  <<: *default-stage
+  variables:
+    _TARGET_PHP: "8.3"
+    _TARGET_DB: "mysql-5.7"
 
 'PHP 7.4 PostgreSQL 9.5':
   <<: *default-stage

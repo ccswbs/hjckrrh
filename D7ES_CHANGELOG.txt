@@ -1,0 +1,3 @@
+Drupal 7.104, 2025-10-01
+------------------------
+- Backport Backdrop SA-Contrib 2025-015 for BBQ JavaScript.

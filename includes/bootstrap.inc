@@ -8,7 +8,7 @@
 /**
  * The current system version.
  */
-define('VERSION', '7.103');
+define('VERSION', '7.104');
 
 /**
  * Core API compatibility.
@@ -760,44 +760,13 @@ function drupal_settings_initialize() {
   global $base_url, $base_path, $base_root;
 
   // Export these settings.php variables to the global namespace.
-  global $databases, $cookie_domain, $cookie_path, $conf, $installed_profile, $update_free_access, $db_url, $db_prefix, $drupal_hash_salt, $is_https, $base_secure_url, $base_insecure_url;
+  global $databases, $cookie_domain, $conf, $installed_profile, $update_free_access, $db_url, $db_prefix, $drupal_hash_salt, $is_https, $base_secure_url, $base_insecure_url;
   $conf = array();
 
   if (file_exists(DRUPAL_ROOT . '/' . conf_path() . '/settings.php')) {
     include_once DRUPAL_ROOT . '/' . conf_path() . '/settings.php';
   }
-  
-  // Auth Tag1 D7ES module on Pantheon
-  if (getenv('PANTHEON_D7ES_API_KEY')) {
-    $conf['tag1_d7es_billing_email'] = getenv('PANTHEON_D7ES_API_KEY');
-  }
-
   $is_https = drupal_is_https();
-
-  // Load environmental config, if present.
-  if (isset($_SERVER['PRESSFLOW_SETTINGS'])) {
-    $pressflow_settings = json_decode($_SERVER['PRESSFLOW_SETTINGS'], TRUE);
-    foreach ($pressflow_settings as $key => $value) {
-      // One level of depth should be enough for $conf and $database.
-      if ($key == 'conf') {
-        foreach($value as $conf_key => $conf_value) {
-          $conf[$conf_key] = $conf_value;
-        }
-      }
-      elseif ($key == 'databases') {
-        // Protect default configuration but allow the specification of
-        // additional databases. Also, allows fun things with 'prefix' if they
-        // want to try multisite.
-        if (!isset($databases) || !is_array($databases)) {
-          $databases = array();
-        }
-        $databases = array_replace_recursive($databases, $value);
-      }
-      else {
-        $$key = $value;
-      }
-    }
-  }
 
   if (isset($base_url)) {
     // Parse fixed base URL from settings.php.
@@ -831,13 +800,8 @@ function drupal_settings_initialize() {
   $base_insecure_url = str_replace('https://', 'http://', $base_url);
 
   if ($cookie_domain) {
-    // If the user specifies the cookie domain, use it for session name.
+    // If the user specifies the cookie domain, also use it for session name.
     $session_name = $cookie_domain;
-
-    // If the user specifies the cookie path, include it in session name.
-    if ($cookie_path && $cookie_path !== '/') {
-      $session_name .= $cookie_path;
-    }
   }
   else {
     // Otherwise use $base_url as session name, without the protocol
@@ -859,16 +823,11 @@ function drupal_settings_initialize() {
       $session_name = '.' . $session_name;
     }
   }
-
   // Per RFC 2109, cookie domains must contain at least one dot other than the
   // first. For hosts such as 'localhost' or IP Addresses we don't set a cookie domain.
   if (count(explode('.', $cookie_domain)) > 2 && !is_numeric(str_replace('.', '', $cookie_domain))) {
     ini_set('session.cookie_domain', $cookie_domain);
   }
-  if ($cookie_path && $cookie_path !== '/') {
-    ini_set('session.cookie_path', $cookie_path);
-  }
-
   // To prevent session cookies from being hijacked, a user can configure the
   // SSL version of their website to only transfer session cookies via SSL by
   // using PHP's session.cookie_secure setting. The browser will then use two
@@ -2892,22 +2851,6 @@ function _drupal_bootstrap_database() {
  */
 function _drupal_bootstrap_variables() {
   global $conf;
-
-  // Pressflow Smart Start
-  if (!empty($GLOBALS['databases']) && variable_get('pressflow_smart_start', FALSE)) {
-    try {
-      $result = db_query('SELECT s.name FROM {system} s WHERE s.name = :name', array(':name' => 'system'));
-    } catch (PDOException $e) {
-      if ($e->getCode() == '2003') {
-        header('Status: 550 Database Offline');
-        exit();
-      }
-      elseif ($e->getCode() == '42S02') {
-        include_once DRUPAL_ROOT . '/includes/install.inc';
-        install_goto('install.php');
-      }
-    }
-  }
 
   // Initialize the lock system.
   require_once DRUPAL_ROOT . '/' . variable_get('lock_inc', 'includes/lock.inc');
