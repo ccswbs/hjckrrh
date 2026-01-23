@@ -61,7 +61,7 @@ class shs_handler_filter_term_node_tid_depth extends shs_handler_filter_term_nod
         return;
       }
       else {
-        $this->value = explode('+', $this->value[0]);
+        $this->value = explode('+', reset($this->value));
         $this->value = explode(',', end($this->value));
         $operator = 'IN';
       }

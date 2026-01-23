@@ -58,7 +58,7 @@ function shs_json() {
       // Get arguments and validate them.
       $post_args = (isset($_POST['arguments']) && is_array($_POST['arguments'])) ? $_POST['arguments'] : array();
       $arguments = _shs_json_callback_get_arguments($valid_callbacks[$_callback], $post_args);
-      if (($callback_result = call_user_func_array($valid_callbacks[$_callback]['callback'], $arguments)) !== FALSE) {
+      if (($callback_result = call_user_func_array($valid_callbacks[$_callback]['callback'], array_values($arguments))) !== FALSE) {
         $result['success'] = TRUE;
         $result['data'] = $callback_result;
       }
@@ -796,13 +796,13 @@ function shs_field_formatter_view($entity_type, $entity, $field, $instance, $lan
         // Add parent term names.
         foreach ($item['parents'] as $parent) {
           $list_items[] = array(
-            'data' => $settings['linked'] ? l($parent->name, "taxonomy/term/{$parent->tid}") : $parent->name,
+            'data' => $settings['linked'] ? l($parent->name, "taxonomy/term/{$parent->tid}") : check_plain($parent->name),
             'class' => array('shs-parent'),
           );
         };
         // Add name of selected term.
         $list_items[] = array(
-          'data' => $settings['linked'] ? l($item['term']->name, "taxonomy/term/{$item['term']->tid}") : $item['term']->name,
+          'data' => $settings['linked'] ? l($item['term']->name, "taxonomy/term/{$item['term']->tid}") : check_plain($item['term']->name),
           'class' => array('shs-term-selected'),
         );
         $elements[$delta] = array(
@@ -907,10 +907,10 @@ function shs_term_get_children($identifier, $parent = 0, array $settings = array
         foreach ($tree as $term) {
           $term_name = $term->name;
           if (module_exists('i18n_taxonomy')) {
-            $term_name = i18n_taxonomy_term_name($term, $langcode);
+            $term_name = check_plain(i18n_taxonomy_term_name($term, $langcode));
           }
           elseif (module_exists('entity_translation')) {
-            $term_name = entity_label('taxonomy_term', $term);
+            $term_name = check_plain(entity_label('taxonomy_term', $term));
           }
           $terms[$vocabulary_cache_key][$langcode][$parent][$term->tid] = $term_name;
         }

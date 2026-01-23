@@ -74,7 +74,8 @@ class shs_handler_filter_term_node_tid extends views_handler_filter_term_node_ti
       $default_value = empty($this->value) ? 0 : $this->value;
 
       if (!empty($form_state['input'][$identifier])) {
-        $default_value = check_plain($form_state['input'][$identifier]);
+        $input_value = $form_state['input'][$identifier];
+        $default_value = is_array($form_state['input'][$identifier]) ? check_plain(reset($form_state['input'][$identifier])) : check_plain($form_state['input'][$identifier]);
         if ($multiple && !is_array($default_value)) {
           $default_value = array($default_value);
         }

@@ -1,0 +1,31 @@
+{
+  "name": "drupal/shs",
+  "type": "drupal-module",
+  "description": "Simple hierarchical select",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "authors": [],
+  "support": {},
+  "require": {
+  },
+  "require-dev": {
+    "drupal/coder": "^8.2@stable",
+    "phpunit/phpunit": "^10.5",
+    "symfony/filesystem": "^6.4",
+    "drush/drush": "^8.3.3"
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    },
+    "audit": {
+      "ignore": {
+        "PKSA-wws7-mr54-jsny": "Drupal7 symphony/process v2.7.0 to v4.4.44"
+      }
+    }
+  },
+  "repositories": [{
+    "type": "composer",
+    "url": "https://packages.drupal.org/7"
+  }]
+}

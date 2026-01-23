@@ -12,19 +12,18 @@
 
     // Default function to attach the behavior.
     attach: function (context, settings) {
-      var self = this;
       var settingsDefault = {
         display: {
           animationSpeed: 400,
         }
       };
-      $('select.shs-enabled:not([disabled])')
+      $('select.shs-enabled')
         .once('shs')
         .addClass('element-invisible')
         .hide()
         .each(function() {
-          $field = $(this);
-          var fieldName = $(this).attr('name');
+          var $field = $(this);
+          var fieldName = $field.attr('name');
           // Multiform messes up the names of the fields
           // to the format multiform[something][fieldname][...].
           if (fieldName.indexOf('multiform') == 0) {
@@ -56,6 +55,10 @@
               if ($field.hasClass('error')) {
                 // Add error-class if there was an error with the original field.
                 $select.addClass('error');
+              }
+              // Disable when the original element is disabled.
+              if ($field.prop('disabled')) {
+                $select.prop('disabled', true);
               }
               // Add label to dropdown.
               $label = shsLabelCreate($field.attr('id'), fieldSettings, level);
@@ -443,6 +446,10 @@
     if (settings.settings.hasOwnProperty('required') && settings.settings.required) {
       $element.addClass('required');
     }
+    // Support Bootstrap.
+    if (Drupal.settings.bootstrap !== undefined) {
+      $element.addClass('form-control');
+    }
     // Return the new element.
     return $element;
   }
@@ -600,3 +607,4 @@
   }
 
 })(jQuery, Drupal);
+
