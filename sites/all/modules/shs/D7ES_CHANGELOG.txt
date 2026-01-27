@@ -1,6 +1,0 @@
-Simple hierarchical select 7.x-1.xxx, xxxx-xx-xx (development version)
-------------------------
-
-Simple hierarchical select 7.x-1.11, 2026-01-21
------------------------
-- Security: Use check_plain() for entity_label and i18n_taxonomy_term_name to prevent XSS.
