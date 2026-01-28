@@ -234,8 +234,6 @@ projects[scanner][version] = "1.1"
 
 projects[services][version] = "3.28"
 
-projects[shs][version] = "1.8"
-
 projects[siteimprove][version] = "1.0"
 
 projects[smart_trim][version] = "1.5"
