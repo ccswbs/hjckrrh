@@ -1,0 +1,83 @@
+<?php
+
+/**
+ * @file
+ * Main module file for Rabbit Hole field collections module.
+ *
+ * This module will add the Rabbit Hole functionality to field collections.
+ */
+
+/**
+ * Implements hook_rabbit_hole().
+ */
+function rh_field_collection_rabbit_hole() {
+  return array(
+    'rh_field_collection' => array(
+      'entity type' => 'field_collection_item',
+      'base table' => 'field_collection_item',
+      'view path' => 'field-collection/%/view',
+    ),
+  );
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * This will add Rabbit Hole options to the field collection form. The user will
+ * be able to override the default Rabbit Hole options.
+ */
+function rh_field_collection_form_field_collection_item_form_alter(&$form, $form_state) {
+  rabbit_hole_form($form, 'field_collection_item', $form['#bundle'], 'rh_field_collection', $form['#entity']);
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * This will add Rabbit Hole options to the edit field form. These settings will
+ * be used as default for every field collection item.
+ */
+function rh_field_collection_form_field_ui_field_edit_form_alter(&$form, &$form_state, $form_id) {
+  if (isset($form['#field']) && isset($form['#field']['type']) && $form['#field']['type'] == 'field_collection') {
+    rabbit_hole_form($form, 'field_collection_item', $form['#field']['field_name'], 'rh_field_collection');
+  }
+}
+
+/**
+ * Submit callback for the bundle form.
+ *
+ * This will set the values of the variables.
+ */
+function rh_field_collection_bundle_form_submit($form, $form_state) {
+  $values = $form_state['values'];
+  $bundle = $values['instance']['field_name'];
+
+  variable_set('rh_field_collection_item_override_' . $bundle, $values['rh_field_collection_item_override']);
+  variable_set('rh_field_collection_item_action_' . $bundle, $values['rh_field_collection_item_action']);
+  variable_set('rh_field_collection_item_redirect_' . $bundle, $values['rh_field_collection_item_redirect']);
+  variable_set('rh_field_collection_item_redirect_response_' . $bundle, $values['rh_field_collection_item_redirect_response']);
+}
+
+/**
+ * Implements hook_field_collection_item_view().
+ */
+function rh_field_collection_field_collection_item_view($field_collection_item, $view_mode, $langcode) {
+  // Execute Rabbit Hole, if the field collection item is being viewed at its
+  // own page using the full view mode, and the current user isn't able to
+  // override Rabbit Hole.
+  $item_page = menu_get_object('field_collection_item', 2);
+  $is_page = $item_page ? ($item_page->item_id == $field_collection_item->item_id) : FALSE;
+
+  if ($is_page && $view_mode == 'full' && !user_access('bypass rh_field_collection')) {
+    rabbit_hole_execute('field_collection_item', $field_collection_item);
+  }
+}
+
+/**
+ * Implements hook_field_delete_field().
+ */
+function rh_field_collection_field_delete_field($field) {
+  if ($field['type'] == 'field_collection') {
+    // Delete variables connected to this field collection.
+    rabbit_hole_delete_variables('field_collection_item', $field['field_name']);
+  }
+}

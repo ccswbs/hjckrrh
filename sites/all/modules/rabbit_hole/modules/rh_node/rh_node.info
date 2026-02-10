@@ -1,0 +1,11 @@
+name = Rabbit Hole nodes
+description = Adds Rabbit Hole functionality for nodes.
+core = 7.x
+dependencies[] = rabbit_hole
+dependencies[] = node
+
+; Information added by Drupal.org packaging script on 2020-11-30
+version = "7.x-2.26"
+core = "7.x"
+project = "rabbit_hole"
+datestamp = "1606763881"

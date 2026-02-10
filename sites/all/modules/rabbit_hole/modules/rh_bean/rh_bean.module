@@ -1,0 +1,137 @@
+<?php
+
+/**
+ * @file
+ * Main module file for Rabbit Hole beans module.
+ *
+ * This module will add the Rabbit Hole functionality to beans.
+ */
+
+/**
+ * Implements hook_rabbit_hole().
+ */
+function rh_bean_rabbit_hole() {
+  return array(
+    'rh_bean' => array(
+      'entity type' => 'bean',
+      'base table' => 'bean',
+      'view path' => 'block/%',
+    ),
+  );
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * This will add Rabbit Hole options to the bean type form. These settings will
+ * be used as default for every bean of this bean type.
+ */
+function rh_bean_form_bean_admin_ui_type_form_alter(&$form, $form_state) {
+  // Add the Rabbit Hole form.
+  rabbit_hole_form($form, 'bean', $form['bean_type']['#value']->type, 'rh_bean');
+  if (isset($form['rabbit_hole'])) {
+    $form['rabbit_hole']['#attached']['js'][] = drupal_get_path('module', 'rh_bean') . '/rh-bean.js';
+  }
+}
+
+/**
+ * Submit callback for the bundle form.
+ *
+ * This will set the values of the variables.
+ */
+function rh_bean_bundle_form_submit($form, $form_state) {
+  $values = $form_state['values'];
+
+  // Set the values of the variables.
+  variable_set('rh_bean_override_' . $values['bean_type']->type, $values['rh_bean_override']);
+  variable_set('rh_bean_action_' . $values['bean_type']->type, $values['rh_bean_action']);
+  variable_set('rh_bean_redirect_' . $values['bean_type']->type, $values['rh_bean_redirect']);
+  variable_set('rh_bean_redirect_response_' . $values['bean_type']->type, $values['rh_bean_redirect_response']);
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * This will add Rabbit Hole options to the bean form when adding a new bean.
+ * The user will be able to override the default Rabbit Hole options.
+ */
+function rh_bean_form_bean_form_alter(&$form, $form_state) {
+  // Add the Rabbit Hole form, and add an extra javascript file that's needed
+  // for the fieldset summary.
+  rabbit_hole_form($form, 'bean', $form_state['bean']->type, 'rh_bean', $form_state['bean']);
+  if (isset($form['rabbit_hole'])) {
+    $form['#attached']['js'][] = drupal_get_path('module', 'rh_bean') . '/rh-bean.js';
+  }
+
+  // Add a custom submit function. This is used to disable the redirect to
+  // block/% if Rabbit Hole is enabled and the user doesn't have the bypass
+  // rh_bean permission.
+  if (!user_access('bypass rh_bean')) {
+    $form['actions']['submit']['#submit'][] = 'rh_bean_form_submit';
+  }
+}
+
+/**
+ * Custom submit function for the bean edit form.
+ *
+ * This will fire after the regular submit function, and its purpose is to make
+ * sure that the user does not get redirected to block/% after saving the bean,
+ * if any Rabbit Hole action is enabled. This works by redirecting the user to
+ * block/%/edit, if a destination parameter has not been set.
+ *
+ * @see node_form_submit()
+ */
+function rh_bean_form_submit($form, &$form_state) {
+  // Get the action. Either the one specified for this bean, or the default
+  // value for the bean type.
+  $action = isset($form_state['values']['rh_action']) && $form_state['values']['rh_action'] != RABBIT_HOLE_USE_DEFAULT ? $form_state['values']['rh_action'] : rabbit_hole_get_action_bundle('bean', $form['#entity']->type);
+
+  // If the action says anything else than to display the content, make sure
+  // that the user does not land on the bean view page. We'll check if a custom
+  // redirect path has been set, otherwise, we'll redirect the user to the edit
+  // page again.
+  if ($action != RABBIT_HOLE_DISPLAY_CONTENT && $form_state['redirect'] == 'block/' . $form_state['values']['bean']->delta . '/view') {
+    $form_state['redirect'] = 'block/' . $form_state['values']['bean']->delta . '/edit';
+  }
+}
+
+/**
+ * Implements hook_entity_view().
+ */
+function rh_bean_entity_view($bean, $entity_type, $view_mode, $langcode) {
+  if ($entity_type == 'bean') {
+    if ($view_mode != 'default') {
+      // The bean isn't viewed using the default view mode, exit early.
+      return;
+    }
+
+    // Determine whether or not the bean is being viewed at it's own page. The
+    // logic for this has been taken from node_is_page().
+    $page_bean = menu_get_object('bean_delta');
+    $bean_is_page = (!empty($page_bean) ? $page_bean->delta == $bean->delta : FALSE);
+
+    // Execute Rabbit Hole, if the bean is being viewed at its own page, and the
+    // current user isn't able to override Rabbit Hole.
+    if ($bean_is_page && !user_access('bypass rh_bean')) {
+      rabbit_hole_execute('bean', $bean);
+    }
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function rh_bean_form_bean_admin_ui_type_op_confirm_alter(&$form, &$form_state, $form_id) {
+  list($op, $type) = $form_state['build_info']['args'];
+  if ($op == 'delete') {
+    $form['#submit'][] = 'rh_bean_bean_admin_ui_type_op_confirm_submit';
+  }
+}
+
+/**
+ * Custom submit handler for the bean type delete confirm form.
+ */
+function rh_bean_bean_admin_ui_type_op_confirm_submit($form, &$form_state) {
+  // Delete variables connected to this bean type.
+  rabbit_hole_delete_variables('bean', $form_state['values']['type']->type);
+}

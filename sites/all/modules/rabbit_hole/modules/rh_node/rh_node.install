@@ -1,0 +1,16 @@
+<?php
+
+/**
+ * @file
+ * Update instructions for Rabbit Hole nodes.
+ */
+
+/**
+ * Delete Rabbit Hole garbage variables.
+ */
+function rh_node_update_7001() {
+  foreach (node_type_get_names() as $type) {
+    variable_del('rh_module_' . $type);
+    variable_del('redirect_setting_name_' . $type);
+  }
+}
