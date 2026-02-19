@@ -1,0 +1,18 @@
+{
+  "name": "drupal/filefield_paths",
+  "type": "drupal-module",
+  "description": "Adds improved Token based file sorting and renaming functionalities.",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "authors": [],
+  "support": {},
+  "require": {
+
+  },
+  "require-dev": {
+    "drupal/pathauto": "^1.3",
+    "drupal/redirect": "^1.0@RC",
+    "drupal/token": "^1.9",
+    "drupal/transliteration": "^3.3"
+  }
+}

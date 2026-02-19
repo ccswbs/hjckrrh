@@ -324,4 +324,30 @@ class FileFieldPathsGeneralTestCase extends FileFieldPathsTestCase {
     $this->drupalGet("node/{$node->nid}");
     $this->assertRaw("{$this->public_files_directory}/{$file->filename}", t('Read-only file not affected by Retroactive updates.'));
   }
+
+  /**
+   * Tests the file objects passed to hook_node_insert().
+   */
+  public function testHookNodeInsertUriCollision() {
+    $langcode = LANGUAGE_NONE;
+
+    // Create a multivalue File field with 'node/[node:nid]' as the File path
+    $field_name                                                 = 'ffp_uri_collision';
+    $field_settings['cardinality']                              = FIELD_CARDINALITY_UNLIMITED;
+    $instance_settings['filefield_paths']['file_path']['value'] = 'node/[node:nid]';
+    $this->createFileField($field_name, $this->content_type, $field_settings, $instance_settings);
+
+    // Create a node with two test files with the same filename.
+    $text_files = $this->drupalGetTestFiles('text');
+    $this->drupalGet("node/add/{$this->content_type}");
+    $this->drupalPost(NULL, array("files[{$field_name}_{$langcode}_0]" => drupal_realpath($text_files[0]->uri)), t('Upload'));
+    $edit = array(
+      'title'                              => 'ffp_uri_collision',
+      "files[{$field_name}_{$langcode}_1]" => drupal_realpath($text_files[0]->uri),
+    );
+    $this->drupalPost(NULL, $edit, t('Save'));
+
+    $node_insert_uris = array_unique(variable_get('ffp_uri_collision_uris', array()));
+    $this->assertTrue(count($node_insert_uris) > 1, 'There were no collisions in the file uris passed to hook_node_insert()');
+  }
 }

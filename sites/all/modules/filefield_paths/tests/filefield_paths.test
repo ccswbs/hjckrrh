@@ -36,12 +36,18 @@ class FileFieldPathsTestCase extends FileFieldTestCase {
     // Create a content type.
     $content_type       = $this->drupalCreateContentType();
     $this->content_type = $content_type->name;
+    variable_set('filefield_paths_temp_location', 'public://filefield_paths');
   }
 
   /**
    * @inheritdoc
    */
   function createFileField($name, $type_name, $field_settings = array(), $instance_settings = array(), $widget_settings = array()) {
+    // Drupal 7.83+ defaults to '[date:custom:Y]-[date:custom:m]'.
+    // Override it for the tests to avoid token throwing errors.
+    if (!isset($instance_settings['file_directory'])) {
+      $instance_settings['file_directory'] = $name;
+    }
     parent::createFileField($name, $type_name, $field_settings, $instance_settings, $widget_settings);
     $this->drupalPost("admin/structure/types/manage/{$this->content_type}/fields/{$name}", array(), t('Save settings'));
   }
@@ -82,6 +88,11 @@ class FileFieldPathsTestCase extends FileFieldTestCase {
         'settings' => array(),
       ),
     );
+    // Drupal 7.83+ defaults to '[date:custom:Y]-[date:custom:m]'.
+    // Override it for the tests to avoid token throwing errors.
+    if (!isset($instance_settings['file_directory'])) {
+      $instance_settings['file_directory'] = $name;
+    }
     $instance['settings']           = array_merge($instance['settings'], $instance_settings);
     $instance['widget']['settings'] = array_merge($instance['widget']['settings'], $widget_settings);
     field_create_instance($instance);
