@@ -102,6 +102,9 @@ function filefield_paths_filefield_paths_process_file($type, $entity, $field, $i
         if ($file !== $old_file) {
           $dirname = drupal_dirname($file['uri']);
           if (file_prepare_directory($dirname, FILE_CREATE_DIRECTORY) && $new_file = file_move((object) $old_file, $file['uri'])) {
+
+            $file['uri'] = $new_file->uri;
+
             // Process regular expression.
             _filefield_paths_replace_path($old_file['uri'], $file['uri'], $entity);
 

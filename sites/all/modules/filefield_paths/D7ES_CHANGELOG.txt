@@ -1,0 +1,7 @@
+File (Field) Paths 7.x-1.x, xxxx-xx-xx (development version)
+-----------------------
+
+File (Field) Paths 7.x-1.3, 2026-02-18
+-----------------------
+- Security fix: URI collision bug where $file['uri'] was not updated after file_move() rename, causing hook_insert implementations to receive incorrect file URIs for duplicate filenames.
+- Fix broken tests.
