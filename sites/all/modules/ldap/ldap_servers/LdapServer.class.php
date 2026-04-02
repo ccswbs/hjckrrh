@@ -431,10 +431,16 @@ class LdapServer {
         ldap_set_rebind_proc($this->connection, [$rebHandler, 'rebind_callback']);
       }
 
-      if (drupal_strlen($pass) == 0 || drupal_strlen($userdn) == 0) {
-        watchdog('ldap_servers', "LDAP bind failure for user userdn=%userdn, pass=%pass.", ['%userdn' => $userdn, '%pass' => $pass]);
+      if (drupal_strlen($pass) == 0) {
+        watchdog('ldap_servers', "LDAP bind failure: Password missing for non-anonymous bind.");
         return LDAP_LOCAL_ERROR;
       }
+
+      if (drupal_strlen($userdn) == 0) {
+        watchdog('ldap_servers', "LDAP bind failure: DN missing for non-anonymous bind.");
+        return LDAP_LOCAL_ERROR;
+      }
+
       if (@!ldap_bind($this->connection, $userdn, $pass)) {
         if ($this->detailedWatchdogLog) {
           watchdog('ldap_servers', "LDAP bind failure for user %user. Error %errno: %error", ['%user' => $userdn, '%errno' => ldap_errno($this->connection), '%error' => ldap_error($this->connection)]);
@@ -792,7 +798,7 @@ class LdapServer {
    *   elements if search returns no results),
    *   or FALSE on error.
    */
-  public function search($base_dn = NULL,
+  public function search($base_dn,
   $filter,
   $attributes = [],
     $attrsonly = 0,

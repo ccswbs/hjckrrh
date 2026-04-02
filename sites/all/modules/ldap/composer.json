@@ -1,0 +1,18 @@
+{
+  "name": "drupal/ldap",
+  "type": "drupal-module",
+  "description": "Lightweight Directory Access Protocol",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "authors": [],
+  "support": {},
+  "require": {
+
+  },
+  "require-dev": {
+    "drupal/ctools": "^1.21",
+    "drupal/entity": "^1.11",
+    "drupal/ldap_sso-ldap_sso": "^2.3",
+    "drupal/og": "^2.10"
+  }
+}

@@ -19,8 +19,6 @@ files[] = LdapServerTest.class.php
 files[] = LdapTestFunctions.class.php
 files[] = LdapUserTestCase.class.php
 
-; Information added by Drupal.org packaging script on 2019-04-20
-version = "7.x-2.5"
-core = "7.x"
-project = "ldap"
-datestamp = "1555751588"
+version = 7.x-2.7
+project = ldap
+datestamp = 1775066467
