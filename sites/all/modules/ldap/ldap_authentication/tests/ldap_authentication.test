@@ -319,8 +319,8 @@ class LdapAuthenticationTestCase extends LdapTestCase {
   ) {
 
     // Clear past environment.
-    ldap_servers_delete_globals('_SERVER', 'REMOTE_USER', TRUE);
-    ldap_servers_delete_globals('_SERVER', 'REDIRECT_REMOTE_USER', TRUE);
+    unset($_SERVER['REMOTE_USER']);
+    unset($_SERVER['REDIRECT_REMOTE_USER']);
 
     $authenticationConf = new LdapAuthenticationConfAdmin();
 
@@ -337,7 +337,7 @@ class LdapAuthenticationTestCase extends LdapTestCase {
         $sso_name = $sso_name_parts[0];
         $authenticationConf->ssoRemoteUserStripDomainName = TRUE;
       }
-      ldap_servers_set_globals('_SERVER', $server_var_key, $sso_name);
+      $_SERVER[$server_var_key] = $sso_name;
     }
     $authenticationConf->save();
     return ldap_authentication_get_valid_conf(TRUE);
@@ -367,8 +367,8 @@ class LdapAuthenticationTestCase extends LdapTestCase {
 
     // Just test that the setup works.
     $authenticationConf = new LdapAuthenticationConfAdmin();
-    $this->assertTrue(ldap_servers_get_globals('_SERVER', 'REMOTE_USER', TRUE) == 'hpotter',
-       '$_SERVER[REMOTE_USER] and $_SERVER[REDIRECT_REMOTE_USER] set properly for test with remote server ' . ldap_servers_get_globals('_SERVER', 'REMOTE_ADDR'), $testid);
+    $this->assertTrue($_SERVER['REMOTE_USER'] == 'hpotter',
+       '$_SERVER[REMOTE_USER] and $_SERVER[REDIRECT_REMOTE_USER] set properly for test with remote server ' . $_SERVER['REMOTE_ADDR'], $testid);
 
     $setup_success = ($authenticationConf->ssoEnabled == TRUE &&
       $authenticationConf->ssoRemoteUserStripDomainName == FALSE &&
@@ -767,8 +767,8 @@ class LdapAuthenticationTestCase extends LdapTestCase {
       'excludeIfNoAuthorizations' => [
         'property' => 'excludeIfNoAuthorizations',
         'values' => [
-          [TRUE],
-          [TRUE],
+          1,
+          1,
         ],
       ],
       'emailOption' => [
@@ -811,7 +811,7 @@ class LdapAuthenticationTestCase extends LdapTestCase {
         $property = isset($conf['property']) ? $conf['property'] : $field_name;
         $desired = isset($conf['desired_result']) ? isset($conf['desired_result'][$i]) : $conf['values'][$i];
 
-        if (is_array($desired)) {
+        if (is_array($desired) && is_array($ldap_authentication_conf_post->{$property})) {
           $success = count($desired) == count($ldap_authentication_conf_post->{$property});
         }
         else {
