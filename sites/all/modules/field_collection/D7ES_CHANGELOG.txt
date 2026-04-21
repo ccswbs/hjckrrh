@@ -1,0 +1,6 @@
+Field Collection 7.x-1.xxx, xxxx-xx-xx (development version)
+------------------------
+
+Field Collection 7.x-1.3, 2026-04-15
+-----------------------
+- Security: Prevents access bypass via overprivileged "edit field collections" permission and null host entity.

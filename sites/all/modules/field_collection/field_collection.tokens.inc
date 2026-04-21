@@ -28,6 +28,10 @@ function field_collection_token_info() {
     'name' => t('Host entity ID'),
     'description' => t('The entity ID of the host. For nodes this is <code>nid</code>, for users <code>uid</code>.'),
   );
+  $host['delta'] = array(
+    'name' => t('Host entity item delta'),
+    'description' => t('The delta of the reference pointing to this field collection item.'),
+  );
 
   // Chained tokens.
   foreach (field_collection_host_entity_types() as $entity_type => $entity_info) {
@@ -62,7 +66,6 @@ function field_collection_token_info_alter(&$data) {
   );
 }
 
-
 /**
  * Implements hook_tokens().
  */
@@ -71,7 +74,7 @@ function field_collection_tokens($type, $tokens, array $data = array(), array $o
 
   // Provide a complete set of tokens for type == 'host', and a supplementary
   // token 'host' for type == 'field_collection_item'.
-  if (($type == 'field_collection_item' or $type == 'host') and !empty($data['field_collection_item'])) {
+  if (($type === 'field_collection_item' || $type === 'host') && !empty($data['field_collection_item'])) {
     $collection = $data['field_collection_item'];
     // When saving revisions, only $collection->original has valid state about
     // its host entity.
@@ -79,7 +82,7 @@ function field_collection_tokens($type, $tokens, array $data = array(), array $o
       $collection = $collection->original;
     }
 
-    if ($type == 'field_collection_item') {
+    if ($type === 'field_collection_item') {
       if (!empty($tokens['host'])) {
         $replacements[$tokens['host']] = $collection->hostEntityId();
       }
@@ -96,6 +99,7 @@ function field_collection_tokens($type, $tokens, array $data = array(), array $o
         'type' => 'hostEntityType',
         'bundle' => 'hostEntityBundle',
         'id' => 'hostEntityId',
+        'delta' => 'delta',
       );
       $entity_types = field_collection_host_entity_types();
       foreach ($tokens as $name => $orig) {
