@@ -158,7 +158,6 @@ Hjckrrh 7.10.0, 2016-10-25
 - Fixed: changed more link for events and changed filter to use term id [fixes #328]
 - Update: upgrade to panelizer-7.x-3.4
 - New: Map edupersonaffiliation to Drupal roles
-- New: flag module version 7.x-3.9
 
 
 Hjckrrh 7.9.0, 2016-10-11
