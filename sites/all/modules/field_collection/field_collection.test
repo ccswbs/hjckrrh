@@ -10,6 +10,11 @@
  */
 class FieldCollectionBasicTestCase extends DrupalWebTestCase {
 
+  public $field_name;
+  public $field;
+  public $field_id;
+  public $instance;
+
   public static function getInfo() {
     return array(
       'name' => 'Field collection',
@@ -35,12 +40,12 @@ class FieldCollectionBasicTestCase extends DrupalWebTestCase {
       'field_name' => $this->field_name,
       'entity_type' => 'node',
       'bundle' => 'article',
-      'label' => $this->randomName() . '_label',
-      'description' => $this->randomName() . '_description',
-      'weight' => mt_rand(0, 127),
+      'label' => self::randomName() . '_label',
+      'description' => self::randomName() . '_description',
+      'weight' => random_int(0, 127),
       'settings' => array(),
       'widget' => array(
-        'type' => 'hidden',
+        'type' => 'field_collection_hidden',
         'label' => 'Test',
         'settings' => array(),
       ),
@@ -70,7 +75,7 @@ class FieldCollectionBasicTestCase extends DrupalWebTestCase {
     if (!isset($message)) {
       $message = $text;
     }
-    return $this->assertTrue(array_search($text, $_SESSION['entity_crud_hook_test']) !== FALSE, $message, $group);
+    return $this->assertTrue(in_array($text, $_SESSION['entity_crud_hook_test']), $message, $group);
   }
 
   /**
@@ -95,7 +100,7 @@ class FieldCollectionBasicTestCase extends DrupalWebTestCase {
     if (!isset($message)) {
       $message = $text;
     }
-    return $this->assertFalse(array_search($text, $_SESSION['entity_crud_hook_test']) !== FALSE, $message, $group);
+    return $this->assertFalse(in_array($text, $_SESSION['entity_crud_hook_test']), $message, $group);
   }
 
   /**
@@ -153,7 +158,7 @@ class FieldCollectionBasicTestCase extends DrupalWebTestCase {
     $this->clearHookMessages();
     node_delete($node->nid);
     $this->assertNoHookMessage('entity_crud_hook_test_entity_presave called for type node');
-    $this->assertTrue(entity_load('field_collection_item', FALSE) === array(), 'Field collections are deleted when the host is deleted.');
+    $this->assertTrue(entity_load('field_collection_item') === array(), 'Field collections are deleted when the host is deleted.');
 
     // Try deleting nodes with collections without any values.
     $node = $this->drupalCreateNode(array('type' => 'article'));
@@ -340,19 +345,19 @@ class FieldCollectionBasicTestCase extends DrupalWebTestCase {
     $this->drupalGet($path);
     $this->assertText(t('Test text field'), 'Add form is shown.');
 
-    $edit['field_text[und][0][value]'] = $this->randomName();
+    $edit['field_text[und][0][value]'] = self::randomName();
     $this->drupalPost($path, $edit, t('Save'));
     $this->assertText(t('The changes have been saved.'), 'Field collection saved.');
 
-    $this->assertText($edit['field_text[und][0][value]'], "Added field value is shown.");
+    $this->assertText($edit['field_text[und][0][value]'], 'Added field value is shown.');
 
-    $edit['field_text[und][0][value]'] = $this->randomName();
+    $edit['field_text[und][0][value]'] = self::randomName();
     $this->drupalPost('field-collection/field-test-collection/1/edit', $edit, t('Save'));
     $this->assertText(t('The changes have been saved.'), 'Field collection saved.');
-    $this->assertText($edit['field_text[und][0][value]'], "Field collection has been edited.");
+    $this->assertText($edit['field_text[und][0][value]'], 'Field collection has been edited.');
 
     $this->drupalGet('field-collection/field-test-collection/1');
-    $this->assertText($edit['field_text[und][0][value]'], "Field collection can be viewed.");
+    $this->assertText($edit['field_text[und][0][value]'], 'Field collection can be viewed.');
 
     // Add further 3 items, so we have reached 4 == maxium cardinality.
     $this->drupalPost($path, $edit, t('Save'));
@@ -361,7 +366,7 @@ class FieldCollectionBasicTestCase extends DrupalWebTestCase {
     // Make sure adding doesn't work any more as we have restricted cardinality
     // to 1.
     $this->drupalGet($path);
-    $this->assertText(t('Too many items.'), 'Maxium cardinality has been reached.');
+    $this->assertResponse(403);
 
     $this->drupalPost('field-collection/field-test-collection/1/delete', array(), t('Delete'));
     $this->drupalGet($path);
@@ -457,12 +462,12 @@ class FieldCollectionRulesIntegrationTestCase extends DrupalWebTestCase {
       'field_name' => $this->field_name,
       'entity_type' => 'node',
       'bundle' => 'article',
-      'label' => $this->randomName() . '_label',
-      'description' => $this->randomName() . '_description',
-      'weight' => mt_rand(0, 127),
+      'label' => self::randomName() . '_label',
+      'description' => self::randomName() . '_description',
+      'weight' => random_int(0, 127),
       'settings' => array(),
       'widget' => array(
-        'type' => 'hidden',
+        'type' => 'field_collection_hidden',
         'label' => 'Test',
         'settings' => array(),
       ),
@@ -551,6 +556,11 @@ class FieldCollectionRulesIntegrationTestCase extends DrupalWebTestCase {
  */
 class FieldCollectionContentTranslationTestCase extends DrupalWebTestCase {
 
+  public $field_name;
+  public $field;
+  public $field_id;
+  public $instance;
+
   public static function getInfo() {
     return array(
       'name' => 'Field collection content translation',
@@ -572,9 +582,9 @@ class FieldCollectionContentTranslationTestCase extends DrupalWebTestCase {
       'field_name' => $this->field_name,
       'entity_type' => 'node',
       'bundle' => 'article',
-      'label' => $this->randomName() . '_label',
-      'description' => $this->randomName() . '_description',
-      'weight' => mt_rand(0, 127),
+      'label' => self::randomName() . '_label',
+      'description' => self::randomName() . '_description',
+      'weight' => random_int(0, 127),
       'settings' => array(),
       'widget' => array(
         'type' => 'field_collection_embed',
@@ -618,11 +628,11 @@ class FieldCollectionContentTranslationTestCase extends DrupalWebTestCase {
    */
   public function testContentTranslation() {
     // Create "Article" content.
-    $edit['title'] = $this->randomName();
-    $edit['body[' . LANGUAGE_NONE . '][0][value]'] = $this->randomName();
+    $edit['title'] = self::randomName();
+    $edit['body[' . LANGUAGE_NONE . '][0][value]'] = self::randomName();
     $edit['language'] = 'en';
     $field_collection_name = 'field_test_collection[' . LANGUAGE_NONE . '][0][field_text][' . LANGUAGE_NONE . '][0][value]';
-    $edit[$field_collection_name] = $this->randomName();
+    $edit[$field_collection_name] = self::randomName();
 
     $this->drupalPost('node/add/article', $edit, t('Save'));
     $this->assertRaw(t('Article %title has been created.', array('%title' => $edit['title'])), 'Article created.');
@@ -651,6 +661,21 @@ class FieldCollectionContentTranslationTestCase extends DrupalWebTestCase {
  * Test using field collection with content that gets translated with Entity Translation.
  */
 class FieldCollectionEntityTranslationTestCase extends DrupalWebTestCase {
+
+  public $admin_user;
+  public $current_user;
+  public $translator_user;
+  public $field_name;
+  public $field_base;
+  public $field;
+  public $field_id;
+  public $instance;
+  public $field_untrans_name;
+  public $field_untrans_base;
+  public $field_trans_name;
+  public $field_trans_base;
+  public $field_trans_dest;
+
   const TRANS_FIELD_EN = 'Translatable EN';
   const TRANS_FIELD_DE = 'Translatable DE';
   const TRANS_FIELD_DE_MOD = 'Translatable DE Mod';
@@ -737,7 +762,7 @@ class FieldCollectionEntityTranslationTestCase extends DrupalWebTestCase {
 
       // Make sure we are not using a stale list.
       drupal_static_reset('language_list');
-      $languages = language_list('language');
+      $languages = language_list();
       $this->assertTrue(array_key_exists($langcode, $languages), t('Language was installed successfully.'));
 
       if (array_key_exists($langcode, $languages)) {
@@ -787,9 +812,9 @@ class FieldCollectionEntityTranslationTestCase extends DrupalWebTestCase {
       'field_name' => $this->field_name,
       'entity_type' => 'node',
       'bundle' => 'page',
-      'label' => $this->randomName() . '_label',
-      'description' => $this->randomName() . '_description',
-      'weight' => mt_rand(0, 127),
+      'label' => self::randomName() . '_label',
+      'description' => self::randomName() . '_description',
+      'weight' => random_int(0, 127),
       'settings' => array(),
       'widget' => array(
         'type' => 'field_collection_embed',
@@ -864,7 +889,7 @@ class FieldCollectionEntityTranslationTestCase extends DrupalWebTestCase {
       $num_values = self::NUM_VALUES;
     }
 
-    $title = $this->randomName();
+    $title = self::randomName();
 
     $this->drupalGet('node/add/page');
 
@@ -917,15 +942,15 @@ class FieldCollectionEntityTranslationTestCase extends DrupalWebTestCase {
       $fc_untrans_key = "{$this->field_name}[$langcode][$delta]{$this->field_untrans_base}";
       $fc_trans_key = "{$this->field_name}[$langcode][$delta]{$this->field_trans_dest}";
       $this->assertFieldByXPath(
-          "//input[@name='$fc_untrans_key']",
-          $fc_item->{$this->field_untrans_name}[LANGUAGE_NONE][0]['value'],
-          'Original value of untranslatable field correctly populated'
-              );
+        "//input[@name='$fc_untrans_key']",
+        $fc_item->{$this->field_untrans_name}[LANGUAGE_NONE][0]['value'],
+        'Original value of untranslatable field correctly populated'
+      );
       $this->assertFieldByXPath(
-          "//input[@name='$fc_trans_key']",
-          $fc_item->{$this->field_trans_name}['en'][0]['value'],
-          'Original value of translatable field correctly populated'
-              );
+        "//input[@name='$fc_trans_key']",
+        $fc_item->{$this->field_trans_name}['en'][0]['value'],
+        'Original value of translatable field correctly populated'
+      );
 
       $edit[$fc_untrans_key] = self::UNTRANS_FIELD_DE . '_' . $delta;
       $edit[$fc_trans_key] = self::TRANS_FIELD_DE . '_' . $delta;
@@ -976,7 +1001,7 @@ class FieldCollectionEntityTranslationTestCase extends DrupalWebTestCase {
     // Check that the translation is removed.
     $this->drupalGet('node/' . $node->nid . '/translate');
     $this->assertLinkByHref('node/' . $node->nid . '/edit/add/' . $source_langcode . '/' . $langcode, 0, 'The add translation link appears');
-    $this->assert(empty($node->{$this->field_name}[$langcode]));
+    $this->assert(empty($node->translations->data[$langcode]));
 
     // Check that the field collection in the original language has not changed.
     $num_fc_items = count($node->{$this->field_name}[$source_langcode]);
@@ -1013,12 +1038,11 @@ class FieldCollectionEntityTranslationTestCase extends DrupalWebTestCase {
       $field = field_info_field($field_name);
       $field_value = array();
       // Copy the value of the translated field if it's translatable.
-      if ($field['translatable']) {
-        if (isset($node->{$field_name}[$node->language])) {
-          $field_value = $node->{$field_name}[$source_langcode];
-          $values[$field_name][$langcode] = $field_value;
-          $node->{$field_name}[$langcode] = $field_value;
-        }
+      if ($field['translatable']
+        && isset($node->{$field_name}[$node->language])) {
+        $field_value = $node->{$field_name}[$source_langcode];
+        $values[$field_name][$langcode] = $field_value;
+        $node->{$field_name}[$langcode] = $field_value;
       }
     }
 
@@ -1275,6 +1299,155 @@ class FieldCollectionEntityTranslationTestCase extends DrupalWebTestCase {
 
     // Check that the field translated content has been removed.
     $this->assert(empty($node->{$this->field_name}[$translation_langcode]), t('Translated content removed.'));
+  }
+
+}
+
+/**
+ * Tests access control for field collection items.
+ *
+ * Covers the fix for the privilege escalation where 'edit field collections'
+ * bypassed parent entity access entirely.
+ */
+class FieldCollectionAccessTestCase extends DrupalWebTestCase {
+
+  protected $field_name;
+  protected $field;
+
+
+  public static function getInfo() {
+    return array(
+      'name' => 'Field collection access control',
+      'description' => 'Tests that field collection item access checks respect parent entity access.',
+      'group' => 'Field types',
+    );
+  }
+
+  function setUp() {
+    parent::setUp('field_collection');
+
+    $this->field_name = 'field_test_collection';
+    $this->field = field_create_field(array(
+      'field_name' => $this->field_name,
+      'type' => 'field_collection',
+      'cardinality' => FIELD_CARDINALITY_UNLIMITED,
+    ));
+    field_create_instance(array(
+      'field_name' => $this->field_name,
+      'entity_type' => 'node',
+      'bundle' => 'article',
+      'label' => 'Test collection',
+      'widget' => array(
+        'type' => 'field_collection_hidden',
+        'settings' => array(),
+      ),
+    ));
+  }
+
+  /**
+   * Creates a node with an attached field collection item and returns both.
+   */
+  protected function createNodeWithItem() {
+    $node = $this->drupalCreateNode(array('type' => 'article'));
+    $item = entity_create('field_collection_item', array('field_name' => $this->field_name));
+    $item->setHostEntity('node', $node);
+    $item->save();
+    // Reload to get a clean instance with no in-memory host entity cache.
+    return array($node, field_collection_item_load($item->item_id));
+  }
+
+  /**
+   * 'administer field collections' bypasses all access checks.
+   */
+  function testAdminBypassesAll() {
+    list(, $item) = $this->createNodeWithItem();
+    $admin = $this->drupalCreateUser(array('administer field collections'));
+
+    $this->assertTrue(field_collection_item_access('view', $item, $admin), 'Admin can view any FC item.');
+    $this->assertTrue(field_collection_item_access('update', $item, $admin), 'Admin can update any FC item.');
+    $this->assertTrue(field_collection_item_access('delete', $item, $admin), 'Admin can delete any FC item.');
+  }
+
+  /**
+   * 'edit field collections' alone does not grant access to restricted nodes.
+   *
+   * Regression test for privilege escalation: before the fix, a user with
+   * 'edit field collections' could view/edit/delete FC items on any node,
+   * bypassing node-level access control entirely.
+   */
+  function testEditPermissionRequiresParentAccess() {
+    list(, $item) = $this->createNodeWithItem();
+    // User owns no nodes and lacks any node-edit permission.
+    $user = $this->drupalCreateUser(array('access content', 'edit field collections'));
+
+    $this->assertFalse(field_collection_item_access('view', $item, $user), '"edit field collections" alone does not grant view access to FC items on inaccessible nodes.');
+    $this->assertFalse(field_collection_item_access('update', $item, $user), '"edit field collections" alone does not grant update access to FC items on inaccessible nodes.');
+    $this->assertFalse(field_collection_item_access('delete', $item, $user), '"edit field collections" alone does not grant delete access to FC items on inaccessible nodes.');
+  }
+
+  /**
+   * 'edit field collections' combined with parent entity access is allowed.
+   */
+  function testEditPermissionWithParentAccess() {
+    list(, $item) = $this->createNodeWithItem();
+    $user = $this->drupalCreateUser(array('access content', 'edit any article content', 'edit field collections'));
+
+    $this->assertTrue(field_collection_item_access('view', $item, $user), 'User with "edit field collections" and node access can view FC item.');
+    $this->assertTrue(field_collection_item_access('update', $item, $user), 'User with "edit field collections" and node access can update FC item.');
+  }
+
+  /**
+   * A user with only node edit access can still access FC items via field_access().
+   */
+  function testNodeAccessAloneIsEnough() {
+    list(, $item) = $this->createNodeWithItem();
+    // No 'edit field collections' — access should fall through to field_access().
+    $user = $this->drupalCreateUser(array('access content', 'edit any article content'));
+
+    $this->assertTrue(field_collection_item_access('view', $item, $user), 'User with node access but no FC permission can view FC item.');
+    $this->assertTrue(field_collection_item_access('update', $item, $user), 'User with node access but no FC permission can update FC item.');
+  }
+
+  /**
+   * A FC item whose host entity cannot be loaded is always denied.
+   *
+   * Regression test for the NULL host entity bypass: before the fix, a NULL
+   * entity was passed to entity_access(), which could return TRUE for some
+   * entity type implementations.
+   */
+  function testOrphanedItemDenied() {
+    // A freshly created, unsaved item has no host entity. Testing 'view'
+    // specifically because non-view ops are blocked earlier by isInUse().
+    $item = entity_create('field_collection_item', array('field_name' => $this->field_name));
+
+    $user = $this->drupalCreateUser(array('access content', 'edit field collections'));
+    $this->assertFalse(field_collection_item_access('view', $item, $user), 'View access denied for FC item with no resolvable host entity.');
+  }
+
+  /**
+   * HTTP: 'edit field collections' without node access returns 403.
+   */
+  function testEditPermissionRequiresParentAccessHTTP() {
+    list(, $item) = $this->createNodeWithItem();
+    $path = 'field-collection/field-test-collection/' . $item->item_id . '/edit';
+
+    $user = $this->drupalCreateUser(array('access content', 'edit field collections'));
+    $this->drupalLogin($user);
+    $this->drupalGet($path);
+    $this->assertResponse(403, 'HTTP 403 returned when "edit field collections" user has no access to the parent node.');
+  }
+
+  /**
+   * HTTP: 'edit field collections' with node access returns 200.
+   */
+  function testEditPermissionWithParentAccessHTTP() {
+    list(, $item) = $this->createNodeWithItem();
+    $path = 'field-collection/field-test-collection/' . $item->item_id . '/edit';
+
+    $user = $this->drupalCreateUser(array('access content', 'edit any article content', 'edit field collections'));
+    $this->drupalLogin($user);
+    $this->drupalGet($path);
+    $this->assertNoResponse(403, 'FC item edit page accessible when user has "edit field collections" and node access.');
   }
 
 }

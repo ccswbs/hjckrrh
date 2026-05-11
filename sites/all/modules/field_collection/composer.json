@@ -1,0 +1,15 @@
+{
+  "name": "drupal/field_collection",
+  "type": "drupal-module",
+  "description": "Provides a field-collection field, to which any number of fields can be attached.",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "authors": [],
+  "support": {},
+  "require": {
+    "drupal/entity": "^1.11"
+  },
+  "require-dev": {
+    "drupal/entity_translation": "^3.0"
+  }
+}

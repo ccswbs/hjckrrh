@@ -101,10 +101,6 @@ projects[file_entity][version] = "2.39"
 
 projects[filebrowser][version] = "3.3"
 
-projects[filefield_sources][version] = "1.11"
-
-projects[flag][version] = "3.9"
-
 projects[flood_control][version] = "1.0"
 
 projects[fontawesome][version] = "3.7"
