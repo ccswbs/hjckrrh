@@ -1,0 +1,15 @@
+name = CAPTCHA
+description = Base CAPTCHA module for adding challenges to arbitrary forms.
+package = "Spam control"
+core = 7.x
+configure = admin/config/people/captcha
+
+files[] = captcha.module
+files[] = captcha.inc
+files[] = captcha.admin.inc
+files[] = captcha.install
+files[] = captcha.test
+
+version = 7.x-1.8
+project = captcha
+datestamp = 1779898709

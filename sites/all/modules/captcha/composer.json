@@ -1,0 +1,15 @@
+{
+  "name": "drupal/captcha",
+  "type": "drupal-module",
+  "description": "Base CAPTCHA module for adding challenges to arbitrary forms.",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "authors": [],
+  "support": {},
+  "require": {
+
+  },
+  "require-dev": {
+
+  }
+}
