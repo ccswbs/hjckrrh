@@ -172,7 +172,7 @@ abstract class CaptchaBaseWebTestCase extends DrupalWebTestCase {
    */
   protected function getCaptchaTokenFromForm() {
     $elements = $this->xpath('//input[@name="captcha_token"]');
-    $captcha_token = (int) $elements[0]['value'];
+    $captcha_token = (string) $elements[0]['value'];
     return $captcha_token;
   }
 
@@ -417,7 +417,6 @@ class CaptchaAdminTestCase extends CaptchaBaseWebTestCase {
   function testAdminAccess() {
     $this->drupalLogin($this->normal_user);
     $this->drupalGet(self::CAPTCHA_ADMIN_PATH);
-    file_put_contents('tmp.simpletest.html', $this->drupalGetContent());
     $this->assertText(t('Access denied'), 'Normal users should not be able to access the CAPTCHA admin pages', 'CAPTCHA');
 
     $this->drupalLogin($this->admin_user);
@@ -1135,6 +1134,41 @@ class CaptchaSessionReuseAttackTestCase extends CaptchaBaseWebTestCase {
 
   }
 
+}
+
+class CaptchaSecurityTestCase extends CaptchaBaseWebTestCase {
+  public static function getInfo() {
+    return array(
+      'name' => t('CAPTCHA Security tests'),
+      'description' => t('Testing of the protection against CAPTCHA attacks.'),
+      'group' => t('CAPTCHA'),
+    );
+  }
+
+  /**
+   * Testing the protection of the user log in form.
+   */
+  public function testSupressingValidationOnLoginForm() {
+    // Set a CAPTCHA on login form
+    captcha_set_form_id_setting('user_login', 'captcha/Math');
+
+    // Check if there is a CAPTCHA on the login form (look for the title).
+    $this->drupalGet('user');
+    $this->assertCaptchaPresence(TRUE);
+
+    // Try to log in, which should fail.
+    $edit = array(
+      'name' => 'invalid_user_name',
+      'pass' => 'incorrect_password',
+      'captcha_response' => '?',
+    );
+    $this->drupalPost('user', $edit, t('Log in'));
+    // Check for error message.
+    $this->assertText(t(CAPTCHA_WRONG_RESPONSE_ERROR_MESSAGE),
+      'CAPTCHA should block user login form', 'CAPTCHA');
+    $this->assertNoText(t('Sorry, unrecognized username or password. Have you forgotten your password?'),
+      'CAPTCHA should supress thirty-party validators for login form', 'CAPTCHA');
+  }
 }
 
 

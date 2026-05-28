@@ -1,0 +1,6 @@
+CAPTCHA 7.x-1.x, xxxx-xx-xx (development version)
+-----------------------
+
+CAPTCHA 7.x-1.8, xxxx-xx-xx
+-----------------------
+- Captcha on login forms should suppress the normal form validation.
