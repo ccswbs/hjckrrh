@@ -1,0 +1,16 @@
+{
+  "name": "drupal/calendar",
+  "type": "drupal-module",
+  "description": "Views plugin to display views containing dates as Calendars.",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "authors": [],
+  "support": {},
+  "require": {
+    "drupal/views": "^3.30",
+    "drupal/date": "^2.14"
+  },
+  "require-dev": {
+
+  }
+}
