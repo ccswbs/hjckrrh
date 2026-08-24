@@ -1,0 +1,114 @@
+<?php
+
+/**
+ * @file
+ * Tests sanitization of stripe labels in the Calendar theme layer.
+ *
+ * Regression coverage for the check_plain() calls added in theme/theme.inc to
+ * theme_calendar_stripe_legend() and theme_calendar_stripe_stripe(). Both
+ * functions output stripe labels (taxonomy term names, node type names and OG
+ * group names) into an HTML title attribute; without sanitization a label
+ * containing HTML control characters can break out of the attribute and inject
+ * script (see the "Cross Site Scripting via Unsanitized Stripe Labels"
+ * advisory).
+ */
+class CalendarStripeXssTestCase extends DrupalWebTestCase {
+
+  /**
+   * A stripe label that breaks out of a double-quoted title attribute.
+   *
+   * @var string
+   */
+  protected $payload = 'Test"><img src=x onerror=alert(1)>';
+
+  /**
+   * The payload after check_plain() sanitization.
+   *
+   * @var string
+   */
+  protected $escaped;
+
+  public static function getInfo() {
+    return array(
+      'name' => 'Calendar stripe label XSS',
+      'description' => 'Stripe labels are sanitized before being output into the legend and per-item stripe title attributes.',
+      'group' => 'Calendar',
+    );
+  }
+
+  public function setUp() {
+    parent::setUp('calendar', 'date', 'date_api', 'date_views', 'views');
+    $this->escaped = check_plain($this->payload);
+    // Sanity check: the payload must actually change when sanitized, otherwise
+    // the assertions below would pass vacuously.
+    $this->assertNotEqual($this->payload, $this->escaped, 'Test payload is altered by check_plain().');
+  }
+
+  /**
+   * Asserts an XSS-safe rendering: raw payload absent, escaped payload present.
+   */
+  protected function assertSanitized($output, $message_prefix) {
+    $this->assertTrue(strpos($output, $this->payload) === FALSE, "$message_prefix: raw payload does not appear in the output.");
+    $this->assertTrue(strpos($output, $this->escaped) !== FALSE, "$message_prefix: escaped payload appears in the output.");
+    // The exact attribute-breakout sequence must never reach the markup.
+    $this->assertTrue(strpos($output, '"><img') === FALSE, "$message_prefix: title attribute breakout is neutralized.");
+  }
+
+  /**
+   * theme_calendar_stripe_stripe() must escape each per-item stripe label.
+   */
+  public function testStripeStripeSanitizesLabel() {
+    $item = new stdClass();
+    $item->stripe = array('#ff0000');
+    $item->stripe_label = array($this->payload);
+
+    $output = theme('calendar_stripe_stripe', array('item' => $item));
+    $this->assertSanitized($output, 'theme_calendar_stripe_stripe()');
+  }
+
+  /**
+   * theme_calendar_stripe_legend() must escape taxonomy term names.
+   */
+  public function testStripeLegendSanitizesLabel() {
+    // A vocabulary with a single, maliciously named term.
+    $vocabulary = new stdClass();
+    $vocabulary->name = 'Calendar XSS test';
+    $vocabulary->machine_name = 'calendar_xss_test';
+    taxonomy_vocabulary_save($vocabulary);
+
+    $term = new stdClass();
+    $term->name = $this->payload;
+    $term->vid = $vocabulary->vid;
+    taxonomy_term_save($term);
+
+    // A Calendar-row view whose taxonomy legend assigns a colour to the term.
+    // theme_calendar_stripe_legend() only reads the display's 'row_options', so
+    // no executable date argument is required to exercise the sanitization.
+    module_load_include('inc', 'views', 'includes/view');
+    $view = new view();
+    $view->name = 'calendar_xss_test_view';
+    $view->base_table = 'node';
+    $view->api_version = '3.0';
+    $view->disabled = FALSE;
+    $handler = $view->new_display('default', 'Master', 'default');
+    $handler->display->display_options['row_plugin'] = 'calendar_entity';
+    $handler->display->display_options['row_options'] = array(
+      'colors' => array(
+        'legend' => 'taxonomy',
+        'calendar_colors_type' => array(),
+        'calendar_colors_vocabulary' => array('field_calendar_xss' => $vocabulary->vid),
+        'calendar_colors_taxonomy' => array($term->tid => '#ff0000'),
+        'calendar_colors_group' => array(),
+      ),
+    );
+    $view->save();
+    views_invalidate_cache();
+
+    $output = theme('calendar_stripe_legend', array('view' => 'calendar_xss_test_view:default'));
+    // Make sure the legend actually rendered our term (guards against a silent
+    // empty return that would make the assertions pass for the wrong reason).
+    $this->assertTrue(strpos($output, 'calendar-legend') !== FALSE, 'theme_calendar_stripe_legend(): the legend rendered.');
+    $this->assertSanitized($output, 'theme_calendar_stripe_legend()');
+  }
+
+}

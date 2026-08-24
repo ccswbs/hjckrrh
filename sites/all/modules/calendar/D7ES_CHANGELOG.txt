@@ -1,0 +1,6 @@
+Calendar 7.x-3.x, xxxx-xx-xx (development version)
+-----------------------
+
+Calendar 7.x-3.7, 2026-07-15
+-----------------------
+- Security: Addresses cross site scripting via unsanitized taxonomy term and OG group names output into stripe legend and stripe title attributes.
