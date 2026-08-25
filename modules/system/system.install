@@ -248,28 +248,16 @@ function system_requirements($phase) {
       // writable file, as a reminder, rather than an error.
       $file_protection_severity = REQUIREMENT_WARNING;
     }
-    elseif (defined('PANTHEON_ENVIRONMENT')) {
-      $file_protection_severity = REQUIREMENT_WARNING;
-    }
     else {
+      $error_value = t('Not protected');
       // In normal operation, writable files or directories are an error.
       $file_protection_severity = REQUIREMENT_ERROR;
       if (!drupal_verify_install_file(conf_path(), FILE_NOT_WRITABLE, 'dir')) {
         $conf_errors[] = $t('The directory %file is not protected from modifications and poses a security risk. You must change the directory\'s permissions to be non-writable. ', array('%file' => conf_path()));
       }
     }
-    if (defined('PANTHEON_ENVIRONMENT')) {
-      // Pantheon logic
-      $error_value = t('Not present');
-      if (!drupal_verify_install_file(conf_path() . '/settings.php', FILE_EXIST, 'file', !$skip_permissions_hardening)) {
-        $conf_errors[] = $t('The file %file does not exist. Please add one to your site codebase by copying default.settings.php to settings.php. This is only necessary for some operations, such as using <a href="@url">Drush</a>.', array('%file' => conf_path() . '/settings.php', '@url' => 'https://www.drush.org'));
-      }
-    }
-    else {
-      // Drupal core logic
-      if (!drupal_verify_install_file(conf_path() . '/settings.php', FILE_EXIST | FILE_READABLE | FILE_NOT_WRITABLE, 'file', !$skip_permissions_hardening)) {
-        $conf_errors[] = $t('The file %file is not protected from modifications and poses a security risk. You must change the file\'s permissions to be non-writable.', array('%file' => conf_path() . '/settings.php'));
-      }
+    if (!drupal_verify_install_file(conf_path() . '/settings.php', FILE_EXIST | FILE_READABLE | FILE_NOT_WRITABLE, 'file', !$skip_permissions_hardening)) {
+      $conf_errors[] = $t('The file %file is not protected from modifications and poses a security risk. You must change the file\'s permissions to be non-writable.', array('%file' => conf_path() . '/settings.php'));
     }
 
     if (!empty($conf_errors)) {
@@ -308,8 +296,8 @@ function system_requirements($phase) {
     );
     foreach ($htaccess_files as $htaccess_file => $info) {
       // Check for the string which was added to the recommended .htaccess file
-      // in the latest security update. Skipped on Pantheon where it has no effect.
-      if (!defined('PANTHEON_ENVIRONMENT') && (!file_exists($htaccess_file) || !($contents = @file_get_contents($htaccess_file)) || strpos($contents, 'Drupal_Security_Do_Not_Remove_See_SA_2013_003') === FALSE)) {
+      // in the latest security update.
+      if (!file_exists($htaccess_file) || !($contents = @file_get_contents($htaccess_file)) || strpos($contents, 'Drupal_Security_Do_Not_Remove_See_SA_2013_003') === FALSE) {
         $requirements[$htaccess_file] = array(
           'title' => $info['title'],
           'value' => $t('Not fully protected'),
