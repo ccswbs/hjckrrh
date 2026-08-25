@@ -12,3 +12,7 @@ regions[header] = Header
 regions[footer] = Footer
 regions[highlighted] = Highlighted
 regions[help] = Help
+
+version = 7.106
+project = drupal
+datestamp = 1787164245
