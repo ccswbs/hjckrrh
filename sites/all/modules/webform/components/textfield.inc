@@ -156,13 +156,14 @@ function _webform_render_textfield($component, $value = NULL, $filter = TRUE, $s
     '#field_prefix' => empty($component['extra']['field_prefix']) ? NULL : ($filter ? webform_filter_xss($component['extra']['field_prefix']) : $component['extra']['field_prefix']),
     '#field_suffix' => empty($component['extra']['field_suffix']) ? NULL : ($filter ? webform_filter_xss($component['extra']['field_suffix']) : $component['extra']['field_suffix']),
     '#description' => $filter ? webform_filter_descriptions($component['extra']['description'], $node) : $component['extra']['description'],
-    '#attributes' => $component['extra']['attributes'],
+    '#attributes' => $component['extra']['attributes'] ?: array(),
     '#theme_wrappers' => array('webform_element'),
     '#translatable' => array(
       'title',
       'description',
       'field_prefix',
       'field_suffix',
+      'placeholder',
     ),
   );
 
@@ -220,7 +221,7 @@ function _webform_display_textfield($component, $value, $format = 'html', $submi
     '#field_suffix' => $component['extra']['field_suffix'],
     '#format' => $format,
     '#value' => isset($value[0]) ? $value[0] : '',
-    '#translatable' => array('title', 'field_prefix', 'field_suffix'),
+    '#translatable' => array('title', 'field_prefix', 'field_suffix', 'placeholder'),
   );
 }
 

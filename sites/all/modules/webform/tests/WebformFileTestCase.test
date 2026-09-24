@@ -1,0 +1,351 @@
+<?php
+
+/**
+ * @file
+ * Webform module file component tests.
+ */
+
+/**
+ * Tests uploads made through the file component.
+ */
+class WebformFileTestCase extends WebformTestCase {
+
+  /**
+   * The user who uploads a file and owns the submission it is attached to.
+   *
+   * @var object
+   */
+  protected $fileOwner;
+
+  /**
+   * The user who attempts to claim another user's upload.
+   *
+   * @var object
+   */
+  protected $fileThief;
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function getInfo() {
+    return array(
+      'name' => t('Webform file component'),
+      'description' => t('Uploads files through the file component and verifies that a submitted file ID cannot be swapped for an arbitrary one.'),
+      'group' => t('Webform'),
+    );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setUp($added_modules = array()) {
+    parent::setUp($added_modules);
+
+    // Both users may submit the webform and view their own submissions, but
+    // neither may view the other's.
+    $permissions = array('access content', 'access own webform submissions');
+    $this->fileOwner = $this->drupalCreateUser($permissions);
+    $this->fileThief = $this->drupalCreateUser($permissions);
+
+    // The upload directories are normally created when the component is saved
+    // through the UI. These tests build components directly, so create them.
+    foreach (array('public', 'private') as $scheme) {
+      $directory = $scheme . '://webform';
+      file_prepare_directory($directory, FILE_CREATE_DIRECTORY);
+    }
+  }
+
+  /**
+   * A submitted file ID may not be swapped for another user's file ID.
+   *
+   * The file component renders the ID of the uploaded file into a hidden form
+   * field, "submitted[<form key>][fid]". Editing that value in the browser must
+   * not make the webform attach a file belonging to somebody else, which would
+   * both corrupt the submission and expose a file the submitting user has no
+   * access to.
+   */
+  public function testFileIdTamperingRejected() {
+    foreach (array('public', 'private') as $scheme) {
+      $node = $this->webformFileNode($scheme);
+
+      // The file owner uploads a file and submits it.
+      $this->drupalLogin($this->fileOwner);
+      $owner_file = $this->webformFileCreate('owner-' . $scheme . '.txt', 'Contents that only the file owner may read.');
+      $this->webformFileUpload($node, $owner_file);
+      $owner_fid = $this->webformFilePostedFid();
+      $this->drupalPost(NULL, array(), t('Submit'));
+      $this->assertText(t('Thanks!'), format_string('@scheme: the file owner submitted the webform.', array('@scheme' => $scheme)));
+      $this->assertEqual($owner_fid, $this->webformFileSubmittedFid($node, $this->fileOwner), format_string('@scheme: the file owner uploaded file @fid.', array('@scheme' => $scheme, '@fid' => $owner_fid)));
+      $this->drupalLogout();
+
+      // A second user uploads a file of their own, then tampers with the hidden
+      // file ID so that the form posts the file owner's file ID instead.
+      $this->drupalLogin($this->fileThief);
+      $thief_file = $this->webformFileCreate('thief-' . $scheme . '.txt', 'Contents supplied by the second user.');
+      $this->webformFileUpload($node, $thief_file);
+      $thief_fid = $this->webformFilePostedFid();
+      $this->assertNotEqual($thief_fid, $owner_fid, format_string('@scheme: the two users uploaded different files.', array('@scheme' => $scheme)));
+      $this->drupalPost(NULL, array('submitted[file][fid]' => $owner_fid), t('Submit'));
+
+      // The submission must not reference the file owner's upload.
+      $stored_fid = $this->webformFileSubmittedFid($node, $this->fileThief);
+      $this->assertNotEqual($stored_fid, $owner_fid, format_string("@scheme: the tampered file ID @fid was not attached to the second user's submission (attached: @stored).", array(
+        '@scheme' => $scheme,
+        '@fid' => $owner_fid,
+        '@stored' => var_export($stored_fid, TRUE),
+      )));
+
+      // Nor may the tampering have granted access to the file itself. Files in
+      // the public scheme are served directly by the web server and are not
+      // access checked at all, so this only applies to private files.
+      if ($scheme == 'private') {
+        $owner_file_object = file_load($owner_fid);
+        $this->drupalGet(file_create_url($owner_file_object->uri));
+        $this->assertNoText('Contents that only the file owner may read.', format_string("@scheme: the second user cannot read the file owner's upload.", array('@scheme' => $scheme)));
+      }
+
+      $this->drupalLogout();
+    }
+  }
+
+  /**
+   * Legitimate uploads and edits keep working.
+   */
+  public function testFileUploadAndEdit() {
+    $node = $this->webformFileNode('private');
+
+    $this->drupalLogin($this->fileOwner);
+
+    // Upload a file and submit it.
+    $file = $this->webformFileCreate('upload.txt', 'An ordinary upload.');
+    $this->webformFileUpload($node, $file);
+    $fid = $this->webformFilePostedFid();
+    $this->drupalPost(NULL, array(), t('Submit'));
+    $this->assertText(t('Thanks!'), 'The webform was submitted.');
+    $this->assertEqual($fid, $this->webformFileSubmittedFid($node, $this->fileOwner), 'The uploaded file was attached to the submission.');
+
+    // The file is readable by the user who submitted it.
+    $this->drupalGet(file_create_url(file_load($fid)->uri));
+    $this->assertText('An ordinary upload.', 'The submitting user can read their own upload.');
+
+    // Re-saving the submission without touching the upload keeps the file.
+    $submission = $this->webformFileSubmission($node, $this->fileOwner);
+    $this->drupalLogin($this->webform_users['admin']);
+    $this->drupalPost('node/' . $node->nid . '/submission/' . $submission->sid . '/edit', array(), t('Save'));
+    $this->assertEqual($fid, $this->webformFileSubmittedFid($node, $this->fileOwner), 'Editing a submission preserves the uploaded file.');
+  }
+
+  /**
+   * Anonymous users can upload a file and submit it.
+   *
+   * Anonymous uploads are the case least able to prove who owns a file, so
+   * check that the two-step upload then submit sequence still works for them.
+   */
+  public function testAnonymousFileUpload() {
+    $node = $this->webformFileNode('public');
+    $this->drupalLogout();
+
+    $file = $this->webformFileCreate('anonymous.txt', 'An upload with nobody logged in.');
+    $this->webformFileUpload($node, $file);
+    $fid = $this->webformFilePostedFid();
+    $this->assertTrue($fid > 0, 'An anonymous user uploaded a file.');
+
+    $this->drupalPost(NULL, array(), t('Submit'));
+    $this->assertText(t('Thanks!'), 'An anonymous user submitted the webform.');
+
+    $submissions = webform_get_submissions(array('nid' => $node->nid));
+    $submission = end($submissions);
+    $stored_fid = empty($submission->data[1][0]) ? NULL : $submission->data[1][0];
+    $this->assertEqual($fid, $stored_fid, 'The anonymous upload was attached to the submission.');
+  }
+
+  /**
+   * An upload survives paging back and forth and a preview.
+   *
+   * On every page after the upload the file ID is only present as the hidden
+   * form field, so this exercises the path where a file ID is accepted because
+   * it is already the value of the component.
+   */
+  public function testMultiPageFileUpload() {
+    $node = $this->webformFileNode('private', TRUE);
+
+    $this->drupalLogin($this->fileOwner);
+    $file = $this->webformFileCreate('multipage.txt', 'An upload made on the first page.');
+
+    // First page: upload the file and continue.
+    $this->webformFileUpload($node, $file);
+    $fid = $this->webformFilePostedFid();
+    $this->assertTrue($fid > 0, 'A file was uploaded on the first page.');
+    $this->drupalPost(NULL, array(), t('Next Page >'));
+
+    // Second page, then back to the first to check the file is still there.
+    $this->drupalPost(NULL, array('submitted[textfield]' => 'Second page value'), t('< Previous Page'));
+    $this->assertEqual($fid, $this->webformFilePostedFid(), 'The upload is still attached after paging back.');
+
+    // Forward again, through the preview, and submit.
+    $this->drupalPost(NULL, array(), t('Next Page >'));
+    $this->drupalPost(NULL, array(), t('Preview'));
+    $this->drupalPost(NULL, array(), t('Submit'));
+    $this->assertText(t('Thanks!'), 'The multi-page webform was submitted.');
+
+    $this->assertEqual($fid, $this->webformFileSubmittedFid($node, $this->fileOwner), 'The upload from the first page was attached to the submission.');
+  }
+
+  /**
+   * Creates a webform node with a single file component.
+   *
+   * @param string $scheme
+   *   The stream wrapper scheme to upload into.
+   * @param bool $multipage
+   *   Whether to add a second page and a preview to the form.
+   *
+   * @return object
+   *   The created node.
+   */
+  protected function webformFileNode($scheme, $multipage = FALSE) {
+    $components = array(
+      1 => array(
+        'cid' => 1,
+        'form_key' => 'file',
+        'name' => 'File',
+        'type' => 'file',
+        'value' => '',
+        'required' => 0,
+        'pid' => 0,
+        'weight' => 0,
+        'extra' => array(
+          'filtering' => array(
+            'types' => array('txt'),
+            'addextensions' => '',
+            'size' => '2 MB',
+          ),
+          'rename' => '',
+          'scheme' => $scheme,
+          'directory' => '',
+          'progress_indicator' => 'throbber',
+          'title_display' => 0,
+          'description' => '',
+          'attributes' => array(),
+          'private' => FALSE,
+          'analysis' => FALSE,
+        ),
+      ),
+    );
+
+    // Put a second page after the file so that the file ID makes a round trip
+    // through the form without being re-uploaded.
+    if ($multipage) {
+      $components[2] = array(
+        'cid' => 2,
+        'form_key' => 'pagebreak',
+        'name' => 'Page break',
+        'type' => 'pagebreak',
+        'value' => '',
+        'required' => 0,
+        'pid' => 0,
+        'weight' => 1,
+        'extra' => array(),
+      );
+      $components[3] = array(
+        'cid' => 3,
+        'form_key' => 'textfield',
+        'name' => 'Textfield',
+        'type' => 'textfield',
+        'value' => '',
+        'required' => 0,
+        'pid' => 0,
+        'weight' => 2,
+        'extra' => array(),
+      );
+    }
+
+    $settings = array(
+      'type' => 'webform',
+      'language' => LANGUAGE_NONE,
+      'uid' => 1,
+      'status' => 1,
+      'title' => 'Test Webform file component (' . $scheme . ($multipage ? ', multi-page' : '') . ')',
+      'webform' => array(
+        'confirmation' => 'Thanks!',
+        'preview' => $multipage ? 1 : 0,
+        'components' => $components,
+      ) + webform_node_defaults(),
+    );
+
+    return $this->drupalCreateNode($settings);
+  }
+
+  /**
+   * Writes a file to disk so that it can be posted to a webform.
+   *
+   * @param string $filename
+   *   The name to give the file.
+   * @param string $contents
+   *   The contents of the file.
+   *
+   * @return string
+   *   The real path of the file, suitable for posting.
+   */
+  protected function webformFileCreate($filename, $contents) {
+    $uri = file_unmanaged_save_data($contents, 'temporary://' . $filename, FILE_EXISTS_REPLACE);
+    return drupal_realpath($uri);
+  }
+
+  /**
+   * Posts a file to the webform's file component using the Upload button.
+   *
+   * @param object $node
+   *   The webform node.
+   * @param string $realpath
+   *   The real path of the file to upload.
+   */
+  protected function webformFileUpload($node, $realpath) {
+    $this->drupalPost('node/' . $node->nid, array('files[submitted_file]' => $realpath), t('Upload'));
+  }
+
+  /**
+   * Returns the file ID in the hidden field of the form currently displayed.
+   *
+   * @return string
+   *   The value of the "submitted[file][fid]" hidden input.
+   */
+  protected function webformFilePostedFid() {
+    $fields = $this->xpath('//input[@type="hidden" and @name="submitted[file][fid]"]');
+    $this->assertTrue(!empty($fields), 'The form contains a hidden file ID field.');
+    return empty($fields) ? NULL : (string) $fields[0]['value'];
+  }
+
+  /**
+   * Loads a user's submission to a webform node.
+   *
+   * @param object $node
+   *   The webform node.
+   * @param object $account
+   *   The user who made the submission.
+   *
+   * @return object|false
+   *   The submission, or FALSE if the user has not submitted the webform.
+   */
+  protected function webformFileSubmission($node, $account) {
+    drupal_static_reset('webform_get_submission');
+    $submissions = webform_get_submissions(array('nid' => $node->nid, 'uid' => $account->uid));
+    return empty($submissions) ? FALSE : end($submissions);
+  }
+
+  /**
+   * Returns the file ID stored for the file component of a user's submission.
+   *
+   * @param object $node
+   *   The webform node.
+   * @param object $account
+   *   The user who made the submission.
+   *
+   * @return string|null
+   *   The stored file ID, or NULL if no file is attached.
+   */
+  protected function webformFileSubmittedFid($node, $account) {
+    $submission = $this->webformFileSubmission($node, $account);
+    return empty($submission->data[1][0]) ? NULL : $submission->data[1][0];
+  }
+
+}

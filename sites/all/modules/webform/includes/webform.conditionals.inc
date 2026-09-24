@@ -233,11 +233,18 @@ function webform_conditionals_form_validate($form, &$form_state) {
         }
       }
       foreach ($conditional['rules'] as $rule_key => $rule) {
+        if (!is_numeric($rule_key)) {
+          continue;
+        }
+        $source_cid = isset($rule['source']['#value']) ? $rule['source']['#value'] : NULL;
         // Validate component rules, but not conditional_start/end rules.
-        if (is_numeric($rule_key) && $rule['source_type']['#value'] == 'component' && isset($targets[$rule['source']['#value']])) {
+        if ($source_cid && $rule['source_type']['#value'] == 'component' && isset($targets[$source_cid])) {
           form_set_error('conditionals][' . $conditional_key . '][rules][' . $rule_key . '][source',
             t('The subject of the conditional cannot be the same as the component that is changed (%target).',
-            array('%target' => $components[$rule['source']['#value']]['name'])));
+            array('%target' => $components[$source_cid]['name'])));
+        }
+        if ($source_cid && $components[$source_cid]['type'] === 'date' && strtotime($rule['value']['#value']) === FALSE) {
+          form_set_error('conditionals][' . $conditional_key . '][rules][' . $rule_key . '][value', t('The conditional comparison value must be a valid date.'));
         }
       }
     }
@@ -253,6 +260,9 @@ function webform_conditionals_form_validate($form, &$form_state) {
  */
 function webform_conditionals_form_submit($form, &$form_state) {
   $node = $form['#node'];
+  // Get a fresh copy of the node so that we are only saving these changes.
+  // Otherwise, changes to the Webform on another tab will be overwritten.
+  $node = node_load($node->nid, NULL, TRUE);
 
   // Remove the new conditional placeholder.
   unset($form_state['values']['conditionals']['new']);
@@ -266,7 +276,7 @@ function webform_conditionals_form_submit($form, &$form_state) {
  * AJAX callback to render out adding a new condition.
  */
 function webform_conditionals_ajax($form, $form_state) {
-  $rgids = element_children($form['conditionals']);
+  $rgids = array_filter(element_children($form['conditionals']), 'is_numeric');
   $new_rgid = max($rgids);
   $form['conditionals'][$new_rgid]['#ajax_added'] = TRUE;
 
@@ -523,6 +533,7 @@ function _webform_conditional_rule_expand($element, $rid, $conditional, $level, 
       '#title' => t('Value'),
       '#size' => 20,
       '#default_value' => $conditional['value'],
+      '#maxlength' => 1024,
     ),
     'add_subconditional' => _webform_conditional_add_expand($element, $rid, TRUE),
     'add' => _webform_conditional_add_expand($element, $rid, FALSE),
@@ -1275,7 +1286,7 @@ function webform_conditional_form_select($node) {
   webform_component_include('select');
   foreach ($node->webform['components'] as $cid => $component) {
     if (webform_component_property($component['type'], 'conditional_type') == 'select') {
-      // @todo: Use a pluggable mechanism for retrieving select list values.
+      // @todo Use a pluggable mechanism for retrieving select list values.
       $options = _webform_select_options($component);
       $element = array(
         '#type' => 'select',
@@ -1532,7 +1543,8 @@ function webform_conditional_prepare_time_js($rule_value) {
 function webform_conditional_operator_string_equal($input_values, $rule_value) {
   foreach ($input_values as $value) {
     // Checkbox values come in as 0 integers for unchecked boxes.
-    $value = ($value === 0) ? '' : $value;
+    // Radio values come in as NULL if none of the options are selected.
+    $value = in_array($value, array(0, NULL), TRUE) ? '' : $value;
     if (strcasecmp($value, $rule_value) === 0) {
       return TRUE;
     }

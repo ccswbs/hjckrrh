@@ -5,7 +5,7 @@
  */
 class webform_exporter {
   public $options = array();
-  public $export_wordrap;
+  public $export_wordwrap;
 
   /**
    * Constructor for webform_exporter classes.
@@ -66,6 +66,19 @@ class webform_exporter {
     drupal_add_http_header('Content-Type', 'application/force-download');
     drupal_add_http_header('Pragma', 'public');
     drupal_add_http_header('Cache-Control', 'max-age=0');
+  }
+
+  /**
+   * Get full filename of the export file, including the extension.
+   *
+   * @param string $filename
+   *   The base filename of the export file.
+   *
+   * @return string
+   *   The full filename of the export file, including the extension.
+   */
+  public function get_filename($filename) {
+    return $filename;
   }
 
   /**

@@ -1,0 +1,137 @@
+<?php
+
+/**
+ * Webform module file component tests.
+ */
+class WebformFileComponentTestCase extends DrupalWebTestCase {
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function getInfo() {
+    return array(
+      'name' => t('Webform file component'),
+      'description' => t('Check that links to uploaded files force a download for the MIME types a browser would otherwise display inline.'),
+      'group' => t('Webform'),
+    );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setUp($added_modules = array()) {
+    parent::setUp(array_merge(array('webform'), $added_modules));
+    module_load_include('inc', 'webform', 'components/file');
+  }
+
+  /**
+   * Provides the MIME types to check.
+   *
+   * @return array
+   *   TRUE if a link to a file of that MIME type should carry the HTML5
+   *   download attribute, FALSE if it should be left alone, keyed by MIME
+   *   type.
+   */
+  protected function fileDownloadMimeTypes() {
+    return array(
+      // Browsers render these inline rather than downloading them.
+      'application/atom' => TRUE,
+      'application/pdf' => TRUE,
+      'application/xml' => TRUE,
+      'text/html' => TRUE,
+      'text/xml' => TRUE,
+      // Everything else keeps the browser's default behaviour.
+      'application/json' => FALSE,
+      'application/zip' => FALSE,
+      'image/jpeg' => FALSE,
+      'text/plain' => FALSE,
+    );
+  }
+
+  /**
+   * Saves a managed file with the given MIME type.
+   *
+   * @param string $filemime
+   *   The MIME type to store on the file.
+   * @param int $delta
+   *   An index used to keep file names unique.
+   *
+   * @return object
+   *   The saved file object.
+   */
+  protected function createFileWithMimeType($filemime, $delta) {
+    $file = file_save_data('Webform test file.', 'public://webform-download-' . $delta . '.txt');
+    $file->filemime = $filemime;
+    return file_save($file);
+  }
+
+  /**
+   * Checks whether rendered markup links the file with a download attribute.
+   *
+   * @param string $output
+   *   The rendered markup containing the link.
+   * @param object $file
+   *   The file the link points at.
+   *
+   * @return bool
+   *   TRUE if the link carries a download attribute naming the file.
+   */
+  protected function hasDownloadAttribute($output, $file) {
+    $pattern = '/<a[^>]+\bdownload="' . preg_quote($file->filename, '/') . '"/';
+    return (bool) preg_match($pattern, $output);
+  }
+
+  /**
+   * Test the download attribute on the submission display link.
+   */
+  public function testFileDisplayDownloadAttribute() {
+    $delta = 0;
+    foreach ($this->fileDownloadMimeTypes() as $filemime => $expected) {
+      $file = $this->createFileWithMimeType($filemime, $delta++);
+      $output = theme('webform_display_file', array(
+        'element' => array(
+          '#value' => $file,
+          '#format' => 'html',
+        ),
+      ));
+      $message = format_string('A @mime file displayed in a submission @expected a download attribute. Markup: @output', array(
+        '@mime' => $filemime,
+        '@expected' => $expected ? 'has' : 'does not have',
+        '@output' => $output,
+      ));
+      $this->assertEqual($this->hasDownloadAttribute($output, $file), $expected, $message);
+    }
+  }
+
+  /**
+   * Test the download attribute on the results table link.
+   */
+  public function testFileTableDownloadAttribute() {
+    $delta = 100;
+    foreach ($this->fileDownloadMimeTypes() as $filemime => $expected) {
+      $file = $this->createFileWithMimeType($filemime, $delta++);
+      $output = _webform_table_file(array(), array($file->fid));
+      $message = format_string('A @mime file listed in the results table @expected a download attribute. Markup: @output', array(
+        '@mime' => $filemime,
+        '@expected' => $expected ? 'has' : 'does not have',
+        '@output' => $output,
+      ));
+      $this->assertEqual($this->hasDownloadAttribute($output, $file), $expected, $message);
+    }
+  }
+
+  /**
+   * Test that the plain text display is still just the file URL.
+   */
+  public function testFileDisplayTextFormat() {
+    $file = $this->createFileWithMimeType('application/pdf', 200);
+    $output = theme('webform_display_file', array(
+      'element' => array(
+        '#value' => $file,
+        '#format' => 'text',
+      ),
+    ));
+    $this->assertEqual($output, webform_file_url($file->uri), 'The text format display is the file URL without any markup.');
+  }
+
+}

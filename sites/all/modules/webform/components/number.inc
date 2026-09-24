@@ -188,7 +188,7 @@ function _webform_edit_number($component) {
     '#type' => 'textfield',
     '#title' => t('Minimum'),
     '#default_value' => $component['extra']['min'],
-    '#description' => t('Minimum numeric value. For example, 0 would ensure positive numbers.'),
+    '#description' => t('Minimum numeric value. For example, 0 would ensure non-negative numbers.'),
     '#size' => 5,
     '#maxlength' => 10,
     '#weight' => 2.1,
@@ -295,7 +295,7 @@ function _webform_render_number($component, $value = NULL, $filter = TRUE, $subm
     '#field_prefix' => empty($component['extra']['field_prefix']) ? NULL : ($filter ? webform_filter_xss($component['extra']['field_prefix']) : $component['extra']['field_prefix']),
     '#field_suffix' => empty($component['extra']['field_suffix']) ? NULL : ($filter ? webform_filter_xss($component['extra']['field_suffix']) : $component['extra']['field_suffix']),
     '#description' => $filter ? webform_filter_descriptions($component['extra']['description'], $node) : $component['extra']['description'],
-    '#attributes' => $component['extra']['attributes'],
+    '#attributes' => $component['extra']['attributes'] ?: array(),
     '#element_validate' => array('_webform_validate_number'),
     '#theme_wrappers' => array('webform_element'),
     '#min' => $component['extra']['min'],
@@ -305,7 +305,7 @@ function _webform_render_number($component, $value = NULL, $filter = TRUE, $subm
     '#point' => $component['extra']['point'],
     '#separator' => $component['extra']['separator'],
     '#decimals' => $component['extra']['decimals'],
-    '#translatable' => array('title', 'description', 'field_prefix', 'field_suffix'),
+    '#translatable' => array('title', 'description', 'field_prefix', 'field_suffix', 'placeholder'),
   );
 
   if ($component['required']) {
@@ -404,7 +404,7 @@ function _webform_display_number($component, $value, $format = 'html', $submissi
     '#field_suffix' => $empty ? '' : $component['extra']['field_suffix'],
     '#format' => $format,
     '#value' => $empty ? '' : _webform_number_format($component, $value[0]),
-    '#translatable' => array('title'),
+    '#translatable' => array('title', 'placeholder'),
   );
 }
 
@@ -649,10 +649,10 @@ function _webform_validate_number($element, &$form_state) {
         }
       }
       elseif ($element['#max'] != '' && $numeric_value > $element['#max']) {
-        form_error($element, t('!name field value must be less than @max.', array('!name' => $element['#title'], '@max' => $element['#max'])));
+        form_error($element, t('!name field value must be less than or equal to @max.', array('!name' => $element['#title'], '@max' => $element['#max'])));
       }
       elseif ($element['#min'] != '' && $numeric_value < $element['#min']) {
-        form_error($element, t('!name field value must be greater than @min.', array('!name' => $element['#title'], '@min' => $element['#min'])));
+        form_error($element, t('!name field value must be greater than or equal to @min.', array('!name' => $element['#title'], '@min' => $element['#min'])));
       }
 
       // Integer test.
@@ -763,10 +763,9 @@ function _webform_edit_number_validate($element, &$form_state) {
  */
 function _webform_number_select_options($component) {
   $options = array();
-  $step = abs($component['extra']['step']);
 
   // Step is optional and defaults to 1.
-  $step = empty($step) ? 1 : $step;
+  $step = abs($component['extra']['step'] ?: 1);
 
   // Generate list in correct direction.
   $min = $component['extra']['min'];
@@ -782,14 +781,10 @@ function _webform_number_select_options($component) {
     $options[$f . ''] = $f . '';
   }
 
-  // @todo: HTML5 browsers apparently do not include the max value if it does
-  // not line up with step. Restore this if needed in the future.
   // Add end limit if it's been skipped due to step.
-  // @code
-  // if (end($options) != $max) {
-  //   $options[$f] = $max;
-  // }
-  // @endcode
+  if (end($options) != $max) {
+    $options[$f] = $max;
+  }
   if ($flipped) {
     $options = array_reverse($options, TRUE);
   }
@@ -903,6 +898,13 @@ function webform_number_standardize($value, $point) {
  * See https://drupal.org/node/1601968.
  */
 function webform_modulo($a, $b) {
+  // Ensure values are either int or float.
+  if (!is_numeric($a) || !is_numeric($b)) {
+    return 0.0;
+  }
+  $a = +$a;
+  $b = +$b;
+
   $modulo = $a - $b * (($b < 0) ? ceil($a / $b) : floor($a / $b));
   if (webform_compare_floats($modulo, 0.0) == 0 || webform_compare_floats($modulo, $b) == 0) {
     $modulo = 0.0;
