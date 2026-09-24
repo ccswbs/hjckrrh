@@ -152,10 +152,10 @@ function _webform_render_email($component, $value = NULL, $filter = TRUE, $submi
     '#required' => $component['required'],
     '#weight' => $component['weight'],
     '#description' => $filter ? webform_filter_descriptions($component['extra']['description'], $node) : $component['extra']['description'],
-    '#attributes' => $component['extra']['attributes'],
+    '#attributes' => $component['extra']['attributes'] ?: array(),
     '#element_validate'  => array('_webform_validate_email'),
     '#theme_wrappers' => array('webform_element'),
-    '#translatable' => array('title', 'description'),
+    '#translatable' => array('title', 'description', 'placeholder'),
   );
 
   if ($component['required']) {
@@ -275,7 +275,7 @@ function _webform_display_email($component, $value, $format = 'html', $submissio
     '#theme_wrappers' => $format == 'html' ? array('webform_element') : array('webform_element_text'),
     '#format' => $format,
     '#value' => isset($value[0]) ? $value[0] : '',
-    '#translatable' => array('title'),
+    '#translatable' => array('title', 'placeholder'),
   );
 }
 

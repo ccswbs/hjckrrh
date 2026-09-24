@@ -1,0 +1,7 @@
+Webform 7.x-4.x, xxxx-xx-xx (development version)
+-----------------------
+
+Webform 7.x-4.28, 2026-09-23
+-----------------------
+- Addresses SA-CONTRIB-158
+- Addresses SA-CONTRIB-172

@@ -1,0 +1,16 @@
+{
+  "name": "drupal/webform",
+  "type": "drupal-module",
+  "description": "The Webform module allows you to build forms to collect data.",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "authors": [],
+  "support": {},
+  "require": {
+    "drupal/ctools": "^1.0",
+    "drupal/views": "^3.0"
+  },
+  "require-dev": {
+    "drupal/token": "^1.0"
+  }
+}
