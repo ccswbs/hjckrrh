@@ -24,7 +24,8 @@ Drupal requires:
 
 Note that version numbers above represent the minimum versions that Drupal 7 is
 routinely tested with. For more detailed information about compatibility with
-newer versions (that benefit from support from their maintainers), and
+newer versions (that benefit from support from their maintainers), and]
+
 requirements including a list of PHP extensions and configurations that are
 required, see "System requirements"
 (https://www.drupal.org/docs/7/system-requirements) in the Drupal.org online

@@ -5,3 +5,7 @@ hidden = TRUE
 
 settings[basetheme_only] = base theme value
 settings[subtheme_override] = base theme value
+
+version = 7.106
+project = drupal
+datestamp = 1787164245
