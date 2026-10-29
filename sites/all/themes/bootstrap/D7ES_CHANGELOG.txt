@@ -1,0 +1,6 @@
+Bootstrap 7.x-3.x, xxxx-xx-xx (development version)
+-----------------------
+
+Bootstrap 7.x-3.28, 2026-10-28
+-----------------------
+- Security: Addresses cross site scripting through data-sanitize, data-sanitize-fn and data-white-list attributes that turned off or replaced the Bootstrap sanitizer of popovers and tooltips. The sanitizer requires Bootstrap 3.4.1 or later, and subthemes that override the bootstrapPopovers or bootstrapTooltips behaviors must remove these options from the element data themselves.

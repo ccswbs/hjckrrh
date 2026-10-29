@@ -12,6 +12,21 @@ var Drupal = Drupal || {};
 
   var $document = $(document);
 
+  /**
+   * Returns the data-* options of a popover or tooltip element.
+   *
+   * Bootstrap rejects sanitizer overrides read directly from data-*. Apply the
+   * same restriction before supplying data as explicit options. Only strip
+   * untrusted data so trusted plugin defaults and settings are preserved.
+   */
+  var getDataOptions = function ($element) {
+    var data = $.extend({}, $element.data());
+    delete data.sanitize;
+    delete data.sanitizeFn;
+    delete data.whiteList;
+    return data;
+  };
+
   Drupal.behaviors.bootstrap = {
     attach: function(context) {
       // Provide some Bootstrap tab/Drupal integration.
@@ -113,7 +128,7 @@ var Drupal = Drupal || {};
       var elements = $(context).find('[data-toggle=popover]').toArray();
       for (var i = 0; i < elements.length; i++) {
         var $element = $(elements[i]);
-        var options = $.extend({}, $.fn.popover.Constructor.DEFAULTS, settings.bootstrap.popoverOptions, $element.data());
+        var options = $.extend({}, $.fn.popover.Constructor.DEFAULTS, settings.bootstrap.popoverOptions, getDataOptions($element));
 
         // Store the original trigger.
         options.originalTrigger = options.trigger;
@@ -172,7 +187,7 @@ var Drupal = Drupal || {};
         var elements = $(context).find('[data-toggle="tooltip"]').toArray();
         for (var i = 0; i < elements.length; i++) {
           var $element = $(elements[i]);
-          var options = $.extend({}, settings.bootstrap.tooltipOptions, $element.data());
+          var options = $.extend({}, settings.bootstrap.tooltipOptions, getDataOptions($element));
           $element.tooltip(options);
         }
       }
