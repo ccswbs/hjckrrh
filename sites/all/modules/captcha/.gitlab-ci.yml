@@ -1,0 +1,26 @@
+include:
+  # Packaging pipeline
+  - project: "tag1consulting/d7es-ci-packaging"
+    ref: main
+    file:
+      - "templates/package_release/package_release.yml"
+
+  # Use CI from drupal.org https://git.drupalcode.org/project/gitlab_templates/
+  - remote: https://git.drupalcode.org/project/gitlab_templates/-/raw/default-ref/includes/include.drupalci.main-d7.yml
+  - remote: https://git.drupalcode.org/project/gitlab_templates/-/raw/default-ref/includes/include.drupalci.variables.yml
+  - remote: https://git.drupalcode.org/project/gitlab_templates/-/raw/default-ref/includes/include.drupalci.hidden-variables.yml
+  - remote: https://git.drupalcode.org/project/gitlab_templates/-/raw/default-ref/includes/include.drupalci.workflows.yml
+
+stages:
+  - build
+  - validate
+  - test
+  - packaging
+  - upload
+  - release
+
+variables:
+  _SHOW_ENVIRONMENT_VARIABLES: '1'
+  SKIP_PHPCS: "1"
+  _TARGET_D7_PHP: '$CORE_LEG_PHP'
+  OPT_IN_TEST_MAX_PHP: '1'

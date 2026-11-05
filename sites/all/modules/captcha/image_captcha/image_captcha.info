@@ -11,6 +11,6 @@ files[] = image_captcha.admin.inc
 files[] = image_captcha.user.inc
 files[] = image_captcha.test
 
-version = 7.x-1.8
+version = 7.x-1.9
 project = captcha
-datestamp = 1779898709
+datestamp = 1793819205

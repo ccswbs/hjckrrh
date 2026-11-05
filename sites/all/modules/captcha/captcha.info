@@ -9,7 +9,8 @@ files[] = captcha.inc
 files[] = captcha.admin.inc
 files[] = captcha.install
 files[] = captcha.test
+files[] = tests/captcha_session_replay.test
 
-version = 7.x-1.8
+version = 7.x-1.9
 project = captcha
-datestamp = 1779898709
+datestamp = 1793819205

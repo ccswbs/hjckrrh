@@ -1,0 +1,380 @@
+<?php
+
+/**
+ * @file
+ * Tests for the protection against replaying solved CAPTCHA sessions.
+ */
+
+/**
+ * Tests that a solved CAPTCHA session cannot be submitted again.
+ */
+class CaptchaSessionReplayTestCase extends CaptchaBaseWebTestCase {
+
+  public static function getInfo() {
+    return array(
+      'name' => t('CAPTCHA session replay protection'),
+      'description' => t('Testing that solved CAPTCHA sessions cannot be replayed to skip the challenge.'),
+      'group' => t('CAPTCHA'),
+    );
+  }
+
+  /**
+   * Get a field from the captcha_sessions table.
+   */
+  protected function getCaptchaSessionField($captcha_sid, $field) {
+    return db_query('SELECT ' . $field . ' FROM {captcha_sessions} WHERE csid = :csid', array(':csid' => $captcha_sid))->fetchField();
+  }
+
+  /**
+   * Get the raw value of a hidden form field from the current page.
+   */
+  protected function getHiddenFieldValue($name) {
+    $elements = $this->xpath('//input[@name=:name]', array(':name' => $name));
+    return isset($elements[0]['value']) ? (string) $elements[0]['value'] : NULL;
+  }
+
+  /**
+   * Log in through the login form solving the Test CAPTCHA.
+   *
+   * @return int
+   *   The CAPTCHA session ID that was solved.
+   */
+  protected function loginSolvingCaptcha($account) {
+    $this->drupalGet('user');
+    $this->assertCaptchaPresence(TRUE);
+    $captcha_sid = $this->getCaptchaSidFromForm();
+    $edit = array(
+      'name' => $account->name,
+      'pass' => $account->pass_raw,
+      'captcha_response' => 'Test 123',
+    );
+    $this->drupalPost(NULL, $edit, t('Log in'));
+    $this->assertCaptchaResponseAccepted();
+    $this->assertLink(t('Log out'), 0, 'User logged in after solving the CAPTCHA.');
+    $this->assertEqual($this->getCaptchaSessionField($captcha_sid, 'status'), CAPTCHA_STATUS_SOLVED, 'The CAPTCHA session is solved.');
+    return $captcha_sid;
+  }
+
+  /**
+   * Post the login form reusing the given CAPTCHA session.
+   */
+  protected function replayLoginForm($account, $captcha_sid, $captcha_token) {
+    $this->drupalGet('user');
+    $edit = array(
+      'name' => $account->name,
+      'pass' => $account->pass_raw,
+      'captcha_sid' => $captcha_sid,
+      'captcha_token' => $captcha_token,
+    );
+    $this->drupalPost(NULL, $edit, t('Log in'));
+  }
+
+  /**
+   * Assert that a replayed login was blocked and asks for a new challenge.
+   */
+  protected function assertReplayBlocked($captcha_sid) {
+    $this->assertText(t(CAPTCHA_SESSION_REUSE_ATTACK_ERROR_MESSAGE), 'Replaying a solved CAPTCHA session is detected.');
+    $this->assertNoLink(t('Log out'), 'User is not logged in by replaying a solved CAPTCHA session.');
+    $this->assertCaptchaPresence(TRUE);
+    $this->assertNotEqual($this->getCaptchaSidFromForm(), $captcha_sid, 'A new CAPTCHA session is started.');
+  }
+
+  /**
+   * Solve the CAPTCHA once and log out, with the session token used up.
+   *
+   * @return int
+   *   The solved CAPTCHA session ID.
+   */
+  protected function solveCaptchaAndUseUpToken() {
+    $captcha_sid = $this->loginSolvingCaptcha($this->normal_user);
+    $this->drupalLogout();
+    db_update('captcha_sessions')
+      ->fields(array('token' => NULL))
+      ->condition('csid', $captcha_sid)
+      ->execute();
+    return $captcha_sid;
+  }
+
+  /**
+   * A solved session with its current token may not skip the challenge.
+   */
+  public function testReplayWithCurrentTokenIsBlocked() {
+    captcha_set_form_id_setting('user_login', 'captcha/Test');
+
+    $captcha_sid = $this->loginSolvingCaptcha($this->normal_user);
+    $this->drupalLogout();
+
+    // The solved session keeps a token that a replay can send along.
+    $captcha_token = $this->getCaptchaSessionField($captcha_sid, 'token');
+    $this->assertTrue(!empty($captcha_token), 'The solved CAPTCHA session has a token.');
+
+    $this->replayLoginForm($this->normal_user, $captcha_sid, $captcha_token);
+    $this->assertReplayBlocked($captcha_sid);
+
+    // Solving the new challenge is accepted.
+    $edit = array(
+      'name' => $this->normal_user->name,
+      'pass' => $this->normal_user->pass_raw,
+      'captcha_response' => 'Test 123',
+    );
+    $this->drupalPost(NULL, $edit, t('Log in'));
+    $this->assertCaptchaResponseAccepted();
+    $this->assertLink(t('Log out'), 0, 'User logged in after solving the new challenge.');
+  }
+
+  /**
+   * A solved session replayed with an empty token field is blocked.
+   */
+  public function testReplayWithEmptyTokenIsBlocked() {
+    captcha_set_form_id_setting('user_login', 'captcha/Test');
+    $captcha_sid = $this->solveCaptchaAndUseUpToken();
+
+    $this->replayLoginForm($this->normal_user, $captcha_sid, '');
+    $this->assertReplayBlocked($captcha_sid);
+  }
+
+  /**
+   * A solved session replayed without the token field is blocked.
+   */
+  public function testReplayWithoutTokenFieldIsBlocked() {
+    captcha_set_form_id_setting('user_login', 'captcha/Test');
+    $captcha_sid = $this->solveCaptchaAndUseUpToken();
+
+    // Build the POST by hand so that the captcha_token field is left out.
+    $this->drupalGet('user');
+    $post = array(
+      'name' => $this->normal_user->name,
+      'pass' => $this->normal_user->pass_raw,
+      'form_build_id' => $this->getHiddenFieldValue('form_build_id'),
+      'form_id' => 'user_login',
+      'captcha_sid' => $captcha_sid,
+      'op' => t('Log in'),
+    );
+    $this->curlExec(array(
+      CURLOPT_URL => url('user', array('absolute' => TRUE)),
+      CURLOPT_POST => TRUE,
+      CURLOPT_POSTFIELDS => http_build_query($post, '', '&'),
+    ));
+    $this->assertReplayBlocked($captcha_sid);
+  }
+
+  /**
+   * A form shown again after a failed submission asks for a new challenge.
+   */
+  public function testFailedSubmissionAsksForNewChallenge() {
+    captcha_set_form_id_setting('user_login', 'captcha/Test');
+
+    $this->drupalGet('user');
+    $captcha_sid = $this->getCaptchaSidFromForm();
+    $edit = array(
+      'name' => 'foobar',
+      'pass' => 'bazlaz',
+      'captcha_response' => 'Test 123',
+    );
+    $this->drupalPost(NULL, $edit, t('Log in'));
+    $this->assertCaptchaResponseAccepted();
+    $this->assertText(t('Sorry, unrecognized username or password.'), 'The login attempt itself failed.');
+
+    // The same CAPTCHA session is shown with a new challenge.
+    $this->assertCaptchaPresence(TRUE);
+    $this->assertEqual($this->getCaptchaSidFromForm(), $captcha_sid, 'The CAPTCHA session ID is preserved.');
+    $this->assertEqual($this->getCaptchaSessionField($captcha_sid, 'status'), CAPTCHA_STATUS_UNSOLVED, 'The CAPTCHA session is unsolved again.');
+
+    // Resubmitting without an answer is blocked.
+    unset($edit['captcha_response']);
+    $this->drupalPost(NULL, $edit, t('Log in'));
+    $this->assertNoText(t(CAPTCHA_SESSION_REUSE_ATTACK_ERROR_MESSAGE), 'No CAPTCHA session reuse is reported for the shown form.');
+    $this->assertFieldByXPath('//input[@name="captcha_response" and contains(@class, "error")]', NULL, 'A resubmission must solve the new challenge.');
+
+    // Answering the new challenge is accepted.
+    $edit = array(
+      'name' => $this->normal_user->name,
+      'pass' => $this->normal_user->pass_raw,
+      'captcha_response' => 'Test 123',
+    );
+    $this->drupalPost(NULL, $edit, t('Log in'));
+    $this->assertCaptchaResponseAccepted();
+    $this->assertLink(t('Log out'), 0, 'User logged in after solving the new challenge.');
+  }
+
+  /**
+   * Challenges added to a solved session reset it to unsolved.
+   */
+  public function testAlwaysPersistenceResetsSessionStatus() {
+    variable_set('captcha_persistence', CAPTCHA_PERSISTENCE_SHOW_ALWAYS);
+    captcha_set_form_id_setting('user_login', 'captcha/Test');
+
+    $this->drupalGet('user');
+    $captcha_sid = $this->getCaptchaSidFromForm();
+    $edit = array(
+      'name' => 'foobar',
+      'pass' => 'bazlaz',
+      'captcha_response' => 'Test 123',
+    );
+    $this->drupalPost(NULL, $edit, t('Log in'));
+    $this->assertCaptchaResponseAccepted();
+    $this->assertCaptchaPresence(TRUE);
+    $this->assertEqual($this->getCaptchaSidFromForm(), $captcha_sid, 'The CAPTCHA session ID is preserved.');
+    $this->assertEqual($this->getCaptchaSessionField($captcha_sid, 'status'), CAPTCHA_STATUS_UNSOLVED, 'A new challenge resets the CAPTCHA session to unsolved.');
+
+    $this->drupalPost(NULL, $edit, t('Log in'));
+    $this->assertCaptchaResponseAccepted();
+    $this->assertEqual($this->getCaptchaSidFromForm(), $captcha_sid, 'The CAPTCHA session ID is preserved after answering again.');
+  }
+
+  /**
+   * Session based persistence keeps omitting the challenge.
+   */
+  public function testPerFormTypePersistenceStillSkipsChallenge() {
+    variable_set('captcha_persistence', CAPTCHA_PERSISTENCE_SKIP_ONCE_SUCCESSFUL_PER_FORM_TYPE);
+    captcha_set_form_id_setting('user_login', 'captcha/Test');
+
+    $this->drupalGet('user');
+    $edit = array(
+      'name' => 'foobar',
+      'pass' => 'bazlaz',
+      'captcha_response' => 'Test 123',
+    );
+    $this->drupalPost(NULL, $edit, t('Log in'));
+    $this->assertCaptchaResponseAccepted();
+    $this->assertCaptchaPresence(FALSE);
+
+    // Resubmitting the form without a challenge is fine for this user session.
+    unset($edit['captcha_response']);
+    $this->drupalPost(NULL, $edit, t('Log in'));
+    $this->assertCaptchaResponseAccepted();
+    $this->assertText(t('Sorry, unrecognized username or password.'), 'The login form was processed.');
+    $this->assertCaptchaPresence(FALSE);
+  }
+
+  /**
+   * A solved session carried along a preview skips the challenge on save.
+   */
+  public function testPreviewThenSaveStillSkipsChallenge() {
+    captcha_set_form_id_setting('page_node_form', 'captcha/Test');
+    captcha_set_form_id_setting(self::COMMENT_FORM_ID, 'captcha/Test');
+    $this->drupalLogin($this->normal_user);
+
+    // Node preview, then save.
+    $edit = $this->getNodeFormValues();
+    $edit['captcha_response'] = 'Test 123';
+    $this->drupalPost('node/add/page', $edit, t('Preview'));
+    $this->assertCaptchaResponseAccepted();
+    $this->assertCaptchaPresence(FALSE);
+    $this->drupalPost(NULL, array(), t('Save'));
+    $this->assertCaptchaResponseAccepted();
+    $this->assertRaw(t('!post %title has been created.', array('!post' => 'Basic page', '%title' => $edit['title'])), 'Node saved after preview without a second challenge.');
+
+    // Comment preview, then save.
+    $node = $this->createNodeWithCommentsEnabled();
+    $edit = $this->getCommentFormValues();
+    $edit['captcha_response'] = 'Test 123';
+    $this->drupalPost('comment/reply/' . $node->nid, $edit, t('Preview'));
+    $this->assertCaptchaResponseAccepted();
+    $this->assertCaptchaPresence(FALSE);
+    $this->drupalPost(NULL, array(), t('Save'));
+    $this->assertCaptchaResponseAccepted();
+    $this->assertText(t('Your comment has been posted.'), 'Comment saved after preview without a second challenge.');
+  }
+
+  /**
+   * Only form state carried along a rebuild may reuse a solved session.
+   */
+  public function testSolvedSessionReusable() {
+    $captcha_sid = _captcha_generate_captcha_session('user_login', CAPTCHA_STATUS_SOLVED);
+
+    $form_state = array();
+    $this->assertFalse(_captcha_solved_session_reusable($captcha_sid, $form_state, 'user_login'), 'A posted solved session is not reusable.');
+
+    // Form state cached before the CAPTCHA was solved, e.g. a form with Ajax
+    // elements that failed validation, is not enough.
+    $form_state['captcha_info'] = array('captcha_sid' => $captcha_sid);
+    $this->assertFalse(_captcha_solved_session_reusable($captcha_sid, $form_state, 'user_login'), 'Cached form state without the carry flag is not trusted.');
+
+    $form_state['captcha_info']['carry_solved'] = TRUE;
+    $this->assertTrue(_captcha_solved_session_reusable($captcha_sid, $form_state, 'user_login'), 'Form state carried along a rebuild is trusted.');
+    $this->assertFalse(_captcha_solved_session_reusable($captcha_sid + 1, $form_state, 'user_login'), 'The carried form state only covers its own session.');
+
+    // Callers that do not pass $skip_solved require a new challenge.
+    $this->assertTrue(_captcha_required_for_user($captcha_sid, 'user_login'), 'A solved session still requires a challenge by default.');
+  }
+
+  /**
+   * A preview build cannot be saved again, even when the form cache is kept.
+   */
+  public function testOldPreviewBuildCannotBeReplayed() {
+    variable_set('cache', 1);
+    captcha_set_form_id_setting('page_node_form', 'captcha/Test');
+    $this->drupalLogin($this->normal_user);
+
+    $edit = $this->getNodeFormValues();
+    $edit['captcha_response'] = 'Test 123';
+    $this->drupalPost('node/add/page', $edit, t('Preview'));
+    $this->assertCaptchaPresence(FALSE);
+    $preview = $this->drupalGetContent();
+    $this->drupalPost(NULL, array(), t('Save'));
+    $this->assertRaw(t('!post %title has been created.', array('!post' => 'Basic page', '%title' => $edit['title'])), 'Node saved after preview.');
+
+    // Post the preview page again with a new title.
+    $this->drupalSetContent($preview);
+    $replay = array('title' => 'replayed ' . $this->randomName(16));
+    $this->drupalPost(NULL, $replay, t('Save'));
+    $this->assertText(t(CAPTCHA_SESSION_REUSE_ATTACK_ERROR_MESSAGE), 'Posting the old preview build again is detected.');
+    $this->assertNoRaw(t('!post %title has been created.', array('!post' => 'Basic page', '%title' => $replay['title'])), 'No second node is saved.');
+  }
+
+  /**
+   * Persistence on all forms keeps omitting the challenge.
+   */
+  public function testOncePersistenceStillSkipsChallenge() {
+    variable_set('captcha_persistence', CAPTCHA_PERSISTENCE_SKIP_ONCE_SUCCESSFUL);
+    captcha_set_form_id_setting('user_login', 'captcha/Test');
+    captcha_set_form_id_setting('user_register_form', 'captcha/Test');
+
+    $this->drupalGet('user/register');
+    $this->assertCaptchaPresence(TRUE);
+
+    $this->drupalGet('user');
+    $edit = array(
+      'name' => 'foobar',
+      'pass' => 'bazlaz',
+      'captcha_response' => 'Test 123',
+    );
+    $this->drupalPost(NULL, $edit, t('Log in'));
+    $this->assertCaptchaResponseAccepted();
+    $this->assertCaptchaPresence(FALSE);
+
+    unset($edit['captcha_response']);
+    $this->drupalPost(NULL, $edit, t('Log in'));
+    $this->assertNoText(t(CAPTCHA_SESSION_REUSE_ATTACK_ERROR_MESSAGE), 'The form shown again can be submitted in the same user session.');
+    $this->drupalGet('user/register');
+    $this->assertCaptchaPresence(FALSE);
+  }
+
+  /**
+   * Session based persistence does not let another user session replay.
+   */
+  public function testSessionPersistenceReplayFromOtherSessionIsBlocked() {
+    variable_set('captcha_persistence', CAPTCHA_PERSISTENCE_SKIP_ONCE_SUCCESSFUL_PER_FORM_TYPE);
+    captcha_set_form_id_setting('user_login', 'captcha/Test');
+
+    $this->drupalGet('user');
+    $edit = array(
+      'name' => 'foobar',
+      'pass' => 'bazlaz',
+      'captcha_response' => 'Test 123',
+    );
+    $this->drupalPost(NULL, $edit, t('Log in'));
+    $this->assertCaptchaPresence(FALSE);
+    $captcha_sid = $this->getCaptchaSidFromForm();
+    $captcha_token = $this->getHiddenFieldValue('captcha_token');
+
+    // Start a new user session.
+    $this->curlClose();
+    $this->cookies = array();
+
+    $this->replayLoginForm($this->normal_user, $captcha_sid, $captcha_token);
+    $this->assertReplayBlocked($captcha_sid);
+  }
+
+}

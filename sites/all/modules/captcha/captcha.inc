@@ -179,6 +179,9 @@ function _captcha_generate_captcha_session($form_id = NULL, $status = CAPTCHA_ST
 /**
  * Helper function for updating the solution in the CAPTCHA session table.
  *
+ * This also marks the CAPTCHA session as unsolved, as the new challenge has
+ * to be solved.
+ *
  * @param int $captcha_sid
  *   the CAPTCHA session ID to update.
  *
@@ -191,6 +194,7 @@ function _captcha_update_captcha_session($captcha_sid, $solution) {
     ->fields(array(
       'timestamp' => REQUEST_TIME,
       'solution' => $solution,
+      'status' => CAPTCHA_STATUS_UNSOLVED,
     ))
     ->execute();
 }
@@ -200,8 +204,21 @@ function _captcha_update_captcha_session($captcha_sid, $solution) {
  *
  * Based on the CAPTCHA persistence setting, the CAPTCHA session ID and
  * user session info.
+ *
+ * @param int $captcha_sid
+ *   the CAPTCHA session ID.
+ *
+ * @param string $form_id
+ *   the form ID.
+ *
+ * @param bool $skip_solved
+ *   whether a solved CAPTCHA session omits the challenge, see
+ *   _captcha_solved_session_reusable().
+ *
+ * @return bool
+ *   TRUE if a challenge has to be added for the user.
  */
-function _captcha_required_for_user($captcha_sid, $form_id) {
+function _captcha_required_for_user($captcha_sid, $form_id, $skip_solved = FALSE) {
   // Get the CAPTCHA persistence setting.
   $captcha_persistence = variable_get('captcha_persistence', CAPTCHA_PERSISTENCE_SKIP_ONCE_SUCCESSFUL_PER_FORM_INSTANCE);
 
@@ -212,28 +229,14 @@ function _captcha_required_for_user($captcha_sid, $form_id) {
 
   // Get the status of the current CAPTCHA session.
   $captcha_session_status = db_query('SELECT status FROM {captcha_sessions} WHERE csid = :csid', array(':csid' => $captcha_sid))->fetchField();
-  // Second check: if the current session is already solved: omit further CAPTCHAs.
-  if ($captcha_session_status == CAPTCHA_STATUS_SOLVED) {
+  // Second check: if the current session is already solved and may be
+  // reused: omit further CAPTCHAs.
+  if ($skip_solved && $captcha_session_status == CAPTCHA_STATUS_SOLVED) {
     return FALSE;
   }
 
   // Third check: look at the persistence level (per form instance, per form or per user).
-  if ($captcha_persistence == CAPTCHA_PERSISTENCE_SKIP_ONCE_SUCCESSFUL_PER_FORM_INSTANCE) {
-    return TRUE;
-  }
-  else {
-    $captcha_success_form_ids = isset($_SESSION['captcha_success_form_ids']) ? (array) ($_SESSION['captcha_success_form_ids']) : array();
-    switch ($captcha_persistence) {
-      case CAPTCHA_PERSISTENCE_SKIP_ONCE_SUCCESSFUL:
-        return (count($captcha_success_form_ids) == 0);
-
-      case CAPTCHA_PERSISTENCE_SKIP_ONCE_SUCCESSFUL_PER_FORM_TYPE:
-        return !isset($captcha_success_form_ids[$form_id]);
-    }
-  }
-
-  // We should never get to this point, but to be sure, we return TRUE.
-  return TRUE;
+  return !_captcha_persistence_skips_challenge($form_id);
 }
 
 
