@@ -232,6 +232,13 @@ function captcha_element_process($element, &$form_state, $complete_form) {
   // Get implementing module and challenge for CAPTCHA.
   list($captcha_type_module, $captcha_type_challenge) = _captcha_parse_captcha_type($element['#captcha_type']);
 
+  // Whether a solved CAPTCHA session may omit the challenge. This has to be
+  // determined before $form_state['captcha_info'] is overwritten below.
+  $skip_solved = _captcha_solved_session_reusable($captcha_sid, $form_state, $this_form_id);
+  // Keep a solved CAPTCHA session carried along a form rebuild, see
+  // captcha_form_alter().
+  $carry_solved = !empty($form_state['rebuild']) && !empty($form_state['captcha_info']['carry_solved']) && $form_state['captcha_info']['captcha_sid'] == $captcha_sid;
+
   // Store CAPTCHA information for further processing in
   // - $form_state['captcha_info'], which survives a form rebuild (e.g. node
   //   preview), useful in _captcha_get_posted_captcha_info().
@@ -244,13 +251,15 @@ function captcha_element_process($element, &$form_state, $complete_form) {
     'module' => $captcha_type_module,
     'captcha_type' => $captcha_type_challenge,
     'reuse_attack' => $reuse_attack,
+    'carry_solved' => $carry_solved,
   );
   $element['#captcha_info'] = array(
     'form_id' => $this_form_id,
     'captcha_sid' => $captcha_sid,
+    'skip_solved' => $skip_solved,
   );
 
-  if (_captcha_required_for_user($captcha_sid, $this_form_id) || $element['#captcha_admin_mode'] || $element['#captcha_always']) {
+  if (_captcha_required_for_user($captcha_sid, $this_form_id, $skip_solved) || $element['#captcha_admin_mode'] || $element['#captcha_always']) {
     // Generate a CAPTCHA and its solution
     // (note that the CAPTCHA session ID is given as third argument).
     $captcha = module_invoke($captcha_type_module, 'captcha', 'generate', $captcha_type_challenge, $captcha_sid);
@@ -396,6 +405,18 @@ function theme_captcha($variables) {
  * CAPTCHA administration links for site administrators if this option is enabled.
  */
 function captcha_form_alter(&$form, &$form_state, $form_id) {
+
+  // A form is only rebuilt after it validated, e.g. for a preview or the next
+  // step of a multi-step form. Mark a CAPTCHA session that is solved by then,
+  // so that it is carried along to the rebuilt form in the form cache. This
+  // happens here, because drupal_rebuild_form() caches the form state before
+  // the rebuilt form is processed. Forms that are cached without a rebuild,
+  // e.g. forms with Ajax elements that failed validation, do not carry a
+  // solved CAPTCHA session along.
+  if (!empty($form_state['rebuild']) && isset($form_state['captcha_info']['captcha_sid'])) {
+    $captcha_session_status = db_query('SELECT status FROM {captcha_sessions} WHERE csid = :csid', array(':csid' => $form_state['captcha_info']['captcha_sid']))->fetchField();
+    $form_state['captcha_info']['carry_solved'] = $captcha_session_status == CAPTCHA_STATUS_SOLVED;
+  }
 
   // If user has skip CAPTCHA permission, doesn't do anything.
   if (!user_access('skip CAPTCHA')) {
@@ -659,12 +680,29 @@ function _captcha_get_posted_captcha_info($element, $form_state, $this_form_id) 
       // and the database query should also be more efficient (because there is
       // an index on the CAPTCHA session ID).
       if ($posted_captcha_sid != NULL) {
-        $expected_captcha_token = db_query(
-          "SELECT token FROM {captcha_sessions} WHERE csid = :csid",
-          array(':csid' => $posted_captcha_sid)
-        )->fetchField();
+        // Use up the CAPTCHA token in a single query, so that concurrent
+        // requests cannot use it more than once. A missing token never
+        // matches, and a solved CAPTCHA session only matches when it may be
+        // reused, see _captcha_solved_session_reusable().
+        $token_valid = FALSE;
+        if ($posted_captcha_token !== NULL) {
+          $query = db_update('captcha_sessions')
+            ->fields(array('token' => NULL))
+            ->condition('csid', $posted_captcha_sid)
+            ->condition('token', $posted_captcha_token);
+          if (!_captcha_solved_session_reusable($posted_captcha_sid, $form_state, $this_form_id)) {
+            $query->condition('status', CAPTCHA_STATUS_UNSOLVED);
+          }
+          $token_valid = $query->execute() == 1;
+        }
+        if (!$token_valid && variable_get('captcha_log_wrong_responses', FALSE)) {
+          watchdog('CAPTCHA',
+            'CAPTCHA session reuse blocked on form %form_id (CAPTCHA session ID %csid).',
+            array('%form_id' => $this_form_id, '%csid' => $posted_captcha_sid),
+            WATCHDOG_NOTICE);
+        }
 
-        if ($expected_captcha_token !== $posted_captcha_token) {
+        if (!$token_valid) {
           $reuse_attack = empty($form_state['input']['captcha_cacheable']);
           // Invalidate the CAPTCHA session.
           $posted_captcha_sid = NULL;
@@ -684,6 +722,57 @@ function _captcha_get_posted_captcha_info($element, $form_state, $this_form_id) 
     }
   }
   return array($posted_form_id, $posted_captcha_sid, !empty($reuse_attack));
+}
+
+/**
+ * Checks whether the persistence setting omits the challenge for the user.
+ *
+ * @param string $form_id
+ *   the form ID.
+ *
+ * @return bool
+ *   TRUE if the user already responded successfully to a challenge that
+ *   omits challenges on this form for the rest of the user session.
+ */
+function _captcha_persistence_skips_challenge($form_id) {
+  $captcha_success_form_ids = isset($_SESSION['captcha_success_form_ids']) ? (array) ($_SESSION['captcha_success_form_ids']) : array();
+  switch (variable_get('captcha_persistence', CAPTCHA_PERSISTENCE_SKIP_ONCE_SUCCESSFUL_PER_FORM_INSTANCE)) {
+    case CAPTCHA_PERSISTENCE_SKIP_ONCE_SUCCESSFUL:
+      return count($captcha_success_form_ids) > 0;
+
+    case CAPTCHA_PERSISTENCE_SKIP_ONCE_SUCCESSFUL_PER_FORM_TYPE:
+      return isset($captcha_success_form_ids[$form_id]);
+  }
+  return FALSE;
+}
+
+/**
+ * Checks whether a solved CAPTCHA session may be used to omit the challenge.
+ *
+ * A solved CAPTCHA session is only accepted when it was carried along a form
+ * rebuild (e.g. node and comment previews or multi-step forms) in the form
+ * state, or when the persistence setting omits the challenge for the current
+ * user session anyway. The one time CAPTCHA token
+ * still has to match, which limits a carried along CAPTCHA session to one
+ * successful submission.
+ *
+ * @param int $captcha_sid
+ *   the CAPTCHA session ID.
+ *
+ * @param array $form_state
+ *   the form state structure.
+ *
+ * @param string $form_id
+ *   the form ID of the form we are currently processing.
+ *
+ * @return bool
+ *   TRUE if a solved CAPTCHA session may omit the challenge.
+ */
+function _captcha_solved_session_reusable($captcha_sid, $form_state, $form_id) {
+  if (!empty($form_state['captcha_info']['carry_solved']) && $form_state['captcha_info']['captcha_sid'] == $captcha_sid) {
+    return TRUE;
+  }
+  return _captcha_persistence_skips_challenge($form_id);
 }
 
 /**
@@ -848,8 +937,10 @@ function captcha_pre_render_process($element) {
   // (@see captcha_process), but it is also done here for better support
   // of multi-page forms. Take previewing a node submission for example:
   // when the challenge is solved correctely on preview, the form is still
-  // not completely submitted, but the CAPTCHA can be skipped.
-  if (_captcha_required_for_user($captcha_sid, $form_id) || $element['#captcha_admin_mode'] || $element['#captcha_always']) {
+  // not completely submitted, but the CAPTCHA can be skipped. Whether a
+  // solved CAPTCHA session omits the challenge was determined during the
+  // element processing, see _captcha_solved_session_reusable().
+  if (_captcha_required_for_user($captcha_sid, $form_id, !empty($captcha_info['skip_solved'])) || $element['#captcha_admin_mode'] || $element['#captcha_always']) {
     // Prevent caching of the page with CAPTCHA elements.
     // This needs to be done only if the captcha is actually displayed.
     // The captcha display will be skipped only in 2 cases:

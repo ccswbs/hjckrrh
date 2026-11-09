@@ -878,8 +878,9 @@ class CaptchaPersistenceTestCase extends CaptchaBaseWebTestCase {
     $this->drupalPost(NULL, $edit, t('Log in'));
     // Check that there was no error message for the CAPTCHA.
     $this->assertCaptchaResponseAccepted();
-    // There shouldn't be a CAPTCHA on the new form.
-    $this->assertCaptchaPresence(FALSE);
+    // The form was not carried along in a multi-step/preview workflow, so the
+    // session replay protection asks for a new challenge.
+    $this->assertCaptchaPresence(TRUE);
     $this->assertPreservedCsid($captcha_sid_initial);
 
     // Start a new form instance/session
